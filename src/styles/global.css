@@ -1,0 +1,144 @@
+:root {
+  /* Brand Colors */
+  --color-bg-primary: #050810;        /* Background chính — đen xanh sâu */
+  --color-bg-secondary: #0a0f1e;      /* Card / section background */
+  --color-bg-tertiary: #0f1629;       /* Elevated surfaces */
+  --color-bg-glass: rgba(15, 22, 41, 0.6); /* Glassmorphism */
+
+  /* Neon Accents */
+  --color-cyan: #00d4ff;              /* Primary accent — Cyan */
+  --color-cyan-dim: #00a8cc;          /* Cyan hover state */
+  --color-purple: #8b5cf6;            /* Secondary accent — Purple */
+  --color-purple-dim: #7c3aed;        /* Purple hover state */
+  --color-pink: #ec4899;              /* Tertiary — Pink */
+
+  /* Text */
+  --color-text-primary: #f0f4ff;      /* Main text — gần trắng, tông xanh */
+  --color-text-secondary: #94a3b8;    /* Muted text */
+  --color-text-muted: #475569;        /* Very muted */
+
+  /* Borders */
+  --color-border: rgba(0, 212, 255, 0.15);  /* Cyan border dim */
+  --color-border-hover: rgba(0, 212, 255, 0.4);
+
+  /* Success / Warning */
+  --color-green: #10b981;
+  --color-amber: #f59e0b;
+  --color-red: #ef4444;
+
+  /* Gradients */
+  --gradient-hero: linear-gradient(135deg, #050810 0%, #0a0f1e 50%, #050810 100%);
+  --gradient-cyan: linear-gradient(135deg, #00d4ff, #0080ff);
+  --gradient-purple: linear-gradient(135deg, #8b5cf6, #ec4899);
+  --gradient-card: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(139,92,246,0.05));
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+/* Animated gradient orbs — background ambient glow */
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.bg-orb-cyan {
+  background: radial-gradient(circle, #00d4ff, transparent 70%);
+}
+
+.bg-orb-purple {
+  background: radial-gradient(circle, #8b5cf6, transparent 70%);
+}
+
+/* Grid pattern overlay */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: var(--color-bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -10px rgba(0, 212, 255, 0.15);
+}
+
+/* Neon text glow */
+.text-glow-cyan {
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5), 0 0 60px rgba(0, 212, 255, 0.2);
+}
+
+.text-glow-purple {
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.2);
+}
+
+/* Gradient text */
+.gradient-text-cyan {
+  background: var(--gradient-cyan);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-purple {
+  background: var(--gradient-purple);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* CTA button primary */
+.btn-primary {
+  background: var(--gradient-cyan);
+  color: #050810;
+  font-weight: 700;
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+/* CTA button secondary (ghost) */
+.btn-ghost {
+  border: 1px solid var(--color-border-hover);
+  color: var(--color-cyan);
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: var(--color-cyan);
+}

@@ -1,0 +1,161 @@
+---
+// src/pages/case-studies/[slug].astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getAllCaseStudies } from '../../lib/wordpress';
+import type { CaseStudy } from '../../lib/wordpress';
+
+export async function getStaticPaths() {
+  const items = await getAllCaseStudies();
+  return items.map((cs) => ({
+    params: { slug: cs.slug },
+    props: { caseStudy: cs }
+  }));
+}
+
+interface Props {
+  caseStudy: CaseStudy;
+}
+
+const { caseStudy } = Astro.props;
+const { acf } = caseStudy;
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Case Studies', item: 'https://fintech24h.com/case-studies' },
+  { name: acf.client_name, item: `https://fintech24h.com/case-studies/${caseStudy.slug}` }
+];
+---
+
+<BaseLayout
+  title={`${acf.client_name} Case Study | Web3 Growth Report`}
+  description={`See how Fintech24h helped ${acf.client_name} drive ${acf.result_roi} during their regional launch and community building campaigns.`}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <article class="relative py-24 lg:py-32 overflow-hidden">
+    <!-- Ambient background glows -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-cyan w-[600px] h-[600px] absolute -top-40 right-10 opacity-15"></div>
+      <div class="bg-orb bg-orb-purple w-[400px] h-[400px] absolute bottom-1/3 -left-32 opacity-10"></div>
+      <div class="grid-pattern absolute inset-0 opacity-20"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Back Link -->
+      <a href="/case-studies" class="inline-flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors mb-8 font-body">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to case studies
+      </a>
+
+      <!-- Header Col -->
+      <header class="mb-12">
+        <div class="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-wider text-cyan-400 font-display mb-6">
+          <span>{acf.industry}</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400/50"></span>
+          <span>{acf.result_timeline}</span>
+        </div>
+
+        <h1 class="font-display text-4xl sm:text-5xl font-bold text-[#f0f4ff] leading-tight mb-8">
+          {caseStudy.title.rendered}
+        </h1>
+      </header>
+
+      <!-- Key Campaign metrics bar -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        <div class="glass-card rounded-2xl p-6 text-center border-cyan-400/25">
+          <div class="text-3xl font-display font-bold gradient-text-cyan mb-1">{acf.result_roi}</div>
+          <div class="text-[10px] text-[#94a3b8] font-body uppercase tracking-wider">Campaign ROI</div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center border-purple-500/15">
+          <div class="text-3xl font-display font-bold gradient-text-purple mb-1">{acf.result_reach}</div>
+          <div class="text-[10px] text-[#94a3b8] font-body uppercase tracking-wider">Campaign Reach</div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center border-purple-500/15">
+          <div class="text-3xl font-display font-bold gradient-text-purple mb-1">{acf.result_leads}</div>
+          <div class="text-[10px] text-[#94a3b8] font-body uppercase tracking-wider font-semibold">Leads/Members</div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center border-cyan-400/25">
+          <div class="text-3xl font-display font-bold text-[#f0f4ff] mb-1">{acf.result_timeline}</div>
+          <div class="text-[10px] text-[#94a3b8] font-body uppercase tracking-wider">Timeline</div>
+        </div>
+      </div>
+
+      <!-- Core Analysis details split grid -->
+      <div class="grid lg:grid-cols-12 gap-12 items-start mb-16">
+        
+        <!-- Case copy -->
+        <div class="lg:col-span-8 space-y-10">
+          <div>
+            <h2 class="font-display text-2xl font-bold text-[#f0f4ff] mb-4">The Challenge</h2>
+            <p class="text-base text-[#94a3b8] font-body leading-relaxed">{acf.challenge}</p>
+          </div>
+          <div>
+            <h2 class="font-display text-2xl font-bold text-[#f0f4ff] mb-4">The Solution</h2>
+            <p class="text-base text-[#94a3b8] font-body leading-relaxed">{acf.solution}</p>
+          </div>
+          
+          <!-- Detailed content block from WP -->
+          {caseStudy.content.rendered && (
+            <div class="border-t border-white/5 pt-10 prose prose-invert prose-headings:font-display prose-headings:font-bold prose-p:font-body text-[#94a3b8]">
+              <h2 class="font-display text-2xl font-bold text-[#f0f4ff] mb-4">Execution Blueprint</h2>
+              <div set:html={caseStudy.content.rendered} />
+            </div>
+          )}
+        </div>
+
+        <!-- Right side widgets: Services & Testimonial -->
+        <div class="lg:col-span-4 space-y-6">
+          
+          <!-- Services used box -->
+          <div class="glass-card rounded-2xl p-6 border-white/5">
+            <h3 class="font-display text-sm font-bold text-[#f0f4ff] uppercase tracking-wider mb-4">Services Deployed</h3>
+            <div class="flex flex-wrap gap-2">
+              {acf.services_used.map((s) => (
+                <span class="px-2.5 py-1 rounded-lg border border-white/10 bg-white/5 text-[10px] font-semibold text-cyan-400 font-body">
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Testimonial box -->
+          {acf.testimonial_quote && (
+            <div class="glass-card rounded-2xl p-6 border-purple-500/15 relative overflow-hidden">
+              <div class="absolute inset-0 bg-radial-gradient(circle, rgba(139,92,246,0.03) 0%, transparent 80%) pointer-events-none"></div>
+              <p class="text-xs text-[#94a3b8] font-body italic leading-relaxed mb-4">
+                "{acf.testimonial_quote}"
+              </p>
+              <div>
+                <div class="text-[11px] font-semibold text-[#f0f4ff] font-display">{acf.testimonial_author}</div>
+                <div class="text-[9px] text-[#475569] font-body">{acf.testimonial_role} at {acf.client_name}</div>
+              </div>
+            </div>
+          )}
+
+        </div>
+
+      </div>
+
+      <!-- Proposal Form CTA -->
+      <div class="glass-card rounded-2xl p-8 lg:p-12 text-center border-cyan-400/20 max-w-4xl mx-auto">
+        <h3 class="font-display text-2xl font-bold text-[#f0f4ff] mb-4">
+          Ready to Deliver Similar Metrics?
+        </h3>
+        <p class="text-sm text-[#94a3b8] font-body mb-8 max-w-lg mx-auto">
+          Get in touch today. Our builders will audit your product and deliver a tailored proposal within 24 hours.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/#get-proposal" class="btn-primary font-display font-semibold text-sm">
+            Get My Proposal
+          </a>
+          <a href="/contact" class="btn-ghost font-display font-semibold text-sm">
+            Book Discovery Call
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </article>
+</BaseLayout>

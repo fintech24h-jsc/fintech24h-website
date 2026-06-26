@@ -1,0 +1,9 @@
+---
+// src/pages/services/growth-airdrop.astro
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import { services } from '../../data/services';
+
+const service = services.find((s) => s.slug === 'growth-airdrop')!;
+---
+
+<ServiceLayout service={service} />

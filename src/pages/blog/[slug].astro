@@ -1,0 +1,24 @@
+---
+// src/pages/blog/[slug].astro
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import { getAllPosts } from '../../lib/wordpress';
+import type { WPPost } from '../../lib/wordpress';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+interface Props {
+  post: WPPost;
+}
+
+const { post } = Astro.props;
+---
+
+<BlogLayout post={post}>
+  <div set:html={post.content.rendered} />
+</BlogLayout>

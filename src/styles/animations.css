@@ -1,0 +1,45 @@
+/* src/styles/animations.css */
+
+/* GSAP classes for smooth reveal before script initialization */
+[data-animate="fade-up"] {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+[data-animate="stagger"] [data-animate-child] {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Custom animation delay classes */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* Custom slow floating elements */
+.animate-float-slow {
+  animation: float 12s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Hover glow transitions */
+.hover-glow-cyan {
+  transition: all 0.3s ease;
+}
+.hover-glow-cyan:hover {
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+  border-color: rgba(0, 212, 255, 0.6);
+}
+
+.hover-glow-purple {
+  transition: all 0.3s ease;
+}
+.hover-glow-purple:hover {
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+  border-color: rgba(139, 92, 246, 0.6);
+}

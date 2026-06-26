@@ -1,0 +1,132 @@
+---
+// src/components/layout/Navbar.astro
+import { mainNavLinks } from '../../data/navigation';
+import MobileMenu from './MobileMenu.astro';
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 lg:py-6" id="main-header">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="glass-card rounded-2xl px-6 py-4 flex items-center justify-between border-white/5 relative z-50">
+      
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 group" aria-label="Fintech24h Homepage">
+        <span class="text-xl sm:text-2xl font-display font-bold text-[#f0f4ff] tracking-tight">
+          Fintech<span class="gradient-text-cyan">24h</span>
+        </span>
+      </a>
+
+      <!-- Desktop Navigation links -->
+      <nav class="hidden lg:flex items-center gap-8">
+        {mainNavLinks.map((link) => (
+          <div class="relative group">
+            {link.children ? (
+              <div>
+                <button 
+                  class="flex items-center gap-1.5 text-sm font-semibold text-[#94a3b8] hover:text-[#f0f4ff] font-display transition-colors py-2 focus:outline-none"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  {link.label}
+                  <svg class="w-4 h-4 transition-transform group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                
+                <div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-[#0a0f1e]/95 border border-white/10 rounded-xl p-2 shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 backdrop-blur-md">
+                  <div class="flex flex-col gap-1">
+                    {link.children.map((child) => (
+                      <a
+                        href={child.href}
+                        class="text-xs font-medium text-[#94a3b8] hover:text-cyan-400 font-body hover:bg-white/5 p-2.5 rounded-lg transition-all"
+                      >
+                        {child.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a
+                href={link.href}
+                class="text-sm font-semibold text-[#94a3b8] hover:text-[#f0f4ff] font-display transition-colors py-2"
+              >
+                {link.label}
+              </a>
+            )}
+          </div>
+        ))}
+      </nav>
+
+      <!-- Proposal Call to Action button & Mobile Toggle button -->
+      <div class="flex items-center gap-4">
+        <a
+          href="/#get-proposal"
+          class="hidden sm:inline-flex btn-primary font-display font-semibold text-xs py-2.5 px-5 rounded-lg shadow-none hover:shadow-cyan-400/20"
+        >
+          Get Proposal
+        </a>
+        
+        <button
+          id="menu-toggle"
+          class="lg:hidden p-2 text-[#94a3b8] hover:text-[#f0f4ff] focus:outline-none"
+          aria-label="Toggle Navigation Menu"
+          aria-expanded="false"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path
+              id="menu-icon"
+              d="M4 6h16M4 12h16M4 18h16"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+  
+  <MobileMenu />
+</header>
+
+<script>
+  const header = document.getElementById('main-header');
+  const toggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+
+  // Shrink header spacing on scroll down
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) {
+      header?.classList.remove('py-4', 'lg:py-6');
+      header?.classList.add('py-2');
+    } else {
+      header?.classList.remove('py-2');
+      header?.classList.add('py-4', 'lg:py-6');
+    }
+  });
+
+  // Toggle mobile navigation overlay drawer
+  let isOpen = false;
+  toggle?.addEventListener('click', () => {
+    isOpen = !isOpen;
+    if (isOpen) {
+      mobileMenu?.classList.remove('translate-x-full');
+      menuIcon?.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+      toggle.setAttribute('aria-expanded', 'true');
+    } else {
+      mobileMenu?.classList.add('translate-x-full');
+      menuIcon?.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Automatically close mobile menu when clicking page anchor links
+  const mobileLinks = mobileMenu?.querySelectorAll('a');
+  mobileLinks?.forEach((link) => {
+    link.addEventListener('click', () => {
+      isOpen = false;
+      mobileMenu?.classList.add('translate-x-full');
+      menuIcon?.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

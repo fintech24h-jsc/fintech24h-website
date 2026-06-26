@@ -1,0 +1,9 @@
+---
+// src/pages/services/community-management.astro
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import { services } from '../../data/services';
+
+const service = services.find((s) => s.slug === 'community-management')!;
+---
+
+<ServiceLayout service={service} />

@@ -1,0 +1,25 @@
+---
+// src/components/ui/Button.astro
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'ghost';
+  class?: string;
+  id?: string;
+  [key: string]: any;
+}
+
+const { href, variant = 'primary', class: className, id, ...rest } = Astro.props;
+
+const baseStyles = "inline-flex items-center justify-center gap-2 font-display font-semibold transition-all duration-300 text-sm";
+const variantStyles = variant === 'primary' ? 'btn-primary' : 'btn-ghost';
+---
+
+{href ? (
+  <a href={href} class:list={[baseStyles, variantStyles, className]} id={id} {...rest}>
+    <slot />
+  </a>
+) : (
+  <button class:list={[baseStyles, variantStyles, className]} id={id} {...rest}>
+    <slot />
+  </button>
+)}

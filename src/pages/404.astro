@@ -1,0 +1,43 @@
+---
+// src/pages/404.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found (404)"
+  description="The page you are looking for does not exist. Redirect back to Fintech24h homepage or book a marketing discovery call."
+  noIndex={true}
+>
+  <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden" aria-label="Error 404">
+    <!-- Ambient background glows -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-cyan w-[500px] h-[500px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 animate-glow-pulse"></div>
+      <div class="grid-pattern absolute inset-0 opacity-20"></div>
+    </div>
+
+    <div class="relative z-10 max-w-xl mx-auto px-4 text-center" data-animate="fade-up">
+      <!-- Error index -->
+      <div class="text-7xl font-display font-bold gradient-text-cyan text-glow-cyan mb-6">
+        404
+      </div>
+
+      <h1 class="font-display text-3xl font-bold text-[#f0f4ff] mb-4">
+        Page Not Found
+      </h1>
+      
+      <p class="text-base text-[#94a3b8] font-body leading-relaxed mb-8">
+        The link you followed may be broken or the page was renamed. Let’s get you back on track to scale your Web3 project.
+      </p>
+
+      <!-- Action buttons -->
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/" class="btn-primary font-display font-semibold text-sm">
+          Back to Home
+        </a>
+        <a href="/#get-proposal" class="btn-ghost font-display font-semibold text-sm">
+          Get Proposal Proposal
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

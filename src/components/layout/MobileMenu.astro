@@ -1,0 +1,60 @@
+---
+// src/components/layout/MobileMenu.astro
+import { mainNavLinks } from '../../data/navigation';
+---
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 bg-[#050810]/95 backdrop-blur-lg transform translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col justify-between p-8 pt-24"
+  aria-hidden="true"
+  role="dialog"
+>
+  <nav class="flex flex-col gap-6 overflow-y-auto max-h-[70vh]">
+    {mainNavLinks.map((link) => (
+      <div>
+        {link.children ? (
+          <div>
+            <div class="text-xs font-bold text-cyan-400 font-display uppercase tracking-wider mb-3">
+              {link.label}
+            </div>
+            <div class="flex flex-col gap-3 pl-4 border-l border-white/10">
+              {link.children.map((child) => (
+                <a
+                  href={child.href}
+                  class="text-sm text-[#94a3b8] hover:text-[#f0f4ff] font-body transition-colors"
+                >
+                  {child.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a
+            href={link.href}
+            class="text-xl font-display font-semibold text-[#f0f4ff] hover:text-cyan-400 transition-colors"
+          >
+            {link.label}
+          </a>
+        )}
+      </div>
+    ))}
+  </nav>
+
+  <div class="flex flex-col gap-3 mt-8">
+    <a
+      href="/#get-proposal"
+      class="btn-primary text-center font-display font-semibold text-sm py-3"
+      id="mobile-proposal-btn"
+    >
+      Get Free Proposal
+    </a>
+    <a
+      href="https://t.me/fintech24h"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-ghost text-center font-display font-semibold text-sm py-3"
+    >
+      Join Telegram
+    </a>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+---
+// src/pages/contact.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+import CalendlyEmbed from '../components/ui/CalendlyEmbed.tsx';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Contact', item: 'https://fintech24h.com/contact' }
+];
+---
+
+<BaseLayout
+  title="Contact Us & Book a Discovery Call"
+  description="Connect with Fintech24h. Fill out our HubSpot lead form or schedule a discovery call directly to discuss Web3 marketing and SEO partnerships."
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="Contact Us Page">
+    <!-- Ambient background glows -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-cyan w-[600px] h-[600px] absolute -top-40 right-10 opacity-15"></div>
+      <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute bottom-10 -left-32 opacity-10"></div>
+      <div class="grid-pattern absolute inset-0 opacity-20"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        
+        <!-- Left Side: Contact details -->
+        <div class="lg:col-span-5" data-animate="fade-up">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/5 mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span class="text-xs font-semibold text-cyan-400 font-body uppercase tracking-wider">Get In Touch</span>
+          </div>
+
+          <h1 class="font-display text-h1 font-bold text-[#f0f4ff] mb-6 leading-tight">
+            Connect With Our Growth Team
+          </h1>
+
+          <p class="text-base text-[#94a3b8] font-body leading-relaxed mb-10">
+            Have questions about our KOL networks, PR packages, or community moderation? Book a direct discovery session or email our offices.
+          </p>
+
+          <!-- Contact items list -->
+          <div class="space-y-6 mb-12">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-semibold text-[#f0f4ff] font-display">General Inquiries</h3>
+                <p class="text-sm text-[#94a3b8] font-body mt-1">
+                  <a href="mailto:info@fintech24h.com" class="hover:text-cyan-400 transition-colors">info@fintech24h.com</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-400/20 flex items-center justify-center text-purple-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-semibold text-[#f0f4ff] font-display">Vietnam Office</h3>
+                <p class="text-sm text-[#94a3b8] font-body mt-1">
+                  1014 Đ. Phạm Văn Đồng, Hiệp Bình, Ho Chi Minh City, Vietnam.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.1.02-1.62 1.03-4.57 3.02-.43.3-.82.45-1.17.44-.39-.01-1.15-.22-1.71-.41-.69-.23-1.24-.35-1.19-.74.03-.2.3-.41.82-.62 3.2-1.39 5.34-2.31 6.42-2.76 3.05-1.28 3.68-1.5 4.1-.11.02.04.05.09.05.14z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-semibold text-[#f0f4ff] font-display">Telegram Channels</h3>
+                <p class="text-sm text-[#94a3b8] font-body mt-1">
+                  Join our official announcements: <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300">@fintech24h</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Calendly Booking dashboard area -->
+        <div id="book-call" class="lg:col-span-7 scroll-mt-24" data-animate="fade-up">
+          <div class="glass-card rounded-2xl p-6 border-white/5 relative overflow-hidden">
+            <div class="text-center mb-6">
+              <h2 class="text-xl font-display font-semibold text-[#f0f4ff] mb-1">Book Discovery Session</h2>
+              <p class="text-xs text-[#94a3b8] font-body">Select a convenient timezone and time slot below.</p>
+            </div>
+            <CalendlyEmbed client:load />
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

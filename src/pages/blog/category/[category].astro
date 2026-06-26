@@ -1,0 +1,133 @@
+---
+// src/pages/blog/category/[category].astro
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
+import { getAllCategories, getPostsByCategory, formatDate, getExcerpt } from '../../../lib/wordpress';
+import { getReadingTime } from '../../../lib/utils';
+import type { WPCategory } from '../../../lib/wordpress';
+
+export async function getStaticPaths() {
+  const categories = await getAllCategories();
+  return categories.map((cat) => ({
+    params: { category: cat.slug },
+    props: { category: cat }
+  }));
+}
+
+interface Props {
+  category: WPCategory;
+}
+
+const { category } = Astro.props;
+const posts = await getPostsByCategory(category.slug);
+const allCategories = await getAllCategories();
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Blog', item: 'https://fintech24h.com/blog' },
+  { name: category.name, item: `https://fintech24h.com/blog/category/${category.slug}` }
+];
+---
+
+<BaseLayout
+  title={`${category.name} Archives — Insights Blog`}
+  description={`Read our latest research and growth playbooks in ${category.name} from the Fintech24h strategy team.`}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="Blog Category Catalog">
+    <!-- Ambient background glows -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-purple w-[600px] h-[600px] absolute -top-40 -left-32 opacity-15"></div>
+      <div class="bg-orb bg-orb-cyan w-[500px] h-[500px] absolute bottom-10 -right-32 opacity-10"></div>
+      <div class="grid-pattern absolute inset-0 opacity-20"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/5 mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          <span class="text-xs font-semibold text-cyan-400 font-body uppercase tracking-wider">Category Archives</span>
+        </div>
+        <h1 class="font-display text-h1 font-bold text-[#f0f4ff] mb-6">
+          Category: {category.name}
+        </h1>
+        <p class="text-lg text-[#94a3b8] font-body leading-relaxed">
+          {category.description || `Browse marketing playbooks and research related to ${category.name}.`}
+        </p>
+      </div>
+
+      <!-- Categories Filter bar -->
+      <div class="flex flex-wrap justify-center gap-3 mb-16" data-animate="fade-up">
+        <a 
+          href="/blog" 
+          class="px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:border-white/30 text-xs font-semibold font-body text-[#94a3b8] hover:text-[#f0f4ff] transition-all"
+        >
+          All Articles
+        </a>
+        {allCategories.map((c) => (
+          <a
+            href={`/blog/category/${c.slug}`}
+            class:list={[
+              "px-4 py-2 rounded-full border text-xs font-semibold font-body transition-all",
+              c.slug === category.slug 
+                ? "border-cyan-400 bg-cyan-400/10 text-cyan-400"
+                : "border-white/10 bg-white/5 text-[#94a3b8] hover:text-[#f0f4ff] hover:border-white/30"
+            ]}
+          >
+            {c.name} ({c.count || 0})
+          </a>
+        ))}
+      </div>
+
+      <!-- Articles list grid -->
+      {posts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-animate="stagger">
+          {posts.map((post) => {
+            const rTime = getReadingTime(post.content.rendered);
+            const excerptText = getExcerpt(post, 140);
+            return (
+              <article class="glass-card rounded-2xl p-6 border border-white/5 hover:border-cyan-400/30 transition-all duration-300 flex flex-col justify-between group" data-animate-child>
+                <div>
+                  <!-- Info row -->
+                  <div class="flex items-center gap-3 text-xs text-[#475569] font-body mb-4">
+                    <span>{formatDate(post.date)}</span>
+                    <span class="w-1 h-1 rounded-full bg-[#475569]"></span>
+                    <span>{rTime} min read</span>
+                  </div>
+
+                  <!-- Title & Summary -->
+                  <h2 class="font-display text-lg font-bold text-[#f0f4ff] mb-3 group-hover:text-cyan-400 transition-colors line-clamp-2">
+                    {post.title.rendered}
+                  </h2>
+                  <p class="text-xs text-[#94a3b8] font-body leading-relaxed mb-6 line-clamp-3">
+                    {excerptText}
+                  </p>
+                </div>
+
+                <!-- Redirect link -->
+                <div class="flex justify-end pt-4 border-t border-white/5 mt-6">
+                  <a
+                    href={`/blog/${post.slug}`}
+                    class="text-[10px] font-semibold text-cyan-400 hover:text-cyan-300 font-display uppercase tracking-wider flex items-center gap-1.5 transition-colors"
+                    aria-label={`Read ${post.title.rendered}`}
+                  >
+                    Read Article
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-[#94a3b8] font-body">No articles found in this category yet. Check back soon!</p>
+        </div>
+      )}
+
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,64 @@
+---
+// src/components/sections/TrustBar.astro
+// Infinite scrolling marquee with brand verification badges
+import { clients } from '../../data/clients';
+---
+
+<section class="py-12 border-y border-white/5 overflow-hidden bg-[#050810]" aria-label="Trusted by clients">
+  <div class="max-w-7xl mx-auto px-4 mb-8 text-center">
+    <p class="text-sm text-[#475569] font-body uppercase tracking-wider">
+      Trusted by 200+ blockchain & AI projects worldwide
+    </p>
+  </div>
+
+  <!-- Badge bar (Crunchbase, Clutch, Sortlist, The Manifest) -->
+  <div class="flex justify-center gap-6 md:gap-8 mb-10 flex-wrap px-4">
+    {[
+      { name: 'Crunchbase', url: 'https://www.crunchbase.com/organization/fintech24h', badge: '⭐ Listed' },
+      { name: 'Clutch', url: 'https://clutch.co/profile/fintech24hcom-blockchain-agency-more', badge: '⭐ Verified' },
+      { name: 'Sortlist', url: 'https://www.sortlist.com/agency/fintech24h', badge: '⭐ Top Agency' },
+      { name: 'The Manifest', url: 'https://themanifest.com/company/fintech24hcom-blockchain-agency-more', badge: '⭐ Listed' },
+    ].map((b) => (
+      <a
+        href={b.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="glass-card px-4 py-2 rounded-full text-xs md:text-sm font-body text-[#94a3b8] hover:text-cyan-400 transition-colors"
+        aria-label={`Fintech24h on ${b.name}`}
+      >
+        <span class="font-semibold text-[#f0f4ff]">{b.name}</span>
+        <span class="ml-2 text-xs text-cyan-400">{b.badge}</span>
+      </a>
+    ))}
+  </div>
+
+  <!-- Auto-scrolling logo marquee -->
+  <div class="relative overflow-hidden w-full" role="img" aria-label="Client logos">
+    <!-- Gradient overlays on left/right for marquee fade-out visual effect -->
+    <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#050810] to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#050810] to-transparent z-10 pointer-events-none"></div>
+
+    <div class="flex gap-16 animate-marquee whitespace-nowrap">
+      {/* Duplicate for infinite loop */}
+      {[...clients, ...clients].map((client, i) => (
+        <div
+          key={i}
+          class="flex items-center gap-2 flex-shrink-0 opacity-50 hover:opacity-100 transition-opacity"
+        >
+          {client.logo ? (
+            <img
+              src={client.logo}
+              alt={client.name}
+              width="120"
+              height="40"
+              class="h-8 w-auto object-contain grayscale hover:grayscale-0 transition-all"
+              loading="lazy"
+            />
+          ) : (
+            <span class="text-[#475569] font-display font-semibold text-sm tracking-wide uppercase hover:text-cyan-400 transition-colors">{client.name}</span>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

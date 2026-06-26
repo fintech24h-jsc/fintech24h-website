@@ -1,0 +1,9 @@
+---
+// src/pages/services/content-strategy-seo.astro
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import { services } from '../../data/services';
+
+const service = services.find((s) => s.slug === 'content-strategy-seo')!;
+---
+
+<ServiceLayout service={service} />

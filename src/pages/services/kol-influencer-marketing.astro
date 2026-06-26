@@ -1,0 +1,9 @@
+---
+// src/pages/services/kol-influencer-marketing.astro
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import { services } from '../../data/services';
+
+const service = services.find((s) => s.slug === 'kol-influencer-marketing')!;
+---
+
+<ServiceLayout service={service} />

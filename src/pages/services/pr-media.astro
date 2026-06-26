@@ -1,0 +1,9 @@
+---
+// src/pages/services/pr-media.astro
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import { services } from '../../data/services';
+
+const service = services.find((s) => s.slug === 'pr-media')!;
+---
+
+<ServiceLayout service={service} />
