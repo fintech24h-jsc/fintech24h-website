@@ -108,11 +108,11 @@ export default function MultiStepForm() {
     return (
       <div className="text-center py-8">
         <div className="text-5xl mb-4">🎯</div>
-        <h3 className="text-xl font-display font-semibold text-[#f0f4ff] mb-2">
+        <h3 className="text-xl font-display font-semibold text-[var(--text-primary)] mb-2">
           Proposal Request Received!
         </h3>
-        <p className="text-[#94a3b8] font-body mb-4">
-          Our team will reach out within <strong className="text-cyan-400">24 hours</strong> with a custom growth strategy for your project.
+        <p className="text-[var(--text-secondary)] font-body mb-4">
+          Our team will reach out within <strong className="text-[var(--accent-cyan)]">24 hours</strong> with a custom growth strategy for your project.
         </p>
         <a
           href="https://t.me/fintech24h"
@@ -135,15 +135,15 @@ export default function MultiStepForm() {
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold font-display transition-all duration-300 ${
                 s < step
-                  ? 'bg-cyan-400 text-black'
+                  ? 'bg-[var(--accent-cyan)] text-[#050810]'
                   : s === step
-                  ? 'border-2 border-cyan-400 text-cyan-400'
-                  : 'border border-white/20 text-white/30'
+                  ? 'border-2 border-[var(--accent-cyan)] text-[var(--accent-cyan)]'
+                  : 'border border-[var(--border-default)] text-[var(--text-secondary)]'
               }`}
             >
               {s < step ? '✓' : s}
             </div>
-            {s < 3 && <div className={`w-8 h-0.5 ${s < step ? 'bg-cyan-400' : 'bg-white/10'}`} />}
+            {s < 3 && <div className={`w-8 h-0.5 ${s < step ? 'bg-[var(--accent-cyan)]' : 'bg-[var(--border-default)]'}`} />}
           </div>
         ))}
       </div>
@@ -151,19 +151,19 @@ export default function MultiStepForm() {
       {/* Step 1: Project Type */}
       {step === 1 && (
         <div>
-          <p className="text-sm text-[#94a3b8] text-center font-body mb-4">What type of project are you building?</p>
+          <p className="text-sm text-[var(--text-secondary)] text-center font-body mb-4">What type of project are you building?</p>
           <div className="grid grid-cols-2 gap-3">
             {PROJECT_TYPES.map(({ label, icon }) => (
               <button
                 key={label}
                 onClick={() => { update('projectType', label); setStep(2); }}
-                className={`glass-card rounded-xl p-4 text-left transition-all duration-200 hover:border-cyan-400/50 ${
-                  formData.projectType === label ? 'border-cyan-400/70 bg-cyan-400/10' : ''
+                className={`card-default p-4 text-left transition-all duration-200 hover:border-[var(--border-accent)] ${
+                  formData.projectType === label ? 'border-[var(--border-accent)] bg-[rgba(0,200,240,0.1)]' : ''
                 }`}
                 aria-pressed={formData.projectType === label}
               >
                 <span className="text-2xl mb-1 block" aria-hidden="true">{icon}</span>
-                <span className="text-sm font-medium text-[#f0f4ff] font-body">{label}</span>
+                <span className="text-sm font-medium text-[var(--text-primary)] font-body">{label}</span>
               </button>
             ))}
           </div>
@@ -173,10 +173,10 @@ export default function MultiStepForm() {
       {/* Step 2: Contact Info */}
       {step === 2 && (
         <div className="space-y-4">
-          <p className="text-sm text-[#94a3b8] text-center font-body mb-4">How can we reach you?</p>
+          <p className="text-sm text-[var(--text-secondary)] text-center font-body mb-4">How can we reach you?</p>
 
           <div>
-            <label htmlFor="contactName" className="block text-xs text-[#94a3b8] mb-1 font-body">Your Name *</label>
+            <label htmlFor="contactName" className="block text-xs text-[var(--text-secondary)] mb-1 font-body">Your Name *</label>
             <input
               id="contactName"
               type="text"
@@ -184,12 +184,12 @@ export default function MultiStepForm() {
               onChange={(e) => update('contactName', e.target.value)}
               placeholder="Alex Nguyen"
               required
-              className="w-full px-4 py-3 rounded-lg bg-[#0a0f1e] border border-white/10 text-[#f0f4ff] font-body text-sm placeholder-[#475569] focus:outline-none focus:border-cyan-400/50 transition-colors"
+              className="input-field"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-xs text-[#94a3b8] mb-1 font-body">Email *</label>
+            <label htmlFor="email" className="block text-xs text-[var(--text-secondary)] mb-1 font-body">Email *</label>
             <input
               id="email"
               type="email"
@@ -197,43 +197,43 @@ export default function MultiStepForm() {
               onChange={(e) => update('email', e.target.value)}
               placeholder="alex@project.com"
               required
-              className="w-full px-4 py-3 rounded-lg bg-[#0a0f1e] border border-white/10 text-[#f0f4ff] font-body text-sm placeholder-[#475569] focus:outline-none focus:border-cyan-400/50 transition-colors"
+              className="input-field"
             />
           </div>
 
           <div>
-            <label htmlFor="telegram" className="block text-xs text-[#94a3b8] mb-1 font-body">Telegram (Preferred) *</label>
+            <label htmlFor="telegram" className="block text-xs text-[var(--text-secondary)] mb-1 font-body">Telegram (Preferred) *</label>
             <input
               id="telegram"
               type="text"
               value={formData.telegram}
               onChange={(e) => update('telegram', e.target.value)}
               placeholder="@yourhandle"
-              className="w-full px-4 py-3 rounded-lg bg-[#0a0f1e] border border-white/10 text-[#f0f4ff] font-body text-sm placeholder-[#475569] focus:outline-none focus:border-cyan-400/50 transition-colors"
+              className="input-field"
             />
           </div>
 
           <div>
-            <label htmlFor="projectName" className="block text-xs text-[#94a3b8] mb-1 font-body">Project Name</label>
+            <label htmlFor="projectName" className="block text-xs text-[var(--text-secondary)] mb-1 font-body">Project Name</label>
             <input
               id="projectName"
               type="text"
               value={formData.projectName}
               onChange={(e) => update('projectName', e.target.value)}
               placeholder="MyDeFi Protocol"
-              className="w-full px-4 py-3 rounded-lg bg-[#0a0f1e] border border-white/10 text-[#f0f4ff] font-body text-sm placeholder-[#475569] focus:outline-none focus:border-cyan-400/50 transition-colors"
+              className="input-field"
             />
           </div>
 
           <div>
-            <label htmlFor="projectUrl" className="block text-xs text-[#94a3b8] mb-1 font-body">Project Website / Whitepaper</label>
+            <label htmlFor="projectUrl" className="block text-xs text-[var(--text-secondary)] mb-1 font-body">Project Website / Whitepaper</label>
             <input
               id="projectUrl"
               type="url"
               value={formData.projectUrl}
               onChange={(e) => update('projectUrl', e.target.value)}
               placeholder="https://myproject.io"
-              className="w-full px-4 py-3 rounded-lg bg-[#0a0f1e] border border-white/10 text-[#f0f4ff] font-body text-sm placeholder-[#475569] focus:outline-none focus:border-cyan-400/50 transition-colors"
+              className="input-field"
             />
           </div>
 
@@ -263,20 +263,20 @@ export default function MultiStepForm() {
       {/* Step 3: Service + Budget + Timeline */}
       {step === 3 && (
         <div className="space-y-5">
-          <p className="text-sm text-[#94a3b8] text-center font-body mb-4">Almost done — help us understand your goals.</p>
+          <p className="text-sm text-[var(--text-secondary)] text-center font-body mb-4">Almost done — help us understand your goals.</p>
 
           {/* Service Interest */}
           <div>
-            <label className="block text-xs text-[#94a3b8] mb-2 font-body">Primary Service Needed</label>
+            <label className="block text-xs text-[var(--text-secondary)] mb-2 font-body">Primary Service Needed</label>
             <div className="grid grid-cols-1 gap-2">
               {SERVICES.map((s) => (
                 <button
                   key={s}
                   onClick={() => update('serviceInterest', s)}
-                  className={`text-left px-4 py-2.5 rounded-lg border text-sm font-body transition-all ${
+                  className={`select-option text-left !justify-start ${
                     formData.serviceInterest === s
-                      ? 'border-cyan-400/70 bg-cyan-400/10 text-cyan-400'
-                      : 'border-white/10 text-[#94a3b8] hover:border-white/30'
+                      ? 'active'
+                      : ''
                   }`}
                   aria-pressed={formData.serviceInterest === s}
                 >
@@ -288,16 +288,16 @@ export default function MultiStepForm() {
 
           {/* Budget (large tap targets) */}
           <div>
-            <label className="block text-xs text-[#94a3b8] mb-2 font-body">Monthly Budget Range *</label>
+            <label className="block text-xs text-[var(--text-secondary)] mb-2 font-body">Monthly Budget Range *</label>
             <div className="grid grid-cols-3 gap-2">
               {BUDGETS.map(({ label, value }) => (
                 <button
                   key={value}
                   onClick={() => update('budget', value)}
-                  className={`py-3 rounded-lg border text-xs font-semibold font-display text-center transition-all ${
+                  className={`select-option font-display font-semibold ${
                     formData.budget === value
-                      ? 'border-cyan-400/70 bg-cyan-400/10 text-cyan-400'
-                      : 'border-white/10 text-[#94a3b8] hover:border-white/30'
+                      ? 'active'
+                      : ''
                   }`}
                   aria-pressed={formData.budget === value}
                 >
@@ -309,16 +309,16 @@ export default function MultiStepForm() {
 
           {/* Timeline */}
           <div>
-            <label className="block text-xs text-[#94a3b8] mb-2 font-body">When do you want to launch?</label>
+            <label className="block text-xs text-[var(--text-secondary)] mb-2 font-body">When do you want to launch?</label>
             <div className="grid grid-cols-3 gap-2">
               {TIMELINES.map(({ label, value }) => (
                 <button
                   key={value}
                   onClick={() => update('timeline', value)}
-                  className={`py-3 rounded-lg border text-xs font-semibold font-display text-center transition-all ${
+                  className={`select-option font-display font-semibold ${
                     formData.timeline === value
-                      ? 'border-purple-400/70 bg-purple-400/10 text-purple-400'
-                      : 'border-white/10 text-[#94a3b8] hover:border-white/30'
+                      ? '!border-[var(--accent-purple)] !bg-[rgba(124,92,252,0.1)] !text-[var(--accent-purple)]'
+                      : ''
                   }`}
                   aria-pressed={formData.timeline === value}
                 >
@@ -344,7 +344,7 @@ export default function MultiStepForm() {
               disabled={isSubmitting}
               className="btn-primary flex-1 text-sm font-display font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? 'Sending...' : 'Get My Strategy →'}
+              <span>{isSubmitting ? 'Sending...' : 'Get My Strategy →'}</span>
             </button>
           </div>
 

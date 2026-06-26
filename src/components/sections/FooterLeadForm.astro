@@ -3,7 +3,7 @@
 import HubSpotForm from '../ui/HubSpotForm.tsx';
 ---
 
-<section class="py-24 bg-[#050810] relative overflow-hidden" aria-label="Final Conversion CTA">
+<section class="py-24 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Final Conversion CTA">
   <!-- Glowing background lines -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <div class="bg-orb bg-orb-cyan w-[600px] h-[600px] absolute bottom-0 right-10 opacity-15"></div>
@@ -12,18 +12,18 @@ import HubSpotForm from '../ui/HubSpotForm.tsx';
   </div>
 
   <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="glass-card rounded-3xl p-8 sm:p-12 lg:p-16 border-cyan-400/20 relative overflow-hidden text-center">
+    <div class="card-default p-8 sm:p-12 lg:p-16 border-[var(--accent-cyan)]/20 relative overflow-hidden text-center">
       
       <!-- Top Eyebrow -->
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-400/30 bg-purple-400/5 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
-        <span class="text-xs font-semibold text-purple-400 font-body uppercase tracking-wider">Start Scaling</span>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/30 bg-[var(--accent-purple)]/5 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
+        <span class="text-xs font-semibold text-[var(--accent-purple)] font-body uppercase tracking-wider">Start Scaling</span>
       </div>
 
-      <h2 class="font-display text-h1 font-bold text-[#f0f4ff] mb-6 max-w-2xl mx-auto">
+      <h2 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-6 max-w-2xl mx-auto">
         Ready to Scale Your Web3 Project?
       </h2>
-      <p class="text-base sm:text-lg text-[#94a3b8] font-body mb-10 max-w-xl mx-auto">
+      <p class="text-base sm:text-lg text-[var(--text-secondary)] font-body mb-10 max-w-xl mx-auto">
         Subscribe to our newsletter for actionable crypto marketing playbooks, or schedule a growth audit with our strategy team today.
       </p>
 
@@ -32,26 +32,26 @@ import HubSpotForm from '../ui/HubSpotForm.tsx';
         
         <!-- Newsletter subscription -->
         <div class="w-full md:w-1/2 text-left">
-          <h3 class="text-sm font-semibold text-[#f0f4ff] font-display uppercase tracking-wider mb-3">
+          <h3 class="text-sm font-semibold text-[var(--text-primary)] font-display uppercase tracking-wider mb-3">
             Subscribe to playbooks
           </h3>
           <HubSpotForm client:load />
         </div>
 
         <!-- Middle divide line -->
-        <div class="hidden md:block w-px h-20 bg-white/10" aria-hidden="true"></div>
+        <div class="hidden md:block w-px h-20 bg-[var(--border-subtle)]" aria-hidden="true"></div>
 
         <!-- Book a meeting -->
         <div class="w-full md:w-1/2 text-center md:text-left">
-          <h3 class="text-sm font-semibold text-[#f0f4ff] font-display uppercase tracking-wider mb-4">
+          <h3 class="text-sm font-semibold text-[var(--text-primary)] font-display uppercase tracking-wider mb-4">
             Direct Strategy Booking
           </h3>
           <a
             href="/contact#book-call"
-            class="btn-primary inline-flex items-center gap-2 text-sm font-display font-semibold w-full sm:w-auto text-center"
+            class="btn-primary inline-flex items-center justify-center text-center"
           >
-            Book Discovery Call
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span>Book Discovery Call</span>
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
 

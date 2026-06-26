@@ -1,4 +1,4 @@
-// tailwind.config.mjs
+/** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
@@ -8,32 +8,37 @@ export default {
         body: ['Inter', 'sans-serif'],               // Body text
         mono: ['"JetBrains Mono"', 'monospace'],     // Code
       },
+      colors: {
+        background: {
+          primary: 'var(--bg-primary)',
+          secondary: 'var(--bg-secondary)',
+          tertiary: 'var(--bg-tertiary)',
+          glass: 'var(--bg-glass)',
+        },
+        accent: {
+          cyan: 'var(--accent-cyan)',
+          purple: 'var(--accent-purple)',
+        },
+        text: {
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          muted: 'var(--text-muted)',
+        },
+        border: {
+          default: 'var(--border-default)',
+          hover: 'var(--border-hover)',
+          accent: 'var(--border-accent)',
+        }
+      },
       fontSize: {
-        'hero': ['clamp(2.5rem, 6vw, 5rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        'h1': ['clamp(2rem, 4vw, 3.5rem)', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
-        'h2': ['clamp(1.5rem, 3vw, 2.5rem)', { lineHeight: '1.2' }],
-        'h3': ['clamp(1.2rem, 2vw, 1.75rem)', { lineHeight: '1.3' }],
-      },
-      animation: {
-        'glow-pulse': 'glow-pulse 3s ease-in-out infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'marquee': 'marquee 30s linear infinite',
-        'grid-fade': 'grid-fade 8s ease-in-out infinite',
-      },
-      keyframes: {
-        'glow-pulse': {
-          '0%, 100%': { opacity: '0.4' },
-          '50%': { opacity: '1' },
-        },
-        'float': {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        'marquee': {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
-      },
+        'hero': ['clamp(3rem, 7vw, 5.5rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
+        'h1': ['clamp(2.2rem, 4.5vw, 3.75rem)', { lineHeight: '1.1', letterSpacing: '-0.025em' }],
+        'h2': ['clamp(1.6rem, 3vw, 2.5rem)', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+        'h3': ['clamp(1.2rem, 2vw, 1.5rem)', { lineHeight: '1.3', letterSpacing: '-0.01em' }],
+        'body': ['1rem', { lineHeight: '1.75' }],
+        'small': ['0.875rem', { lineHeight: '1.6' }],
+        'xs': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.05em' }],
+      }
     },
   },
   plugins: [],

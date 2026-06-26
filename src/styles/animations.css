@@ -1,45 +1,85 @@
-/* src/styles/animations.css */
-
-/* GSAP classes for smooth reveal before script initialization */
-[data-animate="fade-up"] {
-  opacity: 0;
-  will-change: transform, opacity;
+/* ─── AMBIENT (background effects) ─── */
+@keyframes orb-pulse {
+  0%, 100% { opacity: 0.12; transform: scale(1); }
+  50%       { opacity: 0.22; transform: scale(1.08); }
 }
 
-[data-animate="stagger"] [data-animate-child] {
-  opacity: 0;
-  will-change: transform, opacity;
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0); }
+  33%       { transform: translate(12px, -8px); }
+  66%       { transform: translate(-8px, 6px); }
 }
 
-/* Custom animation delay classes */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-700 { animation-delay: 700ms; }
-
-/* Custom slow floating elements */
-.animate-float-slow {
-  animation: float 12s ease-in-out infinite;
+@keyframes grid-shimmer {
+  0%, 100% { opacity: 0.03; }
+  50%       { opacity: 0.06; }
 }
 
-.animate-float-fast {
-  animation: float 4s ease-in-out infinite;
+@keyframes border-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(0,200,240,0.15); }
+  50%       { box-shadow: 0 0 20px rgba(0,200,240,0.3); }
 }
 
-/* Hover glow transitions */
-.hover-glow-cyan {
-  transition: all 0.3s ease;
-}
-.hover-glow-cyan:hover {
-  box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
-  border-color: rgba(0, 212, 255, 0.6);
+/* ─── ENTRANCE (dùng với GSAP ScrollTrigger, hoặc CSS khi không cần GSAP) ─── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.hover-glow-purple {
-  transition: all 0.3s ease;
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
-.hover-glow-purple:hover {
-  box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
-  border-color: rgba(139, 92, 246, 0.6);
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── INTERACTION ─── */
+@keyframes shimmer-slide {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── LOADING ─── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(0.75); opacity: 0.5; }
+}
+
+/* ─── SHIMMER LOADING STATE ─── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.03) 25%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ─── REDUCED MOTION OVERRIDE (TUYỆT ĐỐI PHẢI CÓ) ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

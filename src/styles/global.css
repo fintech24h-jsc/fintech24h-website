@@ -1,144 +1,285 @@
-:root {
-  /* Brand Colors */
-  --color-bg-primary: #050810;        /* Background chính — đen xanh sâu */
-  --color-bg-secondary: #0a0f1e;      /* Card / section background */
-  --color-bg-tertiary: #0f1629;       /* Elevated surfaces */
-  --color-bg-glass: rgba(15, 22, 41, 0.6); /* Glassmorphism */
-
-  /* Neon Accents */
-  --color-cyan: #00d4ff;              /* Primary accent — Cyan */
-  --color-cyan-dim: #00a8cc;          /* Cyan hover state */
-  --color-purple: #8b5cf6;            /* Secondary accent — Purple */
-  --color-purple-dim: #7c3aed;        /* Purple hover state */
-  --color-pink: #ec4899;              /* Tertiary — Pink */
-
-  /* Text */
-  --color-text-primary: #f0f4ff;      /* Main text — gần trắng, tông xanh */
-  --color-text-secondary: #94a3b8;    /* Muted text */
-  --color-text-muted: #475569;        /* Very muted */
-
-  /* Borders */
-  --color-border: rgba(0, 212, 255, 0.15);  /* Cyan border dim */
-  --color-border-hover: rgba(0, 212, 255, 0.4);
-
-  /* Success / Warning */
-  --color-green: #10b981;
-  --color-amber: #f59e0b;
-  --color-red: #ef4444;
-
-  /* Gradients */
-  --gradient-hero: linear-gradient(135deg, #050810 0%, #0a0f1e 50%, #050810 100%);
-  --gradient-cyan: linear-gradient(135deg, #00d4ff, #0080ff);
-  --gradient-purple: linear-gradient(135deg, #8b5cf6, #ec4899);
-  --gradient-card: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(139,92,246,0.05));
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* ─── BACKGROUNDS ─── */
+    --bg-primary:        #050810;  /* Nền chính — đen xanh thiên văn sâu */
+    --bg-secondary:      #080d1a;  /* Card, elevated surface */
+    --bg-tertiary:       #0c1221;  /* Hover state, deepest card */
+    --bg-glass:          rgba(8, 13, 26, 0.75);   /* Glassmorphism base */
+    --bg-glass-light:    rgba(255, 255, 255, 0.03); /* Subtle highlight */
+
+    /* ─── BRAND ACCENTS ─── */
+    --accent-cyan:       #00c8f0;  /* Primary — Cyan lạnh (không phải #00ffff điện) */
+    --accent-cyan-dim:   #0090b0;  /* Hover/active state của cyan */
+    --accent-cyan-glow:  rgba(0, 200, 240, 0.15);
+    --accent-purple:     #7c5cfc;  /* Secondary — Tím indigo sâu */
+    --accent-purple-dim: #5a3fd0;
+    --accent-purple-glow: rgba(124, 92, 252, 0.12);
+
+    /* ─── TEXT ─── */
+    --text-primary:      #e8edf8;  /* Body text — trắng ngà lạnh */
+    --text-secondary:    #8896b3;  /* Muted — xanh xám trung bình */
+    --text-muted:        #4a5470;  /* Very muted — chỉ dùng cho metadata nhỏ */
+    --text-inverted:     #050810;  /* Text trên gradient button */
+
+    /* ─── BORDERS ─── */
+    --border-default:    rgba(255, 255, 255, 0.06);  /* Card border mặc định */
+    --border-hover:      rgba(255, 255, 255, 0.12);  /* Card border khi hover */
+    --border-accent:     rgba(0, 200, 240, 0.25);    /* Accent border (active, focus) */
+    --border-subtle:     rgba(255, 255, 255, 0.03);  /* Section divider cực nhạt */
+
+    /* ─── SEMANTIC ─── */
+    --color-success:     #10b981;
+    --color-success-bg:  rgba(16, 185, 129, 0.1);
+    --color-warning:     #f59e0b;
+    --color-danger:      #ef4444;
+
+    /* ─── GRADIENTS ─── */
+    --gradient-primary:  linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%);
+    --gradient-primary-hover: linear-gradient(135deg, #00dcff 0%, #9070ff 100%);
+    --gradient-hero-bg:  radial-gradient(ellipse 80% 60% at 50% -20%,
+                           rgba(124, 92, 252, 0.18) 0%, transparent 65%);
+    --gradient-card:     linear-gradient(135deg,
+                           rgba(0, 200, 240, 0.04) 0%,
+                           rgba(124, 92, 252, 0.04) 100%);
+    --gradient-glow-cyan:   radial-gradient(ellipse at center,
+                              rgba(0, 200, 240, 0.18) 0%, transparent 70%);
+    --gradient-glow-purple: radial-gradient(ellipse at center,
+                              rgba(124, 92, 252, 0.14) 0%, transparent 70%);
+    --gradient-text:     linear-gradient(135deg, #00c8f0 0%, #a78bfa 100%);
+    --gradient-mesh:     /* Dùng trong Hero background */
+      radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0,200,240,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 60%, rgba(124,92,252,0.10) 0%, transparent 60%);
+
+    /* ─── TYPOGRAPHY ─── */
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* ─── RADIUS ─── */
+    --radius-sm:   4px;
+    --radius-md:   8px;
+    --radius-lg:   12px;
+    --radius-xl:   16px;
+    --radius-2xl:  24px;
+    --radius-full: 9999px;
+  }
+
   body {
-    background-color: var(--color-bg-primary);
-    color: var(--color-text-primary);
-    font-family: 'Inter', sans-serif;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
   }
 }
 
-/* Animated gradient orbs — background ambient glow */
-.bg-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.15;
-  pointer-events: none;
-}
+@layer components {
+  /* Gradient text */
+  .text-gradient {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-.bg-orb-cyan {
-  background: radial-gradient(circle, #00d4ff, transparent 70%);
-}
+  /* Glass Card Variants */
+  .card-default {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-default);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-default:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  }
 
-.bg-orb-purple {
-  background: radial-gradient(circle, #8b5cf6, transparent 70%);
-}
+  .card-featured {
+    background: linear-gradient(135deg,
+      rgba(0, 200, 240, 0.08) 0%,
+      rgba(124, 92, 252, 0.08) 100%);
+    border: 1px solid rgba(0, 200, 240, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 0 0 1px rgba(0, 200, 240, 0.05),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+  }
 
-/* Grid pattern overlay */
-.grid-pattern {
-  background-image:
-    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
+  .card-numbered {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-numbered::before {
+    content: attr(data-step);
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    user-select: none;
+  }
 
-/* Glassmorphism card */
-.glass-card {
-  background: var(--color-bg-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--color-border);
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
+  /* Button System */
+  .btn-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #050810;
+    background: var(--gradient-primary);
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 20px rgba(0, 200, 240, 0.35),
+      0 0 60px rgba(124, 92, 252, 0.15),
+      0 8px 24px rgba(0,0,0,0.3);
+  }
+  .btn-primary:hover::after { background: rgba(255,255,255,0.08); }
+  .btn-primary:active { transform: translateY(0); }
 
-.glass-card:hover {
-  border-color: var(--color-border-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px -10px rgba(0, 212, 255, 0.15);
-}
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--accent-cyan);
+    background: transparent;
+    border: 1px solid rgba(0, 200, 240, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .btn-ghost:hover {
+    background: rgba(0, 200, 240, 0.08);
+    border-color: rgba(0, 200, 240, 0.6);
+    box-shadow: 0 0 16px rgba(0, 200, 240, 0.15);
+  }
 
-/* Neon text glow */
-.text-glow-cyan {
-  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5), 0 0 60px rgba(0, 212, 255, 0.2);
-}
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-icon:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    background: rgba(0, 200, 240, 0.06);
+  }
 
-.text-glow-purple {
-  text-shadow: 0 0 20px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.2);
-}
+  /* Tags */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 4px;
+    border: 1px solid;
+  }
+  .tag-cyan {
+    color: var(--accent-cyan);
+    border-color: rgba(0, 200, 240, 0.25);
+    background: rgba(0, 200, 240, 0.06);
+  }
+  .tag-purple {
+    color: #a78bfa;
+    border-color: rgba(167, 139, 250, 0.25);
+    background: rgba(124, 92, 252, 0.06);
+  }
+  .tag-gray {
+    color: var(--text-secondary);
+    border-color: var(--border-default);
+    background: var(--bg-glass);
+  }
+  .tag-success {
+    color: var(--color-success);
+    border-color: rgba(16, 185, 129, 0.25);
+    background: rgba(16, 185, 129, 0.06);
+  }
 
-/* Gradient text */
-.gradient-text-cyan {
-  background: var(--gradient-cyan);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+  /* Forms */
+  .input-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+  }
+  .input-field::placeholder { color: var(--text-muted); }
+  .input-field:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px rgba(0, 200, 240, 0.1);
+  }
+  .input-field:focus-visible {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px rgba(0, 200, 240, 0.15);
+  }
 
-.gradient-text-purple {
-  background: var(--gradient-purple);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* CTA button primary */
-.btn-primary {
-  background: var(--gradient-cyan);
-  color: #050810;
-  font-weight: 700;
-  padding: 0.875rem 2rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-}
-
-.btn-primary:hover {
-  box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
-  transform: translateY(-1px);
-}
-
-/* CTA button secondary (ghost) */
-.btn-ghost {
-  border: 1px solid var(--color-border-hover);
-  color: var(--color-cyan);
-  padding: 0.875rem 2rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-}
-
-.btn-ghost:hover {
-  background: rgba(0, 212, 255, 0.08);
-  border-color: var(--color-cyan);
+  .select-option {
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+  .select-option:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+  .select-option[aria-pressed="true"],
+  .select-option.active {
+    border-color: var(--accent-cyan);
+    background: rgba(0, 200, 240, 0.08);
+    color: var(--accent-cyan);
+  }
 }

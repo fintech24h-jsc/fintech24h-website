@@ -9,6 +9,6 @@ interface Props {
 const { class: className, id, ...rest } = Astro.props;
 ---
 
-<div class:list={["glass-card rounded-2xl p-6 sm:p-8", className]} id={id} {...rest}>
+<div class:list={["card-default p-6 sm:p-8", className]} id={id} {...rest}>
   <slot />
 </div>

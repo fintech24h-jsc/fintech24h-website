@@ -1,4 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface Props {
   end: number;
@@ -7,50 +11,39 @@ interface Props {
   prefix?: string;
 }
 
-export default function AnimatedCounter({ end, duration = 1500, suffix = '', prefix = '' }: Props) {
-  const [count, setCount] = useState(0);
-  const elementRef = useRef<HTMLSpanElement>(null);
+export default function AnimatedCounter({ end, duration = 2, suffix = '', prefix = '' }: Props) {
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    let startTimestamp: number | null = null;
-    let animationFrameId: number;
-
-    const step = (timestamp: number) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      
-      // Easing easeOutQuad
-      const easeProgress = progress * (2 - progress);
-      setCount(Math.floor(easeProgress * end));
-
-      if (progress < 1) {
-        animationFrameId = requestAnimationFrame(step);
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          animationFrameId = requestAnimationFrame(step);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
+    if (!ref.current) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      ref.current.textContent = prefix + end + suffix;
+      return;
     }
 
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      observer.disconnect();
-    };
-  }, [end, duration]);
+    const obj = { val: 0 };
+    ScrollTrigger.create({
+      trigger: ref.current,
+      start: 'top 88%',
+      once: true,
+      onEnter: () => {
+        gsap.to(obj, {
+          val: end,
+          duration,
+          ease: 'power2.out',
+          onUpdate() {
+            if (ref.current) {
+              ref.current.textContent = prefix + Math.round(obj.val).toLocaleString() + suffix;
+            }
+          },
+        });
+      },
+    });
+  }, [end, prefix, suffix, duration]);
 
   return (
-    <span ref={elementRef} className="tabular-nums">
-      {prefix}{count}{suffix}
+    <span ref={ref} className="tabular-nums">
+      {prefix}0{suffix}
     </span>
   );
 }

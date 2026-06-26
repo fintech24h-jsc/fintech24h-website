@@ -3,7 +3,7 @@
 import { footerLinks } from '../../data/navigation';
 ---
 
-<footer class="relative border-t border-white/5 bg-[#050810] pt-20 pb-10 overflow-hidden" aria-label="Agency Footer">
+<footer class="relative border-t border-[var(--border-subtle)] bg-[var(--bg-primary)] pt-20 pb-10 overflow-hidden" aria-label="Agency Footer">
   <!-- Glowing background lines -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <div class="bg-orb bg-orb-cyan w-[400px] h-[400px] absolute -bottom-40 right-10 opacity-10"></div>
@@ -15,24 +15,24 @@ import { footerLinks } from '../../data/navigation';
       <!-- Company Branding Col -->
       <div class="col-span-2">
         <a href="/" class="inline-flex items-center gap-2 mb-6" aria-label="Fintech24h Homepage">
-          <span class="text-2xl font-display font-bold text-[#f0f4ff] tracking-tight">
-            Fintech<span class="gradient-text-cyan">24h</span>
+          <span class="text-2xl font-display font-bold text-[var(--text-primary)] tracking-tight">
+            Fintech<span class="text-[var(--accent-cyan)]">24h</span>
           </span>
         </a>
-        <p class="text-sm text-[#94a3b8] font-body leading-relaxed mb-6 max-w-xs">
+        <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed mb-6 max-w-xs">
           The Blockchain & AI Revenue Engine. We align influencer campaigns, public relations, and technical growth hacking with OKR models to deliver on-chain returns.
         </p>
         <div class="flex gap-4">
           <!-- Telegram link -->
-          <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-[#94a3b8] hover:text-cyan-400 hover:bg-white/10 transition-all" aria-label="Fintech24h Telegram">
+          <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-icon" aria-label="Fintech24h Telegram">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.1.02-1.62 1.03-4.57 3.02-.43.3-.82.45-1.17.44-.39-.01-1.15-.22-1.71-.41-.69-.23-1.24-.35-1.19-.74.03-.2.3-.41.82-.62 3.2-1.39 5.34-2.31 6.42-2.76 3.05-1.28 3.68-1.5 4.1-.11.02.04.05.09.05.14z"/></svg>
           </a>
           <!-- Twitter link -->
-          <a href="https://x.com/fintech24h_com" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-[#94a3b8] hover:text-cyan-400 hover:bg-white/10 transition-all" aria-label="Fintech24h Twitter">
+          <a href="https://x.com/fintech24h_com" target="_blank" rel="noopener noreferrer" class="btn-icon" aria-label="Fintech24h Twitter">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
           <!-- LinkedIn link -->
-          <a href="https://www.linkedin.com/company/fintech24h/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-[#94a3b8] hover:text-cyan-400 hover:bg-white/10 transition-all" aria-label="Fintech24h LinkedIn">
+          <a href="https://www.linkedin.com/company/fintech24h/" target="_blank" rel="noopener noreferrer" class="btn-icon" aria-label="Fintech24h LinkedIn">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
           </a>
         </div>
@@ -40,25 +40,11 @@ import { footerLinks } from '../../data/navigation';
 
       <!-- Links Column: Services -->
       <div>
-        <h2 class="text-sm font-semibold font-display text-[#f0f4ff] uppercase tracking-wider mb-6">Services</h2>
+        <h2 class="text-sm font-semibold font-display text-[var(--text-primary)] uppercase tracking-wider mb-6">Services</h2>
         <ul class="space-y-4">
           {footerLinks.services.map((link) => (
             <li>
-              <a href={link.href} class="text-xs text-[#94a3b8] hover:text-cyan-400 font-body transition-colors">
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- Links Column: Company -->
-      <div>
-        <h2 class="text-sm font-semibold font-display text-[#f0f4ff] uppercase tracking-wider mb-6">Company</h2>
-        <ul class="space-y-4">
-          {footerLinks.company.map((link) => (
-            <li>
-              <a href={link.href} class="text-xs text-[#94a3b8] hover:text-cyan-400 font-body transition-colors">
+              <a href={link.href} class="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] font-body transition-colors">
                 {link.label}
               </a>
             </li>
@@ -68,11 +54,25 @@ import { footerLinks } from '../../data/navigation';
 
       <!-- Links Column: Resources -->
       <div>
-        <h2 class="text-sm font-semibold font-display text-[#f0f4ff] uppercase tracking-wider mb-6">Resources</h2>
+        <h2 class="text-sm font-semibold font-display text-[var(--text-primary)] uppercase tracking-wider mb-6">Resources</h2>
         <ul class="space-y-4">
           {footerLinks.resources.map((link) => (
             <li>
-              <a href={link.href} class="text-xs text-[#94a3b8] hover:text-cyan-400 font-body transition-colors">
+              <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined} class="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] font-body transition-colors">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Links Column: Ecosystem -->
+      <div>
+        <h2 class="text-sm font-semibold font-display text-[var(--text-primary)] uppercase tracking-wider mb-6">Ecosystem</h2>
+        <ul class="space-y-4">
+          {footerLinks.ecosystem.map((link) => (
+            <li>
+              <a href={link.href} target="_blank" rel="noopener noreferrer" class="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] font-body transition-colors">
                 {link.label}
               </a>
             </li>
@@ -82,28 +82,36 @@ import { footerLinks } from '../../data/navigation';
 
       <!-- Location / Office Details -->
       <div>
-        <h2 class="text-sm font-semibold font-display text-[#f0f4ff] uppercase tracking-wider mb-6">Headquarters</h2>
-        <address class="not-italic text-xs text-[#94a3b8] font-body leading-relaxed space-y-4">
+        <h2 class="text-sm font-semibold font-display text-[var(--text-primary)] uppercase tracking-wider mb-6">Headquarters</h2>
+        <address class="not-italic text-xs text-[var(--text-secondary)] font-body leading-relaxed space-y-4">
           <p>
             1014 Đ. Phạm Văn Đồng, Hiệp Bình, Ho Chi Minh City, Vietnam.
           </p>
           <p>
-            Email: <a href="mailto:info@fintech24h.com" class="hover:text-cyan-400">info@fintech24h.com</a>
+            Email: <a href="mailto:info@fintech24h.com" class="hover:text-[var(--accent-cyan)]">info@fintech24h.com</a>
           </p>
         </address>
       </div>
 
     </div>
 
+    <!-- Neon Divider -->
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-[var(--accent-cyan)]/30 to-transparent mx-auto mb-8" />
+
     <!-- Bottom border & legal references -->
-    <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-xs text-[#475569] font-body">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-[var(--text-muted)] font-body">
         &copy; {new Date().getFullYear()} Fintech24h. All rights reserved.
       </p>
       
-      <div class="flex gap-6">
+      <div class="flex gap-4 sm:gap-6 flex-wrap">
+        {footerLinks.company.map((link) => (
+          <a href={link.href} class="text-xs text-[var(--text-muted)] hover:text-[var(--accent-cyan)] font-body transition-colors">
+            {link.label}
+          </a>
+        ))}
         {footerLinks.legal.map((link) => (
-          <a href={link.href} class="text-xs text-[#475569] hover:text-cyan-400 font-body transition-colors">
+          <a href={link.href} class="text-xs text-[var(--text-muted)] hover:text-[var(--accent-cyan)] font-body transition-colors">
             {link.label}
           </a>
         ))}

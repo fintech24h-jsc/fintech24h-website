@@ -53,7 +53,7 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap"
     rel="stylesheet"
   />
 
@@ -95,7 +95,7 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <link rel="dns-prefetch" href="https://assets.calendly.com" />
 </head>
 
-<body class="bg-[#050810] text-[#f0f4ff] antialiased">
+<body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased">
   <!-- Skip to main content (accessibility) -->
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-cyan-400 focus:text-black focus:rounded">
     Skip to main content
@@ -116,45 +116,33 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Fade-up animation for all [data-animate] elements
+    // Global scroll setup — chỉ chạy 1 lần
     document.addEventListener('DOMContentLoaded', () => {
-      gsap.utils.toArray('[data-animate="fade-up"]').forEach((el) => {
-        gsap.fromTo(
-          el as Element,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: el as Element,
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-            },
-          }
-        );
+      // Kiểm tra reduced motion
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return; // Dừng tất cả GSAP animation
+
+      // Batch animate tất cả [data-animate="fade-up"] elements
+      ScrollTrigger.batch('[data-animate="fade-up"]', {
+        onEnter: (elements) => {
+          gsap.fromTo(elements,
+            { opacity: 0, y: 28 },
+            { opacity: 1, y: 0, duration: 0.75, stagger: 0.1, ease: 'power3.out' }
+          );
+        },
+        start: 'top 84%',
+        once: true,
       });
 
-      // Stagger animation for [data-animate="stagger"] children
-      gsap.utils.toArray('[data-animate="stagger"]').forEach((container) => {
-        const children = (container as Element).querySelectorAll('[data-animate-child]');
-        gsap.fromTo(
-          children,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: container as Element,
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-          }
-        );
+      ScrollTrigger.batch('[data-animate="scale-in"]', {
+        onEnter: (elements) => {
+          gsap.fromTo(elements,
+            { opacity: 0, scale: 0.94, y: 16 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.65, stagger: 0.09, ease: 'power2.out' }
+          );
+        },
+        start: 'top 82%',
+        once: true,
       });
     });
   </script>

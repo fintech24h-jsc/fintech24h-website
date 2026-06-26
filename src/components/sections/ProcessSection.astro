@@ -2,7 +2,7 @@
 // src/components/sections/ProcessSection.astro
 ---
 
-<section id="process" class="py-24 bg-[#0a0f1e]/40 relative overflow-hidden" aria-label="Our Process">
+<section id="process" class="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Our Process">
   <!-- Glowing background lines -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <div class="bg-orb bg-orb-purple w-[600px] h-[600px] absolute top-10 -left-32 opacity-10"></div>
@@ -13,14 +13,14 @@
     
     <!-- Section Heading -->
     <div class="text-center max-w-3xl mx-auto mb-20" data-animate="fade-up">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/5 mb-4">
-        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-        <span class="text-xs font-semibold text-cyan-400 font-body uppercase tracking-wider">How We Work</span>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/5 mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+        <span class="text-xs font-semibold text-[var(--accent-cyan)] font-body uppercase tracking-wider">How We Work</span>
       </div>
-      <h2 class="font-display text-h2 font-bold text-[#f0f4ff] mb-4">
+      <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] mb-4">
         The Plug & Play Revenue Engine
       </h2>
-      <p class="text-base text-[#94a3b8] font-body leading-relaxed">
+      <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed">
         Our campaigns align direct conversions with measurable marketing OKRs. Here is how we launch and scale your project.
       </p>
     </div>
@@ -29,26 +29,26 @@
     <div class="relative max-w-4xl mx-auto" data-animate="stagger">
       
       <!-- Central vertical line for desktop -->
-      <div class="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-400/50 via-purple-400/30 to-white/5 -translate-x-1/2 hidden sm:block pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--accent-cyan)]/50 via-[var(--accent-purple)]/30 to-white/5 -translate-x-1/2 hidden sm:block pointer-events-none" aria-hidden="true"></div>
 
       <!-- Step 1 -->
       <div class="relative grid sm:grid-cols-2 gap-8 mb-16 items-center" data-animate-child>
         <div class="sm:text-right sm:pr-12">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-cyan-400 text-black font-display font-bold text-base mb-4 sm:hidden">1</div>
-          <h3 class="font-display text-xl font-bold text-[#f0f4ff] mb-3">01 / Audit & Alignment</h3>
-          <p class="text-sm text-[#94a3b8] font-body leading-relaxed">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--accent-cyan)] text-black font-display font-bold text-base mb-4 sm:hidden">1</div>
+          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">01 / Audit & Alignment</h3>
+          <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed">
             We review your current tokenomics, community metrics, and target positioning. Then, we construct a custom OKR template defining conversion targets.
           </p>
         </div>
         <div class="hidden sm:flex items-center justify-center absolute left-1/2 -translate-x-1/2 z-20">
-          <div class="w-10 h-10 rounded-xl bg-cyan-400 text-black border border-cyan-400/25 flex items-center justify-center font-display font-bold text-base shadow-[0_0_20px_rgba(0,212,255,0.4)]">
+          <div class="w-10 h-10 rounded-xl bg-[var(--accent-cyan)] text-black border border-[var(--accent-cyan)]/25 flex items-center justify-center font-display font-bold text-base shadow-[0_0_20px_rgba(0,212,255,0.4)]">
             1
           </div>
         </div>
         <div class="sm:pl-12">
-          <div class="glass-card rounded-2xl p-6 border-cyan-400/10">
-            <span class="text-xs font-semibold text-cyan-400 font-body uppercase tracking-wider block mb-2">Deliverables</span>
-            <ul class="text-xs text-[#94a3b8] font-body space-y-2">
+          <div class="card-default p-6 border-[var(--accent-cyan)]/10">
+            <span class="text-xs font-semibold text-[var(--accent-cyan)] font-body uppercase tracking-wider block mb-2">Deliverables</span>
+            <ul class="text-xs text-[var(--text-secondary)] font-body space-y-2">
               <li>• Comprehensive Positioning Audit</li>
               <li>• KPI & Goal Alignment Map</li>
               <li>• Initial Competitor Review</li>
@@ -60,21 +60,21 @@
       <!-- Step 2 -->
       <div class="relative grid sm:grid-cols-2 gap-8 mb-16 items-center" data-animate-child>
         <div class="order-1 sm:order-2 sm:pl-12">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-purple-400 text-black font-display font-bold text-base mb-4 sm:hidden">2</div>
-          <h3 class="font-display text-xl font-bold text-[#f0f4ff] mb-3">02 / Setup & Campaign Formula</h3>
-          <p class="text-sm text-[#94a3b8] font-body leading-relaxed">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--accent-purple)] text-black font-display font-bold text-base mb-4 sm:hidden">2</div>
+          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">02 / Setup & Campaign Formula</h3>
+          <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed">
             We list and approve vetted regional KOL networks, design marketing briefs, write PR drafts, and secure publisher editorial calendars.
           </p>
         </div>
         <div class="hidden sm:flex items-center justify-center absolute left-1/2 -translate-x-1/2 z-20">
-          <div class="w-10 h-10 rounded-xl bg-purple-400 text-black border border-purple-400/25 flex items-center justify-center font-display font-bold text-base shadow-[0_0_20px_rgba(139,92,246,0.4)]">
+          <div class="w-10 h-10 rounded-xl bg-[var(--accent-purple)] text-black border border-[var(--accent-purple)]/25 flex items-center justify-center font-display font-bold text-base shadow-[0_0_20px_rgba(139,92,246,0.4)]">
             2
           </div>
         </div>
         <div class="order-2 sm:order-1 sm:text-right sm:pr-12">
-          <div class="glass-card rounded-2xl p-6 border-purple-400/10">
-            <span class="text-xs font-semibold text-purple-400 font-body uppercase tracking-wider block mb-2">Deliverables</span>
-            <ul class="text-xs text-[#94a3b8] font-body space-y-2 sm:inline-block sm:text-right">
+          <div class="card-default p-6 border-[var(--accent-purple)]/10">
+            <span class="text-xs font-semibold text-[var(--accent-purple)] font-body uppercase tracking-wider block mb-2">Deliverables</span>
+            <ul class="text-xs text-[var(--text-secondary)] font-body space-y-2 sm:inline-block sm:text-right">
               <li>• Vetted KOL Seeding List</li>
               <li>• Press Release Editorial Calendar</li>
               <li>• Community Moderation Setup Guide</li>
@@ -86,21 +86,21 @@
       <!-- Step 3 -->
       <div class="relative grid sm:grid-cols-2 gap-8 mb-16 items-center" data-animate-child>
         <div class="sm:text-right sm:pr-12">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-cyan-400 text-black font-display font-bold text-base mb-4 sm:hidden">3</div>
-          <h3 class="font-display text-xl font-bold text-[#f0f4ff] mb-3">03 / Launch & Engagement</h3>
-          <p class="text-sm text-[#94a3b8] font-body leading-relaxed">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--accent-cyan)] text-black font-display font-bold text-base mb-4 sm:hidden">3</div>
+          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">03 / Launch & Engagement</h3>
+          <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed">
             Campaigns go live. Our 24/7 moderators manage group chat channels, Quest platforms are activated, and regional PR releases go in sync.
           </p>
         </div>
         <div class="hidden sm:flex items-center justify-center absolute left-1/2 -translate-x-1/2 z-20">
-          <div class="w-10 h-10 rounded-xl bg-cyan-400 text-black border border-cyan-400/25 flex items-center justify-center font-display font-bold text-base shadow-[0_0_20px_rgba(0,212,255,0.4)]">
+          <div class="w-10 h-10 rounded-xl bg-[var(--accent-cyan)] text-black border border-[var(--accent-cyan)]/25 flex items-center justify-center font-display font-bold text-base shadow-[0_0_20px_rgba(0,212,255,0.4)]">
             3
           </div>
         </div>
         <div class="sm:pl-12">
-          <div class="glass-card rounded-2xl p-6 border-cyan-400/10">
-            <span class="text-xs font-semibold text-cyan-400 font-body uppercase tracking-wider block mb-2">Deliverables</span>
-            <ul class="text-xs text-[#94a3b8] font-body space-y-2">
+          <div class="card-default p-6 border-[var(--accent-cyan)]/10">
+            <span class="text-xs font-semibold text-[var(--accent-cyan)] font-body uppercase tracking-wider block mb-2">Deliverables</span>
+            <ul class="text-xs text-[var(--text-secondary)] font-body space-y-2">
               <li>• Active Multi-channel Moderation</li>
               <li>• KOL Content Placements Live</li>
               <li>• Viral Referral quest structures</li>
@@ -112,21 +112,21 @@
       <!-- Step 4 -->
       <div class="relative grid sm:grid-cols-2 gap-8 items-center" data-animate-child>
         <div class="order-1 sm:order-2 sm:pl-12">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-purple-400 text-black font-display font-bold text-base mb-4 sm:hidden">4</div>
-          <h3 class="font-display text-xl font-bold text-[#f0f4ff] mb-3">04 / Growth Optimization</h3>
-          <p class="text-sm text-[#94a3b8] font-body leading-relaxed">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--accent-purple)] text-black font-display font-bold text-base mb-4 sm:hidden">4</div>
+          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">04 / Growth Optimization</h3>
+          <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed">
             We review direct metrics on custom dashboards, pruning under-performing components and scaling channels delivering the highest ROI.
           </p>
         </div>
         <div class="hidden sm:flex items-center justify-center absolute left-1/2 -translate-x-1/2 z-20">
-          <div class="w-10 h-10 rounded-xl bg-purple-400 text-black border border-purple-400/25 flex items-center justify-center font-display font-bold text-base shadow-[0_0_20px_rgba(139,92,246,0.4)]">
+          <div class="w-10 h-10 rounded-xl bg-[var(--accent-purple)] text-black border border-[var(--accent-purple)]/25 flex items-center justify-center font-display font-bold text-base shadow-[0_0_20px_rgba(139,92,246,0.4)]">
             4
           </div>
         </div>
         <div class="order-2 sm:order-1 sm:text-right sm:pr-12">
-          <div class="glass-card rounded-2xl p-6 border-purple-400/10">
-            <span class="text-xs font-semibold text-purple-400 font-body uppercase tracking-wider block mb-2">Deliverables</span>
-            <ul class="text-xs text-[#94a3b8] font-body space-y-2 sm:inline-block sm:text-right">
+          <div class="card-default p-6 border-[var(--accent-purple)]/10">
+            <span class="text-xs font-semibold text-[var(--accent-purple)] font-body uppercase tracking-wider block mb-2">Deliverables</span>
+            <ul class="text-xs text-[var(--text-secondary)] font-body space-y-2 sm:inline-block sm:text-right">
               <li>• Weekly ROI Analytics Reports</li>
               <li>• Campaign Spend Optimization adjustments</li>
               <li>• Scaled Growth playbook blueprints</li>

@@ -41,8 +41,14 @@ export const footerLinks = {
   ],
   resources: [
     { label: 'Insights Blog', href: '/blog' },
+    { label: 'Media Kit', href: 'https://drive.google.com/drive/folders/1fPgwA514HzHmkBOkhh_P4QfV6lie9OUh' },
+    { label: 'Partnership', href: 'https://docs.google.com/forms/d/e/1FAIpQLSeOhaoV-q4dyjEgVa5fVQToKPtHyqDmKBj9fHig9bNS3JrYqw/viewform' },
     { label: 'Marketing Proposals', href: '/#get-proposal' },
     { label: 'Book a discovery call', href: '/contact#book-call' }
+  ],
+  ecosystem: [
+    { label: 'Coinstori', href: 'https://coinstori.com' },
+    { label: 'CMO Intern', href: 'https://cmointern.com' }
   ],
   legal: [
     { label: 'Privacy Policy', href: '/privacy' },
