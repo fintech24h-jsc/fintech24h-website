@@ -2,7 +2,7 @@
 // src/layouts/BaseLayout.astro
 import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
-import Navbar from '../components/layout/Navbar.astro';
+import NavbarReact from '../components/layout/NavbarReact.tsx';
 import Footer from '../components/layout/Footer.astro';
 
 interface Props {
@@ -53,7 +53,7 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet"
   />
 
@@ -95,15 +95,15 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <link rel="dns-prefetch" href="https://assets.calendly.com" />
 </head>
 
-<body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased">
+<body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased selection:bg-white selection:text-black">
   <!-- Skip to main content (accessibility) -->
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-cyan-400 focus:text-black focus:rounded">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--accent-cyan)] focus:text-black focus:rounded">
     Skip to main content
   </a>
 
-  <Navbar />
+  <NavbarReact client:load />
 
-  <main id="main-content">
+  <main id="main-content" class="relative w-full flex flex-col overflow-hidden shrink-0">
     <slot />
   </main>
 

@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Space Grotesk"', 'sans-serif'],  // Headings H1-H3
+        display: ['"Instrument Serif"', 'serif'],    // Headings H1-H3
         body: ['Inter', 'sans-serif'],               // Body text
         mono: ['"JetBrains Mono"', 'monospace'],     // Code
       },

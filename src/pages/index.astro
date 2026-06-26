@@ -1,7 +1,8 @@
 ---
 // src/pages/index.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroSection from '../components/sections/HeroSection.astro';
+import HeroReact from '../components/sections/HeroReact.tsx';
+import BackgroundVideo from '../components/ui/BackgroundVideo.tsx';
 import TrustBar from '../components/sections/TrustBar.astro';
 import ServicesGrid from '../components/sections/ServicesGrid.astro';
 import CaseStudyWidget from '../components/sections/CaseStudyWidget.astro';
@@ -59,7 +60,10 @@ const faqSchema = {
   description="Scale your blockchain, DeFi, or AI project globally. Fintech24h delivers KOL marketing, PR, community management, and growth hacking for Web3 startups in Vietnam, Singapore, UAE, and beyond."
   schema={faqSchema}
 >
-  <HeroSection />
+  <div class="relative w-full min-h-screen">
+    <BackgroundVideo src="https://stream.mux.com/kimF2ha9zLrX64H00UgLGPflCzNtl1T0215MlAmeOztv8.m3u8" client:only="react" />
+    <HeroReact client:load />
+  </div>
   <TrustBar />
   <ServicesGrid />
   {featuredCase && <CaseStudyWidget caseStudy={featuredCase} />}

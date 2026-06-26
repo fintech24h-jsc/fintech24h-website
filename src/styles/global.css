@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,10 +7,10 @@
 @layer base {
   :root {
     /* ─── BACKGROUNDS ─── */
-    --bg-primary:        #050810;  /* Nền chính — đen xanh thiên văn sâu */
-    --bg-secondary:      #080d1a;  /* Card, elevated surface */
-    --bg-tertiary:       #0c1221;  /* Hover state, deepest card */
-    --bg-glass:          rgba(8, 13, 26, 0.75);   /* Glassmorphism base */
+    --bg-primary:        #000000;  /* Pure black for dark hero */
+    --bg-secondary:      #050505;  /* Extremely dark for cards */
+    --bg-tertiary:       #0a0a0a;  
+    --bg-glass:          rgba(0, 0, 0, 0.75);   /* Glassmorphism base */
     --bg-glass-light:    rgba(255, 255, 255, 0.03); /* Subtle highlight */
 
     /* ─── BRAND ACCENTS ─── */
@@ -55,7 +57,7 @@
       radial-gradient(ellipse 50% 60% at 80% 60%, rgba(124,92,252,0.10) 0%, transparent 60%);
 
     /* ─── TYPOGRAPHY ─── */
-    --font-display: 'Space Grotesk', sans-serif;
+    --font-display: 'Instrument Serif', serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
 
@@ -281,5 +283,35 @@
     border-color: var(--accent-cyan);
     background: rgba(0, 200, 240, 0.08);
     color: var(--accent-cyan);
+  }
+
+  /* Liquid Glass Styles */
+  .liquid-glass {
+    background: rgba(255,255,255,0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1.4px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glass-pill {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(16px) saturate(180%);
+    border-radius: 9999px;
+    box-shadow: none !important;
   }
 }
