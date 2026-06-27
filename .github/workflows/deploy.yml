@@ -36,6 +36,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           # Account: fintech24hvn@gmail.com | ID: f19a1ad20a5cf825ec8530f167aacc30
           # Project created via: npx wrangler pages project create fintech24h
-          projectName: 'fintech24h'
-          directory: 'dist'
-          gitBranch: 'main'
+          command: pages deploy dist --project-name=fintech24h
