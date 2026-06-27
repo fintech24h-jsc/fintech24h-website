@@ -1,60 +1,108 @@
 ---
 // src/components/sections/FooterLeadForm.astro
+// Theo design-system.md section 7.6 (CTA Section cuối trang):
+// - KHÔNG phải full-width gradient block thông thường
+// - Thay bằng: Floating card trên nền tối, border glow animation, text lớn
+// - 2 CTA: primary + secondary Telegram link
+// - Social proof nhỏ bên dưới buttons
 import HubSpotForm from '../ui/HubSpotForm.tsx';
 ---
 
 <section class="py-24 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Final Conversion CTA">
-  <!-- Glowing background lines -->
-  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <div class="bg-orb bg-orb-cyan w-[600px] h-[600px] absolute bottom-0 right-10 opacity-15"></div>
-    <div class="bg-orb bg-orb-purple w-[400px] h-[400px] absolute top-10 left-10 opacity-10"></div>
-    <div class="grid-pattern absolute inset-0 opacity-20"></div>
+  <!-- Background: mesh gradient riêng cho section CTA -->
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(124,92,252,0.12) 0%, transparent 65%);" aria-hidden="true"></div>
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute w-[600px] h-[600px] rounded-full"
+      style="background: var(--gradient-glow-cyan); bottom: -20%; right: 5%; filter: blur(72px);
+             animation: orb-pulse 8s ease-in-out infinite;">
+    </div>
+    <div class="absolute w-[400px] h-[400px] rounded-full"
+      style="background: var(--gradient-glow-purple); top: 10%; left: 5%; filter: blur(72px);
+             animation: orb-pulse 10s ease-in-out infinite 2s;">
+    </div>
+    <div class="absolute inset-0 grid-pattern" style="opacity: 0.2;"></div>
   </div>
 
-  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="card-default p-8 sm:p-12 lg:p-16 border-[var(--accent-cyan)]/20 relative overflow-hidden text-center">
-      
-      <!-- Top Eyebrow -->
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/30 bg-[var(--accent-purple)]/5 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
-        <span class="text-xs font-semibold text-[var(--accent-purple)] font-body uppercase tracking-wider">Start Scaling</span>
+  <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Floating card — theo design-system.md 7.6 -->
+    <div
+      class="card-featured p-8 sm:p-12 lg:p-16 text-center relative overflow-hidden"
+      style="animation: border-glow 4s ease-in-out infinite;"
+      data-animate="scale-in"
+    >
+      <!-- Subtle radial glow inside card -->
+      <div class="absolute inset-0 pointer-events-none"
+        style="background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,200,240,0.06) 0%, transparent 60%);">
       </div>
 
-      <h2 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-6 max-w-2xl mx-auto">
-        Ready to Scale Your Web3 Project?
+      <!-- Eyebrow: font-mono theo spec -->
+      <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-6" data-animate="fade-up">
+        Start Scaling
+      </p>
+
+      <!-- H2: text lớn theo spec — KHÔNG gradient toàn bộ, chỉ 1 phần -->
+      <h2 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-4 max-w-2xl mx-auto leading-[1.1]" data-animate="fade-up">
+        Ready to Scale Your
+        <span class="text-gradient"> Web3 Project?</span>
       </h2>
-      <p class="text-base sm:text-lg text-[var(--text-secondary)] font-body mb-10 max-w-xl mx-auto">
+
+      <p class="text-base sm:text-lg text-[var(--text-secondary)] font-body mb-10 max-w-xl mx-auto leading-relaxed" data-animate="fade-up">
         Subscribe to our newsletter for actionable crypto marketing playbooks, or schedule a growth audit with our strategy team today.
       </p>
 
-      <!-- Dual CTA block -->
-      <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-3xl mx-auto">
-        
+      <!-- Dual CTA -->
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-3xl mx-auto mb-10">
+
         <!-- Newsletter subscription -->
         <div class="w-full md:w-1/2 text-left">
-          <h3 class="text-sm font-semibold text-[var(--text-primary)] font-display uppercase tracking-wider mb-3">
-            Subscribe to playbooks
+          <h3 class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest mb-3">
+            Subscribe to Playbooks
           </h3>
           <HubSpotForm client:load />
         </div>
 
-        <!-- Middle divide line -->
+        <!-- Divider -->
         <div class="hidden md:block w-px h-20 bg-[var(--border-subtle)]" aria-hidden="true"></div>
 
         <!-- Book a meeting -->
         <div class="w-full md:w-1/2 text-center md:text-left">
-          <h3 class="text-sm font-semibold text-[var(--text-primary)] font-display uppercase tracking-wider mb-4">
+          <h3 class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest mb-4">
             Direct Strategy Booking
           </h3>
-          <a
-            href="/contact#book-call"
-            class="btn-primary inline-flex items-center justify-center text-center"
-          >
+          <a href="/contact#book-call" class="btn-primary inline-flex items-center justify-center mb-3">
             <span>Book Discovery Call</span>
-            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a
+            href="https://t.me/fintech24h"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-ghost inline-flex items-center justify-center text-sm py-2.5 px-4"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            <span>Telegram</span>
           </a>
         </div>
 
+      </div>
+
+      <!-- Social proof nhỏ bên dưới buttons — theo design-system.md 7.6 -->
+      <div class="flex items-center justify-center gap-6 flex-wrap border-t border-[var(--border-subtle)] pt-8">
+        <div class="flex items-center gap-2 text-xs text-[var(--text-muted)] font-body">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]"></span>
+          200+ Projects scaled
+        </div>
+        <div class="w-px h-4 bg-[var(--border-subtle)]" aria-hidden="true"></div>
+        <div class="flex items-center gap-2 text-xs text-[var(--text-muted)] font-body">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]"></span>
+          Avg 50x ROI delivered
+        </div>
+        <div class="w-px h-4 bg-[var(--border-subtle)]" aria-hidden="true"></div>
+        <div class="flex items-center gap-2 text-xs text-[var(--text-muted)] font-body">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]"></span>
+          24h response guarantee
+        </div>
       </div>
 
     </div>

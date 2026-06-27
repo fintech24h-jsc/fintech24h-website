@@ -1,4 +1,4 @@
-/* ─── AMBIENT (background effects) ─── */
+/* ─── AMBIENT BACKGROUND EFFECTS ─── */
 @keyframes orb-pulse {
   0%, 100% { opacity: 0.12; transform: scale(1); }
   50%       { opacity: 0.22; transform: scale(1.08); }
@@ -20,7 +20,7 @@
   50%       { box-shadow: 0 0 20px rgba(0,200,240,0.3); }
 }
 
-/* ─── ENTRANCE (dùng với GSAP ScrollTrigger, hoặc CSS khi không cần GSAP) ─── */
+/* ─── ENTRANCE ANIMATIONS (dùng với GSAP ScrollTrigger) ─── */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -36,6 +36,12 @@
   to   { opacity: 1; transform: scale(1); }
 }
 
+/* ─── HERO TEXT REVEAL (chỉ dùng 1 lần ở Hero H1) ─── */
+@keyframes hero-line-reveal {
+  from { opacity: 0; transform: translateY(32px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0px); }
+}
+
 /* ─── INTERACTION ─── */
 @keyframes shimmer-slide {
   from { transform: translateX(-100%); }
@@ -47,6 +53,12 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ─── MARQUEE ─── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* ─── LOADING ─── */
 @keyframes spin {
   to { transform: rotate(360deg); }
@@ -55,6 +67,12 @@
 @keyframes pulse-dot {
   0%, 100% { transform: scale(1); opacity: 1; }
   50%       { transform: scale(0.75); opacity: 0.5; }
+}
+
+/* ─── LINE REVEAL (cho timeline/dividers — Pattern 5 trong design-system.md) ─── */
+@keyframes line-reveal {
+  from { transform: scaleX(0); transform-origin: left center; }
+  to   { transform: scaleX(1); transform-origin: left center; }
 }
 
 /* ─── SHIMMER LOADING STATE ─── */

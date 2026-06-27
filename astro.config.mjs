@@ -6,7 +6,11 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://fintech24h.com',
   integrations: [
-    tailwind(),
+    tailwind({
+      // Dùng global.css làm entry point chính — chứa @tailwind directives + @layer components
+      configFile: './tailwind.config.mjs',
+      applyBaseStyles: false,
+    }),
     react(),
     sitemap({
       customPages: [

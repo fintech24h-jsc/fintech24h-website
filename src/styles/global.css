@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,10 +7,10 @@
 @layer base {
   :root {
     /* ─── BACKGROUNDS ─── */
-    --bg-primary:        #000000;  /* Pure black for dark hero */
-    --bg-secondary:      #050505;  /* Extremely dark for cards */
-    --bg-tertiary:       #0a0a0a;  
-    --bg-glass:          rgba(0, 0, 0, 0.75);   /* Glassmorphism base */
+    --bg-primary:        #050810;  /* Nền chính — đen xanh thiên văn sâu */
+    --bg-secondary:      #080d1a;  /* Card, elevated surface */
+    --bg-tertiary:       #0c1221;  /* Hover state, deepest card */
+    --bg-glass:          rgba(8, 13, 26, 0.75);   /* Glassmorphism base */
     --bg-glass-light:    rgba(255, 255, 255, 0.03); /* Subtle highlight */
 
     /* ─── BRAND ACCENTS ─── */
@@ -52,33 +52,56 @@
     --gradient-glow-purple: radial-gradient(ellipse at center,
                               rgba(124, 92, 252, 0.14) 0%, transparent 70%);
     --gradient-text:     linear-gradient(135deg, #00c8f0 0%, #a78bfa 100%);
-    --gradient-mesh:     /* Dùng trong Hero background */
+    --gradient-mesh:
       radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0,200,240,0.08) 0%, transparent 60%),
       radial-gradient(ellipse 50% 60% at 80% 60%, rgba(124,92,252,0.10) 0%, transparent 60%);
 
-    /* ─── TYPOGRAPHY ─── */
-    --font-display: 'Instrument Serif', serif;
-    --font-body: 'Inter', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    /* ─── TYPOGRAPHY — theo design-system.md ─── */
+    --font-display: 'Space Grotesk', sans-serif;   /* H1-H3, buttons, stats */
+    --font-body:    'Inter', sans-serif;            /* Body text, captions, tags */
+    --font-mono:    'JetBrains Mono', monospace;   /* Eyebrow labels — điểm nhận diện */
 
     /* ─── RADIUS ─── */
     --radius-sm:   4px;
     --radius-md:   8px;
     --radius-lg:   12px;
     --radius-xl:   16px;
-    --radius-2xl:  24px;
+    --radius-2xl:  20px;
     --radius-full: 9999px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-purple));
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background: rgba(0, 200, 240, 0.2);
+    color: var(--text-primary);
   }
 }
 
 @layer components {
-  /* Gradient text */
+
+  /* ─── GRADIENT TEXT ─── */
+  /* Chỉ dùng cho 1 phần trong H1/H2 — không dùng toàn heading */
   .text-gradient {
     background: var(--gradient-text);
     -webkit-background-clip: text;
@@ -86,11 +109,25 @@
     background-clip: text;
   }
 
-  /* Glass Card Variants */
+  /* Alias helpers */
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-text-purple {
+    background: linear-gradient(135deg, #7c5cfc 0%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── GLASS CARD VARIANTS — theo design-system.md 4.1 ─── */
   .card-default {
     background: var(--bg-glass);
     border: 1px solid var(--border-default);
-    border-radius: 16px;
+    border-radius: 16px;   /* đúng spec: 16px */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
@@ -129,9 +166,10 @@
     color: rgba(255,255,255,0.03);
     line-height: 1;
     user-select: none;
+    pointer-events: none;
   }
 
-  /* Button System */
+  /* ─── BUTTON SYSTEM — theo design-system.md 4.2 ─── */
   .btn-primary {
     position: relative;
     display: inline-flex;
@@ -148,6 +186,7 @@
     cursor: pointer;
     transition: all 0.25s ease;
     overflow: hidden;
+    white-space: nowrap;
   }
   .btn-primary::after {
     content: '';
@@ -180,6 +219,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.25s ease;
+    white-space: nowrap;
   }
   .btn-ghost:hover {
     background: rgba(0, 200, 240, 0.08);
@@ -206,7 +246,7 @@
     background: rgba(0, 200, 240, 0.06);
   }
 
-  /* Tags */
+  /* ─── BADGE / TAG SYSTEM — theo design-system.md 4.3 ─── */
   .tag {
     display: inline-flex;
     align-items: center;
@@ -239,7 +279,7 @@
     background: rgba(16, 185, 129, 0.06);
   }
 
-  /* Forms */
+  /* ─── FORM ELEMENTS — theo design-system.md 4.4 ─── */
   .input-field {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -285,7 +325,7 @@
     color: var(--accent-cyan);
   }
 
-  /* Liquid Glass Styles */
+  /* ─── LIQUID GLASS (Navbar dùng) ─── */
   .liquid-glass {
     background: rgba(255,255,255,0.01);
     background-blend-mode: luminosity;
@@ -314,4 +354,73 @@
     border-radius: 9999px;
     box-shadow: none !important;
   }
+
+  /* ─── BACKGROUND ORB DECORATIVES — theo design-system.md 5.3 ─── */
+  .bg-orb {
+    border-radius: 50%;
+    filter: blur(72px);
+    pointer-events: none;
+    will-change: opacity, transform;
+  }
+  .bg-orb-cyan {
+    background: var(--gradient-glow-cyan);
+  }
+  .bg-orb-purple {
+    background: var(--gradient-glow-purple);
+  }
+
+  /* Grid pattern overlay */
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ─── MARQUEE TRACK (Trust Bar) — theo design-system.md 7.2 ─── */
+  .marquee-track {
+    display: flex;
+    gap: 4rem;
+    animation: marquee-scroll 35s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  /* ─── GLOW HELPERS ─── */
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(0,200,240,0.3), 0 0 60px rgba(0,200,240,0.1);
+  }
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(124,92,252,0.3), 0 0 60px rgba(124,92,252,0.1);
+  }
+  .text-glow-cyan {
+    text-shadow: 0 0 30px rgba(0,200,240,0.5), 0 0 60px rgba(0,200,240,0.2);
+  }
+
+  /* ─── DIVIDERS ─── */
+  .divider-gradient {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,200,240,0.3), rgba(124,92,252,0.2), transparent);
+  }
+}
+
+/* ─── KEYFRAMES dùng trong component ─── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(0.75); opacity: 0.5; }
+}
+
+@keyframes animate-glow-pulse {
+  0%, 100% { opacity: 0.12; transform: scale(1); }
+  50%       { opacity: 0.22; transform: scale(1.08); }
+}
+
+.animate-glow-pulse {
+  animation: animate-glow-pulse 8s ease-in-out infinite;
 }

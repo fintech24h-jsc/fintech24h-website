@@ -1,16 +1,42 @@
 ---
 // src/components/sections/HeroSection.astro
-// Multi-step lead form instead of Book-a-Call directly
+// Theo design-system.md section 7.1:
+// - H1 tách 3 dòng với weight/color khác nhau để tạo rhythm
+// - Background: mesh gradient + orbs + grid pattern (3 lớp)
+// - Chỉ animate H1 reveal + form fade-in — KHÔNG animate subtext/buttons
+// - Eyebrow: font-mono uppercase tracking-widest
 import MultiStepForm from '../ui/MultiStepForm.tsx';
 ---
 
 <section class="relative min-h-screen flex items-center overflow-hidden" aria-label="Hero">
 
-  <!-- Ambient background orbs -->
-  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <div class="bg-orb bg-orb-cyan w-[600px] h-[600px] absolute -top-32 -left-32 opacity-20 animate-glow-pulse"></div>
-    <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute top-1/2 -right-32 opacity-15" style="animation-delay: 2s;"></div>
-    <div class="grid-pattern absolute inset-0 opacity-30"></div>
+  <!-- Background Layer 1: Mesh gradient -->
+  <div class="absolute inset-0" style="background: var(--gradient-hero-bg);" aria-hidden="true"></div>
+
+  <!-- Background Layer 2: Orbs + Grid — theo design-system.md 5.3 -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <!-- Orb 1 — Cyan, góc trên trái -->
+    <div class="absolute w-[500px] h-[500px] rounded-full"
+      style="
+        background: var(--gradient-glow-cyan);
+        top: -10%; left: -5%;
+        filter: blur(72px);
+        animation: orb-pulse 8s ease-in-out infinite, orb-drift 12s ease-in-out infinite;
+      ">
+    </div>
+    <!-- Orb 2 — Purple, góc dưới phải (offset thời gian khác nhau) -->
+    <div class="absolute w-[400px] h-[400px] rounded-full"
+      style="
+        background: var(--gradient-glow-purple);
+        bottom: -5%; right: -8%;
+        filter: blur(72px);
+        animation: orb-pulse 10s ease-in-out infinite 2s, orb-drift 15s ease-in-out infinite 4s;
+      ">
+    </div>
+    <!-- Background Layer 3: Grid pattern overlay -->
+    <div class="absolute inset-0 grid-pattern"
+      style="animation: grid-shimmer 6s ease-in-out infinite; opacity: 0.3;">
+    </div>
   </div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
@@ -18,43 +44,50 @@ import MultiStepForm from '../ui/MultiStepForm.tsx';
 
       <!-- Left: Copy -->
       <div>
-        <!-- Eyebrow -->
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/5 mb-8" data-animate="fade-up">
-          <span class="w-2 h-2 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
-          <span class="text-sm font-medium text-[var(--accent-cyan)] font-body">Blockchain & AI Marketing Agency</span>
-        </div>
-
-        <!-- H1 -->
-        <h1 class="font-display text-hero font-bold text-[var(--text-primary)] leading-tight mb-6" data-animate="fade-up">
-          We Scale
-          <span class="gradient-text-cyan text-glow-cyan block">AI, Blockchain</span>
-          & Fintech Startups
-          <span class="text-[var(--text-secondary)]">Globally</span>
-        </h1>
-
-        <!-- Subheadline -->
-        <p class="text-lg lg:text-xl text-[var(--text-secondary)] font-body leading-relaxed mb-8 max-w-xl" data-animate="fade-up">
-          From KOL campaigns to community building — our Plug & Play Marketing model with OKR framework drives measurable growth for Web3 projects across Vietnam, Singapore, UAE, and beyond.
+        <!-- Eyebrow: JetBrains Mono uppercase — điểm nhận diện theo spec -->
+        <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-[0.12em] mb-8" data-hero-eyebrow>
+          Blockchain &amp; AI Marketing Agency
         </p>
 
-        <!-- Social proof numbers -->
-        <div class="flex flex-wrap gap-8 mb-10" data-animate="stagger">
-          <div data-animate-child>
-            <div class="text-3xl font-display font-bold gradient-text-cyan">200+</div>
-            <div class="text-sm text-[var(--text-secondary)] font-body mt-1">Projects Scaled</div>
+        <!-- H1: 3 dòng với weight/color/style khác nhau — theo design-system.md 7.1 -->
+        <h1 class="font-display font-bold leading-[1.05] mb-6">
+          <!-- Dòng 1: text-secondary, smaller — tạo contrast -->
+          <span class="block text-[clamp(1.5rem,3vw,2.25rem)] tracking-[-0.02em] text-[var(--text-secondary)]" data-hero-line>
+            We Scale
+          </span>
+          <!-- Dòng 2: gradient text — điểm nhấn chính -->
+          <span class="block text-[clamp(3rem,7vw,5.5rem)] tracking-[-0.03em] bg-gradient-to-r from-[var(--accent-cyan)] to-[#a78bfa] bg-clip-text text-transparent" data-hero-line>
+            AI &amp; Blockchain
+          </span>
+          <!-- Dòng 3: text-primary — trọng lượng -->
+          <span class="block text-[clamp(3rem,7vw,5.5rem)] tracking-[-0.03em] text-[var(--text-primary)]" data-hero-line>
+            Startups Globally
+          </span>
+        </h1>
+
+        <!-- Subheadline: KHÔNG animate theo spec -->
+        <p class="text-base lg:text-lg text-[var(--text-secondary)] font-body leading-relaxed mb-8 max-w-xl">
+          From KOL campaigns to community building — our Plug &amp; Play Marketing model with OKR framework drives measurable growth for Web3 projects across Vietnam, Singapore, UAE, and beyond.
+        </p>
+
+        <!-- Stats: Divider dọc — theo design-system.md 6.2 -->
+        <div class="grid grid-cols-3 divide-x divide-white/[0.06] mb-10">
+          <div class="text-center px-6 first:pl-0">
+            <div class="font-display text-4xl font-bold text-[var(--accent-cyan)] tabular-nums" data-count="200" data-suffix="+">200+</div>
+            <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest mt-2">Projects Scaled</div>
           </div>
-          <div data-animate-child>
-            <div class="text-3xl font-display font-bold gradient-text-cyan">50x</div>
-            <div class="text-sm text-[var(--text-secondary)] font-body mt-1">Avg ROI Delivered</div>
+          <div class="text-center px-6">
+            <div class="font-display text-4xl font-bold text-[var(--accent-cyan)] tabular-nums" data-count="50" data-suffix="x">50x</div>
+            <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest mt-2">Avg ROI</div>
           </div>
-          <div data-animate-child>
-            <div class="text-3xl font-display font-bold gradient-text-cyan">6</div>
-            <div class="text-sm text-[var(--text-secondary)] font-body mt-1">Countries Covered</div>
+          <div class="text-center px-6 last:pr-0">
+            <div class="font-display text-4xl font-bold text-[var(--accent-cyan)] tabular-nums" data-count="6">6</div>
+            <div class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest mt-2">Countries</div>
           </div>
         </div>
 
-        <!-- CTA Buttons -->
-        <div class="flex flex-wrap gap-4" data-animate="fade-up">
+        <!-- CTA Buttons: KHÔNG animate theo spec — cần clickable ngay -->
+        <div class="flex flex-wrap gap-4">
           <a
             href="#get-proposal"
             class="btn-primary"
@@ -76,10 +109,10 @@ import MultiStepForm from '../ui/MultiStepForm.tsx';
         </div>
       </div>
 
-      <!-- Right: Multi-step Lead Form (CTA #1 template) -->
+      <!-- Right: Multi-step Lead Form — KHÔNG mockup/3D object theo spec -->
       <div id="get-proposal" class="card-default p-8 lg:p-10" data-animate="fade-up">
         <div class="text-center mb-6">
-          <h2 class="text-xl font-display font-semibold text-[var(--text-primary)] mb-2">
+          <h2 class="font-display text-xl font-bold text-[var(--text-primary)] mb-2">
             Get Your Free Strategy
           </h2>
           <p class="text-sm text-[var(--text-secondary)] font-body">
@@ -91,4 +124,69 @@ import MultiStepForm from '../ui/MultiStepForm.tsx';
 
     </div>
   </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--text-muted)]" aria-hidden="true">
+    <span class="font-mono text-[9px] uppercase tracking-widest">Scroll</span>
+    <div class="w-px h-8 bg-gradient-to-b from-[var(--accent-cyan)]/40 to-transparent"></div>
+  </div>
 </section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Pattern 4: Hero headline reveal — chỉ dùng đúng 1 lần theo design-system.md ──
+  document.addEventListener('DOMContentLoaded', () => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const heroLines = document.querySelectorAll('[data-hero-line]');
+    const heroEyebrow = document.querySelector('[data-hero-eyebrow]');
+
+    // Eyebrow fade in trước
+    if (heroEyebrow) {
+      gsap.fromTo(heroEyebrow,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+      );
+    }
+
+    // H1 lines: blur reveal theo design-system.md pattern 4
+    gsap.fromTo(
+      heroLines,
+      { opacity: 0, y: 32, filter: 'blur(6px)' },
+      {
+        opacity: 1, y: 0, filter: 'blur(0px)',
+        duration: 1.0,
+        stagger: 0.12,
+        ease: 'power4.out',
+        delay: 0.1,
+      }
+    );
+
+    // Counter animation — theo design-system.md Pattern 3
+    document.querySelectorAll('[data-count]').forEach((el) => {
+      const target = parseInt(el.getAttribute('data-count') || '0');
+      const suffix = el.getAttribute('data-suffix') || '';
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: target,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate() {
+              el.textContent = Math.round(obj.val) + suffix;
+            },
+          });
+        },
+      });
+    });
+  });
+</script>

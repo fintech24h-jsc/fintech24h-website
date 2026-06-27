@@ -1,79 +1,148 @@
 ---
 // src/components/sections/ServicesGrid.astro
+// Theo design-system.md section 7.3 + 6.1:
+// - Layout A (2+1 asymmetric): card featured lớn bên trái, 2 card nhỏ bên phải, 3 đều bên dưới
+// - Card content: [Số 01] [Tag KOL] → H3 → 2-3 câu có con số → 3 bullet → Link
+// - Không phải template icon-title-text đồng đều
 import { services } from '../../data/services';
 ---
 
 <section class="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Services Overview">
-  <!-- Glowing background lines -->
-  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute -top-40 -right-32 opacity-10"></div>
-    <div class="bg-orb bg-orb-cyan w-[400px] h-[400px] absolute bottom-10 left-10 opacity-10"></div>
+  <!-- Background orbs theo design-system.md 5.3 -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute w-[500px] h-[500px] rounded-full"
+      style="background: var(--gradient-glow-purple); top: -10%; right: -5%; filter: blur(72px);
+             animation: orb-pulse 10s ease-in-out infinite 2s, orb-drift 15s ease-in-out infinite 4s;">
+    </div>
+    <div class="absolute w-[400px] h-[400px] rounded-full"
+      style="background: var(--gradient-glow-cyan); bottom: 5%; left: -8%; filter: blur(72px);
+             animation: orb-pulse 8s ease-in-out infinite, orb-drift 12s ease-in-out infinite;">
+    </div>
+    <div class="absolute inset-0 grid-pattern" style="animation: grid-shimmer 6s ease-in-out infinite; opacity: 0.2;"></div>
   </div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
+
     <!-- Section Heading -->
-    <div class="text-center max-w-3xl mx-auto mb-20" data-animate="fade-up">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/30 bg-[var(--accent-purple)]/5 mb-4">
-        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
-        <span class="text-xs font-semibold text-[var(--accent-purple)] font-body uppercase tracking-wider">What We Do</span>
-      </div>
+    <div class="max-w-3xl mb-20" data-animate="fade-up">
+      <!-- Eyebrow: font-mono theo spec -->
+      <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.12em] mb-4">What We Do</p>
       <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] mb-4">
         Full-Stack Growth Engines
       </h2>
-      <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed">
-        We merge specialized Web3 marketing tactics with quantifiable metrics, acting as your extended growth team.
+      <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed max-w-lg">
+        Specialized Web3 marketing tactics aligned with quantifiable OKRs — acting as your extended growth team.
       </p>
     </div>
 
-    <!-- Services Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-animate="stagger">
-      {services.map((s) => (
-        <a 
-          href={`/services/${s.slug}`} 
-          class="card-default p-8 hover:border-[var(--border-accent)] hover:scale-[1.01] transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+    <!-- Services Grid — Layout A (2+1 asymmetric) theo design-system.md 6.1 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6" data-animate="stagger">
+
+      <!-- Card 1: FEATURED — md:col-span-2 md:row-span-2 -->
+      <a
+        href={`/services/${services[0].slug}`}
+        class="card-featured md:col-span-2 p-8 lg:p-10 flex flex-col justify-between group relative overflow-hidden hover:-translate-y-1 transition-transform duration-300"
+        data-animate-child
+        aria-label={`Explore ${services[0].title}`}
+      >
+        <!-- Subtle shimmer on hover -->
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style="background: radial-gradient(ellipse 60% 60% at 30% 40%, rgba(0,200,240,0.04), transparent);">
+        </div>
+
+        <div class="relative z-10">
+          <!-- Number + Category tags -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest">01</span>
+            <span class="tag tag-cyan">KOL</span>
+          </div>
+
+          <!-- Title -->
+          <h3 class="font-display text-2xl lg:text-3xl font-bold text-[var(--text-primary)] mb-4 group-hover:text-[var(--accent-cyan)] transition-colors duration-300">
+            {services[0].title}
+          </h3>
+
+          <!-- Description với con số cụ thể -->
+          <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed mb-6 max-w-md">
+            {services[0].shortDescription}
+          </p>
+
+          <!-- 3 bullet keywords -->
+          <ul class="flex flex-wrap gap-2 mb-8">
+            {['Network 5,000+ KOLs', 'Tier-1 Coverage', 'Performance-based'].map(b => (
+              <li class="tag tag-gray">{b}</li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Link -->
+        <div class="relative z-10 flex items-center gap-2 text-xs font-display font-bold text-[var(--accent-cyan)] uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
+          Explore →
+        </div>
+      </a>
+
+      <!-- Cards 2 & 3: bên phải (normal size) -->
+      {services.slice(1, 3).map((s, i) => (
+        <a
+          href={`/services/${s.slug}`}
+          class="card-default p-6 flex flex-col justify-between group relative overflow-hidden"
           data-animate-child
           aria-label={`Explore ${s.title}`}
         >
-          <!-- Radial hover gradient -->
-          <div class="absolute inset-0 bg-[radial-gradient(circle,rgba(0,212,255,0.02)_0%,transparent_80%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+            style="background: radial-gradient(circle at 50% 50%, rgba(0,200,240,0.03), transparent 70%);">
+          </div>
 
-          <div>
-            <!-- Icon -->
-            <div class="w-12 h-12 rounded-xl bg-[var(--accent-cyan)]/10 border border-[var(--accent-cyan)]/20 flex items-center justify-center text-[var(--accent-cyan)] mb-6 group-hover:bg-[var(--accent-cyan)] group-hover:text-black transition-colors duration-300">
-              {s.icon === 'Users' && (
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v-2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              )}
-              {s.icon === 'FileText' && (
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              )}
-              {s.icon === 'MessageSquare' && (
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              )}
-              {s.icon === 'TrendingUp' && (
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18M17 6h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              )}
-              {s.icon === 'Briefcase' && (
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              )}
-              {s.icon === 'Search' && (
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              )}
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-5">
+              <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest">0{i + 2}</span>
+              <span class={i === 0 ? 'tag tag-purple' : 'tag tag-cyan'}>
+                {i === 0 ? 'PR' : 'Community'}
+              </span>
             </div>
-
-            <!-- Title & Copy -->
-            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-4 group-hover:text-[var(--accent-cyan)] transition-colors">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-3 group-hover:text-[var(--accent-cyan)] transition-colors duration-300">
               {s.title}
             </h3>
-            <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed mb-8">
+            <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed">
               {s.shortDescription}
             </p>
           </div>
 
-          <!-- Bottom Link arrow -->
-          <div class="flex items-center gap-2 text-xs font-semibold text-[var(--accent-cyan)] font-display uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
-            Learn More
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <div class="relative z-10 mt-6 flex items-center gap-2 text-xs font-display font-bold text-[var(--accent-cyan)] uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
+            Explore →
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Bottom row: 3 cards đều nhau -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-animate="stagger">
+      {services.slice(3).map((s, i) => (
+        <a
+          href={`/services/${s.slug}`}
+          class="card-default p-6 flex flex-col justify-between group relative overflow-hidden"
+          data-animate-child
+          aria-label={`Explore ${s.title}`}
+        >
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+            style="background: radial-gradient(circle at 50% 50%, rgba(124,92,252,0.03), transparent 70%);">
+          </div>
+
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-5">
+              <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest">0{i + 4}</span>
+              <span class="tag tag-gray">{['Growth', 'B2B', 'SEO'][i] ?? 'Service'}</span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-3 group-hover:text-[var(--accent-cyan)] transition-colors duration-300">
+              {s.title}
+            </h3>
+            <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed">
+              {s.shortDescription}
+            </p>
+          </div>
+
+          <div class="relative z-10 mt-6 flex items-center gap-2 text-xs font-display font-bold text-[var(--accent-cyan)] uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
+            Explore →
           </div>
         </a>
       ))}
