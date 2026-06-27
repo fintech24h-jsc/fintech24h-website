@@ -6,7 +6,7 @@ export interface NavLink {
 
 export const mainNavLinks: NavLink[] = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
+  { label: 'About Us', href: '/about' },
   {
     label: 'Services',
     href: '/services',
@@ -19,9 +19,9 @@ export const mainNavLinks: NavLink[] = [
       { label: 'Content Strategy & SEO', href: '/services/content-strategy-seo' },
     ]
   },
-  { label: 'Case Studies', href: '/case-studies' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/contact' }
+  { label: 'Contact', href: '/contact' },
+  { label: 'Partnership', href: 'https://docs.google.com/forms/d/e/1FAIpQLSeOhaoV-q4dyjEgVa5fVQToKPtHyqDmKBj9fHig9bNS3JrYqw/viewform' },
+  { label: 'Get Proposal', href: '/#get-proposal' }
 ];
 
 export const footerLinks = {
