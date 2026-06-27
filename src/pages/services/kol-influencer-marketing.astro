@@ -2,7 +2,7 @@
 // src/pages/services/kol-influencer-marketing.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
-import CalendlyEmbed from '../../components/ui/CalendlyEmbed.tsx';
+import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
 import AnimatedCounter from '../../components/ui/AnimatedCounter.tsx';
 import { services } from '../../data/services';
 
@@ -127,21 +127,21 @@ const breadcrumbs = [
     </div>
   </section>
 
-  <!-- 3. Calendly Section -->
+  <!-- 3. Inquiry Form Section (Đã thay thế Calendly) -->
   <section id="book-call" class="py-24 relative">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="card-default p-8 lg:p-12 border-[var(--accent-purple)]/20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-radial-gradient(circle, rgba(124,92,252,0.08) 0%, transparent 70%) pointer-events-none"></div>
+    <div class="max-w-3xl mx-auto px-4">
+      <div class="p-8 lg:p-12 rounded-[24px] border border-[#ff5e62]/20 bg-gradient-to-br from-[rgba(255,94,98,0.05)] via-transparent to-transparent shadow-[0_15px_35px_rgba(255,94,98,0.06)] relative overflow-hidden">
+        <div class="absolute inset-0 bg-radial-gradient(circle, rgba(255,94,98,0.05) 0%, transparent 70%) pointer-events-none"></div>
         <div class="text-center max-w-2xl mx-auto mb-10 relative z-10">
-          <h2 class="font-display text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">
-            Claim Your Market Share
+          <h2 class="font-display text-3xl font-bold text-[var(--text-primary)] mb-4">
+            Khởi động chiến dịch KOLs của bạn
           </h2>
-          <p class="text-lg text-[var(--text-secondary)] font-body">
-            Book a 15-minute strategy call. We will audit your current KOL strategy and map out a growth plan for the next 90 days.
+          <p class="text-sm text-[var(--text-secondary)] font-body">
+            Điền thông tin khảo sát nhanh bên dưới, đội ngũ Fintech24h sẽ chuẩn bị bản phân tích KOLs mẫu và gửi lại cho bạn trong vòng 24h.
           </p>
         </div>
         <div class="relative z-10">
-          <CalendlyEmbed client:load />
+          <ServiceInquiryForm client:load defaultService={service.title} />
         </div>
       </div>
     </div>

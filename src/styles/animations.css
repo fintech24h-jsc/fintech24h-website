@@ -93,6 +93,36 @@
   to   { background-position: -200% 0; }
 }
 
+@keyframes border-sweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes text-shimmer-warm {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes background-drift {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: 48px 48px;
+  }
+}
+
 /* ─── REDUCED MOTION OVERRIDE (TUYỆT ĐỐI PHẢI CÓ) ─── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

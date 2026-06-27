@@ -40,6 +40,9 @@
     --color-danger:      #ef4444;
 
     /* ─── GRADIENTS ─── */
+    --gradient-accent-warm: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%);
+    --color-orange-pink-glow: rgba(255, 94, 98, 0.15);
+
     --gradient-primary:  linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%);
     --gradient-primary-hover: linear-gradient(135deg, #00dcff 0%, #9070ff 100%);
     --gradient-hero-bg:  radial-gradient(ellipse 80% 60% at 50% -20%,
@@ -182,30 +185,44 @@
     color: #050810;
     background: var(--gradient-primary);
     border-radius: 8px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
     transition: all 0.25s ease;
     overflow: hidden;
     white-space: nowrap;
+    z-index: 1;
   }
-  .btn-primary::after {
+  .btn-primary::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0);
-    transition: background 0.2s ease;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.35),
+      transparent
+    );
+    transform: skewX(-25deg);
+    z-index: -1;
   }
   .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow:
-      0 0 20px rgba(0, 200, 240, 0.35),
-      0 0 60px rgba(124, 92, 252, 0.15),
-      0 8px 24px rgba(0,0,0,0.3);
+      0 0 25px rgba(0, 200, 240, 0.4),
+      0 0 50px rgba(124, 92, 252, 0.2),
+      0 8px 24px rgba(0,0,0,0.4);
   }
-  .btn-primary:hover::after { background: rgba(255,255,255,0.08); }
+  .btn-primary:hover::before {
+    left: 150%;
+    transition: left 0.8s ease-in-out;
+  }
   .btn-primary:active { transform: translateY(0); }
 
   .btn-ghost {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -213,18 +230,37 @@
     font-family: var(--font-display);
     font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--accent-cyan);
-    background: transparent;
-    border: 1px solid rgba(0, 200, 240, 0.3);
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.02);
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.25s ease;
     white-space: nowrap;
+    overflow: hidden;
+  }
+  .btn-ghost::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    padding: 1px;
+    background: linear-gradient(90deg, rgba(0, 200, 240, 0.3), rgba(124, 92, 252, 0.3), rgba(255, 94, 98, 0.3), rgba(0, 200, 240, 0.3));
+    background-size: 200% auto;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    opacity: 0.7;
   }
   .btn-ghost:hover {
-    background: rgba(0, 200, 240, 0.08);
-    border-color: rgba(0, 200, 240, 0.6);
-    box-shadow: 0 0 16px rgba(0, 200, 240, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 200, 240, 0.15);
+    color: var(--accent-cyan);
+  }
+  .btn-ghost:hover::before {
+    animation: border-sweep 3s linear infinite;
+    opacity: 1;
   }
 
   .btn-icon {
@@ -325,27 +361,38 @@
     color: var(--accent-cyan);
   }
 
-  /* ─── LIQUID GLASS (Navbar dùng) ─── */
-  .liquid-glass {
-    background: rgba(255,255,255,0.01);
-    background-blend-mode: luminosity;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: none;
-    box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+  /* ─── LIQUID GLASS PREMIUM (Navbar dùng) ─── */
+  .liquid-glass-premium {
     position: relative;
+    background: rgba(5, 8, 16, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 16px;
+    z-index: 1;
     overflow: hidden;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   }
-  .liquid-glass::before {
+  .liquid-glass-premium::before {
     content: '';
     position: absolute;
     inset: 0;
-    padding: 1.4px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(0, 200, 240, 0.4), rgba(124, 92, 252, 0.4), rgba(255, 94, 98, 0.4), rgba(255, 255, 255, 0.05));
+    background-size: 200% auto;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
+    animation: border-sweep 6s linear infinite;
+  }
+
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-default);
+    border-radius: 16px;
   }
 
   .glass-pill {
@@ -375,6 +422,12 @@
       linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
     background-size: 48px 48px;
+    animation: background-drift 24s linear infinite;
+  }
+
+  .border-accent-warm {
+    border-color: rgba(255, 94, 98, 0.3);
+    box-shadow: 0 0 15px rgba(255, 94, 98, 0.1);
   }
 
   /* ─── MARQUEE TRACK (Trust Bar) — theo design-system.md 7.2 ─── */

@@ -15,13 +15,66 @@ interface FormData {
   timeline: string;
 }
 
-const PROJECT_TYPES: { label: ProjectType; icon: string }[] = [
-  { label: 'DeFi', icon: '💎' },
-  { label: 'Exchange', icon: '📊' },
-  { label: 'L1/L2 Blockchain', icon: '⛓️' },
-  { label: 'NFT/GameFi', icon: '🎮' },
-  { label: 'AI Project', icon: '🤖' },
-  { label: 'Other', icon: '🚀' },
+const PROJECT_TYPES: { label: ProjectType; icon: React.ReactNode }[] = [
+  {
+    label: 'DeFi',
+    icon: (
+      <svg className="w-6 h-6 text-[var(--accent-cyan)] mb-2" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 3h12l4 6-10 12L2 9z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11 3 8 9l4 12 4-12-3-6" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2 9h20" />
+      </svg>
+    )
+  },
+  {
+    label: 'Exchange',
+    icon: (
+      <svg className="w-6 h-6 text-[var(--accent-cyan)] mb-2" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 3v18M18 3v18M12 1v22" />
+        <rect x="4" y="6" width="4" height="10" rx="1" fill="none" />
+        <rect x="10" y="4" width="4" height="14" rx="1" fill="none" />
+        <rect x="16" y="9" width="4" height="8" rx="1" fill="none" />
+      </svg>
+    )
+  },
+  {
+    label: 'L1/L2 Blockchain',
+    icon: (
+      <svg className="w-6 h-6 text-[var(--accent-cyan)] mb-2" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="6" height="6" rx="1" />
+        <rect x="15" y="3" width="6" height="6" rx="1" />
+        <rect x="15" y="15" width="6" height="6" rx="1" />
+        <rect x="3" y="15" width="6" height="6" rx="1" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 6h6M9 18h6M6 9v6M18 9v6" />
+      </svg>
+    )
+  },
+  {
+    label: 'NFT/GameFi',
+    icon: (
+      <svg className="w-6 h-6 text-[var(--accent-cyan)] mb-2" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <rect x="2" y="6" width="20" height="12" rx="3" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12h4M8 10v4M15 11h.01M18 13h.01" />
+      </svg>
+    )
+  },
+  {
+    label: 'AI Project',
+    icon: (
+      <svg className="w-6 h-6 text-[var(--accent-cyan)] mb-2" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <rect x="5" y="5" width="14" height="14" rx="2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4" />
+      </svg>
+    )
+  },
+  {
+    label: 'Other',
+    icon: (
+      <svg className="w-6 h-6 text-[var(--accent-cyan)] mb-2" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+    )
+  },
 ];
 
 const SERVICES = [
@@ -157,13 +210,13 @@ export default function MultiStepForm() {
               <button
                 key={label}
                 onClick={() => { update('projectType', label); setStep(2); }}
-                className={`card-default p-4 text-left transition-all duration-200 hover:border-[var(--border-accent)] ${
-                  formData.projectType === label ? 'border-[var(--border-accent)] bg-[rgba(0,200,240,0.1)]' : ''
+                className={`card-default p-5 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-[#ff9966]/50 hover:scale-[1.03] ${
+                  formData.projectType === label ? 'border-[#ff5e62] bg-[rgba(255,94,98,0.05)] shadow-[0_0_15px_rgba(255,94,98,0.15)]' : ''
                 }`}
                 aria-pressed={formData.projectType === label}
               >
-                <span className="text-2xl mb-1 block" aria-hidden="true">{icon}</span>
-                <span className="text-sm font-medium text-[var(--text-primary)] font-body">{label}</span>
+                <div className="mb-2 text-[var(--accent-cyan)] group-hover:scale-110 transition-transform">{icon}</div>
+                <span className="text-xs font-semibold text-[var(--text-primary)] font-display tracking-wide">{label}</span>
               </button>
             ))}
           </div>

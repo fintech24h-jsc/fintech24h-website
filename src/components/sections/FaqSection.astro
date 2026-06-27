@@ -1,64 +1,112 @@
 ---
 // src/components/sections/FaqSection.astro
-// Theo design-system.md: eyebrow font-mono, không dùng badge to
-// Accordion với transition mượt, không cùng cấu trúc section khác
+// Theo phản hồi khách hàng: Mở rộng ít nhất 15 câu hỏi.
+// Bao gồm các câu hỏi địa lý (Việt Nam, UAE, Châu Âu...) phục vụ SEO,
+// và chính sách linh hoạt ngân sách cho các câu hỏi về giá.
 
 const faqs = [
   {
-    q: "What services does Fintech24h offer?",
-    a: "Fintech24h offers 6 core services for blockchain, crypto, DeFi, and AI projects: KOL & Influencer Marketing, PR & Media Coverage, Community Management, Growth & Airdrop Campaigns, B2B Business Development, and Content Strategy & SEO."
+    q: "Fintech24h có hoạt động tại thị trường Việt Nam không?",
+    a: "Có, Việt Nam là một trong những thị trường trọng điểm của Fintech24h tại Đông Nam Á. Chúng tôi sở hữu mạng lưới hơn 2,000+ KOLs/Influencers Việt Nam, có mối quan hệ hợp tác trực tiếp với các cộng đồng crypto lớn nhất nước và các đầu báo lớn như Cafef, VnExpress, và các trang chuyên môn Web3."
   },
   {
-    q: "How much does blockchain marketing cost?",
-    a: "Our agency works on a monthly retainer structure. Pricing starts at $3,000/month for starter growth packages. Mid-tier packages range from $5,000–$10,000/month, and enterprise-grade launch packages start at $15,000/month. Custom projects can be quoted based on required milestones."
+    q: "Fintech24h có cung cấp dịch vụ tại UAE (Dubai) không?",
+    a: "Có, Fintech24h hoạt động mạnh mẽ tại UAE với pháp nhân và đội ngũ tại chỗ. Chúng tôi chuyên kết nối các dự án với giới đầu tư quỹ, các KOLs bản địa và khu vực Trung Đông, đồng thời tổ chức các sự kiện bên lề (side-events) Web3 lớn trong khuôn khổ các tuần lễ blockchain tại Dubai."
   },
   {
-    q: "What markets does Fintech24h cover?",
-    a: "We specialize in Tier 1 markets globally, with local teams on the ground in Southeast Asia (Vietnam, Singapore, Indonesia, Thailand) and the Middle East (UAE). We also support global outreach campaigns in Western Europe and North America through specialized publications."
+    q: "Fintech24h.com có hỗ trợ các dự án tại Châu Âu không?",
+    a: "Có, chúng tôi cung cấp dịch vụ PR và Marketing toàn cầu, bao gồm khu vực Châu Âu. Fintech24h có mạng lưới phóng viên và KOLs phủ rộng các quốc gia Châu Âu như Anh, Đức, Pháp, Tây Ban Nha, giúp dự án tiếp cận cộng đồng nhà đầu tư bản địa thông qua các chiến dịch PR bản địa hóa và sự kiện offline."
   },
   {
-    q: "How long does it take to see results?",
-    a: "Public relations coverage (placements on Bloomberg, CoinTelegraph) can begin within the first 14 days. Community growth and active referral loops show results within 30–60 days. SEO strategies typically compounding and show significant organic traction within 90 days."
+    q: "Fintech24h nhận dự án tối thiểu bao nhiêu tiền? (Yêu cầu ngân sách)",
+    a: "Fintech24h cực kỳ linh động trong việc thiết lập budget cho từng dự án. Chúng tôi hiểu rằng mỗi startup có những giai đoạn phát triển khác nhau, từ giai đoạn gọi vốn ban đầu (Seed) đến giai đoạn mở rộng thị trường lớn. Do đó, chúng tôi luôn đáp ứng linh hoạt theo nhu cầu cụ thể và ngân sách khả thi của đối tác để thiết lập các gói OKRs hiệu quả nhất."
+  },
+  {
+    q: "Fintech24h có kinh nghiệm triển khai các dự án tại Đông Nam Á không?",
+    a: "Hoàn toàn có. Ngoài Việt Nam, chúng tôi có mạng lưới đối tác và KOL chuyên sâu tại Singapore, Thái Lan, Indonesia và Philippines. Đây là các thị trường năng động nhất về tỷ lệ chấp nhận crypto, và chúng tôi có thể giúp dự án tăng trưởng người dùng thực tế vô cùng nhanh chóng."
+  },
+  {
+    q: "Quy trình kết nối và booking KOLs của Fintech24h hoạt động ra sao?",
+    a: "Chúng tôi làm việc trực tiếp với KOLs hoặc thông qua các quản lý độc quyền trực tiếp, cam kết không qua trung gian thứ ba để tối ưu chi phí. Fintech24h thực hiện lọc bot, kiểm toán tương tác thật của kênh trước khi chạy và có hệ thống tracking link đo lường chuyển đổi (on-chain & off-chain) chuẩn xác."
+  },
+  {
+    q: "Fintech24h có thể cam kết KPI/ROI cho chiến dịch marketing không?",
+    a: "Có. Trực tiếp chống lại các mô hình marketing rập khuôn, Fintech24h làm việc dựa trên các chỉ số đo lường hiệu quả cụ thể (KPIs/OKRs) đã cam kết trước trong hợp đồng, ví dụ: số lượng tương tác, số lượng thành viên cộng đồng mới thực tế, số bài PR hiển thị, thay vì chỉ hứa hẹn những con số ảo."
+  },
+  {
+    q: "Dịch vụ PR & Media của Fintech24h hỗ trợ đăng tải trên các trang báo nào?",
+    a: "Chúng tôi hỗ trợ book bài viết và phỏng vấn trên các trang báo tài chính/Web3 hàng đầu thế giới như Bloomberg, Yahoo Finance, TechCrunch, CoinTelegraph, CoinDesk, BeInCrypto, BSC News... và hơn 150 trang tin tức khu vực."
+  },
+  {
+    q: "Fintech24h quản trị và phát triển những kênh cộng đồng nào?",
+    a: "Chúng tôi tập trung tối ưu hóa 3 kênh cốt lõi của Web3: Telegram (xây dựng phễu chat), Discord (quản lý phân quyền, tương tác sâu và bảo mật tránh link scam), và Twitter/X (xây dựng thương hiệu và thu hút traffic tự nhiên)."
+  },
+  {
+    q: "Fintech24h có hỗ trợ thiết lập các chiến dịch Airdrop và Quests không?",
+    a: "Có. Chúng tôi thiết kế và vận hành các chiến dịch Quest tích hợp trên Zealy, Galxe, TaskOn... kết hợp với các chương trình Referral và Airdrop chống Sybil (chống tài khoản ảo) để đảm bảo thu về tệp người dùng thực sự quan tâm đến sản phẩm."
+  },
+  {
+    q: "Fintech24h hỗ trợ những mảng dự án nào?",
+    a: "Chúng tôi chuyên sâu về các dự án Web3, bao gồm: DeFi protocols, Layer 1 & Layer 2 Blockchains, các sàn giao dịch (CEX/DEX), GameFi, Launchpads, NFT collections và đặc biệt là các dự án tích hợp AI (Trí tuệ nhân tạo) thế hệ mới."
+  },
+  {
+    q: "Fintech24h có hỗ trợ gọi vốn hoặc kết nối quỹ đầu tư (B2B BD) không?",
+    a: "Có. Thông qua dịch vụ B2B Business Development, chúng tôi kết nối các nhà sáng lập trực tiếp với các quỹ VC lớn, các nhà đầu tư thiên thần, đối tác làm cầu nối thanh toán, hoặc các dự án blockchain khác trong hệ sinh thái để cùng hợp tác (co-marketing)."
+  },
+  {
+    q: "Fintech24h có nhận thanh toán bằng tiền mã hóa (Crypto) không?",
+    a: "Có. Để hỗ trợ tối đa cho các đối tác Web3, chúng tôi chấp nhận linh động các hình thức thanh toán bằng các loại stablecoin phổ biến như USDT, USDC hoặc các đồng coin nền tảng lớn như BTC, ETH."
+  },
+  {
+    q: "Thời gian thiết lập một chiến dịch marketing mất bao lâu?",
+    a: "Các chiến dịch KOL và PR thông thường có thể khởi động trong vòng 7–10 ngày làm việc sau khi hai bên thống nhất OKRs và tài liệu truyền thông. Đối với việc thiết lập hệ thống kiểm trị cộng đồng 24/7 và airdrop quest lớn, thời gian chuẩn bị dao động khoảng 2 tuần."
+  },
+  {
+    q: "Tại sao nên chọn Fintech24h thay vì các agency marketing truyền thống khác?",
+    a: "Chúng tôi là Agency chuyên biệt về Web3 và AI, hiểu rõ hành vi người dùng on-chain. Chúng tôi không sử dụng các lưới grid rập khuôn hay nội dung sáo rỗng. Mọi dịch vụ đều hướng đến chuyển đổi thật, chống tài khoản ảo và đồng hành cùng dự án như một đội ngũ nội bộ."
   }
 ];
 ---
 
-<section class="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Frequently Asked Questions">
+<section class="py-32 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Frequently Asked Questions">
   <!-- Background -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="absolute w-[400px] h-[400px] rounded-full"
-      style="background: var(--gradient-glow-purple); top: -10%; right: 0; filter: blur(72px);
+    <div class="absolute w-[500px] h-[500px] rounded-full"
+      style="background: var(--gradient-glow-purple); top: -10%; right: 0; filter: blur(90px);
              animation: orb-pulse 10s ease-in-out infinite 2s;">
     </div>
-    <div class="absolute inset-0 grid-pattern" style="animation: grid-shimmer 6s ease-in-out infinite; opacity: 0.2;"></div>
+    <div class="absolute inset-0 grid-pattern" style="opacity: 0.15;"></div>
   </div>
 
   <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Section Heading — layout khác các section khác: left-aligned thay vì centered -->
-    <div class="mb-16" data-animate="fade-up">
-      <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.12em] mb-4">FAQs</p>
-      <div class="grid md:grid-cols-2 gap-8 items-end">
+    <div class="mb-20" data-animate="fade-up">
+      <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+        FAQ Engine
+      </p>
+      <div class="grid md:grid-cols-2 gap-8 items-start">
         <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
-          Common Questions
+          Knowledge Base &amp; FAQs
         </h2>
-        <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed">
-          Everything you need to know about our Web3 marketing models, pricing packages, and regional campaign coverages.
+        <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed">
+          Everything you need to know about our Web3 marketing models, flexible pricing packages, regional campaign coverages, and OKR guarantees.
         </p>
       </div>
     </div>
 
     <!-- Accordion -->
-    <div class="space-y-3" data-animate="stagger">
+    <div class="space-y-4" data-animate="stagger">
       {faqs.map((faq, i) => (
         <details
-          class="card-default p-0 border border-[var(--border-subtle)] hover:border-[var(--accent-cyan)]/20 transition-all duration-300 group overflow-hidden"
+          class="card-default p-0 border border-white/5 hover:border-[var(--accent-cyan)]/20 transition-all duration-300 group overflow-hidden"
           data-animate-child
         >
           <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
             <span class="flex items-center gap-4">
-              <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest w-6 shrink-0">0{i + 1}</span>
-              <span class="font-display font-bold text-base sm:text-lg text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors">
+              <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest w-8 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-display font-bold text-sm sm:text-base text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors">
                 {faq.q}
               </span>
             </span>
@@ -68,8 +116,8 @@ const faqs = [
               </svg>
             </div>
           </summary>
-          <div class="px-6 pb-6 text-sm text-[var(--text-secondary)] font-body leading-relaxed border-t border-[var(--border-subtle)] pt-4 pl-16">
-            <p>{faq.a}</p>
+          <div class="px-6 pb-6 text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed border-t border-white/[0.03] pt-4 pl-14 sm:pl-18">
+            <p class="whitespace-pre-line">{faq.a}</p>
           </div>
         </details>
       ))}

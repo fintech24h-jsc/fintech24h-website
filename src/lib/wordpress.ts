@@ -177,7 +177,10 @@ async function fetchWP<T>(endpoint: string, params: Record<string, string> = {})
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
   const res = await fetch(url.toString(), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    },
     // ISR: cache 1 hour, auto-revalidate
     // @ts-ignore
     cf: { cacheTtl: 3600, cacheEverything: true },

@@ -6,7 +6,7 @@ import TrustBar from '../components/sections/TrustBar.astro';
 import ServicesGrid from '../components/sections/ServicesGrid.astro';
 import CaseStudyWidget from '../components/sections/CaseStudyWidget.astro';
 import ProcessSection from '../components/sections/ProcessSection.astro';
-import TestimonialsSection from '../components/sections/TestimonialsSection.astro';
+import CampaignCalculator from '../components/ui/CampaignCalculator.tsx';
 import FaqSection from '../components/sections/FaqSection.astro';
 import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
 import { getFeaturedCaseStudy } from '../lib/wordpress';
@@ -64,7 +64,34 @@ const faqSchema = {
   <ServicesGrid />
   {featuredCase && <CaseStudyWidget caseStudy={featuredCase} />}
   <ProcessSection />
-  <TestimonialsSection />
+
+  <!-- Interactive Campaign ROI Calculator Section -->
+  <section class="py-24 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Campaign ROI Calculator">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[600px] h-[600px] rounded-full"
+        style="background: var(--gradient-glow-cyan); top: 20%; left: -10%; filter: blur(90px); opacity: 0.15;">
+      </div>
+      <div class="absolute inset-0 grid-pattern" style="opacity: 0.1;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center justify-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+          ROI Simulator
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] mb-4">
+          Estimate Your <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[#ff9966] bg-clip-text text-transparent">Growth Impact</span>
+        </h2>
+        <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed">
+          Select your market sector, targeting geography, and monthly budget to view estimated 90-day reach, community acquisition, and average ROI.
+        </p>
+      </div>
+
+      <CampaignCalculator client:load />
+    </div>
+  </section>
+
   <FaqSection />
   <FooterLeadForm />
 </BaseLayout>

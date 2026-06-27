@@ -3,32 +3,38 @@
 // Theo design-system.md section 7.3 + 6.1:
 // - Layout A (2+1 asymmetric): card featured lớn bên trái, 2 card nhỏ bên phải, 3 đều bên dưới
 // - Card content: [Số 01] [Tag KOL] → H3 → 2-3 câu có con số → 3 bullet → Link
-// - Không phải template icon-title-text đồng đều
+// - Đã thêm: Cực kỳ làm nổi bật dịch vụ KOL với màu cam-hồng gradient và tag HOT lấp lánh
 import { services } from '../../data/services';
 ---
 
-<section class="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Services Overview">
-  <!-- Background orbs theo design-system.md 5.3 -->
+<section class="py-28 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Services Overview">
+  <!-- Background orbs với mesh pattern chuyển động chìm -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute w-[600px] h-[600px] rounded-full"
+      style="background: var(--gradient-glow-purple); top: -10%; right: -5%; filter: blur(90px);
+             animation: orb-pulse 10s ease-in-out infinite 2s, orb-drift 18s ease-in-out infinite 4s;">
+    </div>
     <div class="absolute w-[500px] h-[500px] rounded-full"
-      style="background: var(--gradient-glow-purple); top: -10%; right: -5%; filter: blur(72px);
-             animation: orb-pulse 10s ease-in-out infinite 2s, orb-drift 15s ease-in-out infinite 4s;">
+      style="background: var(--gradient-glow-cyan); bottom: 5%; left: -8%; filter: blur(80px);
+             animation: orb-pulse 8s ease-in-out infinite, orb-drift 14s ease-in-out infinite;">
     </div>
-    <div class="absolute w-[400px] h-[400px] rounded-full"
-      style="background: var(--gradient-glow-cyan); bottom: 5%; left: -8%; filter: blur(72px);
-             animation: orb-pulse 8s ease-in-out infinite, orb-drift 12s ease-in-out infinite;">
+    <!-- Điểm nhấn màu ấm ở giữa góc trái -->
+    <div class="absolute w-[350px] h-[350px] rounded-full"
+      style="background: radial-gradient(circle, var(--color-orange-pink-glow) 0%, transparent 70%); top: 40%; left: 10%; filter: blur(50px); animation: orb-pulse 7s ease-in-out infinite 1s;">
     </div>
-    <div class="absolute inset-0 grid-pattern" style="animation: grid-shimmer 6s ease-in-out infinite; opacity: 0.2;"></div>
+    <div class="absolute inset-0 grid-pattern" style="opacity: 0.15;"></div>
   </div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Section Heading -->
     <div class="max-w-3xl mb-20" data-animate="fade-up">
-      <!-- Eyebrow: font-mono theo spec -->
-      <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.12em] mb-4">What We Do</p>
+      <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+        Core Solutions
+      </p>
       <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] mb-4">
-        Full-Stack Growth Engines
+        Full-Stack <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[#ff9966] bg-clip-text text-transparent">Growth Engines</span>
       </h2>
       <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed max-w-lg">
         Specialized Web3 marketing tactics aligned with quantifiable OKRs — acting as your extended growth team.
@@ -38,46 +44,49 @@ import { services } from '../../data/services';
     <!-- Services Grid — Layout A (2+1 asymmetric) theo design-system.md 6.1 -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6" data-animate="stagger">
 
-      <!-- Card 1: FEATURED — md:col-span-2 md:row-span-2 -->
+      <!-- Card 1: FEATURED (KOL Service) — md:col-span-2 — NỔI BẬT CAM-HỒNG -->
       <a
         href={`/services/${services[0].slug}`}
-        class="card-featured md:col-span-2 p-8 lg:p-10 flex flex-col justify-between group relative overflow-hidden hover:-translate-y-1 transition-transform duration-300"
+        class="md:col-span-2 p-8 lg:p-12 flex flex-col justify-between group relative overflow-hidden transition-all duration-500 rounded-[24px] border border-[#ff5e62]/30 bg-gradient-to-br from-[rgba(255,94,98,0.06)] via-transparent to-[rgba(124,92,252,0.03)] hover:-translate-y-2 hover:border-[#ff9966]/60 hover:shadow-[0_20px_50px_rgba(255,94,98,0.12),0_0_0_1px_rgba(255,255,255,0.05)]"
         data-animate-child
         aria-label={`Explore ${services[0].title}`}
       >
-        <!-- Subtle shimmer on hover -->
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style="background: radial-gradient(ellipse 60% 60% at 30% 40%, rgba(0,200,240,0.04), transparent);">
+        <!-- Ambient radial glow inside -->
+        <div class="absolute inset-0 opacity-40 group-hover:opacity-80 transition-opacity duration-500 pointer-events-none"
+          style="background: radial-gradient(ellipse 60% 60% at 20% 20%, rgba(255,94,98,0.1), transparent 60%);">
         </div>
 
         <div class="relative z-10">
-          <!-- Number + Category tags -->
-          <div class="flex items-center justify-between mb-6">
-            <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest">01</span>
-            <span class="tag tag-cyan">KOL</span>
+          <!-- Number + Category tags (HOT label lấp lánh) -->
+          <div class="flex items-center justify-between mb-8">
+            <span class="font-mono text-[11px] text-[#ff9966] tracking-widest font-semibold">01 / FEATURED</span>
+            <span class="tag bg-gradient-to-r from-[#ff5e62] to-[#ff9966] text-[#050810] font-bold border-none px-3.5 py-1 flex items-center gap-1.5 shadow-[0_0_15px_rgba(255,94,98,0.3)] animate-pulse rounded text-[10px] tracking-wider">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#050810]" aria-hidden="true"></span>
+              HOT / PERFORMANCE GUARANTEED
+            </span>
           </div>
 
           <!-- Title -->
-          <h3 class="font-display text-2xl lg:text-3xl font-bold text-[var(--text-primary)] mb-4 group-hover:text-[var(--accent-cyan)] transition-colors duration-300">
+          <h3 class="font-display text-2xl lg:text-4xl font-bold text-[var(--text-primary)] mb-5 group-hover:text-[var(--accent-cyan)] transition-colors duration-300">
             {services[0].title}
           </h3>
 
           <!-- Description với con số cụ thể -->
-          <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed mb-6 max-w-md">
+          <p class="text-sm md:text-base text-[var(--text-secondary)] font-body leading-relaxed mb-8 max-w-xl">
             {services[0].shortDescription}
           </p>
 
           <!-- 3 bullet keywords -->
-          <ul class="flex flex-wrap gap-2 mb-8">
-            {['Network 5,000+ KOLs', 'Tier-1 Coverage', 'Performance-based'].map(b => (
-              <li class="tag tag-gray">{b}</li>
+          <ul class="flex flex-wrap gap-2.5 mb-10">
+            {['Network 5,000+ KOLs', 'Tier-1 Regional Coverage', 'Performance-based Contract'].map(b => (
+              <li class="tag bg-white/[0.03] border-white/10 text-[var(--text-secondary)] py-1 px-3 rounded hover:border-[#ff9966]/40 transition-colors font-body text-xs">{b}</li>
             ))}
           </ul>
         </div>
 
-        <!-- Link -->
-        <div class="relative z-10 flex items-center gap-2 text-xs font-display font-bold text-[var(--accent-cyan)] uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
-          Explore →
+        <!-- Link / CTA -->
+        <div class="relative z-10 inline-flex items-center gap-2 text-xs font-display font-bold text-[#ff9966] uppercase tracking-wider group-hover:gap-4 transition-all duration-300 group-hover:text-[var(--accent-cyan)]">
+          Explore Solution →
         </div>
       </a>
 
@@ -85,22 +94,23 @@ import { services } from '../../data/services';
       {services.slice(1, 3).map((s, i) => (
         <a
           href={`/services/${s.slug}`}
-          class="card-default p-6 flex flex-col justify-between group relative overflow-hidden"
+          class="card-default p-8 flex flex-col justify-between group relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-[var(--accent-cyan)]/30"
           data-animate-child
           aria-label={`Explore ${s.title}`}
         >
-          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-            style="background: radial-gradient(circle at 50% 50%, rgba(0,200,240,0.03), transparent 70%);">
+          <!-- Accent glow -->
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+            style={`background: radial-gradient(circle at 50% 50%, ${i === 0 ? 'rgba(124,92,252,0.06)' : 'rgba(0,200,240,0.06)'}, transparent 70%);`}>
           </div>
 
           <div class="relative z-10">
-            <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center justify-between mb-6">
               <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest">0{i + 2}</span>
               <span class={i === 0 ? 'tag tag-purple' : 'tag tag-cyan'}>
                 {i === 0 ? 'PR' : 'Community'}
               </span>
             </div>
-            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-3 group-hover:text-[var(--accent-cyan)] transition-colors duration-300">
+            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-4 group-hover:text-[var(--accent-cyan)] transition-colors duration-300">
               {s.title}
             </h3>
             <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed">
@@ -108,7 +118,7 @@ import { services } from '../../data/services';
             </p>
           </div>
 
-          <div class="relative z-10 mt-6 flex items-center gap-2 text-xs font-display font-bold text-[var(--accent-cyan)] uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
+          <div class="relative z-10 mt-8 flex items-center gap-2 text-xs font-display font-bold text-[var(--accent-cyan)] uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
             Explore →
           </div>
         </a>
@@ -120,20 +130,21 @@ import { services } from '../../data/services';
       {services.slice(3).map((s, i) => (
         <a
           href={`/services/${s.slug}`}
-          class="card-default p-6 flex flex-col justify-between group relative overflow-hidden"
+          class="card-default p-8 flex flex-col justify-between group relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-[var(--accent-cyan)]/30"
           data-animate-child
           aria-label={`Explore ${s.title}`}
         >
-          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-            style="background: radial-gradient(circle at 50% 50%, rgba(124,92,252,0.03), transparent 70%);">
+          <!-- Accent glow -->
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+            style="background: radial-gradient(circle at 50% 50%, rgba(124,92,252,0.04), transparent 70%);">
           </div>
 
           <div class="relative z-10">
-            <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center justify-between mb-6">
               <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest">0{i + 4}</span>
-              <span class="tag tag-gray">{['Growth', 'B2B', 'SEO'][i] ?? 'Service'}</span>
+              <span class="tag tag-gray">{['BD & Ecosystems', 'Event Marketing', 'AI Marketing'][i] ?? 'Service'}</span>
             </div>
-            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-3 group-hover:text-[var(--accent-cyan)] transition-colors duration-300">
+            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-4 group-hover:text-[var(--accent-cyan)] transition-colors duration-300">
               {s.title}
             </h3>
             <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed">
@@ -141,7 +152,7 @@ import { services } from '../../data/services';
             </p>
           </div>
 
-          <div class="relative z-10 mt-6 flex items-center gap-2 text-xs font-display font-bold text-[var(--accent-cyan)] uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
+          <div class="relative z-10 mt-8 flex items-center gap-2 text-xs font-display font-bold text-[var(--accent-cyan)] uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
             Explore →
           </div>
         </a>
@@ -149,7 +160,7 @@ import { services } from '../../data/services';
     </div>
 
     <!-- Bottom Action CTA -->
-    <div class="text-center mt-16" data-animate="fade-up">
+    <div class="text-center mt-20" data-animate="fade-up">
       <a href="/services" class="btn-ghost">
         <span>Explore All Solutions</span>
       </a>

@@ -2,7 +2,7 @@
 // src/pages/blog/category/[category].astro
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
-import { getAllCategories, getPostsByCategory, formatDate, getExcerpt } from '../../../lib/wordpress';
+import { getAllCategories, getPostsByCategory, formatDate, getExcerpt, getFeaturedImage } from '../../../lib/wordpress';
 import { getReadingTime } from '../../../lib/utils';
 import type { WPCategory } from '../../../lib/wordpress';
 
@@ -88,9 +88,22 @@ const breadcrumbs = [
           {posts.map((post) => {
             const rTime = getReadingTime(post.content.rendered);
             const excerptText = getExcerpt(post, 140);
+            const featuredImage = getFeaturedImage(post);
             return (
-              <article class="glass-card rounded-2xl p-6 border border-white/5 hover:border-cyan-400/30 transition-all duration-300 flex flex-col justify-between group" data-animate-child>
+              <article class="card-default p-6 flex flex-col justify-between group" data-animate-child>
                 <div>
+                  {/* Image */}
+                  {featuredImage.url && (
+                    <div class="relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-white/5 shadow-inner">
+                      <img
+                        src={featuredImage.url}
+                        alt={featuredImage.alt}
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+
                   <!-- Info row -->
                   <div class="flex items-center gap-3 text-xs text-[#475569] font-body mb-4">
                     <span>{formatDate(post.date)}</span>
