@@ -31,10 +31,10 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
   ];
 
   const budgetRanges = [
-    'Linh hoạt / Dưới $5,000',
+    'Flexible / Under $5,000',
     '$5,000 - $15,000',
     '$15,000 - $30,000',
-    'Trên $30,000 / Tháng',
+    'Above $30,000 / Month',
   ];
 
   const update = (field: string, value: string) => {
@@ -44,7 +44,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.telegram) {
-      setError('Vui lòng điền đầy đủ các thông tin bắt buộc (*).');
+      setError('Please fill in all required fields (*).');
       return;
     }
 
@@ -77,7 +77,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
       setIsSuccess(true);
     } catch (err) {
       console.error(err);
-      setError('Có lỗi xảy ra. Vui lòng gửi email trực tiếp tới info@fintech24h.com');
+      setError('An error occurred. Please contact us directly at info@fintech24h.com');
     } finally {
       setIsSubmitting(false);
     }
@@ -86,24 +86,24 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
   if (isSuccess) {
     return (
       <div className="text-center py-10 px-4">
-        <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#ff5e62] to-[#ff9966] flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(255,94,98,0.3)]">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#ff6b83] to-[#f0a278] flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(255,107,131,0.2)]">
           <svg className="w-8 h-8 text-[#050810]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
           </svg>
         </div>
         <h3 className="text-2xl font-display font-bold text-white mb-3">
-          Gửi yêu cầu thành công!
+          Inquiry Submitted!
         </h3>
         <p className="text-sm text-[var(--text-secondary)] font-body max-w-md mx-auto mb-8">
-          Cảm ơn bạn. Đội ngũ chuyên gia của Fintech24h sẽ phản hồi kèm thiết kế khung chiến dịch demo trong vòng <strong className="text-[#ff9966]">24 giờ</strong>.
+          Thank you. Our growth strategy team will reach out with a custom campaign proposal within <strong className="text-[#f0a278]">24 hours</strong>.
         </p>
         <a
           href="https://t.me/fintech24h"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 btn-primary py-3 px-6 bg-gradient-to-r from-[#ff5e62] to-[#ff9966] text-[#050810] border-none shadow-[0_4px_15px_rgba(255,94,98,0.2)]"
+          className="inline-flex items-center gap-2 btn-primary py-3.5 px-6 bg-gradient-to-r from-[#ff6b83] to-[#f0a278] text-[#050810] border-none shadow-[0_4px_15px_rgba(255,107,131,0.2)]"
         >
-          Liên hệ nhanh qua Telegram
+          Quick Connect via Telegram
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
           </svg>
@@ -122,7 +122,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Họ và tên *</label>
+          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Full Name *</label>
           <input
             type="text"
             required
@@ -147,7 +147,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Địa chỉ Email *</label>
+          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Email Address *</label>
           <input
             type="email"
             required
@@ -158,7 +158,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Tên dự án</label>
+          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Project Name</label>
           <input
             type="text"
             value={formData.projectName}
@@ -171,26 +171,26 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Dịch vụ quan tâm</label>
+          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Service of Interest</label>
           <select
             value={formData.serviceInterest}
             onChange={e => update('serviceInterest', e.target.value)}
             className="input-field bg-[#0c1221]"
           >
-            <option value="">Chọn giải pháp quan tâm...</option>
+            <option value="">Select a service...</option>
             {servicesList.map(s => (
               <option key={s} value={s}>{s}</option>
             ))}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Ngân sách dự kiến</label>
+          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Estimated Monthly Budget</label>
           <select
             value={formData.budget}
             onChange={e => update('budget', e.target.value)}
             className="input-field bg-[#0c1221]"
           >
-            <option value="">Chọn khoảng ngân sách...</option>
+            <option value="">Select budget range...</option>
             {budgetRanges.map(b => (
               <option key={b} value={b}>{b}</option>
             ))}
@@ -210,11 +210,11 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Lời nhắn / Yêu cầu riêng</label>
+        <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Message / Custom Requirements</label>
         <textarea
           value={formData.message}
           onChange={e => update('message', e.target.value)}
-          placeholder="Chia sẻ về dự án của bạn và mục tiêu tăng trưởng..."
+          placeholder="Tell us about your project, timelines, or growth goals..."
           rows={3}
           className="input-field resize-none py-3"
         ></textarea>
@@ -223,13 +223,13 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
       <button
         type="submit"
         disabled={isSubmitting}
-        className="btn-primary w-full text-center justify-center font-display text-sm flex items-center gap-2 py-4 bg-gradient-to-r from-[#ff5e62] to-[#ff9966] text-[#050810] border-none shadow-[0_4px_20px_rgba(255,94,98,0.2)] hover:shadow-[0_4px_30px_rgba(255,94,98,0.35)] disabled:opacity-50"
+        className="btn-primary w-full text-center justify-center font-display text-sm flex items-center gap-2 py-4 bg-gradient-to-r from-[#ff6b83] to-[#f0a278] text-[#050810] border-none shadow-[0_4px_20px_rgba(255,107,131,0.15)] hover:shadow-[0_4px_30px_rgba(255,107,131,0.25)] disabled:opacity-50"
       >
         {isSubmitting ? (
-          <span>Đang gửi yêu cầu...</span>
+          <span>Submitting Inquiry...</span>
         ) : (
           <>
-            <span>Yêu cầu Đề xuất Chiến dịch</span>
+            <span>Request Campaign Proposal</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>

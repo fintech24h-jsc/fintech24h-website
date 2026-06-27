@@ -40,8 +40,8 @@
     --color-danger:      #ef4444;
 
     /* ─── GRADIENTS ─── */
-    --gradient-accent-warm: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%);
-    --color-orange-pink-glow: rgba(255, 94, 98, 0.15);
+    --gradient-accent-warm: linear-gradient(135deg, #ff6b83 0%, #f0a278 100%);
+    --color-orange-pink-glow: rgba(255, 107, 131, 0.07);
 
     --gradient-primary:  linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%);
     --gradient-primary-hover: linear-gradient(135deg, #00dcff 0%, #9070ff 100%);

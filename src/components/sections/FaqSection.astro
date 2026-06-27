@@ -1,69 +1,68 @@
 ---
 // src/components/sections/FaqSection.astro
-// Theo phản hồi khách hàng: Mở rộng ít nhất 15 câu hỏi.
-// Bao gồm các câu hỏi địa lý (Việt Nam, UAE, Châu Âu...) phục vụ SEO,
-// và chính sách linh hoạt ngân sách cho các câu hỏi về giá.
+// FAQ Section expanded to 15+ SEO-optimized questions in English.
+// Reflects global partner network, Vietnam legal entity, and flexible budgets.
 
 const faqs = [
   {
-    q: "Fintech24h có hoạt động tại thị trường Việt Nam không?",
-    a: "Có, Việt Nam là một trong những thị trường trọng điểm của Fintech24h tại Đông Nam Á. Chúng tôi sở hữu mạng lưới hơn 2,000+ KOLs/Influencers Việt Nam, có mối quan hệ hợp tác trực tiếp với các cộng đồng crypto lớn nhất nước và các đầu báo lớn như Cafef, VnExpress, và các trang chuyên môn Web3."
+    q: "Does Fintech24h operate in the Vietnamese market?",
+    a: "Yes, Vietnam is one of our primary growth hubs. We possess an extensive network of local partners, crypto communities, and localized media relationships, enabling Web3 projects to quickly establish a strong brand footprint in the region."
   },
   {
-    q: "Fintech24h có cung cấp dịch vụ tại UAE (Dubai) không?",
-    a: "Có, Fintech24h hoạt động mạnh mẽ tại UAE với pháp nhân và đội ngũ tại chỗ. Chúng tôi chuyên kết nối các dự án với giới đầu tư quỹ, các KOLs bản địa và khu vực Trung Đông, đồng thời tổ chức các sự kiện bên lề (side-events) Web3 lớn trong khuôn khổ các tuần lễ blockchain tại Dubai."
+    q: "Does Fintech24h have offices in the UAE (Dubai) or Europe?",
+    a: "Fintech24h is a global agency legally based in Vietnam. We operate globally through a highly integrated network of on-the-ground strategic partners in key Web3 hubs, including the UAE, Singapore, and Europe, rather than maintaining physical branch entities."
   },
   {
-    q: "Fintech24h.com có hỗ trợ các dự án tại Châu Âu không?",
-    a: "Có, chúng tôi cung cấp dịch vụ PR và Marketing toàn cầu, bao gồm khu vực Châu Âu. Fintech24h có mạng lưới phóng viên và KOLs phủ rộng các quốc gia Châu Âu như Anh, Đức, Pháp, Tây Ban Nha, giúp dự án tiếp cận cộng đồng nhà đầu tư bản địa thông qua các chiến dịch PR bản địa hóa và sự kiện offline."
+    q: "What is Fintech24h's minimum budget requirement?",
+    a: "We offer highly flexible engagement models tailored to the specific growth phase of your project. We design customized campaign scopes to match the budget constraints and target OKRs of early-stage startups and enterprise-grade networks alike."
   },
   {
-    q: "Fintech24h nhận dự án tối thiểu bao nhiêu tiền? (Yêu cầu ngân sách)",
-    a: "Fintech24h cực kỳ linh động trong việc thiết lập budget cho từng dự án. Chúng tôi hiểu rằng mỗi startup có những giai đoạn phát triển khác nhau, từ giai đoạn gọi vốn ban đầu (Seed) đến giai đoạn mở rộng thị trường lớn. Do đó, chúng tôi luôn đáp ứng linh hoạt theo nhu cầu cụ thể và ngân sách khả thi của đối tác để thiết lập các gói OKRs hiệu quả nhất."
+    q: "How do you ensure campaign transparency and ROI?",
+    a: "We prioritize verifiable metrics over vanity KPIs. Every campaign is backed by an alignment roadmap, transparent target tracking, and regular analytics dashboards to ensure you see real, on-chain growth."
   },
   {
-    q: "Fintech24h có kinh nghiệm triển khai các dự án tại Đông Nam Á không?",
-    a: "Hoàn toàn có. Ngoài Việt Nam, chúng tôi có mạng lưới đối tác và KOL chuyên sâu tại Singapore, Thái Lan, Indonesia và Philippines. Đây là các thị trường năng động nhất về tỷ lệ chấp nhận crypto, và chúng tôi có thể giúp dự án tăng trưởng người dùng thực tế vô cùng nhanh chóng."
+    q: "How long does it take to see measurable results?",
+    a: "Initial media exposure and press coverage typically launch within the first 14 days. Community sentiment shifts and campaign engagement loops show tangible traction within 30–60 days, while search authority and full-funnel conversions compound over 90 days."
   },
   {
-    q: "Quy trình kết nối và booking KOLs của Fintech24h hoạt động ra sao?",
-    a: "Chúng tôi làm việc trực tiếp với KOLs hoặc thông qua các quản lý độc quyền trực tiếp, cam kết không qua trung gian thứ ba để tối ưu chi phí. Fintech24h thực hiện lọc bot, kiểm toán tương tác thật của kênh trước khi chạy và có hệ thống tracking link đo lường chuyển đổi (on-chain & off-chain) chuẩn xác."
+    q: "What marketing channels do you specialize in?",
+    a: "We optimize the core Web3 user acquisition funnel, focusing on social media management (X/Twitter), community activation platforms (Telegram/Discord), regional public relations, and developer relations."
   },
   {
-    q: "Fintech24h có thể cam kết KPI/ROI cho chiến dịch marketing không?",
-    a: "Có. Trực tiếp chống lại các mô hình marketing rập khuôn, Fintech24h làm việc dựa trên các chỉ số đo lường hiệu quả cụ thể (KPIs/OKRs) đã cam kết trước trong hợp đồng, ví dụ: số lượng tương tác, số lượng thành viên cộng đồng mới thực tế, số bài PR hiển thị, thay vì chỉ hứa hẹn những con số ảo."
+    q: "What types of Web3 projects do you support?",
+    a: "We work across all major Web3 sectors, including Decentralized Finance (DeFi), Layer 1 & Layer 2 protocols, exchanges (CEX/DEX), GameFi/NFT projects, and emerging AI-integrated Web3 solutions."
   },
   {
-    q: "Dịch vụ PR & Media của Fintech24h hỗ trợ đăng tải trên các trang báo nào?",
-    a: "Chúng tôi hỗ trợ book bài viết và phỏng vấn trên các trang báo tài chính/Web3 hàng đầu thế giới như Bloomberg, Yahoo Finance, TechCrunch, CoinTelegraph, CoinDesk, BeInCrypto, BSC News... và hơn 150 trang tin tức khu vực."
+    q: "Do you accept payments in cryptocurrencies?",
+    a: "Yes, as a native Web3 agency, we accept payments in major stablecoins (USDT, USDC) as well as major platform assets (BTC, ETH) to facilitate smooth collaborations."
   },
   {
-    q: "Fintech24h quản trị và phát triển những kênh cộng đồng nào?",
-    a: "Chúng tôi tập trung tối ưu hóa 3 kênh cốt lõi của Web3: Telegram (xây dựng phễu chat), Discord (quản lý phân quyền, tương tác sâu và bảo mật tránh link scam), và Twitter/X (xây dựng thương hiệu và thu hút traffic tự nhiên)."
+    q: "How does your partner network benefit projects?",
+    a: "Our global network includes prominent venture capitals, major centralized exchange listing teams, key opinion leaders, and regional PR agencies, giving our clients direct fast-track access to critical industry gatekeepers."
   },
   {
-    q: "Fintech24h có hỗ trợ thiết lập các chiến dịch Airdrop và Quests không?",
-    a: "Có. Chúng tôi thiết kế và vận hành các chiến dịch Quest tích hợp trên Zealy, Galxe, TaskOn... kết hợp với các chương trình Referral và Airdrop chống Sybil (chống tài khoản ảo) để đảm bảo thu về tệp người dùng thực sự quan tâm đến sản phẩm."
+    q: "Do you help with exchange listings?",
+    a: "Through our B2B business development services, we connect projects directly with listing teams at Tier-1 and Tier-2 centralized exchanges, helping navigate the requirements and streamline the application process."
   },
   {
-    q: "Fintech24h hỗ trợ những mảng dự án nào?",
-    a: "Chúng tôi chuyên sâu về các dự án Web3, bao gồm: DeFi protocols, Layer 1 & Layer 2 Blockchains, các sàn giao dịch (CEX/DEX), GameFi, Launchpads, NFT collections và đặc biệt là các dự án tích hợp AI (Trí tuệ nhân tạo) thế hệ mới."
+    q: "How do you verify and select influencers?",
+    a: "We audit influencers using engagement-tracking tools to filter out bot traffic and ensure real, organic reach. We select partners based on their audience alignment with your specific project type."
   },
   {
-    q: "Fintech24h có hỗ trợ gọi vốn hoặc kết nối quỹ đầu tư (B2B BD) không?",
-    a: "Có. Thông qua dịch vụ B2B Business Development, chúng tôi kết nối các nhà sáng lập trực tiếp với các quỹ VC lớn, các nhà đầu tư thiên thần, đối tác làm cầu nối thanh toán, hoặc các dự án blockchain khác trong hệ sinh thái để cùng hợp tác (co-marketing)."
+    q: "Can you manage community moderation in multiple time zones?",
+    a: "Yes, our moderation network operates 24/7, providing round-the-clock chat management, spam prevention, and active engagement across multiple regional communities."
   },
   {
-    q: "Fintech24h có nhận thanh toán bằng tiền mã hóa (Crypto) không?",
-    a: "Có. Để hỗ trợ tối đa cho các đối tác Web3, chúng tôi chấp nhận linh động các hình thức thanh toán bằng các loại stablecoin phổ biến như USDT, USDC hoặc các đồng coin nền tảng lớn như BTC, ETH."
+    q: "Do you support localized campaigns?",
+    a: "Yes, we specialize in localized outreach, translating and adapting your message to fit the cultural and investment nuances of specific regions in Asia, the Middle East, and Europe."
   },
   {
-    q: "Thời gian thiết lập một chiến dịch marketing mất bao lâu?",
-    a: "Các chiến dịch KOL và PR thông thường có thể khởi động trong vòng 7–10 ngày làm việc sau khi hai bên thống nhất OKRs và tài liệu truyền thông. Đối với việc thiết lập hệ thống kiểm trị cộng đồng 24/7 và airdrop quest lớn, thời gian chuẩn bị dao động khoảng 2 tuần."
+    q: "How does Fintech24h differ from traditional agencies?",
+    a: "Unlike generic agencies, we have deep native knowledge of Web3 user behavior and tokenomics. We focus strictly on conversion-driven growth and treat your team as our own partners."
   },
   {
-    q: "Tại sao nên chọn Fintech24h thay vì các agency marketing truyền thống khác?",
-    a: "Chúng tôi là Agency chuyên biệt về Web3 và AI, hiểu rõ hành vi người dùng on-chain. Chúng tôi không sử dụng các lưới grid rập khuôn hay nội dung sáo rỗng. Mọi dịch vụ đều hướng đến chuyển đổi thật, chống tài khoản ảo và đồng hành cùng dự án như một đội ngũ nội bộ."
+    q: "How do we get started with Fintech24h?",
+    a: "Simply submit our strategy inquiry form. Our team will review your project details and follow up with a custom 90-day campaign blueprint within 24 hours."
   }
 ];
 ---
@@ -80,7 +79,7 @@ const faqs = [
 
   <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <!-- Section Heading — layout khác các section khác: left-aligned thay vì centered -->
+    <!-- Section Heading -->
     <div class="mb-20" data-animate="fade-up">
       <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>

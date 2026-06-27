@@ -210,8 +210,8 @@ export default function MultiStepForm() {
               <button
                 key={label}
                 onClick={() => { update('projectType', label); setStep(2); }}
-                className={`card-default p-5 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-[#ff9966]/50 hover:scale-[1.03] ${
-                  formData.projectType === label ? 'border-[#ff5e62] bg-[rgba(255,94,98,0.05)] shadow-[0_0_15px_rgba(255,94,98,0.15)]' : ''
+                className={`card-default p-5 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-[#f0a278]/40 hover:scale-[1.03] ${
+                  formData.projectType === label ? 'border-[#ff6b83] bg-[rgba(255,107,131,0.02)] shadow-[0_0_15px_rgba(255,107,131,0.05)]' : ''
                 }`}
                 aria-pressed={formData.projectType === label}
               >

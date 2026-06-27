@@ -1,14 +1,12 @@
 ---
 // src/components/sections/ServicesGrid.astro
-// Theo design-system.md section 7.3 + 6.1:
-// - Layout A (2+1 asymmetric): card featured lớn bên trái, 2 card nhỏ bên phải, 3 đều bên dưới
-// - Card content: [Số 01] [Tag KOL] → H3 → 2-3 câu có con số → 3 bullet → Link
-// - Đã thêm: Cực kỳ làm nổi bật dịch vụ KOL với màu cam-hồng gradient và tag HOT lấp lánh
+// Asymmetric layout (2+1) styling in Space Grotesk / astronomical dark theme.
+// Softened rose-gold accents for the KOL card instead of neon bright orange.
 import { services } from '../../data/services';
 ---
 
 <section class="py-28 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Services Overview">
-  <!-- Background orbs với mesh pattern chuyển động chìm -->
+  <!-- Background orbs with sliding mesh -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
     <div class="absolute w-[600px] h-[600px] rounded-full"
       style="background: var(--gradient-glow-purple); top: -10%; right: -5%; filter: blur(90px);
@@ -18,7 +16,7 @@ import { services } from '../../data/services';
       style="background: var(--gradient-glow-cyan); bottom: 5%; left: -8%; filter: blur(80px);
              animation: orb-pulse 8s ease-in-out infinite, orb-drift 14s ease-in-out infinite;">
     </div>
-    <!-- Điểm nhấn màu ấm ở giữa góc trái -->
+    <!-- Luxury warm rose accent point -->
     <div class="absolute w-[350px] h-[350px] rounded-full"
       style="background: radial-gradient(circle, var(--color-orange-pink-glow) 0%, transparent 70%); top: 40%; left: 10%; filter: blur(50px); animation: orb-pulse 7s ease-in-out infinite 1s;">
     </div>
@@ -34,33 +32,33 @@ import { services } from '../../data/services';
         Core Solutions
       </p>
       <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] mb-4">
-        Full-Stack <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[#ff9966] bg-clip-text text-transparent">Growth Engines</span>
+        Full-Stack <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[#f0a278] bg-clip-text text-transparent">Growth Engines</span>
       </h2>
       <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed max-w-lg">
         Specialized Web3 marketing tactics aligned with quantifiable OKRs — acting as your extended growth team.
       </p>
     </div>
 
-    <!-- Services Grid — Layout A (2+1 asymmetric) theo design-system.md 6.1 -->
+    <!-- Services Grid — Layout A (2+1 asymmetric) -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6" data-animate="stagger">
 
-      <!-- Card 1: FEATURED (KOL Service) — md:col-span-2 — NỔI BẬT CAM-HỒNG -->
+      <!-- Card 1: FEATURED (KOL Service) — md:col-span-2 — Softened Luxury Rose Gold -->
       <a
         href={`/services/${services[0].slug}`}
-        class="md:col-span-2 p-8 lg:p-12 flex flex-col justify-between group relative overflow-hidden transition-all duration-500 rounded-[24px] border border-[#ff5e62]/30 bg-gradient-to-br from-[rgba(255,94,98,0.06)] via-transparent to-[rgba(124,92,252,0.03)] hover:-translate-y-2 hover:border-[#ff9966]/60 hover:shadow-[0_20px_50px_rgba(255,94,98,0.12),0_0_0_1px_rgba(255,255,255,0.05)]"
+        class="md:col-span-2 p-8 lg:p-12 flex flex-col justify-between group relative overflow-hidden transition-all duration-500 rounded-[24px] border border-[#ff6b83]/20 bg-gradient-to-br from-[rgba(255,107,131,0.03)] via-transparent to-[rgba(124,92,252,0.03)] hover:-translate-y-2 hover:border-[#f0a278]/40 hover:shadow-[0_20px_50px_rgba(255,107,131,0.04),0_0_0_1px_rgba(255,255,255,0.05)]"
         data-animate-child
         aria-label={`Explore ${services[0].title}`}
       >
         <!-- Ambient radial glow inside -->
         <div class="absolute inset-0 opacity-40 group-hover:opacity-80 transition-opacity duration-500 pointer-events-none"
-          style="background: radial-gradient(ellipse 60% 60% at 20% 20%, rgba(255,94,98,0.1), transparent 60%);">
+          style="background: radial-gradient(ellipse 60% 60% at 20% 20%, rgba(255,107,131,0.04) 0%, transparent 60%);">
         </div>
 
         <div class="relative z-10">
-          <!-- Number + Category tags (HOT label lấp lánh) -->
+          <!-- Number + Category tags (HOT label pulse) -->
           <div class="flex items-center justify-between mb-8">
-            <span class="font-mono text-[11px] text-[#ff9966] tracking-widest font-semibold">01 / FEATURED</span>
-            <span class="tag bg-gradient-to-r from-[#ff5e62] to-[#ff9966] text-[#050810] font-bold border-none px-3.5 py-1 flex items-center gap-1.5 shadow-[0_0_15px_rgba(255,94,98,0.3)] animate-pulse rounded text-[10px] tracking-wider">
+            <span class="font-mono text-[11px] text-[#f0a278] tracking-widest font-semibold">01 / FEATURED</span>
+            <span class="tag bg-gradient-to-r from-[#ff6b83] to-[#f0a278] text-[#050810] font-bold border-none px-3.5 py-1 flex items-center gap-1.5 shadow-[0_0_15px_rgba(255,107,131,0.1)] animate-pulse rounded text-[10px] tracking-wider">
               <span class="w-1.5 h-1.5 rounded-full bg-[#050810]" aria-hidden="true"></span>
               HOT / PERFORMANCE GUARANTEED
             </span>
@@ -71,7 +69,7 @@ import { services } from '../../data/services';
             {services[0].title}
           </h3>
 
-          <!-- Description với con số cụ thể -->
+          <!-- Description -->
           <p class="text-sm md:text-base text-[var(--text-secondary)] font-body leading-relaxed mb-8 max-w-xl">
             {services[0].shortDescription}
           </p>
@@ -79,18 +77,18 @@ import { services } from '../../data/services';
           <!-- 3 bullet keywords -->
           <ul class="flex flex-wrap gap-2.5 mb-10">
             {['Network 5,000+ KOLs', 'Tier-1 Regional Coverage', 'Performance-based Contract'].map(b => (
-              <li class="tag bg-white/[0.03] border-white/10 text-[var(--text-secondary)] py-1 px-3 rounded hover:border-[#ff9966]/40 transition-colors font-body text-xs">{b}</li>
+              <li class="tag bg-white/[0.03] border-white/10 text-[var(--text-secondary)] py-1 px-3 rounded hover:border-[#f0a278]/40 transition-colors font-body text-xs">{b}</li>
             ))}
           </ul>
         </div>
 
         <!-- Link / CTA -->
-        <div class="relative z-10 inline-flex items-center gap-2 text-xs font-display font-bold text-[#ff9966] uppercase tracking-wider group-hover:gap-4 transition-all duration-300 group-hover:text-[var(--accent-cyan)]">
+        <div class="relative z-10 inline-flex items-center gap-2 text-xs font-display font-bold text-[#f0a278] uppercase tracking-wider group-hover:gap-4 transition-all duration-300 group-hover:text-[var(--accent-cyan)]">
           Explore Solution →
         </div>
       </a>
 
-      <!-- Cards 2 & 3: bên phải (normal size) -->
+      <!-- Cards 2 & 3: Right Side (normal size) -->
       {services.slice(1, 3).map((s, i) => (
         <a
           href={`/services/${s.slug}`}
@@ -125,7 +123,7 @@ import { services } from '../../data/services';
       ))}
     </div>
 
-    <!-- Bottom row: 3 cards đều nhau -->
+    <!-- Bottom row: 3 cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-animate="stagger">
       {services.slice(3).map((s, i) => (
         <a

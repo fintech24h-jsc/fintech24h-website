@@ -93,7 +93,7 @@ export default function CampaignCalculator() {
       <div className="lg:col-span-7 card-default p-6 md:p-8 flex flex-col justify-between">
         <div>
           <div className="mb-6">
-            <h3 className="font-mono text-[10px] text-[#ff9966] uppercase tracking-[0.15em] mb-3">01 / Configure Project</h3>
+            <h3 className="font-mono text-[10px] text-[#f0a278] uppercase tracking-[0.15em] mb-3">01 / Configure Project</h3>
             <div className="flex flex-wrap gap-2">
               {(['DeFi', 'L1/L2', 'Exchange', 'GameFi', 'AI Project'] as ProjectType[]).map(type => (
                 <button
@@ -101,7 +101,7 @@ export default function CampaignCalculator() {
                   onClick={() => setProjectType(type)}
                   className={`px-4 py-2 rounded-lg border text-xs font-semibold font-display transition-all ${
                     projectType === type
-                      ? 'border-[#ff5e62] bg-[rgba(255,94,98,0.06)] text-[#ff9966]'
+                      ? 'border-[#ff6b83] bg-[rgba(255,107,131,0.04)] text-[#f0a278]'
                       : 'border-white/5 bg-white/5 text-[var(--text-secondary)] hover:text-white hover:border-white/20'
                   }`}
                 >
@@ -144,7 +144,7 @@ export default function CampaignCalculator() {
               step="1000"
               value={budget}
               onChange={e => setBudget(parseInt(e.target.value))}
-              className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ff5e62]"
+              className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ff6b83]"
             />
             <div className="flex justify-between text-[9px] font-mono text-[var(--text-muted)] mt-1.5">
               <span>$3,000</span>
@@ -154,7 +154,7 @@ export default function CampaignCalculator() {
           </div>
 
           <div className="mb-2">
-            <h3 className="font-mono text-[10px] text-[#ff9966] uppercase tracking-[0.15em] mb-3">04 / Growth Tactic Toggles</h3>
+            <h3 className="font-mono text-[10px] text-[#f0a278] uppercase tracking-[0.15em] mb-3">04 / Growth Tactic Toggles</h3>
             <div className="grid sm:grid-cols-2 gap-3">
               {SERVICES_OPTIONS.map(opt => {
                 const isActive = selectedServices.includes(opt.id);
@@ -164,12 +164,12 @@ export default function CampaignCalculator() {
                     onClick={() => toggleService(opt.id)}
                     className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all duration-300 ${
                       isActive
-                        ? 'border-[#ff5e62]/40 bg-[rgba(255,94,98,0.03)]'
+                        ? 'border-[#ff6b83]/30 bg-[rgba(255,107,131,0.02)]'
                         : 'border-white/5 bg-white/5 opacity-60 hover:opacity-100 hover:border-white/10'
                     }`}
                   >
                     <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
-                      isActive ? 'border-[#ff5e62] bg-[#ff5e62] text-[#050810]' : 'border-white/20'
+                      isActive ? 'border-[#ff6b83] bg-[#ff6b83] text-[#050810]' : 'border-white/20'
                     }`}>
                       {isActive && (
                         <svg className="w-2.5 h-2.5 font-bold" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
@@ -187,13 +187,13 @@ export default function CampaignCalculator() {
       </div>
 
       {/* Dynamic Results Dashboard (Right) */}
-      <div className="lg:col-span-5 p-8 flex flex-col justify-between rounded-[24px] border border-[#ff5e62]/30 bg-gradient-to-br from-[rgba(255,94,98,0.06)] via-transparent to-[rgba(124,92,252,0.04)] shadow-[0_20px_50px_rgba(255,94,98,0.08)] relative overflow-hidden">
+      <div className="lg:col-span-5 p-8 flex flex-col justify-between rounded-[24px] border border-[#ff6b83]/20 bg-gradient-to-br from-[rgba(255,107,131,0.03)] via-transparent to-[rgba(124,92,252,0.04)] shadow-[0_20px_50px_rgba(255,107,131,0.04)] relative overflow-hidden">
         {/* Shimmer effect inside */}
-        <div className="absolute inset-0 bg-radial-gradient(circle, rgba(255,94,98,0.05) 0%, transparent 60%) pointer-events-none"></div>
+        <div className="absolute inset-0 bg-radial-gradient(circle, rgba(255,107,131,0.03) 0%, transparent 60%) pointer-events-none"></div>
 
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
-            <h4 className="font-mono text-xs text-[#ff9966] uppercase tracking-widest font-semibold">Estimate ROI & KPIs</h4>
+            <h4 className="font-mono text-xs text-[#f0a278] uppercase tracking-widest font-semibold">Estimate ROI & KPIs</h4>
             <span className="tag bg-[var(--color-success-bg)] text-[var(--color-success)] border-[var(--color-success)]/30 font-mono text-[9px]">90-Day Simulation</span>
           </div>
 
@@ -240,10 +240,10 @@ export default function CampaignCalculator() {
 
             <div className="flex justify-between items-center pt-4">
               <div>
-                <span className="font-mono text-[9px] text-[#ff9966] uppercase tracking-widest font-semibold block mb-1">Projected ROI</span>
+                <span className="font-mono text-[9px] text-[#f0a278] uppercase tracking-widest font-semibold block mb-1">Projected ROI</span>
                 <span className="text-xs font-body text-[var(--text-muted)]">Historical average reference</span>
               </div>
-              <div className="text-right bg-gradient-to-r from-[#ff5e62] to-[#ff9966] bg-clip-text text-transparent">
+              <div className="text-right bg-gradient-to-r from-[#ff6b83] to-[#f0a278] bg-clip-text text-transparent">
                 <span className="font-display text-4xl font-bold tracking-tighter">{results.roi}</span>
               </div>
             </div>
@@ -253,7 +253,7 @@ export default function CampaignCalculator() {
         <div className="relative z-10 mt-8 pt-6 border-t border-white/5">
           <a
             href="#get-proposal"
-            className="btn-primary w-full text-center justify-center font-display text-sm flex items-center gap-2 py-3.5 bg-gradient-to-r from-[#ff5e62] to-[#ff9966] text-[#050810] border-none shadow-[0_4px_20px_rgba(255,94,98,0.25)] hover:shadow-[0_4px_30px_rgba(255,94,98,0.4)]"
+            className="btn-primary w-full text-center justify-center font-display text-sm flex items-center gap-2 py-3.5 bg-gradient-to-r from-[#ff6b83] to-[#f0a278] text-[#050810] border-none shadow-[0_4px_20px_rgba(255,107,131,0.1)] hover:shadow-[0_4px_30px_rgba(255,107,131,0.2)]"
           >
             <span>Request Detailed Proposal</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
