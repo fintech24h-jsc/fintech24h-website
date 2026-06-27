@@ -6,64 +6,76 @@ import MobileMenu from './MobileMenu.astro';
 
 <header class="fixed top-0 left-0 right-0 z-50 py-4 lg:py-6" id="navbar">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="liquid-glass-premium px-6 py-3.5 flex items-center justify-between relative z-50">
 
-      <!-- Logo -->
-      <a href="/" class="flex items-center gap-2 group" aria-label="Fintech24h Homepage">
-        <span class="font-display font-bold text-xl sm:text-2xl text-[var(--text-primary)] tracking-tight">
-          Fintech<span class="text-[var(--accent-cyan)]">24h</span>
-        </span>
-      </a>
+    <!-- Outer wrapper handles the spotlight ring (not clipped) -->
+    <div class="navbar-spotlight-wrap">
+      <!-- Inner glass bar -->
+      <div class="liquid-glass-premium px-6 py-3.5 flex items-center justify-between relative z-50">
 
-      <!-- Desktop Navigation -->
-      <nav class="hidden lg:flex items-center gap-8" aria-label="Main navigation">
-        {mainNavLinks.map((link) => (
-          <div class="relative group">
-            {link.children ? (
-              <div>
-                <button
-                  class="flex items-center gap-1.5 font-display text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors py-2 focus:outline-none"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                >
-                  {link.label}
-                  <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-
-                <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 bg-[var(--bg-glass)] border border-[var(--border-default)] rounded-xl p-2 shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 backdrop-blur-xl">
-                  <div class="flex flex-col gap-0.5">
-                    {link.children.map((child) => (
-                      <a
-                        href={child.href}
-                        class="font-body text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] hover:bg-white/[0.04] px-3 py-2.5 rounded-lg transition-all duration-150"
-                      >
-                        {child.label}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <a
-                href={link.href}
-                class="font-display text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors py-2"
-              >
-                {link.label}
-              </a>
-            )}
-          </div>
-        ))}
-      </nav>
-
-      <!-- Right side -->
-      <div class="flex items-center gap-4">
-        <a
-          href="/#get-proposal"
-          class="hidden sm:inline-flex btn-primary text-sm py-2.5 px-5"
-        >
-          <span>Get Proposal</span>
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 group" aria-label="Fintech24h Homepage">
+          <span class="font-display font-bold text-xl sm:text-2xl text-[var(--text-primary)] tracking-tight">
+            Fintech<span class="text-[var(--accent-cyan)]">24h</span>
+          </span>
         </a>
 
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center gap-8" aria-label="Main navigation">
+          {mainNavLinks.map((link) => (
+            <div class="relative group">
+              {link.children ? (
+                <div>
+                  <button
+                    class="flex items-center gap-1.5 font-display text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors py-2 focus:outline-none"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    {link.label}
+                    <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+
+                  <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 bg-[var(--bg-glass)] border border-[var(--border-default)] rounded-xl p-2 shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 backdrop-blur-xl">
+                    <div class="flex flex-col gap-0.5">
+                      {link.children.map((child) => (
+                        <a
+                          href={child.href}
+                          class="font-body text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] hover:bg-white/[0.04] px-3 py-2.5 rounded-lg transition-all duration-150"
+                        >
+                          {child.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : link.label === 'Get Proposal' ? (
+                <a
+                  href={link.href}
+                  class="font-display text-sm font-bold text-[var(--text-primary)] bg-gradient-to-r from-[#ff6b83] to-[#f0a278] bg-clip-text text-transparent hover:opacity-80 transition-opacity py-2"
+                >
+                  {link.label}
+                </a>
+              ) : link.label === 'Partnership' ? (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-display text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors py-2"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <a
+                  href={link.href}
+                  class="font-display text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors py-2"
+                >
+                  {link.label}
+                </a>
+              )}
+            </div>
+          ))}
+        </nav>
+
+        <!-- Hamburger -->
         <button
           id="menu-toggle"
           class="lg:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] focus:outline-none"
@@ -79,8 +91,8 @@ import MobileMenu from './MobileMenu.astro';
             />
           </svg>
         </button>
-      </div>
 
+      </div>
     </div>
   </div>
 
@@ -88,6 +100,55 @@ import MobileMenu from './MobileMenu.astro';
 </header>
 
 <style>
+  /* ─── Navbar outer wrapper — spotlight ring lives here ─── */
+  .navbar-spotlight-wrap {
+    position: relative;
+    border-radius: 18px;
+  }
+
+  /* Conic spotlight ring — absolutely placed on the wrapper, not clipped */
+  .navbar-spotlight-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: 19px;
+    background: conic-gradient(
+      from var(--sweep-angle, 0deg),
+      transparent 0deg,
+      transparent 55deg,
+      rgba(0, 200, 240, 0.95) 80deg,
+      rgba(240, 162, 120, 0.85) 90deg,
+      rgba(124, 92, 252, 0.95) 100deg,
+      transparent 130deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 1.5px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+  }
+
+  .navbar-spotlight-wrap:hover::after {
+    opacity: 1;
+    animation: navbar-spotlight-sweep 2s linear infinite;
+  }
+  .navbar-spotlight-wrap:hover .liquid-glass-premium {
+    box-shadow: 0 8px 40px 0 rgba(0, 200, 240, 0.1), 0 0 25px rgba(124, 92, 252, 0.06);
+  }
+
+  /* Ensure glass inner bar is above the spotlight ring */
+  .liquid-glass-premium {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Scrolled state */
   #navbar {
     transition: transform 0.3s ease, padding 0.3s ease;
   }

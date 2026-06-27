@@ -371,28 +371,51 @@
     z-index: 1;
     overflow: hidden;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-    transition: box-shadow 0.4s ease;
+    transition: box-shadow 0.5s ease;
   }
+  /* Default subtle border via ::before */
   .liquid-glass-premium::before {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: 16px;
     padding: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08));
+    background: rgba(255, 255, 255, 0.07);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
-    transition: background 0.4s ease, filter 0.4s ease;
+  }
+  /* Rotating spotlight ring via ::after — ONLY on hover */
+  .liquid-glass-premium::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px;
+    background: conic-gradient(
+      from var(--sweep-angle, 0deg),
+      transparent 0deg,
+      transparent 60deg,
+      rgba(0, 200, 240, 0.9) 90deg,
+      rgba(240, 162, 120, 0.8) 100deg,
+      rgba(124, 92, 252, 0.9) 110deg,
+      transparent 140deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 1.5px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
   }
   .liquid-glass-premium:hover {
-    box-shadow: 0 8px 32px 0 rgba(0, 200, 240, 0.08), 0 0 15px rgba(124, 92, 252, 0.05);
+    box-shadow: 0 8px 40px 0 rgba(0, 200, 240, 0.1), 0 0 20px rgba(124, 92, 252, 0.06);
   }
-  .liquid-glass-premium:hover::before {
-    background: linear-gradient(90deg, transparent 30%, var(--accent-cyan) 45%, #f0a278 50%, var(--accent-purple) 55%, transparent 70%);
-    background-size: 200% auto;
-    animation: border-sweep 2.5s linear infinite;
+  .liquid-glass-premium:hover::after {
+    opacity: 1;
+    animation: navbar-spotlight-sweep 2s linear infinite;
   }
 
   .liquid-glass {
@@ -484,4 +507,29 @@
 
 .animate-glow-pulse {
   animation: animate-glow-pulse 8s ease-in-out infinite;
+}
+
+/* Spotlight sweep keyframe for border-sweep (buttons) */
+@keyframes border-sweep {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* Navbar conic spotlight rotation */
+@keyframes navbar-spotlight-sweep {
+  from { --sweep-angle: 0deg; }
+  to   { --sweep-angle: 360deg; }
+}
+@keyframes marquee-scroll-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.marquee-track-reverse {
+  display: flex;
+  gap: 4rem;
+  animation: marquee-scroll-reverse 35s linear infinite;
+}
+.marquee-track-reverse:hover {
+  animation-play-state: paused;
 }
