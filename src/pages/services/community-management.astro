@@ -1,9 +1,210 @@
 ---
 // src/pages/services/community-management.astro
-import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import CalendlyEmbed from '../../components/ui/CalendlyEmbed.tsx';
+import AnimatedCounter from '../../components/ui/AnimatedCounter.tsx';
 import { services } from '../../data/services';
 
 const service = services.find((s) => s.slug === 'community-management')!;
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Services', item: 'https://fintech24h.com/services' },
+  { name: service.title, item: `https://fintech24h.com/services/${service.slug}` }
+];
+
+const growthSteps = [
+  {
+    timeframe: 'Days 01-14',
+    title: 'Seed & Secure',
+    summary: 'Deploy anti-sybil measures, set up 24/7 moderation bots, and onboard the initial core active members.',
+    metric: '99.9%',
+    metricLabel: 'Spam Prevented'
+  },
+  {
+    timeframe: 'Days 15-45',
+    title: 'Viral Loops & Quests',
+    summary: 'Launch Zealy and Galxe campaigns to incentivize high-quality on-chain and social interactions.',
+    metric: '10x',
+    metricLabel: 'Engagement Spike'
+  },
+  {
+    timeframe: 'Days 46-90',
+    title: 'Scale & Retain',
+    summary: 'Host weekly AMAs, gamified reward systems, and deep sentiment analysis to minimize member churn.',
+    metric: '85%',
+    metricLabel: 'Retention Rate'
+  },
+  {
+    timeframe: 'Day 90+',
+    title: 'Decentralized Cult',
+    summary: 'Transition casual members into fierce project advocates who organically defend and promote the ecosystem.',
+    metric: '100K+',
+    metricLabel: 'Active Members'
+  }
+];
 ---
 
-<ServiceLayout service={service} />
+<BaseLayout
+  title={`${service.title} | Web3 Growth & Moderation`}
+  description={service.shortDescription}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- 1. Hero Section -->
+  <section class="relative min-h-[85vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
+    <!-- Ambient Background -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[600px] h-[600px] rounded-full" style="background:var(--gradient-glow-purple); top:-10%; right:-10%; animation:orb-pulse 10s ease-in-out infinite, orb-drift 15s ease-in-out infinite; filter:blur(60px); opacity:0.18"></div>
+      <div class="grid-pattern absolute inset-0 opacity-15"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto w-full text-center">
+      <div class="inline-flex items-center gap-2 mb-8" data-hero-line>
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] animate-pulse"></span>
+        <span class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em]">
+          Viral Loops · 24/7 Moderation · Sybil Defense
+        </span>
+      </div>
+
+      <h1 class="font-display font-bold max-w-5xl mx-auto" data-hero-line>
+        <span class="block text-[clamp(2.5rem,5.5vw,5rem)] tracking-[-0.03em] leading-[1.05] text-[var(--text-primary)]">
+          Build An Army.
+        </span>
+        <span class="block text-[clamp(2.5rem,5.5vw,5rem)] tracking-[-0.03em] leading-[1.05] bg-gradient-to-r from-[var(--accent-purple)] via-[#d8b4fe] to-[#fbcfe8] bg-clip-text text-transparent pb-2">
+          Defend Your Ecosystem.
+        </span>
+      </h1>
+
+      <p class="font-body text-[clamp(1.1rem,2vw,1.35rem)] text-[var(--text-secondary)] max-w-2xl mx-auto mt-8 mb-14 leading-relaxed" data-hero-line>
+        {service.shortDescription}
+      </p>
+
+      <div class="flex justify-center" data-hero-line>
+        <a href="#book-call" class="btn-primary bg-gradient-to-r from-[var(--accent-purple)] to-[#d8b4fe] px-8 py-4 text-base text-[#050810] shadow-[0_0_24px_rgba(124,92,252,0.3)]">
+          Scale Your Community →
+        </a>
+      </div>
+
+      <!-- Hero Stats -->
+      <div class="mt-24 max-w-4xl mx-auto" data-animate="fade-up">
+        <div class="grid grid-cols-3 divide-x divide-white/[0.06] bg-[var(--bg-glass)] border border-white/[0.06] rounded-2xl backdrop-blur-md">
+          {service.metrics.map((m, i) => {
+            const numStr = m.value.replace(/[^0-9.]/g, '');
+            const suffix = m.value.replace(/[0-9.]/g, '');
+            return (
+              <div class="text-center px-4 py-8 md:px-8">
+                <div class="font-display text-4xl md:text-5xl font-bold text-[var(--accent-purple)] mb-2">
+                  <AnimatedCounter target={parseFloat(numStr)} suffix={suffix} duration={1.5 + (i * 0.2)} client:visible />
+                </div>
+                <div class="font-mono text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-widest">{m.label}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Horizontal Process Timeline Section -->
+  <section class="py-24 relative z-10 bg-[var(--bg-secondary)] border-y border-white/[0.03]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-20" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2">
+          <div class="w-6 h-px bg-[var(--accent-purple)]"></div>
+          <span class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.12em]">Blueprint</span>
+          <div class="w-6 h-px bg-[var(--accent-purple)]"></div>
+        </div>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
+          The <span class="bg-gradient-to-r from-[var(--accent-purple)] to-[#fbcfe8] bg-clip-text text-transparent">Growth Framework</span>
+        </h2>
+      </div>
+
+      <div class="relative">
+        <!-- Connector line (scaleX animate khi scroll) -->
+        <div class="hidden lg:block absolute top-[52px] left-[10%] right-[10%] h-px bg-white/[0.06]" aria-hidden="true">
+          <div id="process-line" class="h-full bg-gradient-to-r from-[var(--accent-purple)] to-[var(--accent-cyan)] origin-left scale-x-0 transition-transform duration-1000 ease-out"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {growthSteps.map((step, i) => (
+            <div class="relative" data-animate="fade-up" style={`--delay: ${i * 0.1}s`}>
+              <!-- Step dot -->
+              <div class="w-6 h-6 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] mx-auto mb-6 relative z-10 hidden lg:flex items-center justify-center">
+                <div class="w-2 h-2 rounded-full bg-[var(--accent-purple)]"></div>
+              </div>
+
+              <!-- Content Card -->
+              <div class="glass-card rounded-xl p-6 relative overflow-hidden h-full flex flex-col group">
+                <span class="absolute top-2 right-4 font-display text-7xl font-bold text-white/[0.03] group-hover:text-white/[0.06] transition-colors leading-none select-none" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                
+                <span class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-widest mb-3 block">
+                  {step.timeframe}
+                </span>
+                <h3 class="font-display font-semibold text-[var(--text-primary)] text-lg mb-3">{step.title}</h3>
+                <p class="font-body text-sm text-[var(--text-secondary)] leading-relaxed flex-1">{step.summary}</p>
+                
+                <div class="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2">
+                  <span class="font-display text-lg font-bold text-[var(--accent-cyan)]">{step.metric}</span>
+                  <span class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-wider">{step.metricLabel}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Calendly Section -->
+  <section id="book-call" class="py-24 relative">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="card-default p-8 lg:p-12 border-[var(--accent-purple)]/20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-radial-gradient(circle, rgba(124,92,252,0.08) 0%, transparent 70%) pointer-events-none"></div>
+        <div class="text-center max-w-2xl mx-auto mb-10 relative z-10">
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">
+            Audit Your Community
+          </h2>
+          <p class="text-lg text-[var(--text-secondary)] font-body">
+            Book a 15-minute strategy session. We'll identify retention bottlenecks and map out a viral growth campaign.
+          </p>
+        </div>
+        <div class="relative z-10">
+          <CalendlyEmbed client:load />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    
+    // Hero line-by-line reveal
+    const heroLines = document.querySelectorAll('[data-hero-line]');
+    if (heroLines.length) {
+      gsap.fromTo(heroLines,
+        { opacity: 0, y: 24, filter: 'blur(6px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9, stagger: 0.1, ease: 'power3.out', delay: 0.1 }
+      );
+    }
+
+    // Process Line Reveal
+    ScrollTrigger.create({
+      trigger: '#process-line',
+      start: 'top 75%',
+      once: true,
+      onEnter: () => {
+        document.getElementById('process-line')?.classList.add('scale-x-100');
+      },
+    });
+  });
+</script>

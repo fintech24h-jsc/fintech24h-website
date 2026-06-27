@@ -1,9 +1,170 @@
 ---
 // src/pages/services/pr-media.astro
-import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import CalendlyEmbed from '../../components/ui/CalendlyEmbed.tsx';
+import AnimatedCounter from '../../components/ui/AnimatedCounter.tsx';
 import { services } from '../../data/services';
 
 const service = services.find((s) => s.slug === 'pr-media')!;
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Services', item: 'https://fintech24h.com/services' },
+  { name: service.title, item: `https://fintech24h.com/services/${service.slug}` }
+];
 ---
 
-<ServiceLayout service={service} />
+<BaseLayout
+  title={`${service.title} | Tier-1 Crypto Publications`}
+  description={service.shortDescription}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- 1. Hero Section -->
+  <section class="relative min-h-[85vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
+    <!-- Ambient Background -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[500px] h-[500px] rounded-full" style="background:var(--gradient-glow-cyan); top:-10%; left:50%; transform:translateX(-50%); animation:orb-pulse 11s ease-in-out infinite, orb-drift 14s ease-in-out infinite; filter:blur(50px); opacity:0.20"></div>
+      <div class="grid-pattern absolute inset-0 opacity-15"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto w-full text-center">
+      <div class="inline-flex items-center gap-2 mb-8" data-hero-line>
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-success)] animate-pulse"></span>
+        <span class="font-mono text-xs text-[var(--color-success)] uppercase tracking-[0.15em]">
+          Authority Building · Global Distribution
+        </span>
+      </div>
+
+      <h1 class="font-display font-bold max-w-5xl mx-auto" data-hero-line>
+        <span class="block text-[clamp(2.5rem,5.5vw,5rem)] tracking-[-0.03em] leading-[1.05] text-[var(--text-primary)]">
+          Command Attention.
+        </span>
+        <span class="block text-[clamp(2.5rem,5.5vw,5rem)] tracking-[-0.03em] leading-[1.05] bg-gradient-to-r from-[var(--color-success)] via-[#6ee7b7] to-[var(--accent-cyan)] bg-clip-text text-transparent pb-2">
+          Control The Narrative.
+        </span>
+      </h1>
+
+      <p class="font-body text-[clamp(1.1rem,2vw,1.35rem)] text-[var(--text-secondary)] max-w-2xl mx-auto mt-8 mb-14 leading-relaxed" data-hero-line>
+        {service.shortDescription}
+      </p>
+
+      <div class="flex justify-center" data-hero-line>
+        <a href="#book-call" class="btn-primary bg-gradient-to-r from-[var(--color-success)] to-[var(--accent-cyan)] px-8 py-4 text-base text-white shadow-[0_0_24px_rgba(16,185,129,0.3)]">
+          Plan Your Launch →
+        </a>
+      </div>
+
+      <!-- Hero Stats -->
+      <div class="mt-24 max-w-4xl mx-auto" data-animate="fade-up">
+        <div class="grid grid-cols-3 divide-x divide-white/[0.06] bg-[var(--bg-glass)] border border-white/[0.06] rounded-2xl backdrop-blur-md">
+          {service.metrics.map((m, i) => {
+            const numStr = m.value.replace(/[^0-9.]/g, '');
+            const suffix = m.value.replace(/[0-9.]/g, '');
+            return (
+              <div class="text-center px-4 py-8 md:px-8">
+                <div class="font-display text-4xl md:text-5xl font-bold text-[var(--color-success)] mb-2">
+                  <AnimatedCounter target={parseFloat(numStr)} suffix={suffix} duration={1.5 + (i * 0.2)} client:visible />
+                </div>
+                <div class="font-mono text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-widest">{m.label}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. The Network Section (Masonry-like) -->
+  <section class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2">
+          <div class="w-6 h-px bg-[var(--color-success)]"></div>
+          <span class="font-mono text-xs text-[var(--color-success)] uppercase tracking-[0.12em]">Distribution</span>
+          <div class="w-6 h-px bg-[var(--color-success)]"></div>
+        </div>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
+          Permanent <span class="bg-gradient-to-r from-[var(--color-success)] to-[var(--accent-cyan)] bg-clip-text text-transparent">Digital Assets</span>
+        </h2>
+      </div>
+
+      <!-- Asymmetric Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Large Card -->
+        <div class="lg:col-span-8 card-default p-8 md:p-12 border-[var(--color-success)]/20 bg-gradient-to-br from-[var(--color-success)]/5 to-transparent relative group" data-animate="scale-in">
+          <h3 class="font-display text-3xl font-bold text-[var(--text-primary)] mb-6">Tier-1 Media Placements</h3>
+          <p class="font-body text-[var(--text-secondary)] text-lg mb-8 leading-relaxed max-w-2xl">
+            {service.longDescription}
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex items-center gap-3 p-4 rounded-lg bg-[var(--bg-primary)] border border-white/[0.06]">
+              <svg class="w-6 h-6 text-[var(--color-success)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+              <span class="font-body text-sm text-[var(--text-primary)]">Rapid Editorial Review</span>
+            </div>
+            <div class="flex items-center gap-3 p-4 rounded-lg bg-[var(--bg-primary)] border border-white/[0.06]">
+              <svg class="w-6 h-6 text-[var(--color-success)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span class="font-body text-sm text-[var(--text-primary)]">High-DA SEO Backlinks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stacked Small Cards -->
+        <div class="lg:col-span-4 flex flex-col gap-6">
+          <div class="card-default p-8 flex-1 relative group" data-animate="scale-in">
+            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">Crisis PR Management</h3>
+            <p class="font-body text-[var(--text-secondary)] text-sm leading-relaxed">
+              Brand narrative control during market volatility or security incidents. Fast response times to protect investor confidence.
+            </p>
+          </div>
+          <div class="card-default p-8 flex-1 relative group" data-animate="scale-in">
+            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">Multi-lingual Translation</h3>
+            <p class="font-body text-[var(--text-secondary)] text-sm leading-relaxed">
+              Press releases crafted and translated by native Web3 copywriters ensuring tone and technical accuracy.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Calendly Section -->
+  <section id="book-call" class="py-24 relative">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="card-default p-8 lg:p-12 border-[var(--color-success)]/20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%) pointer-events-none"></div>
+        <div class="text-center max-w-2xl mx-auto mb-10 relative z-10">
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">
+            Secure Your Feature
+          </h2>
+          <p class="text-lg text-[var(--text-secondary)] font-body">
+            Book a 15-minute editorial strategy call. We'll map out a media campaign timeline tailored to your upcoming milestones.
+          </p>
+        </div>
+        <div class="relative z-10">
+          <CalendlyEmbed client:load />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const heroLines = document.querySelectorAll('[data-hero-line]');
+    if (heroLines.length) {
+      gsap.fromTo(heroLines,
+        { opacity: 0, y: 24, filter: 'blur(6px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9, stagger: 0.1, ease: 'power3.out', delay: 0.1 }
+      );
+    }
+  });
+</script>

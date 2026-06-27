@@ -2,7 +2,7 @@ export interface Service {
   id: string;
   title: string;
   slug: string;
-  icon: string; // Lucide icon name or emoji representation
+  icon: string;
   shortDescription: string;
   longDescription: string;
   features: string[];
@@ -37,7 +37,7 @@ export const services: Service[] = [
   },
   {
     id: 'pr-media',
-    title: 'PR & Media Coverage',
+    title: 'PR & Media Campaigns',
     slug: 'pr-media',
     icon: 'FileText',
     shortDescription: 'Get featured on Tier-1 financial and crypto publications: Bloomberg, CoinTelegraph, Yahoo Finance.',
@@ -60,59 +60,83 @@ export const services: Service[] = [
     ]
   },
   {
-    id: 'community-management',
-    title: 'Community Management',
+    id: 'community-growth',
+    title: 'Community Growth & Management',
     slug: 'community-management',
     icon: 'MessageSquare',
-    shortDescription: '24/7 moderation, engagement, and hype-building across Telegram, Discord, and Twitter.',
-    longDescription: 'Your community is your currency. We provide professional community managers and moderators who operate 24/7 to welcome new users, moderate discussions, answer technical FAQs, prevent scams, and organize AMA events.',
+    shortDescription: 'Scale your active user base fast with viral loops, 24/7 moderation, and structured airdrops.',
+    longDescription: 'Your community is your currency. We design data-driven viral loops and provide 24/7 moderation to turn passive members into active advocates. From anti-sybil airdrops to deep engagement tracking, we handle the entire funnel.',
     features: [
-      '24/7 multi-lingual moderation (English, Vietnamese, Chinese, Bahasa, etc.)',
-      'Weekly interactive AMA sessions, quizzes, and community rewards',
-      'Advanced anti-spam and security bot configurations',
-      'Weekly analysis reports on sentiment and growth analytics'
+      '24/7 multi-lingual moderation and proactive engagement strategies',
+      'Viral referral loop design and gamified task boards (Zealy, Galxe)',
+      'Sybil defense mechanisms and anti-spam security configurations',
+      'Weekly analysis reports on sentiment, retention, and growth metrics'
     ],
     benefits: [
       'Safe, scam-free environments that foster investor confidence',
-      'High retention rates of active, supportive community advocates',
-      'Direct channel to convert users to active product testers'
+      'Explosive social media and on-chain transaction growth',
+      'High retention rates of active, supportive community advocates'
     ],
     metrics: [
-      { label: 'Active Members Managed', value: '100K+' },
-      { label: 'Scams Prevented', value: '99.9%' },
+      { label: 'Members Managed', value: '100K+' },
+      { label: 'Anti-Sybil Filtering', value: '98%' },
       { label: 'Avg Response Time', value: '<2 mins' }
     ]
   },
   {
-    id: 'growth-airdrop',
-    title: 'Growth & Airdrop Campaigns',
-    slug: 'growth-airdrop',
-    icon: 'TrendingUp',
-    shortDescription: 'Launch viral referral, Zealy campaigns, and structured airdrops that acquire active users.',
-    longDescription: 'Scale your active user base fast. We design and execute data-driven viral loops, referral schemes, and gamified task boards (Zealy, Galxe, QuestN) to reward users for on-chain interactions and social engagement.',
+    id: 'event-marketing',
+    title: 'Web3 Event Marketing',
+    slug: 'event-marketing',
+    icon: 'Ticket',
+    shortDescription: 'Host exclusive side-events, VC dinners, and hackathons that leave a lasting impact.',
+    longDescription: 'Transform digital presence into real-world authority. From Token2049 side-events to private VC dinners in Tier-1 cities, we design, manage, and execute offline experiences that connect you directly with strategic partners and high-net-worth individuals.',
     features: [
-      'Viral referral loop design and smart contract reward triggers',
-      'Zealy, Galxe, and QuestN task board setup and optimization',
-      'Sybil defense strategies to filter bot traffic and protect budget',
-      'Incentivized testnet and mainnet transaction growth programs'
+      'End-to-end event conceptualization and logistical execution',
+      'Curated guest list management (VCs, Founders, Tier-1 KOLs)',
+      'High-impact venue sourcing and immersive brand experiences',
+      'Post-event media coverage and partnership follow-up sequences'
     ],
     benefits: [
-      'Explosive social media and on-chain transaction growth',
-      'High-intent user acquisition for products and protocols',
-      'Gamified marketing that improves community product knowledge'
+      'Direct face-time with industry leaders and potential investors',
+      'Elevated brand perception through premium real-world experiences',
+      'High-conversion networking environments optimized for deal-flow'
     ],
     metrics: [
-      { label: 'Campaign Participants', value: '500K+' },
-      { label: 'Anti-Sybil Filtering', value: '98%' },
-      { label: 'On-chain Growth', value: '15x+' }
+      { label: 'Events Hosted', value: '50+' },
+      { label: 'Tier-1 Attendees', value: '5,000+' },
+      { label: 'Lead Conversion', value: '45%+' }
+    ]
+  },
+  {
+    id: 'ai-marketing',
+    title: 'AI-Powered Marketing',
+    slug: 'ai-marketing',
+    icon: 'Cpu',
+    shortDescription: 'Automate community engagement, data scraping, and sentiment analysis with specialized AI models.',
+    longDescription: 'Deploy intelligence at scale. We integrate custom AI solutions to supercharge your marketing operations—from sentiment analysis bots that track community health to automated content distribution pipelines that operate with machine precision.',
+    features: [
+      'Custom AI bots for automated, context-aware community moderation',
+      'Deep data scraping and real-time sentiment analysis on social platforms',
+      'Programmatic content generation and localized distribution',
+      'Predictive analytics for campaign performance and churn reduction'
+    ],
+    benefits: [
+      '24/7 operational efficiency without scaling human headcount',
+      'Data-driven insights that eliminate guesswork from marketing',
+      'Hyper-personalized engagement at a massive scale'
+    ],
+    metrics: [
+      { label: 'Automated Interactions', value: '1M+' },
+      { label: 'Sentiment Accuracy', value: '95%' },
+      { label: 'Operational Savings', value: '$80K/mo' }
     ]
   },
   {
     id: 'business-development',
-    title: 'Business Development & Partnerships',
+    title: 'Business Development',
     slug: 'business-development',
     icon: 'Briefcase',
-    shortDescription: 'Connect with exchanges, VC networks, launchpads, and strategic partners globally.',
+    shortDescription: 'Connect with tier-1 exchanges, VC networks, launchpads, and strategic partners globally.',
     longDescription: 'Accelerate your market entry with critical B2B partnerships. We introduce your project to key decision-makers at tier-1 launchpads, venture capital firms, market makers, and layer-1 blockchains to expand your distribution channels.',
     features: [
       'Introductions to Top 20 centralized exchanges (CEXs) and launchpads',
@@ -129,30 +153,6 @@ export const services: Service[] = [
       { label: 'VC Partner Network', value: '80+' },
       { label: 'Exchanges Connected', value: '25+' },
       { label: 'Capital Facilitated', value: '$12M+' }
-    ]
-  },
-  {
-    id: 'content-strategy-seo',
-    title: 'Content Strategy & Technical SEO',
-    slug: 'content-strategy-seo',
-    icon: 'Search',
-    shortDescription: 'Rank for high-intent search terms. Full-funnel content design + programmatic SEO.',
-    longDescription: 'Own search engine results page (SERP) real estate. We write long-form guides, documentation, and educational content optimized for Web3 keywords to ensure consistent flow of organic traffic without reliance on paid advertising.',
-    features: [
-      'In-depth crypto keyword mapping and competitive analysis',
-      'Astro-optimized technical SEO structure (schema, page speed)',
-      'High-quality, plagiarism-free educational articles and guides',
-      'Programmatic landing pages for token pairs and market data'
-    ],
-    benefits: [
-      'Compounding flow of high-intent organic visitors',
-      'Enhanced search indexation speed on Google and Bing',
-      'Decreased user acquisition cost (CAC) over time'
-    ],
-    metrics: [
-      { label: 'Monthly Organic Visits', value: '300K+' },
-      { label: 'Keywords Ranked Top 3', value: '1,500+' },
-      { label: 'CPC Savings', value: '$45K/mo' }
     ]
   }
 ];
