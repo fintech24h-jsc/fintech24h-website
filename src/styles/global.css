@@ -390,9 +390,9 @@
     box-shadow: 0 8px 32px 0 rgba(0, 200, 240, 0.08), 0 0 15px rgba(124, 92, 252, 0.05);
   }
   .liquid-glass-premium:hover::before {
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), var(--accent-cyan), var(--accent-purple), #f0a278, rgba(255, 255, 255, 0.05));
+    background: linear-gradient(90deg, transparent 30%, var(--accent-cyan) 45%, #f0a278 50%, var(--accent-purple) 55%, transparent 70%);
     background-size: 200% auto;
-    animation: border-sweep 3s linear infinite;
+    animation: border-sweep 2.5s linear infinite;
   }
 
   .liquid-glass {
