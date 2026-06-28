@@ -23,6 +23,68 @@ const SERVICES_OPTIONS: ServiceOption[] = [
 
 const BUDGET_MILESTONES = [3000, 5000, 10000, 15000, 25000, 35000, 50000];
 
+const PROJECT_TYPES_LIST = [
+  {
+    label: 'DeFi' as ProjectType,
+    icon: (
+      <svg className="w-6 h-6 mb-1 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 3h12l4 6-10 12L2 9z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11 3 8 9l4 12 4-12-3-6" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2 9h20" />
+      </svg>
+    )
+  },
+  {
+    label: 'L1/L2' as ProjectType,
+    icon: (
+      <svg className="w-6 h-6 mb-1 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="6" height="6" rx="1" />
+        <rect x="15" y="3" width="6" height="6" rx="1" />
+        <rect x="15" y="15" width="6" height="6" rx="1" />
+        <rect x="3" y="15" width="6" height="6" rx="1" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 6h6M9 18h6M6 9v6M18 9v6" />
+      </svg>
+    )
+  },
+  {
+    label: 'Exchange' as ProjectType,
+    icon: (
+      <svg className="w-6 h-6 mb-1 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 3v18M18 3v18M12 1v22" />
+        <rect x="4" y="6" width="4" height="10" rx="1" fill="none" />
+        <rect x="10" y="4" width="4" height="14" rx="1" fill="none" />
+        <rect x="16" y="9" width="4" height="8" rx="1" fill="none" />
+      </svg>
+    )
+  },
+  {
+    label: 'GameFi' as ProjectType,
+    icon: (
+      <svg className="w-6 h-6 mb-1 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <rect x="2" y="6" width="20" height="12" rx="3" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12h4M8 10v4M15 11h.01M18 13h.01" />
+      </svg>
+    )
+  },
+  {
+    label: 'AI Project' as ProjectType,
+    icon: (
+      <svg className="w-6 h-6 mb-1 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <rect x="5" y="5" width="14" height="14" rx="2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 9h6v6H9zM9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4" />
+      </svg>
+    )
+  },
+  {
+    label: 'Other' as ProjectType,
+    icon: (
+      <svg className="w-6 h-6 mb-1 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+    )
+  }
+];
+
 export default function CampaignCalculator() {
   const [projectType, setProjectType] = useState<ProjectType | null>(null);
   const [customProjectType, setCustomProjectType] = useState('');
@@ -130,303 +192,306 @@ export default function CampaignCalculator() {
   return (
     <div className="w-full space-y-6 relative transition-all duration-500">
       {errorMsg && (
-          <div className="p-3 text-xs text-red-400 border border-red-500/20 bg-red-500/5 rounded-xl font-body">
-            {errorMsg}
-          </div>
-        )}
+        <div className="p-3 text-xs text-red-400 border border-red-500/20 bg-red-500/5 rounded-xl font-body">
+          {errorMsg}
+        </div>
+      )}
 
-        {isSuccess ? (
-          <div className="p-8 text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-[var(--color-success-bg)] border border-[var(--color-success)]/20 flex items-center justify-center mx-auto text-[var(--color-success)] text-xl">
-              ✓
-            </div>
-            <h4 className="font-display text-lg font-bold text-white">Strategy Request Sent!</h4>
-            <p className="text-xs text-[var(--text-secondary)] font-body max-w-sm mx-auto">
-              Our growth specialists will review your selections and prepare a tailored proposal within 24 hours.
-            </p>
+      {isSuccess ? (
+        <div className="p-8 text-center space-y-4">
+          <div className="w-12 h-12 rounded-full bg-[var(--color-success-bg)] border border-[var(--color-success)]/20 flex items-center justify-center mx-auto text-[var(--color-success)] text-xl">
+            ✓
           </div>
-        ) : (
-          <div className="space-y-6">
+          <h4 className="font-display text-lg font-bold text-white">Strategy Request Sent!</h4>
+          <p className="text-xs text-[var(--text-secondary)] font-body max-w-sm mx-auto">
+            Our growth specialists will review your selections and prepare a tailored proposal within 24 hours.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          
+          {/* Step 1: Sector Grid of Cards */}
+          <div>
+            <span className="font-mono text-[9px] text-[var(--accent-cyan)] uppercase tracking-wider block mb-4 text-center">
+              Choose Project Type
+            </span>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
+              {PROJECT_TYPES_LIST.map(({ label, icon }) => (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => setProjectType(label)}
+                  className={`card-default p-5 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-[var(--accent-cyan)]/40 hover:scale-[1.03] cursor-pointer ${
+                    projectType === label
+                      ? 'border-[var(--accent-cyan)] bg-[rgba(0,200,240,0.06)] text-[var(--accent-cyan)] shadow-[0_0_15px_rgba(0,200,240,0.1)]'
+                      : 'border-white/5 bg-white/5 text-[var(--text-secondary)] hover:text-white hover:border-white/20'
+                  }`}
+                >
+                  <div className="mb-2 text-[var(--accent-cyan)] group-hover:scale-110 transition-transform">{icon}</div>
+                  <span className="text-xs font-semibold font-display tracking-wide">{label}</span>
+                </button>
+              ))}
+            </div>
             
-            {/* Step 1: Sector pills (Always visible) */}
-            <div>
-              <span className="font-mono text-[9px] text-[var(--accent-cyan)] uppercase tracking-wider block mb-3">
-                Choose Project Type
-              </span>
-              <div className="flex flex-wrap gap-2.5">
-                {(['DeFi', 'L1/L2', 'Exchange', 'GameFi', 'AI Project', 'Other'] as ProjectType[]).map(type => (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => setProjectType(type)}
-                    className={`px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold font-display transition-all duration-300 ${
-                      projectType === type
-                        ? 'border-[var(--accent-cyan)] bg-[rgba(0,200,240,0.06)] text-[var(--accent-cyan)] shadow-[0_0_15px_rgba(0,200,240,0.1)]'
-                        : 'border-white/5 bg-white/5 text-[var(--text-secondary)] hover:text-white hover:border-white/20'
-                    }`}
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
+            {projectType === 'Other' && (
+              <input
+                type="text"
+                required
+                value={customProjectType}
+                onChange={e => setCustomProjectType(e.target.value)}
+                placeholder="Specify sector..."
+                className="mt-3 w-full max-w-md mx-auto block input-field text-xs py-2 px-3 h-10 animate-[fadeIn_0.2s_ease-out]"
+              />
+            )}
+          </div>
+
+          {/* Rest of the form (Geography, Tactics, Budget, Contact & Submit) - Reveals after sector is clicked */}
+          {projectType !== null && (
+            <form onSubmit={handleFormSubmit} className="space-y-6 pt-6 border-t border-white/5 animate-[fadeIn_0.4s_ease-out] max-w-2xl mx-auto">
               
-              {projectType === 'Other' && (
-                <input
-                  type="text"
-                  required
-                  value={customProjectType}
-                  onChange={e => setCustomProjectType(e.target.value)}
-                  placeholder="Specify sector..."
-                  className="mt-3 w-full input-field text-xs py-2 px-3 h-10 animate-[fadeIn_0.2s_ease-out]"
-                />
-              )}
-            </div>
+              {/* Accordions */}
+              <div className="space-y-3">
 
-            {/* Rest of the form (Geography, Tactics, Budget, Contact & Submit) - Reveals after sector is clicked */}
-            {projectType !== null && (
-              <form onSubmit={handleFormSubmit} className="space-y-6 pt-4 border-t border-white/5 animate-[fadeIn_0.4s_ease-out]">
-                
-                {/* Accordions */}
-                <div className="space-y-3">
+                {/* Section 1: Specs (Geography) */}
+                <div className="border border-white/5 rounded-2xl overflow-hidden bg-white/[0.01]">
+                  <button
+                    type="button"
+                    onClick={() => toggleSection('specs')}
+                    className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors"
+                  >
+                    <div>
+                      <span className="font-mono text-[9px] text-[var(--accent-cyan)] uppercase tracking-wider block mb-0.5">Target Market Geography</span>
+                      <span className="text-xs sm:text-sm font-semibold text-white">
+                        {region === 'Other' && customRegion ? customRegion : region}
+                      </span>
+                    </div>
+                    <span className={`text-xs transition-transform duration-300 ${expandedSection === 'specs' ? 'rotate-180' : ''}`}>▼</span>
+                  </button>
 
-                  {/* Section 1: Specs (Geography) */}
-                  <div className="border border-white/5 rounded-2xl overflow-hidden bg-white/[0.01]">
-                    <button
-                      type="button"
-                      onClick={() => toggleSection('specs')}
-                      className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors"
-                    >
+                  {expandedSection === 'specs' && (
+                    <div className="px-5 pb-5 pt-2 border-t border-white/5 space-y-4 animate-[fadeIn_0.2s_ease-out]">
                       <div>
-                        <span className="font-mono text-[9px] text-[var(--accent-cyan)] uppercase tracking-wider block mb-0.5">Target Market Geography</span>
-                        <span className="text-xs sm:text-sm font-semibold text-white">
-                          {region === 'Other' && customRegion ? customRegion : region}
-                        </span>
-                      </div>
-                      <span className={`text-xs transition-transform duration-300 ${expandedSection === 'specs' ? 'rotate-180' : ''}`}>▼</span>
-                    </button>
-
-                    {expandedSection === 'specs' && (
-                      <div className="px-5 pb-5 pt-2 border-t border-white/5 space-y-4 animate-[fadeIn_0.2s_ease-out]">
-                        <div>
-                          <div className="flex flex-wrap gap-2">
-                            {(['Vietnam', 'Singapore', 'UAE', 'Europe', 'United States', 'United Kingdom', 'Hong Kong', 'South Korea', 'Japan', 'Southeast Asia (SEA)', 'Global', 'Other'] as TargetRegion[]).map(r => (
-                              <button
-                                key={r}
-                                type="button"
-                                onClick={() => setRegion(r)}
-                                className={`px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-300 ${
-                                  region === r
-                                    ? 'border-[var(--accent-cyan)] bg-[rgba(0,200,240,0.06)] text-[var(--accent-cyan)]'
-                                    : 'border-white/5 bg-white/5 text-[var(--text-secondary)] hover:text-white hover:border-white/10'
-                                }`}
-                              >
-                                {r}
-                              </button>
-                            ))}
-                          </div>
-                          {region === 'Other' && (
-                            <input
-                              type="text"
-                              required
-                              value={customRegion}
-                              onChange={e => setCustomRegion(e.target.value)}
-                              placeholder="Specify geography..."
-                              className="mt-2 w-full input-field text-xs py-1.5 px-3 h-8"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Section 2: Tactics */}
-                  <div className="border border-white/5 rounded-2xl overflow-hidden bg-white/[0.01]">
-                    <button
-                      type="button"
-                      onClick={() => toggleSection('tactics')}
-                      className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors"
-                    >
-                      <div>
-                        <span className="font-mono text-[9px] text-[var(--accent-purple)] uppercase tracking-wider block mb-0.5">Services &amp; Tactics Selection</span>
-                        <span className="text-xs sm:text-sm font-semibold text-white">
-                          Selected {selectedServices.length} Tactics
-                        </span>
-                      </div>
-                      <span className={`text-xs transition-transform duration-300 ${expandedSection === 'tactics' ? 'rotate-180' : ''}`}>▼</span>
-                    </button>
-
-                    {expandedSection === 'tactics' && (
-                      <div className="px-5 pb-5 pt-2 border-t border-white/5 space-y-3 animate-[fadeIn_0.2s_ease-out]">
-                        <div className="grid sm:grid-cols-2 gap-2">
-                          {SERVICES_OPTIONS.map(opt => {
-                            const isActive = selectedServices.includes(opt.id);
-                            return (
-                              <button
-                                key={opt.id}
-                                type="button"
-                                onClick={() => toggleService(opt.id)}
-                                className={`flex items-center gap-2.5 p-2.5 rounded-xl border text-left transition-all duration-300 ${
-                                  isActive
-                                    ? 'border-[var(--accent-cyan)]/30 bg-[rgba(0,200,240,0.02)]'
-                                    : 'border-white/5 bg-white/5 opacity-70 hover:opacity-100 hover:border-white/10'
-                                }`}
-                              >
-                                <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
-                                  isActive ? 'border-[var(--accent-cyan)] bg-[var(--accent-cyan)] text-[#050810]' : 'border-white/20'
-                                }`}>
-                                  {isActive && (
-                                    <svg className="w-2.5 h-2.5 font-bold" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                    </svg>
-                                  )}
-                                </div>
-                                <span className="text-xs font-medium text-[var(--text-primary)] font-body">{opt.name}</span>
-                              </button>
-                            );
-                          })}
-                        </div>
-                        {selectedServices.includes('other') && (
-                          <input
-                            type="text"
-                            required
-                            value={customService}
-                            onChange={e => setCustomService(e.target.value)}
-                            placeholder="Specify custom marketing tactic..."
-                            className="w-full input-field text-xs py-1.5 px-3 h-8"
-                          />
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Section 3: Budget */}
-                  <div className="border border-white/5 rounded-2xl overflow-hidden bg-white/[0.01]">
-                    <button
-                      type="button"
-                      onClick={() => toggleSection('budget')}
-                      className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors"
-                    >
-                      <div>
-                        <span className="font-mono text-[9px] text-[#f0a278] uppercase tracking-wider block mb-0.5">Monthly Growth Budget Allocation</span>
-                        <span className="text-xs sm:text-sm font-semibold text-white">
-                          ${budget.toLocaleString()} / mo
-                        </span>
-                      </div>
-                      <span className={`text-xs transition-transform duration-300 ${expandedSection === 'budget' ? 'rotate-180' : ''}`}>▼</span>
-                    </button>
-
-                    {expandedSection === 'budget' && (
-                      <div className="px-5 pb-8 pt-4 border-t border-white/5 space-y-4 animate-[fadeIn_0.2s_ease-out] relative">
-                        <input
-                          type="range"
-                          min="3000"
-                          max="50000"
-                          step="1000"
-                          value={budget}
-                          onChange={e => setBudget(parseInt(e.target.value))}
-                          className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[var(--accent-cyan)]"
-                        />
-                        
-                        {/* Milestones */}
-                        <div class="absolute left-5 right-5 bottom-2 flex justify-between px-1">
-                          {BUDGET_MILESTONES.map((val) => (
+                        <div className="flex flex-wrap gap-2">
+                          {(['Vietnam', 'Singapore', 'UAE', 'Europe', 'United States', 'United Kingdom', 'Hong Kong', 'South Korea', 'Japan', 'Southeast Asia (SEA)', 'Global', 'Other'] as TargetRegion[]).map(r => (
                             <button
-                              key={val}
+                              key={r}
                               type="button"
-                              onClick={() => setBudget(val)}
-                              class="group flex flex-col items-center focus:outline-none"
+                              onClick={() => setRegion(r)}
+                              className={`px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-300 ${
+                                region === r
+                                  ? 'border-[var(--accent-cyan)] bg-[rgba(0,200,240,0.06)] text-[var(--accent-cyan)]'
+                                  : 'border-white/5 bg-white/5 text-[var(--text-secondary)] hover:text-white hover:border-white/10'
+                              }`}
                             >
-                              <span class={`w-2 h-2 rounded-full border transition-all duration-300 ${
-                                budget >= val ? 'bg-[var(--accent-cyan)] border-[var(--accent-cyan)] scale-125' : 'bg-neutral-800 border-white/10'
-                              }`}></span>
-                              <span class="text-[8px] font-mono text-[var(--text-muted)] mt-1 opacity-60 group-hover:opacity-100 transition-opacity">
-                                ${(val / 1000).toFixed(0)}K
-                              </span>
+                              {r}
                             </button>
                           ))}
                         </div>
+                        {region === 'Other' && (
+                          <input
+                            type="text"
+                            required
+                            value={customRegion}
+                            onChange={e => setCustomRegion(e.target.value)}
+                            placeholder="Specify geography..."
+                            className="mt-2 w-full input-field text-xs py-1.5 px-3 h-8"
+                          />
+                        )}
                       </div>
-                    )}
-                  </div>
-
+                    </div>
+                  )}
                 </div>
 
-                {/* Contact Information Fields */}
-                <div className="space-y-3 pt-4 border-t border-white/5">
-                  <span className="font-mono text-[9px] text-[var(--text-secondary)] uppercase tracking-wider block mb-1">Contact details</span>
-                  
-                  <div class="grid sm:grid-cols-2 gap-3">
+                {/* Section 2: Tactics */}
+                <div className="border border-white/5 rounded-2xl overflow-hidden bg-white/[0.01]">
+                  <button
+                    type="button"
+                    onClick={() => toggleSection('tactics')}
+                    className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors"
+                  >
                     <div>
-                      <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">Full Name *</label>
-                      <input
-                        type="text"
-                        required
-                        value={leadName}
-                        onChange={e => setLeadName(e.target.value)}
-                        placeholder="Jane Doe"
-                        className="w-full input-field text-xs py-2 px-3 h-10"
-                      />
+                      <span className="font-mono text-[9px] text-[var(--accent-purple)] uppercase tracking-wider block mb-0.5">Services &amp; Tactics Selection</span>
+                      <span className="text-xs sm:text-sm font-semibold text-white">
+                        Selected {selectedServices.length} Tactics
+                      </span>
                     </div>
-                    <div>
-                      <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">Telegram Username *</label>
-                      <input
-                        type="text"
-                        required
-                        value={leadTelegram}
-                        onChange={e => setLeadTelegram(e.target.value)}
-                        placeholder="@jane_telegram"
-                        className="w-full input-field text-xs py-2 px-3 h-10"
-                      />
-                    </div>
-                  </div>
+                    <span className={`text-xs transition-transform duration-300 ${expandedSection === 'tactics' ? 'rotate-180' : ''}`}>▼</span>
+                  </button>
 
-                  <div class="grid sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">Email Address *</label>
-                      <input
-                        type="email"
-                        required
-                        value={leadEmail}
-                        onChange={e => setLeadEmail(e.target.value)}
-                        placeholder="jane@project.io"
-                        className="w-full input-field text-xs py-2 px-3 h-10"
-                      />
+                  {expandedSection === 'tactics' && (
+                    <div className="px-5 pb-5 pt-2 border-t border-white/5 space-y-3 animate-[fadeIn_0.2s_ease-out]">
+                      <div className="grid sm:grid-cols-2 gap-2">
+                        {SERVICES_OPTIONS.map(opt => {
+                          const isActive = selectedServices.includes(opt.id);
+                          return (
+                            <button
+                              key={opt.id}
+                              type="button"
+                              onClick={() => toggleService(opt.id)}
+                              className={`flex items-center gap-2.5 p-2.5 rounded-xl border text-left transition-all duration-300 ${
+                                isActive
+                                  ? 'border-[var(--accent-cyan)]/30 bg-[rgba(0,200,240,0.02)]'
+                                  : 'border-white/5 bg-white/5 opacity-70 hover:opacity-100 hover:border-white/10'
+                              }`}
+                            >
+                              <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
+                                isActive ? 'border-[var(--accent-cyan)] bg-[var(--accent-cyan)] text-[#050810]' : 'border-white/20'
+                              }`}>
+                                {isActive && (
+                                  <svg className="w-2.5 h-2.5 font-bold" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                  </svg>
+                                )}
+                              </div>
+                              <span className="text-xs font-medium text-[var(--text-primary)] font-body">{opt.name}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {selectedServices.includes('other') && (
+                        <input
+                          type="text"
+                          required
+                          value={customService}
+                          onChange={e => setCustomService(e.target.value)}
+                          placeholder="Specify custom marketing tactic..."
+                          className="w-full input-field text-xs py-1.5 px-3 h-8"
+                        />
+                      )}
                     </div>
-                    <div>
-                      <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">LinkedIn URL (Optional)</label>
-                      <input
-                        type="url"
-                        value={leadLinkedIn}
-                        onChange={e => setLeadLinkedIn(e.target.value)}
-                        placeholder="https://linkedin.com/in/username"
-                        className="w-full input-field text-xs py-2 px-3 h-10"
-                      />
-                    </div>
-                  </div>
+                  )}
+                </div>
 
+                {/* Section 3: Budget */}
+                <div className="border border-white/5 rounded-2xl overflow-hidden bg-white/[0.01]">
+                  <button
+                    type="button"
+                    onClick={() => toggleSection('budget')}
+                    className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors"
+                  >
+                    <div>
+                      <span className="font-mono text-[9px] text-[#f0a278] uppercase tracking-wider block mb-0.5">Monthly Growth Budget Allocation</span>
+                      <span className="text-xs sm:text-sm font-semibold text-white">
+                        ${budget.toLocaleString()} / mo
+                      </span>
+                    </div>
+                    <span className={`text-xs transition-transform duration-300 ${expandedSection === 'budget' ? 'rotate-180' : ''}`}>▼</span>
+                  </button>
+
+                  {expandedSection === 'budget' && (
+                    <div className="px-5 pb-8 pt-4 border-t border-white/5 space-y-4 animate-[fadeIn_0.2s_ease-out] relative">
+                      <input
+                        type="range"
+                        min="3000"
+                        max="50000"
+                        step="1000"
+                        value={budget}
+                        onChange={e => setBudget(parseInt(e.target.value))}
+                        className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[var(--accent-cyan)]"
+                      />
+                      
+                      {/* Milestones */}
+                      <div class="absolute left-5 right-5 bottom-2 flex justify-between px-1">
+                        {BUDGET_MILESTONES.map((val) => (
+                          <button
+                            key={val}
+                            type="button"
+                            onClick={() => setBudget(val)}
+                            class="group flex flex-col items-center focus:outline-none"
+                          >
+                            <span class={`w-2 h-2 rounded-full border transition-all duration-300 ${
+                              budget >= val ? 'bg-[var(--accent-cyan)] border-[var(--accent-cyan)] scale-125' : 'bg-neutral-800 border-white/10'
+                            }`}></span>
+                            <span class="text-[8px] font-mono text-[var(--text-muted)] mt-1 opacity-60 group-hover:opacity-100 transition-opacity">
+                              ${(val / 1000).toFixed(0)}K
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+              </div>
+
+              {/* Contact Information Fields */}
+              <div className="space-y-3 pt-4 border-t border-white/5">
+                <span className="font-mono text-[9px] text-[var(--text-secondary)] uppercase tracking-wider block mb-1">Contact details</span>
+                
+                <div class="grid sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">Strategy Requirements (Optional)</label>
-                    <textarea
-                      value={leadNote}
-                      onChange={e => setLeadNote(e.target.value)}
-                      placeholder="Share details about your launch timeline, token status, etc..."
-                      className="w-full input-field text-xs py-2 px-3 h-20 resize-none"
+                    <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">Full Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={leadName}
+                      onChange={e => setLeadName(e.target.value)}
+                      placeholder="Jane Doe"
+                      className="w-full input-field text-xs py-2 px-3 h-10"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">Telegram Username *</label>
+                    <input
+                      type="text"
+                      required
+                      value={leadTelegram}
+                      onChange={e => setLeadTelegram(e.target.value)}
+                      placeholder="@jane_telegram"
+                      className="w-full input-field text-xs py-2 px-3 h-10"
                     />
                   </div>
                 </div>
 
-                {/* Liquid Glass Submit Button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-xs py-3.5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08),inset_0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-[rgba(0,200,240,0.18)] hover:border-[rgba(0,200,240,0.6)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15),inset_0_1px_3px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer disabled:opacity-50"
-                >
-                  <span>{isSubmitting ? 'Submitting Strategy...' : 'Get Custom Strategy Blueprint →'}</span>
-                </button>
-              </form>
-            )}
-          </div>
-        )}
+                <div class="grid sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">Email Address *</label>
+                    <input
+                      type="email"
+                      required
+                      value={leadEmail}
+                      onChange={e => setLeadEmail(e.target.value)}
+                      placeholder="jane@project.io"
+                      className="w-full input-field text-xs py-2 px-3 h-10"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">LinkedIn URL (Optional)</label>
+                    <input
+                      type="url"
+                      value={leadLinkedIn}
+                      onChange={e => setLeadLinkedIn(e.target.value)}
+                      placeholder="https://linkedin.com/in/username"
+                      className="w-full input-field text-xs py-2 px-3 h-10"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-medium text-[var(--text-secondary)] mb-1 font-body">Strategy Requirements (Optional)</label>
+                  <textarea
+                    value={leadNote}
+                    onChange={e => setLeadNote(e.target.value)}
+                    placeholder="Share details about your launch timeline, token status, etc..."
+                    className="w-full input-field text-xs py-2 px-3 h-20 resize-none"
+                  />
+                </div>
+              </div>
+
+              {/* Liquid Glass Submit Button */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-xs py-3.5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08),inset_0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-[rgba(0,200,240,0.18)] hover:border-[rgba(0,200,240,0.6)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15),inset_0_1px_3px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer disabled:opacity-50"
+              >
+                <span>{isSubmitting ? 'Submitting Strategy...' : 'Get Custom Strategy Blueprint →'}</span>
+              </button>
+
+            </form>
+          )}
+
+        </div>
+      )}
     </div>
   );
 }
