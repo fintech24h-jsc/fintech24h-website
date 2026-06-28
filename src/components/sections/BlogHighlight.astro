@@ -1,0 +1,125 @@
+---
+// src/components/sections/BlogHighlight.astro
+import { getAllPosts, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
+import { getReadingTime } from '../../lib/utils';
+
+const allPosts = await getAllPosts();
+const posts = allPosts.slice(0, 3);
+---
+
+<section class="py-24 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Blog Highlights">
+  <!-- Ambient background glow -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute w-[500px] h-[500px] rounded-full"
+      style="background: var(--gradient-glow-cyan); bottom: 10%; right: -5%; filter: blur(90px); opacity: 0.15;">
+    </div>
+    <div class="absolute inset-0 grid-pattern" style="opacity: 0.1;"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Heading -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 animate-fade-up">
+      <div class="max-w-2xl text-left">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
+          Insights &amp; Strategy
+        </p>
+        <h2 class="font-display text-4xl sm:text-5xl font-bold text-[var(--text-primary)] mb-4 tracking-tight">
+          Latest Web3 <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[#f0a278] bg-clip-text text-transparent">Marketing Intel</span>
+        </h2>
+        <p class="text-sm sm:text-base text-[var(--text-secondary)] font-body leading-relaxed">
+          Stay ahead of the curve with our latest case studies, crypto SEO guidelines, and community growth marketing playbooks.
+        </p>
+      </div>
+      <div>
+        <a
+          href="/blog"
+          class="inline-flex items-center justify-center bg-[rgba(255,255,255,0.02)] border border-white/10 backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-2.5 px-5 rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.1),inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all duration-300 hover:bg-[rgba(255,255,255,0.06)] hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15),inset_0_1px_2px_rgba(255,255,255,0.15)] hover:-translate-y-0.5 cursor-pointer"
+        >
+          <span>Explore All Articles →</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-animate="stagger">
+      {posts.map((post) => {
+        const rTime = getReadingTime(post.content.rendered);
+        const excerptText = getExcerpt(post, 120);
+        const featuredImage = getFeaturedImage(post);
+        return (
+          <article class="btn-liquid-glass-card group flex flex-col justify-between" data-animate-child>
+            <div>
+              {/* Image Container with Liquid Glass Shine effect on card hover */}
+              {featuredImage.url && (
+                <div class="relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-white/5 shadow-inner">
+                  <img
+                    src={featuredImage.url}
+                    alt={featuredImage.alt}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-[#080c1a]/60 via-transparent to-transparent opacity-60"></div>
+                </div>
+              )}
+
+              <!-- Info row -->
+              <div class="flex items-center gap-3 text-[10px] text-[var(--text-muted)] font-mono uppercase tracking-wider mb-3">
+                <span>{formatDate(post.date)}</span>
+                <span class="w-1 h-1 rounded-full bg-white/20"></span>
+                <span>{rTime} min read</span>
+              </div>
+
+              <!-- Title & Summary -->
+              <h3 class="font-display text-lg font-bold text-white mb-3 group-hover:text-[var(--accent-cyan)] transition-colors duration-300 line-clamp-2 leading-snug">
+                {post.title.rendered}
+              </h3>
+              <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6 line-clamp-3">
+                {excerptText}
+              </p>
+            </div>
+
+            <!-- Redirect link styled as a tiny luxury glass button -->
+            <div class="flex justify-end pt-4 border-t border-white/5 mt-auto">
+              <a
+                href={`/blog/${post.slug}`}
+                class="inline-flex items-center justify-center bg-[rgba(0,200,240,0.05)] border border-[rgba(0,200,240,0.2)] backdrop-blur-sm text-white font-mono text-[9px] font-semibold uppercase tracking-wider py-1.5 px-3 rounded-full hover:bg-[rgba(0,200,240,0.12)] hover:border-[rgba(0,200,240,0.45)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15)] transition-all duration-300"
+                aria-label={`Read ${post.title.rendered}`}
+              >
+                <span>Read Article</span>
+                <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* Custom Liquid Glass Cards */
+  .btn-liquid-glass-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.25),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .btn-liquid-glass-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(0, 200, 240, 0.25);
+    transform: translateY(-8px);
+    box-shadow: 
+      0 20px 48px 0 rgba(0, 200, 240, 0.08),
+      inset 0 1px 2px 0 rgba(255, 255, 255, 0.25);
+  }
+</style>
