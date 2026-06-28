@@ -82,7 +82,14 @@ const MOCK_POSTS: WPPost[] = [
     modified: '2026-05-15T08:00:00Z',
     featured_media: 1,
     categories: [1, 3],
-    tags: [10, 11]
+    tags: [10, 11],
+    _embedded: {
+      'wp:featuredmedia': [{
+        source_url: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=800&auto=format&fit=crop',
+        alt_text: 'Web3 Community Building',
+        media_details: { width: 800, height: 500 }
+      }]
+    }
   },
   {
     id: 102,
@@ -94,7 +101,14 @@ const MOCK_POSTS: WPPost[] = [
     modified: '2026-06-01T10:30:00Z',
     featured_media: 2,
     categories: [2],
-    tags: [12]
+    tags: [12],
+    _embedded: {
+      'wp:featuredmedia': [{
+        source_url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
+        alt_text: 'Programmatic SEO Dashboard',
+        media_details: { width: 800, height: 500 }
+      }]
+    }
   },
   {
     id: 103,
@@ -106,7 +120,71 @@ const MOCK_POSTS: WPPost[] = [
     modified: '2026-06-12T14:00:00Z',
     featured_media: 3,
     categories: [1],
-    tags: [10]
+    tags: [10],
+    _embedded: {
+      'wp:featuredmedia': [{
+        source_url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop',
+        alt_text: 'Influencer Marketing Tech',
+        media_details: { width: 800, height: 500 }
+      }]
+    }
+  },
+  {
+    id: 104,
+    slug: 'mastering-liquid-liquidity-token-launches',
+    title: { rendered: 'Mastering Liquid Liquidity: Defi Token Launch playbooks' },
+    excerpt: { rendered: 'A deep dive into automated market maker algorithms, liquidity pool sizing, and post-launch stability design.' },
+    content: { rendered: '<p>Launching a token requires a mathematically sound liquidity seeding plan. This article breaks down liquidity pools, slip rates, and arbitrage protection guides.</p>' },
+    date: '2026-06-18T09:15:00Z',
+    modified: '2026-06-18T09:15:00Z',
+    featured_media: 4,
+    categories: [3],
+    tags: [11],
+    _embedded: {
+      'wp:featuredmedia': [{
+        source_url: 'https://images.unsplash.com/photo-1642104704074-907c0698cbd9?q=80&w=800&auto=format&fit=crop',
+        alt_text: 'DeFi Liquidity Pools',
+        media_details: { width: 800, height: 500 }
+      }]
+    }
+  },
+  {
+    id: 105,
+    slug: 'ai-marketing-bots-crypto-seeding',
+    title: { rendered: 'AI Marketing Bots: The Future of Crypto Project Seeding' },
+    excerpt: { rendered: 'How automation scripts and AI agents are revolutionizing targeted project outreach and multi-channel organic seeding.' },
+    content: { rendered: '<p>AI bots are replacing manual telegram and twitter seeding tasks. Discover how to deploy natural-language marketing agents on scale securely.</p>' },
+    date: '2026-06-22T11:45:00Z',
+    modified: '2026-06-22T11:45:00Z',
+    featured_media: 5,
+    categories: [1, 3],
+    tags: [10],
+    _embedded: {
+      'wp:featuredmedia': [{
+        source_url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
+        alt_text: 'AI Bots and Seeding',
+        media_details: { width: 800, height: 500 }
+      }]
+    }
+  },
+  {
+    id: 106,
+    slug: 'global-web3-regulatory-marketing-policies',
+    title: { rendered: 'Navigating Global Web3 Regulatory Marketing Policies' },
+    excerpt: { rendered: 'Ensure compliance while running promotions across the EU, US, and APAC markets. A playbook for compliance officers.' },
+    content: { rendered: '<p>Marketing crypto is subject to shifting regulatory boundaries. Protect your brand by learning rules regarding financial promotion waivers and disclosures.</p>' },
+    date: '2026-06-26T16:20:00Z',
+    modified: '2026-06-26T16:20:00Z',
+    featured_media: 6,
+    categories: [2],
+    tags: [12],
+    _embedded: {
+      'wp:featuredmedia': [{
+        source_url: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=800&auto=format&fit=crop',
+        alt_text: 'Compliance Regulation Desk',
+        media_details: { width: 800, height: 500 }
+      }]
+    }
   }
 ];
 
