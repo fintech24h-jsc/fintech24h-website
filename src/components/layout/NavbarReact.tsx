@@ -94,7 +94,7 @@ export default function NavbarReact() {
           {/* Right Side: CTA Button & Hamburger */}
           <div className="flex items-center gap-4">
             <a
-              href="#get-proposal"
+              href="/contact"
               className="inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-2 px-5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08),inset_0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-[rgba(0,200,240,0.18)] hover:border-[rgba(0,200,240,0.6)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15),inset_0_1px_3px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer"
             >
               <span>Get Proposal</span>
@@ -169,7 +169,7 @@ export default function NavbarReact() {
 
             <div className="mt-auto border-t border-white/5 pt-6">
               <a
-                href="#get-proposal"
+                href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full text-center inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-3 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08)] cursor-pointer"
               >
