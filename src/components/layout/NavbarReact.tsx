@@ -1,41 +1,184 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Globe } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Globe, ChevronDown, Menu, X } from 'lucide-react';
 
 export default function NavbarReact() {
-  return (
-    <motion.nav 
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="absolute top-0 left-0 z-50 px-6 py-6 w-full"
-    >
-      <div className="liquid-glass rounded-full px-6 py-3 flex items-center justify-between max-w-5xl mx-auto">
-        
-        {/* Left Side: Logo & Nav Links */}
-        <div className="flex items-center gap-8">
-          <a href="/" className="flex items-center gap-2">
-            <Globe className="w-6 h-6 text-white" />
-            <span className="text-white font-semibold text-lg font-display tracking-wide">Fintech24h</span>
-          </a>
-          
-          <div className="hidden md:flex items-center gap-8 text-white/80 text-sm font-medium">
-            <a href="/services" className="hover:text-white transition-colors duration-300">Services</a>
-            <a href="/case-studies" className="hover:text-white transition-colors duration-300">Case Studies</a>
-            <a href="/about" className="hover:text-white transition-colors duration-300">About</a>
-          </div>
-        </div>
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-        {/* Right Side: CTA Buttons */}
-        <div className="flex items-center gap-4">
-          <a href="/contact" className="text-white hover:text-white/80 transition-colors text-sm font-medium cursor-pointer hidden sm:block">
-            Contact
-          </a>
-          <a href="#get-proposal" className="glass-pill px-6 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity cursor-pointer">
-            Get Proposal
-          </a>
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const servicesList = [
+    { label: 'KOL & Influencer Marketing', href: '/services/kol-influencer-marketing' },
+    { label: 'PR & Media Coverage', href: '/services/pr-media' },
+    { label: 'Community Management', href: '/services/community-management' },
+    { label: 'Event Marketing', href: '/services/event-marketing' },
+    { label: 'Business Development', href: '/services/business-development' },
+  ];
+
+  return (
+    <>
+      <motion.nav 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4 py-4 md:px-6 ${
+          isScrolled ? 'md:py-4 bg-[#080C1A]/40 backdrop-blur-md border-b border-white/5 shadow-lg' : 'md:py-6 bg-transparent'
+        }`}
+      >
+        <div className="liquid-glass rounded-full px-5 py-2.5 md:px-6 flex items-center justify-between max-w-5xl mx-auto border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.35)]">
+          
+          {/* Left Side: Logo & Navigation Links */}
+          <div className="flex items-center gap-8">
+            <a href="/" className="flex items-center gap-2 group">
+              <Globe className="w-5 h-5 text-[var(--accent-cyan)] group-hover:rotate-12 transition-transform duration-300" />
+              <span className="text-white font-bold text-base font-display tracking-wider">Fintech24h</span>
+            </a>
+            
+            {/* Desktop Navigation Links */}
+            <div className="hidden md:flex items-center gap-6 text-white/80 text-xs font-semibold uppercase tracking-wider font-mono">
+              <a href="/" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">Home</a>
+              
+              {/* Services Dropdown */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setIsServicesOpen(true)}
+                onMouseLeave={() => setIsServicesOpen(false)}
+              >
+                <button 
+                  type="button"
+                  className="hover:text-[var(--accent-cyan)] transition-colors duration-300 flex items-center gap-1 cursor-pointer focus:outline-none"
+                >
+                  <span>Services</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                <AnimatePresence>
+                  {isServicesOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      className="absolute top-full left-0 mt-3 w-64 bg-[#080c1a]/95 backdrop-blur-2xl border border-white/10 p-3 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col gap-1 z-50 text-left"
+                    >
+                      {servicesList.map(s => (
+                        <a
+                          key={s.href}
+                          href={s.href}
+                          className="px-4 py-2.5 rounded-xl hover:bg-white/[0.04] text-[11px] font-sans font-semibold text-white/70 hover:text-white transition-colors block"
+                        >
+                          {s.label}
+                        </a>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <a href="/blog" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">Blog</a>
+              <a href="/contact" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">Contact</a>
+            </div>
+          </div>
+
+          {/* Right Side: CTA Button & Hamburger */}
+          <div className="flex items-center gap-4">
+            <a
+              href="#get-proposal"
+              className="inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-2 px-5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08),inset_0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-[rgba(0,200,240,0.18)] hover:border-[rgba(0,200,240,0.6)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15),inset_0_1px_3px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer"
+            >
+              <span>Get Proposal</span>
+            </a>
+
+            {/* Mobile Hamburger Icon Toggle */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden text-white hover:text-[var(--accent-cyan)] transition-colors duration-300 focus:outline-none"
+              aria-label="Toggle Mobile Menu"
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+          
         </div>
-        
-      </div>
-    </motion.nav>
+      </motion.nav>
+
+      {/* Mobile Drawer Overlay Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-y-0 right-0 w-80 max-w-full bg-[#080c1a]/98 backdrop-blur-2xl border-l border-white/10 z-40 p-8 pt-24 flex flex-col gap-6 text-left shadow-[20px_0_50px_rgba(0,0,0,0.5)]"
+          >
+            {/* Nav links */}
+            <div className="flex flex-col gap-5 text-sm font-semibold uppercase tracking-widest font-mono text-white/80">
+              <a
+                href="/"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
+              >
+                Home
+              </a>
+              
+              {/* Collapsed Services List header in mobile menu */}
+              <div>
+                <span className="text-white/40 text-[10px] tracking-widest block mb-2 font-mono uppercase">Our Services</span>
+                <div className="flex flex-col gap-3 pl-3 border-l border-white/5">
+                  {servicesList.map(s => (
+                    <a
+                      key={s.href}
+                      href={s.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="text-xs font-sans text-white/60 hover:text-white transition-colors"
+                    >
+                      {s.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <a
+                href="/blog"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
+              >
+                Blog
+              </a>
+              <a
+                href="/contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
+              >
+                Contact
+              </a>
+            </div>
+
+            <div className="mt-auto border-t border-white/5 pt-6">
+              <a
+                href="#get-proposal"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full text-center inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-3 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08)] cursor-pointer"
+              >
+                Get Proposal
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
