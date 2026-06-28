@@ -63,28 +63,23 @@ const faqSchema = {
   <HeroSection />
 
   <!-- Dedicated Strategy Form Section (Separated from Hero) -->
-  <section id="strategy-section" class="py-24 bg-[var(--bg-secondary)] relative overflow-hidden">
+  <section id="get-proposal" class="py-24 bg-[var(--bg-secondary)] relative overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
       <div class="absolute w-[500px] h-[500px] rounded-full"
         style="background: var(--gradient-glow-purple); top: -10%; left: -5%; filter: blur(90px); opacity: 0.1;">
       </div>
       <div class="absolute inset-0 grid-pattern" style="opacity: 0.05;"></div>
     </div>
-    <div class="relative z-10 max-w-3xl mx-auto px-4">
-      <div class="card-default p-8 lg:p-12 relative overflow-hidden z-10" data-animate="fade-up">
-        <div class="absolute inset-0 bg-radial-gradient(circle, rgba(0, 200, 240, 0.03) 0%, transparent 60%) pointer-events-none"></div>
-        <div class="text-center mb-10 relative z-10">
-          <h2 class="font-display text-3xl font-bold text-[var(--text-primary)] mb-3">
-            Get Your Free Strategy
-          </h2>
-          <p class="text-sm text-[var(--text-secondary)] font-body max-w-xl mx-auto">
-            Tell us about your project. We'll build a custom growth plan in 24 hours.
-          </p>
-        </div>
-        <div class="relative z-10">
-          <MultiStepForm client:load />
-        </div>
+    <div class="relative z-10 max-w-3xl mx-auto px-4" data-animate="fade-up">
+      <div class="text-center mb-10">
+        <h2 class="font-display text-3xl font-bold text-[var(--text-primary)] mb-3">
+          Claim Your Free Custom Growth Strategy
+        </h2>
+        <p class="text-sm text-[var(--text-secondary)] font-body max-w-xl mx-auto">
+          Submit your project specifications to receive a customized 90-day execution blueprint in 24 hours.
+        </p>
       </div>
+      <CampaignCalculator client:load />
     </div>
   </section>
 
@@ -92,33 +87,6 @@ const faqSchema = {
   <ServicesGrid />
   {featuredCase && <CaseStudyWidget caseStudy={featuredCase} />}
   <ProcessSection />
-
-  <!-- Interactive Campaign ROI Calculator Section -->
-  <section class="py-24 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Campaign ROI Calculator">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[600px] h-[600px] rounded-full"
-        style="background: var(--gradient-glow-cyan); top: 20%; left: -10%; filter: blur(90px); opacity: 0.15;">
-      </div>
-      <div class="absolute inset-0 grid-pattern" style="opacity: 0.1;"></div>
-    </div>
-
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto mb-16" data-animate="fade-up">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center justify-center gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
-          Campaign Configurator
-        </p>
-        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] mb-4">
-          Configure Your <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[#ff9966] bg-clip-text text-transparent">Growth Strategy</span>
-        </h2>
-        <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed">
-          Select your project specs, target geography, monthly budget, and growth tactics to request a tailored marketing blueprint.
-        </p>
-      </div>
-
-      <CampaignCalculator client:load />
-    </div>
-  </section>
 
   <FaqSection />
   <FooterLeadForm />

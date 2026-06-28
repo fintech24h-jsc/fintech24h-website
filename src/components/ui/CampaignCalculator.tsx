@@ -206,7 +206,7 @@ export default function CampaignCalculator() {
                     <div>
                       <label className="block text-[10px] text-[var(--text-secondary)] font-mono uppercase tracking-wider mb-2">Target Market</label>
                       <div className="flex flex-wrap gap-2">
-                        {(['Vietnam', 'Singapore', 'UAE', 'Southeast Asia (SEA)', 'Global', 'Other'] as TargetRegion[]).map(r => (
+                        {(['Vietnam', 'Singapore', 'UAE', 'Europe', 'United States', 'United Kingdom', 'Hong Kong', 'South Korea', 'Japan', 'Southeast Asia (SEA)', 'Global', 'Other'] as TargetRegion[]).map(r => (
                           <button
                             key={r}
                             type="button"
@@ -361,7 +361,7 @@ export default function CampaignCalculator() {
                     required
                     value={leadName}
                     onChange={e => setLeadName(e.target.value)}
-                    placeholder="Alex Nguyen"
+                    placeholder="Jane Doe"
                     className="w-full input-field text-xs py-2 px-3 h-10"
                   />
                 </div>
@@ -372,7 +372,7 @@ export default function CampaignCalculator() {
                     required
                     value={leadTelegram}
                     onChange={e => setLeadTelegram(e.target.value)}
-                    placeholder="@alex_handle"
+                    placeholder="@jane_telegram"
                     className="w-full input-field text-xs py-2 px-3 h-10"
                   />
                 </div>
@@ -386,7 +386,7 @@ export default function CampaignCalculator() {
                     required
                     value={leadEmail}
                     onChange={e => setLeadEmail(e.target.value)}
-                    placeholder="alex@project.io"
+                    placeholder="jane@project.io"
                     className="w-full input-field text-xs py-2 px-3 h-10"
                   />
                 </div>
