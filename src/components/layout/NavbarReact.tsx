@@ -20,11 +20,11 @@ export default function NavbarReact() {
   }, []);
 
   const servicesList = [
-    { label: 'KOL & Influencer Marketing', href: '/services/kol-influencer-marketing' },
-    { label: 'PR & Media Coverage', href: '/services/pr-media' },
-    { label: 'Community Management', href: '/services/community-management' },
-    { label: 'Event Marketing', href: '/services/event-marketing' },
-    { label: 'Business Development', href: '/services/business-development' },
+    { label: 'kol & influencer marketing', href: '/services/kol-influencer-marketing' },
+    { label: 'pr & media coverage', href: '/services/pr-media' },
+    { label: 'community management', href: '/services/community-management' },
+    { label: 'event marketing', href: '/services/event-marketing' },
+    { label: 'business development', href: '/services/business-development' },
   ];
 
   return (
@@ -36,59 +36,59 @@ export default function NavbarReact() {
           isScrolled ? 'md:py-4 bg-[#080C1A]/40 backdrop-blur-md border-b border-white/5 shadow-lg' : 'md:py-6 bg-transparent'
         }`}
       >
-        <div className="liquid-glass rounded-full px-5 py-2.5 md:px-6 flex items-center justify-between max-w-5xl mx-auto border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.35)]">
+        <div className="liquid-glass rounded-full px-5 py-2.5 md:px-6 flex items-center justify-between max-w-5xl mx-auto border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.35)] relative">
           
-          {/* Left Side: Logo & Navigation Links */}
-          <div className="flex items-center gap-8">
+          {/* Left Side: Brand Logo */}
+          <div className="flex items-center">
             <a href="/" className="flex items-center gap-2 group">
               <Globe className="w-5 h-5 text-[var(--accent-cyan)] group-hover:rotate-12 transition-transform duration-300" />
               <span className="text-white font-bold text-base font-display tracking-wider">Fintech24h</span>
             </a>
+          </div>
+          
+          {/* Centered Navigation Links (Desktop) */}
+          <div className="hidden md:flex items-center gap-8 text-white/80 text-xs font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
+            <a href="/" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">home</a>
             
-            {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center gap-6 text-white/80 text-xs font-semibold uppercase tracking-wider font-mono">
-              <a href="/" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">Home</a>
-              
-              {/* Services Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setIsServicesOpen(true)}
-                onMouseLeave={() => setIsServicesOpen(false)}
+            {/* Services Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setIsServicesOpen(true)}
+              onMouseLeave={() => setIsServicesOpen(false)}
+            >
+              <button 
+                type="button"
+                className="hover:text-[var(--accent-cyan)] transition-colors duration-300 flex items-center gap-1 cursor-pointer focus:outline-none"
               >
-                <button 
-                  type="button"
-                  className="hover:text-[var(--accent-cyan)] transition-colors duration-300 flex items-center gap-1 cursor-pointer focus:outline-none"
-                >
-                  <span>Services</span>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
-                </button>
+                <span>services</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
+              </button>
 
-                <AnimatePresence>
-                  {isServicesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.2, ease: 'easeOut' }}
-                      className="absolute top-full left-0 mt-3 w-64 bg-[#080c1a]/95 backdrop-blur-2xl border border-white/10 p-3 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col gap-1 z-50 text-left"
-                    >
-                      {servicesList.map(s => (
-                        <a
-                          key={s.href}
-                          href={s.href}
-                          className="px-4 py-2.5 rounded-xl hover:bg-white/[0.04] text-[11px] font-sans font-semibold text-white/70 hover:text-white transition-colors block"
-                        >
-                          {s.label}
-                        </a>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <a href="/blog" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">Blog</a>
-              <a href="/contact" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">Contact</a>
+              <AnimatePresence>
+                {isServicesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.2, ease: 'easeOut' }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 bg-[#080c1a]/95 backdrop-blur-2xl border border-white/10 p-3 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col gap-1 z-50 text-left"
+                  >
+                    {servicesList.map(s => (
+                      <a
+                        key={s.href}
+                        href={s.href}
+                        className="px-4 py-2.5 rounded-xl hover:bg-white/[0.04] text-[11px] font-sans font-semibold text-white/70 hover:text-white transition-colors block"
+                      >
+                        {s.label}
+                      </a>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
+
+            <a href="/blog" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">blog</a>
+            <a href="/contact" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
           </div>
 
           {/* Right Side: CTA Button & Hamburger */}
@@ -125,18 +125,18 @@ export default function NavbarReact() {
             className="fixed inset-y-0 right-0 w-80 max-w-full bg-[#080c1a]/98 backdrop-blur-2xl border-l border-white/10 z-40 p-8 pt-24 flex flex-col gap-6 text-left shadow-[20px_0_50px_rgba(0,0,0,0.5)]"
           >
             {/* Nav links */}
-            <div className="flex flex-col gap-5 text-sm font-semibold uppercase tracking-widest font-mono text-white/80">
+            <div className="flex flex-col gap-5 text-sm font-semibold tracking-widest font-mono text-white/80">
               <a
                 href="/"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
               >
-                Home
+                home
               </a>
               
               {/* Collapsed Services List header in mobile menu */}
               <div>
-                <span className="text-white/40 text-[10px] tracking-widest block mb-2 font-mono uppercase">Our Services</span>
+                <span className="text-white/40 text-[10px] tracking-widest block mb-2 font-mono">services</span>
                 <div className="flex flex-col gap-3 pl-3 border-l border-white/5">
                   {servicesList.map(s => (
                     <a
@@ -156,14 +156,14 @@ export default function NavbarReact() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
               >
-                Blog
+                blog
               </a>
               <a
                 href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
               >
-                Contact
+                contact
               </a>
             </div>
 
