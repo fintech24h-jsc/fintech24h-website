@@ -47,7 +47,7 @@ export default function NavbarReact() {
           </div>
           
           {/* Centered Navigation Links (Desktop) */}
-          <div className="hidden md:flex items-center gap-8 text-white/80 text-xs font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
+          <div className="hidden md:flex items-center gap-8 text-white/80 text-sm font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
             <a href="/" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">home</a>
             
             {/* Services Dropdown */}
@@ -77,7 +77,7 @@ export default function NavbarReact() {
                       <a
                         key={s.href}
                         href={s.href}
-                        className="px-4 py-2.5 rounded-xl hover:bg-white/[0.04] text-[11px] font-sans font-semibold text-white/70 hover:text-white transition-colors block"
+                        className="px-4 py-2.5 rounded-xl hover:bg-white/[0.04] text-xs font-sans font-semibold text-white/70 hover:text-white transition-colors block"
                       >
                         {s.label}
                       </a>
