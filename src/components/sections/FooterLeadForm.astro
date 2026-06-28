@@ -1,15 +1,12 @@
 ---
 // src/components/sections/FooterLeadForm.astro
-// Theo design-system.md section 7.6 (CTA Section cuối trang):
-// - KHÔNG phải full-width gradient block thông thường
-// - Thay bằng: Floating card trên nền tối, border glow animation, text lớn
-// - 2 CTA: primary + secondary Telegram link
-// - Social proof nhỏ bên dưới buttons
-import HubSpotForm from '../ui/HubSpotForm.tsx';
+// Final CTA Section redesigned as a centered, high-end Liquid Glass conversion card.
+// - Removed email input field
+// - Styled primary CTA as a premium Liquid Glass button with continuous sheen shine sweep animation
 ---
 
 <section class="py-24 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Final Conversion CTA">
-  <!-- Background: mesh gradient riêng cho section CTA -->
+  <!-- Background: mesh gradient -->
   <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(124,92,252,0.12) 0%, transparent 65%);" aria-hidden="true"></div>
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
     <div class="absolute w-[600px] h-[600px] rounded-full"
@@ -25,7 +22,7 @@ import HubSpotForm from '../ui/HubSpotForm.tsx';
 
   <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <!-- Floating card — theo design-system.md 7.6 -->
+    <!-- Floating card -->
     <div
       class="card-featured p-8 sm:p-12 lg:p-16 text-center relative overflow-hidden"
       style="animation: border-glow 4s ease-in-out infinite;"
@@ -36,59 +33,43 @@ import HubSpotForm from '../ui/HubSpotForm.tsx';
         style="background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,200,240,0.06) 0%, transparent 60%);">
       </div>
 
-      <!-- Eyebrow: font-mono theo spec -->
+      <!-- Eyebrow -->
       <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-6" data-animate="fade-up">
         Start Scaling
       </p>
 
-      <!-- H2: text lớn theo spec — KHÔNG gradient toàn bộ, chỉ 1 phần -->
+      <!-- H2 -->
       <h2 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-4 max-w-2xl mx-auto leading-[1.1]" data-animate="fade-up">
         Ready to Scale Your
         <span class="text-gradient"> Web3 Project?</span>
       </h2>
 
       <p class="text-base sm:text-lg text-[var(--text-secondary)] font-body mb-10 max-w-xl mx-auto leading-relaxed" data-animate="fade-up">
-        Subscribe to our newsletter for actionable crypto marketing playbooks, or schedule a growth audit with our strategy team today.
+        Get in touch with our strategy team today to lock in a customized growth strategy audit and map out your execution roadmap.
       </p>
 
-      <!-- Dual CTA -->
-      <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-3xl mx-auto mb-10">
-
-        <!-- Newsletter subscription -->
-        <div class="w-full md:w-1/2 text-left">
-          <h3 class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest mb-3">
-            Subscribe to Playbooks
-          </h3>
-          <HubSpotForm client:load />
-        </div>
-
-        <!-- Divider -->
-        <div class="hidden md:block w-px h-20 bg-[var(--border-subtle)]" aria-hidden="true"></div>
-
-        <!-- Book a meeting -->
-        <div class="w-full md:w-1/2 text-center md:text-left">
-          <h3 class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest mb-4">
-            Direct Strategy Booking
-          </h3>
-          <a href="/contact#book-call" class="btn-primary inline-flex items-center justify-center mb-3">
-            <span>Book Discovery Call</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <a
-            href="https://t.me/fintech24h"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-ghost inline-flex items-center justify-center text-sm py-2.5 px-4"
-          >
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-            <span>Telegram</span>
-          </a>
-        </div>
-
+      <!-- Centered liquid glass CTA buttons -->
+      <div class="flex flex-wrap gap-4 justify-center items-center max-w-xl mx-auto mb-10" data-animate="fade-up">
+        <a
+          href="#get-proposal"
+          class="btn-liquid-glass-cta py-3 px-8 text-xs font-mono font-bold uppercase tracking-wider rounded-full relative overflow-hidden inline-flex items-center gap-2 cursor-pointer"
+        >
+          <span>Book Discovery Call</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a
+          href="https://t.me/fintech24h"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-liquid-glass-ghost-large py-3 px-8 text-xs font-mono font-bold uppercase tracking-wider rounded-full inline-flex items-center gap-2 cursor-pointer"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          <span>Telegram</span>
+        </a>
       </div>
 
-      <!-- Social proof nhỏ bên dưới buttons — theo design-system.md 7.6 -->
-      <div class="flex items-center justify-center gap-6 flex-wrap border-t border-[var(--border-subtle)] pt-8">
+      <!-- Social proof -->
+      <div class="flex items-center justify-center gap-6 flex-wrap border-t border-[var(--border-subtle)] pt-8" data-animate="fade-up">
         <div class="flex items-center gap-2 text-xs text-[var(--text-muted)] font-body">
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]"></span>
           200+ Projects scaled
@@ -108,3 +89,72 @@ import HubSpotForm from '../ui/HubSpotForm.tsx';
     </div>
   </div>
 </section>
+
+<style>
+  /* Premium Liquid Glass Primary Button with continuous sheen shine sweep */
+  .btn-liquid-glass-cta {
+    background: rgba(0, 200, 240, 0.1);
+    border: 1px solid rgba(0, 200, 240, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    box-shadow: 
+      0 8px 24px 0 rgba(0, 200, 240, 0.08),
+      inset 0 1px 2px rgba(255, 255, 255, 0.25);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-liquid-glass-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.35),
+      transparent
+    );
+    transform: skewX(-25deg);
+    animation: cta-sheen 6s infinite ease-in-out;
+  }
+  @keyframes cta-sheen {
+    0% { left: -150%; }
+    50% { left: 150%; }
+    100% { left: 150%; }
+  }
+  .btn-liquid-glass-cta:hover {
+    background: rgba(0, 200, 240, 0.18);
+    border-color: rgba(0, 200, 240, 0.6);
+    box-shadow: 
+      0 4px 12px rgba(0, 200, 240, 0.15),
+      inset 0 1px 3px rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+  }
+
+  /* Premium Liquid Glass Ghost Button */
+  .btn-liquid-glass-ghost-large {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-secondary);
+    box-shadow: 
+      0 8px 24px 0 rgba(0, 0, 0, 0.1),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-liquid-glass-ghost-large:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+</style>
