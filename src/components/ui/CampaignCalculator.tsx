@@ -128,21 +128,8 @@ export default function CampaignCalculator() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto w-full">
-      <div className="card-default p-5 sm:p-8 space-y-6 relative overflow-hidden backdrop-blur-xl transition-all duration-500">
-        <div className="absolute inset-0 bg-radial-gradient(circle, rgba(0, 200, 240, 0.02) 0%, transparent 60%) pointer-events-none"></div>
-
-        {/* Heading */}
-        <div className="border-b border-white/5 pb-4">
-          <h3 className="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.18em] font-bold mb-1">
-            Campaign Configurator
-          </h3>
-          <p className="text-xs text-[var(--text-secondary)] font-body">
-            Select your project type below to begin your tailored strategy request.
-          </p>
-        </div>
-
-        {errorMsg && (
+    <div className="w-full space-y-6 relative transition-all duration-500">
+      {errorMsg && (
           <div className="p-3 text-xs text-red-400 border border-red-500/20 bg-red-500/5 rounded-xl font-body">
             {errorMsg}
           </div>
@@ -436,13 +423,10 @@ export default function CampaignCalculator() {
                 >
                   <span>{isSubmitting ? 'Submitting Strategy...' : 'Get Custom Strategy Blueprint →'}</span>
                 </button>
-
               </form>
             )}
-
           </div>
         )}
-      </div>
     </div>
   );
 }
