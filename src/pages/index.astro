@@ -11,6 +11,7 @@ import FaqSection from '../components/sections/FaqSection.astro';
 import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
 import MultiStepForm from '../components/ui/MultiStepForm.tsx';
 import { getFeaturedCaseStudy } from '../lib/wordpress';
+import BlogHighlight from '../components/sections/BlogHighlight.astro';
 
 const featuredCase = await getFeaturedCaseStudy();
 
@@ -87,6 +88,8 @@ const faqSchema = {
   <ServicesGrid />
   {featuredCase && <CaseStudyWidget caseStudy={featuredCase} />}
   <ProcessSection />
+
+  <BlogHighlight />
 
   <FaqSection />
   <FooterLeadForm />
