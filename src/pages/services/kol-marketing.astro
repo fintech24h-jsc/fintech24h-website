@@ -1,5 +1,5 @@
 ---
-// src/pages/services/kol-influencer-marketing.astro
+// src/pages/services/kol-marketing.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
@@ -7,33 +7,25 @@ import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services' },
-  { name: 'KOL & Influencer Marketing', item: `https://fintech24h.com/services/kol-marketing` }
+  { name: 'KOL Marketing', item: 'https://fintech24h.com/services/kol-marketing' }
 ];
 
 const faqs = [
   {
-    q: "How do you ensure the KOLs you recommend have real audiences?",
-    a: "Every KOL we work with goes through a vetting process that includes engagement rate analysis, follower quality scoring, historical post performance, and audience demographic review. We don't recommend anyone we haven't validated."
+    q: "How do you verify KOL audience quality?",
+    a: "We use third-party analytics tools and our own historical database to check engagement-to-follower ratios, comment sentiment (filtering out bot replies), and audience geography. If a KOL has 1M followers but averages 10 real comments, they don't make our list."
   },
   {
-    q: "Can we request specific KOLs we already have in mind?",
-    a: "Yes. If you have KOLs you want to work with, we can evaluate them against our criteria and integrate them into the campaign plan where appropriate."
+    q: "Do you handle the payments to KOLs?",
+    a: "Yes. We handle all contract negotiations, escrow, and milestone-based payments (usually 50% upfront, 50% upon successful delivery of content as briefed). You pay us a single invoice; we handle the complex distribution."
   },
   {
-    q: "How long does a typical campaign take to set up?",
-    a: "From brief to first live content is typically 7–10 business days, depending on KOL availability and approval cycles."
+    q: "Can you guarantee ROI or token price impact?",
+    a: "No agency can guarantee token price impact, as it depends on market conditions, your product, and broader macroeconomic factors. We guarantee reach, engagement, and click-through rates based on historical data of the KOLs we select."
   },
   {
-    q: "Do you work with micro-influencers or only large accounts?",
-    a: "Both. The right tier depends on your objectives. Micro-influencers often outperform larger accounts in conversion-focused campaigns due to higher audience trust and engagement rates."
-  },
-  {
-    q: "What markets do you cover?",
-    a: "Our network spans Southeast Asia (Vietnam, Thailand, Indonesia, Philippines), Singapore, UAE, South Korea, Japan, India, Europe, and global English-speaking markets."
-  },
-  {
-    q: "Do you guarantee results?",
-    a: "We don't make guarantees because honest campaign performance depends on factors outside creative control — market conditions, project fundamentals, and timing. What we do guarantee is rigorous execution, full transparency, and a documented process that improves with every cycle."
+    q: "Do KOLs disclose that the posts are sponsored?",
+    a: "Yes, we require all KOLs to comply with local regulations (such as FTC guidelines in the US) regarding sponsored content disclosures, typically using #ad or #sponsored tags."
   }
 ];
 ---
@@ -44,114 +36,142 @@ const faqs = [
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- SECTION 1 — HERO -->
+  <!-- SECTION 1 — HERO (The Network Concept) -->
   <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
+    <!-- Network Background Nodes -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[600px] h-[600px] rounded-full" style="background:var(--gradient-glow-cyan); top:-20%; left:50%; transform:translateX(-50%); animation:orb-pulse 10s ease-in-out infinite; filter:blur(70px); opacity:0.06"></div>
-      <div class="grid-pattern absolute inset-0 opacity-15"></div>
+      <div class="absolute top-[20%] left-[10%] w-32 h-32 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_6s_ease-in-out_infinite]">
+        <div class="w-12 h-12 rounded-full bg-[var(--gradient-glow-cyan)] opacity-20 blur-xl"></div>
+        <img src="https://i.pravatar.cc/100?img=11" alt="Avatar" class="w-10 h-10 rounded-full border border-[var(--accent-cyan)] object-cover opacity-60 absolute" />
+        <div class="absolute inset-0 rounded-full border border-[var(--accent-cyan)] opacity-20 animate-[pulse-ring_3s_ease-out_infinite]"></div>
+      </div>
+      
+      <div class="absolute top-[30%] right-[15%] w-40 h-40 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_8s_ease-in-out_infinite_reverse]">
+        <div class="w-16 h-16 rounded-full bg-[var(--gradient-glow-purple)] opacity-20 blur-xl"></div>
+        <img src="https://i.pravatar.cc/100?img=12" alt="Avatar" class="w-12 h-12 rounded-full border border-[#a78bfa] object-cover opacity-60 absolute" />
+        <div class="absolute inset-0 rounded-full border border-[#a78bfa] opacity-20 animate-[pulse-ring_4s_ease-out_infinite]"></div>
+      </div>
+
+      <div class="absolute bottom-[20%] left-[25%] w-24 h-24 rounded-full border border-white/5 flex items-center justify-center animate-[float-fast_5s_ease-in-out_infinite]">
+        <img src="https://i.pravatar.cc/100?img=13" alt="Avatar" class="w-8 h-8 rounded-full border border-white/30 object-cover opacity-40 absolute" />
+      </div>
+
+      <!-- Connecting Lines (SVG) -->
+      <svg class="absolute inset-0 w-full h-full opacity-10" preserveAspectRatio="none">
+        <line x1="15%" y1="25%" x2="50%" y2="50%" stroke="var(--accent-cyan)" stroke-width="1" stroke-dasharray="4 4" class="line-reveal" />
+        <line x1="80%" y1="35%" x2="50%" y2="50%" stroke="#a78bfa" stroke-width="1" stroke-dasharray="4 4" class="line-reveal delay-200" />
+        <line x1="30%" y1="75%" x2="50%" y2="50%" stroke="white" stroke-width="1" stroke-dasharray="4 4" class="line-reveal delay-500" />
+      </svg>
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto w-full text-center">
+    <div class="relative z-10 max-w-5xl mx-auto w-full text-center">
       <div class="inline-flex items-center justify-center mb-8 reveal reveal-delay-1">
-        <span class="tag tag-cyan font-mono text-xs uppercase tracking-[0.14em]">
+        <span class="px-4 py-1.5 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] font-mono text-xs uppercase tracking-[0.14em] shadow-[0_0_15px_rgba(0,200,240,0.2)]">
           KOL & INFLUENCER MARKETING
         </span>
       </div>
 
-      <h1 class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-2">
-        <span class="block text-[clamp(2.25rem,6vw,4.5rem)] tracking-[-0.02em] leading-[1.1] text-[var(--text-primary)]">
-          The Right Voice,<br/>Reaching the Right Audience.
+      <h1 class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-2 relative">
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.03em] leading-[1.05] text-white">
+          The Right Voice,<br/>
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent-cyan)] to-[#a78bfa]">Reaching the Right Audience.</span>
         </span>
       </h1>
 
-      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-2xl mx-auto mt-6 mb-10 leading-[1.75] reveal reveal-delay-3">
+      <p class="font-body text-[18px] text-[var(--text-secondary)] max-w-2xl mx-auto mt-8 mb-12 leading-[1.7] reveal reveal-delay-3">
         Most KOL campaigns fail before they start — because the wrong influencers are chosen for the wrong reasons. We build campaigns around audience fit, not follower count.
       </p>
 
       <div class="flex flex-col sm:flex-row justify-center gap-4 reveal reveal-delay-4">
-        <a href="#book-call" class="btn-primary">
-          Get a KOL Proposal
+        <a href="#book-call" class="relative group overflow-hidden rounded-full p-[1px]">
+          <span class="absolute inset-0 bg-gradient-to-r from-[var(--accent-cyan)] to-[#a78bfa] rounded-full opacity-70 group-hover:opacity-100 transition-opacity duration-300"></span>
+          <div class="relative bg-black px-8 py-4 rounded-full flex items-center justify-center gap-2 group-hover:bg-opacity-0 transition-all duration-300">
+            <span class="text-white font-mono font-semibold uppercase text-xs tracking-wider">Get a KOL Proposal</span>
+          </div>
         </a>
         <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-ghost">
           Chat on Telegram
         </a>
       </div>
-
-      <div class="mt-16 flex flex-wrap justify-center gap-4 reveal reveal-delay-4">
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">500+ KOLs in our vetted network</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Tier 1 & Tier 2 market coverage</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Full lifecycle management</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Real-time campaign tracking</span>
-      </div>
     </div>
   </section>
 
-  <!-- SECTION 2 — THE PROBLEM -->
-  <section class="py-20 md:py-32 relative z-10">
+  <!-- SECTION 2 — THE PROBLEM (Bento Box Style) -->
+  <section class="py-20 md:py-32 relative z-10 bg-black/40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHY CAMPAIGNS FAIL</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-white leading-[1.2]">
           Why Most KOL Campaigns Underperform
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Fake Followers, Real Budget Lost</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">You pay for reach that doesn't exist. Inflated follower counts and bot-heavy audiences mean your message goes nowhere — and your budget evaporates with nothing to show.</p>
+      <!-- Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[280px]">
+        
+        <!-- Bento 1 (Large) -->
+        <div class="md:col-span-2 card-default border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end group hover:border-red-500/30 transition-all reveal">
+          <div class="absolute top-6 right-6 w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+          </div>
+          <h3 class="font-display text-2xl font-bold text-white mb-2">Fake Followers, Real Budget Lost</h3>
+          <p class="text-[var(--text-secondary)]">You pay for reach that doesn't exist. Inflated follower counts and bot-heavy audiences mean your message goes nowhere — and your budget evaporates with nothing to show.</p>
         </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Wrong Audience, No Conversion</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">A KOL with 500K followers in the gaming niche does nothing for a DeFi protocol. Audience mismatch is the silent killer of crypto influencer campaigns. Reach without relevance is just noise.</p>
+
+        <!-- Bento 2 -->
+        <div class="card-default border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end group hover:border-[var(--accent-cyan)]/30 transition-all reveal reveal-delay-1">
+          <h3 class="font-display text-xl font-bold text-white mb-2">Wrong Audience</h3>
+          <p class="text-[var(--text-secondary)] text-sm">A KOL with 500K followers in gaming does nothing for a DeFi protocol. Reach without relevance is noise.</p>
         </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No Brief, No Direction</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">When KOLs receive no structured brief, they default to generic content. The result: posts that feel promotional, get low engagement, and fail to communicate what makes your project worth paying attention to.</p>
+
+        <!-- Bento 3 -->
+        <div class="card-default border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end group hover:border-[#a78bfa]/30 transition-all reveal">
+          <h3 class="font-display text-xl font-bold text-white mb-2">No Brief, No Direction</h3>
+          <p class="text-[var(--text-secondary)] text-sm">When KOLs receive no brief, they default to generic content. Posts feel promotional and get low engagement.</p>
         </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No Tracking, No Learning</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Most agencies hand you a list of post links and call it a report. There's no conversion data, no audience quality analysis, no insight into what worked — so you can't improve next time.</p>
+
+        <!-- Bento 4 (Large) -->
+        <div class="md:col-span-2 card-default border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end relative overflow-hidden group hover:border-white/20 transition-all reveal reveal-delay-1">
+          <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50"></div>
+          <div class="relative z-10">
+            <h3 class="font-display text-2xl font-bold text-white mb-2">Bad Timing Kills Momentum</h3>
+            <p class="text-[var(--text-secondary)] max-w-lg">A KOL drop one week before launch creates buzz that dies before TGE. One week after, you're chasing a market that's already moved on. Campaign timing is strategy, not a calendar exercise.</p>
+          </div>
         </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 md:col-span-2 reveal reveal-delay-3">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Bad Timing Kills Momentum</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] max-w-4xl">A KOL drop one week before launch creates buzz that dies before TGE. One week after, you're chasing a market that's already moved on. Campaign timing is strategy — and most agencies treat it as a calendar exercise.</p>
-        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3 — OUR APPROACH -->
-  <section class="py-20 md:py-32 relative z-10 bg-black/20">
+  <!-- SECTION 3 — OUR APPROACH (Network Flow) -->
+  <section class="py-20 md:py-32 relative z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">HOW WE WORK</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          How We Run KOL Campaigns That Actually Work
-        </h2>
+      <div class="text-center mb-20 reveal">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em] mb-4">THE FINTECH24H METHOD</p>
+        <h2 class="font-display text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-white">How We Run KOL Campaigns That Work</h2>
       </div>
 
-      <div class="relative max-w-4xl mx-auto">
-        <div class="absolute left-[24px] md:left-[50px] top-0 bottom-0 w-px bg-white/10 hidden md:block"></div>
-        
-        <div class="space-y-12">
+      <div class="relative">
+        <!-- Connecting Line for Desktop -->
+        <div class="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent hidden md:block opacity-30"></div>
+
+        <div class="space-y-24">
           {[
-            { step: '01', title: 'Audience-First Selection', desc: 'Before selecting any KOL, we audit their audience demographics, engagement quality, historical campaign performance, and topic alignment with your project. Bot rate, audience overlap, and geographic distribution are part of every evaluation. You get a shortlist with reasoning — not just names.' },
-            { step: '02', title: 'Brief & Content Alignment', desc: 'We write structured campaign briefs for every KOL, covering project narrative, key messages, tone guidelines, and content formats. Every piece of content is reviewed and approved before going live. Nothing generic. Nothing off-brand.' },
-            { step: '03', title: 'Phased Activation', desc: "We don't release everything at once. KOL campaigns are deployed in phases: awareness seeding, followed by education and trust-building content, followed by conversion-focused calls to action. The sequence matters." },
-            { step: '04', title: 'Live Tracking & Optimization', desc: 'During every campaign, we monitor performance in real time — impressions, engagement rate, click-through, and downstream signals. Underperforming placements are paused and replaced. You see what\'s happening, not a summary two weeks later.' },
-            { step: '05', title: 'Post-Campaign Reporting', desc: 'After every campaign, you receive a full performance breakdown: what worked, what didn\'t, audience quality analysis, and recommendations for the next cycle. Every campaign makes the next one smarter.' }
-          ].map((s, i) => (
-            <div class="relative flex flex-col md:flex-row gap-6 md:gap-12 reveal" style={`transition-delay: ${i * 0.1}s`}>
-              <div class="flex items-center md:items-start gap-4 md:w-[120px] shrink-0 z-10">
-                <div class="w-12 h-12 rounded-full border-[1.5px] border-[var(--accent-cyan)] bg-[var(--bg-primary)] flex items-center justify-center font-mono text-[var(--accent-cyan)] font-bold shrink-0 shadow-[0_0_15px_rgba(0,200,240,0.2)]">
-                  {s.step}
+            { step: '01', title: 'Audience-First Selection', desc: 'Before selecting any KOL, we audit their audience demographics, engagement quality, historical campaign performance, and topic alignment with your project. You get a shortlist with reasoning — not just names.', align: 'left' },
+            { step: '02', title: 'Brief & Content Alignment', desc: 'We write structured campaign briefs for every KOL, covering project narrative, key messages, tone guidelines, and content formats. Every piece of content is reviewed and approved before going live.', align: 'right' },
+            { step: '03', title: 'Phased Activation', desc: 'We don\'t release everything at once. KOL campaigns are deployed in phases: awareness seeding, followed by education and trust-building content, followed by conversion-focused calls to action.', align: 'left' },
+            { step: '04', title: 'Live Tracking & Optimization', desc: 'During every campaign, we monitor performance in real time — impressions, engagement rate, click-through. Underperforming placements are paused and replaced. You see what\'s happening.', align: 'right' },
+            { step: '05', title: 'Post-Campaign Reporting', desc: 'After every campaign, you receive a full performance breakdown: what worked, what didn\'t, audience quality analysis, and recommendations for the next cycle. Every campaign makes the next smarter.', align: 'left' }
+          ].map((item, i) => (
+            <div class={`flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16 reveal ${item.align === 'right' ? 'md:flex-row-reverse' : ''}`}>
+              <div class="w-full md:w-1/2 flex justify-center md:justify-end">
+                <div class={`card-default p-8 max-w-lg w-full relative group ${item.align === 'left' ? 'md:text-right' : 'md:text-left text-left'}`}>
+                  <div class={`absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[var(--accent-cyan)] shadow-[0_0_15px_var(--accent-cyan)] hidden md:block ${item.align === 'left' ? '-right-10' : '-left-10'}`}></div>
+                  <span class="font-mono text-[var(--accent-cyan)] text-lg mb-2 block">{item.step}.</span>
+                  <h3 class="font-display text-xl font-bold text-white mb-3">{item.title}</h3>
+                  <p class="text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
                 </div>
               </div>
-              <div class="pt-2">
-                <h3 class="font-display text-xl font-bold text-white mb-3">{s.title}</h3>
-                <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">{s.desc}</p>
-              </div>
+              <div class="hidden md:block w-full md:w-1/2"></div>
             </div>
           ))}
         </div>
@@ -159,132 +179,82 @@ const faqs = [
     </div>
   </section>
 
-  <!-- SECTION 4 — CAMPAIGN TYPES -->
-  <section class="py-20 md:py-32 relative z-10">
+  <!-- SECTION 4 — SERVICES COVERED (Floating Cards) -->
+  <section class="py-20 md:py-32 relative z-10 bg-white/[0.02] border-y border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHAT WE OFFER</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          Campaign Types & Platforms
-        </h2>
+      <div class="text-center mb-16 reveal">
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-white">Campaign Types & Platforms</h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Influencer Campaign</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">End-to-end management of multi-KOL campaigns — from selection and briefing to activation and reporting. Suitable for project launches, token events, and community growth phases.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">KOL Management</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Ongoing relationship management with a curated group of KOLs who become long-term advocates for your project. Consistency builds credibility.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Ambassador Program</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Recruit, onboard, and activate community ambassadors who create organic content, moderate local communities, and drive referrals. Ideal for projects expanding into new regions.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">X (Twitter) Growth Campaign</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Coordinated Twitter/X amplification — threads, quote posts, Space promotions, and reply engagement — timed to key project milestones.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 5 — WHO IT'S FOR -->
-  <section class="py-20 md:py-32 relative z-10 bg-black/20 border-y border-white/5">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-12 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHO THIS SERVES</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          This Service Is Built For
-        </h2>
-      </div>
-
-      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          "Blockchain projects preparing for TGE or token launch",
-          "DeFi protocols seeking to grow TVL and user acquisition",
-          "L1/L2 networks expanding regional presence",
-          "NFT and GameFi projects driving community growth",
-          "Web3 startups entering new geographic markets"
-        ].map((item, i) => (
-          <li class="flex items-start gap-3 p-4 bg-white/[0.02] border border-white/5 rounded-xl reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <svg class="w-5 h-5 text-[var(--accent-cyan)] shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span class="font-body text-[16px] text-white leading-tight">{item}</span>
-          </li>
+          { title: 'Influencer Campaign', desc: 'End-to-end management of multi-KOL campaigns — from selection to activation.' },
+          { title: 'KOL Management', desc: 'Ongoing relationship management with a curated group of KOLs who become long-term advocates.' },
+          { title: 'Ambassador Program', desc: 'Recruit, onboard, and activate community ambassadors who create organic content.' },
+          { title: 'X Growth Campaign', desc: 'Coordinated Twitter/X amplification — threads, quote posts, Space promotions.' }
+        ].map((s, i) => (
+          <div class="card-default p-8 hover:-translate-y-2 transition-transform duration-300 reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <div class="w-10 h-10 rounded-full bg-white/10 mb-6 flex items-center justify-center text-white font-mono text-sm">{i+1}</div>
+            <h3 class="font-display font-bold text-white mb-3 text-lg">{s.title}</h3>
+            <p class="text-[var(--text-secondary)] text-sm leading-relaxed">{s.desc}</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   </section>
 
-  <!-- SECTION 6 — FAQ -->
-  <section class="py-20 md:py-32 relative z-10">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">FAQ</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          Common Questions
-        </h2>
-      </div>
-
-      <div class="space-y-4">
-        {faqs.map((faq, i) => (
-          <details class="card-default p-0 border border-white/5 hover:border-[var(--accent-cyan)]/20 transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
-              <span class="font-display font-semibold text-base sm:text-[18px] text-white group-hover:text-[var(--accent-cyan)] transition-colors pr-6">
-                {faq.q}
-              </span>
-              <div class="w-8 h-8 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/50 group-hover:text-[var(--accent-cyan)] group-hover:bg-[var(--accent-cyan)]/10 transition-all shrink-0">
-                <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </summary>
-            <div class="px-6 pb-6 text-[16px] text-[var(--text-secondary)] font-body leading-relaxed border-t border-white/[0.03] pt-4">
-              <p>{faq.a}</p>
+  <!-- FAQ SECTION -->
+  <section class="py-20 md:py-32 max-w-4xl mx-auto px-4">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-display text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-white">Common Questions</h2>
+    </div>
+    <div class="space-y-4">
+      {faqs.map((faq, i) => (
+        <details class="card-default p-0 border border-white/5 hover:border-[var(--accent-cyan)]/30 transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
+          <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+            <span class="font-display font-semibold text-white group-hover:text-[var(--accent-cyan)] transition-colors pr-6">{faq.q}</span>
+            <div class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/50 group-hover:text-[var(--accent-cyan)] group-hover:border-[var(--accent-cyan)]/30 shrink-0">
+              <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </div>
-          </details>
-        ))}
-      </div>
+          </summary>
+          <div class="px-6 pb-6 text-[var(--text-secondary)] border-t border-white/5 pt-4">
+            <p>{faq.a}</p>
+          </div>
+        </details>
+      ))}
     </div>
   </section>
 
-  <!-- SECTION 7 — CTA -->
+  <!-- CTA SECTION -->
   <section id="book-call" class="py-24 relative overflow-hidden">
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[800px] h-[800px] rounded-full" style="background:var(--gradient-glow-cyan); top:50%; left:50%; transform:translate(-50%, -50%); filter:blur(100px); opacity:0.1"></div>
+      <div class="absolute w-[800px] h-[800px] rounded-full" style="background:var(--gradient-glow-cyan); top:50%; left:50%; transform:translate(-50%, -50%); filter:blur(120px); opacity:0.15"></div>
     </div>
-    
     <div class="max-w-3xl mx-auto px-4 text-center relative z-10 reveal">
-      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4 leading-tight">
-        Ready to Run a KOL Campaign That Converts?
-      </h2>
-      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-xl mx-auto mb-10">
-        Tell us about your project — we'll outline a KOL strategy tailored to your audience and objectives.
-      </p>
-      <ServiceInquiryForm client:load defaultService="KOL & Influencer Marketing" />
-      <p class="text-sm text-[var(--text-muted)] mt-6">No commitment. Response within 24 hours.</p>
+      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4">Ready to reach the right audience?</h2>
+      <p class="text-[var(--text-secondary)] mb-10">We'll build a custom KOL proposal based on your target demographic and budget.</p>
+      <ServiceInquiryForm client:load defaultService="KOL Marketing" />
     </div>
   </section>
+
 </BaseLayout>
 
 <style>
   summary::-webkit-details-marker { display: none; }
-  
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
   .reveal-delay-4 { transition-delay: 0.4s; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-  }
+  .line-reveal { transform: scaleX(0); transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); transform-origin: left; }
+  .revealed .line-reveal { transform: scaleX(1); }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -293,7 +263,6 @@ const faqs = [
         }
       });
     }, { threshold: 0.15 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal, svg').forEach(el => observer.observe(el));
   });
 </script>

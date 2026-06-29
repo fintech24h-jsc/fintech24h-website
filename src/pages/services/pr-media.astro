@@ -7,236 +7,169 @@ import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services' },
-  { name: 'PR Campaigns', item: `https://fintech24h.com/services/pr-media` }
+  { name: 'PR Campaigns', item: 'https://fintech24h.com/services/pr-media' }
 ];
 
 const faqs = [
   {
-    q: "Do you guarantee placement in specific publications?",
-    a: "We don't guarantee specific placements because editorial decisions are ultimately made by journalists and editors. What we can tell you is our pitch success rate with established outlet contacts is significantly higher than cold outreach, and we will always be transparent with you about what's realistic for your project."
+    q: "Can you guarantee coverage on Bloomberg or Forbes?",
+    a: "We guarantee submission and advocacy through our direct editorial contacts. However, top-tier publications maintain strict editorial independence. We craft the narrative to maximize acceptance, but guaranteed placement on these specific sites is usually through sponsored content (which we can also facilitate)."
   },
   {
-    q: "What's the difference between sponsored and editorial coverage?",
-    a: "Editorial (earned) coverage means a journalist chose to cover your story based on newsworthiness — it carries the highest credibility. Sponsored coverage is paid placement, clearly labeled, and gives you more control over the content. We advise on the right mix for your objectives and budget."
+    q: "What is the difference between PR distribution and Editorial Placement?",
+    a: "PR distribution (like PR Newswire) syndicates your exact text to hundreds of automated feeds — good for SEO, bad for credibility. Editorial placement involves pitching a journalist to write an original article about your project — harder to get, but infinitely more valuable."
   },
   {
-    q: "How long does it take to secure coverage?",
-    a: "Press release production and pitching takes 5–7 business days. Editorial lead times vary by publication — tier-1 outlets typically require 1–3 weeks from pitch to publication."
+    q: "Do you write the press releases?",
+    a: "Yes. Our team of native English speakers and crypto-native writers handle the entire drafting process, ensuring the tone matches top-tier journalistic standards."
   },
   {
-    q: "Can you handle PR in multiple languages?",
-    a: "Yes. We produce content in English, Vietnamese, and through our partner network, Korean, Japanese, and Arabic for regional campaigns."
-  },
-  {
-    q: "What if we have a crisis or negative coverage?",
-    a: "Crisis PR is available as a standalone engagement. The earlier we're involved, the more options we have. Reach out directly for a confidential conversation."
+    q: "How do you measure PR success?",
+    a: "We track total readership reach, domain authority of the publishing sites (for SEO impact), referral traffic to your website, and share-of-voice compared to your competitors."
   }
+];
+
+const logos = [
+  "CoinTelegraph", "Yahoo Finance", "Bloomberg", "Decrypt", "The Block", "CoinDesk", "TechCrunch", "Forbes"
 ];
 ---
 
 <BaseLayout
-  title="Blockchain & Web3 PR Campaigns — Press Coverage That Builds Credibility | Fintech24h"
-  description="Editorial placements in top-tier crypto and fintech media. Fintech24h writes, pitches, and places press coverage for Blockchain, DeFi, and Web3 projects across global media outlets."
+  title="Web3 PR & Media Campaigns | Fintech24h"
+  description="Get featured on Tier-1 financial and crypto publications. Fintech24h crafts compelling narratives and secures premium editorial space for Web3 projects."
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- SECTION 1 — HERO -->
-  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[600px] h-[600px] rounded-full" style="background:var(--gradient-glow-purple); top:-20%; left:50%; transform:translateX(-50%); animation:orb-pulse 10s ease-in-out infinite; filter:blur(70px); opacity:0.06"></div>
-      <div class="grid-pattern absolute inset-0 opacity-15"></div>
-    </div>
-
-    <div class="relative z-10 max-w-7xl mx-auto w-full text-center">
-      <div class="inline-flex items-center justify-center mb-8 reveal reveal-delay-1">
-        <span class="tag tag-purple font-mono text-xs uppercase tracking-[0.14em]">
-          PR & MEDIA CAMPAIGNS
+  <!-- SECTION 1 — HERO (Editorial Split Style) -->
+  <section class="relative min-h-[90vh] flex flex-col md:flex-row items-center pt-24 border-b border-white/10 bg-[#04060A]">
+    <!-- Left: Typography Heavy -->
+    <div class="w-full md:w-1/2 px-6 md:px-12 lg:px-24 pt-20 pb-16 relative z-10">
+      <div class="reveal">
+        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-6 border-b border-white/10 pb-4">
+          PR & MEDIA CAMPAIGNS // ISSUE 01
         </span>
-      </div>
-
-      <h1 class="font-display font-bold max-w-5xl mx-auto reveal reveal-delay-2">
-        <span class="block text-[clamp(2.25rem,6vw,4.5rem)] tracking-[-0.02em] leading-[1.1] text-[var(--text-primary)]">
-          Coverage in the Publications<br/>Your Investors Are Reading.
-        </span>
-      </h1>
-
-      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-3xl mx-auto mt-6 mb-10 leading-[1.75] reveal reveal-delay-3">
-        A press release distributed to 200 outlets nobody reads does nothing for your project. We place editorial coverage in media that actually moves perception — and builds the credibility that converts skeptics into stakeholders.
-      </p>
-
-      <div class="flex flex-col sm:flex-row justify-center gap-4 reveal reveal-delay-4">
-        <a href="#book-call" class="btn-primary">
-          Request a PR Proposal
-        </a>
-        <a href="#media-network" class="btn-ghost">
-          View Media Network
+        <h1 class="font-display font-bold text-[clamp(3rem,8vw,6rem)] leading-[0.9] text-white tracking-[-0.04em] uppercase mb-8">
+          Don't Just Make Noise.<br/>
+          <span class="text-transparent text-stroke-white text-stroke-1 hover:text-white transition-colors duration-500">Make the News.</span>
+        </h1>
+        <p class="font-body text-lg text-white/70 max-w-md leading-relaxed mb-10 border-l-2 border-white/20 pl-6">
+          A press release distributed to 200 outlets nobody reads does nothing. We place editorial coverage that builds credibility, trust, and search authority.
+        </p>
+        <a href="#book-call" class="inline-block bg-white text-black px-8 py-4 font-mono text-sm uppercase tracking-widest font-bold hover:bg-white/80 transition-colors">
+          Get a PR Strategy
         </a>
       </div>
-
-      <div class="mt-16 flex flex-wrap justify-center gap-4 reveal reveal-delay-4">
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Tier-1 editorial placements</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">50+ media outlets</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Full content production</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Coverage tracking & reporting</span>
-      </div>
     </div>
-  </section>
 
-  <!-- SECTION 2 — THE PROBLEM -->
-  <section class="py-20 md:py-32 relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[#a78bfa] uppercase tracking-[0.14em]">WHY PR FAILS</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          What Goes Wrong With Most Crypto PR
-        </h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Wire Distribution ≠ Real Coverage</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Distributing a press release via a wire service creates the illusion of coverage. Hundreds of syndicated posts on low-authority sites don't move perception, don't rank on Google, and don't reach the audience that matters.</p>
+    <!-- Right: Abstract Editorial Image/Graphic -->
+    <div class="w-full md:w-1/2 h-[50vh] md:h-full relative overflow-hidden bg-[#0A0D14] border-l border-white/10 flex items-center justify-center">
+      <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
+      
+      <!-- Abstract Newspaper Layout Element -->
+      <div class="relative w-[80%] h-[80%] border border-white/10 flex flex-col p-6 reveal reveal-delay-2">
+        <div class="w-full h-32 border-b border-white/10 mb-6 flex items-end pb-4">
+          <div class="text-[8rem] leading-none font-display font-bold text-white/5 tracking-tighter">PR</div>
         </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Generic Press Releases Get Ignored</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Crypto journalists receive hundreds of pitches per week. A press release that reads like a marketing brochure — vague claims, no story angle, no hook — gets deleted without being opened.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Coverage Without Narrative Doesn't Convert</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">A feature article that describes what your project does without telling a compelling story doesn't move readers to act. Coverage needs a narrative: why this project, why now, why it matters.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Missing the Timing Window</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">The news cycle in crypto moves fast. A funding announcement published two weeks after the raise is yesterday's news. PR that isn't timed to the moment has half the impact.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 md:col-span-2 reveal reveal-delay-3">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No SEO Value</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] max-w-4xl">Coverage that doesn't live on indexed, high-authority domains generates no long-term organic value. Good PR should still be driving traffic and trust signals 12 months after publication.</p>
+        <div class="flex-1 grid grid-cols-2 gap-6">
+          <div class="space-y-3">
+            <div class="w-full h-2 bg-white/5"></div>
+            <div class="w-5/6 h-2 bg-white/5"></div>
+            <div class="w-4/6 h-2 bg-white/5"></div>
+            <div class="w-full h-2 bg-white/5 mt-8"></div>
+            <div class="w-3/6 h-2 bg-white/5"></div>
+          </div>
+          <div class="border-l border-white/10 pl-6 space-y-3">
+            <div class="w-full h-2 bg-white/5"></div>
+            <div class="w-full h-2 bg-[var(--accent-cyan)]/20 shadow-[0_0_10px_var(--accent-cyan)]"></div>
+            <div class="w-4/6 h-2 bg-white/5"></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3 — OUR APPROACH -->
-  <section class="py-20 md:py-32 relative z-10 bg-black/20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[#a78bfa] uppercase tracking-[0.14em]">HOW WE WORK</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          How We Secure Coverage That Actually Matters
-        </h2>
-      </div>
-
-      <div class="relative max-w-4xl mx-auto">
-        <div class="absolute left-[24px] md:left-[50px] top-0 bottom-0 w-px bg-white/10 hidden md:block"></div>
-        
-        <div class="space-y-12">
-          {[
-            { step: '01', title: 'Story Development', desc: 'Before pitching anything, we work with you to develop a media-ready narrative: What is the genuine news angle? What makes this story relevant to a journalist\'s readers right now? We identify the hook that gets the email opened.' },
-            { step: '02', title: 'Pitch Writing', desc: 'We write tailored pitches for each media outlet — not a mass-distributed template. Each pitch is written for the specific publication\'s audience, tone, and editorial focus.' },
-            { step: '03', title: 'Editorial Placement', desc: 'We pitch to our established contacts across tier-1 and tier-2 crypto media. Our relationships mean pitches are read, not filtered. Where appropriate, we also secure sponsored editorial placements that are clearly labeled and meet outlet quality standards.' },
-            { step: '04', title: 'Content Production', desc: 'We write press releases, feature articles, founder interviews, op-eds, and contributed content. All content is written by writers with native crypto and fintech knowledge — not generalists adapting to a new industry.' },
-            { step: '05', title: 'Coverage Tracking & Reporting', desc: 'After placement, you receive a live-links report with every published article, domain authority scores, estimated reach, and SEO indexing status. You know exactly what you got.' }
-          ].map((s, i) => (
-            <div class="relative flex flex-col md:flex-row gap-6 md:gap-12 reveal" style={`transition-delay: ${i * 0.1}s`}>
-              <div class="flex items-center md:items-start gap-4 md:w-[120px] shrink-0 z-10">
-                <div class="w-12 h-12 rounded-full border-[1.5px] border-[#a78bfa] bg-[var(--bg-primary)] flex items-center justify-center font-mono text-[#a78bfa] font-bold shrink-0 shadow-[0_0_15px_rgba(167,139,250,0.2)]">
-                  {s.step}
-                </div>
-              </div>
-              <div class="pt-2">
-                <h3 class="font-display text-xl font-bold text-white mb-3">{s.title}</h3>
-                <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">{s.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+  <!-- MARQUEE SECTION -->
+  <div class="border-b border-white/10 bg-white/[0.02] overflow-hidden py-4 flex relative">
+    <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#04060A] to-transparent z-10"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#04060A] to-transparent z-10"></div>
+    <div class="flex gap-16 whitespace-nowrap animate-[marquee-scroll_20s_linear_infinite]">
+      {[...logos, ...logos, ...logos].map(logo => (
+        <span class="font-display font-bold text-2xl text-white/20 uppercase tracking-wider">{logo}</span>
+      ))}
     </div>
-  </section>
+  </div>
 
-  <!-- SECTION 4 — COVERAGE TYPES -->
-  <section class="py-20 md:py-32 relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[#a78bfa] uppercase tracking-[0.14em]">WHAT WE OFFER</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          What We Produce and Place
+  <!-- SECTION 2 — THE PROBLEM (Editorial Columns) -->
+  <section class="py-24 bg-[#04060A] relative z-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <div class="mb-16 reveal border-b border-white/10 pb-8 flex flex-col md:flex-row justify-between items-end gap-6">
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-white leading-tight uppercase max-w-2xl">
+          The Illusion of Coverage
         </h2>
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 max-w-[200px] text-right">
+          Why most PR campaigns fail to deliver ROI.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10">
         {[
-          { title: 'Press Release Distribution', desc: 'Structured press releases written to editorial standards and pitched to relevant media — not mass-distributed to low-quality wires.' },
-          { title: 'Sponsored Articles', desc: 'Paid editorial placements on major crypto outlets — clearly disclosed, written to publication standards, and positioned to inform rather than advertise.' },
-          { title: 'Founder Interviews', desc: 'Journalist-style Q&A features that build founder personal brand and establish thought leadership. Placed as editorial content in target publications.' },
-          { title: 'Media Coverage (Organic)', desc: 'Pitching your project as a news source or story subject to journalists covering your sector. Earned media that carries the highest credibility.' },
-          { title: 'Contributed Op-Eds', desc: 'Long-form opinion pieces authored under your name and placed in industry media — the most powerful format for establishing thought leadership.' }
-        ].map((c, i) => (
-          <div class={`card-default p-6 hover:border-[#a78bfa]/40 hover:bg-[#a78bfa]/[0.04] transition-all duration-300 reveal ${i === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`} style={`transition-delay: ${i * 0.1}s`}>
-            <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">{c.title}</h3>
-            <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">{c.desc}</p>
+          { title: 'The Syndication Trap', desc: 'Agencies sell you "200+ publications" but fail to mention they are all automated syndication feeds. It looks good on a report, but no human being ever reads them. Real influence requires real editorial placement.' },
+          { title: 'Boring Narratives', desc: 'Crypto journalists receive hundreds of pitches daily. If your pitch is just "We launched a new token," it goes to the trash. If you don\'t have a narrative that connects to broader market trends, you are invisible.' },
+          { title: 'Lack of SEO Strategy', desc: 'A great article is useless if it doesn\'t include a high-authority backlink. Many PR efforts fail to capitalize on the SEO benefits of media coverage, leaving long-term domain authority on the table.' }
+        ].map((item, i) => (
+          <div class={`p-10 border-b md:border-b-0 ${i !== 2 ? 'md:border-r border-white/10' : ''} hover:bg-white/[0.02] transition-colors group reveal`} style={`transition-delay: ${i * 0.15}s`}>
+            <span class="block font-display text-[4rem] text-white/5 font-bold leading-none mb-6 group-hover:text-[var(--accent-cyan)]/20 transition-colors">0{i+1}</span>
+            <h3 class="font-display text-xl font-bold text-white mb-4 uppercase">{item.title}</h3>
+            <p class="font-body text-white/60 leading-relaxed text-sm">{item.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- SECTION 5 — MEDIA LANDSCAPE -->
-  <section id="media-network" class="py-20 md:py-32 relative z-10 bg-black/20 border-y border-white/5">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[#a78bfa] uppercase tracking-[0.14em]">MEDIA LANDSCAPE</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          Where We Place Coverage
-        </h2>
+  <!-- SECTION 3 — OUR APPROACH (Magazine Layout) -->
+  <section class="py-24 bg-[#0A0D14] relative z-10 border-y border-white/10">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <div class="text-center mb-20 reveal">
+        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--accent-cyan)] mb-4">THE STRATEGY</span>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-white uppercase">How We Shape The Narrative</h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white/[0.02] border border-white/5 rounded-xl p-8 reveal reveal-delay-1 text-center">
-          <h3 class="font-display text-xl font-bold text-[#a78bfa] mb-4">Tier 1 Crypto Media</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">
-            CoinDesk, Cointelegraph, The Block, Decrypt, BeInCrypto, Cryptonews
-          </p>
-        </div>
-        <div class="bg-white/[0.02] border border-white/5 rounded-xl p-8 reveal reveal-delay-2 text-center">
-          <h3 class="font-display text-xl font-bold text-[#a78bfa] mb-4">Fintech & Business Media</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">
-            Forbes, Business Insider Crypto, Entrepreneur, FastCompany (tech desk)
-          </p>
-        </div>
-        <div class="bg-white/[0.02] border border-white/5 rounded-xl p-8 reveal reveal-delay-3 text-center">
-          <h3 class="font-display text-xl font-bold text-[#a78bfa] mb-4">Regional & Niche Media</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">
-            Vietnam crypto publications, SEA media, UAE outlets, Korean & Japanese market media via partner network
-          </p>
-        </div>
+      <div class="space-y-0 border-t border-white/10">
+        {[
+          { step: '01', title: 'Narrative Architecture', desc: 'Before pitching anyone, we find the "hook". We connect your product update to macroeconomic trends, regulatory shifts, or technological breakthroughs. We don\'t pitch a product; we pitch a story.' },
+          { step: '02', title: 'Targeted Pitching', desc: 'We don\'t mass-email journalists. We match your story with specific editors and writers at Tier-1 publications who have a track record of covering your specific niche (DeFi, AI, Layer 2, etc.).' },
+          { step: '03', title: 'Content Drafting', desc: 'Our team of native-English, crypto-fluent writers drafts the press releases and op-eds. We write in journalistic style (AP format), making it as easy as possible for an editor to hit publish.' },
+          { step: '04', title: 'Distribution & Amplification', desc: 'Once published, we don\'t stop. We syndicate the coverage across Web3 communities, leverage KOLs to amplify the article, and ensure maximum eyeballs on the piece.' }
+        ].map((item, i) => (
+          <div class="flex flex-col md:flex-row border-b border-white/10 group reveal">
+            <div class="w-full md:w-1/3 py-8 md:py-12 md:pr-12 border-b md:border-b-0 md:border-r border-white/10 flex items-center">
+              <span class="font-mono text-sm text-[var(--accent-cyan)] mr-6">{item.step}</span>
+              <h3 class="font-display text-2xl font-bold text-white uppercase group-hover:pl-4 transition-all duration-300">{item.title}</h3>
+            </div>
+            <div class="w-full md:w-2/3 py-8 md:py-12 md:pl-12 flex items-center">
+              <p class="font-body text-white/70 leading-relaxed text-lg">{item.desc}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- SECTION 6 — FAQ -->
-  <section class="py-20 md:py-32 relative z-10">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[#a78bfa] uppercase tracking-[0.14em]">FAQ</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          Common Questions
-        </h2>
+  <!-- FAQ SECTION (Minimal) -->
+  <section class="py-24 bg-[#04060A]">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="mb-16 reveal">
+        <h2 class="font-display text-3xl font-bold text-white uppercase border-b border-white/10 pb-6">Editorial FAQ</h2>
       </div>
-
-      <div class="space-y-4">
+      <div class="space-y-2">
         {faqs.map((faq, i) => (
-          <details class="card-default p-0 border border-white/5 hover:border-[#a78bfa]/20 transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
-              <span class="font-display font-semibold text-base sm:text-[18px] text-white group-hover:text-[#a78bfa] transition-colors pr-6">
-                {faq.q}
-              </span>
-              <div class="w-8 h-8 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/50 group-hover:text-[#a78bfa] group-hover:bg-[#a78bfa]/10 transition-all shrink-0">
-                <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
+          <details class="group border-b border-white/10 pb-4 reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <summary class="flex justify-between items-center font-display text-lg text-white font-bold cursor-pointer list-none hover:text-[var(--accent-cyan)] transition-colors py-4">
+              {faq.q}
+              <span class="text-white/30 group-open:rotate-45 transition-transform duration-300 font-mono text-2xl">+</span>
             </summary>
-            <div class="px-6 pb-6 text-[16px] text-[var(--text-secondary)] font-body leading-relaxed border-t border-white/[0.03] pt-4">
+            <div class="text-white/60 font-body text-sm leading-relaxed pb-4 pr-12">
               <p>{faq.a}</p>
             </div>
           </details>
@@ -245,43 +178,32 @@ const faqs = [
     </div>
   </section>
 
-  <!-- SECTION 7 — CTA -->
-  <section id="book-call" class="py-24 relative overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[800px] h-[800px] rounded-full" style="background:var(--gradient-glow-purple); top:50%; left:50%; transform:translate(-50%, -50%); filter:blur(100px); opacity:0.1"></div>
-    </div>
-    
-    <div class="max-w-3xl mx-auto px-4 text-center relative z-10 reveal">
-      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4 leading-tight">
-        Your Project Has a Story Worth Telling.
-      </h2>
-      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-xl mx-auto mb-10">
-        Tell us what you're building — we'll identify the angles, the outlets, and the timing that puts you in front of the right readers.
-      </p>
-      <ServiceInquiryForm client:load defaultService="PR & Media Campaigns" />
+  <!-- CTA SECTION (High Contrast) -->
+  <section id="book-call" class="py-32 bg-white text-black text-center px-6">
+    <div class="max-w-2xl mx-auto reveal">
+      <h2 class="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold uppercase leading-none mb-6 tracking-tight">Control the Narrative.</h2>
+      <p class="font-body text-black/70 mb-12 text-lg">Don't leave your project's reputation to chance. Let's get you in front of the readers who matter.</p>
+      <ServiceInquiryForm client:load defaultService="PR Campaigns" />
     </div>
   </section>
+
 </BaseLayout>
 
 <style>
   summary::-webkit-details-marker { display: none; }
+  .text-stroke-white { -webkit-text-stroke: 1px rgba(255,255,255,0.2); }
+  .text-stroke-1 { -webkit-text-stroke-width: 1px; }
   
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-  }
+  
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -290,7 +212,6 @@ const faqs = [
         }
       });
     }, { threshold: 0.15 });
-
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   });
 </script>

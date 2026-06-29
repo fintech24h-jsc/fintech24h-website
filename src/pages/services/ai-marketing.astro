@@ -7,231 +7,192 @@ import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services' },
-  { name: 'AI Marketing', item: `https://fintech24h.com/services/ai-marketing` }
+  { name: 'AI Marketing', item: 'https://fintech24h.com/services/ai-marketing' }
 ];
 
 const faqs = [
   {
-    q: "We have a technical AI product — can you actually understand it well enough to market it?",
-    a: "Our team includes marketers who have worked exclusively in AI and Web3 markets. We have the technical literacy to understand what you've built and the communication skills to translate it for the audiences you're trying to reach. We'll ask the right questions and be direct if something doesn't add up."
+    q: "Do you build custom AI models?",
+    a: "We don't build LLMs from scratch. We fine-tune existing top-tier models (GPT-4, Claude 3, Llama) on your specific project documentation, tone of voice, and historical data to create specialized agents for moderation and content."
   },
   {
-    q: "Do you work with AI products outside of the Web3 space?",
-    a: "Yes. Our AI marketing capabilities extend beyond the Web3 context to B2B AI tools, AI-native startups, and enterprise AI products entering new markets."
+    q: "Will the community know they are talking to an AI?",
+    a: "We advocate for transparency. The best AI integrations are clearly labeled as AI assistants but are so useful that the community prefers talking to them for instant, accurate technical answers."
   },
   {
-    q: "What does an AI GTM engagement look like?",
-    a: "A GTM engagement typically starts with a positioning sprint (1–2 weeks), produces a messaging architecture document, and moves into channel strategy and execution. The exact structure depends on where you are in your launch timeline and what's already been built."
+    q: "How does AI handle sentiment analysis?",
+    a: "Our bots continuously scrape Telegram, Discord, and Twitter, assigning sentiment scores (-1 to +1) to keywords and topics. If negative sentiment spikes around a specific feature, you get an automated alert before it becomes a crisis."
   },
   {
-    q: "We already have a product live — can you help with repositioning?",
-    a: "Yes. Repositioning an existing AI product is different from launching a new one — it requires careful handling of existing audience expectations. We've done this and can walk you through what the process involves."
+    q: "Can AI completely replace human moderators?",
+    a: "No. AI replaces the repetitive, low-value work (answering 'wen token', filtering spam, providing contract addresses). Humans are still required for complex dispute resolution and genuine community relationship building."
   }
 ];
 ---
 
 <BaseLayout
-  title="AI Product Marketing & GTM Strategy for AI Startups | Fintech24h"
-  description="Go-to-market strategy and marketing execution for AI products, AI startups, and AI-integrated Web3 projects. Fintech24h positions AI products in a crowded market — clearly, credibly, and distinctively."
+  title="AI-Powered Marketing & Automation | Fintech24h"
+  description="Deploy custom AI solutions to supercharge your marketing operations. From sentiment analysis to automated content pipelines, we scale your signal."
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- SECTION 1 — HERO -->
-  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
+  <!-- SECTION 1 — HERO (Cyber HUD / Terminal) -->
+  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden bg-[#0A0F15]">
+    <!-- Cyber Grid Background -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[600px] h-[600px] rounded-full" style="background:var(--gradient-glow-cyan); top:-20%; left:50%; transform:translateX(-50%); animation:orb-pulse 10s ease-in-out infinite; filter:blur(70px); opacity:0.06"></div>
-      <div class="grid-pattern absolute inset-0 opacity-15"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f01a_1px,transparent_1px),linear-gradient(to_bottom,#00c8f01a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--accent-cyan)] opacity-[0.05] blur-[100px] rounded-full"></div>
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto w-full text-center">
-      <div class="inline-flex items-center justify-center mb-8 reveal reveal-delay-1">
-        <span class="tag tag-cyan font-mono text-xs uppercase tracking-[0.14em]">
-          AI MARKETING
-        </span>
+    <!-- HUD Elements -->
+    <div class="absolute top-24 left-8 hidden lg:block font-mono text-[10px] text-[var(--accent-cyan)] opacity-50">
+      <div class="mb-1">SYS.STATUS // ONLINE</div>
+      <div class="mb-1">NODE.ID // 0x4F9...A1B</div>
+      <div class="mb-1">SYNC // 99.9%</div>
+    </div>
+    
+    <div class="absolute bottom-12 right-8 hidden lg:block font-mono text-[10px] text-[var(--accent-cyan)] opacity-50 text-right">
+      <div class="flex gap-1 mb-1 justify-end">
+        <span class="w-2 h-4 bg-[var(--accent-cyan)] opacity-20"></span>
+        <span class="w-2 h-4 bg-[var(--accent-cyan)] opacity-50"></span>
+        <span class="w-2 h-4 bg-[var(--accent-cyan)] opacity-100"></span>
+        <span class="w-2 h-4 bg-[var(--accent-cyan)] opacity-100 animate-pulse"></span>
+      </div>
+      <div>DATA.STREAM // ACTIVE</div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full text-center">
+      <div class="inline-block mb-8 reveal">
+        <div class="relative px-6 py-2 border border-[var(--accent-cyan)]/30 bg-[#00c8f00a] text-[var(--accent-cyan)] font-mono text-xs uppercase tracking-widest overflow-hidden group">
+          <div class="absolute top-0 left-0 w-full h-[1px] bg-[var(--accent-cyan)] opacity-50 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+          AI MARKETING & AUTOMATION
+          <div class="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[var(--accent-cyan)]"></div>
+          <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-[var(--accent-cyan)]"></div>
+        </div>
       </div>
 
-      <h1 class="font-display font-bold max-w-5xl mx-auto reveal reveal-delay-2">
-        <span class="block text-[clamp(2.25rem,6vw,4.5rem)] tracking-[-0.02em] leading-[1.1] text-[var(--text-primary)]">
-          In a Market Full of "AI-Powered" Claims,<br/>Yours Needs to Mean Something.
+      <h1 class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-1 relative">
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-white mb-2 leading-none" style="text-shadow: 0 0 20px rgba(255,255,255,0.1);">
+          Automate the Noise.
+        </span>
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-[var(--accent-cyan)] relative inline-block group">
+          Scale the Signal.
+          <!-- Glitch Effect Layer -->
+          <span class="absolute top-0 left-0 w-full h-full text-[var(--accent-cyan)] opacity-0 group-hover:opacity-100 animate-[glitch_0.2s_linear_infinite] pointer-events-none mix-blend-screen" style="clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); transform: translate(-2px, 2px);">Scale the Signal.</span>
         </span>
       </h1>
 
-      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-3xl mx-auto mt-6 mb-10 leading-[1.75] reveal reveal-delay-3">
-        Every startup claims AI. The projects that win trust and market share are the ones that communicate what their AI actually does, who it's for, and why it matters — clearly, specifically, and without hype. We build that narrative.
-      </p>
+      <div class="font-mono text-sm text-[var(--text-secondary)] max-w-3xl mx-auto mt-12 mb-12 leading-relaxed reveal reveal-delay-2 p-6 border border-white/10 bg-black/40 text-left relative">
+        <div class="absolute -top-3 -left-3 text-[var(--accent-cyan)]/30 text-2xl">┌</div>
+        <div class="absolute -bottom-3 -right-3 text-[var(--accent-cyan)]/30 text-2xl">┘</div>
+        <div class="overflow-hidden whitespace-normal border-r-2 border-[var(--accent-cyan)] pr-2 animate-[typing_2s_steps(40,end),blink-caret_1s_step-end_infinite]">
+          > Every startup claims AI. Projects that win trust communicate what their AI actually does, clearly and without hype. We integrate custom AI solutions to supercharge your marketing operations.
+        </div>
+      </div>
 
-      <div class="flex flex-col sm:flex-row justify-center gap-4 reveal reveal-delay-4">
-        <a href="#book-call" class="btn-primary">
-          Get an AI GTM Plan
+      <div class="flex justify-center reveal reveal-delay-3 mt-8">
+        <a href="#book-call" class="relative overflow-hidden font-mono text-sm uppercase tracking-widest font-bold text-black bg-[var(--accent-cyan)] px-8 py-4 hover:shadow-[0_0_30px_var(--accent-cyan)] transition-all duration-300 group">
+          <span class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+          <span class="relative z-10 flex items-center gap-2">
+            [DEPLOY_AI_MARKETING]
+          </span>
         </a>
-        <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-ghost">
-          Chat on Telegram
-        </a>
-      </div>
-
-      <div class="mt-16 flex flex-wrap justify-center gap-4 reveal reveal-delay-4">
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">AI positioning & narrative</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">GTM strategy & execution</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">AI + Web3 specialist</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">B2B & consumer AI</span>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 2 — THE PROBLEM -->
-  <section class="py-20 md:py-32 relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHAT GOES WRONG</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          What Goes Wrong With AI Product Marketing
-        </h2>
+  <!-- SECTION 2 — THE DASHBOARD (Simulated Data) -->
+  <section class="py-24 bg-[#05080C] relative z-10 border-t border-[var(--accent-cyan)]/20">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="mb-16 reveal flex items-center gap-4 border-b border-white/10 pb-4">
+        <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+        <h2 class="font-mono text-2xl text-white uppercase tracking-widest">SYSTEM_MODULES</h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">"AI-Powered" Is No Longer a Differentiator</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">In 2024, every product has an AI feature. The phrase "AI-powered" carries approximately zero signal. Projects that lead with the technology instead of the outcome lose attention to the ones that lead with what changes for the user.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Technical Teams Write for Technical Audiences</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Founder-written copy for AI products tends toward precision: architectures, model specifications, accuracy benchmarks. These matter to engineers. They mean nothing to the investors, enterprise buyers, or early adopters who make the actual go/no-go decision.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No Clear Positioning in a Crowded Market</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">When every competitor is claiming the same capabilities, the default is a race to the most impressive-sounding claim. Without differentiated positioning — a specific audience, a specific use case, a specific point of view — AI products blur into the background.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">GTM Strategy Built for Traditional SaaS</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">AI product launches don't follow the same playbook as traditional software. Community-driven distribution, open-source credibility building, demo-first marketing, and trust-heavy content strategies require a different approach than standard B2B or consumer SaaS go-to-market.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 md:col-span-2 reveal reveal-delay-3">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Trust Is the Real Barrier</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] max-w-4xl">AI product adoption is gated by trust more than any other product category. Users need to understand what the AI does, what it doesn't do, what data it uses, and who's accountable. Marketing that glosses over these concerns accelerates distrust.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 3 — OUR APPROACH -->
-  <section class="py-20 md:py-32 relative z-10 bg-black/20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">HOW WE WORK</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          How We Market AI Products That Get Taken Seriously
-        </h2>
-      </div>
-
-      <div class="relative max-w-4xl mx-auto">
-        <div class="absolute left-[24px] md:left-[50px] top-0 bottom-0 w-px bg-white/10 hidden md:block"></div>
-        
-        <div class="space-y-12">
-          {[
-            { step: '01', title: 'Positioning Sprint', desc: 'We start by articulating what your AI product actually does in a sentence a non-technical decision-maker immediately understands. Then we find the specific audience segment, use case, and competitive differentiation that makes your positioning ownable. This is the foundation everything else is built on.' },
-            { step: '02', title: 'Narrative Development', desc: 'We build the full messaging architecture: hero statement, proof points, objection handling, and the story that connects your technology to a real outcome someone cares about. No jargon. No vague superlatives. No claims you can\'t back up.' },
-            { step: '03', title: 'Content Marketing', desc: 'Long-form content that educates your target audience about the problem your AI solves — not about your product. Blog posts, thought leadership, technical explainers for non-technical readers, and founder perspective pieces that build authority before the ask.' },
-            { step: '04', title: 'Channel Strategy & Activation', desc: 'The right channels for AI product marketing depend on your audience and stage. We design and execute channel strategies across Twitter/X, LinkedIn, community platforms, and media — tailored to how AI buyers and users actually discover and evaluate products.' },
-            { step: '05', title: 'Growth Campaigns', desc: 'Demo-driven campaigns, beta user acquisition, product hunt coordination, community seeding, and KOL partnerships with AI-adjacent influencers. We design growth campaigns that match the AI product lifecycle — not generic playbooks.' }
-          ].map((s, i) => (
-            <div class="relative flex flex-col md:flex-row gap-6 md:gap-12 reveal" style={`transition-delay: ${i * 0.1}s`}>
-              <div class="flex items-center md:items-start gap-4 md:w-[120px] shrink-0 z-10">
-                <div class="w-12 h-12 rounded-full border-[1.5px] border-[var(--accent-cyan)] bg-[var(--bg-primary)] flex items-center justify-center font-mono text-[var(--accent-cyan)] font-bold shrink-0 shadow-[0_0_15px_rgba(0,200,240,0.2)]">
-                  {s.step}
-                </div>
-              </div>
-              <div class="pt-2">
-                <h3 class="font-display text-xl font-bold text-white mb-3">{s.title}</h3>
-                <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">{s.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 4 — CAMPAIGN TYPES -->
-  <section class="py-20 md:py-32 relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHAT WE COVER</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          Our Services
-        </h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">AI Product GTM</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Full go-to-market strategy for AI product launches — from positioning and messaging through channel selection, launch sequencing, and post-launch optimization.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">AI Startup Marketing</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Ongoing marketing execution for AI startups across content, social, community, and earned media. For teams who need a marketing function without the overhead of a full in-house team.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">AI Growth Campaigns</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Targeted campaigns for specific growth objectives: beta user acquisition, enterprise pipeline building, developer community growth, or geographic expansion.</p>
-        </div>
-        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">AI + Web3 Marketing</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Specialized positioning and campaign strategy for projects at the intersection of AI and blockchain — a segment with its own audience dynamics, trust challenges, and media landscape.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 5 — WHO IT'S FOR -->
-  <section class="py-20 md:py-32 relative z-10 bg-[var(--accent-cyan)]/5 border-y border-white/5">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-12 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHO THIS SERVES</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          This Service Is Built For
-        </h2>
-      </div>
-
-      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Dashboard Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {[
-          "AI startups preparing for public launch or fundraise",
-          "Web3 projects integrating AI features who need clear positioning",
-          "B2B AI products entering enterprise or developer markets",
-          "AI tools targeting the crypto and fintech audience",
-          "Founders who know their product is good and need help explaining it"
-        ].map((item, i) => (
-          <li class="flex items-start gap-3 p-4 bg-white/[0.02] border border-white/5 rounded-xl reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <svg class="w-5 h-5 text-[var(--accent-cyan)] shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span class="font-body text-[16px] text-white leading-tight">{item}</span>
-          </li>
+          { id: 'MOD_01', title: 'Automated Moderation & Q&A', desc: 'Custom LLMs trained on your whitepaper and docs. They answer complex technical questions instantly in Discord/Telegram, resolving 80% of queries without human intervention.', metric: '80% Ticket Reduction', chart: 'M0,100 L20,80 L40,85 L60,40 L80,50 L100,10' },
+          { id: 'MOD_02', title: 'Sentiment Scraping', desc: 'Real-time analysis of Twitter, Reddit, and Telegram. The AI assigns sentiment scores and flags potential FUD or viral trends before they fully materialize.', metric: 'Real-time Alerts', chart: 'M0,50 L20,40 L40,60 L60,20 L80,30 L100,5' },
+          { id: 'MOD_03', title: 'Programmatic Content', desc: 'AI-assisted generation of localized social media posts, translation into 15+ languages, and automated distribution pipelines timed for optimal engagement.', metric: '15+ Languages', chart: 'M0,90 L20,70 L40,75 L60,30 L80,20 L100,0' },
+          { id: 'MOD_04', title: 'Predictive Churn Analytics', desc: 'Analyzing on-chain wallet behavior combined with social engagement to predict which power users are at risk of leaving your ecosystem, triggering retention campaigns.', metric: 'Predictive Modeling', chart: 'M0,10 L20,30 L40,25 L60,80 L80,70 L100,90' }
+        ].map((mod, i) => (
+          <div class="border border-[var(--accent-cyan)]/20 bg-[#0A0F15] p-6 hover:border-[var(--accent-cyan)]/60 transition-colors group relative reveal" style={`transition-delay: ${i * 0.15}s`}>
+            <!-- Cyber Corners -->
+            <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-[var(--accent-cyan)] opacity-50 group-hover:opacity-100"></div>
+            <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[var(--accent-cyan)] opacity-50 group-hover:opacity-100"></div>
+            
+            <div class="flex justify-between items-start mb-6">
+              <span class="font-mono text-xs text-[var(--accent-cyan)]">{mod.id}</span>
+              <span class="font-mono text-xs text-white/40 bg-white/5 px-2 py-1">{mod.metric}</span>
+            </div>
+            <h3 class="font-display text-xl text-white font-bold mb-3">{mod.title}</h3>
+            <p class="font-mono text-sm text-[var(--text-secondary)] leading-relaxed mb-6">{mod.desc}</p>
+            
+            <!-- Simulated Chart -->
+            <div class="w-full h-16 border-t border-[var(--accent-cyan)]/10 pt-4 relative opacity-50 group-hover:opacity-100 transition-opacity">
+              <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                <path d={mod.chart} fill="none" stroke="var(--accent-cyan)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-dasharray="200" stroke-dashoffset="200">
+                  <animate attributeName="stroke-dashoffset" values="200;0" dur="2s" fill="freeze" />
+                </path>
+                <path d={`${mod.chart} L100,100 L0,100 Z`} fill="var(--accent-cyan)" opacity="0.1" />
+              </svg>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   </section>
 
-  <!-- SECTION 6 — FAQ -->
-  <section class="py-20 md:py-32 relative z-10">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">FAQ</p>
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          Common Questions
-        </h2>
+  <!-- SECTION 3 — IMPACT (Monospace Data List) -->
+  <section class="py-24 bg-[#0A0F15] relative z-10 border-t border-[var(--accent-cyan)]/20">
+    <div class="max-w-5xl mx-auto px-4 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <h2 class="font-mono text-2xl text-[var(--accent-cyan)] uppercase tracking-widest">PERFORMANCE_METRICS</h2>
       </div>
 
+      <div class="bg-black border border-[var(--accent-cyan)]/30 p-8 font-mono text-sm md:text-base">
+        <div class="flex border-b border-[var(--accent-cyan)]/30 pb-4 text-[var(--accent-cyan)]/60 uppercase">
+          <div class="w-1/3">METRIC_TYPE</div>
+          <div class="w-1/3 text-center">HUMAN_ONLY</div>
+          <div class="w-1/3 text-right text-[var(--accent-cyan)]">AI_AUGMENTED</div>
+        </div>
+        
+        {[
+          { m: 'Avg Response Time', h: '3-5 Mins', a: '< 5 Seconds' },
+          { m: 'Cost per Query', h: '$1.50', a: '$0.002' },
+          { m: 'Sentiment Tracking', h: 'Weekly Reports', a: 'Real-Time Streaming' },
+          { m: 'Content Localization', h: '3 Languages', a: '15+ Languages' }
+        ].map((row, i) => (
+          <div class="flex border-b border-[var(--accent-cyan)]/10 py-4 hover:bg-[var(--accent-cyan)]/5 transition-colors reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <div class="w-1/3 text-white">{row.m}</div>
+            <div class="w-1/3 text-center text-white/40">{row.h}</div>
+            <div class="w-1/3 text-right text-[var(--accent-cyan)]">{row.a}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION (Terminal Accordion) -->
+  <section class="py-24 bg-[#05080C] border-t border-[var(--accent-cyan)]/20">
+    <div class="max-w-4xl mx-auto px-4 lg:px-8">
+      <div class="mb-12 reveal">
+        <h2 class="font-mono text-xl text-[var(--accent-cyan)]">C:\FAQ\query_database.exe</h2>
+      </div>
+      
       <div class="space-y-4">
         {faqs.map((faq, i) => (
-          <details class="card-default p-0 border border-white/5 hover:border-[var(--accent-cyan)]/20 transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
-              <span class="font-display font-semibold text-base sm:text-[18px] text-white group-hover:text-[var(--accent-cyan)] transition-colors pr-6">
+          <details class="group bg-[#0A0F15] border border-[var(--accent-cyan)]/20 reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-mono text-sm md:text-base text-white hover:bg-[var(--accent-cyan)]/10 transition-colors">
+              <span class="flex items-center gap-4">
+                <span class="text-[var(--accent-cyan)]">></span>
                 {faq.q}
               </span>
-              <div class="w-8 h-8 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/50 group-hover:text-[var(--accent-cyan)] group-hover:bg-[var(--accent-cyan)]/10 transition-all shrink-0">
-                <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
+              <span class="text-[var(--accent-cyan)] group-open:rotate-90 transition-transform">]</span>
             </summary>
-            <div class="px-6 pb-6 text-[16px] text-[var(--text-secondary)] font-body leading-relaxed border-t border-white/[0.03] pt-4">
-              <p>{faq.a}</p>
+            <div class="p-6 pt-0 text-[var(--text-secondary)] font-mono text-sm leading-relaxed border-t border-[var(--accent-cyan)]/10 mt-2 bg-black/40">
+              <span class="text-green-500 mr-2">OK:</span> {faq.a}
             </div>
           </details>
         ))}
@@ -239,43 +200,39 @@ const faqs = [
     </div>
   </section>
 
-  <!-- SECTION 7 — CTA -->
-  <section id="book-call" class="py-24 relative overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[800px] h-[800px] rounded-full" style="background:var(--gradient-glow-cyan); top:50%; left:50%; transform:translate(-50%, -50%); filter:blur(100px); opacity:0.1"></div>
-    </div>
+  <!-- CTA SECTION (HUD Initialize) -->
+  <section id="book-call" class="py-32 bg-[#0A0F15] border-t border-[var(--accent-cyan)]/20 relative overflow-hidden">
+    <!-- Grid -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f01a_1px,transparent_1px),linear-gradient(to_bottom,#00c8f01a_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-20"></div>
     
-    <div class="max-w-3xl mx-auto px-4 text-center relative z-10 reveal">
-      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4 leading-tight">
-        Your AI Product Deserves a Marketing Strategy as Sophisticated as the Technology.
-      </h2>
-      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-xl mx-auto mb-10">
-        Tell us about your product — we'll outline a positioning and GTM strategy tailored to your goals.
-      </p>
-      <ServiceInquiryForm client:load defaultService="AI Marketing" />
+    <div class="max-w-2xl mx-auto px-6 text-center relative z-10 reveal">
+      <div class="w-16 h-16 border-2 border-[var(--accent-cyan)] rounded-full mx-auto mb-8 flex items-center justify-center animate-[spin_10s_linear_infinite]">
+        <div class="w-8 h-8 border border-white/50 rounded-full animate-[spin_5s_linear_infinite_reverse]"></div>
+      </div>
+      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] text-white font-bold mb-6">Initialize Deployment.</h2>
+      <p class="font-mono text-[var(--text-secondary)] mb-12">Upgrade your marketing stack with enterprise-grade AI automation.</p>
+      
+      <div class="bg-[#05080C] border border-[var(--accent-cyan)]/30 p-6 text-left shadow-[0_0_30px_rgba(0,200,240,0.1)]">
+        <ServiceInquiryForm client:load defaultService="AI Marketing" />
+      </div>
     </div>
   </section>
+
 </BaseLayout>
 
 <style>
   summary::-webkit-details-marker { display: none; }
-  
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
-  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal { opacity: 0; transform: scale(0.98) translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.revealed { opacity: 1; transform: scale(1) translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-  }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -284,7 +241,6 @@ const faqs = [
         }
       });
     }, { threshold: 0.15 });
-
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   });
 </script>
