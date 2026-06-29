@@ -2,13 +2,35 @@
 // src/components/sections/HeroSection.astro
 // Fully redesigned to be a centered, high-impact astronomical landing hero.
 // Features centered copy, larger brand text, and highly creative glowing stats.
-// Viewport-constrained to fit exactly within 100vh of large/laptop screens.
+
+// Generate static star coordinates at build time for the parallax starfield
+const generateStars = (count: number) => {
+  let shadows = [];
+  for (let i = 0; i < count; i++) {
+    const x = Math.floor(Math.random() * 2000);
+    const y = Math.floor(Math.random() * 2000);
+    const alpha = (Math.random() * 0.6 + 0.2).toFixed(2);
+    shadows.push(`${x}px ${y}px rgba(255, 255, 255, ${alpha})`);
+  }
+  return shadows.join(', ');
+};
+
+const starsSmall = generateStars(350);
+const starsMedium = generateStars(100);
+const starsLarge = generateStars(30);
 ---
 
 <section class="relative flex flex-col items-center overflow-hidden pt-28 pb-16 lg:pt-40 lg:pb-24" aria-label="Hero">
 
   <!-- Background Layer 1: Mesh gradient -->
   <div class="absolute inset-0" style="background: var(--gradient-hero-bg);" aria-hidden="true"></div>
+
+  <!-- Background Layer 1.5: Parallax Starfield -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div id="stars-small" class="stars-layer w-[1.5px] h-[1.5px] bg-transparent rounded-full opacity-60" style={`--star-shadow: ${starsSmall}; box-shadow: var(--star-shadow);`}></div>
+    <div id="stars-medium" class="stars-layer w-[2px] h-[2px] bg-transparent rounded-full opacity-80" style={`--star-shadow: ${starsMedium}; box-shadow: var(--star-shadow);`}></div>
+    <div id="stars-large" class="stars-layer w-[3px] h-[3px] bg-transparent rounded-full opacity-100" style={`--star-shadow: ${starsLarge}; box-shadow: var(--star-shadow);`}></div>
+  </div>
 
   <!-- Background Layer 2: Orbs + Grid -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -134,6 +156,33 @@
 </section>
 
 <style>
+  /* Starfield Parallax Animation */
+  .stars-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #stars-small { animation: animStar 100s linear infinite; }
+  #stars-medium { animation: animStar 150s linear infinite; }
+  #stars-large { animation: animStar 200s linear infinite; }
+
+  #stars-small::after, #stars-medium::after, #stars-large::after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: var(--star-shadow);
+  }
+  #stars-small::after { width: 1.5px; height: 1.5px; }
+  #stars-medium::after { width: 2px; height: 2px; }
+  #stars-large::after { width: 3px; height: 3px; }
+
+  @keyframes animStar {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-2000px); }
+  }
+
   /* Sheen text shine animation */
   .sheen-text {
     background: linear-gradient(
