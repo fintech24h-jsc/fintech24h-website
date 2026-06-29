@@ -113,127 +113,130 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
       {error && (
-        <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/5 text-red-400 text-xs font-body">
+        <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/10 text-red-400 text-xs font-body backdrop-blur-md">
           {error}
         </div>
       )}
 
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Full Name *</label>
+          <label className="block text-xs font-semibold text-white/50 mb-2 font-body uppercase tracking-wider">Full Name *</label>
           <input
             type="text"
             required
             value={formData.name}
             onChange={e => update('name', e.target.value)}
             placeholder="Alex Nguyen"
-            className="input-field"
+            className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300 font-body placeholder:text-white/20 shadow-inner backdrop-blur-md"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Telegram Username *</label>
+          <label className="block text-xs font-semibold text-white/50 mb-2 font-body uppercase tracking-wider">Telegram Username *</label>
           <input
             type="text"
             required
             value={formData.telegram}
             onChange={e => update('telegram', e.target.value)}
             placeholder="@alex_handle"
-            className="input-field"
+            className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300 font-body placeholder:text-white/20 shadow-inner backdrop-blur-md"
           />
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Email Address *</label>
+          <label className="block text-xs font-semibold text-white/50 mb-2 font-body uppercase tracking-wider">Email Address *</label>
           <input
             type="email"
             required
             value={formData.email}
             onChange={e => update('email', e.target.value)}
             placeholder="alex@project.io"
-            className="input-field"
+            className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300 font-body placeholder:text-white/20 shadow-inner backdrop-blur-md"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Project Name</label>
+          <label className="block text-xs font-semibold text-white/50 mb-2 font-body uppercase tracking-wider">Project Name</label>
           <input
             type="text"
             value={formData.projectName}
             onChange={e => update('projectName', e.target.value)}
             placeholder="My Web3 Protocol"
-            className="input-field"
+            className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300 font-body placeholder:text-white/20 shadow-inner backdrop-blur-md"
           />
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Service of Interest</label>
+          <label className="block text-xs font-semibold text-white/50 mb-2 font-body uppercase tracking-wider">Service of Interest</label>
           <select
             value={formData.serviceInterest}
             onChange={e => update('serviceInterest', e.target.value)}
-            className="input-field bg-[#0c1221]"
+            className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 transition-all duration-300 font-body appearance-none shadow-inner backdrop-blur-md"
           >
-            <option value="">Select a service...</option>
+            <option value="" className="bg-[#050810]">Select a service...</option>
             {servicesList.map(s => (
-              <option key={s} value={s}>{s}</option>
+              <option key={s} value={s} className="bg-[#050810]">{s}</option>
             ))}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Estimated Monthly Budget</label>
+          <label className="block text-xs font-semibold text-white/50 mb-2 font-body uppercase tracking-wider">Estimated Monthly Budget</label>
           <select
             value={formData.budget}
             onChange={e => update('budget', e.target.value)}
-            className="input-field bg-[#0c1221]"
+            className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 transition-all duration-300 font-body appearance-none shadow-inner backdrop-blur-md"
           >
-            <option value="">Select budget range...</option>
+            <option value="" className="bg-[#050810]">Select budget range...</option>
             {budgetRanges.map(b => (
-              <option key={b} value={b}>{b}</option>
+              <option key={b} value={b} className="bg-[#050810]">{b}</option>
             ))}
           </select>
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Website / Pitchdeck URL</label>
-        <input
-          type="url"
-          value={formData.website}
-          onChange={e => update('website', e.target.value)}
-          placeholder="https://myproject.io"
-          className="input-field"
-        />
-      </div>
-
-      <div>
-        <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 font-body">Message / Custom Requirements</label>
+        <label className="block text-xs font-semibold text-white/50 mb-2 font-body uppercase tracking-wider">Message / Details</label>
         <textarea
           value={formData.message}
           onChange={e => update('message', e.target.value)}
-          placeholder="Tell us about your project, timelines, or growth goals..."
+          placeholder="Tell us about your timeline, current metrics, and specific goals..."
           rows={3}
-          className="input-field resize-none py-3"
+          className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300 font-body placeholder:text-white/20 shadow-inner backdrop-blur-md resize-none"
         ></textarea>
       </div>
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="btn-primary w-full text-center justify-center font-display text-sm flex items-center gap-2 py-4 bg-gradient-to-r from-[#ff6b83] to-[#f0a278] text-[#050810] border-none shadow-[0_4px_20px_rgba(255,107,131,0.15)] hover:shadow-[0_4px_30px_rgba(255,107,131,0.25)] disabled:opacity-50"
+        className="relative w-full group flex items-center justify-center py-5 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.01] active:scale-[0.98]"
+        style={{
+          background: 'linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)',
+          boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255,255,255,0.2)',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}
       >
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer-slide_1.5s_ease-out_infinite]" />
+        <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.03] transition-colors duration-500 backdrop-blur-[2px]" />
+        
         {isSubmitting ? (
-          <span>Submitting Inquiry...</span>
+          <span className="relative z-10 font-display text-sm font-semibold tracking-widest text-white/70 uppercase flex items-center gap-3">
+            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Sending...
+          </span>
         ) : (
-          <>
-            <span>Request Campaign Proposal</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+          <span className="relative z-10 font-display text-sm font-semibold tracking-[0.2em] text-white uppercase flex items-center gap-3">
+            Send Inquiry
+            <svg className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
-          </>
+          </span>
         )}
       </button>
     </form>
