@@ -1,5 +1,5 @@
 ---
-// src/pages/services/ai-marketing.astro
+// src/pages/services/kol-influencer-marketing.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
@@ -7,32 +7,40 @@ import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services' },
-  { name: 'AI Marketing', item: `https://fintech24h.com/services/ai-marketing` }
+  { name: 'KOL & Influencer Marketing', item: `https://fintech24h.com/services/kol-marketing` }
 ];
 
 const faqs = [
   {
-    q: "We have a technical AI product — can you actually understand it well enough to market it?",
-    a: "Our team includes marketers who have worked exclusively in AI and Web3 markets. We have the technical literacy to understand what you've built and the communication skills to translate it for the audiences you're trying to reach. We'll ask the right questions and be direct if something doesn't add up."
+    q: "How do you ensure the KOLs you recommend have real audiences?",
+    a: "Every KOL we work with goes through a vetting process that includes engagement rate analysis, follower quality scoring, historical post performance, and audience demographic review. We don't recommend anyone we haven't validated."
   },
   {
-    q: "Do you work with AI products outside of the Web3 space?",
-    a: "Yes. Our AI marketing capabilities extend beyond the Web3 context to B2B AI tools, AI-native startups, and enterprise AI products entering new markets."
+    q: "Can we request specific KOLs we already have in mind?",
+    a: "Yes. If you have KOLs you want to work with, we can evaluate them against our criteria and integrate them into the campaign plan where appropriate."
   },
   {
-    q: "What does an AI GTM engagement look like?",
-    a: "A GTM engagement typically starts with a positioning sprint (1–2 weeks), produces a messaging architecture document, and moves into channel strategy and execution. The exact structure depends on where you are in your launch timeline and what's already been built."
+    q: "How long does a typical campaign take to set up?",
+    a: "From brief to first live content is typically 7–10 business days, depending on KOL availability and approval cycles."
   },
   {
-    q: "We already have a product live — can you help with repositioning?",
-    a: "Yes. Repositioning an existing AI product is different from launching a new one — it requires careful handling of existing audience expectations. We've done this and can walk you through what the process involves."
+    q: "Do you work with micro-influencers or only large accounts?",
+    a: "Both. The right tier depends on your objectives. Micro-influencers often outperform larger accounts in conversion-focused campaigns due to higher audience trust and engagement rates."
+  },
+  {
+    q: "What markets do you cover?",
+    a: "Our network spans Southeast Asia (Vietnam, Thailand, Indonesia, Philippines), Singapore, UAE, South Korea, Japan, India, Europe, and global English-speaking markets."
+  },
+  {
+    q: "Do you guarantee results?",
+    a: "We don't make guarantees because honest campaign performance depends on factors outside creative control — market conditions, project fundamentals, and timing. What we do guarantee is rigorous execution, full transparency, and a documented process that improves with every cycle."
   }
 ];
 ---
 
 <BaseLayout
-  title="AI Product Marketing & GTM Strategy for AI Startups | Fintech24h"
-  description="Go-to-market strategy and marketing execution for AI products, AI startups, and AI-integrated Web3 projects. Fintech24h positions AI products in a crowded market — clearly, credibly, and distinctively."
+  title="KOL & Influencer Marketing for Blockchain & Web3 | Fintech24h"
+  description="Connect your project with vetted crypto KOLs across Twitter/X, YouTube, and Telegram. Fintech24h manages the full KOL lifecycle — selection, briefing, activation, and reporting."
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
@@ -46,23 +54,23 @@ const faqs = [
     <div class="relative z-10 max-w-7xl mx-auto w-full text-center">
       <div class="inline-flex items-center justify-center mb-8 reveal reveal-delay-1">
         <span class="tag tag-cyan font-mono text-xs uppercase tracking-[0.14em]">
-          AI MARKETING
+          KOL & INFLUENCER MARKETING
         </span>
       </div>
 
-      <h1 class="font-display font-bold max-w-5xl mx-auto reveal reveal-delay-2">
+      <h1 class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-2">
         <span class="block text-[clamp(2.25rem,6vw,4.5rem)] tracking-[-0.02em] leading-[1.1] text-[var(--text-primary)]">
-          In a Market Full of "AI-Powered" Claims,<br/>Yours Needs to Mean Something.
+          The Right Voice,<br/>Reaching the Right Audience.
         </span>
       </h1>
 
-      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-3xl mx-auto mt-6 mb-10 leading-[1.75] reveal reveal-delay-3">
-        Every startup claims AI. The projects that win trust and market share are the ones that communicate what their AI actually does, who it's for, and why it matters — clearly, specifically, and without hype. We build that narrative.
+      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-2xl mx-auto mt-6 mb-10 leading-[1.75] reveal reveal-delay-3">
+        Most KOL campaigns fail before they start — because the wrong influencers are chosen for the wrong reasons. We build campaigns around audience fit, not follower count.
       </p>
 
       <div class="flex flex-col sm:flex-row justify-center gap-4 reveal reveal-delay-4">
         <a href="#book-call" class="btn-primary">
-          Get an AI GTM Plan
+          Get a KOL Proposal
         </a>
         <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-ghost">
           Chat on Telegram
@@ -70,10 +78,10 @@ const faqs = [
       </div>
 
       <div class="mt-16 flex flex-wrap justify-center gap-4 reveal reveal-delay-4">
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">AI positioning & narrative</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">GTM strategy & execution</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">AI + Web3 specialist</span>
-        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">B2B & consumer AI</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">500+ KOLs in our vetted network</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Tier 1 & Tier 2 market coverage</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Full lifecycle management</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Real-time campaign tracking</span>
       </div>
     </div>
   </section>
@@ -82,32 +90,32 @@ const faqs = [
   <section class="py-20 md:py-32 relative z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHAT GOES WRONG</p>
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHY CAMPAIGNS FAIL</p>
         <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          What Goes Wrong With AI Product Marketing
+          Why Most KOL Campaigns Underperform
         </h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">"AI-Powered" Is No Longer a Differentiator</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">In 2024, every product has an AI feature. The phrase "AI-powered" carries approximately zero signal. Projects that lead with the technology instead of the outcome lose attention to the ones that lead with what changes for the user.</p>
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Fake Followers, Real Budget Lost</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">You pay for reach that doesn't exist. Inflated follower counts and bot-heavy audiences mean your message goes nowhere — and your budget evaporates with nothing to show.</p>
         </div>
         <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Technical Teams Write for Technical Audiences</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Founder-written copy for AI products tends toward precision: architectures, model specifications, accuracy benchmarks. These matter to engineers. They mean nothing to the investors, enterprise buyers, or early adopters who make the actual go/no-go decision.</p>
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Wrong Audience, No Conversion</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">A KOL with 500K followers in the gaming niche does nothing for a DeFi protocol. Audience mismatch is the silent killer of crypto influencer campaigns. Reach without relevance is just noise.</p>
         </div>
         <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No Clear Positioning in a Crowded Market</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">When every competitor is claiming the same capabilities, the default is a race to the most impressive-sounding claim. Without differentiated positioning — a specific audience, a specific use case, a specific point of view — AI products blur into the background.</p>
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No Brief, No Direction</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">When KOLs receive no structured brief, they default to generic content. The result: posts that feel promotional, get low engagement, and fail to communicate what makes your project worth paying attention to.</p>
         </div>
         <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">GTM Strategy Built for Traditional SaaS</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">AI product launches don't follow the same playbook as traditional software. Community-driven distribution, open-source credibility building, demo-first marketing, and trust-heavy content strategies require a different approach than standard B2B or consumer SaaS go-to-market.</p>
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No Tracking, No Learning</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Most agencies hand you a list of post links and call it a report. There's no conversion data, no audience quality analysis, no insight into what worked — so you can't improve next time.</p>
         </div>
         <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 md:col-span-2 reveal reveal-delay-3">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Trust Is the Real Barrier</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] max-w-4xl">AI product adoption is gated by trust more than any other product category. Users need to understand what the AI does, what it doesn't do, what data it uses, and who's accountable. Marketing that glosses over these concerns accelerates distrust.</p>
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Bad Timing Kills Momentum</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] max-w-4xl">A KOL drop one week before launch creates buzz that dies before TGE. One week after, you're chasing a market that's already moved on. Campaign timing is strategy — and most agencies treat it as a calendar exercise.</p>
         </div>
       </div>
     </div>
@@ -119,7 +127,7 @@ const faqs = [
       <div class="text-center space-y-4 mb-16 reveal">
         <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">HOW WE WORK</p>
         <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          How We Market AI Products That Get Taken Seriously
+          How We Run KOL Campaigns That Actually Work
         </h2>
       </div>
 
@@ -128,11 +136,11 @@ const faqs = [
         
         <div class="space-y-12">
           {[
-            { step: '01', title: 'Positioning Sprint', desc: 'We start by articulating what your AI product actually does in a sentence a non-technical decision-maker immediately understands. Then we find the specific audience segment, use case, and competitive differentiation that makes your positioning ownable. This is the foundation everything else is built on.' },
-            { step: '02', title: 'Narrative Development', desc: 'We build the full messaging architecture: hero statement, proof points, objection handling, and the story that connects your technology to a real outcome someone cares about. No jargon. No vague superlatives. No claims you can\'t back up.' },
-            { step: '03', title: 'Content Marketing', desc: 'Long-form content that educates your target audience about the problem your AI solves — not about your product. Blog posts, thought leadership, technical explainers for non-technical readers, and founder perspective pieces that build authority before the ask.' },
-            { step: '04', title: 'Channel Strategy & Activation', desc: 'The right channels for AI product marketing depend on your audience and stage. We design and execute channel strategies across Twitter/X, LinkedIn, community platforms, and media — tailored to how AI buyers and users actually discover and evaluate products.' },
-            { step: '05', title: 'Growth Campaigns', desc: 'Demo-driven campaigns, beta user acquisition, product hunt coordination, community seeding, and KOL partnerships with AI-adjacent influencers. We design growth campaigns that match the AI product lifecycle — not generic playbooks.' }
+            { step: '01', title: 'Audience-First Selection', desc: 'Before selecting any KOL, we audit their audience demographics, engagement quality, historical campaign performance, and topic alignment with your project. Bot rate, audience overlap, and geographic distribution are part of every evaluation. You get a shortlist with reasoning — not just names.' },
+            { step: '02', title: 'Brief & Content Alignment', desc: 'We write structured campaign briefs for every KOL, covering project narrative, key messages, tone guidelines, and content formats. Every piece of content is reviewed and approved before going live. Nothing generic. Nothing off-brand.' },
+            { step: '03', title: 'Phased Activation', desc: "We don't release everything at once. KOL campaigns are deployed in phases: awareness seeding, followed by education and trust-building content, followed by conversion-focused calls to action. The sequence matters." },
+            { step: '04', title: 'Live Tracking & Optimization', desc: 'During every campaign, we monitor performance in real time — impressions, engagement rate, click-through, and downstream signals. Underperforming placements are paused and replaced. You see what\'s happening, not a summary two weeks later.' },
+            { step: '05', title: 'Post-Campaign Reporting', desc: 'After every campaign, you receive a full performance breakdown: what worked, what didn\'t, audience quality analysis, and recommendations for the next cycle. Every campaign makes the next one smarter.' }
           ].map((s, i) => (
             <div class="relative flex flex-col md:flex-row gap-6 md:gap-12 reveal" style={`transition-delay: ${i * 0.1}s`}>
               <div class="flex items-center md:items-start gap-4 md:w-[120px] shrink-0 z-10">
@@ -155,35 +163,35 @@ const faqs = [
   <section class="py-20 md:py-32 relative z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center space-y-4 mb-16 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHAT WE COVER</p>
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHAT WE OFFER</p>
         <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          Our Services
+          Campaign Types & Platforms
         </h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">AI Product GTM</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Full go-to-market strategy for AI product launches — from positioning and messaging through channel selection, launch sequencing, and post-launch optimization.</p>
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Influencer Campaign</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">End-to-end management of multi-KOL campaigns — from selection and briefing to activation and reporting. Suitable for project launches, token events, and community growth phases.</p>
         </div>
         <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">AI Startup Marketing</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Ongoing marketing execution for AI startups across content, social, community, and earned media. For teams who need a marketing function without the overhead of a full in-house team.</p>
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">KOL Management</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Ongoing relationship management with a curated group of KOLs who become long-term advocates for your project. Consistency builds credibility.</p>
         </div>
         <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-1">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">AI Growth Campaigns</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Targeted campaigns for specific growth objectives: beta user acquisition, enterprise pipeline building, developer community growth, or geographic expansion.</p>
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Ambassador Program</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Recruit, onboard, and activate community ambassadors who create organic content, moderate local communities, and drive referrals. Ideal for projects expanding into new regions.</p>
         </div>
         <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-2">
-          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">AI + Web3 Marketing</h3>
-          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Specialized positioning and campaign strategy for projects at the intersection of AI and blockchain — a segment with its own audience dynamics, trust challenges, and media landscape.</p>
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">X (Twitter) Growth Campaign</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Coordinated Twitter/X amplification — threads, quote posts, Space promotions, and reply engagement — timed to key project milestones.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- SECTION 5 — WHO IT'S FOR -->
-  <section class="py-20 md:py-32 relative z-10 bg-[var(--accent-cyan)]/5 border-y border-white/5">
+  <section class="py-20 md:py-32 relative z-10 bg-black/20 border-y border-white/5">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center space-y-4 mb-12 reveal">
         <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHO THIS SERVES</p>
@@ -194,11 +202,11 @@ const faqs = [
 
       <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {[
-          "AI startups preparing for public launch or fundraise",
-          "Web3 projects integrating AI features who need clear positioning",
-          "B2B AI products entering enterprise or developer markets",
-          "AI tools targeting the crypto and fintech audience",
-          "Founders who know their product is good and need help explaining it"
+          "Blockchain projects preparing for TGE or token launch",
+          "DeFi protocols seeking to grow TVL and user acquisition",
+          "L1/L2 networks expanding regional presence",
+          "NFT and GameFi projects driving community growth",
+          "Web3 startups entering new geographic markets"
         ].map((item, i) => (
           <li class="flex items-start gap-3 p-4 bg-white/[0.02] border border-white/5 rounded-xl reveal" style={`transition-delay: ${i * 0.1}s`}>
             <svg class="w-5 h-5 text-[var(--accent-cyan)] shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -247,12 +255,13 @@ const faqs = [
     
     <div class="max-w-3xl mx-auto px-4 text-center relative z-10 reveal">
       <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4 leading-tight">
-        Your AI Product Deserves a Marketing Strategy as Sophisticated as the Technology.
+        Ready to Run a KOL Campaign That Converts?
       </h2>
       <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-xl mx-auto mb-10">
-        Tell us about your product — we'll outline a positioning and GTM strategy tailored to your goals.
+        Tell us about your project — we'll outline a KOL strategy tailored to your audience and objectives.
       </p>
-      <ServiceInquiryForm client:load defaultService="AI Marketing" />
+      <ServiceInquiryForm client:load defaultService="KOL & Influencer Marketing" />
+      <p class="text-sm text-[var(--text-muted)] mt-6">No commitment. Response within 24 hours.</p>
     </div>
   </section>
 </BaseLayout>

@@ -11,12 +11,12 @@ export const mainNavLinks: NavLink[] = [
     label: 'Services',
     href: '/services',
     children: [
-      { label: 'KOL & Influencer Marketing', href: '/services/kol-influencer-marketing' },
-      { label: 'PR & Media Coverage', href: '/services/pr-media' },
-      { label: 'Community Management', href: '/services/community-management' },
-      { label: 'Growth & Airdrop Campaigns', href: '/services/growth-airdrop' },
+      { label: 'KOL Marketing', href: '/services/kol-marketing' },
+      { label: 'PR Campaigns', href: '/services/pr-media' },
+      { label: 'Community Growth', href: '/services/community-growth' },
+      { label: 'Event Marketing', href: '/services/event-marketing' },
+      { label: 'AI Marketing', href: '/services/ai-marketing' },
       { label: 'Business Development', href: '/services/business-development' },
-      { label: 'Content Strategy & SEO', href: '/services/content-strategy-seo' },
     ]
   },
   { label: 'Contact', href: '/contact' },
@@ -26,12 +26,12 @@ export const mainNavLinks: NavLink[] = [
 
 export const footerLinks = {
   services: [
-    { label: 'KOL Marketing', href: '/services/kol-influencer-marketing' },
-    { label: 'PR & Press Release', href: '/services/pr-media' },
-    { label: 'Community Growth', href: '/services/community-management' },
-    { label: 'Viral Airdrops', href: '/services/growth-airdrop' },
-    { label: 'Business Development', href: '/services/business-development' },
-    { label: 'SEO & Copywriting', href: '/services/content-strategy-seo' }
+    { label: 'KOL Marketing', href: '/services/kol-marketing' },
+    { label: 'PR Campaigns', href: '/services/pr-media' },
+    { label: 'Community Growth', href: '/services/community-growth' },
+    { label: 'Event Marketing', href: '/services/event-marketing' },
+    { label: 'AI Marketing', href: '/services/ai-marketing' },
+    { label: 'Business Development', href: '/services/business-development' }
   ],
   company: [
     { label: 'About Us', href: '/about' },

@@ -3,156 +3,265 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
-import AnimatedCounter from '../../components/ui/AnimatedCounter.tsx';
-import { services } from '../../data/services';
-
-const service = services.find((s) => s.slug === 'business-development')!;
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services' },
-  { name: service.title, item: `https://fintech24h.com/services/${service.slug}` }
+  { name: 'Business Development', item: `https://fintech24h.com/services/business-development` }
+];
+
+const faqs = [
+  {
+    q: "How are you different from an in-house BD hire?",
+    a: "An in-house BD hire spends their first 6 months building a network from scratch. We come with an existing network of exchanges, investors, and protocols across Southeast Asia, UAE, and Europe. We plug you into that network immediately, reducing time-to-market."
+  },
+  {
+    q: "Can you guarantee an exchange listing?",
+    a: "No agency can guarantee a legitimate listing on a Tier 1 exchange. If someone promises that, they are either lying or planning to list you on an exchange with faked volume. What we guarantee is direct access to the decision-makers at target exchanges, a professionally structured application that meets their requirements, and active advocacy on your behalf."
+  },
+  {
+    q: "Do you take equity or tokens as payment for BD services?",
+    a: "We generally operate on a retainer + success fee model for BD engagements. In select cases where we see exceptional long-term alignment, we may consider a token/equity structure for a portion of the compensation. This is evaluated on a case-by-case basis."
+  },
+  {
+    q: "What regions do you cover?",
+    a: "Our core strength is in Southeast Asia (Vietnam, Thailand, Singapore, Indonesia), the UAE (Dubai/Abu Dhabi), and key European Web3 hubs. If you are a Western project looking to enter Asia, this is our exact specialty."
+  },
+  {
+    q: "What size projects do you work with?",
+    a: "We work with projects across the lifecycle — from seed-stage startups needing initial ecosystem partnerships, to established protocols looking for Tier 1 exchange listings or regional expansion."
+  }
 ];
 ---
 
 <BaseLayout
-  title={`${service.title} | Tier-1 Exchange & VC Network`}
-  description={service.shortDescription}
+  title="Web3 Business Development & Exchange Listings | Fintech24h"
+  description="Strategic partnerships, exchange listings, and regional expansion for Web3 projects. Fintech24h opens doors to exchanges, investors, and ecosystem partners across Asia, UAE, and Europe."
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- 1. Hero Section -->
-  <section class="relative min-h-[85vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
-    <!-- Ambient Background -->
+  <!-- SECTION 1 — HERO -->
+  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[600px] h-[600px] rounded-full" style="background:var(--gradient-glow-cyan); top:20%; left:-10%; animation:orb-pulse 11s ease-in-out infinite, orb-drift 16s ease-in-out infinite; filter:blur(70px); opacity:0.15"></div>
-      <div class="absolute w-[500px] h-[500px] rounded-full" style="background:var(--gradient-glow-purple); bottom:-10%; right:10%; animation:orb-pulse 13s ease-in-out infinite 2s, orb-drift 18s ease-in-out infinite 5s; filter:blur(60px); opacity:0.15"></div>
+      <div class="absolute w-[600px] h-[600px] rounded-full" style="background:var(--gradient-glow-purple); top:-20%; left:50%; transform:translateX(-50%); animation:orb-pulse 10s ease-in-out infinite; filter:blur(70px); opacity:0.06"></div>
       <div class="grid-pattern absolute inset-0 opacity-15"></div>
     </div>
 
     <div class="relative z-10 max-w-7xl mx-auto w-full text-center">
-      <div class="inline-flex items-center gap-2 mb-8" data-hero-line>
-        <div class="w-6 h-px bg-[var(--text-secondary)]"></div>
-        <span class="font-mono text-xs text-[var(--text-secondary)] uppercase tracking-[0.15em]">
-          VC Matching · Launchpad Onboarding · Exchange Listings
+      <div class="inline-flex items-center justify-center mb-8 reveal reveal-delay-1">
+        <span class="tag tag-purple font-mono text-xs uppercase tracking-[0.14em]">
+          BUSINESS DEVELOPMENT
         </span>
-        <div class="w-6 h-px bg-[var(--text-secondary)]"></div>
       </div>
 
-      <h1 class="font-display font-bold max-w-5xl mx-auto" data-hero-line>
-        <span class="block text-[clamp(2.5rem,5.5vw,5rem)] tracking-[-0.03em] leading-[1.05] text-[var(--text-primary)]">
-          Strategic Capital.
-        </span>
-        <span class="block text-[clamp(2.5rem,5.5vw,5rem)] tracking-[-0.03em] leading-[1.05] bg-gradient-to-r from-[var(--text-primary)] via-[#a78bfa] to-[var(--accent-cyan)] bg-clip-text text-transparent pb-2">
-          Global Distribution.
+      <h1 class="font-display font-bold max-w-5xl mx-auto reveal reveal-delay-2">
+        <span class="block text-[clamp(2.25rem,6vw,4.5rem)] tracking-[-0.02em] leading-[1.1] text-[var(--text-primary)]">
+          The Right Partnerships<br/>Change the Trajectory of Your Project.
         </span>
       </h1>
 
-      <p class="font-body text-[clamp(1.1rem,2vw,1.35rem)] text-[var(--text-secondary)] max-w-2xl mx-auto mt-8 mb-14 leading-relaxed" data-hero-line>
-        {service.shortDescription}
+      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-3xl mx-auto mt-6 mb-10 leading-[1.75] reveal reveal-delay-3">
+        In Web3, who you integrate with, where you're listed, and who backs you is as important as what you've built. We operate as an extension of your team to secure the partnerships that drive real adoption.
       </p>
 
-      <div class="flex justify-center" data-hero-line>
-        <a href="#book-call" class="btn-primary px-8 py-4 text-base">
-          Request Partnership Audit →
+      <div class="flex flex-col sm:flex-row justify-center gap-4 reveal reveal-delay-4">
+        <a href="#book-call" class="btn-primary">
+          Discuss BD Strategy
+        </a>
+        <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+          Chat on Telegram
         </a>
       </div>
 
-      <!-- Hero Stats -->
-      <div class="mt-24 max-w-4xl mx-auto" data-animate="fade-up">
-        <div class="grid grid-cols-3 divide-x divide-white/[0.06] bg-[var(--bg-glass)] border border-white/[0.06] rounded-2xl backdrop-blur-md">
-          {service.metrics.map((m, i) => {
-            const numStr = m.value.replace(/[^0-9.]/g, '');
-            const suffix = m.value.replace(/[0-9.]/g, '');
-            const prefix = m.value.includes('$') ? '$' : '';
-            return (
-              <div class="text-center px-4 py-8 md:px-8">
-                <div class="font-display text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-2">
-                  <AnimatedCounter target={parseFloat(numStr)} prefix={prefix} suffix={suffix} duration={1.5 + (i * 0.2)} client:visible />
-                </div>
-                <div class="font-mono text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-widest">{m.label}</div>
-              </div>
-            );
-          })}
-        </div>
+      <div class="mt-16 flex flex-wrap justify-center gap-4 reveal reveal-delay-4">
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Exchange listing advisory</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Ecosystem partnerships</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Regional market entry (Asia/UAE)</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">B2B sales & outreach</span>
       </div>
     </div>
   </section>
 
-  <!-- 2. Services Grid (Asymmetric) -->
-  <section class="py-24 relative z-10 border-t border-white/[0.03]">
+  <!-- SECTION 2 — THE PROBLEM -->
+  <section class="py-20 md:py-32 relative z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-20" data-animate="fade-up">
-        <div class="inline-flex items-center gap-2">
-          <div class="w-6 h-px bg-[var(--text-secondary)]"></div>
-          <span class="font-mono text-xs text-[var(--text-secondary)] uppercase tracking-[0.12em]">Network Access</span>
-          <div class="w-6 h-px bg-[var(--text-secondary)]"></div>
-        </div>
-        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
-          The Deal <span class="bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent-purple)] bg-clip-text text-transparent">Flow</span>
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[#a78bfa] uppercase tracking-[0.14em]">WHY BD FAILS</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Why Most Web3 BD Efforts Stall
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-        <div class="md:col-span-12 lg:col-span-8 card-default p-8 md:p-12 border-[var(--text-primary)]/10 bg-gradient-to-br from-white/5 to-transparent relative group" data-animate="scale-in">
-          <h3 class="font-display text-3xl font-bold text-[var(--text-primary)] mb-6">VC Pitching & Fundraising</h3>
-          <p class="font-body text-[var(--text-secondary)] text-lg mb-8 leading-relaxed max-w-2xl">
-            {service.longDescription}
-          </p>
-          <div class="flex gap-4">
-            <span class="px-4 py-2 rounded-full border border-white/10 bg-white/5 font-mono text-xs text-white uppercase tracking-wider">Pitch Deck Audit</span>
-            <span class="px-4 py-2 rounded-full border border-white/10 bg-white/5 font-mono text-xs text-white uppercase tracking-wider">Warm Intros</span>
-          </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Cold Outreach Doesn't Work in Crypto</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Web3 runs on trust and warm introductions. Cold-emailing exchange listing teams or Tier-1 protocols rarely yields a response. If you aren't introduced by someone they already trust, you're at the bottom of the pile.</p>
         </div>
-
-        <div class="md:col-span-6 lg:col-span-4 card-default p-8 relative group flex flex-col justify-between" data-animate="scale-in">
-          <div>
-            <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-4">CEX Listings</h3>
-            <p class="font-body text-[var(--text-secondary)] leading-relaxed">
-              Fast-track introductions to listing teams at Tier-1 and Tier-2 centralized exchanges. We negotiate terms and handle the compliance friction.
-            </p>
-          </div>
-          <div class="mt-8 font-mono text-4xl font-bold text-[var(--accent-cyan)]">25+</div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Partnerships For the Sake of Announcements</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Announcing a partnership that consists only of a shared tweet and a logo on a website is useless. A partnership is only valuable if it drives liquidity, users, or technological integration. "Paper partnerships" destroy credibility.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Misunderstanding Exchange Requirements</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Projects often apply for exchange listings before they are ready, wasting their one shot at a good first impression. Tier-1 exchanges care about community health, organic volume, and regulatory compliance. You need to look like an asset, not a liability.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Lack of Regional Localization</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Trying to enter the Southeast Asian or UAE markets with a purely Western approach fails. Business is done differently, communication styles are different, and local networks control access. You need local representation.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 md:col-span-2 reveal reveal-delay-3">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Founders Acting as Full-Time BD</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] max-w-4xl">When technical founders spend 80% of their time chasing partnerships and maintaining relationships, the product suffers. BD is a full-time function that requires a dedicated machine, not occasional sprints.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. Inquiry Form Section (English updated) -->
-  <section id="book-call" class="py-24 relative">
-    <div class="max-w-3xl mx-auto px-4">
-      <div class="p-8 lg:p-12 rounded-[24px] border border-[#ff6b83]/20 bg-gradient-to-br from-[rgba(255,107,131,0.02)] via-transparent to-transparent shadow-[0_15px_35px_rgba(255,107,131,0.03)] relative overflow-hidden">
-        <div class="absolute inset-0 bg-radial-gradient(circle, rgba(255,107,131,0.03) 0%, transparent 70%) pointer-events-none"></div>
-        <div class="text-center max-w-2xl mx-auto mb-10 relative z-10">
-          <h2 class="font-display text-3xl font-bold text-[var(--text-primary)] mb-4">
-            Accelerate Your Web3 Partnership Network
-          </h2>
-          <p class="text-sm text-[var(--text-secondary)] font-body">
-            Share your partnership goals below and we will prepare a targeted connection roadmap for you within 24 hours.
-          </p>
-        </div>
-        <div class="relative z-10">
-          <ServiceInquiryForm client:load defaultService={service.title} />
+  <!-- SECTION 3 — OUR APPROACH -->
+  <section class="py-20 md:py-32 relative z-10 bg-black/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[#a78bfa] uppercase tracking-[0.14em]">HOW WE WORK</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Our Business Development Process
+        </h2>
+      </div>
+
+      <div class="relative max-w-4xl mx-auto">
+        <div class="absolute left-[24px] md:left-[50px] top-0 bottom-0 w-px bg-white/10 hidden md:block"></div>
+        
+        <div class="space-y-12">
+          {[
+            { step: '01', title: 'Asset Audit & Readiness Review', desc: 'Before making introductions, we audit your project through the lens of a potential partner or exchange. Are your metrics healthy? Is your documentation clear? Is your legal structure sound? We fix the gaps before we go to market.' },
+            { step: '02', title: 'Target Mapping & Strategy', desc: 'We identify the specific exchanges, protocols, or enterprise partners that will move the needle for your project. We map the decision-makers, determine the value proposition for them, and define the engagement strategy.' },
+            { step: '03', title: 'Warm Introductions & Representation', desc: 'We leverage our existing network to bypass the cold-email queue. We represent your project in initial conversations, filter out the noise, and only bring you into meetings with qualified, high-intent partners.' },
+            { step: '04', title: 'Deal Structuring & Negotiation', desc: 'From exchange listing agreements to co-marketing partnerships, we advise on standard market terms, identify hidden costs, and help negotiate structures that align with your long-term tokenomics and runway.' },
+            { step: '05', title: 'Post-Deal Activation', desc: 'Signing the partnership is the beginning, not the end. We oversee the activation phase — ensuring technical integrations happen, co-marketing is executed, and the partnership actually delivers the promised value.' }
+          ].map((s, i) => (
+            <div class="relative flex flex-col md:flex-row gap-6 md:gap-12 reveal" style={`transition-delay: ${i * 0.1}s`}>
+              <div class="flex items-center md:items-start gap-4 md:w-[120px] shrink-0 z-10">
+                <div class="w-12 h-12 rounded-full border-[1.5px] border-[#a78bfa] bg-[var(--bg-primary)] flex items-center justify-center font-mono text-[#a78bfa] font-bold shrink-0 shadow-[0_0_15px_rgba(167,139,250,0.2)]">
+                  {s.step}
+                </div>
+              </div>
+              <div class="pt-2">
+                <h3 class="font-display text-xl font-bold text-white mb-3">{s.title}</h3>
+                <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">{s.desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — SERVICES -->
+  <section class="py-20 md:py-32 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[#a78bfa] uppercase tracking-[0.14em]">WHAT WE OFFER</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Business Development Services
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="card-default p-6 md:p-8 hover:border-[#a78bfa]/40 hover:bg-[#a78bfa]/[0.04] transition-all duration-300 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Exchange Listing Advisory</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">End-to-end management of the listing process. Readiness assessment, warm introductions to listing teams, application management, and negotiation of market-making and liquidity requirements.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 hover:border-[#a78bfa]/40 hover:bg-[#a78bfa]/[0.04] transition-all duration-300 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Ecosystem Partnerships</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Identifying and securing integrations with other protocols, wallets, infrastructure providers, and dApps that increase your product's utility and user base.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 hover:border-[#a78bfa]/40 hover:bg-[#a78bfa]/[0.04] transition-all duration-300 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Regional Market Entry</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Acting as your localized BD team in Southeast Asia and the UAE. We navigate the local business culture, translate your value proposition, and connect you with regional partners and communities.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 hover:border-[#a78bfa]/40 hover:bg-[#a78bfa]/[0.04] transition-all duration-300 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">B2B Lead Generation & Sales</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">For enterprise-facing Web3 tools and infrastructure providers. We build the sales pipeline, manage outreach, and drive qualified leads to your technical team to close.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5 — FAQ -->
+  <section class="py-20 md:py-32 relative z-10 bg-black/20 border-y border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[#a78bfa] uppercase tracking-[0.14em]">FAQ</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Common Questions
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        {faqs.map((faq, i) => (
+          <details class="card-default p-0 border border-white/5 hover:border-[#a78bfa]/20 transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+              <span class="font-display font-semibold text-base sm:text-[18px] text-white group-hover:text-[#a78bfa] transition-colors pr-6">
+                {faq.q}
+              </span>
+              <div class="w-8 h-8 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/50 group-hover:text-[#a78bfa] group-hover:bg-[#a78bfa]/10 transition-all shrink-0">
+                <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </summary>
+            <div class="px-6 pb-6 text-[16px] text-[var(--text-secondary)] font-body leading-relaxed border-t border-white/[0.03] pt-4">
+              <p>{faq.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6 — CTA -->
+  <section id="book-call" class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[800px] h-[800px] rounded-full" style="background:var(--gradient-glow-purple); top:50%; left:50%; transform:translate(-50%, -50%); filter:blur(100px); opacity:0.1"></div>
+    </div>
+    
+    <div class="max-w-3xl mx-auto px-4 text-center relative z-10 reveal">
+      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4 leading-tight">
+        Scale Your Project Through Strategic Partnerships.
+      </h2>
+      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-xl mx-auto mb-10">
+        Tell us what you're building and who you need to reach. We'll outline a roadmap to get you in the room.
+      </p>
+      <ServiceInquiryForm client:load defaultService="Business Development" />
     </div>
   </section>
 </BaseLayout>
 
-<script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  gsap.registerPlugin(ScrollTrigger);
+<style>
+  summary::-webkit-details-marker { display: none; }
+  
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
 
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+
+<script>
   document.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    
-    const heroLines = document.querySelectorAll('[data-hero-line]');
-    if (heroLines.length) {
-      gsap.fromTo(heroLines,
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease: 'power3.out', delay: 0.1 }
-      );
-    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   });
 </script>

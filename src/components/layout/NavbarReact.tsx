@@ -20,10 +20,11 @@ export default function NavbarReact() {
   }, []);
 
   const servicesList = [
-    { label: 'kol & influencer marketing', href: '/services/kol-influencer-marketing' },
-    { label: 'pr & media coverage', href: '/services/pr-media' },
-    { label: 'community management', href: '/services/community-management' },
+    { label: 'kol marketing', href: '/services/kol-marketing' },
+    { label: 'pr campaigns', href: '/services/pr-media' },
+    { label: 'community growth', href: '/services/community-growth' },
     { label: 'event marketing', href: '/services/event-marketing' },
+    { label: 'ai marketing', href: '/services/ai-marketing' },
     { label: 'business development', href: '/services/business-development' },
   ];
 

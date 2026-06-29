@@ -3,167 +3,285 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
-import AnimatedCounter from '../../components/ui/AnimatedCounter.tsx';
-import { services } from '../../data/services';
-
-const service = services.find((s) => s.slug === 'event-marketing')!;
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services' },
-  { name: service.title, item: `https://fintech24h.com/services/${service.slug}` }
+  { name: 'Event Marketing', item: `https://fintech24h.com/services/event-marketing` }
 ];
 
-const eventTypes = [
+const faqs = [
   {
-    title: 'Tier-1 Side Events',
-    desc: 'Capitalize on major conferences like Token2049, Devcon, and Consensus. We host exclusive side-events that draw the highest-quality attendees away from the noise and directly into your brand experience.',
-    icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>'
+    q: "Do you attend events on our behalf?",
+    a: "We can provide on-the-ground support for major conferences in Southeast Asia, Singapore, and UAE. For other locations, we coordinate with our regional partner network and prepare your team with briefing documents, meeting schedules, and real-time content direction."
   },
   {
-    title: 'Private VC Dinners',
-    desc: 'Intimate, high-net-worth gatherings designed purely for deal-flow. We curate the guest list, source Michelin-level venues, and structure the evening to ensure you get face-time with the right capital allocators.',
-    icon: '<path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line>'
+    q: "We're speaking at an event — can you just handle the promotion?",
+    a: "Yes. Speaker promotion is available as a standalone service. We develop the pre-event content calendar, media briefing, and post-event content amplification around your confirmed speaking slot."
   },
   {
-    title: 'Hackathons & Builder Houses',
-    desc: 'Accelerate ecosystem growth by putting developers in a room together. We handle venue logistics, technical mentorship coordination, and prize-pool marketing to attract top-tier Web3 engineers to your protocol.',
-    icon: '<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>'
+    q: "How far in advance do we need to plan?",
+    a: "For major conferences, 6–8 weeks before the event is the minimum for meaningful pre-event work. Earlier is always better. For speaker applications, timelines vary by event — some require 3–4 months lead time."
+  },
+  {
+    q: "Can you help us get speaking slots?",
+    a: "We can identify opportunities and advise on the application process or warm introductions where relationships exist. Speaking placement at major events is competitive and not guaranteed, but preparation and positioning significantly improve the outcome."
   }
 ];
 ---
 
 <BaseLayout
-  title={`${service.title} | Web3 Offline Experiences`}
-  description={service.shortDescription}
+  title="Web3 & Blockchain Event Marketing — Speaker Placement, Sponsorship & Event Coverage | Fintech24h"
+  description="Maximize your presence at Web3 conferences and crypto events. Fintech24h secures speaking slots, manages media partnerships, activates sponsors, and amplifies event coverage across channels."
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- 1. Hero Section - Deep Immersive -->
-  <section class="relative min-h-[90vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
-    <!-- Ambient Background: More dynamic for events -->
+  <!-- SECTION 1 — HERO -->
+  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[800px] h-[800px] rounded-full" style="background:radial-gradient(ellipse, rgba(0,200,240,0.15) 0%, transparent 60%); top:-30%; left:-20%; animation:orb-pulse 8s ease-in-out infinite, orb-drift 12s ease-in-out infinite; filter:blur(60px);"></div>
-      <div class="absolute w-[600px] h-[600px] rounded-full" style="background:radial-gradient(ellipse, rgba(124,92,252,0.15) 0%, transparent 60%); bottom:-10%; right:-10%; animation:orb-pulse 10s ease-in-out infinite 2s, orb-drift 14s ease-in-out infinite 3s; filter:blur(50px);"></div>
-      <!-- Mesh grid overlay -->
-      <div class="absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 64px 64px; animation:grid-shimmer 8s infinite;"></div>
+      <div class="absolute w-[600px] h-[600px] rounded-full" style="background:var(--gradient-glow-cyan); top:-20%; left:50%; transform:translateX(-50%); animation:orb-pulse 10s ease-in-out infinite; filter:blur(70px); opacity:0.06"></div>
+      <div class="absolute w-[500px] h-[500px] rounded-full" style="background:var(--gradient-glow-purple); bottom:-10%; right:0; animation:orb-pulse 12s ease-in-out infinite 2s; filter:blur(70px); opacity:0.06"></div>
+      <div class="grid-pattern absolute inset-0 opacity-15"></div>
     </div>
 
     <div class="relative z-10 max-w-7xl mx-auto w-full text-center">
-      <div class="inline-flex items-center gap-2 mb-8" data-hero-line>
-        <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
-        <span class="font-mono text-xs text-white uppercase tracking-[0.2em] bg-white/10 px-4 py-1.5 rounded-full border border-white/20 backdrop-blur-md">
-          Real-world Authority
+      <div class="inline-flex items-center justify-center mb-8 reveal reveal-delay-1">
+        <span class="tag tag-cyan font-mono text-xs uppercase tracking-[0.14em]">
+          EVENT MARKETING
         </span>
       </div>
 
-      <h1 class="font-display font-bold max-w-5xl mx-auto" data-hero-line>
-        <span class="block text-[clamp(2.5rem,5.5vw,5rem)] tracking-[-0.03em] leading-[1.05] text-[var(--text-primary)]">
-          Digital Presence.
-        </span>
-        <span class="block text-[clamp(2.5rem,5.5vw,5rem)] tracking-[-0.03em] leading-[1.05] bg-gradient-to-r from-[var(--accent-cyan)] to-[#fdf8f6] bg-clip-text text-transparent pb-2">
-          Physical Dominance.
+      <h1 class="font-display font-bold max-w-5xl mx-auto reveal reveal-delay-2">
+        <span class="block text-[clamp(2.25rem,6vw,4.5rem)] tracking-[-0.02em] leading-[1.1] text-[var(--text-primary)]">
+          Be the Project Everyone's Talking About<br/>Before, During, and After the Event.
         </span>
       </h1>
 
-      <p class="font-body text-[clamp(1.1rem,2vw,1.35rem)] text-[var(--text-secondary)] max-w-2xl mx-auto mt-8 mb-12 leading-relaxed" data-hero-line>
-        {service.longDescription.split('.')[0]}. {service.longDescription.split('.')[1]}.
+      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-3xl mx-auto mt-6 mb-10 leading-[1.75] reveal reveal-delay-3">
+        Conferences don't create opportunities — preparation and follow-through do. We handle every layer of event marketing so your presence converts to relationships, press, and pipeline.
       </p>
 
-      <div class="flex flex-col sm:flex-row justify-center gap-4" data-hero-line>
-        <a href="#book-call" class="btn-primary px-8 py-4 text-base shadow-[0_0_32px_rgba(0,200,240,0.3)] hover:shadow-[0_0_60px_rgba(0,200,240,0.5)]">
-          Plan Your Next Event →
+      <div class="flex flex-col sm:flex-row justify-center gap-4 reveal reveal-delay-4">
+        <a href="#book-call" class="btn-primary">
+          Plan My Event Strategy
+        </a>
+        <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+          Chat on Telegram
         </a>
       </div>
 
-      <!-- Hero Stats -->
-      <div class="mt-20 max-w-4xl mx-auto" data-animate="fade-up">
-        <div class="grid grid-cols-3 divide-x divide-white/[0.06] bg-black/40 border border-white/[0.1] rounded-2xl backdrop-blur-xl shadow-2xl">
-          {service.metrics.map((m, i) => {
-            const numStr = m.value.replace(/[^0-9.]/g, '');
-            const suffix = m.value.replace(/[0-9.]/g, '');
-            return (
-              <div class="text-center px-4 py-8 md:px-8">
-                <div class="font-display text-4xl md:text-5xl font-bold text-white mb-2">
-                  <AnimatedCounter target={parseFloat(numStr)} suffix={suffix} duration={1.5 + (i * 0.2)} client:visible />
-                </div>
-                <div class="font-mono text-xs md:text-sm text-[var(--accent-cyan)] uppercase tracking-widest">{m.label}</div>
-              </div>
-            );
-          })}
+      <div class="mt-16 flex flex-wrap justify-center gap-4 reveal reveal-delay-4">
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Pre-event / At-event / Post-event</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Media & speaker coordination</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Sponsor activation</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Content capture & distribution</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 — THE PROBLEM -->
+  <section class="py-20 md:py-32 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHY EVENTS FAIL TO CONVERT</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Why Most Web3 Event Appearances Don't Pay Off
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">You Show Up, Nobody Knows You're There</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Without pre-event awareness — announcement content, speaker promotion, media briefings — your presence at even a major conference goes unnoticed by most attendees. The work happens before the event, not at it.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Sponsorships That Don't Convert</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Logos on a banner and a booth nobody visits is the standard return on underprepared sponsorship. Sponsorship only works when it's activated: structured meeting schedules, media moments, and content capture.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No Media Coverage From the Event</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Walking away from TOKEN2049 or ETHDenver with zero press coverage means you missed one of the highest-leverage PR windows in the Web3 calendar. Media access at events is relationship-driven — without the right connections, you're invisible to journalists on the floor.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Content Captured But Never Used</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Teams film panels and record interviews at events, then let the footage sit. Event content — repurposed into clips, Twitter threads, recaps, and LinkedIn posts — is among the highest-performing content a Web3 project can publish.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 md:col-span-2 reveal reveal-delay-3">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No Follow-Through After the Event</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] max-w-4xl">Business cards exchanged, conversations had — and then nothing. Without a structured post-event outreach and content cadence, the momentum from in-person connection dissipates within 72 hours.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 2. Experiences Section (Masonry) -->
-  <section class="py-24 relative z-10">
+  <!-- SECTION 3 — OUR APPROACH -->
+  <section class="py-20 md:py-32 relative z-10 bg-black/20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-20" data-animate="fade-up">
-        <div class="inline-flex items-center gap-2">
-          <div class="w-6 h-px bg-[var(--accent-cyan)]"></div>
-          <span class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.12em]">Formats</span>
-          <div class="w-6 h-px bg-[var(--accent-cyan)]"></div>
-        </div>
-        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
-          Curated <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] bg-clip-text text-transparent">Experiences</span>
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">HOW WE MAXIMIZE ROI</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Our Event Marketing Phases
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {eventTypes.map((event, i) => (
-          <div class={`card-default p-8 md:p-12 border-[var(--accent-cyan)]/10 bg-[var(--bg-secondary)] relative group hover:bg-[var(--bg-tertiary)] transition-colors ${i === 0 ? 'md:col-span-12 lg:col-span-8' : i === 1 ? 'md:col-span-6 lg:col-span-4' : 'md:col-span-6 lg:col-span-12'}`} data-animate="scale-in">
-            <div class="absolute inset-0 bg-gradient-to-br from-[var(--accent-cyan)]/0 to-[var(--accent-cyan)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
-            
-            <div class="w-14 h-14 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center mb-8 text-[var(--accent-cyan)] group-hover:scale-110 transition-transform duration-500">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={event.icon}></svg>
-            </div>
-            
-            <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-4">{event.title}</h3>
-            <p class="font-body text-[var(--text-secondary)] text-lg leading-relaxed max-w-3xl">
-              {event.desc}
-            </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+        <!-- 3-phase layout -->
+        <div class="card-default p-8 reveal reveal-delay-1 border-t-2 border-t-[var(--accent-cyan)]">
+          <div class="font-mono text-xs text-[var(--accent-cyan)] mb-2 uppercase tracking-wider">Phase 1</div>
+          <h3 class="font-display text-2xl font-bold text-white mb-4">Pre-Event</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] mb-6">Strategic planning begins 4–6 weeks before the event.</p>
+          <ul class="space-y-3 font-body text-sm text-white/80">
+            <li class="flex items-start gap-2"><span class="text-[var(--accent-cyan)]">→</span> Identify speaking opportunities</li>
+            <li class="flex items-start gap-2"><span class="text-[var(--accent-cyan)]">→</span> Brief media contacts</li>
+            <li class="flex items-start gap-2"><span class="text-[var(--accent-cyan)]">→</span> Pre-event content calendar</li>
+            <li class="flex items-start gap-2"><span class="text-[var(--accent-cyan)]">→</span> Team logistics coordination</li>
+          </ul>
+        </div>
+
+        <div class="card-default p-8 reveal reveal-delay-2 border-t-2 border-t-purple-400">
+          <div class="font-mono text-xs text-purple-400 mb-2 uppercase tracking-wider">Phase 2</div>
+          <h3 class="font-display text-2xl font-bold text-white mb-4">At the Event</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] mb-6">Real-time media coverage and social amplification.</p>
+          <ul class="space-y-3 font-body text-sm text-white/80">
+            <li class="flex items-start gap-2"><span class="text-purple-400">→</span> Facilitate journalist meetings</li>
+            <li class="flex items-start gap-2"><span class="text-purple-400">→</span> Capture content</li>
+            <li class="flex items-start gap-2"><span class="text-purple-400">→</span> Sponsor activation touchpoints</li>
+            <li class="flex items-start gap-2"><span class="text-purple-400">→</span> Coordinate side events/AMAs</li>
+          </ul>
+        </div>
+
+        <div class="card-default p-8 reveal reveal-delay-3 border-t-2 border-t-emerald-400">
+          <div class="font-mono text-xs text-emerald-400 mb-2 uppercase tracking-wider">Phase 3</div>
+          <h3 class="font-display text-2xl font-bold text-white mb-4">Post-Event</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] mb-6">The 2 weeks after are when the best projects accelerate.</p>
+          <ul class="space-y-3 font-body text-sm text-white/80">
+            <li class="flex items-start gap-2"><span class="text-emerald-400">→</span> Post-event content cascade</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-400">→</span> KOL amplification of key moments</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-400">→</span> Follow-up outreach to media</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-400">→</span> Performance analysis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — WHAT WE COVER -->
+  <section class="py-20 md:py-32 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHAT WE COVER</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Our Event Services
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {[
+          { title: 'Media Partnership', desc: 'Negotiate and activate media partnerships with event-adjacent publications and podcasts for pre-event coverage, on-site interviews, and post-event features.' },
+          { title: 'Speaker Promotion', desc: 'Amplify confirmed speaking appearances through KOL seeding, social content, and media briefings. A speaking slot is only valuable if people know about it and show up.' },
+          { title: 'Event Coverage', desc: 'On-site content capture and real-time social amplification. Live-tweet threads, short-form video clips, and interview coordination during the event.' },
+          { title: 'Sponsor Activation', desc: 'Strategic activation of sponsorship packages — beyond the logo placement. We design structured meeting programs, side event hosting, media moments, and branded content opportunities that make sponsorship investments pay off.' },
+          { title: 'Side Events & Satellite Events', desc: 'Planning and execution of co-located side events — dinners, workshops, investor roundtables, and community meetups — that create controlled environments for high-value relationship building.' }
+        ].map((c, i) => (
+          <div class={`card-default p-6 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal ${i === 3 ? 'md:col-span-2 lg:col-span-1' : ''} ${i === 4 ? 'lg:col-span-2' : ''}`} style={`transition-delay: ${i * 0.1}s`}>
+            <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">{c.title}</h3>
+            <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">{c.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- 3. Inquiry Form Section (English updated) -->
-  <section id="book-call" class="py-24 relative">
-    <div class="max-w-3xl mx-auto px-4">
-      <div class="p-8 lg:p-12 rounded-[24px] border border-[#ff6b83]/20 bg-gradient-to-br from-[rgba(255,107,131,0.02)] via-transparent to-transparent shadow-[0_15px_35px_rgba(255,107,131,0.03)] relative overflow-hidden">
-        <div class="absolute inset-0 bg-radial-gradient(circle, rgba(255,107,131,0.03) 0%, transparent 70%) pointer-events-none"></div>
-        <div class="text-center max-w-2xl mx-auto mb-10 relative z-10">
-          <h2 class="font-display text-3xl font-bold text-[var(--text-primary)] mb-4">
-            Organize Your Web3 Offline Experience
-          </h2>
-          <p class="text-sm text-[var(--text-secondary)] font-body">
-            Provide your estimated event scope and our events team will deliver a venue strategy and budget estimate for you within 24 hours.
-          </p>
-        </div>
-        <div class="relative z-10">
-          <ServiceInquiryForm client:load defaultService={service.title} />
-        </div>
+  <!-- SECTION 5 — EVENTS WE COVER -->
+  <section class="py-20 md:py-32 relative z-10 bg-[var(--accent-cyan)]/5 border-y border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+      <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em] mb-4">EVENTS WE ACTIVATE AROUND</p>
+      <h2 class="font-display text-[clamp(1.5rem,2.5vw,2.25rem)] font-bold text-[var(--text-primary)] leading-[1.2] mb-6">
+        Major Web3 Conferences
+      </h2>
+      <p class="font-body text-[16px] text-white/80 leading-[1.75]">
+        Key Web3 conferences where we have established media and networking presence: <br/><br/>
+        <strong class="text-white">TOKEN2049 (Singapore & Dubai), ETHDenver, Consensus, Binance Blockchain Week, Korea Blockchain Week, WebX Japan, Vietnam Blockchain Summit</strong>, and other major regional and global Web3 events.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 6 — FAQ -->
+  <section class="py-20 md:py-32 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">FAQ</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Common Questions
+        </h2>
       </div>
+
+      <div class="space-y-4">
+        {faqs.map((faq, i) => (
+          <details class="card-default p-0 border border-white/5 hover:border-[var(--accent-cyan)]/20 transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+              <span class="font-display font-semibold text-base sm:text-[18px] text-white group-hover:text-[var(--accent-cyan)] transition-colors pr-6">
+                {faq.q}
+              </span>
+              <div class="w-8 h-8 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/50 group-hover:text-[var(--accent-cyan)] group-hover:bg-[var(--accent-cyan)]/10 transition-all shrink-0">
+                <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </summary>
+            <div class="px-6 pb-6 text-[16px] text-[var(--text-secondary)] font-body leading-relaxed border-t border-white/[0.03] pt-4">
+              <p>{faq.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7 — CTA -->
+  <section id="book-call" class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[800px] h-[800px] rounded-full" style="background:var(--gradient-glow-cyan); top:50%; left:50%; transform:translate(-50%, -50%); filter:blur(100px); opacity:0.1"></div>
+    </div>
+    
+    <div class="max-w-3xl mx-auto px-4 text-center relative z-10 reveal">
+      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4 leading-tight">
+        Events Are Leverage — If You Activate Them.
+      </h2>
+      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-xl mx-auto mb-10">
+        Tell us which events you're attending — we'll outline a strategy to maximize your ROI.
+      </p>
+      <ServiceInquiryForm client:load defaultService="Event Marketing" />
     </div>
   </section>
 </BaseLayout>
 
-<script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  gsap.registerPlugin(ScrollTrigger);
+<style>
+  summary::-webkit-details-marker { display: none; }
+  
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
 
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+
+<script>
   document.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    
-    const heroLines = document.querySelectorAll('[data-hero-line]');
-    if (heroLines.length) {
-      gsap.fromTo(heroLines,
-        { opacity: 0, y: 30, filter: 'blur(10px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: 0.15, ease: 'power4.out', delay: 0.1 }
-      );
-    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   });
 </script>

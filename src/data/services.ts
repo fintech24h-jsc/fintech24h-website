@@ -14,9 +14,9 @@ export const services: Service[] = [
   {
     id: 'kol-influencer',
     title: 'KOL & Influencer Marketing',
-    slug: 'kol-influencer-marketing',
+    slug: 'kol-marketing',
     icon: 'Users',
-    shortDescription: 'Access a vetted network of 500+ Web3, Crypto, and AI influencers in Tier 1 and Tier 2 markets.',
+    shortDescription: 'Most KOL campaigns fail before they start. We build campaigns around audience fit, not follower count.',
     longDescription: 'Establish trust and generate massive reach through our global network of crypto and AI influencers. We manage the entire lifecycle from onboarding and content alignment to tracking ROI, conversions, and key engagement metrics.',
     features: [
       'Tier 1 influencer partnerships across Twitter/X, YouTube, and Telegram',
@@ -40,7 +40,7 @@ export const services: Service[] = [
     title: 'PR & Media Campaigns',
     slug: 'pr-media',
     icon: 'FileText',
-    shortDescription: 'Get featured on Tier-1 financial and crypto publications: Bloomberg, CoinTelegraph, Yahoo Finance.',
+    shortDescription: 'A press release distributed to 200 outlets nobody reads does nothing. We place editorial coverage that builds credibility.',
     longDescription: 'Establish authority and project credibility. We write compelling narratives and pitch to leading editors on major platforms to secure premium editorial space for your product launches, updates, and fundraising announcements.',
     features: [
       'Tier-1 media placements (Bloomberg, Forbes, Yahoo Finance, CoinTelegraph, Decrypt)',
@@ -62,9 +62,9 @@ export const services: Service[] = [
   {
     id: 'community-growth',
     title: 'Community Growth & Management',
-    slug: 'community-management',
+    slug: 'community-growth',
     icon: 'MessageSquare',
-    shortDescription: 'Scale your active user base fast with viral loops, 24/7 moderation, and structured airdrops.',
+    shortDescription: 'Follower count is vanity. Daily active engagement, organic sharing, and community-led growth is what moves the needle.',
     longDescription: 'Your community is your currency. We design data-driven viral loops and provide 24/7 moderation to turn passive members into active advocates. From anti-sybil airdrops to deep engagement tracking, we handle the entire funnel.',
     features: [
       '24/7 multi-lingual moderation and proactive engagement strategies',
@@ -85,10 +85,10 @@ export const services: Service[] = [
   },
   {
     id: 'event-marketing',
-    title: 'Web3 Event Marketing',
+    title: 'Event Marketing',
     slug: 'event-marketing',
     icon: 'Ticket',
-    shortDescription: 'Host exclusive side-events, VC dinners, and hackathons that leave a lasting impact.',
+    shortDescription: 'Conferences don\'t create opportunities — preparation and follow-through do. We handle every layer of event marketing.',
     longDescription: 'Transform digital presence into real-world authority. From Token2049 side-events to private VC dinners in Tier-1 cities, we design, manage, and execute offline experiences that connect you directly with strategic partners and high-net-worth individuals.',
     features: [
       'End-to-end event conceptualization and logistical execution',
@@ -109,10 +109,10 @@ export const services: Service[] = [
   },
   {
     id: 'ai-marketing',
-    title: 'AI-Powered Marketing',
+    title: 'AI Marketing',
     slug: 'ai-marketing',
     icon: 'Cpu',
-    shortDescription: 'Automate community engagement, data scraping, and sentiment analysis with specialized AI models.',
+    shortDescription: 'Every startup claims AI. Projects that win trust communicate what their AI actually does, clearly and without hype.',
     longDescription: 'Deploy intelligence at scale. We integrate custom AI solutions to supercharge your marketing operations—from sentiment analysis bots that track community health to automated content distribution pipelines that operate with machine precision.',
     features: [
       'Custom AI bots for automated, context-aware community moderation',
@@ -136,7 +136,7 @@ export const services: Service[] = [
     title: 'Business Development',
     slug: 'business-development',
     icon: 'Briefcase',
-    shortDescription: 'Connect with tier-1 exchanges, VC networks, launchpads, and strategic partners globally.',
+    shortDescription: 'Who you integrate with, where you\'re listed, and who backs you is as important as what you\'ve built.',
     longDescription: 'Accelerate your market entry with critical B2B partnerships. We introduce your project to key decision-makers at tier-1 launchpads, venture capital firms, market makers, and layer-1 blockchains to expand your distribution channels.',
     features: [
       'Introductions to Top 20 centralized exchanges (CEXs) and launchpads',

@@ -1,0 +1,267 @@
+---
+// src/pages/services/community-management.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Services', item: 'https://fintech24h.com/services' },
+  { name: 'Community Growth', item: `https://fintech24h.com/services/community-growth` }
+];
+
+const faqs = [
+  {
+    q: "What does 24/7 moderation actually mean in practice?",
+    a: "Our moderation team operates across Southeast Asian and European time zones, providing continuous coverage with documented handoff protocols. Response time targets depend on engagement level, but no message sits unaddressed for more than a few hours during active periods."
+  },
+  {
+    q: "How do you handle FUD attacks?",
+    a: "We have documented response protocols for different FUD scenarios — factual inaccuracies, competitor attacks, and market-panic messaging. The protocol covers what to respond, what to remove, when to escalate to the project team, and when to let community leaders address it organically."
+  },
+  {
+    q: "Can you take over management of a community we already have?",
+    a: "Yes. We start with a transition audit to understand what's working, what isn't, and what the community expectations are — then phase in our management without disrupting existing dynamics."
+  },
+  {
+    q: "How long until we see engagement improvement?",
+    a: "Structural improvements (moderation consistency, channel organization, welcome flow) are visible immediately. Engagement growth from content calendars and ambassador programs typically shows meaningful movement within 30–60 days of consistent operation."
+  },
+  {
+    q: "Do you create all community content, or do we need to provide it?",
+    a: "We produce most operational content — daily engagement posts, responses, AMA facilitation, and educational content. Project-specific announcements and product updates should come from your team. We work with whatever you provide and fill the gaps."
+  }
+];
+---
+
+<BaseLayout
+  title="Web3 Community Growth & Management — Telegram, Discord & Ambassador Programs | Fintech24h"
+  description="Build active, loyal communities that drive organic growth. Fintech24h manages Telegram and Discord communities, runs ambassador programs, and creates the engagement loops that turn members into advocates."
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- SECTION 1 — HERO -->
+  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[600px] h-[600px] rounded-full" style="background:var(--gradient-glow-cyan); top:-20%; left:50%; transform:translateX(-50%); animation:orb-pulse 10s ease-in-out infinite; filter:blur(70px); opacity:0.06"></div>
+      <div class="grid-pattern absolute inset-0 opacity-15"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto w-full text-center">
+      <div class="inline-flex items-center justify-center mb-8 reveal reveal-delay-1">
+        <span class="tag tag-cyan font-mono text-xs uppercase tracking-[0.14em]">
+          COMMUNITY GROWTH & MANAGEMENT
+        </span>
+      </div>
+
+      <h1 class="font-display font-bold max-w-5xl mx-auto reveal reveal-delay-2">
+        <span class="block text-[clamp(2.25rem,6vw,4.5rem)] tracking-[-0.02em] leading-[1.1] text-[var(--text-primary)]">
+          A Community That Grows<br/>Your Project — Not Just a Group<br/>That Gets Bigger.
+        </span>
+      </h1>
+
+      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-3xl mx-auto mt-6 mb-10 leading-[1.75] reveal reveal-delay-3">
+        Follower count is vanity. Daily active engagement, organic sharing, and community-led growth is what moves the needle. We build the infrastructure that makes the second possible.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4 reveal reveal-delay-4">
+        <a href="#book-call" class="btn-primary">
+          Build My Community
+        </a>
+        <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+          Chat on Telegram
+        </a>
+      </div>
+
+      <div class="mt-16 flex flex-wrap justify-center gap-4 reveal reveal-delay-4">
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">24/7 moderation coverage</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Telegram & Discord management</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Ambassador program design</span>
+        <span class="glass-pill px-4 py-2 text-[13px] text-[var(--text-primary)] border border-white/10">Multi-timezone operations</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 — THE PROBLEM -->
+  <section class="py-20 md:py-32 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHY COMMUNITIES STAGNATE</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Why Most Web3 Communities Stagnate
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Members Join, Nobody Engages</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">A Telegram group with 10,000 members where 50 people are active is not a community — it's a list. Without intentional engagement architecture, most crypto communities become echo chambers of price talk and silence.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Moderation Gaps Destroy Credibility</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">A single unaddressed scam message, a prolonged FUD attack without response, or spam that sits for hours — these erode trust faster than any positive content can rebuild it. Inconsistent moderation signals an unserious team.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Community Growth Stops After Launch</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Projects pour energy into pre-launch community building and go quiet after TGE. The result is a community that decays exactly when it should be converting. Growth needs a long-term operating rhythm, not a sprint.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">No Ambassador Program, No Organic Reach</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Without an ambassador layer, all community reach is paid or centrally produced. An activated ambassador network multiplies organic content, regional penetration, and word-of-mouth — at a fraction of the cost of paid campaigns.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 border-l-[2px] border-l-red-500/50 md:col-span-2 reveal reveal-delay-3">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Community Exists in Silos</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] max-w-4xl">Telegram, Discord, and Twitter communities that don't connect to each other, or to product milestones, create fragmented experiences that reduce overall engagement across all channels.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — OUR APPROACH -->
+  <section class="py-20 md:py-32 relative z-10 bg-black/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">HOW WE WORK</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          How We Build Communities That Compound
+        </h2>
+      </div>
+
+      <div class="relative max-w-4xl mx-auto">
+        <div class="absolute left-[24px] md:left-[50px] top-0 bottom-0 w-px bg-white/10 hidden md:block"></div>
+        
+        <div class="space-y-12">
+          {[
+            { step: '01', title: 'Community Audit', desc: 'If you have an existing community, we start with a health audit: DAU/MAU ratio, message sentiment analysis, engagement pattern mapping, and identification of toxic patterns. We diagnose before we prescribe.' },
+            { step: '02', title: 'Architecture Setup', desc: 'For new communities, we design the full structure: channel architecture, bot configuration, role systems, welcome sequences, rules, and FAQ automation. The foundation determines whether the community can scale.' },
+            { step: '03', title: 'Moderation Operations', desc: 'Our moderation team operates across multiple time zones to ensure continuous coverage. We use a documented response protocol for FUD, scam messages, technical questions, and community conflicts. Consistency is the product.' },
+            { step: '04', title: 'Content & Engagement Calendar', desc: 'We produce and manage a monthly engagement calendar: AMAs, polls, alpha drops, milestone announcements, community spotlights, and educational content. The calendar exists to give members a reason to stay active between major project events.' },
+            { step: '05', title: 'Ambassador Program Design & Activation', desc: 'We design structured ambassador programs: application criteria, reward mechanics, content responsibilities, and performance tracking. Ambassadors become the community\'s organic growth engine in their local markets.' }
+          ].map((s, i) => (
+            <div class="relative flex flex-col md:flex-row gap-6 md:gap-12 reveal" style={`transition-delay: ${i * 0.1}s`}>
+              <div class="flex items-center md:items-start gap-4 md:w-[120px] shrink-0 z-10">
+                <div class="w-12 h-12 rounded-full border-[1.5px] border-[var(--accent-cyan)] bg-[var(--bg-primary)] flex items-center justify-center font-mono text-[var(--accent-cyan)] font-bold shrink-0 shadow-[0_0_15px_rgba(0,200,240,0.2)]">
+                  {s.step}
+                </div>
+              </div>
+              <div class="pt-2">
+                <h3 class="font-display text-xl font-bold text-white mb-3">{s.title}</h3>
+                <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">{s.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — PLATFORMS -->
+  <section class="py-20 md:py-32 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">WHERE WE BUILD</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Platforms We Operate
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Telegram</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">The primary community hub for most crypto projects. We manage group structure, bot integrations (anti-spam, verification, welcome bots), channel content calendars, and 24/7 moderation.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Discord</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">For projects where developer community, NFT holders, or gaming audiences are central. We build role hierarchies, channel structures, bot ecosystems, and engagement programs suited to Discord's culture.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-1">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Twitter / X Community</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Community management on X — including reply engagement, Space hosting, thread amplification, and Twitter-native ambassador activation.</p>
+        </div>
+        <div class="card-default p-6 md:p-8 hover:border-[var(--accent-cyan)]/40 hover:bg-[var(--accent-cyan)]/[0.04] transition-all duration-300 reveal reveal-delay-2">
+          <h3 class="font-display text-[clamp(1.125rem,2vw,1.375rem)] font-bold text-white mb-3">Ambassador Programs</h3>
+          <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75]">Regional ambassador networks that extend your community reach into local markets. We recruit, onboard, train, and manage ambassadors who create content, moderate local groups, and drive referrals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5 — FAQ -->
+  <section class="py-20 md:py-32 relative z-10 bg-black/20 border-y border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-4 mb-16 reveal">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em]">FAQ</p>
+        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
+          Common Questions
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        {faqs.map((faq, i) => (
+          <details class="card-default p-0 border border-white/5 hover:border-[var(--accent-cyan)]/20 transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+              <span class="font-display font-semibold text-base sm:text-[18px] text-white group-hover:text-[var(--accent-cyan)] transition-colors pr-6">
+                {faq.q}
+              </span>
+              <div class="w-8 h-8 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/50 group-hover:text-[var(--accent-cyan)] group-hover:bg-[var(--accent-cyan)]/10 transition-all shrink-0">
+                <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </summary>
+            <div class="px-6 pb-6 text-[16px] text-[var(--text-secondary)] font-body leading-relaxed border-t border-white/[0.03] pt-4">
+              <p>{faq.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6 — CTA -->
+  <section id="book-call" class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[800px] h-[800px] rounded-full" style="background:var(--gradient-glow-cyan); top:50%; left:50%; transform:translate(-50%, -50%); filter:blur(100px); opacity:0.1"></div>
+    </div>
+    
+    <div class="max-w-3xl mx-auto px-4 text-center relative z-10 reveal">
+      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-bold text-white mb-4 leading-tight">
+        Your Community Is Your Moat.
+      </h2>
+      <p class="font-body text-[16px] text-[var(--text-secondary)] max-w-xl mx-auto mb-10">
+        Tell us about your project — we'll outline a community architecture and growth strategy tailored to your goals.
+      </p>
+      <ServiceInquiryForm client:load defaultService="Community Growth" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  summary::-webkit-details-marker { display: none; }
+  
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  });
+</script>
