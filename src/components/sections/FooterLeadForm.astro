@@ -25,11 +25,11 @@ const { defaultService = '' } = Astro.props;
     <div class="absolute inset-0 grid-pattern" style="opacity: 0.2;"></div>
   </div>
 
-  <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6">
 
     <!-- Floating card -->
     <div
-      class="card-featured p-6 sm:p-8 lg:p-10 text-center relative overflow-hidden"
+      class="card-featured p-6 sm:p-8 text-center relative overflow-hidden"
       style="animation: border-glow 4s ease-in-out infinite;"
       data-animate="scale-in"
     >
@@ -39,22 +39,22 @@ const { defaultService = '' } = Astro.props;
       </div>
 
       <!-- Eyebrow -->
-      <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-6" data-animate="fade-up">
+      <p class="font-mono text-[10px] text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-4" data-animate="fade-up">
         Start Scaling
       </p>
 
       <!-- H2 -->
-      <h2 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-4 max-w-2xl mx-auto leading-[1.1]" data-animate="fade-up">
+      <h2 class="font-display text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-3 max-w-xl mx-auto leading-[1.1]" data-animate="fade-up">
         Ready to Scale Your
         <span class="text-gradient"> Web3 Project?</span>
       </h2>
 
-      <p class="text-base sm:text-lg text-[var(--text-secondary)] font-body mb-10 max-w-xl mx-auto leading-relaxed" data-animate="fade-up">
+      <p class="text-sm text-[var(--text-secondary)] font-body mb-8 max-w-lg mx-auto leading-relaxed" data-animate="fade-up">
         Get in touch with our strategy team today to lock in a customized growth strategy audit and map out your execution roadmap.
       </p>
 
       <!-- The Embedded Form (Liquid Glass Style) -->
-      <div class="max-w-2xl mx-auto text-left" data-animate="fade-up">
+      <div class="max-w-xl mx-auto text-left" data-animate="fade-up">
         <ServiceInquiryForm client:load defaultService={defaultService} />
       </div>
 
