@@ -33,15 +33,15 @@ export default function NavbarReact() {
       <motion.nav 
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4 py-4 md:px-6 ${
-          isScrolled ? 'md:py-4 bg-[#080C1A]/40 backdrop-blur-md border-b border-white/5 shadow-lg' : 'md:py-6 bg-transparent'
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4 py-2 md:px-6 ${
+          isScrolled ? 'md:py-2 bg-[#080C1A]/40 backdrop-blur-md border-b border-white/5 shadow-lg' : 'md:py-4 bg-transparent'
         }`}
       >
-        <div className="liquid-glass rounded-full px-5 py-2.5 md:px-6 flex items-center justify-between max-w-5xl mx-auto border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.35)] relative">
+        <div className="liquid-glass rounded-full px-5 py-1.5 md:px-6 flex items-center justify-between max-w-5xl mx-auto border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.35)] relative">
           
           {/* Left Side: Brand Logo */}
           <a href="/" className="flex items-center gap-2" aria-label="Fintech24h Home">
-            <img src="/images/Logo-Fintech24h.png" alt="Fintech24h" className="h-10 md:h-12 object-contain" />
+            <img src="/images/Logo-Fintech24h.png" alt="Fintech24h" className="h-[56px] md:h-[72px] -my-[8px] md:-my-[12px] object-contain" />
           </a>
           
           {/* Centered Navigation Links (Desktop) */}

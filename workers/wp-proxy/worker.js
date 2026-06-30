@@ -1,5 +1,5 @@
-const ORIGIN_HOST = 'origin.fintech24h.com';
-const SITE_HOST   = 'fintech24h.com';
+const ORIGIN_HOST = 'origin.fintech24h.com'; // DNS resolve target — TCP kết nối tới 172.96.186.230
+const SITE_HOST   = 'fintech24h.com';        // Host header gửi đến LiteSpeed
 
 const CF_STRIP_HEADERS = new Set([
   'cf-connecting-ip', 'cf-ipcountry', 'cf-ray', 'cf-visitor',
@@ -47,11 +47,16 @@ export default {
     reqHeaders.set('X-Forwarded-Host', SITE_HOST);
     reqHeaders.set('X-Forwarded-Proto', 'https');
 
-    const originReq = new Request(`http://${ORIGIN_HOST}${url.pathname}${url.search}`, {
+    // resolveOverride: Workers sẽ dùng DNS của ORIGIN_HOST (→ 172.96.186.230) cho TCP
+    // nhưng URL dùng SITE_HOST nên Host header gửi đến LiteSpeed là fintech24h.com
+    // — đây là cách duy nhất tránh được cả error 1003 (IP trực tiếp) lẫn Host-override bug.
+    const originReq = new Request(`http://${SITE_HOST}${url.pathname}${url.search}`, {
       method:   request.method,
       headers:  reqHeaders,
       body:     ['GET', 'HEAD'].includes(request.method) ? undefined : request.body,
       redirect: 'manual',
+      // @ts-ignore
+      cf: { resolveOverride: ORIGIN_HOST },
     });
 
     let res;
