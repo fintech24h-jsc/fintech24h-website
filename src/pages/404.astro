@@ -4,40 +4,268 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Page Not Found (404)"
-  description="The page you are looking for does not exist. Redirect back to Fintech24h homepage or book a marketing discovery call."
+  title="404: Node Not Found | Fintech24h"
+  description="This block has been dropped from the chain. Return to the Fintech24h mainnet."
   noIndex={true}
 >
-  <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden" aria-label="Error 404">
-    <!-- Ambient background glows -->
+  <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#050914]" aria-label="Error 404">
+    
+    <!-- Deep Space / Grid Background -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="bg-orb bg-orb-cyan w-[500px] h-[500px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 animate-glow-pulse"></div>
-      <div class="grid-pattern absolute inset-0 opacity-20"></div>
+      <!-- Starry/Particle Background (using simple CSS radial gradients for stars) -->
+      <div class="absolute inset-0" style="background-image: radial-gradient(circle at center, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.5;"></div>
+      
+      <!-- Scanlines -->
+      <div class="absolute inset-0 bg-scanlines opacity-20 pointer-events-none z-0"></div>
+
+      <!-- Ambient Orbs -->
+      <div class="bg-orb bg-orb-cyan w-[600px] h-[600px] absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-20 animate-[spin_20s_linear_infinite]"></div>
+      <div class="bg-orb bg-orb-purple w-[600px] h-[600px] absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 opacity-15 animate-[spin_25s_linear_infinite_reverse]"></div>
+      
+      <!-- Floor Grid 3D -->
+      <div class="grid-pattern-3d absolute -bottom-[10%] left-[-20%] right-[-20%] h-[60%] transition-transform duration-200 ease-out" 
+           style="background-image: linear-gradient(rgba(0, 200, 240, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 200, 240, 0.3) 1px, transparent 1px); background-size: 40px 40px; background-position: center bottom; transform-origin: bottom center; transform: perspective(600px) rotateX(75deg); opacity: 0.4;">
+        <!-- Grid Fade out mask -->
+        <div class="absolute inset-0" style="background: linear-gradient(to top, transparent 0%, #050914 80%);"></div>
+      </div>
     </div>
 
-    <div class="relative z-10 max-w-xl mx-auto px-4 text-center" data-animate="fade-up">
-      <!-- Error index -->
-      <div class="text-7xl font-display font-bold gradient-text-cyan text-glow-cyan mb-6">
-        404
+    <!-- Interactive Layer -->
+    <div class="relative z-10 w-full max-w-4xl mx-auto px-4 flex flex-col items-center justify-center text-center mt-[-5vh]">
+      
+      <!-- Glitch 404 -->
+      <div class="glitch-wrapper mb-6 relative">
+        <h1 class="glitch" data-text="404">404</h1>
+        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-cyan-400 font-mono text-sm tracking-[0.5em] opacity-80 uppercase text-shadow-cyan whitespace-nowrap">
+          Anomaly Detected
+        </div>
       </div>
 
-      <h1 class="font-display text-3xl font-bold text-[#f0f4ff] mb-4">
-        Page Not Found
-      </h1>
+      <!-- Terminal window -->
+      <div class="terminal-box w-full max-w-lg mx-auto mb-10 text-left rounded-xl bg-black/60 border border-cyan-500/30 backdrop-blur-md shadow-[0_0_30px_rgba(0,200,240,0.15)] relative overflow-hidden transform hover:scale-[1.02] transition-transform duration-500">
+        <!-- Terminal Header -->
+        <div class="absolute top-0 left-0 right-0 h-8 bg-white/5 border-b border-white/10 flex items-center px-3 gap-2">
+          <div class="w-2.5 h-2.5 rounded-full bg-red-500/80 shadow-[0_0_5px_rgba(239,68,68,0.8)]"></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/80 shadow-[0_0_5px_rgba(234,179,8,0.8)]"></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-green-500/80 shadow-[0_0_5px_rgba(34,197,94,0.8)]"></div>
+          <span class="text-[9px] text-cyan-500/70 font-mono ml-2 uppercase tracking-widest">Fintech24h // Node_Diagnostics // TTY1</span>
+        </div>
+        
+        <!-- Terminal Body -->
+        <div class="mt-8 p-6 font-mono text-xs sm:text-sm text-cyan-400/90 space-y-3" id="terminal-text">
+          <p class="typing-line" style="animation-delay: 0.5s;">> Pinging requested block...</p>
+          <p class="typing-line opacity-0 text-red-400 font-bold" style="animation-delay: 1.5s;">> Error: Orphaned block detected. Node not found.</p>
+          <p class="typing-line opacity-0" style="animation-delay: 2.8s;">> Attempting to recover lost data...</p>
+          <p class="typing-line opacity-0 text-yellow-400" style="animation-delay: 4.0s;">> Status: Data irrecoverable. The marketing campaign was too explosive.</p>
+          <p class="typing-line opacity-0 text-white" style="animation-delay: 5.5s;">> Action required: Reroute to Genesis Block.</p>
+        </div>
+      </div>
       
-      <p class="text-base text-[#94a3b8] font-body leading-relaxed mb-8">
-        The link you followed may be broken or the page was renamed. Let’s get you back on track to scale your Web3 project.
-      </p>
-
-      <!-- Action buttons -->
-      <div class="flex flex-wrap justify-center gap-4">
-        <a href="/" class="btn-primary font-display font-semibold text-sm">
-          Back to Home
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 opacity-0 animate-[fade-in_1s_ease-out_6.5s_forwards]">
+        <!-- Cybernetic Button -->
+        <a href="/" class="cyber-btn group">
+          <span class="cyber-btn-bg"></span>
+          <span class="cyber-btn-text flex items-center">INITIALIZE MAINNET <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></span>
         </a>
-        <a href="/#get-proposal" class="btn-ghost font-display font-semibold text-sm">
-          Get Proposal Proposal
+        
+        <a href="/contact" class="text-sm font-mono text-purple-400 hover:text-cyan-400 transition-colors uppercase tracking-widest border-b border-purple-400/30 hover:border-cyan-400/80 pb-1">
+          Report Anomaly
         </a>
       </div>
     </div>
   </section>
+  
+  <style>
+    /* Scanlines */
+    .bg-scanlines {
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.3) 50%,
+        rgba(0,0,0,0.3)
+      );
+      background-size: 100% 4px;
+    }
+
+    /* Glitch Effect */
+    .glitch-wrapper {
+      position: relative;
+    }
+    .glitch {
+      font-size: clamp(8rem, 25vw, 15rem);
+      font-weight: 900;
+      line-height: 1;
+      font-family: var(--font-display);
+      color: #fff;
+      position: relative;
+      text-shadow: 0 0 40px rgba(0, 200, 240, 0.6);
+      z-index: 1;
+      letter-spacing: -0.05em;
+    }
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+    .glitch::before {
+      left: 6px;
+      text-shadow: -4px 0 #ff00c1, 0 0 20px #ff00c1;
+      clip: rect(44px, 900px, 56px, 0);
+      animation: glitch-anim 3s infinite linear alternate-reverse;
+      z-index: -1;
+    }
+    .glitch::after {
+      left: -6px;
+      text-shadow: -4px 0 #00fff9, 4px 4px #ff00c1, 0 0 20px #00fff9;
+      clip: rect(44px, 900px, 56px, 0);
+      animation: glitch-anim2 4s infinite linear alternate-reverse;
+      z-index: -2;
+    }
+
+    @keyframes glitch-anim {
+      0% { clip: rect(31px, 9999px, 94px, 0); transform: skew(0.85deg); }
+      5% { clip: rect(70px, 9999px, 71px, 0); transform: skew(0.85deg); }
+      10% { clip: rect(29px, 9999px, 83px, 0); transform: skew(0.12deg); }
+      15% { clip: rect(16px, 9999px, 91px, 0); transform: skew(0.13deg); }
+      20% { clip: rect(2px, 9999px, 23px, 0); transform: skew(0.53deg); }
+      25% { clip: rect(46px, 9999px, 73px, 0); transform: skew(0.14deg); }
+      30% { clip: rect(62px, 9999px, 14px, 0); transform: skew(0.01deg); }
+      35% { clip: rect(34px, 9999px, 44px, 0); transform: skew(0.86deg); }
+      40% { clip: rect(80px, 9999px, 78px, 0); transform: skew(0.19deg); }
+      45% { clip: rect(89px, 9999px, 2px, 0); transform: skew(0.66deg); }
+      50% { clip: rect(20px, 9999px, 74px, 0); transform: skew(0.97deg); }
+      55% { clip: rect(35px, 9999px, 77px, 0); transform: skew(0.51deg); }
+      60% { clip: rect(3px, 9999px, 12px, 0); transform: skew(0.33deg); }
+      65% { clip: rect(61px, 9999px, 32px, 0); transform: skew(0.72deg); }
+      70% { clip: rect(56px, 9999px, 5px, 0); transform: skew(0.64deg); }
+      75% { clip: rect(89px, 9999px, 30px, 0); transform: skew(0.85deg); }
+      80% { clip: rect(31px, 9999px, 94px, 0); transform: skew(0.24deg); }
+      85% { clip: rect(4px, 9999px, 90px, 0); transform: skew(0.96deg); }
+      90% { clip: rect(93px, 9999px, 3px, 0); transform: skew(0.48deg); }
+      95% { clip: rect(10px, 9999px, 96px, 0); transform: skew(0.6deg); }
+      100% { clip: rect(53px, 9999px, 34px, 0); transform: skew(0.92deg); }
+    }
+    @keyframes glitch-anim2 {
+      0% { clip: rect(65px, 9999px, 100px, 0); transform: skew(0.85deg); }
+      5% { clip: rect(52px, 9999px, 74px, 0); transform: skew(0.85deg); }
+      10% { clip: rect(79px, 9999px, 85px, 0); transform: skew(0.12deg); }
+      15% { clip: rect(75px, 9999px, 5px, 0); transform: skew(0.13deg); }
+      20% { clip: rect(34px, 9999px, 14px, 0); transform: skew(0.53deg); }
+      25% { clip: rect(55px, 9999px, 46px, 0); transform: skew(0.14deg); }
+      30% { clip: rect(90px, 9999px, 16px, 0); transform: skew(0.01deg); }
+      35% { clip: rect(8px, 9999px, 19px, 0); transform: skew(0.86deg); }
+      40% { clip: rect(48px, 9999px, 76px, 0); transform: skew(0.19deg); }
+      45% { clip: rect(3px, 9999px, 49px, 0); transform: skew(0.66deg); }
+      50% { clip: rect(99px, 9999px, 31px, 0); transform: skew(0.97deg); }
+      55% { clip: rect(51px, 9999px, 60px, 0); transform: skew(0.51deg); }
+      60% { clip: rect(97px, 9999px, 100px, 0); transform: skew(0.33deg); }
+      65% { clip: rect(21px, 9999px, 4px, 0); transform: skew(0.72deg); }
+      70% { clip: rect(23px, 9999px, 38px, 0); transform: skew(0.64deg); }
+      75% { clip: rect(64px, 9999px, 92px, 0); transform: skew(0.85deg); }
+      80% { clip: rect(46px, 9999px, 20px, 0); transform: skew(0.24deg); }
+      85% { clip: rect(31px, 9999px, 70px, 0); transform: skew(0.96deg); }
+      90% { clip: rect(77px, 9999px, 36px, 0); transform: skew(0.48deg); }
+      95% { clip: rect(38px, 9999px, 13px, 0); transform: skew(0.6deg); }
+      100% { clip: rect(57px, 9999px, 41px, 0); transform: skew(0.92deg); }
+    }
+
+    .text-shadow-cyan {
+      text-shadow: 0 0 10px rgba(0,200,240,0.5);
+    }
+
+    /* Terminal typing */
+    .typing-line {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid transparent;
+      width: 0;
+      animation: typing 1s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+    }
+    /* Subsequent lines clear their border and maintain width after animation */
+    .typing-line:nth-child(2) { animation: type-line2 1.2s steps(40, end) 1.5s forwards; border-right: none; }
+    .typing-line:nth-child(3) { animation: type-line3 1s steps(40, end) 2.8s forwards; border-right: none; }
+    .typing-line:nth-child(4) { animation: type-line4 1.5s steps(40, end) 4.0s forwards; border-right: none; }
+    /* The final line keeps the blinking cursor */
+    .typing-line:nth-child(5) { animation: type-line5 1s steps(40, end) 5.5s forwards, blink-caret 0.75s step-end infinite 5.5s; border-right: 2px solid var(--accent-cyan); }
+
+    @keyframes typing { from { width: 0; opacity: 1; } to { width: 100%; opacity: 1; border-color: transparent; } }
+    @keyframes type-line2 { from { width: 0; opacity: 1; border-right: 2px solid var(--accent-cyan); } to { width: 100%; opacity: 1; border-right: 2px solid transparent; } }
+    @keyframes type-line3 { from { width: 0; opacity: 1; border-right: 2px solid var(--accent-cyan); } to { width: 100%; opacity: 1; border-right: 2px solid transparent; } }
+    @keyframes type-line4 { from { width: 0; opacity: 1; border-right: 2px solid var(--accent-cyan); } to { width: 100%; opacity: 1; border-right: 2px solid transparent; } }
+    @keyframes type-line5 { from { width: 0; opacity: 1; } to { width: 100%; opacity: 1; } }
+    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-cyan) } }
+
+    /* Cyber Button */
+    .cyber-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 32px;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #00fff9;
+      text-transform: uppercase;
+      background: rgba(0, 255, 249, 0.05);
+      border: 1px solid #00fff9;
+      outline: none;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(0,255,249,0.2), inset 0 0 10px rgba(0,255,249,0.1);
+      backdrop-filter: blur(4px);
+    }
+    
+    .cyber-btn-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #00fff9;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+      z-index: -1;
+    }
+    .cyber-btn:hover .cyber-btn-bg {
+      transform: scaleX(1);
+    }
+    .cyber-btn:hover {
+      color: #050914;
+      box-shadow: 0 0 25px rgba(0,255,249,0.6), inset 0 0 20px rgba(0,255,249,0.4);
+    }
+    .cyber-btn-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+  </style>
+  
+  <script>
+    // Mouse movement interaction for the 3D grid
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.querySelector('.grid-pattern-3d') as HTMLElement;
+      if (grid && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.addEventListener('mousemove', (e) => {
+          // Calculate mouse position relative to center of screen (-1 to 1)
+          const x = (e.clientX / window.innerWidth - 0.5) * 2;
+          const y = (e.clientY / window.innerHeight - 0.5) * 2;
+          
+          // Apply subtle rotation based on mouse position
+          // Base rotation is 75deg on X axis
+          grid.style.transform = `perspective(600px) rotateX(${75 - y * 5}deg) rotateY(${x * 10}deg)`;
+        });
+      }
+    });
+  </script>
 </BaseLayout>
