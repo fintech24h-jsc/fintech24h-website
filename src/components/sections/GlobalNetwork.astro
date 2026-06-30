@@ -200,9 +200,9 @@
 
   /* Floating Animation */
   @keyframes floating-pill {
-    0% { transform: translate(-50%, 0px); }
-    50% { transform: translate(-50%, -8px); }
-    100% { transform: translate(-50%, 0px); }
+    0% { transform: translate(-50%, -50%); }
+    50% { transform: translate(-50%, calc(-50% - 8px)); }
+    100% { transform: translate(-50%, -50%); }
   }
 
   @keyframes eq {
