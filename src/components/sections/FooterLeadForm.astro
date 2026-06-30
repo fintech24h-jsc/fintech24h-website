@@ -1,12 +1,16 @@
 ---
 // src/components/sections/FooterLeadForm.astro
 // Final CTA Section redesigned as a centered, high-end Liquid Glass conversion card.
-// - Removed email input field
-// - Styled primary CTA as a premium Liquid Glass button with continuous sheen shine sweep animation
 import ServiceInquiryForm from '../ui/ServiceInquiryForm.tsx';
+
+interface Props {
+  defaultService?: string;
+}
+
+const { defaultService = '' } = Astro.props;
 ---
 
-<section class="py-24 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Final Conversion CTA">
+<section class="py-12 sm:py-16 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Final Conversion CTA">
   <!-- Background: mesh gradient -->
   <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(124,92,252,0.12) 0%, transparent 65%);" aria-hidden="true"></div>
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -25,7 +29,7 @@ import ServiceInquiryForm from '../ui/ServiceInquiryForm.tsx';
 
     <!-- Floating card -->
     <div
-      class="card-featured p-8 sm:p-12 lg:p-16 text-center relative overflow-hidden"
+      class="card-featured p-6 sm:p-8 lg:p-10 text-center relative overflow-hidden"
       style="animation: border-glow 4s ease-in-out infinite;"
       data-animate="scale-in"
     >
@@ -51,7 +55,7 @@ import ServiceInquiryForm from '../ui/ServiceInquiryForm.tsx';
 
       <!-- The Embedded Form (Liquid Glass Style) -->
       <div class="max-w-2xl mx-auto text-left" data-animate="fade-up">
-        <ServiceInquiryForm client:load defaultService="" />
+        <ServiceInquiryForm client:load defaultService={defaultService} />
       </div>
 
       <!-- Social proof -->

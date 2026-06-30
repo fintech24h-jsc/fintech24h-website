@@ -2,7 +2,7 @@
 // src/pages/services/event-marketing.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
-import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
+import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -156,15 +156,8 @@ const faqs = [
     </div>
   </section>
 
-  <!-- CTA SECTION (Spotlight Button) -->
-  <section id="book-call" class="py-32 relative bg-[#050505] overflow-hidden text-center flex flex-col items-center border-t border-white/5">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.1),transparent_70%)] pointer-events-none"></div>
-    <div class="max-w-2xl mx-auto px-6 relative z-10 reveal">
-      <h2 class="font-display text-[clamp(2.5rem,4vw,4rem)] text-white uppercase tracking-tight mb-6 font-bold drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">Own The Room.</h2>
-      <p class="font-body text-white/50 mb-12 text-lg font-light">Whether it's a 50-person VIP dinner or a 500-person afterparty, we ensure your brand leaves a lasting mark.</p>
-      <ServiceInquiryForm client:load defaultService="Event Marketing" />
-    </div>
-  </section>
+  <!-- CTA SECTION (Unified FooterLeadForm) -->
+  <FooterLeadForm defaultService="Event Marketing" />
 
 </BaseLayout>
 

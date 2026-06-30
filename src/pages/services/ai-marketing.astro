@@ -2,7 +2,7 @@
 // src/pages/services/ai-marketing.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
-import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
+import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -200,23 +200,8 @@ const faqs = [
     </div>
   </section>
 
-  <!-- CTA SECTION (HUD Initialize) -->
-  <section id="book-call" class="py-32 bg-[#0A0F15] border-t border-[var(--accent-cyan)]/20 relative overflow-hidden">
-    <!-- Grid -->
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f01a_1px,transparent_1px),linear-gradient(to_bottom,#00c8f01a_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-20"></div>
-    
-    <div class="max-w-2xl mx-auto px-6 text-center relative z-10 reveal">
-      <div class="w-16 h-16 border-2 border-[var(--accent-cyan)] rounded-full mx-auto mb-8 flex items-center justify-center animate-[spin_10s_linear_infinite]">
-        <div class="w-8 h-8 border border-white/50 rounded-full animate-[spin_5s_linear_infinite_reverse]"></div>
-      </div>
-      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] text-white font-bold mb-6">Initialize Deployment.</h2>
-      <p class="font-mono text-[var(--text-secondary)] mb-12">Upgrade your marketing stack with enterprise-grade AI automation.</p>
-      
-      <div class="bg-[#05080C] border border-[var(--accent-cyan)]/30 p-6 text-left shadow-[0_0_30px_rgba(0,200,240,0.1)]">
-        <ServiceInquiryForm client:load defaultService="AI Marketing" />
-      </div>
-    </div>
-  </section>
+  <!-- CTA SECTION (Unified FooterLeadForm) -->
+  <FooterLeadForm defaultService="AI Marketing" />
 
 </BaseLayout>
 

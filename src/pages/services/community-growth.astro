@@ -2,7 +2,7 @@
 // src/pages/services/community-growth.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
-import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
+import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -165,17 +165,8 @@ const faqs = [
     </div>
   </section>
 
-  <!-- CTA SECTION -->
-  <section id="book-call" class="py-32 bg-[#1E1F29] text-center px-4 relative">
-    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-    <div class="max-w-3xl mx-auto relative z-10 reveal">
-      <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-black text-white mb-4">Level Up Your Community.</h2>
-      <p class="text-white/60 mb-10 text-lg">Stop paying for bots. Start building a movement.</p>
-      <div class="bg-[#2B2D31] p-8 rounded-[16px] border border-white/10 shadow-2xl text-left">
-        <ServiceInquiryForm client:load defaultService="Community Growth" />
-      </div>
-    </div>
-  </section>
+  <!-- CTA SECTION (Unified FooterLeadForm) -->
+  <FooterLeadForm defaultService="Community Growth" />
 
 </BaseLayout>
 

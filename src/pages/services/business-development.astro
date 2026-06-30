@@ -2,7 +2,7 @@
 // src/pages/services/business-development.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
-import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
+import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -188,20 +188,8 @@ const faqs = [
     </div>
   </section>
 
-  <!-- CTA SECTION -->
-  <section id="book-call" class="py-32 bg-[#121216] relative">
-    <div class="max-w-[1400px] mx-auto px-4 md:px-8 reveal">
-      <div class="bg-[#0a0a0c] border border-white/10 rounded-3xl p-8 md:p-16 flex flex-col lg:flex-row gap-12 items-center justify-between">
-        <div class="lg:w-1/2 text-center lg:text-left">
-          <h2 class="font-display text-[clamp(2.5rem,4vw,4rem)] text-white font-light leading-[1.1] mb-6">Scale Through <br/><span class="font-bold">Partnerships.</span></h2>
-          <p class="text-white/50 text-lg font-light max-w-md mx-auto lg:mx-0">Tell us what you're building and who you need to reach. We'll outline a roadmap to get you in the room.</p>
-        </div>
-        <div class="lg:w-1/2 w-full max-w-md bg-white/[0.02] p-8 rounded-2xl border border-white/5">
-          <ServiceInquiryForm client:load defaultService="Business Development" />
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- CTA SECTION (Unified FooterLeadForm) -->
+  <FooterLeadForm defaultService="Business Development" />
 
 </BaseLayout>
 

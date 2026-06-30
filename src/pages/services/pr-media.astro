@@ -2,7 +2,7 @@
 // src/pages/services/pr-media.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
-import ServiceInquiryForm from '../../components/ui/ServiceInquiryForm.tsx';
+import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -178,14 +178,8 @@ const logos = [
     </div>
   </section>
 
-  <!-- CTA SECTION (High Contrast) -->
-  <section id="book-call" class="py-32 bg-white text-black text-center px-6">
-    <div class="max-w-2xl mx-auto reveal">
-      <h2 class="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold uppercase leading-none mb-6 tracking-tight">Control the Narrative.</h2>
-      <p class="font-body text-black/70 mb-12 text-lg">Don't leave your project's reputation to chance. Let's get you in front of the readers who matter.</p>
-      <ServiceInquiryForm client:load defaultService="PR Campaigns" />
-    </div>
-  </section>
+  <!-- CTA SECTION (Unified FooterLeadForm) -->
+  <FooterLeadForm defaultService="PR Campaigns" />
 
 </BaseLayout>
 

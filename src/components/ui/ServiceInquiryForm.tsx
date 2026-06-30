@@ -10,6 +10,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
     name: '',
     email: '',
     telegram: '',
+    linkedin: '',
     projectName: '',
     website: '',
     serviceInterest: defaultService,
@@ -62,6 +63,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
           { name: 'email', value: formData.email },
           { name: 'company', value: formData.projectName },
           { name: 'website', value: formData.website },
+          { name: 'linkedin', value: formData.linkedin },
           { name: 'telegram_handle', value: formData.telegram },
           { name: 'service_interest', value: formData.serviceInterest },
           { name: 'budget_range', value: formData.budget },
@@ -128,7 +130,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
             required
             value={formData.name}
             onChange={e => update('name', e.target.value)}
-            placeholder="Alex Nguyen"
+            placeholder="Alex Fintech24h"
             className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300 font-body placeholder:text-white/20 shadow-inner backdrop-blur-md"
           />
         </div>
@@ -140,6 +142,19 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
             value={formData.telegram}
             onChange={e => update('telegram', e.target.value)}
             placeholder="@alex_handle"
+            className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300 font-body placeholder:text-white/20 shadow-inner backdrop-blur-md"
+          />
+        </div>
+      </div>
+
+      <div className="grid sm:grid-cols-2 gap-5">
+        <div>
+          <label className="block text-xs font-semibold text-white/50 mb-2 font-body uppercase tracking-wider">LinkedIn Profile</label>
+          <input
+            type="url"
+            value={formData.linkedin}
+            onChange={e => update('linkedin', e.target.value)}
+            placeholder="https://linkedin.com/in/alex"
             className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-all duration-300 font-body placeholder:text-white/20 shadow-inner backdrop-blur-md"
           />
         </div>
