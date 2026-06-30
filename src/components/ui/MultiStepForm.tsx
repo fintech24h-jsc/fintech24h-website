@@ -125,8 +125,8 @@ export default function MultiStepForm() {
     setError('');
 
     try {
-      const portalId = import.meta.env.PUBLIC_HUBSPOT_PORTAL_ID || '000000';
-      const formId = import.meta.env.PUBLIC_HUBSPOT_FORM_ID || 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+      const portalId = import.meta.env.PUBLIC_HUBSPOT_PORTAL_ID;
+      const formId = import.meta.env.PUBLIC_HUBSPOT_FORM_ID;
 
       const payload = {
         fields: [
@@ -147,61 +147,43 @@ export default function MultiStepForm() {
         },
       };
 
-      await submitHubSpotForm(portalId, formId, payload);
+      // Isolated HubSpot submit
+      if (portalId && formId && portalId !== '000000') {
+        try {
+          await submitHubSpotForm(portalId, formId, payload);
+        } catch (hsErr) {
+          console.error('HubSpot submission error (ignored):', hsErr);
+        }
+      }
 
       // Submit to Google Sheets & Telegram Webhook
       const sheetsWebhook = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL;
       if (sheetsWebhook) {
-        try {
-          await fetch(sheetsWebhook, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              ...formData,
-              formType: 'Multi Step Proposal'
-            }),
-          });
-        } catch (webhookErr) {
-          console.error('Google Sheets Webhook error:', webhookErr);
-        }
+        await fetch(sheetsWebhook, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...formData,
+            formType: 'Multi Step Proposal'
+          }),
+        });
       }
 
       setIsSuccess(true);
     } catch (err) {
-      console.error(err);
+      console.error('Submission error:', err);
       setError('Something went wrong. Please reach us directly at info@fintech24h.com');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (isSuccess) {
-    return (
-      <div className="text-center py-8">
-        <div className="text-5xl mb-4">🎯</div>
-        <h3 className="text-xl font-display font-semibold text-[var(--text-primary)] mb-2">
-          Proposal Request Received!
-        </h3>
-        <p className="text-[var(--text-secondary)] font-body mb-4">
-          Our team will reach out within <strong className="text-[var(--accent-cyan)]">24 hours</strong> with a custom growth strategy for your project.
-        </p>
-        <a
-          href="https://t.me/fintech24h"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-primary inline-flex items-center gap-2 text-sm"
-        >
-          Chat Now on Telegram →
-        </a>
-      </div>
-    );
-  }
-
   return (
-    <div>
+    <>
+      <div>
       {/* Progress indicator */}
       <div className="flex items-center justify-center gap-2 mb-8" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={3} aria-label={`Step ${step} of 3`}>
         {[1, 2, 3].map((s) => (
@@ -425,6 +407,67 @@ export default function MultiStepForm() {
           {error && <p className="text-red-400 text-sm text-center font-body" role="alert">{error}</p>}
         </div>
       )}
-    </div>
+      </div>
+
+      {/* Success Modal Popup in Liquid Glass Style */}
+      {isSuccess && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-[#080C1A]/80 backdrop-blur-md animate-[fadeIn_0.3s_ease-out]">
+          <div className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl border border-white/10 bg-[#0c1226]/90 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,200,240,0.15)] text-center animate-[scale-in_0.3s_ease-out] overflow-hidden">
+            {/* Spotlight glow inside */}
+            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,200,240,0.08) 0%, transparent 60%)' }} />
+            
+            {/* Success Icon */}
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#ff6b83] to-[#f0a278] flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(255,107,131,0.3)]">
+              <svg className="w-8 h-8 text-[#050810]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
+            </div>
+
+            <h3 className="text-2xl font-display font-bold text-white mb-3">
+              Gửi yêu cầu thành công!
+            </h3>
+            
+            <p className="text-sm text-white/70 font-body max-w-sm mx-auto mb-8 leading-relaxed">
+              Cảm ơn bạn. Đội ngũ chiến lược của <span className="text-[#f0a278] font-bold">Fintech24h</span> sẽ liên hệ sớm nhất với bạn để tư vấn chiến dịch.
+            </p>
+
+            <div className="flex flex-col gap-3 relative z-10">
+              <a
+                href="https://t.me/fintech24h"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 text-sm font-semibold rounded-xl bg-gradient-to-r from-[#ff6b83] to-[#f0a278] text-[#050810] shadow-[0_4px_15px_rgba(255,107,131,0.2)] hover:opacity-90 active:scale-[0.98] transition-all"
+              >
+                Kết nối nhanh qua Telegram
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+
+              <button
+                onClick={() => {
+                  setIsSuccess(false);
+                  setStep(1);
+                  setFormData({
+                    projectType: '',
+                    projectName: '',
+                    projectUrl: '',
+                    contactName: '',
+                    email: '',
+                    telegram: '',
+                    serviceInterest: '',
+                    budget: '',
+                    timeline: '',
+                  });
+                }}
+                className="w-full py-3 px-5 text-xs font-semibold text-white/50 hover:text-white rounded-xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] transition-all"
+              >
+                Đóng thông báo
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
