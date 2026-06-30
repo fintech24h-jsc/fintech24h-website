@@ -158,18 +158,22 @@ export default function MultiStepForm() {
 
       // Submit to Google Sheets & Telegram Webhook
       const sheetsWebhook = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL;
-      if (sheetsWebhook) {
-        await fetch(sheetsWebhook, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ...formData,
-            formType: 'Multi Step Proposal'
-          }),
-        });
+      if (sheetsWebhook && sheetsWebhook.trim().startsWith('http')) {
+        try {
+          await fetch(sheetsWebhook.trim(), {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              ...formData,
+              formType: 'Multi Step Proposal'
+            }),
+          });
+        } catch (webhookErr) {
+          console.error('Google Sheets Webhook submit failed (ignored):', webhookErr);
+        }
       }
 
       setIsSuccess(true);
