@@ -55,7 +55,7 @@ const { defaultService = '' } = Astro.props;
 
       <!-- The Embedded Form (Liquid Glass Style) -->
       <div class="max-w-xl mx-auto text-left" data-animate="fade-up">
-        <ServiceInquiryForm client:load defaultService={defaultService} />
+        <ServiceInquiryForm client:visible defaultService={defaultService} />
       </div>
 
       <!-- Social proof -->

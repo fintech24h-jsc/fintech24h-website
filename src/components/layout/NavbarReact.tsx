@@ -41,7 +41,7 @@ export default function NavbarReact() {
           
           {/* Left Side: Brand Logo */}
           <a href="/" className="flex items-center gap-2" aria-label="Fintech24h Home">
-            <img src="/images/Logo-Fintech24h.png" alt="Fintech24h" className="h-[48px] md:h-[64px] -my-[6px] md:-my-[10px] object-contain" />
+            <img src="/images/Logo-Fintech24h.png" alt="Fintech24h" width={300} height={210} loading="eager" fetchPriority="high" decoding="async" className="h-[48px] md:h-[64px] w-auto -my-[6px] md:-my-[10px] object-contain" />
           </a>
           
           {/* Centered Navigation Links (Desktop) */}

@@ -20,3 +20,4 @@ workers/apps-script/Code.gs
 
 # astro cache / metadata
 .astro/
+.backup-assets/

@@ -13,15 +13,11 @@ export default defineConfig({
     }),
     react(),
     sitemap({
-      customPages: [
-        'https://fintech24h.com/services/kol-influencer-marketing',
-        'https://fintech24h.com/services/pr-media',
-        'https://fintech24h.com/services/community-management',
-        'https://fintech24h.com/services/growth-airdrop',
-        'https://fintech24h.com/services/business-development',
-        'https://fintech24h.com/services/content-strategy-seo',
-      ],
-      filter: (page) => !page.includes('/wp-admin'),
+      // Các trang thật được @astrojs/sitemap tự quét từ build output. Trước đây
+      // customPages khai 4 slug service KHÔNG tồn tại (kol-influencer-marketing,
+      // community-management, growth-airdrop, content-strategy-seo) → sitemap chứa
+      // URL 404. Đã bỏ; chỉ lọc bỏ route WordPress.
+      filter: (page) => !page.includes('/wp-admin') && !page.includes('/wp-json'),
     }),
   ],
   output: 'static',
