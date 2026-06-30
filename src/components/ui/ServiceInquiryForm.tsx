@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { submitHubSpotForm } from '../../lib/hubspot';
+import { submitLead } from '../../lib/leadSubmit';
 
 interface ServiceInquiryFormProps {
   defaultService?: string;
@@ -52,64 +52,25 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
     setIsSubmitting(true);
     setError('');
 
-    try {
-      const portalId = import.meta.env.PUBLIC_HUBSPOT_PORTAL_ID;
-      const formId = import.meta.env.PUBLIC_HUBSPOT_FORM_ID;
+    const result = await submitLead(formData, 'Service Inquiry', [
+      { name: 'firstname', value: formData.name.split(' ')[0] || formData.name },
+      { name: 'lastname', value: formData.name.split(' ').slice(1).join(' ') || '' },
+      { name: 'email', value: formData.email },
+      { name: 'company', value: formData.projectName },
+      { name: 'website', value: formData.website },
+      { name: 'telegram_handle', value: formData.telegram },
+      { name: 'linkedin', value: formData.linkedin },
+      { name: 'service_interest', value: formData.serviceInterest },
+      { name: 'budget_range', value: formData.budget },
+      { name: 'message', value: formData.message },
+    ]);
 
-      const payload = {
-        fields: [
-          { name: 'firstname', value: formData.name.split(' ')[0] || formData.name },
-          { name: 'lastname', value: formData.name.split(' ').slice(1).join(' ') || '' },
-          { name: 'email', value: formData.email },
-          { name: 'company', value: formData.projectName },
-          { name: 'website', value: formData.website },
-          { name: 'telegram_handle', value: formData.telegram },
-          { name: 'linkedin', value: formData.linkedin },
-          { name: 'service_interest', value: formData.serviceInterest },
-          { name: 'budget_range', value: formData.budget },
-          { name: 'message', value: formData.message },
-        ],
-        context: {
-          pageUri: window.location.href,
-          pageName: document.title,
-        },
-      };
+    setIsSubmitting(false);
 
-      // Isolated HubSpot submit
-      if (portalId && formId && portalId !== '000000') {
-        try {
-          await submitHubSpotForm(portalId, formId, payload);
-        } catch (hsErr) {
-          console.error('HubSpot submission error (ignored):', hsErr);
-        }
-      }
-
-      // Submit to Google Sheets & Telegram Webhook
-      const sheetsWebhook = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL;
-      if (sheetsWebhook && sheetsWebhook.trim().startsWith('http')) {
-        try {
-          await fetch(sheetsWebhook.trim(), {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              ...formData,
-              formType: 'Service Inquiry'
-            }),
-          });
-        } catch (webhookErr) {
-          console.error('Google Sheets Webhook submit failed (ignored):', webhookErr);
-        }
-      }
-
+    if (result.ok) {
       setIsSuccess(true);
-    } catch (err) {
-      console.error('Submission error:', err);
-      setError('An error occurred. Please contact us directly at info@fintech24h.com');
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      setError(result.error || 'An error occurred. Please email info@fintech24h.com');
     }
   };
 
@@ -281,26 +242,36 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
             </div>
 
             <h3 className="text-2xl font-display font-bold text-white mb-3">
-              Gửi yêu cầu thành công!
+              Request Sent Successfully!
             </h3>
-            
+
             <p className="text-sm text-white/70 font-body max-w-sm mx-auto mb-8 leading-relaxed">
-              Cảm ơn bạn. Đội ngũ chiến lược của <span className="text-[#f0a278] font-bold">Fintech24h</span> sẽ liên hệ sớm nhất với bạn để tư vấn chiến dịch.
+              Thank you. The <span className="text-[#f0a278] font-bold">Fintech24h</span> strategy team will reach out to you shortly to discuss your campaign.
             </p>
 
             <div className="flex flex-col gap-3 relative z-10">
+              {/* Liquid glass primary CTA */}
               <a
                 href="https://t.me/fintech24h"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 text-sm font-semibold rounded-xl bg-gradient-to-r from-[#ff6b83] to-[#f0a278] text-[#050810] shadow-[0_4px_15px_rgba(255,107,131,0.2)] hover:opacity-90 active:scale-[0.98] transition-all"
+                className="group relative w-full inline-flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl overflow-hidden font-display text-xs font-semibold tracking-[0.15em] uppercase text-white transition-all duration-500 hover:scale-[1.01] active:scale-[0.98]"
+                style={{
+                  background: 'linear-gradient(145deg, rgba(0,200,240,0.14) 0%, rgba(124,92,252,0.12) 100%)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.25)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                }}
               >
-                Kết nối nhanh qua Telegram
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                </svg>
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:animate-[shimmer-slide_1.5s_ease-out_infinite]" />
+                <span className="relative z-10 flex items-center gap-2">
+                  Connect instantly on Telegram
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
               </a>
 
+              {/* Liquid glass secondary */}
               <button
                 onClick={() => {
                   setIsSuccess(false);
@@ -316,9 +287,15 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
                     message: '',
                   });
                 }}
-                className="w-full py-3 px-5 text-xs font-semibold text-white/50 hover:text-white rounded-xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] transition-all"
+                className="w-full py-3 px-5 text-xs font-semibold uppercase tracking-wider text-white/60 hover:text-white rounded-xl transition-all duration-300"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                }}
               >
-                Đóng thông báo
+                Close
               </button>
             </div>
           </div>
