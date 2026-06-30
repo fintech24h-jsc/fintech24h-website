@@ -40,11 +40,9 @@ export default function NavbarReact() {
         <div className="liquid-glass rounded-full px-5 py-2.5 md:px-6 flex items-center justify-between max-w-5xl mx-auto border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.35)] relative">
           
           {/* Left Side: Brand Logo */}
-          <div className="flex items-center">
-            <a href="/" className="flex items-center gap-2 group">
-              <img src="/images/Logo-Fintech24h.png" alt="Fintech24h" className="h-6 object-contain" />
-            </a>
-          </div>
+          <a href="/" className="flex items-center gap-2" aria-label="Fintech24h Home">
+            <img src="/images/Logo-Fintech24h.png" alt="Fintech24h" className="h-10 md:h-12 object-contain" />
+          </a>
           
           {/* Centered Navigation Links (Desktop) */}
           <div className="hidden md:flex items-center gap-8 text-white/80 text-sm font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
