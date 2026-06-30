@@ -28,11 +28,39 @@ const faqs = [
     a: "Our core focus is Discord (for core community and governance), Telegram (for rapid updates and local communities), and Zealy/Galxe/QuestN (for task-based growth and viral loops)."
   }
 ];
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Community Growth",
+  "provider": {
+    "@type": "Organization",
+    "name": "Fintech24h"
+  },
+  "url": "https://fintech24h.com/services/community-growth",
+  "description": "Build active, loyal communities that drive organic growth. Fintech24h manages Telegram and Discord communities."
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="Web3 Community Management & Growth | Fintech24h"
-  description="Scale your active user base with viral loops, 24/7 moderation, and structured airdrops. Fintech24h turns passive members into active advocates."
+  title="Web3 Community Growth & Management | Telegram, Discord | Fintech24h"
+  description="Build active, loyal communities that drive organic growth. Fintech24h manages Telegram and Discord communities, runs ambassador programs, and creates engagement loops that work."
+  schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
@@ -60,10 +88,10 @@ const faqs = [
 
       <h1 class="font-display font-black max-w-5xl mx-auto reveal reveal-delay-1">
         <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-white mb-2" style="text-shadow: 0 4px 20px rgba(0,0,0,0.5);">
-          Follower Count is Vanity.
+          A Community That Grows Your Project
         </span>
         <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#5865F2] to-[#EB459E]" style="filter: drop-shadow(0 0 10px rgba(88,101,242,0.4));">
-          Active Community is Currency.
+          — Not Just a Group That Gets Bigger.
         </span>
       </h1>
 

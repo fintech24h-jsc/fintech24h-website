@@ -12,11 +12,20 @@ const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Blog', item: 'https://fintech24h.com/blog' }
 ];
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Fintech24h Insights",
+  "url": "https://fintech24h.com/blog",
+  "description": "Strategy, trends, and insights on Blockchain, Fintech & AI marketing — from KOL campaigns to growth hacking. Written by the Fintech24h team."
+};
 ---
 
 <BaseLayout
-  title="Insights Blog — Web3 Marketing & AI Playbooks"
-  description="Access our latest research on crypto programmatic SEO, influencer campaigns, and community growth hacking strategies."
+  title="Insights — Blockchain & Web3 Marketing Blog | Fintech24h"
+  description="Strategy, trends, and insights on Blockchain, Fintech & AI marketing — from KOL campaigns to growth hacking. Written by the Fintech24h team."
+  schema={blogSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
@@ -37,7 +46,7 @@ const breadcrumbs = [
           <span class="text-xs font-semibold text-cyan-400 font-body uppercase tracking-wider">Research Hub</span>
         </div>
         <h1 class="font-display text-h1 font-bold text-[#f0f4ff] mb-6">
-          Web3 Marketing Playbooks
+          Insights
         </h1>
         <p class="text-lg text-[#94a3b8] font-body leading-relaxed">
           Actionable frameworks, tokenomics research, and technical search engine optimization guides for blockchain builders.

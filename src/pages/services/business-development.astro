@@ -32,11 +32,39 @@ const faqs = [
     a: "We work with projects across the lifecycle — from seed-stage startups needing initial ecosystem partnerships, to established protocols looking for Tier 1 exchange listings or regional expansion."
   }
 ];
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Business Development",
+  "provider": {
+    "@type": "Organization",
+    "name": "Fintech24h"
+  },
+  "url": "https://fintech24h.com/services/business-development",
+  "description": "Open the doors that matter for your Web3 project. Fintech24h connects blockchain projects with strategic partners, investors, exchanges, and ecosystem players."
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="Web3 Business Development & Exchange Listings | Fintech24h"
-  description="Strategic partnerships, exchange listings, and regional expansion for Web3 projects. Fintech24h opens doors to exchanges, investors, and ecosystem partners."
+  title="Web3 Business Development — Partnerships & Investor Intros | Fintech24h"
+  description="Open the doors that matter for your Web3 project. Fintech24h connects blockchain projects with strategic partners, investors, exchanges, and ecosystem players."
+  schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
@@ -56,9 +84,9 @@ const faqs = [
             Strategic Advisory & Execution
           </span>
           <h1 class="font-display font-light text-[clamp(2.5rem,4vw,4.5rem)] text-white leading-[1.1] tracking-tight mb-8">
-            The Right Partnerships <br/>
-            <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/50">Change the Trajectory of Your Project.</span>
-          </h1>
+          The Relationships That Take Years to Build <br/>
+          <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/50">— We Already Have Them.</span>
+        </h1>
           <p class="font-body text-lg text-white/50 max-w-xl leading-relaxed mb-10 font-light">
             In Web3, who you integrate with, where you're listed, and who backs you is as important as what you've built. We operate as an extension of your team to secure the partnerships that drive real adoption.
           </p>

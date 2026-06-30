@@ -53,12 +53,21 @@ const faqSchema = {
     }
   ]
 };
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Fintech24h",
+  "url": "https://fintech24h.com"
+};
+
+const combinedSchema = [faqSchema, websiteSchema];
 ---
 
 <BaseLayout
-  title="Fintech24h — Blockchain & AI Marketing Agency | Web3 Growth Experts"
-  description="Scale your blockchain, DeFi, or AI project globally. Fintech24h delivers KOL marketing, PR, community management, and growth hacking for Web3 startups in Vietnam, Singapore, UAE, and beyond."
-  schema={faqSchema}
+  title="Fintech24h — Blockchain & AI Marketing Agency | Growth Partner"
+  description="Fintech24h is the growth partner and marketing authority for Blockchain, Fintech & AI projects — KOL marketing, PR, community growth, and business development."
+  schema={combinedSchema}
 >
   <HeroSection />
 

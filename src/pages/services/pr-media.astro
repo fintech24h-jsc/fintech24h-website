@@ -32,11 +32,39 @@ const faqs = [
 const logos = [
   "CoinTelegraph", "Yahoo Finance", "Bloomberg", "Decrypt", "The Block", "CoinDesk", "TechCrunch", "Forbes"
 ];
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "PR Campaigns",
+  "provider": {
+    "@type": "Organization",
+    "name": "Fintech24h"
+  },
+  "url": "https://fintech24h.com/services/pr-media",
+  "description": "Editorial placements in top-tier crypto and fintech media. Fintech24h writes, pitches, and places press coverage for Blockchain, DeFi, and Web3 projects."
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="Web3 PR & Media Campaigns | Fintech24h"
-  description="Get featured on Tier-1 financial and crypto publications. Fintech24h crafts compelling narratives and secures premium editorial space for Web3 projects."
+  title="Blockchain & Web3 PR Campaigns — Press Coverage | Fintech24h"
+  description="Editorial placements in top-tier crypto and fintech media. Fintech24h writes, pitches, and places press coverage for Blockchain, DeFi, and Web3 projects across global media outlets."
+  schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
@@ -48,9 +76,9 @@ const logos = [
         <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-6 border-b border-white/10 pb-4">
           PR & MEDIA CAMPAIGNS // ISSUE 01
         </span>
-        <h1 class="font-display font-bold text-[clamp(3rem,8vw,6rem)] leading-[0.9] text-white tracking-[-0.04em] uppercase mb-8">
-          Don't Just Make Noise.<br/>
-          <span class="text-transparent text-stroke-white text-stroke-1 hover:text-white transition-colors duration-500">Make the News.</span>
+        <h1 class="font-display font-bold text-[clamp(2.5rem,6vw,5rem)] leading-[1.0] text-white tracking-[-0.04em] uppercase mb-8">
+          Coverage in the Publications<br/>
+          <span class="text-transparent text-stroke-white text-stroke-1 hover:text-white transition-colors duration-500">Your Investors Are Reading.</span>
         </h1>
         <p class="font-body text-lg text-white/70 max-w-md leading-relaxed mb-10 border-l-2 border-white/20 pl-6">
           A press release distributed to 200 outlets nobody reads does nothing. We place editorial coverage that builds credibility, trust, and search authority.

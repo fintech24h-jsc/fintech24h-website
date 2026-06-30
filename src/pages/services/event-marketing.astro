@@ -28,11 +28,39 @@ const faqs = [
     a: "Yes, we provide bilingual brand ambassadors, check-in staff, and technical coordinators to ensure your team can focus on networking rather than logistics."
   }
 ];
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Event Marketing",
+  "provider": {
+    "@type": "Organization",
+    "name": "Fintech24h"
+  },
+  "url": "https://fintech24h.com/services/event-marketing",
+  "description": "Maximize your presence at Web3 conferences. Fintech24h secures speaking slots, manages media partnerships, activates sponsors, and amplifies event coverage."
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="Web3 Event Marketing & Side Events | Fintech24h"
-  description="Host exclusive side-events, VC dinners, and hackathons. Fintech24h designs and manages high-impact offline experiences for Web3 projects."
+  title="Web3 & Blockchain Event Marketing — Speaker & Sponsor | Fintech24h"
+  description="Maximize your presence at Web3 conferences. Fintech24h secures speaking slots, manages media partnerships, activates sponsors, and amplifies event coverage."
+  schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
@@ -49,8 +77,8 @@ const faqs = [
       </div>
 
       <h1 class="font-display font-light max-w-5xl mx-auto reveal reveal-delay-1">
-        <span class="block text-[clamp(2.5rem,5vw,4.5rem)] tracking-widest text-white/40 uppercase mb-2">Digital Presence is Cheap.</span>
-        <span class="block text-[clamp(3rem,6vw,5.5rem)] font-bold tracking-tight text-white uppercase drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">Real-World Authority is Earned.</span>
+        <span class="block text-[clamp(2.5rem,5vw,4.5rem)] tracking-widest text-white/40 uppercase mb-2">Be the Project Everyone's Talking About</span>
+        <span class="block text-[clamp(3rem,6vw,5.5rem)] font-bold tracking-tight text-white uppercase drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">— Before, During, and After the Event.</span>
       </h1>
 
       <p class="font-body text-lg text-white/60 max-w-2xl mx-auto mt-8 mb-12 leading-[1.8] reveal reveal-delay-2 font-light">

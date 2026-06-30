@@ -28,11 +28,39 @@ const faqs = [
     a: "Yes, we require all KOLs to comply with local regulations (such as FTC guidelines in the US) regarding sponsored content disclosures, typically using #ad or #sponsored tags."
   }
 ];
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "KOL & Influencer Marketing",
+  "provider": {
+    "@type": "Organization",
+    "name": "Fintech24h"
+  },
+  "url": "https://fintech24h.com/services/kol-marketing",
+  "description": "Connect your project with vetted crypto KOLs across Twitter/X, YouTube, and Telegram. Fintech24h manages the full KOL lifecycle."
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
   title="KOL & Influencer Marketing for Blockchain & Web3 | Fintech24h"
   description="Connect your project with vetted crypto KOLs across Twitter/X, YouTube, and Telegram. Fintech24h manages the full KOL lifecycle — selection, briefing, activation, and reporting."
+  schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 

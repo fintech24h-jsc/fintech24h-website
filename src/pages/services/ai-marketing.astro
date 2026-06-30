@@ -28,11 +28,39 @@ const faqs = [
     a: "No. AI replaces the repetitive, low-value work (answering 'wen token', filtering spam, providing contract addresses). Humans are still required for complex dispute resolution and genuine community relationship building."
   }
 ];
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "AI Marketing",
+  "provider": {
+    "@type": "Organization",
+    "name": "Fintech24h"
+  },
+  "url": "https://fintech24h.com/services/ai-marketing",
+  "description": "Go-to-market strategy and marketing execution for AI products and AI startups. Fintech24h positions AI products clearly, credibly, and distinctively in a crowded market."
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="AI-Powered Marketing & Automation | Fintech24h"
-  description="Deploy custom AI solutions to supercharge your marketing operations. From sentiment analysis to automated content pipelines, we scale your signal."
+  title="AI Product Marketing & GTM Strategy for AI Startups | Fintech24h"
+  description="Go-to-market strategy and marketing execution for AI products and AI startups. Fintech24h positions AI products clearly, credibly, and distinctively in a crowded market."
+  schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
@@ -73,12 +101,12 @@ const faqs = [
 
       <h1 class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-1 relative">
         <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-white mb-2 leading-none" style="text-shadow: 0 0 20px rgba(255,255,255,0.1);">
-          Automate the Noise.
+          In a Market Full of "AI-Powered" Claims,
         </span>
         <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-[var(--accent-cyan)] relative inline-block group">
-          Scale the Signal.
+          Yours Needs to Mean Something.
           <!-- Glitch Effect Layer -->
-          <span class="absolute top-0 left-0 w-full h-full text-[var(--accent-cyan)] opacity-0 group-hover:opacity-100 animate-[glitch_0.2s_linear_infinite] pointer-events-none mix-blend-screen" style="clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); transform: translate(-2px, 2px);">Scale the Signal.</span>
+          <span class="absolute top-0 left-0 w-full h-full text-[var(--accent-cyan)] opacity-0 group-hover:opacity-100 animate-[glitch_0.2s_linear_infinite] pointer-events-none mix-blend-screen" style="clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); transform: translate(-2px, 2px);">Yours Needs to Mean Something.</span>
         </span>
       </h1>
 

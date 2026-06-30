@@ -1,0 +1,417 @@
+FINTECH24H
+Brand Identity & SEO Onpage Master Guide
+The Growth Partner & Marketing Authority in Blockchain
+Domain: fintech24h.com  ·  Prepared for website public launch
+
+
+
+1. Brand Identity Core
+Bộ nhận diện thương hiệu cốt lõi — dùng làm chuẩn tham chiếu cho mọi nội dung, thiết kế và truyền thông của Fintech24h.
+Thành phần
+Nội dung
+Tên thương hiệu
+Fintech24h
+Tên đầy đủ pháp lý / domain
+fintech24h.com
+Ngành nghề
+Blockchain, Fintech & AI Marketing Agency
+Vị thế (Positioning)
+The Growth Partner & Marketing Authority in Blockchain
+Tagline chính (Primary)
+The Growth Partner & Marketing Authority in Blockchain.
+Tagline phụ (Alternate 1)
+We Scale AI, Blockchain & Fintech Startups Globally.
+Tagline phụ (Alternate 2)
+Marketing Built for Blockchain — Not Adapted for It.
+Mission Statement
+We build the marketing engine that turns Blockchain, Fintech & Web3 projects into market leaders — through strategy, execution, and full-spectrum growth partnership.
+Vision Statement
+To be the most trusted growth partner for Blockchain, Fintech & AI projects scaling globally.
+Brand Voice
+Confident, direct, expert — never hype-driven. Speaks like a strategic partner, not a vendor.
+Brand Tone theo kênh
+Website: chuyên nghiệp, cao cấp · Social: năng động, thẳng thắn · Email/Proposal: trang trọng, rõ ràng
+Core Values
+Transparency · Execution-first · Sector expertise · Long-term partnership · No empty promises
+Đối tượng khách hàng (ICP)
+Founder/CMO của Blockchain, DeFi, L1/L2, NFT/GameFi, AI startups đang gọi vốn hoặc mở rộng thị trường
+Khu vực hoạt động
+Vietnam · Singapore · UAE · Southeast Asia · Global
+2. Visual Identity
+2.1 Bảng màu (Color Palette)
+Vai trò
+Tên màu
+Hex Code
+Background chính
+Deep Navy
+#080C1A
+Accent chính
+Cyan/Teal
+#20C4A0
+Accent phụ (hạn chế dùng)
+Coral / Soft Orange
+#E8845A
+Text chính
+White
+#FFFFFF
+Text phụ
+White 65% opacity
+rgba(255,255,255,0.65)
+Text muted / caption
+White 35% opacity
+rgba(255,255,255,0.35)
+Surface card
+White 4% opacity
+rgba(255,255,255,0.04)
+Border default
+White 8% opacity
+rgba(255,255,255,0.08)
+Footer background
+Almost Black
+#040710
+Quy tắc dùng màu: Trắng là màu chủ đạo cho tiêu đề. Cyan là accent duy nhất cho điểm nhấn (CTA, từ khóa quan trọng, icon). Cam/coral chỉ xuất hiện như màu phụ rất hạn chế — không dùng làm màu chủ đạo trong headline.
+2.2 Typography
+Vai trò
+Quy cách
+Font chữ
+Inter (Google Fonts) — weight 400/500/600/700
+H1 (Hero)
+clamp(36px, 6vw, 72–88px), weight 700, line-height 1.1
+H2 (Section)
+clamp(24px, 3.5vw, 44–48px), weight 600
+H3 (Card title)
+18–22px, weight 600
+Eyebrow / Label
+11px, weight 600, letter-spacing 0.12–0.14em, uppercase, màu cyan
+Body text
+16px, weight 400, line-height 1.7
+Caption / Small
+12–14px, màu text muted
+2.3 Logo & Icon Usage
+	•	Logo chính: wordmark "Fintech24h" — không dùng hiệu ứng 3D, không bóng đổ nặng
+	•	Logo trên nền tối: màu trắng 100%
+	•	Logo đối tác hiển thị: brightness(0) invert(1), opacity 0.45–0.5, hover lên 0.9
+	•	Icon style: outline/line-style (Tabler Icons hoặc tương đương), không dùng icon filled màu mè
+
+3. SEO Onpage — Tổng quan chiến lược
+Bảng dưới đây là chuẩn SEO Onpage áp dụng cho toàn bộ website fintech24h.com trước khi public. Áp dụng nhất quán cho mọi trang (Home, Services, Blog, Case Studies, Contact, About).
+Hạng mục
+Tiêu chuẩn áp dụng
+Primary keyword (Home)
+blockchain marketing agency
+Secondary keywords
+Web3 marketing agency, crypto KOL marketing, blockchain PR agency, fintech marketing agency, AI marketing agency
+Keyword theo khu vực
+blockchain marketing agency Vietnam, Web3 agency Singapore, crypto marketing UAE
+URL structure
+Ngắn gọn, dùng dấu gạch ngang, không dấu, không ký tự đặc biệt: /services/kol-marketing
+Title tag length
+50–60 ký tự, chứa primary keyword + brand name
+Meta description length
+150–160 ký tự, chứa CTA ngầm + keyword tự nhiên
+H1 mỗi trang
+Chỉ 1 H1 duy nhất / trang, chứa keyword chính
+Heading hierarchy
+H1 → H2 → H3 tuần tự, không nhảy cấp
+Internal linking
+Mỗi trang service link chéo đến 2–3 service liên quan + 1 case study (nếu có)
+Schema Markup
+Organization, Service, FAQPage, BreadcrumbList (chi tiết ở mục 6)
+Image alt text
+Mô tả ngữ nghĩa, chứa keyword tự nhiên, không nhồi nhét
+Mobile-first indexing
+Toàn bộ trang responsive, Core Web Vitals đạt chuẩn Good
+Canonical tag
+Bắt buộc trên mọi trang, trỏ về phiên bản chính thức https://fintech24h.com/...
+Sitemap & Robots
+sitemap.xml submit Google Search Console, robots.txt cho phép index toàn bộ trừ trang nội bộ
+4. Meta SEO chi tiết theo từng trang
+4.1 Trang chủ (Home)
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/
+Title Tag
+Fintech24h — Blockchain & AI Marketing Agency | Growth Partner
+Meta Description
+Fintech24h is the growth partner and marketing authority for Blockchain, Fintech & AI projects — KOL marketing, PR, community growth, and business development.
+H1
+The Growth Partner & Marketing Authority in Blockchain.
+OG Title
+Fintech24h — Blockchain & AI Marketing Agency | Web3 Growth Experts
+OG Description
+From brand positioning to full-scale execution — we build the marketing engine that turns Blockchain, Fintech & Web3 projects into market leaders.
+OG Type
+website
+Twitter Card
+summary_large_image
+Focus keyword
+blockchain marketing agency
+Schema
+Organization + WebSite
+4.2 Trang Services (Hub)
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/services
+Title Tag
+Our Services — Blockchain Marketing Solutions | Fintech24h
+Meta Description
+Explore Fintech24h's full-spectrum Blockchain & Web3 marketing services: KOL marketing, PR campaigns, community growth, event marketing, AI marketing, and business development.
+H1
+What We Do Best
+Focus keyword
+blockchain marketing services
+Schema
+Service (ItemList of 6 services) + BreadcrumbList
+4.3 KOL & Influencer Marketing
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/services/kol-marketing
+Title Tag
+KOL & Influencer Marketing for Blockchain & Web3 | Fintech24h
+Meta Description
+Connect your project with vetted crypto KOLs across Twitter/X, YouTube, and Telegram. Fintech24h manages the full KOL lifecycle — selection, briefing, activation, and reporting.
+H1
+The Right Voice, Reaching the Right Audience.
+Focus keyword
+crypto KOL marketing
+Secondary keywords
+Web3 influencer marketing, crypto influencer agency, KOL management blockchain
+Schema
+Service + FAQPage + BreadcrumbList
+4.4 PR Campaigns
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/services/pr-campaigns
+Title Tag
+Blockchain & Web3 PR Campaigns — Press Coverage | Fintech24h
+Meta Description
+Editorial placements in top-tier crypto and fintech media. Fintech24h writes, pitches, and places press coverage for Blockchain, DeFi, and Web3 projects across global media outlets.
+H1
+Coverage in the Publications Your Investors Are Reading.
+Focus keyword
+blockchain PR agency
+Secondary keywords
+crypto press release, Web3 media coverage, DeFi PR campaign
+Schema
+Service + FAQPage + BreadcrumbList
+4.5 Community Growth
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/services/community-growth
+Title Tag
+Web3 Community Growth & Management | Telegram, Discord | Fintech24h
+Meta Description
+Build active, loyal communities that drive organic growth. Fintech24h manages Telegram and Discord communities, runs ambassador programs, and creates engagement loops that work.
+H1
+A Community That Grows Your Project — Not Just a Group That Gets Bigger.
+Focus keyword
+Web3 community management
+Secondary keywords
+crypto Telegram management, Discord community growth, ambassador program Web3
+Schema
+Service + FAQPage + BreadcrumbList
+4.6 Event Marketing
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/services/event-marketing
+Title Tag
+Web3 & Blockchain Event Marketing — Speaker & Sponsor | Fintech24h
+Meta Description
+Maximize your presence at Web3 conferences. Fintech24h secures speaking slots, manages media partnerships, activates sponsors, and amplifies event coverage.
+H1
+Be the Project Everyone's Talking About — Before, During, and After the Event.
+Focus keyword
+Web3 event marketing
+Secondary keywords
+blockchain conference marketing, crypto event sponsorship, TOKEN2049 marketing
+Schema
+Service + FAQPage + BreadcrumbList
+4.7 AI Marketing
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/services/ai-marketing
+Title Tag
+AI Product Marketing & GTM Strategy for AI Startups | Fintech24h
+Meta Description
+Go-to-market strategy and marketing execution for AI products and AI startups. Fintech24h positions AI products clearly, credibly, and distinctively in a crowded market.
+H1
+In a Market Full of “AI-Powered” Claims, Yours Needs to Mean Something.
+Focus keyword
+AI startup marketing
+Secondary keywords
+AI product GTM strategy, AI marketing agency, AI Web3 marketing
+Schema
+Service + FAQPage + BreadcrumbList
+4.8 Business Development
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/services/business-development
+Title Tag
+Web3 Business Development — Partnerships & Investor Intros | Fintech24h
+Meta Description
+Open the doors that matter for your Web3 project. Fintech24h connects blockchain projects with strategic partners, investors, exchanges, and ecosystem players.
+H1
+The Relationships That Take Years to Build — We Already Have Them.
+Focus keyword
+Web3 business development
+Secondary keywords
+blockchain investor introductions, crypto exchange listing consultation, Web3 partnerships
+Schema
+Service + FAQPage + BreadcrumbList
+4.9 Blog (Hub)
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/blog
+Title Tag
+Insights — Blockchain & Web3 Marketing Blog | Fintech24h
+Meta Description
+Strategy, trends, and insights on Blockchain, Fintech & AI marketing — from KOL campaigns to growth hacking. Written by the Fintech24h team.
+H1
+Insights
+Focus keyword
+blockchain marketing blog
+Schema
+Blog + BreadcrumbList
+4.10 About
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/about
+Title Tag
+About Fintech24h — Blockchain & AI Marketing Agency
+Meta Description
+Fintech24h is a growth partner for Blockchain, Fintech & AI projects scaling across Vietnam, Singapore, UAE, and beyond. Learn about our team and approach.
+H1
+We Build Marketing That's Native to Blockchain — Not Adapted for It.
+Focus keyword
+Fintech24h agency
+Schema
+AboutPage + Organization
+4.11 Contact
+Thuộc tính
+Nội dung
+URL
+https://fintech24h.com/contact
+Title Tag
+Contact Fintech24h — Request a Proposal
+Meta Description
+Tell us about your Blockchain, Fintech, or AI project. Fintech24h will respond with a tailored proposal within 24 hours.
+H1
+Let's Build Your Growth Engine.
+Focus keyword
+contact blockchain marketing agency
+Schema
+ContactPage
+
+5. Bản đồ từ khóa (Keyword Map)
+Phân nhóm từ khóa theo Search Intent — dùng để định hướng content blog và tối ưu từng trang.
+Nhóm Intent
+Từ khóa mẫu
+Trang áp dụng
+Informational
+what is KOL marketing crypto, how does Web3 PR work, blockchain marketing strategy
+Blog
+Commercial
+best blockchain marketing agency, top Web3 PR agency, crypto marketing agency Vietnam
+Home, Services
+Transactional
+hire blockchain marketing agency, request KOL campaign proposal, get Web3 PR quote
+Contact, Service pages
+Navigational
+Fintech24h, Fintech24h reviews, Fintech24h services
+Home
+Long-tail
+crypto KOL marketing agency for DeFi projects, AI startup go-to-market agency Singapore
+Service pages
+6. Schema Markup (Structured Data)
+Áp dụng JSON-LD cho từng loại trang để tăng khả năng xuất hiện Rich Results trên Google.
+Loại trang
+Schema Type cần triển khai
+Toàn site (Header/Footer)
+Organization, WebSite, SiteNavigationElement
+Trang chủ
+Organization + WebSite + (tùy chọn) SearchAction
+Trang Services (hub)
+ItemList (6 services) + BreadcrumbList
+Từng Service Page
+Service + FAQPage + BreadcrumbList
+Blog (hub)
+Blog + BreadcrumbList
+Từng bài Blog
+Article (hoặc BlogPosting) + BreadcrumbList + Person (tác giả nếu có)
+Case Studies
+Article hoặc CreativeWork + BreadcrumbList
+About
+AboutPage + Organization
+Contact
+ContactPage + Organization (address, email, telegram)
+Lưu ý: Organization schema nên khai báo đầy đủ name, url, logo, sameAs (link Telegram, X/Twitter, LinkedIn), và address (1014 Đ. Phạm Văn Đồng, Hiệp Bình, Ho Chi Minh City, Vietnam).
+7. Technical SEO Checklist (Trước khi Public)
+7.1 Performance & Core Web Vitals
+	•	Largest Contentful Paint (LCP) < 2.5s trên mobile
+	•	Cumulative Layout Shift (CLS) < 0.1 — không để hero animation gây layout shift
+	•	Interaction to Next Paint (INP) < 200ms
+	•	Nén toàn bộ ảnh sang WebP/AVIF, lazy-load mọi ảnh dưới fold
+	•	Canvas animation ở Hero phải pause khi tab không active (document.hidden)
+7.2 Indexability
+	•	Tạo sitemap.xml đầy đủ, submit Google Search Console & Bing Webmaster Tools
+	•	robots.txt cho phép crawl toàn bộ trừ /admin, /api nếu có
+	•	Mỗi trang có canonical tag trỏ về URL chính thức (tránh trùng lặp pages.dev / workers.dev)
+	•	301 redirect từ phiên bản staging (pages.dev, workers.dev) sang domain chính thức fintech24h.com khi public
+	•	Kiểm tra không có noindex sót lại từ bản staging
+7.3 Mobile & Responsive
+	•	Kiểm tra hiển thị tại 375px, 768px, 1024px, 1440px
+	•	Form 3 bước và FAQ accordion hoạt động mượt trên touch device
+	•	Tốc độ tải trên 3G/4G giả lập đạt ngưỡng chấp nhận được (Lighthouse Mobile > 80)
+7.4 Onpage Content Hygiene
+	•	Không trùng lặp Title/Meta Description giữa các trang
+	•	Không có heading rỗng hoặc nhảy cấp (H1 → H3 mà thiếu H2)
+	•	Alt text mô tả đúng ngữ cảnh cho mọi logo đối tác và icon minh họa
+	•	Internal link giữa 6 service pages và từ Service → Blog liên quan
+	•	External link (nếu có) gắn rel="noopener" và mở tab mới khi trỏ ra ngoài domain
+7.5 Off-page chuẩn bị song song
+	•	Đăng ký Google Business Profile (nếu áp dụng cho văn phòng HCM)
+	•	Đồng bộ NAP (Name, Address, Phone) nhất quán trên mọi nền tảng
+	•	Xác thực domain trên Google Search Console trước ngày public chính thức
+
+8. Nguyên tắc nội dung (Content Governance)
+Quy tắc bắt buộc khi viết bất kỳ nội dung nào cho website hoặc proposal — đảm bảo tính nhất quán và tuân thủ pháp lý/đạo đức ngành marketing.
+Nguyên tắc
+Áp dụng
+Không đưa số liệu doanh thu/tiền cụ thể
+Không hiển thị $ amount, budget cụ thể của khách hàng cũ trên trang public
+Không cam kết KPI
+Không dùng các cụm như 'guaranteed ROI', '50x return guaranteed' trên nội dung public
+Không show số liệu ảo / chưa verify
+Mọi con số (200+ projects, 50x ROI...) chỉ dùng khi có thể chứng minh hoặc thay bằng ngôn ngữ định tính
+Tập trung vào Pain Point trước khi nói giải pháp
+Mỗi trang dịch vụ phải có section liệt kê vấn đề khách hàng gặp phải trước khi trình bày cách giải quyết
+Minh bạch về vai trò
+Với Business Development: nêu rõ không phải broker, không thu phí thành công trên deal
+Ngôn ngữ chủ động, cụ thể
+Tránh tính từ mơ hồ ('amazing', 'best-in-class') không có bằng chứng đi kèm
+9. Thông tin thương hiệu dùng nhất quán (NAP & Social)
+Kênh
+Thông tin chuẩn
+Website
+https://fintech24h.com
+Email
+info@fintech24h.com
+Địa chỉ
+1014 Đ. Phạm Văn Đồng, Hiệp Bình, Ho Chi Minh City, Vietnam
+Telegram
+https://t.me/fintech24h
+X (Twitter)
+https://x.com/fintech24h_com
+LinkedIn
+https://www.linkedin.com/company/fintech24h/
+Toàn bộ thông tin NAP (Name, Address, Phone/Contact) phải đồng nhất tuyệt đối giữa website, social profile, và mọi nền tảng directory (Crunchbase, LinkedIn...) để tối ưu tín hiệu SEO local & entity trust.

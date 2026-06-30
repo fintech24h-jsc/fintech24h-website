@@ -8,11 +8,20 @@ const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'About Us', item: 'https://fintech24h.com/about' }
 ];
+
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About Fintech24h",
+  "url": "https://fintech24h.com/about",
+  "description": "Fintech24h is a growth partner for Blockchain, Fintech & AI projects scaling across Vietnam, Singapore, UAE, and beyond. Learn about our team and approach."
+};
 ---
 
 <BaseLayout
-  title="About Us — Our Team & Web3 Growth Philosophy"
-  description="Learn about Fintech24h, a premier Blockchain & AI Marketing Agency. Access our team of verified Growth Hackers, KOL Managers, and strategic Web3 advisors."
+  title="About Fintech24h — Blockchain & AI Marketing Agency"
+  description="Fintech24h is a growth partner for Blockchain, Fintech & AI projects scaling across Vietnam, Singapore, UAE, and beyond. Learn about our team and approach."
+  schema={aboutSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
@@ -31,7 +40,8 @@ const breadcrumbs = [
           <span class="text-xs font-semibold text-cyan-400 font-body uppercase tracking-wider">Our Story</span>
         </div>
         <h1 class="font-display text-h1 font-bold text-[#f0f4ff] mb-6">
-          Scaling the Decentralized Web
+          We Build Marketing That's Native to Blockchain <br/>
+          <span class="text-cyan-400">— Not Adapted for It.</span>
         </h1>
         <p class="text-lg text-[#94a3b8] font-body leading-relaxed">
           Fintech24h was built to bridge the gap between complex blockchain technologies and scalable user acquisition. We replace speculative hype with quantitative, OKR-driven marketing strategies.
