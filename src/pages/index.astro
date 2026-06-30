@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroSection from '../components/sections/HeroSection.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
 import ServicesGrid from '../components/sections/ServicesGrid.astro';
+import GlobalNetwork from '../components/sections/GlobalNetwork.astro';
 import CaseStudyWidget from '../components/sections/CaseStudyWidget.astro';
 import ProcessSection from '../components/sections/ProcessSection.astro';
 import BlogHighlight from '../components/sections/BlogHighlight.astro';
@@ -65,6 +66,7 @@ const faqSchema = {
 
   <TrustBar />
   <ServicesGrid />
+  <GlobalNetwork />
   {featuredCase && <CaseStudyWidget caseStudy={featuredCase} />}
   <ProcessSection />
 
