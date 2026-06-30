@@ -28,20 +28,8 @@
     <!-- Map Container -->
     <div class="relative w-full max-w-5xl aspect-[16/10] md:aspect-[21/9] mx-auto flex items-center justify-center mt-4">
       
-      <!-- Minimalist Dotted/Vector World Map SVG (Background) -->
-      <!-- A stylized, low-opacity vector path representing continents -->
-      <svg class="absolute inset-0 w-full h-full text-white drop-shadow-md" style="opacity: 0.08;" viewBox="0 0 1000 450" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- North America -->
-        <path d="M150,120 Q120,80 180,50 Q250,30 280,70 Q300,120 220,180 Q180,200 150,120 Z"/>
-        <!-- South America -->
-        <path d="M220,200 Q280,210 300,280 Q320,380 250,420 Q200,350 220,200 Z"/>
-        <!-- Europe & Asia (Eurasia) -->
-        <path d="M450,120 Q480,50 600,40 Q750,30 850,70 Q950,150 850,220 Q700,280 600,220 Q450,200 450,120 Z"/>
-        <!-- Africa -->
-        <path d="M450,150 Q550,150 580,250 Q600,350 500,400 Q400,300 450,150 Z"/>
-        <!-- Australia -->
-        <path d="M780,300 Q850,280 880,350 Q850,420 780,380 Q750,350 780,300 Z"/>
-      </svg>
+      <!-- High-Quality Vector World Map (Background) -->
+      <img src="/images/world-map.svg" alt="" class="absolute inset-0 w-full h-full object-contain opacity-[0.15] pointer-events-none drop-shadow-lg" aria-hidden="true" style="filter: invert(1);" />
 
       <!-- Connection lines (optional styling to link hubs) -->
       <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-20" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -53,61 +41,61 @@
       
       <!-- 1. United States -->
       <div class="country-pill" style="top: 30%; left: 15%; animation-delay: 0.2s;">
-        <span class="flag">🇺🇸</span>
+        <img src="https://flagcdn.com/w40/us.png" alt="USA" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">USA</span>
       </div>
 
       <!-- 2. United Kingdom -->
       <div class="country-pill" style="top: 25%; left: 46%; animation-delay: 0.7s;">
-        <span class="flag">🇬🇧</span>
+        <img src="https://flagcdn.com/w40/gb.png" alt="UK" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">UK</span>
       </div>
 
       <!-- 3. France -->
       <div class="country-pill" style="top: 35%; left: 48%; animation-delay: 1.1s;">
-        <span class="flag">🇫🇷</span>
+        <img src="https://flagcdn.com/w40/fr.png" alt="France" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">FRANCE</span>
       </div>
 
       <!-- 4. Turkey -->
       <div class="country-pill" style="top: 38%; left: 56%; animation-delay: 0.5s;">
-        <span class="flag">🇹🇷</span>
+        <img src="https://flagcdn.com/w40/tr.png" alt="Turkey" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">TURKEY</span>
       </div>
 
       <!-- 5. UAE -->
       <div class="country-pill" style="top: 48%; left: 60%; animation-delay: 1.4s;">
-        <span class="flag">🇦🇪</span>
+        <img src="https://flagcdn.com/w40/ae.png" alt="UAE" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">UAE</span>
       </div>
 
       <!-- 6. India -->
       <div class="country-pill" style="top: 50%; left: 68%; animation-delay: 0.9s;">
-        <span class="flag">🇮🇳</span>
+        <img src="https://flagcdn.com/w40/in.png" alt="India" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">INDIA</span>
       </div>
 
       <!-- 7. Vietnam -->
       <div class="country-pill" style="top: 55%; left: 75%; animation-delay: 0.3s;">
-        <span class="flag">🇻🇳</span>
+        <img src="https://flagcdn.com/w40/vn.png" alt="Vietnam" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">VIETNAM</span>
       </div>
 
       <!-- 8. Singapore -->
       <div class="country-pill" style="top: 65%; left: 77%; animation-delay: 1.6s;">
-        <span class="flag">🇸🇬</span>
+        <img src="https://flagcdn.com/w40/sg.png" alt="Singapore" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">SINGAPORE</span>
       </div>
 
       <!-- 9. South Korea -->
       <div class="country-pill" style="top: 35%; left: 82%; animation-delay: 1.2s;">
-        <span class="flag">🇰🇷</span>
+        <img src="https://flagcdn.com/w40/kr.png" alt="South Korea" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">KOREA</span>
       </div>
 
       <!-- 10. Japan -->
       <div class="country-pill" style="top: 38%; left: 88%; animation-delay: 0.6s;">
-        <span class="flag">🇯🇵</span>
+        <img src="https://flagcdn.com/w40/jp.png" alt="Japan" class="w-5 h-5 rounded-full object-cover shadow-sm" />
         <span class="name">JAPAN</span>
       </div>
 
@@ -164,9 +152,8 @@
     z-index: 30;
   }
 
-  .country-pill .flag {
-    font-size: 1.25rem;
-    line-height: 1;
+  .country-pill img {
+    /* Subtle shadow for the flag */
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
   }
 
