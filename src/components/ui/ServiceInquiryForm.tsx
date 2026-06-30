@@ -76,6 +76,27 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
       };
 
       await submitHubSpotForm(portalId, formId, payload);
+
+      // Submit to Google Sheets & Telegram Webhook
+      const sheetsWebhook = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL;
+      if (sheetsWebhook) {
+        try {
+          await fetch(sheetsWebhook, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              ...formData,
+              formType: 'Service Inquiry'
+            }),
+          });
+        } catch (webhookErr) {
+          console.error('Google Sheets Webhook error:', webhookErr);
+        }
+      }
+
       setIsSuccess(true);
     } catch (err) {
       console.error(err);
