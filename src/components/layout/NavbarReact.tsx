@@ -42,8 +42,7 @@ export default function NavbarReact() {
           {/* Left Side: Brand Logo */}
           <div className="flex items-center">
             <a href="/" className="flex items-center gap-2 group">
-              <Globe className="w-5 h-5 text-[var(--accent-cyan)] group-hover:rotate-12 transition-transform duration-300" />
-              <span className="text-white font-bold text-base font-display tracking-wider">Fintech24h</span>
+              <img src="/images/Logo-Fintech24h.png" alt="Fintech24h" className="h-6 object-contain" />
             </a>
           </div>
           
