@@ -2,7 +2,7 @@
 // src/layouts/BaseLayout.astro
 import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
-import Navbar from '../components/layout/Navbar.astro';
+import NavbarReact from '../components/layout/NavbarReact.tsx';
 import Footer from '../components/layout/Footer.astro';
 import '../styles/global.css';
 import '../styles/animations.css';
@@ -118,7 +118,7 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
     Skip to main content
   </a>
 
-  <Navbar />
+  <NavbarReact client:load />
 
   <main id="main-content" class="relative w-full flex flex-col overflow-hidden shrink-0">
     <slot />
