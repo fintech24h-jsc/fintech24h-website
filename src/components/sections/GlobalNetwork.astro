@@ -2,7 +2,7 @@
 // src/components/sections/GlobalNetwork.astro
 ---
 
-<section class="py-24 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Global Network">
+<section id="global-network-section" class="py-24 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Global Network">
   
   <!-- Ambient background glow -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -188,44 +188,47 @@
 </style>
 
 <script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  gsap.registerPlugin(ScrollTrigger);
-
+  // GSAP loaded only when this section enters viewport — not on initial page load
+  // back.out(1.5) overshoot spring cannot be replicated in CSS, so we keep GSAP here
   document.addEventListener('DOMContentLoaded', () => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const pills = document.querySelectorAll('.country-pill');
 
     if (prefersReduced) {
-      gsap.set(pills, { opacity: 1, scale: 1, xPercent: -50, yPercent: -50 });
-      pills.forEach(p => { (p as HTMLElement).style.animationPlayState = 'running'; });
+      pills.forEach(p => {
+        const el = p as HTMLElement;
+        el.style.opacity = '1';
+        el.style.transform = 'translate(-50%, -50%)';
+        el.style.animationPlayState = 'running';
+      });
       return;
     }
 
-    // Set initial state for entrance animation
-    // We use xPercent/yPercent -50 to keep them centered on their left/top coordinates
-    gsap.set(pills, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
+    const section = document.getElementById('global-network-section');
+    if (!section) return;
 
-    ScrollTrigger.create({
-      trigger: '.country-pill',
-      start: 'top 85%',
-      once: true,
-      onEnter: () => {
-        gsap.to(pills, {
-          opacity: 1,
-          scale: 1,
-          duration: 0.8,
-          ease: "back.out(1.5)",
-          stagger: 0.1,
-          onComplete: () => {
-            // Unpause the CSS floating animation after GSAP finishes
-            pills.forEach(p => {
-              (p as HTMLElement).style.animationPlayState = 'running';
-            });
-          }
-        });
-      }
-    });
+    const observer = new IntersectionObserver(async (entries) => {
+      if (!entries.some(e => e.isIntersecting)) return;
+      observer.disconnect();
+
+      // Load GSAP only now — user has scrolled here, plenty of time to fetch
+      const { gsap } = await import('gsap');
+
+      gsap.set(pills, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
+      gsap.to(pills, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        ease: 'back.out(1.5)',
+        stagger: 0.1,
+        onComplete: () => {
+          pills.forEach(p => {
+            (p as HTMLElement).style.animationPlayState = 'running';
+          });
+        },
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(section);
   });
 </script>

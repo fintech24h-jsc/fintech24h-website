@@ -71,13 +71,13 @@ const starsLarge = generateStars(30);
 
       <!-- H1: Larger, beautifully styled rhythm with metallic sweep -->
       <h1 class="font-display font-bold leading-[1.08] text-center max-w-4xl mx-auto">
-        <span class="block text-[clamp(1.3rem,3.2vh,2.5rem)] tracking-[-0.02em] text-[var(--text-secondary)] mb-1" data-hero-line>
+        <span class="block text-[clamp(1.3rem,3.2vh,2.5rem)] tracking-[-0.02em] text-[var(--text-secondary)] mb-1" data-hero-line style="--li:0">
           The Growth Partner
         </span>
-        <span class="block text-[clamp(2.8rem,8.2vh,5.8rem)] tracking-[-0.03em] bg-clip-text text-transparent sheen-text mb-1" data-hero-line>
+        <span class="block text-[clamp(2.8rem,8.2vh,5.8rem)] tracking-[-0.03em] bg-clip-text text-transparent sheen-text mb-1" data-hero-line style="--li:1">
           Marketing Authority
         </span>
-        <span class="block text-[clamp(2.4rem,6.8vh,5rem)] tracking-[-0.03em] text-[var(--text-primary)]" data-hero-line>
+        <span class="block text-[clamp(2.4rem,6.8vh,5rem)] tracking-[-0.03em] text-[var(--text-primary)]" data-hero-line style="--li:2">
           in Blockchain
         </span>
       </h1>
@@ -291,57 +291,32 @@ const starsLarge = generateStars(30);
 </style>
 
 <script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  gsap.registerPlugin(ScrollTrigger);
-
+  // Hero text: pure CSS animation (data-hero-eyebrow + data-hero-line with --li var)
+  // Counter: vanilla rAF — same power3.out easing, no GSAP dependency
   document.addEventListener('DOMContentLoaded', () => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const heroLines = document.querySelectorAll('[data-hero-line]');
-    const heroEyebrow = document.querySelector('[data-hero-eyebrow]');
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-    if (heroEyebrow) {
-      gsap.fromTo(heroEyebrow,
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
-      );
-    }
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.count || '0');
+        const suffix = el.dataset.suffix || '';
+        const duration = 2200;
+        const start = performance.now();
 
-    gsap.fromTo(
-      heroLines,
-      { opacity: 0, y: 32, filter: 'blur(6px)' },
-      {
-        opacity: 1, y: 0, filter: 'blur(0px)',
-        duration: 1.0,
-        stagger: 0.12,
-        ease: 'power4.out',
-        delay: 0.1,
-      }
-    );
-
-    // Dynamic Odometer counter simulation
-    document.querySelectorAll('[data-count]').forEach((el) => {
-      const target = parseInt(el.getAttribute('data-count') || '0');
-      const suffix = el.getAttribute('data-suffix') || '';
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 95%',
-        once: true,
-        onEnter: () => {
-          const obj = { val: 0 };
-          gsap.to(obj, {
-            val: target,
-            duration: 2.2,
-            ease: 'power3.out',
-            onUpdate() {
-              el.textContent = Math.round(obj.val) + suffix;
-            },
-          });
-        },
+        const tick = (now: number) => {
+          const t = Math.min((now - start) / duration, 1);
+          el.textContent = Math.round(easeOutCubic(t) * target) + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        counterObs.unobserve(el);
       });
-    });
+    }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+
+    document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
   });
 </script>

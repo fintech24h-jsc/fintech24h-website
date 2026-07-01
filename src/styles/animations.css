@@ -158,11 +158,62 @@
   100% { transform: scale(2.5); opacity: 0; }
 }
 
+/* ─── SCROLL REVEAL STATES (IntersectionObserver — replaces GSAP ScrollTrigger) ─── */
+/* power3.out ≈ cubic-bezier(0.165, 0.84, 0.44, 1) */
+/* power2.out ≈ cubic-bezier(0.215, 0.61, 0.355, 1) */
+[data-animate="fade-up"] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.165, 0.84, 0.44, 1),
+              transform 0.75s cubic-bezier(0.165, 0.84, 0.44, 1);
+  will-change: opacity, transform;
+}
+[data-animate="scale-in"] {
+  opacity: 0;
+  transform: translateY(16px) scale(0.94);
+  transition: opacity 0.65s cubic-bezier(0.215, 0.61, 0.355, 1),
+              transform 0.65s cubic-bezier(0.215, 0.61, 0.355, 1);
+  will-change: opacity, transform;
+}
+[data-animate="fade-up"].is-visible,
+[data-animate="scale-in"].is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  will-change: auto;
+}
+
+/* ─── HERO ENTRANCE (above-fold, pure CSS — zero JS needed) ─── */
+/* power4.out ≈ cubic-bezier(0.23, 1, 0.32, 1) */
+[data-hero-eyebrow] {
+  opacity: 0;
+  animation: hero-eyebrow-in 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) 0.05s both;
+}
+[data-hero-line] {
+  opacity: 0;
+  animation: hero-line-reveal 1.0s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation-delay: calc(0.1s + var(--li, 0) * 0.12s);
+}
+@keyframes hero-eyebrow-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ─── REDUCED MOTION OVERRIDE (TUYỆT ĐỐI PHẢI CÓ) ─── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  /* Explicitly show initially-hidden elements — don't rely on near-zero animation */
+  [data-animate="fade-up"],
+  [data-animate="scale-in"],
+  [data-hero-eyebrow],
+  [data-hero-line] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
   }
 }
