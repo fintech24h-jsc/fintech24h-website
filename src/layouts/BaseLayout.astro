@@ -47,6 +47,13 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <!-- Open Graph -->
   <OpenGraph title={siteTitle} description={description} url={canonical} image={ogImage} type={ogType} />
 
+  <!-- Theme color for mobile browsers -->
+  <meta name="theme-color" content="#050810" />
+
+  <!-- Geo tags for local SEO -->
+  <meta name="geo.region" content="VN-SG" />
+  <meta name="geo.placename" content="Ho Chi Minh City, Vietnam" />
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
@@ -69,7 +76,7 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
     "name": "Fintech24h",
     "url": "https://fintech24h.com",
     "logo": "https://fintech24h.com/images/Logo-Fintech24h.png",
-    "description": "Blockchain & AI Marketing Agency — KOL Marketing, PR, Community Building, Growth Hacking for Web3 Projects",
+    "description": "The Growth Partner Marketing Authority in Blockchain — KOL Marketing, PR, Community Building, Growth Hacking for Web3 Projects",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "1014 Pham Van Dong Street, Hiep Binh",
@@ -95,6 +102,8 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <!-- Performance hints -->
   <link rel="dns-prefetch" href="https://js.hsforms.net" />
   <link rel="dns-prefetch" href="https://assets.calendly.com" />
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
+  <link rel="dns-prefetch" href="https://i.pravatar.cc" />
 </head>
 
 <body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased selection:bg-white selection:text-black">

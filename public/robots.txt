@@ -2,5 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /wp-admin/
 Disallow: /wp-content/
+Disallow: /wp-json/
+Disallow: /wp-login.php
+Disallow: /wp-includes/
 
 Sitemap: https://fintech24h.com/sitemap-index.xml
