@@ -57,8 +57,11 @@ const posts = allPosts.slice(0, 6);
                   <img
                     src={featuredImage.url}
                     alt={featuredImage.alt}
+                    width="800"
+                    height="500"
                     class="w-full h-full object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
+                    decoding="async"
                   />
                   {/* Slate Gray Filter Overlay (No Blur) */}
                   <div class="absolute inset-0 bg-slate-900/60 pointer-events-none transition-all duration-500 group-hover:bg-slate-900/20" aria-hidden="true"></div>
