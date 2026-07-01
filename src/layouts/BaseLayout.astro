@@ -126,20 +126,21 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
 
   <Footer />
 
-  <!-- GSAP Init (global animations) -->
+  <!-- GSAP Init — dynamic import keeps GSAP off the critical rendering path -->
   <script>
-    import { gsap } from 'gsap';
-    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check reduced motion BEFORE loading GSAP — saves bandwidth for those users
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    gsap.registerPlugin(ScrollTrigger);
+      // Dynamic import: Vite splits GSAP into a separate async chunk.
+      // Browser fetches it in parallel with page render, not blocking LCP.
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+      ]);
 
-    // Global scroll setup — chỉ chạy 1 lần
-    document.addEventListener('DOMContentLoaded', () => {
-      // Kiểm tra reduced motion
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) return; // Dừng tất cả GSAP animation
+      gsap.registerPlugin(ScrollTrigger);
 
-      // Batch animate tất cả [data-animate="fade-up"] elements
       ScrollTrigger.batch('[data-animate="fade-up"]', {
         onEnter: (elements) => {
           gsap.fromTo(elements,

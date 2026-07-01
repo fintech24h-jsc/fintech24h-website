@@ -239,8 +239,13 @@
   const mobDraw = document.getElementById('mob-drawer')!;
 
   /* ── Scroll → scrolled class (triggers bg + padding change) ── */
+  let rafId = 0;
   window.addEventListener('scroll', () => {
-    nb.classList.toggle('scrolled', window.scrollY > 20);
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+      nb.classList.toggle('scrolled', window.scrollY > 20);
+      rafId = 0;
+    });
   }, { passive: true });
 
   /* ── Services dropdown on hover ── */
