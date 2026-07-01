@@ -9,6 +9,15 @@
 
 import { submitHubSpotForm, type HubSpotField } from './hubspot';
 
+// Public Google Apps Script endpoint (Sheet + Telegram + Email).
+// Committed on purpose: PUBLIC_ env vars are inlined into the client bundle and
+// visible in the browser anyway, and this endpoint is designed to be POSTed to
+// from the browser. Hardcoding it as a fallback guarantees the Cloudflare Workers
+// Builds CI (which has no local .env) always has a working endpoint. An env var,
+// when present, still overrides it.
+const DEFAULT_LEAD_WEBHOOK =
+  'https://script.google.com/macros/s/AKfycbxXYuqt7OoRcETFg3UCWz344ha4PrYCYXuQmSJMTj7kM3OOsVoWQd8XDzXUYWJGkknWfw/exec';
+
 export interface SubmitResult {
   ok: boolean;
   error?: string;
@@ -30,8 +39,10 @@ export async function submitLead(
   }
 
   // 2. Primary path — Google Apps Script → Google Sheet + Telegram + Email.
-  const webhook = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL;
-  if (!webhook || !webhook.trim().startsWith('http')) {
+  // Env var overrides the committed default; the default guarantees the CI build
+  // (no .env) still ships a working endpoint.
+  const webhook = (import.meta.env.PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL || DEFAULT_LEAD_WEBHOOK).trim();
+  if (!webhook.startsWith('http')) {
     return { ok: false, error: 'Submission endpoint is not configured.' };
   }
 
@@ -43,7 +54,7 @@ export async function submitLead(
   // A resolved fetch means the browser handed the request off successfully; only a
   // genuine network failure (offline) rejects, which we surface as an error.
   try {
-    await fetch(webhook.trim(), {
+    await fetch(webhook, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
