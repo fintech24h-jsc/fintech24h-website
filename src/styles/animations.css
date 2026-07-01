@@ -182,17 +182,7 @@
   will-change: auto;
 }
 
-/* ─── HERO ENTRANCE (above-fold, pure CSS — zero JS needed) ─── */
-/* power4.out ≈ cubic-bezier(0.23, 1, 0.32, 1) */
-[data-hero-eyebrow] {
-  opacity: 0;
-  animation: hero-eyebrow-in 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) 0.05s both;
-}
-[data-hero-line] {
-  opacity: 0;
-  animation: hero-line-reveal 1.0s cubic-bezier(0.23, 1, 0.32, 1) both;
-  animation-delay: calc(0.1s + var(--li, 0) * 0.12s);
-}
+/* ─── HERO ENTRANCE keyframes (rules are scoped in HeroSection.astro <style>) ─── */
 @keyframes hero-eyebrow-in {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }

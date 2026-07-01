@@ -298,6 +298,26 @@ const starsLarge = generateStars(30);
     stroke-dashoffset: 120;
     animation: draw-sparkline 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
+
+  /* ─── HERO ENTRANCE (scoped here to prevent cascade conflict with .sheen-text) ─── */
+  /* Scoped selectors get data-astro-cid-xxx attr → higher specificity than global [data-hero-line] */
+  [data-hero-eyebrow] {
+    opacity: 0;
+    animation: hero-eyebrow-in 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) 0.05s both;
+  }
+  [data-hero-line] {
+    opacity: 0;
+    animation: hero-line-reveal 1.0s cubic-bezier(0.23, 1, 0.32, 1) both;
+    animation-delay: calc(0.1s + var(--li, 0) * 0.12s);
+  }
+  /* "Marketing Authority" span has BOTH .sheen-text AND [data-hero-line].
+     .sheen-text sets animation:sheen-sweep. This rule has higher specificity (class+attr)
+     and combines both: reveal first (0.22s delay = 0.1+1×0.12), then sheen loops after. */
+  .sheen-text[data-hero-line] {
+    animation:
+      hero-line-reveal 1.0s cubic-bezier(0.23, 1, 0.32, 1) 0.22s both,
+      sheen-sweep 8s linear 1.42s infinite;
+  }
 </style>
 
 <script>
