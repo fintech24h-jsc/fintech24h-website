@@ -9,13 +9,42 @@ const breadcrumbs = [
   { name: 'About Us', item: 'https://fintech24h.com/about' }
 ];
 
-const aboutSchema = {
-  "@context": "https://schema.org",
-  "@type": "AboutPage",
-  "name": "About Fintech24h",
-  "url": "https://fintech24h.com/about",
-  "description": "Fintech24h is a growth partner for Blockchain, Fintech & AI projects scaling across Vietnam, Singapore, UAE, and beyond. Learn about our team and approach."
-};
+const aboutSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About Fintech24h",
+    "url": "https://fintech24h.com/about",
+    "description": "Fintech24h is a growth partner for Blockchain, Fintech & AI projects scaling across Vietnam, Singapore, UAE, and beyond. Learn about our team and approach.",
+    "mainEntity": { "@type": "Organization", "@id": "https://fintech24h.com/#organization" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://fintech24h.com/#organization",
+    "name": "Fintech24h",
+    "url": "https://fintech24h.com",
+    "logo": "https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp",
+    "foundingDate": "2020",
+    "numberOfEmployees": { "@type": "QuantitativeValue", "value": "30" },
+    "knowsAbout": [
+      "Blockchain Marketing","Web3 Growth Hacking","KOL Marketing","Crypto PR",
+      "Community Management","DeFi Marketing","NFT Campaigns","Token Launch Marketing"
+    ],
+    "member": team.map(m => ({
+      "@type": "OrganizationRole",
+      "member": {
+        "@type": "Person",
+        "name": m.name,
+        "jobTitle": m.role,
+        "description": m.bio,
+        ...(m.linkedin ? { "sameAs": m.linkedin } : {})
+      },
+      "roleName": m.role,
+      "startDate": "2020"
+    }))
+  }
+];
 ---
 
 <BaseLayout

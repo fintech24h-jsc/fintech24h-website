@@ -16,11 +16,50 @@ const breadcrumbs = [
   { name: 'Services', item: 'https://fintech24h.com/services' },
   { name: service.title, item: `https://fintech24h.com/services/${service.slug}` }
 ];
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": service.title,
+  "description": service.longDescription,
+  "url": `https://fintech24h.com/services/${service.slug}`,
+  "serviceType": "Blockchain & Web3 Marketing",
+  "provider": {
+    "@type": "Organization",
+    "name": "Fintech24h",
+    "url": "https://fintech24h.com",
+    "logo": "https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp"
+  },
+  "areaServed": [
+    { "@type": "Country", "name": "Vietnam" },
+    { "@type": "Country", "name": "Singapore" },
+    { "@type": "Country", "name": "United Arab Emirates" },
+    { "@type": "Country", "name": "Indonesia" },
+    { "@type": "Country", "name": "Thailand" },
+    { "@type": "Country", "name": "India" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": service.title,
+    "itemListElement": service.features.map((f, i) => ({
+      "@type": "Offer",
+      "position": i + 1,
+      "itemOffered": { "@type": "Service", "name": f }
+    }))
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://fintech24h.com/contact",
+    "availability": "https://schema.org/InStock",
+    "priceCurrency": "USD"
+  }
+};
 ---
 
 <BaseLayout
   title={`${service.title} | Web3 Marketing Solutions`}
   description={service.shortDescription}
+  schema={serviceSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 

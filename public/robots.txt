@@ -1,9 +1,16 @@
 User-agent: *
 Allow: /
+Allow: /_assets/*.css
+Allow: /_assets/*.js
 Disallow: /wp-admin/
 Disallow: /wp-content/
 Disallow: /wp-json/
 Disallow: /wp-login.php
 Disallow: /wp-includes/
+Disallow: /_assets/*.map
+
+# Throttle aggressive scrapers
+Crawl-delay: 1
 
 Sitemap: https://fintech24h.com/sitemap-index.xml
+Sitemap: https://fintech24h.com/rss.xml

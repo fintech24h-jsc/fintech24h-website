@@ -58,10 +58,58 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Fintech24h",
-  "url": "https://fintech24h.com"
+  "url": "https://fintech24h.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://fintech24h.com/blog?s={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
 };
 
-const combinedSchema = [faqSchema, websiteSchema];
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "ProfessionalService"],
+  "name": "Fintech24h",
+  "description": "Blockchain & AI Marketing Agency — KOL Marketing, PR, Community Growth, Business Development for Web3 projects in Vietnam, Singapore, UAE.",
+  "image": "https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp",
+  "url": "https://fintech24h.com",
+  "email": "info@fintech24h.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1014 Đường Phạm Văn Đồng, Hiệp Bình",
+    "addressLocality": "Thành phố Hồ Chí Minh",
+    "addressRegion": "Hồ Chí Minh",
+    "addressCountry": "VN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 10.8404,
+    "longitude": 106.7520
+  },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+    "opens": "09:00",
+    "closes": "18:00"
+  }],
+  "priceRange": "$$$$",
+  "currenciesAccepted": "USD, USDT",
+  "paymentAccepted": "Bank Transfer, Cryptocurrency",
+  "areaServed": ["VN","SG","AE","ID","TH","IN"],
+  "sameAs": [
+    "https://www.linkedin.com/company/fintech24h/",
+    "https://www.facebook.com/fintech24hnews",
+    "https://x.com/fintech24h_com",
+    "https://t.me/fintech24h",
+    "https://medium.com/@fintech24h",
+    "https://www.instagram.com/fintech24h/"
+  ]
+};
+
+const combinedSchema = [faqSchema, websiteSchema, localBusinessSchema];
 ---
 
 <BaseLayout

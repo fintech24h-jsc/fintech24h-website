@@ -9,13 +9,57 @@ const breadcrumbs = [
   { name: 'Contact', item: 'https://fintech24h.com/contact' }
 ];
 
-const contactSchema = {
-  "@context": "https://schema.org",
-  "@type": "ContactPage",
-  "name": "Contact Fintech24h",
-  "url": "https://fintech24h.com/contact",
-  "description": "Ready to scale your Blockchain or Web3 project? Contact Fintech24h to discuss your marketing strategy, KOL campaigns, and SEO needs."
-};
+const contactSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Fintech24h",
+    "url": "https://fintech24h.com/contact",
+    "description": "Ready to scale your Blockchain or Web3 project? Contact Fintech24h to discuss your marketing strategy, KOL campaigns, and SEO needs."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "ProfessionalService"],
+    "name": "Fintech24h",
+    "image": "https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp",
+    "url": "https://fintech24h.com",
+    "email": "info@fintech24h.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1014 Đường Phạm Văn Đồng, Hiệp Bình",
+      "addressLocality": "Thành phố Hồ Chí Minh",
+      "addressRegion": "Hồ Chí Minh",
+      "addressCountry": "VN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 10.8404,
+      "longitude": 106.7520
+    },
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "email": "info@fintech24h.com",
+        "contactType": "customer service",
+        "areaServed": ["VN","SG","AE","ID","TH","IN"],
+        "availableLanguage": ["English","Vietnamese"]
+      },
+      {
+        "@type": "ContactPoint",
+        "url": "https://t.me/fintech24h",
+        "contactType": "sales",
+        "areaServed": "Worldwide",
+        "availableLanguage": ["English","Vietnamese"]
+      }
+    ],
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    }]
+  }
+];
 ---
 
 <BaseLayout

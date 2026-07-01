@@ -10,11 +10,31 @@ const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Case Studies', item: 'https://fintech24h.com/case-studies' }
 ];
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Fintech24h Case Studies — Web3 Campaign Results",
+  "url": "https://fintech24h.com/case-studies",
+  "description": "Browse our marketing and growth records. See how we scaled layer-1 ecosystems, decentralized exchanges, and gaming hubs to millions of active users.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Fintech24h",
+    "url": "https://fintech24h.com"
+  },
+  "hasPart": caseStudies.map((cs, i) => ({
+    "@type": "Article",
+    "position": i + 1,
+    "name": cs.title.rendered,
+    "url": `https://fintech24h.com/case-studies/${cs.slug}`
+  }))
+};
 ---
 
 <BaseLayout
   title="Case Studies — Web3 Campaign Results & ROI"
   description="Browse our marketing and growth records. See how we scaled layer-1 ecosystems, decentralized exchanges, and gaming hubs to millions of active users."
+  schema={collectionSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
