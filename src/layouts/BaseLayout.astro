@@ -2,7 +2,7 @@
 // src/layouts/BaseLayout.astro
 import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
-import NavbarReact from '../components/layout/NavbarReact.tsx';
+import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
 import '../styles/global.css';
 import '../styles/animations.css';
@@ -58,13 +58,19 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
 
-  <!-- Fonts (preload for performance) -->
+  <!-- Fonts — non-blocking async load to avoid render-blocking LCP -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
   />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
+  </noscript>
 
   <!-- Schema.org JSON-LD -->
   {schema && <SchemaOrg schema={schema} />}
@@ -112,7 +118,7 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
     Skip to main content
   </a>
 
-  <NavbarReact client:load />
+  <Navbar />
 
   <main id="main-content" class="relative w-full flex flex-col overflow-hidden shrink-0">
     <slot />

@@ -134,8 +134,9 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-[10px] font-semibold text-white/50 mb-1.5 font-body uppercase tracking-wider">Service of Interest</label>
+            <label htmlFor="service-interest" className="block text-[10px] font-semibold text-white/50 mb-1.5 font-body uppercase tracking-wider">Service of Interest</label>
             <select
+              id="service-interest"
               value={formData.serviceInterest}
               onChange={e => update('serviceInterest', e.target.value)}
               className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-white/30 transition-all duration-300 font-body appearance-none shadow-inner backdrop-blur-md"
@@ -147,8 +148,9 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
             </select>
           </div>
           <div>
-            <label className="block text-[10px] font-semibold text-white/50 mb-1.5 font-body uppercase tracking-wider">Estimated Monthly Budget</label>
+            <label htmlFor="budget-range" className="block text-[10px] font-semibold text-white/50 mb-1.5 font-body uppercase tracking-wider">Estimated Monthly Budget</label>
             <select
+              id="budget-range"
               value={formData.budget}
               onChange={e => update('budget', e.target.value)}
               className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-white/30 transition-all duration-300 font-body appearance-none shadow-inner backdrop-blur-md"
