@@ -1,0 +1,280 @@
+---
+// src/components/layout/NavbarFast.astro
+// Pixel-identical to NavbarReact.tsx — removes React 18 + Framer Motion + Lucide (≈44 KiB)
+// Every animation is replicated 1-to-1 with CSS transitions / keyframes + vanilla JS
+---
+
+<nav
+  id="nb"
+  class="fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4 py-2 md:px-6"
+>
+  <div class="liquid-glass rounded-full px-5 py-1.5 md:px-6 flex items-center justify-between max-w-5xl mx-auto border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.35)] relative">
+
+    <!-- Logo (same attrs as NavbarReact) -->
+    <a href="/" class="flex items-center gap-2" aria-label="Fintech24h Home">
+      <img
+        src="/images/Logo-Fintech24h.png"
+        alt="Fintech24h"
+        width="300"
+        height="210"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="h-[48px] md:h-[64px] w-auto -my-[6px] md:-my-[10px] object-contain"
+      />
+    </a>
+
+    <!-- Desktop nav — same classes, absolute-centered -->
+    <div class="hidden md:flex items-center gap-8 text-white/80 text-sm font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
+      <a href="/" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">home</a>
+
+      <!-- Services dropdown (hover) -->
+      <div id="svc-wrap" class="relative">
+        <button
+          type="button"
+          id="svc-btn"
+          class="hover:text-[var(--accent-cyan)] transition-colors duration-300 flex items-center gap-1 cursor-pointer focus:outline-none"
+        >
+          <span>services</span>
+          <!-- ChevronDown — same shape as lucide ChevronDown -->
+          <svg
+            id="svc-chevron"
+            class="w-3.5 h-3.5 transition-transform duration-300"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+
+        <!-- Dropdown panel: replicates Framer initial={opacity:0,y:10,scale:.95} animate/exit -->
+        <div
+          id="svc-dropdown"
+          class="svc-dd absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 bg-[#080c1a]/95 backdrop-blur-2xl border border-white/10 p-3 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col gap-1 z-50 text-left"
+        >
+          <a href="/services/kol-marketing"       class="svc-link">kol marketing</a>
+          <a href="/services/pr-media"             class="svc-link">pr campaigns</a>
+          <a href="/services/community-growth"     class="svc-link">community growth</a>
+          <a href="/services/event-marketing"      class="svc-link">event marketing</a>
+          <a href="/services/ai-marketing"         class="svc-link">ai marketing</a>
+          <a href="/services/business-development" class="svc-link">business development</a>
+        </div>
+      </div>
+
+      <a href="/blog"    class="hover:text-[var(--accent-cyan)] transition-colors duration-300">blog</a>
+      <a href="/contact" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
+    </div>
+
+    <!-- Right: CTA button + hamburger -->
+    <div class="flex items-center gap-4">
+      <a
+        href="/contact"
+        class="inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-2 px-5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08),inset_0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-[rgba(0,200,240,0.18)] hover:border-[rgba(0,200,240,0.6)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15),inset_0_1px_3px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer"
+      >
+        <span>Get Proposal</span>
+      </a>
+
+      <!-- Hamburger — 3 SVG lines morphing to × (same visual as lucide Menu/X swap) -->
+      <button
+        type="button"
+        id="mob-toggle"
+        class="md:hidden text-white hover:text-[var(--accent-cyan)] transition-colors duration-300 focus:outline-none"
+        aria-label="Toggle Mobile Menu"
+        aria-expanded="false"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round">
+          <line id="hb-l1" x1="4" y1="6"  x2="20" y2="6"/>
+          <line id="hb-l2" x1="4" y1="12" x2="20" y2="12"/>
+          <line id="hb-l3" x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Mobile drawer — replicates motion.div spring(damping:25,stiffness:200) -->
+<div
+  id="mob-drawer"
+  aria-hidden="true"
+  class="mob-drawer fixed inset-y-0 right-0 w-80 max-w-full bg-[#080c1a]/98 backdrop-blur-2xl border-l border-white/10 z-40 p-8 pt-24 flex flex-col gap-6 text-left shadow-[20px_0_50px_rgba(0,0,0,0.5)]"
+>
+  <div class="flex flex-col gap-5 text-sm font-semibold tracking-widest font-mono text-white/80">
+    <a href="/"       class="hover:text-[var(--accent-cyan)] transition-colors duration-300">home</a>
+
+    <div>
+      <span class="text-white/40 text-[10px] tracking-widest block mb-2 font-mono">services</span>
+      <div class="flex flex-col gap-3 pl-3 border-l border-white/5">
+        <a href="/services/kol-marketing"       class="text-xs font-sans text-white/60 hover:text-white transition-colors">kol marketing</a>
+        <a href="/services/pr-media"             class="text-xs font-sans text-white/60 hover:text-white transition-colors">pr campaigns</a>
+        <a href="/services/community-growth"     class="text-xs font-sans text-white/60 hover:text-white transition-colors">community growth</a>
+        <a href="/services/event-marketing"      class="text-xs font-sans text-white/60 hover:text-white transition-colors">event marketing</a>
+        <a href="/services/ai-marketing"         class="text-xs font-sans text-white/60 hover:text-white transition-colors">ai marketing</a>
+        <a href="/services/business-development" class="text-xs font-sans text-white/60 hover:text-white transition-colors">business development</a>
+      </div>
+    </div>
+
+    <a href="/blog"    class="hover:text-[var(--accent-cyan)] transition-colors duration-300">blog</a>
+    <a href="/contact" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
+  </div>
+
+  <div class="mt-auto border-t border-white/5 pt-6">
+    <a
+      href="/contact"
+      class="w-full text-center inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-3 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08)] cursor-pointer"
+    >
+      Get Proposal
+    </a>
+  </div>
+</div>
+
+<style>
+  /* ────────────────────────────────────────────────────────────────
+     ENTRANCE  — replicates motion.nav initial={y:-20,opacity:0}
+                                        animate={y:0,opacity:1}
+  ──────────────────────────────────────────────────────────────── */
+  #nb {
+    animation: nb-enter 0.5s ease-out both;
+    background: transparent;
+  }
+  @keyframes nb-enter {
+    from { transform: translateY(-20px); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+  }
+
+  /* ────────────────────────────────────────────────────────────────
+     SCROLL STATE — md:py-4 default → md:py-2 scrolled
+     (replicates isScrolled ternary in NavbarReact className)
+  ──────────────────────────────────────────────────────────────── */
+  @media (min-width: 768px) {
+    #nb          { padding-top: 1rem; padding-bottom: 1rem; }
+    #nb.scrolled { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+  }
+  #nb.scrolled {
+    background: rgba(8, 12, 26, 0.40);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ────────────────────────────────────────────────────────────────
+     DROPDOWN  — replicates AnimatePresence + motion.div
+     initial={opacity:0,y:10,scale:.95}
+     animate ={opacity:1,y:0, scale:1}
+     exit    ={opacity:0,y:10,scale:.95}
+     transition={duration:0.2, ease:'easeOut'}
+  ──────────────────────────────────────────────────────────────── */
+  .svc-dd {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    pointer-events: none;
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  }
+  .svc-dd.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  /* Service link — replicates className in NavbarReact map() */
+  .svc-link {
+    display: block;
+    padding: 0.625rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    color: rgba(255, 255, 255, 0.70);
+    transition: background 0.15s, color 0.15s;
+  }
+  .svc-link:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+  }
+
+  /* ────────────────────────────────────────────────────────────────
+     MOBILE DRAWER — replicates motion.div
+     initial ={x:'100%'}
+     animate ={x:0}
+     exit    ={x:'100%'}
+     transition={type:'spring', damping:25, stiffness:200}
+     ζ = 25/(2√200) ≈ 0.884 → near-critically-damped spring
+     CSS equivalent: cubic-bezier(0.34,1.08,0.64,1) @ 380ms
+  ──────────────────────────────────────────────────────────────── */
+  .mob-drawer {
+    transform: translateX(100%);
+    transition: transform 0.38s cubic-bezier(0.34, 1.08, 0.64, 1);
+  }
+  .mob-drawer.open {
+    transform: translateX(0);
+  }
+
+  /* ────────────────────────────────────────────────────────────────
+     HAMBURGER → X morphing
+     Replicates lucide <Menu> ↔ <X> swap from NavbarReact
+     Lines animate to form × shape via translate + rotate
+  ──────────────────────────────────────────────────────────────── */
+  #hb-l1, #hb-l2, #hb-l3 {
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  /* When menu is open: morph 3 lines into × */
+  #nb.menu-open #hb-l1 { transform: translateY(6px)  rotate(45deg);  }
+  #nb.menu-open #hb-l2 { opacity: 0; transform: scaleX(0);           }
+  #nb.menu-open #hb-l3 { transform: translateY(-6px) rotate(-45deg); }
+</style>
+
+<script>
+  const nb      = document.getElementById('nb')!;
+  const svcWrap = document.getElementById('svc-wrap')!;
+  const svcDD   = document.getElementById('svc-dropdown')!;
+  const svcChev = document.getElementById('svc-chevron')!;
+  const mobTog  = document.getElementById('mob-toggle')! as HTMLButtonElement;
+  const mobDraw = document.getElementById('mob-drawer')!;
+
+  /* ── Scroll → scrolled class (triggers bg + padding change) ── */
+  window.addEventListener('scroll', () => {
+    nb.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  /* ── Services dropdown on hover ── */
+  let closeTimer = 0;
+  svcWrap.addEventListener('mouseenter', () => {
+    clearTimeout(closeTimer);
+    svcDD.classList.add('open');
+    svcChev.classList.add('rotate-180');
+  });
+  svcWrap.addEventListener('mouseleave', () => {
+    closeTimer = window.setTimeout(() => {
+      svcDD.classList.remove('open');
+      svcChev.classList.remove('rotate-180');
+    }, 100);
+  });
+
+  /* ── Mobile menu toggle ── */
+  let menuOpen = false;
+  mobTog.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobDraw.classList.toggle('open', menuOpen);
+    nb.classList.toggle('menu-open', menuOpen);
+    mobTog.setAttribute('aria-expanded', String(menuOpen));
+    mobDraw.setAttribute('aria-hidden', String(!menuOpen));
+  });
+
+  /* ── Close drawer when any link is tapped ── */
+  mobDraw.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menuOpen = false;
+      mobDraw.classList.remove('open');
+      nb.classList.remove('menu-open');
+      mobTog.setAttribute('aria-expanded', 'false');
+      mobDraw.setAttribute('aria-hidden', 'true');
+    });
+  });
+</script>
