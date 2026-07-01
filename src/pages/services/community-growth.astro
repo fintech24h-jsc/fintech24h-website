@@ -64,61 +64,107 @@ const combinedSchema = [serviceSchema, faqSchema];
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- SECTION 1 — HERO (Gamified Discord/Chat Style) -->
-  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden bg-[#1E1F29]">
-    <!-- Gamified Background Elements -->
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 1 — HERO
+  ═══════════════════════════════════════════════════ -->
+  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden bg-[var(--bg-primary)]">
+
+    <!-- Brand ambient glows — matches other service pages -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      <!-- Floating Emojis / Badges -->
-      <div class="absolute top-[20%] left-[10%] text-5xl animate-[float-slow_4s_ease-in-out_infinite] opacity-50 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">🚀</div>
-      <div class="absolute top-[40%] right-[15%] text-6xl animate-[float-fast_3s_ease-in-out_infinite_reverse] opacity-40 drop-shadow-[0_0_20px_rgba(88,101,242,0.8)]">💎</div>
-      <div class="absolute bottom-[20%] left-[25%] text-4xl animate-[float-slow_5s_ease-in-out_infinite] opacity-60 drop-shadow-[0_0_10px_rgba(87,242,135,0.8)]">WAGMI</div>
-      <div class="absolute bottom-[30%] right-[20%] text-5xl animate-[float-fast_4s_ease-in-out_infinite] opacity-30 drop-shadow-[0_0_15px_rgba(235,69,158,0.8)]">🔥</div>
-      
-      <!-- Abstract Discord-like Waves -->
-      <svg class="absolute bottom-0 w-full h-auto text-[#2B2D31] opacity-50" viewBox="0 0 1440 320">
-        <path fill="currentColor" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,186.7C384,192,480,224,576,218.7C672,213,768,171,864,144C960,117,1056,107,1152,112C1248,117,1344,139,1392,150.4L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-      </svg>
+      <div class="bg-orb bg-orb-cyan  w-[700px] h-[700px] absolute -top-40 -right-40 opacity-15"></div>
+      <div class="bg-orb bg-orb-purple w-[600px] h-[600px] absolute bottom-0 -left-40 opacity-12"></div>
+      <div class="grid-pattern absolute inset-0 opacity-20"></div>
     </div>
 
     <div class="relative z-10 max-w-5xl mx-auto w-full text-center">
-      <div class="inline-flex items-center justify-center gap-2 mb-8 bg-[#2B2D31] px-4 py-2 rounded-[8px] border border-white/5 shadow-lg reveal">
-        <span class="w-3 h-3 rounded-full bg-[#57F287] animate-pulse"></span>
-        <span class="font-mono text-sm text-white/80 font-bold tracking-wide">LFG // ONLINE</span>
+
+      <!-- Status badge -->
+      <div class="inline-flex items-center justify-center gap-2 mb-8 px-4 py-2 rounded-full border border-[var(--accent-cyan)]/25 bg-[var(--accent-cyan)]/5 backdrop-blur-md reveal">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#57F287] shadow-[0_0_8px_rgba(87,242,135,0.8)] animate-pulse"></span>
+        <span class="font-mono text-sm text-[var(--accent-cyan)] font-bold tracking-widest uppercase">LFG // Online</span>
       </div>
 
       <h1 class="font-display font-black max-w-5xl mx-auto reveal reveal-delay-1">
-        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-white mb-2" style="text-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-[var(--text-primary)] mb-2">
           A Community That Grows Your Project
         </span>
-        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#5865F2] to-[#EB459E]" style="filter: drop-shadow(0 0 10px rgba(88,101,242,0.4));">
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)]" style="filter: drop-shadow(0 0 18px rgba(0,200,240,0.3));">
           — Not Just a Group That Gets Bigger.
         </span>
       </h1>
 
-      <div class="max-w-2xl mx-auto mt-8 mb-12 p-6 bg-[#2B2D31]/80 backdrop-blur-md rounded-[16px] border border-white/10 shadow-2xl reveal reveal-delay-2 text-left relative overflow-hidden group">
-        <div class="absolute left-0 top-0 bottom-0 w-1 bg-[#5865F2]"></div>
-        <p class="font-body text-[16px] text-white/80 leading-[1.7]">
-          <strong class="text-white">Daily active engagement</strong>, organic sharing, and community-led growth is what moves the needle. From anti-sybil airdrops to deep engagement tracking, we handle the entire funnel.
+      <!-- Glass description card -->
+      <div class="max-w-2xl mx-auto mt-8 mb-12 p-6 bg-[var(--bg-glass)] backdrop-blur-md rounded-2xl border border-white/[0.07] shadow-2xl reveal reveal-delay-2 text-left relative overflow-hidden">
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--accent-cyan)] to-[var(--accent-purple)] rounded-l-full"></div>
+        <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] pl-2">
+          <strong class="text-[var(--text-primary)]">Daily active engagement</strong>, organic sharing, and community-led growth is what moves the needle. From anti-sybil airdrops to deep engagement tracking, we handle the entire funnel.
         </p>
       </div>
 
+      <!-- CTA -->
       <div class="flex justify-center reveal reveal-delay-3">
-        <a href="#book-call" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-8 py-4 rounded-[8px] font-bold text-lg transition-colors flex items-center gap-3 shadow-[0_8px_20px_rgba(88,101,242,0.4)] hover:-translate-y-1 duration-300">
+        <a
+          href="#book-call"
+          class="relative inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-base text-[var(--bg-primary)] bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] shadow-[0_8px_28px_rgba(0,200,240,0.35)] hover:shadow-[0_8px_36px_rgba(0,200,240,0.5)] hover:-translate-y-1 transition-all duration-300"
+        >
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
           Scale Your Community
         </a>
       </div>
+
+      <!-- 3 floating stat cards (replacing emoji) -->
+      <div class="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 reveal reveal-delay-3">
+        <div class="stat-card group">
+          <div class="stat-icon">
+            <!-- People / community icon -->
+            <svg class="w-5 h-5 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 0 0-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 0 1 5.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 0 1 9.288 0M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+          </div>
+          <div class="stat-value">+500K</div>
+          <div class="stat-label">Community Members Built</div>
+        </div>
+        <div class="stat-card group">
+          <div class="stat-icon">
+            <!-- Clock / 24h icon -->
+            <svg class="w-5 h-5 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="stat-value">24/7</div>
+          <div class="stat-label">Global Moderation Coverage</div>
+        </div>
+        <div class="stat-card group">
+          <div class="stat-icon">
+            <!-- Grid / platforms icon -->
+            <svg class="w-5 h-5 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <div class="stat-value">6</div>
+          <div class="stat-label">Platforms Managed</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Wave transition into next section -->
+    <div class="absolute bottom-0 left-0 w-full pointer-events-none" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="rgba(8,13,26,0.9)"/>
+      </svg>
     </div>
   </section>
 
-  <!-- SECTION 2 — THE PROBLEM (Chat Bubbles) -->
-  <section class="py-20 bg-[#2B2D31] relative z-10 border-t border-white/5">
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 2 — THE PROBLEM (Chat Bubbles)
+  ═══════════════════════════════════════════════════ -->
+  <section class="py-20 bg-[var(--bg-secondary)] relative z-10 border-t border-white/[0.04]">
     <div class="max-w-4xl mx-auto px-4">
+
       <div class="text-center mb-16 reveal">
-        <h2 class="font-display text-3xl md:text-5xl font-black text-white">Why Most Communities Die</h2>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/20 bg-[var(--accent-cyan)]/5 mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+          <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-widest">Real Conversations</span>
+        </div>
+        <h2 class="font-display text-3xl md:text-5xl font-black text-[var(--text-primary)]">Why Most Communities Die</h2>
       </div>
 
-      <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-5">
         {[
           { sender: 'Client', text: 'We have 50K members but no one is talking except bots saying "GM".', isUser: false },
           { sender: 'Fintech24h', text: 'That\'s the Bot & Bounty Trap. Airdrop hunters inflate numbers but destroy real engagement. You need anti-Sybil screening and value-based incentives.', isUser: true },
@@ -127,65 +173,130 @@ const combinedSchema = [serviceSchema, faqSchema];
           { sender: 'Client', text: 'Every time there is a dip, the community turns toxic.', isUser: false },
           { sender: 'Fintech24h', text: 'A lack of crisis management and transparent communication breeds FUD. You need a proactive narrative defense strategy before the dip happens.', isUser: true }
         ].map((msg, i) => (
-          <div class={`flex ${msg.isUser ? 'justify-end' : 'justify-start'} reveal`} style={`transition-delay: ${i * 0.1}s`}>
-            <div class={`max-w-[85%] md:max-w-[70%] p-5 rounded-2xl ${msg.isUser ? 'bg-[#5865F2] text-white rounded-tr-sm' : 'bg-[#1E1F29] text-white/90 rounded-tl-sm border border-white/5'}`}>
-              <span class="block text-[10px] font-mono text-white/50 mb-1">{msg.sender}</span>
-              <p class="font-body text-[15px] leading-relaxed">{msg.text}</p>
-            </div>
+          <div class={`flex ${msg.isUser ? 'justify-end' : 'justify-start'} reveal`} style={`transition-delay: ${i * 0.08}s`}>
+            {msg.isUser ? (
+              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tr-sm border border-[var(--accent-cyan)]/25 bg-gradient-to-br from-[var(--accent-cyan)]/12 to-[var(--accent-purple)]/10 backdrop-blur-md shadow-[0_4px_20px_rgba(0,200,240,0.08)]">
+                <span class="block text-[10px] font-mono text-[var(--accent-cyan)] mb-1.5 tracking-wider">Fintech24h</span>
+                <p class="font-body text-[15px] leading-relaxed text-[var(--text-primary)]">{msg.text}</p>
+              </div>
+            ) : (
+              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tl-sm border border-white/[0.06] bg-[var(--bg-primary)] shadow-inner">
+                <span class="block text-[10px] font-mono text-[var(--text-muted)] mb-1.5 tracking-wider">Client</span>
+                <p class="font-body text-[15px] leading-relaxed text-[var(--text-secondary)]">{msg.text}</p>
+              </div>
+            )}
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3 — OUR APPROACH (Gamified Levels) -->
-  <section class="py-24 bg-[#1E1F29] relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 3 — OUR APPROACH (Gamified Levels)
+  ═══════════════════════════════════════════════════ -->
+  <section class="py-24 bg-[var(--bg-primary)] relative z-10">
+
+    <!-- Ambient glow -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute top-20 right-0 opacity-10"></div>
+      <div class="grid-pattern absolute inset-0 opacity-15"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
       <div class="text-center mb-20 reveal">
-        <h2 class="font-display text-3xl md:text-5xl font-black text-white">The Community Growth Funnel</h2>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/5 mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
+          <span class="text-xs font-mono font-medium text-[var(--accent-purple)] uppercase tracking-widest">Growth Framework</span>
+        </div>
+        <h2 class="font-display text-3xl md:text-5xl font-black text-[var(--text-primary)]">The Community Growth Funnel</h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { level: 'LVL 1', title: 'Viral Loop Design', desc: 'We design Zealy/Galxe campaigns that require users to invite friends, create content, and engage deeply to earn roles, not just click buttons.', color: '#57F287' },
-          { level: 'LVL 2', title: 'Sybil Defense', desc: 'We filter out bots and low-quality airdrop hunters using on-chain reputation scores, Discord age requirements, and CAPTCHA workflows.', color: '#FEE75C' },
-          { level: 'LVL 3', title: 'Proactive Moderation', desc: 'Our 24/7 global team doesn\'t just delete spam. We spark conversations, answer technical questions, and identify power users.', color: '#EB459E' },
-          { level: 'LVL 4', title: 'Advocate Activation', desc: 'We identify the top 1% of your community and recruit them into private Ambassador programs to scale your reach organically.', color: '#5865F2' }
+          {
+            level: 'LVL 1',
+            title: 'Viral Loop Design',
+            desc: 'We design Zealy/Galxe campaigns that require users to invite friends, create content, and engage deeply to earn roles, not just click buttons.',
+            bar: 'from-[var(--accent-cyan)] to-[var(--accent-cyan)]',
+            badge: 'bg-[var(--accent-cyan)]/10 border-[var(--accent-cyan)]/30 text-[var(--accent-cyan)]'
+          },
+          {
+            level: 'LVL 2',
+            title: 'Sybil Defense',
+            desc: 'We filter out bots and low-quality airdrop hunters using on-chain reputation scores, Discord age requirements, and CAPTCHA workflows.',
+            bar: 'from-[var(--accent-cyan)] to-[var(--accent-purple)]',
+            badge: 'bg-[var(--accent-purple)]/10 border-[var(--accent-purple)]/30 text-[var(--accent-purple)]'
+          },
+          {
+            level: 'LVL 3',
+            title: 'Proactive Moderation',
+            desc: 'Our 24/7 global team doesn\'t just delete spam. We spark conversations, answer technical questions, and identify power users.',
+            bar: 'from-[var(--accent-purple)] to-[var(--accent-cyan)]',
+            badge: 'bg-[var(--accent-cyan)]/10 border-[var(--accent-cyan)]/30 text-[var(--accent-cyan)]'
+          },
+          {
+            level: 'LVL 4',
+            title: 'Advocate Activation',
+            desc: 'We identify the top 1% of your community and recruit them into private Ambassador programs to scale your reach organically.',
+            bar: 'from-[var(--accent-purple)] to-[var(--accent-purple)]',
+            badge: 'bg-[var(--accent-purple)]/10 border-[var(--accent-purple)]/30 text-[var(--accent-purple)]'
+          }
         ].map((item, i) => (
-          <div class="bg-[#2B2D31] rounded-[16px] p-6 border border-white/5 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group reveal" style={`transition-delay: ${i * 0.15}s`}>
-            <div class="absolute top-0 left-0 w-full h-1" style={`background-color: ${item.color}`}></div>
-            <div class="w-12 h-12 rounded-[8px] flex items-center justify-center font-black text-black text-sm mb-6" style={`background-color: ${item.color}`}>
+          <div
+            class="relative bg-[var(--bg-glass)] rounded-2xl p-6 border border-white/[0.06] hover:border-[var(--accent-cyan)]/25 hover:-translate-y-2 transition-all duration-300 overflow-hidden group reveal"
+            style={`transition-delay: ${i * 0.12}s`}
+          >
+            <!-- Top gradient bar -->
+            <div class={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r ${item.bar}`}></div>
+            <!-- Hover glow -->
+            <div class="absolute inset-0 bg-gradient-to-br from-[var(--accent-cyan)]/3 to-[var(--accent-purple)]/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none"></div>
+
+            <div class={`w-12 h-12 rounded-xl flex items-center justify-center font-black text-[11px] mb-6 border ${item.badge}`}>
               {item.level}
             </div>
-            <h3 class="font-display text-xl font-bold text-white mb-3">{item.title}</h3>
-            <p class="text-white/60 font-body text-sm leading-relaxed">{item.desc}</p>
+            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">{item.title}</h3>
+            <p class="text-[var(--text-secondary)] font-body text-sm leading-relaxed">{item.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- FAQ SECTION (Discord Channel Style) -->
-  <section class="py-20 bg-[#2B2D31]">
-    <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row gap-8">
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 4 — FAQ (Discord Channel Style)
+  ═══════════════════════════════════════════════════ -->
+  <section class="py-20 bg-[var(--bg-secondary)] border-t border-white/[0.04]">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row gap-10">
+
+      <!-- Left: channel list -->
       <div class="w-full md:w-1/3 reveal">
-        <h2 class="font-display text-2xl font-black text-white mb-6 uppercase"># faq-channel</h2>
-        <div class="space-y-1 border-l-2 border-[#1E1F29] pl-3">
-          <div class="py-2 text-[#5865F2] font-bold text-sm bg-[#1E1F29] px-3 rounded">1. Anti-Sybil</div>
-          <div class="py-2 text-white/50 hover:text-white transition-colors text-sm px-3">2. Moderation</div>
-          <div class="py-2 text-white/50 hover:text-white transition-colors text-sm px-3">3. Web2 to Web3</div>
-          <div class="py-2 text-white/50 hover:text-white transition-colors text-sm px-3">4. Platforms</div>
+        <h2 class="font-mono text-xl font-black text-[var(--text-primary)] mb-6 tracking-tight">
+          <span class="text-[var(--accent-cyan)]">#</span> faq-channel
+        </h2>
+        <div class="space-y-1 border-l-2 border-white/[0.06] pl-3">
+          <div class="py-2 text-[var(--accent-cyan)] font-bold text-sm bg-[var(--accent-cyan)]/8 px-3 rounded-lg border border-[var(--accent-cyan)]/15">
+            1. Anti-Sybil
+          </div>
+          <div class="py-2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors text-sm px-3 cursor-default">2. Moderation</div>
+          <div class="py-2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors text-sm px-3 cursor-default">3. Web2 to Web3</div>
+          <div class="py-2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors text-sm px-3 cursor-default">4. Platforms</div>
         </div>
       </div>
-      <div class="w-full md:w-2/3 space-y-4">
+
+      <!-- Right: FAQ items -->
+      <div class="w-full md:w-2/3 space-y-3">
         {faqs.map((faq, i) => (
-          <details class="bg-[#1E1F29] rounded-[8px] group reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex justify-between items-center p-5 cursor-pointer list-none font-bold text-white">
-              <span class="flex items-center gap-2"><span class="text-white/30">Q:</span> {faq.q}</span>
-              <span class="text-[#5865F2] group-open:rotate-180 transition-transform">▼</span>
+          <details class="bg-[var(--bg-primary)] rounded-xl border border-white/[0.06] group reveal" style={`transition-delay: ${i * 0.08}s`}>
+            <summary class="flex justify-between items-center p-5 cursor-pointer list-none font-bold text-[var(--text-primary)] hover:text-[var(--accent-cyan)] transition-colors">
+              <span class="flex items-center gap-2 text-sm">
+                <span class="text-[var(--text-muted)] font-mono">Q:</span>
+                {faq.q}
+              </span>
+              <svg class="w-4 h-4 text-[var(--accent-cyan)] shrink-0 ml-3 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
             </summary>
-            <div class="px-5 pb-5 text-white/70 text-sm leading-relaxed border-t border-white/5 pt-3">
-              <span class="text-[#57F287] font-bold">A:</span> {faq.a}
+            <div class="px-5 pb-5 text-[var(--text-secondary)] text-sm leading-relaxed border-t border-white/[0.05] pt-3">
+              <span class="text-[#57F287] font-bold font-mono">A:</span> {faq.a}
             </div>
           </details>
         ))}
@@ -193,19 +304,75 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <!-- CTA SECTION (Unified FooterLeadForm) -->
+  <!-- CTA -->
   <FooterLeadForm defaultService="Community Growth" />
 
 </BaseLayout>
 
 <style>
+  /* ── FAQ details marker ── */
   summary::-webkit-details-marker { display: none; }
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+
+  /* ── Stat cards (replacing floating emoji) ── */
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.25rem 1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(8,13,26,0.6);
+    backdrop-filter: blur(12px);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .stat-card:hover {
+    border-color: rgba(0,200,240,0.25);
+    transform: translateY(-4px);
+  }
+  .stat-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,200,240,0.08);
+    border: 1px solid rgba(0,200,240,0.15);
+  }
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  /* ── Scroll reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+  .reveal-delay-1 { transition-delay: 0.10s; }
+  .reveal-delay-2 { transition-delay: 0.20s; }
+  .reveal-delay-3 { transition-delay: 0.30s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
 </style>
 
 <script>
@@ -218,7 +385,7 @@ const combinedSchema = [serviceSchema, faqSchema];
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   });
 </script>
