@@ -1,0 +1,24 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://fintech24h.com",
+      "describedby": [
+        {
+          "href": "https://fintech24h.com/sitemap-index.xml",
+          "type": "application/xml",
+          "title": "XML Sitemap"
+        }
+      ]
+    },
+    {
+      "anchor": "https://fintech24h.com/blog",
+      "alternate": [
+        {
+          "href": "https://fintech24h.com/rss.xml",
+          "type": "application/rss+xml",
+          "title": "Fintech24h Blog — Blockchain & Web3 Marketing Insights"
+        }
+      ]
+    }
+  ]
+}
