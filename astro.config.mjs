@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import partytown from '@astrojs/partytown';
 
 export default defineConfig({
   site: 'https://fintech24h.com',
@@ -12,6 +13,11 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     react(),
+    partytown({
+      config: {
+        forward: ['dataLayer.push'],
+      },
+    }),
     sitemap({
       filter: (page) => !page.includes('/wp-admin') && !page.includes('/wp-json'),
       // Priority & changefreq per URL type — helps Google prioritize crawl budget

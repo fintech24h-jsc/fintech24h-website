@@ -116,9 +116,9 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
-  <!-- Google Analytics 4 (async — non-blocking) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TDZQMBWLR"></script>
-  <script>
+  <!-- Google Analytics 4 via Partytown — runs in Web Worker, zero main-thread cost -->
+  <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-4TDZQMBWLR"></script>
+  <script type="text/partytown">
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
