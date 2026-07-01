@@ -23,8 +23,8 @@
 
     /* ─── TEXT ─── */
     --text-primary:      #e8edf8;  /* Body text — trắng ngà lạnh */
-    --text-secondary:    #8896b3;  /* Muted — xanh xám trung bình */
-    --text-muted:        #4a5470;  /* Very muted — chỉ dùng cho metadata nhỏ */
+    --text-secondary:    #a3b1cc;  /* Muted — xanh xám trung bình */
+    --text-muted:        #8594ad;  /* Very muted — chỉ dùng cho metadata nhỏ */
     --text-inverted:     #050810;  /* Text trên gradient button */
 
     /* ─── BORDERS ─── */
