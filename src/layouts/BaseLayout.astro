@@ -113,6 +113,17 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <link rel="dns-prefetch" href="https://assets.calendly.com" />
   <link rel="dns-prefetch" href="https://images.unsplash.com" />
   <link rel="dns-prefetch" href="https://i.pravatar.cc" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+  <!-- Google Analytics 4 (async — non-blocking) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TDZQMBWLR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4TDZQMBWLR');
+  </script>
 </head>
 
 <body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased selection:bg-white selection:text-black">
