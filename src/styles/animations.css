@@ -1,7 +1,7 @@
 /* ─── AMBIENT BACKGROUND EFFECTS ─── */
 @keyframes orb-pulse {
-  0%, 100% { opacity: 0.12; transform: scale(1); }
-  50%       { opacity: 0.22; transform: scale(1.08); }
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
 }
 
 @keyframes orb-drift {
@@ -38,8 +38,8 @@
 
 /* ─── HERO TEXT REVEAL (chỉ dùng 1 lần ở Hero H1) ─── */
 @keyframes hero-line-reveal {
-  from { opacity: 0; transform: translateY(32px); filter: blur(6px); }
-  to   { opacity: 1; transform: translateY(0); filter: blur(0px); }
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ─── INTERACTION ─── */
