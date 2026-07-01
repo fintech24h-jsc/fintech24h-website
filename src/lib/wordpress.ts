@@ -2,7 +2,7 @@
 // WordPress Headless API Client
 // WP runs in background at fintech24h.com/wp-json/
 
-const WP_API_BASE = import.meta.env.WP_API_URL || 'https://fintech24h.com/wp-json/wp/v2';
+const WP_API_BASE = (import.meta.env.WP_API_URL || 'https://fintech24h.com/wp-json/wp/v2').replace(/\/$/, '');
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
