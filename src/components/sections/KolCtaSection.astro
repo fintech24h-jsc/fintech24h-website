@@ -9,47 +9,56 @@ const TitleTag = isHero ? 'h1' : 'h2';
   <section class="relative min-h-[90vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden border-b border-white/10 bg-[#04060A]">
     <!-- Network Background Nodes -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute top-[20%] left-[10%] w-32 h-32 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_6s_ease-in-out_infinite]">
-        <div class="w-12 h-12 rounded-full bg-[var(--gradient-glow-cyan)] opacity-20 blur-xl"></div>
-        <img src="https://i.pravatar.cc/100?img=11" alt="KOL influencer" width="40" height="40" class="w-10 h-10 rounded-full border border-[var(--accent-cyan)] object-cover opacity-60 absolute" loading="lazy" decoding="async" />
-        <div class="absolute inset-0 rounded-full border border-[var(--accent-cyan)] opacity-20 animate-[pulse-ring_3s_ease-out_infinite]"></div>
+      <!-- Ambient overall glow for mobile -->
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,200,240,0.1),transparent_60%)] sm:opacity-50"></div>
+
+      <!-- Node 1 -->
+      <div class="absolute top-[10%] left-[-5%] sm:left-[10%] w-40 h-40 sm:w-32 sm:h-32 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_6s_ease-in-out_infinite]">
+        <div class="w-20 h-20 sm:w-12 sm:h-12 rounded-full bg-[var(--gradient-glow-cyan)] opacity-40 sm:opacity-20 blur-2xl sm:blur-xl"></div>
+        <img src="https://i.pravatar.cc/100?img=11" alt="KOL influencer" width="40" height="40" class="w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-[var(--accent-cyan)] object-cover opacity-80 sm:opacity-60 absolute" loading="lazy" decoding="async" />
+        <div class="absolute inset-0 rounded-full border border-[var(--accent-cyan)] opacity-30 animate-[pulse-ring_3s_ease-out_infinite]"></div>
       </div>
 
-      <div class="absolute top-[30%] right-[15%] w-40 h-40 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_8s_ease-in-out_infinite_reverse]">
-        <div class="w-16 h-16 rounded-full bg-[var(--gradient-glow-purple)] opacity-20 blur-xl"></div>
-        <img src="https://i.pravatar.cc/100?img=12" alt="KOL influencer" width="48" height="48" class="w-12 h-12 rounded-full border border-[#a78bfa] object-cover opacity-60 absolute" loading="lazy" decoding="async" />
-        <div class="absolute inset-0 rounded-full border border-[#a78bfa] opacity-20 animate-[pulse-ring_4s_ease-out_infinite]"></div>
+      <!-- Node 2 -->
+      <div class="absolute top-[40%] sm:top-[30%] right-[-10%] sm:right-[15%] w-56 h-56 sm:w-40 sm:h-40 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_8s_ease-in-out_infinite_reverse]">
+        <div class="w-28 h-28 sm:w-16 sm:h-16 rounded-full bg-[var(--gradient-glow-purple)] opacity-40 sm:opacity-20 blur-2xl sm:blur-xl"></div>
+        <img src="https://i.pravatar.cc/100?img=12" alt="KOL influencer" width="48" height="48" class="w-14 h-14 sm:w-12 sm:h-12 rounded-full border border-[#a78bfa] object-cover opacity-80 sm:opacity-60 absolute" loading="lazy" decoding="async" />
+        <div class="absolute inset-0 rounded-full border border-[#a78bfa] opacity-30 animate-[pulse-ring_4s_ease-out_infinite]"></div>
       </div>
 
-      <div class="absolute bottom-[20%] left-[25%] w-24 h-24 rounded-full border border-white/5 flex items-center justify-center animate-[float-fast_5s_ease-in-out_infinite]">
-        <img src="https://i.pravatar.cc/100?img=13" alt="KOL influencer" width="32" height="32" class="w-8 h-8 rounded-full border border-white/30 object-cover opacity-40 absolute" loading="lazy" decoding="async" />
+      <!-- Node 3 -->
+      <div class="absolute bottom-[5%] sm:bottom-[20%] left-[10%] sm:left-[25%] w-32 h-32 sm:w-24 sm:h-24 rounded-full border border-white/5 flex items-center justify-center animate-[float-fast_5s_ease-in-out_infinite]">
+        <div class="w-16 h-16 rounded-full bg-white opacity-10 blur-xl"></div>
+        <img src="https://i.pravatar.cc/100?img=13" alt="KOL influencer" width="32" height="32" class="w-10 h-10 sm:w-8 sm:h-8 rounded-full border border-white/30 object-cover opacity-60 sm:opacity-40 absolute" loading="lazy" decoding="async" />
       </div>
 
       <!-- Connecting Lines (SVG) -->
-      <svg class="absolute inset-0 w-full h-full opacity-10" preserveAspectRatio="none">
-        <line x1="15%" y1="25%" x2="50%" y2="50%" stroke="var(--accent-cyan)" stroke-width="1" stroke-dasharray="4 4" class="line-reveal" />
-        <line x1="80%" y1="35%" x2="50%" y2="50%" stroke="#a78bfa" stroke-width="1" stroke-dasharray="4 4" class="line-reveal delay-200" />
-        <line x1="30%" y1="75%" x2="50%" y2="50%" stroke="white" stroke-width="1" stroke-dasharray="4 4" class="line-reveal delay-500" />
+      <svg class="absolute inset-0 w-full h-full opacity-20 sm:opacity-10" preserveAspectRatio="none">
+        <line x1="0%" y1="20%" x2="50%" y2="50%" stroke="var(--accent-cyan)" stroke-width="1.5" stroke-dasharray="4 4" class="line-reveal" />
+        <line x1="100%" y1="50%" x2="50%" y2="50%" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="4 4" class="line-reveal delay-200" />
+        <line x1="20%" y1="90%" x2="50%" y2="50%" stroke="white" stroke-width="1.5" stroke-dasharray="4 4" class="line-reveal delay-500" />
       </svg>
     </div>
 
-    <div class="relative z-10 max-w-5xl mx-auto w-full text-center">
-      <div class="inline-flex items-center justify-center mb-8 reveal reveal-delay-1">
-        <span class="px-4 py-1.5 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] font-mono text-xs uppercase tracking-[0.14em] shadow-[0_0_15px_rgba(0,200,240,0.2)]">
-          KOL & INFLUENCER MARKETING
-        </span>
+    <div class="relative z-10 max-w-5xl mx-auto w-full text-center px-4 sm:px-0">
+      <div class="relative p-6 sm:p-0 rounded-2xl sm:rounded-none bg-black/20 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-white/5 sm:border-none shadow-[0_0_30px_rgba(0,0,0,0.5)] sm:shadow-none">
+        <div class="inline-flex items-center justify-center mb-6 sm:mb-8 reveal reveal-delay-1">
+          <span class="px-4 py-1.5 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] font-mono text-xs uppercase tracking-[0.14em] shadow-[0_0_15px_rgba(0,200,240,0.2)]">
+            KOL & INFLUENCER MARKETING
+          </span>
+        </div>
+
+        <TitleTag class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-2 relative">
+          <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.03em] leading-[1.05] text-white">
+            The Right Voice,<br/>
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent-cyan)] to-[#a78bfa]">Reaching the Right Audience.</span>
+          </span>
+        </TitleTag>
+
+        <p class="font-body text-base sm:text-[18px] text-[var(--text-secondary)] max-w-2xl mx-auto mt-6 sm:mt-8 mb-4 sm:mb-12 leading-[1.7] reveal reveal-delay-3">
+          Most KOL campaigns fail before they start — because the wrong influencers are chosen for the wrong reasons. We build campaigns around audience fit, not follower count.
+        </p>
       </div>
-
-      <TitleTag class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-2 relative">
-        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.03em] leading-[1.05] text-white">
-          The Right Voice,<br/>
-          <span class="bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent-cyan)] to-[#a78bfa]">Reaching the Right Audience.</span>
-        </span>
-      </TitleTag>
-
-      <p class="font-body text-[18px] text-[var(--text-secondary)] max-w-2xl mx-auto mt-8 mb-12 leading-[1.7] reveal reveal-delay-3">
-        Most KOL campaigns fail before they start — because the wrong influencers are chosen for the wrong reasons. We build campaigns around audience fit, not follower count.
-      </p>
 
       <div class="flex flex-col sm:flex-row justify-center items-center gap-6 reveal reveal-delay-4 mt-8">
         <!-- Liquid Glass Button -->
