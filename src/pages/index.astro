@@ -10,6 +10,7 @@ import ProcessSection from '../components/sections/ProcessSection.astro';
 import BlogHighlight from '../components/sections/BlogHighlight.astro';
 import FaqSection from '../components/sections/FaqSection.astro';
 import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
+import PrCtaSection from '../components/sections/PrCtaSection.astro';
 import { getFeaturedCaseStudy } from '../lib/wordpress';
 
 const featuredCase = await getFeaturedCaseStudy();
@@ -126,6 +127,9 @@ const combinedSchema = [faqSchema, websiteSchema, localBusinessSchema];
   <GlobalNetwork />
   {featuredCase && <CaseStudyWidget caseStudy={featuredCase} />}
   <ProcessSection />
+
+  <!-- PR CTA Section (Newspaper Mockup) -->
+  <PrCtaSection isHero={false} />
 
   <BlogHighlight />
 
