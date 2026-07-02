@@ -134,11 +134,20 @@ const row2Clients = clients.slice(Math.ceil(clients.length / 2));
     transform: scale(1.12);
   }
 
-  /* Slow down scrolling speeds for easier readability of large logos */
+  /* Adjust scrolling speeds: faster on mobile for dynamics, slower on desktop for readability */
   .marquee-track {
-    animation-duration: 45s;
+    animation-duration: 20s;
   }
   .marquee-track-reverse {
-    animation-duration: 45s;
+    animation-duration: 20s;
+  }
+
+  @media (min-width: 768px) {
+    .marquee-track {
+      animation-duration: 45s;
+    }
+    .marquee-track-reverse {
+      animation-duration: 45s;
+    }
   }
 </style>
