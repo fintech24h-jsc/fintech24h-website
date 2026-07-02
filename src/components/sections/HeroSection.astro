@@ -172,9 +172,9 @@ const starsLarge = generateStars(30);
     top: 0;
     left: 0;
   }
-  #stars-small { animation: animStar 100s linear infinite; }
-  #stars-medium { animation: animStar 150s linear infinite; }
-  #stars-large { animation: animStar 200s linear infinite; }
+  #stars-small  { animation: animStar 100s linear infinite; will-change: transform; }
+  #stars-medium { animation: animStar 150s linear infinite; will-change: transform; }
+  #stars-large  { animation: animStar 200s linear infinite; will-change: transform; }
 
   #stars-small::after, #stars-medium::after, #stars-large::after {
     content: " ";
@@ -210,6 +210,8 @@ const starsLarge = generateStars(30);
     text-fill-color: transparent;
     -webkit-text-fill-color: transparent;
     animation: sheen-sweep 8s linear infinite;
+    transform: translateZ(0); /* force GPU compositing layer — reduces main-thread paint cost */
+    isolation: isolate;
   }
   @keyframes sheen-sweep {
     0% { background-position: 200% 0; }

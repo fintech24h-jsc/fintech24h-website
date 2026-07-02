@@ -453,7 +453,7 @@
       linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
     background-size: 48px 48px;
-    animation: background-drift 24s linear infinite;
+    /* background-drift removed: 2px/s movement is imperceptible but costs main-thread repaint at 60fps */
   }
 
   .border-accent-warm {
