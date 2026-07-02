@@ -1,0 +1,96 @@
+---
+// src/components/sections/KolCtaSection.astro
+interface Props {
+  isHero?: boolean;
+}
+const { isHero = false } = Astro.props;
+const TitleTag = isHero ? 'h1' : 'h2';
+---
+  <section class="relative min-h-[90vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden border-b border-white/10 bg-[#04060A]">
+    <!-- Network Background Nodes -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute top-[20%] left-[10%] w-32 h-32 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_6s_ease-in-out_infinite]">
+        <div class="w-12 h-12 rounded-full bg-[var(--gradient-glow-cyan)] opacity-20 blur-xl"></div>
+        <img src="https://i.pravatar.cc/100?img=11" alt="KOL influencer" width="40" height="40" class="w-10 h-10 rounded-full border border-[var(--accent-cyan)] object-cover opacity-60 absolute" loading="lazy" decoding="async" />
+        <div class="absolute inset-0 rounded-full border border-[var(--accent-cyan)] opacity-20 animate-[pulse-ring_3s_ease-out_infinite]"></div>
+      </div>
+
+      <div class="absolute top-[30%] right-[15%] w-40 h-40 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_8s_ease-in-out_infinite_reverse]">
+        <div class="w-16 h-16 rounded-full bg-[var(--gradient-glow-purple)] opacity-20 blur-xl"></div>
+        <img src="https://i.pravatar.cc/100?img=12" alt="KOL influencer" width="48" height="48" class="w-12 h-12 rounded-full border border-[#a78bfa] object-cover opacity-60 absolute" loading="lazy" decoding="async" />
+        <div class="absolute inset-0 rounded-full border border-[#a78bfa] opacity-20 animate-[pulse-ring_4s_ease-out_infinite]"></div>
+      </div>
+
+      <div class="absolute bottom-[20%] left-[25%] w-24 h-24 rounded-full border border-white/5 flex items-center justify-center animate-[float-fast_5s_ease-in-out_infinite]">
+        <img src="https://i.pravatar.cc/100?img=13" alt="KOL influencer" width="32" height="32" class="w-8 h-8 rounded-full border border-white/30 object-cover opacity-40 absolute" loading="lazy" decoding="async" />
+      </div>
+
+      <!-- Connecting Lines (SVG) -->
+      <svg class="absolute inset-0 w-full h-full opacity-10" preserveAspectRatio="none">
+        <line x1="15%" y1="25%" x2="50%" y2="50%" stroke="var(--accent-cyan)" stroke-width="1" stroke-dasharray="4 4" class="line-reveal" />
+        <line x1="80%" y1="35%" x2="50%" y2="50%" stroke="#a78bfa" stroke-width="1" stroke-dasharray="4 4" class="line-reveal delay-200" />
+        <line x1="30%" y1="75%" x2="50%" y2="50%" stroke="white" stroke-width="1" stroke-dasharray="4 4" class="line-reveal delay-500" />
+      </svg>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto w-full text-center">
+      <div class="inline-flex items-center justify-center mb-8 reveal reveal-delay-1">
+        <span class="px-4 py-1.5 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] font-mono text-xs uppercase tracking-[0.14em] shadow-[0_0_15px_rgba(0,200,240,0.2)]">
+          KOL & INFLUENCER MARKETING
+        </span>
+      </div>
+
+      <TitleTag class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-2 relative">
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.03em] leading-[1.05] text-white">
+          The Right Voice,<br/>
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent-cyan)] to-[#a78bfa]">Reaching the Right Audience.</span>
+        </span>
+      </TitleTag>
+
+      <p class="font-body text-[18px] text-[var(--text-secondary)] max-w-2xl mx-auto mt-8 mb-12 leading-[1.7] reveal reveal-delay-3">
+        Most KOL campaigns fail before they start — because the wrong influencers are chosen for the wrong reasons. We build campaigns around audience fit, not follower count.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-6 reveal reveal-delay-4 mt-8">
+        <!-- Liquid Glass Button -->
+        <a href="/services/kol-marketing" class="relative overflow-hidden font-mono text-sm uppercase tracking-widest font-bold text-white border border-[var(--accent-cyan)]/40 bg-[var(--accent-cyan)]/10 px-8 py-4 rounded-xl hover:bg-[var(--accent-cyan)]/20 hover:border-[var(--accent-cyan)] hover:shadow-[0_0_40px_rgba(0,200,240,0.3)] transition-all duration-500 group/btn backdrop-blur-md">
+          <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite]"></span>
+          <span class="relative z-10 drop-shadow-[0_0_8px_rgba(0,200,240,0.8)]">Get a KOL Proposal</span>
+        </a>
+        
+        <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="font-mono text-sm uppercase tracking-widest font-bold text-white/70 hover:text-white transition-colors border-b border-transparent hover:border-white/50 pb-1">
+          Chat on Telegram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .line-reveal { transform: scaleX(0); transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); transform-origin: left; }
+    .revealed .line-reveal { transform: scaleX(1); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reveal, svg').forEach(el => observer.observe(el));
+    });
+  </script>

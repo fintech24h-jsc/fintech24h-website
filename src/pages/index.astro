@@ -11,6 +11,7 @@ import BlogHighlight from '../components/sections/BlogHighlight.astro';
 import FaqSection from '../components/sections/FaqSection.astro';
 import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
 import PrCtaSection from '../components/sections/PrCtaSection.astro';
+import KolCtaSection from '../components/sections/KolCtaSection.astro';
 import { getFeaturedCaseStudy } from '../lib/wordpress';
 
 const featuredCase = await getFeaturedCaseStudy();
@@ -132,6 +133,9 @@ const combinedSchema = [faqSchema, websiteSchema, localBusinessSchema];
   <PrCtaSection isHero={false} />
 
   <BlogHighlight />
+
+  <!-- KOL CTA Section -->
+  <KolCtaSection isHero={false} />
 
   <FaqSection />
   <FooterLeadForm />
