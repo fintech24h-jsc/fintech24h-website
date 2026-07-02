@@ -466,6 +466,7 @@
     display: flex;
     gap: 4rem;
     animation: marquee-scroll 35s linear infinite;
+    will-change: transform;
   }
   .marquee-track:hover {
     animation-play-state: paused;
@@ -529,7 +530,51 @@
   display: flex;
   gap: 4rem;
   animation: marquee-scroll-reverse 35s linear infinite;
+  will-change: transform;
 }
 .marquee-track-reverse:hover {
   animation-play-state: paused;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE PERFORMANCE & APP-LIKE UX
+   Rule: none of these rules affect desktop (min-width: 768px+)
+   ═══════════════════════════════════════════════════════════ */
+
+/* App-like touch baseline — all screen sizes */
+html {
+  overscroll-behavior-y: contain;
+}
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+a, button, [role="button"], summary, label {
+  touch-action: manipulation;
+}
+
+@media (max-width: 767px) {
+  /* ─── GPU relief: backdrop-filter is the single biggest GPU drain on mobile ─── */
+  /* Removing it saves 1 compositing layer per card — with 6+ cards this is huge */
+  .card-default,
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* ─── Disable hover lift on touch devices — "stuck hover" after tap ─── */
+  @media (hover: none) {
+    .card-default:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    .btn-primary:hover,
+    .btn-ghost:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  /* ─── Marquee speed on mobile ─── */
+  .marquee-track { animation-duration: 28s; }
+  .marquee-track-reverse { animation-duration: 32s; }
 }

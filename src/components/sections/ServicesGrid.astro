@@ -33,7 +33,7 @@ const colors = [
 ];
 ---
 
-<section class="py-32 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Services Overview">
+<section class="py-14 md:py-32 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Services Overview">
   <!-- Background ambient mesh -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
     <div class="absolute w-[600px] h-[600px] rounded-full"
@@ -50,7 +50,7 @@ const colors = [
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Section Heading -->
-    <div class="max-w-3xl mb-16 text-left animate-fade-up">
+    <div class="max-w-3xl mb-8 md:mb-16 text-left animate-fade-up">
       <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
         Core Solutions
@@ -67,24 +67,25 @@ const colors = [
     <div class="grid lg:grid-cols-12 gap-8 items-stretch relative">
       
       <!-- Left Side: Interactive Sidebar Dock (4 columns) -->
-      <div class="lg:col-span-4 flex flex-col gap-2.5 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar" id="services-dock">
+      <!-- Mobile: horizontal scroll snap tabs | Desktop: vertical sidebar -->
+      <div class="lg:col-span-4 flex flex-col gap-2.5 lg:max-h-[500px] lg:overflow-y-auto pr-2 custom-scrollbar" id="services-dock">
         {services.map((s, idx) => (
           <button
-            class={`service-dock-item text-left py-5 px-6 rounded-2xl border transition-all duration-300 flex items-center justify-between group ${
-              idx === 0 
-                ? 'border-[#ff6b83]/30 bg-[rgba(255,107,131,0.03)] text-white active-item' 
+            class={`service-dock-item text-left py-3.5 lg:py-5 px-4 lg:px-6 rounded-xl lg:rounded-2xl border transition-all duration-300 flex items-center justify-between group ${
+              idx === 0
+                ? 'border-[#ff6b83]/30 bg-[rgba(255,107,131,0.03)] text-white active-item'
                 : 'border-white/5 bg-white/[0.01] text-[var(--text-secondary)] hover:border-white/10 hover:bg-white/[0.02]'
             }`}
             data-index={idx}
             data-color={colors[idx]}
             aria-pressed={idx === 0 ? "true" : "false"}
           >
-            <div class="flex items-center gap-4">
-              <span class="font-mono text-xs text-[var(--text-muted)] group-hover:text-white transition-colors">0{idx + 1}</span>
+            <div class="flex items-center gap-3 lg:gap-4">
+              <span class="font-mono text-[10px] lg:text-xs text-[var(--text-muted)] group-hover:text-white transition-colors">0{idx + 1}</span>
               <div class="transition-colors group-hover:text-white" set:html={icons[s.id]} />
-              <span class="text-sm sm:text-base font-bold font-display tracking-wide">{s.title}</span>
+              <span class="text-xs lg:text-base font-bold font-display tracking-wide">{s.title}</span>
             </div>
-            <svg class="w-4 h-4 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
             </svg>
           </button>
@@ -93,7 +94,7 @@ const colors = [
 
       <!-- Right Side: Bento Board Info Display (8 columns) -->
       <div class="lg:col-span-8 relative">
-        <div class="h-full p-8 lg:p-12 rounded-[24px] border border-white/5 bg-gradient-to-br from-white/[0.01] to-white/[0.03] shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative overflow-hidden flex flex-col justify-between min-h-[480px]" id="bento-board">
+        <div class="h-full p-5 sm:p-7 lg:p-12 rounded-[20px] lg:rounded-[24px] border border-white/5 bg-gradient-to-br from-white/[0.01] to-white/[0.03] shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative overflow-hidden flex flex-col justify-between min-h-[auto] lg:min-h-[480px]" id="bento-board">
           
           <!-- Dynamic Background Glow based on Active Color -->
           <div class="absolute inset-0 bg-radial-gradient(circle, rgba(255,107,131,0.03) 0%, transparent 60%) pointer-events-none transition-all duration-700" id="bento-glow"></div>
