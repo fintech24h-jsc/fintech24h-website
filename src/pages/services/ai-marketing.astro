@@ -13,19 +13,19 @@ const breadcrumbs = [
 const faqs = [
   {
     q: "Do you build custom AI models?",
-    a: "We don't build LLMs from scratch. We fine-tune existing top-tier models (GPT-4, Claude 3, Llama) on your specific project documentation, tone of voice, and historical data to create specialized agents for moderation and content."
+    a: "We fine-tune existing top-tier models (GPT-4, Claude 3, Llama) on your specific project documentation, tone of voice, and historical data to create highly specialized, emotionally intelligent agents for your community."
   },
   {
-    q: "Will the community know they are talking to an AI?",
-    a: "We advocate for transparency. The best AI integrations are clearly labeled as AI assistants but are so useful that the community prefers talking to them for instant, accurate technical answers."
+    q: "Will the community know they are interacting with an AI?",
+    a: "We advocate for transparency. The best AI integrations are clearly labeled as digital assistants but are so useful, empathetic, and rapid that the community genuinely prefers interacting with them for technical support."
   },
   {
-    q: "How does AI handle sentiment analysis?",
-    a: "Our bots continuously scrape Telegram, Discord, and Twitter, assigning sentiment scores (-1 to +1) to keywords and topics. If negative sentiment spikes around a specific feature, you get an automated alert before it becomes a crisis."
+    q: "How does the AI handle sentiment analysis?",
+    a: "Our systems continuously analyze social streams across Telegram, Discord, and X (Twitter). We track emotional resonance and flag potential crises or viral moments before they hit the mainstream timeline."
   },
   {
-    q: "Can AI completely replace human moderators?",
-    a: "No. AI replaces the repetitive, low-value work (answering 'wen token', filtering spam, providing contract addresses). Humans are still required for complex dispute resolution and genuine community relationship building."
+    q: "Does AI completely replace human moderators?",
+    a: "No. AI handles the repetitive, high-volume queries and data filtering. Human moderators are elevated to community managers—focusing purely on relationship building and complex dispute resolution."
   }
 ];
 
@@ -58,113 +58,108 @@ const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="AI Product Marketing & GTM Strategy for AI Startups | Fintech24h"
-  description="Go-to-market strategy and marketing execution for AI products and AI startups. Fintech24h positions AI products clearly, credibly, and distinctively in a crowded market."
+  title="AI Product Marketing & GTM Strategy | Fintech24h"
+  description="Go-to-market strategy and marketing execution for AI products. Fintech24h positions AI startups clearly and distinctively with fluid, automated marketing pipelines."
   schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- SECTION 1 — HERO (Cyber HUD / Terminal) -->
-  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden bg-[#0A0F15]">
-    <!-- Cyber Grid Background -->
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f01a_1px,transparent_1px),linear-gradient(to_bottom,#00c8f01a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--accent-cyan)] opacity-[0.05] blur-[100px] rounded-full"></div>
-    </div>
-
-    <!-- HUD Elements -->
-    <div class="absolute top-24 left-8 hidden lg:block font-mono text-[10px] text-[var(--accent-cyan)] opacity-50">
-      <div class="mb-1">SYS.STATUS // ONLINE</div>
-      <div class="mb-1">NODE.ID // 0x4F9...A1B</div>
-      <div class="mb-1">SYNC // 99.9%</div>
-    </div>
+  <!-- SECTION 1 — HERO (Liquid Glass Core) -->
+  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden bg-[var(--bg-primary)]">
     
-    <div class="absolute bottom-12 right-8 hidden lg:block font-mono text-[10px] text-[var(--accent-cyan)] opacity-50 text-right">
-      <div class="flex gap-1 mb-1 justify-end">
-        <span class="w-2 h-4 bg-[var(--accent-cyan)] opacity-20"></span>
-        <span class="w-2 h-4 bg-[var(--accent-cyan)] opacity-50"></span>
-        <span class="w-2 h-4 bg-[var(--accent-cyan)] opacity-100"></span>
-        <span class="w-2 h-4 bg-[var(--accent-cyan)] opacity-100 animate-pulse"></span>
-      </div>
-      <div>DATA.STREAM // ACTIVE</div>
+    <!-- Ambient Liquid Orbs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full mix-blend-screen opacity-40" 
+           style="background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%); filter: blur(90px); animation: float-slow 12s ease-in-out infinite;"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full mix-blend-screen opacity-40" 
+           style="background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%); filter: blur(100px); animation: float-fast 15s ease-in-out infinite reverse;"></div>
     </div>
 
-    <div class="relative z-10 max-w-5xl mx-auto w-full text-center">
-      <div class="inline-block mb-8 reveal">
-        <div class="relative px-6 py-2 border border-[var(--accent-cyan)]/30 bg-[#00c8f00a] text-[var(--accent-cyan)] font-mono text-xs uppercase tracking-widest overflow-hidden group">
-          <div class="absolute top-0 left-0 w-full h-[1px] bg-[var(--accent-cyan)] opacity-50 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-          AI MARKETING & AUTOMATION
-          <div class="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[var(--accent-cyan)]"></div>
-          <div class="absolute top-0 left-0 w-2 h-2 border-l border-t border-[var(--accent-cyan)]"></div>
-        </div>
+    <!-- Hero Content in a Glass Pane -->
+    <div class="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center text-center mt-12">
+      
+      <!-- Premium Eyebrow -->
+      <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md mb-8 reveal shadow-[0_4px_24px_rgba(0,200,240,0.1)]">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent-cyan)] opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent-cyan)]"></span>
+        </span>
+        <span class="font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-[var(--accent-cyan)]">
+          Intelligent Marketing Operations
+        </span>
       </div>
 
-      <h1 class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-1 relative">
-        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-white mb-2 leading-none" style="text-shadow: 0 0 20px rgba(255,255,255,0.1);">
-          In a Market Full of "AI-Powered" Claims,
+      <!-- Main Headline -->
+      <h1 class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-1 leading-[1.1] mb-6">
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-white mb-2">
+          In a Sea of AI Noise,
         </span>
-        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-[var(--accent-cyan)] relative inline-block group">
-          Yours Needs to Mean Something.
-          <!-- Glitch Effect Layer -->
-          <span class="absolute top-0 left-0 w-full h-full text-[var(--accent-cyan)] opacity-0 group-hover:opacity-100 animate-[glitch_0.2s_linear_infinite] pointer-events-none mix-blend-screen" style="clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); transform: translate(-2px, 2px);">Yours Needs to Mean Something.</span>
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight bg-clip-text text-transparent sheen-text">
+          Yours Must Resonate.
         </span>
       </h1>
 
-      <div class="font-mono text-sm text-[var(--text-secondary)] max-w-3xl mx-auto mt-12 mb-12 leading-relaxed reveal reveal-delay-2 p-6 border border-white/10 bg-black/40 text-left relative">
-        <div class="absolute -top-3 -left-3 text-[var(--accent-cyan)]/30 text-2xl">┌</div>
-        <div class="absolute -bottom-3 -right-3 text-[var(--accent-cyan)]/30 text-2xl">┘</div>
-        <div class="overflow-hidden whitespace-normal border-r-2 border-[var(--accent-cyan)] pr-2 animate-[typing_2s_steps(40,end),blink-caret_1s_step-end_infinite]">
-          > Every startup claims AI. Projects that win trust communicate what their AI actually does, clearly and without hype. We integrate custom AI solutions to supercharge your marketing operations.
-        </div>
+      <!-- Subheadline inside a frosted glass card -->
+      <div class="glass-panel p-6 sm:p-8 max-w-3xl mx-auto mt-8 mb-12 reveal reveal-delay-2 rounded-2xl relative overflow-hidden group">
+        <div class="absolute inset-0 bg-gradient-to-r from-[var(--accent-cyan)]/0 via-[var(--accent-cyan)]/5 to-[var(--accent-purple)]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        <p class="font-body text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed relative z-10">
+          Every startup claims AI. Projects that win trust communicate what their AI actually does—clearly, beautifully, and without hype. We build fluid, intelligent marketing pipelines that convert noise into lasting market dominance.
+        </p>
       </div>
 
-      <div class="flex justify-center reveal reveal-delay-3 mt-8">
-        <a href="#book-call" class="relative overflow-hidden font-mono text-sm uppercase tracking-widest font-bold text-black bg-[var(--accent-cyan)] px-8 py-4 hover:shadow-[0_0_30px_var(--accent-cyan)] transition-all duration-300 group">
-          <span class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-          <span class="relative z-10 flex items-center gap-2">
-            [DEPLOY_AI_MARKETING]
-          </span>
+      <!-- Liquid Glass CTA -->
+      <div class="reveal reveal-delay-3 flex justify-center">
+        <a href="#book-call" class="btn-liquid-glass-primary px-8 py-4 text-sm tracking-widest group">
+          <span>Deploy AI Strategy</span>
+          <svg class="w-4 h-4 ml-2 inline-block transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 2 — THE DASHBOARD (Simulated Data) -->
-  <section class="py-24 bg-[#05080C] relative z-10 border-t border-[var(--accent-cyan)]/20">
-    <div class="max-w-7xl mx-auto px-4 lg:px-8">
-      <div class="mb-16 reveal flex items-center gap-4 border-b border-white/10 pb-4">
-        <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-        <h2 class="font-mono text-2xl text-white uppercase tracking-widest">SYSTEM_MODULES</h2>
+  <!-- SECTION 2 — THE ECOSYSTEM (Frosted Glass Cards) -->
+  <section class="py-24 sm:py-32 relative z-10 border-t border-white/5 overflow-hidden">
+    <!-- Ambient Background -->
+    <div class="absolute inset-0 bg-[#05080C] -z-20"></div>
+    <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-[var(--accent-purple)] opacity-[0.03] blur-[150px] rounded-full pointer-events-none -z-10"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
+      <div class="text-center mb-20 reveal">
+        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--accent-purple)] mb-4">The Modules</span>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-white tracking-tight">Intelligent Architecture</h2>
       </div>
 
-      <!-- Dashboard Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Glass Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         {[
-          { id: 'MOD_01', title: 'Automated Moderation & Q&A', desc: 'Custom LLMs trained on your whitepaper and docs. They answer complex technical questions instantly in Discord/Telegram, resolving 80% of queries without human intervention.', metric: '80% Ticket Reduction', chart: 'M0,100 L20,80 L40,85 L60,40 L80,50 L100,10' },
-          { id: 'MOD_02', title: 'Sentiment Scraping', desc: 'Real-time analysis of Twitter, Reddit, and Telegram. The AI assigns sentiment scores and flags potential FUD or viral trends before they fully materialize.', metric: 'Real-time Alerts', chart: 'M0,50 L20,40 L40,60 L60,20 L80,30 L100,5' },
-          { id: 'MOD_03', title: 'Programmatic Content', desc: 'AI-assisted generation of localized social media posts, translation into 15+ languages, and automated distribution pipelines timed for optimal engagement.', metric: '15+ Languages', chart: 'M0,90 L20,70 L40,75 L60,30 L80,20 L100,0' },
-          { id: 'MOD_04', title: 'Predictive Churn Analytics', desc: 'Analyzing on-chain wallet behavior combined with social engagement to predict which power users are at risk of leaving your ecosystem, triggering retention campaigns.', metric: 'Predictive Modeling', chart: 'M0,10 L20,30 L40,25 L60,80 L80,70 L100,90' }
+          { id: '01', title: 'Contextual Moderation', desc: 'Custom models trained on your whitepaper. They answer complex technical queries instantly, resolving 80% of support tickets with high empathy and accuracy.', highlight: 'var(--accent-cyan)' },
+          { id: '02', title: 'Sentiment Fluidity', desc: 'Real-time emotional tracking across Web3 platforms. AI assigns fluid sentiment scores, predicting viral trends or mitigating crises before they surface.', highlight: 'var(--accent-purple)' },
+          { id: '03', title: 'Generative Pipelines', desc: 'AI-assisted generation of localized social content, flawlessly translated into 15+ languages and distributed at peak engagement hours globally.', highlight: '#f0a278' },
+          { id: '04', title: 'Predictive Retention', desc: 'Analyzing on-chain and off-chain behavioral patterns to predict user churn. We intercept at-risk power users with personalized retention flows.', highlight: 'var(--accent-cyan)' }
         ].map((mod, i) => (
-          <div class="border border-[var(--accent-cyan)]/20 bg-[#0A0F15] p-6 hover:border-[var(--accent-cyan)]/60 transition-colors group relative reveal" style={`transition-delay: ${i * 0.15}s`}>
-            <!-- Cyber Corners -->
-            <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-[var(--accent-cyan)] opacity-50 group-hover:opacity-100"></div>
-            <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[var(--accent-cyan)] opacity-50 group-hover:opacity-100"></div>
+          <div class="glass-card p-8 sm:p-10 reveal group relative overflow-hidden" style={`transition-delay: ${i * 0.15}s`}>
+            <!-- Hover Glow Effect -->
+            <div class="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[inherit]" style={`background: linear-gradient(135deg, ${mod.highlight}33 0%, transparent 100%); z-index: 0;`}></div>
             
-            <div class="flex justify-between items-start mb-6">
-              <span class="font-mono text-xs text-[var(--accent-cyan)]">{mod.id}</span>
-              <span class="font-mono text-xs text-white/40 bg-white/5 px-2 py-1">{mod.metric}</span>
-            </div>
-            <h3 class="font-display text-xl text-white font-bold mb-3">{mod.title}</h3>
-            <p class="font-mono text-sm text-[var(--text-secondary)] leading-relaxed mb-6">{mod.desc}</p>
-            
-            <!-- Simulated Chart -->
-            <div class="w-full h-16 border-t border-[var(--accent-cyan)]/10 pt-4 relative opacity-50 group-hover:opacity-100 transition-opacity">
-              <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-                <path d={mod.chart} fill="none" stroke="var(--accent-cyan)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-dasharray="200" stroke-dashoffset="200">
-                  <animate attributeName="stroke-dashoffset" values="200;0" dur="2s" fill="freeze" />
-                </path>
-                <path d={`${mod.chart} L100,100 L0,100 Z`} fill="var(--accent-cyan)" opacity="0.1" />
-              </svg>
+            <div class="relative z-10">
+              <div class="flex justify-between items-center mb-8">
+                <span class="font-display text-4xl font-bold opacity-20 group-hover:opacity-100 transition-opacity duration-500" style={`color: ${mod.highlight}`}>{mod.id}</span>
+                <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:scale-110 transition-transform duration-500">
+                  <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </div>
+              </div>
+              <h3 class="font-display text-2xl text-white font-bold mb-4">{mod.title}</h3>
+              <p class="font-body text-[var(--text-secondary)] leading-relaxed text-sm sm:text-base">{mod.desc}</p>
+              
+              <!-- Smooth Sparkline -->
+              <div class="w-full h-12 mt-8 opacity-40 group-hover:opacity-100 transition-opacity duration-500">
+                <svg viewBox="0 0 100 20" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+                  <path d={i % 2 === 0 ? "M0 15 Q25 5 50 15 T100 5" : "M0 5 Q25 15 50 5 T100 15"} fill="none" stroke={mod.highlight} stroke-width="1.5" stroke-linecap="round" class="sparkline-path" />
+                  <path d={i % 2 === 0 ? "M0 15 Q25 5 50 15 T100 5 L100 25 L0 25 Z" : "M0 5 Q25 15 50 5 T100 15 L100 25 L0 25 Z"} fill={mod.highlight} opacity="0.1" />
+                </svg>
+              </div>
             </div>
           </div>
         ))}
@@ -172,55 +167,66 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <!-- SECTION 3 — IMPACT (Monospace Data List) -->
-  <section class="py-24 bg-[#0A0F15] relative z-10 border-t border-[var(--accent-cyan)]/20">
+  <!-- SECTION 3 — PERFORMANCE COMPARISON (Glass Rows) -->
+  <section class="py-24 sm:py-32 bg-[var(--bg-primary)] relative z-10 border-t border-white/5">
     <div class="max-w-5xl mx-auto px-4 lg:px-8">
       <div class="text-center mb-16 reveal">
-        <h2 class="font-mono text-2xl text-[var(--accent-cyan)] uppercase tracking-widest">PERFORMANCE_METRICS</h2>
+        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--accent-cyan)] mb-4">The Impact</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">Fluid Performance Shift</h2>
       </div>
 
-      <div class="bg-black border border-[var(--accent-cyan)]/30 p-8 font-mono text-sm md:text-base">
-        <div class="flex border-b border-[var(--accent-cyan)]/30 pb-4 text-[var(--accent-cyan)]/60 uppercase">
-          <div class="w-1/3">METRIC_TYPE</div>
-          <div class="w-1/3 text-center">HUMAN_ONLY</div>
-          <div class="w-1/3 text-right text-[var(--accent-cyan)]">AI_AUGMENTED</div>
+      <div class="glass-panel p-2 sm:p-4 rounded-3xl overflow-hidden shadow-2xl reveal reveal-delay-1">
+        <!-- Header Row -->
+        <div class="flex items-center px-6 py-4 border-b border-white/10">
+          <div class="w-2/5 font-mono text-xs text-[var(--text-secondary)] uppercase tracking-wider">Metric</div>
+          <div class="w-1/5 font-mono text-xs text-[var(--text-secondary)] uppercase tracking-wider text-center hidden sm:block">Standard</div>
+          <div class="w-full sm:w-2/5 font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-wider text-right">AI Augmented</div>
         </div>
         
-        {[
-          { m: 'Avg Response Time', h: '3-5 Mins', a: '< 5 Seconds' },
-          { m: 'Cost per Query', h: '$1.50', a: '$0.002' },
-          { m: 'Sentiment Tracking', h: 'Weekly Reports', a: 'Real-Time Streaming' },
-          { m: 'Content Localization', h: '3 Languages', a: '15+ Languages' }
-        ].map((row, i) => (
-          <div class="flex border-b border-[var(--accent-cyan)]/10 py-4 hover:bg-[var(--accent-cyan)]/5 transition-colors reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <div class="w-1/3 text-white">{row.m}</div>
-            <div class="w-1/3 text-center text-white/40">{row.h}</div>
-            <div class="w-1/3 text-right text-[var(--accent-cyan)]">{row.a}</div>
-          </div>
-        ))}
+        <!-- Data Rows -->
+        <div class="space-y-2 mt-2">
+          {[
+            { label: 'Avg Response Time', old: '3-5 Mins', new: '< 5 Seconds' },
+            { label: 'Cost per Resolution', old: '$1.50', new: '$0.002' },
+            { label: 'Sentiment Tracking', old: 'Weekly', new: 'Real-Time' },
+            { label: 'Content Localization', old: '3 Locales', new: '15+ Locales' }
+          ].map((row, i) => (
+            <div class="flex items-center px-6 py-5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/0 hover:border-white/10 transition-all duration-300 group">
+              <div class="w-2/5 font-display text-sm sm:text-base text-white font-medium group-hover:text-[var(--accent-cyan)] transition-colors">{row.label}</div>
+              <div class="w-1/5 text-center font-mono text-xs sm:text-sm text-[var(--text-muted)] hidden sm:block line-through opacity-50">{row.old}</div>
+              <div class="w-full sm:w-2/5 text-right font-display text-base sm:text-lg text-white font-bold group-hover:text-white drop-shadow-[0_0_8px_rgba(0,200,240,0.5)] transition-all">{row.new}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ SECTION (Terminal Accordion) -->
-  <section class="py-24 bg-[#05080C] border-t border-[var(--accent-cyan)]/20">
-    <div class="max-w-4xl mx-auto px-4 lg:px-8">
-      <div class="mb-12 reveal">
-        <h2 class="font-mono text-xl text-[var(--accent-cyan)]">C:\FAQ\query_database.exe</h2>
+  <!-- FAQ SECTION (Elegant Glass Accordions) -->
+  <section class="py-24 sm:py-32 bg-[#05080C] relative z-10 border-t border-white/5">
+    <div class="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[var(--accent-cyan)] opacity-[0.03] blur-[120px] rounded-full pointer-events-none -z-10"></div>
+    
+    <div class="max-w-3xl mx-auto px-4 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">Clarity & Vision</h2>
       </div>
       
       <div class="space-y-4">
         {faqs.map((faq, i) => (
-          <details class="group bg-[#0A0F15] border border-[var(--accent-cyan)]/20 reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-mono text-sm md:text-base text-white hover:bg-[var(--accent-cyan)]/10 transition-colors">
-              <span class="flex items-center gap-4">
-                <span class="text-[var(--accent-cyan)]">></span>
+          <details class="glass-accordion group reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <summary class="flex justify-between items-center p-6 sm:p-8 cursor-pointer list-none">
+              <h3 class="font-display text-lg sm:text-xl text-white font-medium group-hover:text-[var(--accent-cyan)] transition-colors pr-8">
                 {faq.q}
-              </span>
-              <span class="text-[var(--accent-cyan)] group-open:rotate-90 transition-transform">]</span>
+              </h3>
+              <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center bg-white/5 group-open:rotate-45 group-open:border-[var(--accent-cyan)]/50 group-open:text-[var(--accent-cyan)] transition-all duration-300 shrink-0">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+              </div>
             </summary>
-            <div class="p-6 pt-0 text-[var(--text-secondary)] font-mono text-sm leading-relaxed border-t border-[var(--accent-cyan)]/10 mt-2 bg-black/40">
-              <span class="text-green-500 mr-2">OK:</span> {faq.a}
+            <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-0">
+              <div class="w-full h-px bg-gradient-to-r from-white/10 to-transparent mb-6"></div>
+              <p class="font-body text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">
+                {faq.a}
+              </p>
             </div>
           </details>
         ))}
@@ -234,13 +240,63 @@ const combinedSchema = [serviceSchema, faqSchema];
 </BaseLayout>
 
 <style>
+  /* Base Glassmorphism Utilities */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  
+  .glass-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 1.5rem;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), 0 12px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  .glass-accordion {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+  }
+  .glass-accordion:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
   summary::-webkit-details-marker { display: none; }
-  .reveal { opacity: 0; transform: scale(0.98) translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
-  .reveal.revealed { opacity: 1; transform: scale(1) translateY(0); }
+  
+  /* Smooth Animations */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+  
+  .sparkline-path {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: draw-sparkline 3s ease-out forwards;
+  }
+  @keyframes draw-sparkline { to { stroke-dashoffset: 0; } }
+  
+  @media (prefers-reduced-motion: reduce) { 
+    .reveal { opacity: 1; transform: none; transition: none; } 
+    .sparkline-path { animation: none; stroke-dashoffset: 0; }
+  }
 </style>
 
 <script>
@@ -253,7 +309,8 @@ const combinedSchema = [serviceSchema, faqSchema];
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   });
 </script>
+
