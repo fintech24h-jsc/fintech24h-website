@@ -1,0 +1,188 @@
+---
+// src/pages/terms.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Terms of Service', item: 'https://fintech24h.com/terms' }
+];
+
+const EFFECTIVE_DATE = 'July 4, 2026';
+---
+
+<BaseLayout
+  title="Terms of Service — Fintech24h"
+  description="The terms that govern use of the Fintech24h website and engagement of our Blockchain & AI marketing services."
+  canonical="https://fintech24h.com/terms"
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="Terms of Service">
+    <!-- Ambient background glows -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-cyan w-[600px] h-[600px] absolute -top-40 right-10 opacity-15"></div>
+      <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute bottom-10 -left-32 opacity-10"></div>
+      <div class="grid-pattern absolute inset-0 opacity-20"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Section header -->
+      <div class="mb-16" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/5 text-[var(--accent-purple)] text-xs font-mono font-medium tracking-widest uppercase mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] animate-pulse"></span>
+          Legal
+        </div>
+        <h1 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-4">Terms of Service</h1>
+        <p class="font-body text-[var(--text-secondary)] text-lg leading-relaxed">
+          Effective date: {EFFECTIVE_DATE}. Please read these terms before using this website or engaging
+          Fintech24h for services.
+        </p>
+      </div>
+
+      <div class="w-16 h-px bg-gradient-to-r from-transparent via-[var(--accent-purple)]/60 to-transparent mb-16"></div>
+
+      <!-- Content -->
+      <div class="space-y-12 font-body text-[var(--text-secondary)] leading-relaxed" data-animate="fade-up">
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">1. Acceptance of terms</h2>
+          <p>
+            By accessing this website or submitting an inquiry to Fintech24h ("we", "us", "our"), you agree to
+            these Terms of Service. If you engage us for paid services, the specific scope, deliverables,
+            timeline, and fees will be set out in a separate signed proposal or service agreement, which takes
+            precedence over this page in case of conflict.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">2. Our services</h2>
+          <p>
+            Fintech24h provides Blockchain &amp; AI marketing services, including KOL &amp; Influencer Marketing,
+            PR &amp; Media, Community Growth &amp; Management, Event Marketing, AI Marketing, and Business
+            Development. Service availability, packages, and pricing referenced on this website are indicative
+            and may change without notice; a formal quote is confirmed only in a signed proposal.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">3. Client responsibilities</h2>
+          <p class="mb-3">When engaging our services, you agree to:</p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li>Provide accurate information about your project, product, and business</li>
+            <li>Ensure your project's marketing, fundraising, and token-related activities comply with the laws and regulations of every jurisdiction you target</li>
+            <li>Provide timely feedback, approvals, and assets needed for us to execute campaigns</li>
+            <li>Not use our services to promote fraudulent, misleading, or illegal offerings</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">4. Fees &amp; payment</h2>
+          <p>
+            Fees, deposit requirements, payment schedule, and accepted currencies (including USD and USDT) are
+            specified in the individual proposal or service agreement signed with each client. Cryptocurrency
+            payments carry inherent price volatility risk between invoicing and settlement, which is the
+            responsibility of the paying party unless otherwise agreed in writing.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">5. No financial or investment advice</h2>
+          <p>
+            Fintech24h is a marketing agency, not a financial advisor, broker-dealer, or investment firm.
+            Nothing on this website or in our communications constitutes financial, legal, tax, or investment
+            advice, or a solicitation to buy or sell any token or security. You are solely responsible for
+            evaluating the legal and financial implications of your own project.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">6. No guaranteed results</h2>
+          <p>
+            Marketing outcomes such as media placements, KOL reach, community growth, engagement rates, and
+            fundraising introductions depend on factors outside our control, including third-party platforms,
+            publications, and market conditions. Any figures, case studies, or metrics shown on this website are
+            illustrative of past engagements and are not a guarantee of future results.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">7. Intellectual property</h2>
+          <p>
+            You retain all rights to your own brand, product, and materials you provide to us. Fintech24h
+            retains rights to its proprietary methodologies, templates, and internal tools. Campaign creative
+            produced specifically for a client becomes the client's property upon full payment, unless otherwise
+            agreed in the service agreement.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">8. Confidentiality</h2>
+          <p>
+            Both parties agree to keep confidential any non-public business, financial, or strategic information
+            shared in the course of an engagement, and to use it only for the purpose of delivering or receiving
+            the agreed services.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">9. Third-party services</h2>
+          <p>
+            Delivering our services may involve independent third parties — influencers, media outlets,
+            exchanges, launchpads, venture capital firms, and platform tools such as Calendly, HubSpot, and
+            Google. Fintech24h facilitates these introductions and coordination in good faith but is not
+            responsible for the independent acts, omissions, or terms of third parties.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">10. Limitation of liability</h2>
+          <p>
+            To the maximum extent permitted by law, Fintech24h's total liability arising from any engagement is
+            limited to the fees paid by the client for the specific service giving rise to the claim. We are not
+            liable for indirect, incidental, or consequential damages, including lost profits or lost
+            opportunities.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">11. Termination</h2>
+          <p>
+            Either party may terminate an active engagement in accordance with the notice period and terms set
+            out in the applicable service agreement. Fees for work already performed remain payable.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">12. Governing law</h2>
+          <p>
+            These terms are governed by the laws of Vietnam. Any dispute that cannot be resolved amicably will
+            be subject to the exclusive jurisdiction of the competent courts of Ho Chi Minh City, Vietnam, unless
+            otherwise agreed in a signed service agreement.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">13. Changes to these terms</h2>
+          <p>
+            We may update these terms from time to time. The "Effective date" above reflects the latest
+            revision. Continued use of this website after changes are posted constitutes acceptance of the
+            updated terms.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-display text-h3 font-semibold text-[var(--text-primary)] mb-3">14. Contact us</h2>
+          <p>
+            Questions about these terms can be sent to
+            <a href="mailto:info@fintech24h.com" class="text-[var(--accent-cyan)] hover:underline"> info@fintech24h.com</a>
+            or via Telegram at
+            <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="text-[var(--accent-cyan)] hover:underline"> @fintech24h</a>.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>

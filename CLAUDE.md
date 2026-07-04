@@ -353,12 +353,12 @@ Partnership: https://docs.google.com/forms/d/e/1FAIpQLSeOhaoV-q4dyjEgVa5fVQToKPt
 ### 6.5 Sáu dịch vụ cốt lõi (không thêm bớt)
 
 ```
-1. KOL & Influencer Marketing    → /services/kol-influencer-marketing
+1. KOL & Influencer Marketing    → /services/kol-marketing
 2. PR & Media                    → /services/pr-media
-3. Community Management          → /services/community-management
-4. Growth & Airdrop Campaigns    → /services/growth-airdrop
-5. Business Development          → /services/business-development
-6. Content Strategy & SEO        → /services/content-strategy-seo
+3. Community Growth & Management → /services/community-growth
+4. Event Marketing               → /services/event-marketing
+5. AI Marketing                  → /services/ai-marketing
+6. Business Development          → /services/business-development
 ```
 
 ---
@@ -381,7 +381,7 @@ Partnership: https://docs.google.com/forms/d/e/1FAIpQLSeOhaoV-q4dyjEgVa5fVQToKPt
 - CLS = 0: mọi ảnh phải có `width`/`height` hoặc `aspect-ratio`
 - Spline/Three.js: LUÔN `client:visible`, KHÔNG BAO GIỜ tại Hero (ảnh hưởng LCP)
 - CSS: chỉ Tailwind utilities, không viết CSS ad-hoc trừ animation keyframes và CSS variables
-- Font: preconnect Google Fonts, chỉ load 2 weights mỗi font (400 + 600 cho Inter, 500 + 700 cho Space Grotesk)
+- Font: preconnect Google Fonts, chỉ load 2 weights mỗi font (400 + 500 cho Inter, 500 + 700 cho Space Grotesk)
 
 ---
 
