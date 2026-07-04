@@ -21,3 +21,6 @@ workers/apps-script/Code.gs
 # astro cache / metadata
 .astro/
 .backup-assets/
+
+# macOS Finder metadata
+.DS_Store
