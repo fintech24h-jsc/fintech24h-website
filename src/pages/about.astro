@@ -2,7 +2,8 @@
 // src/pages/about.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
-import { team, advisors } from '../data/team';
+import ServiceInquiryForm from '../components/ui/ServiceInquiryForm';
+import { team } from '../data/team';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -15,7 +16,7 @@ const aboutSchema = [
     "@type": "AboutPage",
     "name": "About Fintech24h",
     "url": "https://fintech24h.com/about",
-    "description": "Fintech24h is a growth partner for Blockchain, Fintech & AI projects scaling across Vietnam, Singapore, UAE, and beyond. Learn about our team and approach.",
+    "description": "Meet the core architects of Fintech24h and learn about our future-consensus-driven vision and mission for the global blockchain community.",
     "mainEntity": { "@type": "Organization", "@id": "https://fintech24h.com/#organization" }
   },
   {
@@ -48,143 +49,321 @@ const aboutSchema = [
 ---
 
 <BaseLayout
-  title="About Fintech24h — Blockchain & AI Marketing Agency"
-  description="Fintech24h is a growth partner for Blockchain, Fintech & AI projects scaling across Vietnam, Singapore, UAE, and beyond. Learn about our team and approach."
+  title="About Fintech24h — Architects of the Consensus Future"
+  description="Meet the core architects of Fintech24h and learn about our future-consensus-driven vision and mission for the global blockchain community."
   schema={aboutSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- About Hero -->
-  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="About Us Hero">
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="bg-orb bg-orb-cyan w-[600px] h-[600px] absolute -top-40 -left-32 opacity-15"></div>
-      <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute bottom-0 -right-32 opacity-10"></div>
-      <div class="grid-pattern absolute inset-0 opacity-20"></div>
+  <!-- Interactive Hero Section -->
+  <section class="relative min-h-[90vh] flex items-center justify-center py-20 lg:py-32 overflow-hidden" aria-label="About Hero">
+    <!-- Cybernetic background layers -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[var(--gradient-glow-cyan)] opacity-20 filter blur-[120px] animate-[float-slow_15s_infinite_ease-in-out]"></div>
+      <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[var(--gradient-glow-purple)] opacity-15 filter blur-[120px] animate-[float-slow_18s_infinite_ease-in-out_2s]"></div>
+      <div class="absolute inset-0 grid-pattern opacity-10"></div>
+      
+      <!-- Tech mesh grid background -->
+      <div class="absolute top-[20%] left-[10%] right-[10%] bottom-[20%] border border-white/[0.02] rounded-[40px] pointer-events-none">
+        <div class="absolute top-0 left-[25%] bottom-0 w-px bg-gradient-to-b from-transparent via-white/[0.03] to-transparent"></div>
+        <div class="absolute top-0 left-[50%] bottom-0 w-px bg-gradient-to-b from-transparent via-white/[0.03] to-transparent"></div>
+        <div class="absolute top-0 left-[75%] bottom-0 w-px bg-gradient-to-b from-transparent via-white/[0.03] to-transparent"></div>
+        <div class="absolute left-0 top-[33%] right-0 h-px bg-gradient-to-r from-transparent via-white/[0.03] to-transparent"></div>
+        <div class="absolute left-0 top-[66%] right-0 h-px bg-gradient-to-r from-transparent via-white/[0.03] to-transparent"></div>
+      </div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Cyber eyebrow -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/25 bg-[var(--accent-cyan)]/5 mb-8" data-animate="fade-up">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
+        <span class="text-[10px] font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-[0.2em]">consensual pathfinders</span>
+      </div>
+
+      <!-- Animated display header -->
+      <h1 class="font-display text-hero font-bold tracking-tight text-[#e8edf8] mb-6 max-w-5xl mx-auto leading-[1.05]" data-animate="hero-line-reveal">
+        Architects of the <br />
+        <span class="text-gradient">Consensus Future.</span>
+      </h1>
+
+      <p class="text-sm sm:text-base text-[var(--text-secondary)] font-body max-w-2xl mx-auto leading-relaxed mb-16" data-animate="fade-up">
+        We bridge the gap between complex blockchain technologies and scalable user acquisition. We replace speculative hype with quantitative, OKR-driven marketing strategies to scale the global decentralized ecosystem.
+      </p>
+
+      <!-- Asymmetric Vision & Mission Cards -->
+      <div class="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto text-left" data-animate="stagger">
+        <!-- Vision (The Horizon of Consensus) -->
+        <div class="group relative bg-[var(--bg-glass)] border border-white/[0.05] rounded-3xl p-8 backdrop-blur-md transition-all duration-500 hover:border-[var(--accent-cyan)]/30 hover:shadow-[0_20px_50px_rgba(0,200,240,0.06)]" data-animate-child>
+          <!-- Corner Cybernetic Decorators -->
+          <div class="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/10 rounded-tr-3xl transition-colors group-hover:border-[var(--accent-cyan)]/40"></div>
+          <div class="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-white/10 rounded-bl-3xl transition-colors group-hover:border-[var(--accent-cyan)]/40"></div>
+          
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[var(--accent-cyan)]/5 border border-[var(--accent-cyan)]/20 text-[var(--accent-cyan)] mb-6 shadow-inner">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.43 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+          </div>
+
+          <h2 class="font-display text-2xl font-bold text-white mb-4 flex items-center gap-3">
+            Tầm nhìn 
+            <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] tracking-wider">/ consensus horizon</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed">
+            Định hình bình minh của sự đồng thuận phi tập trung toàn cầu. Chúng tôi tin rằng tương lai thuộc về các hệ sinh thái phân tán minh bạch, nơi công nghệ blockchain và trí tuệ nhân tạo hội tụ để tạo nên niềm tin không biên giới và cơ hội bình đẳng cho mọi cộng đồng.
+          </p>
+        </div>
+
+        <!-- Mission (The Engine of Connection) -->
+        <div class="group relative bg-[var(--bg-glass)] border border-white/[0.05] rounded-3xl p-8 backdrop-blur-md transition-all duration-500 hover:border-[var(--accent-purple)]/30 hover:shadow-[0_20px_50px_rgba(124,92,252,0.06)]" data-animate-child>
+          <!-- Corner Cybernetic Decorators -->
+          <div class="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/10 rounded-tr-3xl transition-colors group-hover:border-[var(--accent-purple)]/40"></div>
+          <div class="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-white/10 rounded-bl-3xl transition-colors group-hover:border-[var(--accent-purple)]/40"></div>
+
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[var(--accent-purple)]/5 border border-[var(--accent-purple)]/20 text-[var(--accent-purple)] mb-6 shadow-inner">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.59 8.37m6 6-6-6m0 0H3.75m6.5 0h.008v.008H10.25V8.37" />
+            </svg>
+          </div>
+
+          <h2 class="font-display text-2xl font-bold text-white mb-4 flex items-center gap-3">
+            Sứ mệnh
+            <span class="text-xs font-mono font-medium text-[var(--accent-purple)] tracking-wider">/ growth engine</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed">
+            Kiến tạo luồng sinh lực tăng trưởng bền vững cho Web3. Chúng tôi đồng hành cùng các nhà phát triển thông qua tiếp thị định lượng dữ liệu và kết nối cộng đồng, biến các ý tưởng phi tập trung thành hiện thực có giá trị thực tiễn.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Leadership - Highly Creative Orb Portraits (No Photos) -->
+  <section class="relative py-24 sm:py-32 bg-[#060a14] overflow-hidden" aria-label="Core Team">
+    <!-- Glow backdrops -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <div class="absolute top-[40%] left-[-20%] w-[800px] h-[800px] rounded-full bg-[var(--gradient-glow-cyan)] opacity-[0.08] filter blur-[150px]"></div>
+      <div class="absolute bottom-[20%] right-[-20%] w-[700px] h-[700px] rounded-full bg-[var(--gradient-glow-purple)] opacity-[0.08] filter blur-[150px]"></div>
     </div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl mx-auto text-center mb-20" data-animate="fade-up">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/5 mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-          <span class="text-xs font-semibold text-cyan-400 font-body uppercase tracking-wider">Our Story</span>
+      <!-- Section header -->
+      <div class="text-center space-y-4 mb-20" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/20 bg-[var(--accent-cyan)]/5 text-[var(--accent-cyan)] text-xs font-mono font-medium tracking-widest uppercase">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse" />
+          Consensus Architects
         </div>
-        <h1 class="font-display text-h1 font-bold text-[#f0f4ff] mb-6">
-          We Build Marketing That's Native to Blockchain <br/>
-          <span class="text-cyan-400">— Not Adapted for It.</span>
-        </h1>
-        <p class="text-lg text-[#94a3b8] font-body leading-relaxed">
-          Fintech24h was built to bridge the gap between complex blockchain technologies and scalable user acquisition. We replace speculative hype with quantitative, OKR-driven marketing strategies.
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] max-w-2xl mx-auto">
+          Core Leadership
+          <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] bg-clip-text text-transparent">
+            Nodes
+          </span>
+        </h2>
+        <p class="font-body text-[var(--text-secondary)] text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+          Meet the core engineering nodes driving global marketing scalability across international networks.
         </p>
       </div>
 
-      <!-- Core Philosophy Grid -->
-      <div class="grid md:grid-cols-3 gap-6 mb-24" data-animate="stagger">
-        
-        <div class="glass-card rounded-2xl p-8 border-white/5" data-animate-child>
-          <div class="w-10 h-10 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 mb-6">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3 class="font-display text-lg font-bold text-[#f0f4ff] mb-3">Vetted Integrity</h3>
-          <p class="text-xs text-[#94a3b8] font-body leading-relaxed">
-            Every influencer, publication, and community manager in our network is audited for bot traffic and sybil activity to protect your ad budget.
-          </p>
-        </div>
-
-        <div class="glass-card rounded-2xl p-8 border-white/5" data-animate-child>
-          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-400/20 flex items-center justify-center text-purple-400 mb-6">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3 class="font-display text-lg font-bold text-[#f0f4ff] mb-3">Data-Driven Models</h3>
-          <p class="text-xs text-[#94a3b8] font-body leading-relaxed">
-            We tie influencer campaigns, community growth, and PR coverages directly to measurable conversion goals using an Objectives and Key Results framework.
-          </p>
-        </div>
-
-        <div class="glass-card rounded-2xl p-8 border-white/5" data-animate-child>
-          <div class="w-10 h-10 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 mb-6">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3 class="font-display text-lg font-bold text-[#f0f4ff] mb-3">Plug & Play Efficiency</h3>
-          <p class="text-xs text-[#94a3b8] font-body leading-relaxed">
-            No long onboarding delays. We deploy pre-configured moderation bots, verified marketing briefs, and PR lists within 72 hours of retainer sign-off.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- Core Leadership Team -->
-      <div class="mb-24">
-        <div class="text-center max-w-2xl mx-auto mb-16" data-animate="fade-up">
-          <h2 class="font-display text-3xl font-bold text-[#f0f4ff] mb-4">
-            Core Leadership
-          </h2>
-          <p class="text-sm text-[#94a3b8] font-body">
-            Meet the crypto growth engineers and operators guiding campaigns across international hubs.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6" data-animate="stagger">
-          {team.map((t) => (
-            <div class="glass-card rounded-2xl p-6 border-white/5 flex flex-col justify-between group" data-animate-child>
+      <!-- Members Grid with Generative CSS Orbs (No photos) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" data-animate="stagger">
+        {team.map((t, idx) => {
+          // Splitting name to create a 2 letter emblem (e.g. Vincent Nguyen -> VN)
+          const initials = t.name.split(' ').map(n => n[0]).join('');
+          
+          return (
+            <div class="group relative bg-[var(--bg-glass)] border border-white/[0.05] rounded-3xl p-6 backdrop-blur-md transition-all duration-500 hover:border-white/[0.12] hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] flex flex-col justify-between" data-animate-child>
+              <!-- Glowing neon stripe at top based on their color -->
+              <div class="absolute top-0 left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-cyan)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: t.signatureColor }}></div>
+              
               <div>
-                <div class="w-full aspect-[4/5] rounded-xl bg-[#0a0f1e] border border-white/5 overflow-hidden mb-4 relative">
-                  <div class="absolute inset-0 flex items-center justify-center font-display text-cyan-400/30 text-4xl font-bold">
-                    {t.name.split(' ').map(n => n[0]).join('')}
+                <!-- CSS Generative Abstract Orb Placeholder -->
+                <div class="relative w-full aspect-square rounded-2xl bg-[#03060c] border border-white/[0.04] overflow-hidden mb-6 flex items-center justify-center group-hover:border-white/[0.08] transition-all duration-500">
+                  
+                  <!-- Abstract animated morphing blob inside -->
+                  <div class="absolute w-[65%] h-[65%] rounded-full opacity-60 filter blur-[20px] transition-all duration-700 group-hover:scale-125 group-hover:opacity-85 mix-blend-screen animate-[float-slow_8s_infinite_ease-in-out]"
+                    style={{ 
+                      background: t.signatureColor,
+                      animationDelay: `${idx * 1.5}s`
+                    }}>
                   </div>
+                  
+                  <div class="absolute w-[50%] h-[50%] rounded-full opacity-40 filter blur-[15px] transition-all duration-700 group-hover:scale-110 mix-blend-screen animate-[float-fast_6s_infinite_ease-in-out]"
+                    style={{ 
+                      background: `linear-gradient(225deg, #00c8f0 0%, #7c5cfc 100%)`,
+                      animationDelay: `${idx * 2 + 1}s`
+                    }}>
+                  </div>
+
+                  <!-- Glass sphere outline overlay -->
+                  <div class="absolute inset-[15%] rounded-full border border-white/[0.08] backdrop-blur-[6px] flex items-center justify-center shadow-[inset_0_4px_12px_rgba(255,255,255,0.1),0_8px_32px_rgba(0,0,0,0.4)]">
+                    <span class="font-display text-4xl font-bold tracking-widest text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500">
+                      {initials}
+                    </span>
+                  </div>
+
+                  <!-- Orbital particle ring -->
+                  <div class="absolute inset-[8%] rounded-full border border-dashed border-white/5 group-hover:rotate-45 transition-transform duration-1000"></div>
                 </div>
-                <h3 class="font-display text-sm font-bold text-[#f0f4ff] group-hover:text-cyan-400 transition-colors mb-1">{t.name}</h3>
-                <div class="text-[10px] text-cyan-400 font-body uppercase tracking-wider mb-3">{t.role}</div>
-                <p class="text-xs text-[#94a3b8] font-body leading-relaxed mb-4">{t.bio}</p>
+
+                <!-- Bio details -->
+                <h3 class="font-display text-lg font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors duration-300 mb-1">{t.name}</h3>
+                <div class="text-[10px] text-[var(--accent-cyan)] font-mono font-medium uppercase tracking-[0.15em] mb-4" style={{ color: idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>{t.role}</div>
+                <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6">{t.bio}</p>
               </div>
 
-              {t.linkedin && (
+              <!-- Social connections handles -->
+              <div class="flex items-center gap-3 mt-auto pt-4 border-t border-white/[0.04]">
+                <!-- Telegram connection -->
+                <a
+                  href={t.telegram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Connect with ${t.name} on Telegram`}
+                  class="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 rounded-xl border border-white/[0.05] bg-white/[0.01] font-display text-[10px] font-bold text-white/70 hover:text-white hover:border-[var(--accent-cyan)]/30 hover:bg-[var(--accent-cyan)]/5 transition-all duration-300 group/btn"
+                >
+                  <svg class="w-3.5 h-3.5 text-white/50 group-hover/btn:text-[var(--accent-cyan)] transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.53-1.39.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.36-.49.99-.75 3.88-1.69 6.46-2.8 7.74-3.32 3.69-1.5 4.44-1.76 4.95-1.77.11 0 .36.03.52.16.13.11.17.26.19.37z" />
+                  </svg>
+                  Telegram
+                </a>
+
+                <!-- LinkedIn connection -->
                 <a
                   href={t.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-[10px] text-[#475569] hover:text-cyan-400 transition-colors font-display font-semibold uppercase tracking-wider flex items-center gap-1 mt-auto"
+                  aria-label={`Connect with ${t.name} on LinkedIn`}
+                  class="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 rounded-xl border border-white/[0.05] bg-white/[0.01] font-display text-[10px] font-bold text-white/70 hover:text-white hover:border-[var(--accent-purple)]/30 hover:bg-[var(--accent-purple)]/5 transition-all duration-300 group/btn"
                 >
+                  <svg class="w-3.5 h-3.5 text-white/50 group-hover/btn:text-[var(--accent-purple)] transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                  </svg>
                   LinkedIn
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <!-- Strategic Advisors -->
-      <div>
-        <div class="text-center max-w-2xl mx-auto mb-16" data-animate="fade-up">
-          <h2 class="font-display text-3xl font-bold text-[#f0f4ff] mb-4">
-            Strategic Advisors
-          </h2>
-          <p class="text-sm text-[#94a3b8] font-body">
-            Venture capitalists and economists lending market intelligence and liquidity relations expertise.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto" data-animate="stagger">
-          {advisors.map((t) => (
-            <div class="glass-card rounded-2xl p-8 border-purple-500/10 flex flex-col sm:flex-row gap-6 items-start" data-animate-child>
-              <div class="w-20 h-20 rounded-xl bg-purple-500/10 border border-purple-400/20 flex items-center justify-center font-display text-purple-400 font-bold text-2xl shrink-0">
-                {t.name.split(' ').map(n => n[0]).join('')}
               </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Contacts Matrix & HubSpot Inquiries Form -->
+  <section class="py-24 sm:py-32 bg-[var(--bg-primary)] relative overflow-hidden" id="get-proposal" aria-label="Connect and Lead Form">
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[var(--gradient-glow-cyan)] opacity-[0.06] filter blur-[120px] animate-[float-slow_12s_infinite_ease-in-out]"></div>
+      <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[var(--gradient-glow-purple)] opacity-[0.06] filter blur-[120px] animate-[float-slow_15s_infinite_ease-in-out_3s]"></div>
+      <div class="absolute inset-0 grid-pattern opacity-10"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-16 items-center">
+        
+        <!-- Social Matrix Content -->
+        <div class="lg:col-span-5 space-y-8" data-animate="fade-up">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/25 bg-[var(--accent-purple)]/5 mb-4">
+              <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] animate-pulse"></span>
+              <span class="text-[10px] font-mono font-medium text-[var(--accent-purple)] uppercase tracking-[0.2em]">Social Matrix</span>
+            </div>
+            <h2 class="font-display text-4xl sm:text-5xl font-bold text-white leading-tight">
+              Connect to our <br />
+              <span class="text-gradient">Ecosystem.</span>
+            </h2>
+            <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed mt-4">
+              Access our direct communication handles, social distribution channels, and resource indexes across the decentralization spectrum.
+            </p>
+          </div>
+
+          <!-- Social Matrix Nodes -->
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Node 1: Telegram -->
+            <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="group p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-[var(--accent-cyan)]/30 hover:bg-[var(--accent-cyan)]/5 transition-all duration-300">
+              <span class="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block mb-1">Direct Chat</span>
+              <span class="font-display text-sm font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">Telegram Channel</span>
+              <span class="text-[9px] font-mono text-[var(--accent-cyan)] block mt-2">t.me/fintech24h →</span>
+            </a>
+
+            <!-- Node 2: LinkedIn -->
+            <a href="https://www.linkedin.com/company/fintech24h/" target="_blank" rel="noopener noreferrer" class="group p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-[var(--accent-purple)]/30 hover:bg-[var(--accent-purple)]/5 transition-all duration-300">
+              <span class="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block mb-1">Corporate Node</span>
+              <span class="font-display text-sm font-bold text-white group-hover:text-[var(--accent-purple)] transition-colors">LinkedIn Hub</span>
+              <span class="text-[9px] font-mono text-[var(--accent-purple)] block mt-2">linkedin.com/... →</span>
+            </a>
+
+            <!-- Node 3: Twitter/X -->
+            <a href="https://x.com/fintech24h_com" target="_blank" rel="noopener noreferrer" class="group p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300">
+              <span class="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block mb-1">Broadcasts</span>
+              <span class="font-display text-sm font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">X / Twitter</span>
+              <span class="text-[9px] font-mono text-white/50 block mt-2">x.com/fintech24h_com →</span>
+            </a>
+
+            <!-- Node 4: Medium -->
+            <a href="https://medium.com/@fintech24h" target="_blank" rel="noopener noreferrer" class="group p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300">
+              <span class="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block mb-1">Publications</span>
+              <span class="font-display text-sm font-bold text-white group-hover:text-[var(--accent-purple)] transition-colors">Medium Blog</span>
+              <span class="text-[9px] font-mono text-white/50 block mt-2">medium.com/... →</span>
+            </a>
+          </div>
+
+          <!-- Secondary ecosystem links -->
+          <div class="flex items-center gap-6 text-[10px] text-[var(--text-muted)] font-mono uppercase tracking-widest pt-4">
+            <span class="flex items-center gap-1.5">
+              Ecosystem: 
+              <a href="https://coinstori.com" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--accent-cyan)] transition-colors">Coinstori</a>
+              | 
+              <a href="https://cmointern.com" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--accent-purple)] transition-colors">CMO Intern</a>
+            </span>
+          </div>
+        </div>
+
+        <!-- Inquiries Lead Form Card -->
+        <div class="lg:col-span-7" data-animate="scale-in">
+          <div class="relative p-6 sm:p-10 rounded-3xl bg-[var(--bg-glass)] border border-white/[0.06] backdrop-blur-xl shadow-[0_30px_60px_rgba(0,0,0,0.6)] overflow-hidden">
+            <!-- Decorative interior spotlight -->
+            <div class="absolute inset-0 pointer-events-none z-0" style="background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,200,240,0.04) 0%, transparent 60%);"></div>
+
+            <div class="relative z-10 space-y-6">
               <div>
-                <h3 class="font-display text-base font-bold text-[#f0f4ff] mb-1">{t.name}</h3>
-                <div class="text-xs text-purple-400 font-body uppercase tracking-wider mb-3">{t.role}</div>
-                <p class="text-xs text-[#94a3b8] font-body leading-relaxed mb-4">{t.bio}</p>
-                {t.linkedin && (
-                  <a href={t.linkedin} target="_blank" rel="noopener noreferrer" class="text-[10px] text-[#475569] hover:text-cyan-400 transition-colors font-display font-semibold uppercase tracking-wider inline-flex items-center gap-1">
-                    LinkedIn →
-                  </a>
-                )}
+                <h3 class="font-display text-2xl font-bold text-white">Direct Project Application</h3>
+                <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mt-1">
+                  Fill in your project metrics below. Our direct operations team reviews all incoming inquiries within a 24-hour cycle.
+                </p>
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
 
+              <!-- Inquiry Form Component (React) -->
+              <ServiceInquiryForm client:load />
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* Morphing & pulsation animations for our team's generative orbs */
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0) scale(1) rotate(0deg);
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    50% {
+      transform: translateY(-10px) scale(1.08) rotate(180deg);
+      border-radius: 40% 60% 70% 30% / 50% 60% 40% 50%;
+    }
+  }
+
+  @keyframes float-fast {
+    0%, 100% {
+      transform: translateY(0) scale(1) rotate(0deg);
+      border-radius: 50% 50% 30% 70% / 50% 30% 70% 50%;
+    }
+    50% {
+      transform: translateY(-6px) scale(1.05) rotate(-180deg);
+      border-radius: 70% 30% 60% 40% / 30% 60% 40% 70%;
+    }
+  }
+</style>
+

@@ -2,64 +2,45 @@ export interface TeamMember {
   name: string;
   role: string;
   bio: string;
-  image: string;
-  linkedin?: string;
-  twitter?: string;
+  telegram: string;
+  linkedin: string;
+  signatureColor: string; // Gradient color for the abstract interactive orb
 }
 
 export const team: TeamMember[] = [
   {
-    name: 'Jules Nguyen',
-    role: 'Founder & CEO',
-    bio: 'Ex-CMO of a tier-1 Web3 Launchpad. 8+ years scaling fintech and blockchain platforms across Southeast Asia and UAE.',
-    image: '/images/team/jules-nguyen.jpg',
-    linkedin: 'https://linkedin.com/company/fintech24h',
-    twitter: 'https://x.com/fintech24h_com'
+    name: 'Vincent Nguyen',
+    role: 'Co-Founder & CEO',
+    bio: 'Pioneering strategic growth architectures with 8+ years scaling high-performance blockchain operations and Web3 protocols globally.',
+    telegram: 'https://telegram.me/vincentnguyen0501',
+    linkedin: 'https://www.linkedin.com/in/vincentnguyen0501/',
+    signatureColor: 'linear-gradient(135deg, #ff6b83 0%, #f0a278 100%)' // Solar Flare
   },
   {
-    name: 'Sarah Chen',
-    role: 'Partner & COO',
-    bio: 'Specializes in operations, compliance, and B2B partnerships. Managed liquidity relations for top token projects.',
-    image: '/images/team/sarah-chen.jpg',
-    linkedin: 'https://linkedin.com/company/fintech24h'
+    name: 'Phat Vo',
+    role: 'Co-Founder & CPO',
+    bio: 'Designing cutting-edge user interfaces and technical protocols, aligning user-centric UX systems with next-generation Web3 engines.',
+    telegram: 'https://telegram.me/phatvt',
+    linkedin: 'https://www.linkedin.com/in/phatvt/',
+    signatureColor: 'linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%)' // Cyber Glow
   },
   {
-    name: 'Marcus Vasseur',
-    role: 'Head of Growth Hacking',
-    bio: 'Growth lead with expertise in viral loop design, programmatic SEO, and quantitative user acquisition strategies.',
-    image: '/images/team/marcus-vasseur.jpg',
-    linkedin: 'https://linkedin.com/company/fintech24h',
-    twitter: 'https://x.com/fintech24h_com'
+    name: 'JayC',
+    role: 'Head of CM',
+    bio: 'Architecting viral marketing loops, orchestrating large-scale global community frameworks, and building active player/investor engagement networks.',
+    telegram: 'https://telegram.me/Fintech24hIJAYC',
+    linkedin: 'https://www.linkedin.com/in/jayc24h/',
+    signatureColor: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)' // Hyper Aura
   },
   {
-    name: 'Anh Pham',
-    role: 'Lead Community Strategist',
-    bio: 'Runs global moderation frameworks. Designed and executed campaigns spanning 200,000+ members on Discord.',
-    image: '/images/team/anh-pham.jpg',
-    linkedin: 'https://linkedin.com/company/fintech24h'
-  },
-  {
-    name: 'Devon Patel',
-    role: 'Head of Business Development',
-    bio: 'Ex-Exchange Listing Director. Built relationships with launchpads, VCs, and market makers internationally.',
-    image: '/images/team/devon-patel.jpg',
-    linkedin: 'https://linkedin.com/company/fintech24h'
+    name: 'Gemi',
+    role: 'Global Business Development',
+    bio: 'Driving cross-border collaborations, facilitating venture integrations, and connecting strategic capital partners with emerging developer nodes.',
+    telegram: 'https://telegram.me/qviet0706',
+    linkedin: 'https://www.linkedin.com/in/quangviet0706/',
+    signatureColor: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)' // Mint Nebula
   }
 ];
 
-export const advisors: TeamMember[] = [
-  {
-    name: 'Dr. Michael Sterling',
-    role: 'Tokenomics Advisor',
-    bio: 'Economist advising Tier-1 Layer-1 blockchains on token economics, inflation dampening, and staking structures.',
-    image: '/images/team/advisor-michael.jpg',
-    linkedin: 'https://linkedin.com/company/fintech24h'
-  },
-  {
-    name: 'Kenji Sato',
-    role: 'Strategic Investor Relations',
-    bio: 'Managing Partner at a Tokyo-based Web3 VC fund. Mentors early-stage projects on institutional pitching.',
-    image: '/images/team/advisor-kenji.jpg',
-    linkedin: 'https://linkedin.com/company/fintech24h'
-  }
-];
+export const advisors: TeamMember[] = [];
+
