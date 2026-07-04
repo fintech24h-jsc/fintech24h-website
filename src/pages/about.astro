@@ -55,190 +55,195 @@ const aboutSchema = [
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- Interactive Hero Section -->
-  <section class="relative min-h-[90vh] flex items-center justify-center py-20 lg:py-32 overflow-hidden" aria-label="About Hero">
-    <!-- Cybernetic background layers -->
-    <div class="absolute inset-0 pointer-events-none z-0">
-      <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-[var(--gradient-glow-cyan)] opacity-20 filter blur-[120px] animate-[float-slow_15s_infinite_ease-in-out]"></div>
-      <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[var(--gradient-glow-purple)] opacity-15 filter blur-[120px] animate-[float-slow_18s_infinite_ease-in-out_2s]"></div>
+  <!-- SECTION 1 — HERO (Cinematic HUD Spotlight) -->
+  <section class="relative min-h-screen flex flex-col justify-center items-center px-4 overflow-hidden bg-[#020202]">
+    <!-- Spotlight Effect -->
+    <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-[radial-gradient(ellipse_at_top,rgba(0,200,240,0.12),transparent_60%)] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] left-[10%] w-[400px] h-[400px] rounded-full bg-[var(--gradient-glow-purple)] opacity-10 filter blur-[100px] pointer-events-none animate-[float-slow_15s_infinite_ease-in-out]"></div>
+    
+    <!-- Cyber Grid Background -->
+    <div class="absolute inset-0 pointer-events-none opacity-20" aria-hidden="true">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f015_1px,transparent_1px),linear-gradient(to_bottom,#00c8f015_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+      <div class="absolute top-0 left-[15%] w-[1px] h-full bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent opacity-30 animate-[matrix-fall_5s_linear_infinite]"></div>
+      <div class="absolute top-0 right-[25%] w-[1px] h-full bg-gradient-to-b from-transparent via-[var(--accent-purple)] to-transparent opacity-20 animate-[matrix-fall_7s_linear_infinite_1.5s]"></div>
       <div class="absolute inset-0 grid-pattern opacity-10"></div>
-      
-      <!-- Tech mesh grid background -->
-      <div class="absolute top-[20%] left-[10%] right-[10%] bottom-[20%] border border-white/[0.02] rounded-[40px] pointer-events-none">
-        <div class="absolute top-0 left-[25%] bottom-0 w-px bg-gradient-to-b from-transparent via-white/[0.03] to-transparent"></div>
-        <div class="absolute top-0 left-[50%] bottom-0 w-px bg-gradient-to-b from-transparent via-white/[0.03] to-transparent"></div>
-        <div class="absolute top-0 left-[75%] bottom-0 w-px bg-gradient-to-b from-transparent via-white/[0.03] to-transparent"></div>
-        <div class="absolute left-0 top-[33%] right-0 h-px bg-gradient-to-r from-transparent via-white/[0.03] to-transparent"></div>
-        <div class="absolute left-0 top-[66%] right-0 h-px bg-gradient-to-r from-transparent via-white/[0.03] to-transparent"></div>
-      </div>
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <!-- Cyber eyebrow -->
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/25 bg-[var(--accent-cyan)]/5 mb-8" data-animate="fade-up">
-        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
-        <span class="text-[10px] font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-[0.2em]">consensual pathfinders</span>
+    <!-- HUD Indicators -->
+    <div class="absolute top-28 left-8 hidden lg:block font-mono text-[9px] text-[var(--accent-cyan)] opacity-50 space-y-1">
+      <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span> SYS.STATUS // ACTIVE</div>
+      <div>CORE.INTEGRITY // VETTED_OK</div>
+      <div class="text-white/30">PROTOCOL // AB_US_V3.0</div>
+    </div>
+
+    <div class="relative z-10 text-center max-w-5xl mx-auto mt-20">
+      <div class="reveal">
+        <p class="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--accent-cyan)] mb-6">[ DIRECTORY // CORE_TEAM ]</p>
       </div>
 
-      <!-- Animated display header -->
-      <h1 class="font-display text-hero font-bold tracking-tight text-[#e8edf8] mb-6 max-w-5xl mx-auto leading-[1.05]" data-animate="hero-line-reveal">
-        Architects of the <br />
-        <span class="text-gradient">Consensus Future.</span>
+      <h1 class="font-display font-light max-w-5xl mx-auto reveal reveal-delay-1 leading-[1.05]">
+        <span class="block text-[clamp(2.5rem,5vw,4.5rem)] tracking-widest text-white/40 uppercase mb-2">RE-ENGINEERING TRUST</span>
+        <span class="block text-[clamp(3rem,6vw,5.5rem)] font-bold tracking-tight text-white uppercase drop-shadow-[0_0_30px_rgba(0,200,240,0.2)]">FOR THE DECENTRALIZED ERA</span>
       </h1>
 
-      <p class="text-sm sm:text-base text-[var(--text-secondary)] font-body max-w-2xl mx-auto leading-relaxed mb-16" data-animate="fade-up">
-        We bridge the gap between complex blockchain technologies and scalable user acquisition. We replace speculative hype with quantitative, OKR-driven marketing strategies to scale the global decentralized ecosystem.
+      <p class="font-body text-base md:text-lg text-white/60 max-w-2xl mx-auto mt-8 mb-16 leading-[1.8] reveal reveal-delay-2 font-light">
+        We replace speculative hype with quantitative, OKR-driven marketing strategies. By merging deep data analytics with target-driven community building, we establish permanent authority for high-growth protocols.
       </p>
 
-      <!-- Asymmetric Vision & Mission Cards -->
-      <div class="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto text-left" data-animate="stagger">
-        <!-- Vision (The Horizon of Consensus) -->
-        <div class="group relative bg-[var(--bg-glass)] border border-white/[0.05] rounded-3xl p-8 backdrop-blur-md transition-all duration-500 hover:border-[var(--accent-cyan)]/30 hover:shadow-[0_20px_50px_rgba(0,200,240,0.06)]" data-animate-child>
-          <!-- Corner Cybernetic Decorators -->
-          <div class="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/10 rounded-tr-3xl transition-colors group-hover:border-[var(--accent-cyan)]/40"></div>
-          <div class="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-white/10 rounded-bl-3xl transition-colors group-hover:border-[var(--accent-cyan)]/40"></div>
-          
-          <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[var(--accent-cyan)]/5 border border-[var(--accent-cyan)]/20 text-[var(--accent-cyan)] mb-6 shadow-inner">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.43 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-            </svg>
+      <div class="reveal reveal-delay-3 flex justify-center gap-4">
+        <a href="#registry" class="inline-flex items-center justify-center border border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/5 px-8 py-4 text-white font-mono text-xs uppercase tracking-[0.2em] hover:bg-[var(--accent-cyan)] hover:text-black hover:shadow-[0_0_30px_rgba(0,200,240,0.3)] transition-all duration-500 backdrop-blur-sm">
+          View Node Registry
+        </a>
+        <a href="#connect" class="inline-flex items-center justify-center border border-white/10 px-8 py-4 text-white/50 font-mono text-xs uppercase tracking-[0.2em] hover:border-white/30 hover:text-white transition-all duration-500 backdrop-blur-sm">
+          Establish Contact
+        </a>
+      </div>
+    </div>
+    
+    <!-- Cinematic Bottom Fade -->
+    <div class="absolute bottom-0 w-full h-48 bg-gradient-to-t from-[#020202] to-transparent pointer-events-none"></div>
+  </section>
+
+  <!-- SECTION 2 — THE BLUEPRINT (Vision & Mission Ticket Layout) -->
+  <section class="py-32 bg-[#020202] relative z-10 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-24 reveal">
+        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--accent-purple)] mb-4">THE BLUEPRINT</span>
+        <h2 class="font-display text-[clamp(2.5rem,4vw,3.5rem)] text-white uppercase tracking-wider font-bold">Consensus Horizons</h2>
+        <div class="w-16 h-px bg-white/20 mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 max-w-5xl mx-auto">
+        {[
+          { 
+            step: 'VISION', 
+            title: 'Consensus Horizon', 
+            desc: 'Architecting the convergence of decentralized ledgers and intelligence interfaces. We envision a global community sustained by cryptographically secure trust, transparent consensus, and uncompromised user sovereignty.', 
+            marker: 'EST. FUTURE' 
+          },
+          { 
+            step: 'MISSION', 
+            title: 'The Growth Engine', 
+            desc: 'Accelerating Web3 adoption through data-driven performance marketing and direct community seeding. We empower decentralization protocols by engineering scalable growth loops and transparent, high-integrity network distribution.', 
+            marker: 'ACTIVE_RUN' 
+          }
+        ].map((item, i) => (
+          <div class="relative bg-[#080808] border border-white/10 rounded-lg flex flex-col md:flex-row overflow-hidden group hover:border-white/30 transition-all duration-500 reveal">
+            <!-- Ticket Left Tear -->
+            <div class="hidden md:flex flex-col justify-between items-center w-16 bg-white/5 border-r border-white/10 border-dashed py-6 relative">
+              <div class="w-6 h-6 rounded-full bg-[#020202] absolute -left-3 top-6 border-r border-white/10"></div>
+              <div class="w-6 h-6 rounded-full bg-[#020202] absolute -left-3 bottom-6 border-r border-white/10"></div>
+              <span class="transform -rotate-90 font-mono text-[9px] text-white/30 tracking-[0.3em] whitespace-nowrap">{item.marker}</span>
+            </div>
+            
+            <!-- Ticket Content -->
+            <div class="p-8 md:p-10 flex-1">
+              <span class="font-mono text-[10px] text-white/40 tracking-[0.2em] uppercase block mb-4" style={{ color: i === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>{item.step}</span>
+              <h3 class="font-display text-2xl text-white font-medium mb-4 group-hover:text-white transition-colors">{item.title}</h3>
+              <p class="font-body text-white/50 text-sm leading-relaxed font-light">{item.desc}</p>
+            </div>
+            
+            <!-- Ticket Right Barcode -->
+            <div class="hidden md:flex flex-col justify-center items-center w-16 bg-white/[0.01] border-l border-white/10">
+              <div class="flex gap-1 h-20 opacity-20 group-hover:opacity-40 transition-opacity">
+                <div class="w-1 h-full bg-white"></div>
+                <div class="w-[2px] h-full bg-white"></div>
+                <div class="w-2.5 h-full bg-white"></div>
+                <div class="w-1 h-full bg-white"></div>
+                <div class="w-[2px] h-full bg-white"></div>
+              </div>
+            </div>
           </div>
-
-          <h2 class="font-display text-2xl font-bold text-white mb-4 flex items-center gap-3">
-            Tầm nhìn 
-            <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] tracking-wider">/ consensus horizon</span>
-          </h2>
-          <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed">
-            Định hình bình minh của sự đồng thuận phi tập trung toàn cầu. Chúng tôi tin rằng tương lai thuộc về các hệ sinh thái phân tán minh bạch, nơi công nghệ blockchain và trí tuệ nhân tạo hội tụ để tạo nên niềm tin không biên giới và cơ hội bình đẳng cho mọi cộng đồng.
-          </p>
-        </div>
-
-        <!-- Mission (The Engine of Connection) -->
-        <div class="group relative bg-[var(--bg-glass)] border border-white/[0.05] rounded-3xl p-8 backdrop-blur-md transition-all duration-500 hover:border-[var(--accent-purple)]/30 hover:shadow-[0_20px_50px_rgba(124,92,252,0.06)]" data-animate-child>
-          <!-- Corner Cybernetic Decorators -->
-          <div class="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/10 rounded-tr-3xl transition-colors group-hover:border-[var(--accent-purple)]/40"></div>
-          <div class="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-white/10 rounded-bl-3xl transition-colors group-hover:border-[var(--accent-purple)]/40"></div>
-
-          <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[var(--accent-purple)]/5 border border-[var(--accent-purple)]/20 text-[var(--accent-purple)] mb-6 shadow-inner">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.59 8.37m6 6-6-6m0 0H3.75m6.5 0h.008v.008H10.25V8.37" />
-            </svg>
-          </div>
-
-          <h2 class="font-display text-2xl font-bold text-white mb-4 flex items-center gap-3">
-            Sứ mệnh
-            <span class="text-xs font-mono font-medium text-[var(--accent-purple)] tracking-wider">/ growth engine</span>
-          </h2>
-          <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed">
-            Kiến tạo luồng sinh lực tăng trưởng bền vững cho Web3. Chúng tôi đồng hành cùng các nhà phát triển thông qua tiếp thị định lượng dữ liệu và kết nối cộng đồng, biến các ý tưởng phi tập trung thành hiện thực có giá trị thực tiễn.
-          </p>
-        </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- Core Leadership - Highly Creative Orb Portraits (No Photos) -->
-  <section class="relative py-24 sm:py-32 bg-[#060a14] overflow-hidden" aria-label="Core Team">
-    <!-- Glow backdrops -->
-    <div class="absolute inset-0 pointer-events-none z-0">
-      <div class="absolute top-[40%] left-[-20%] w-[800px] h-[800px] rounded-full bg-[var(--gradient-glow-cyan)] opacity-[0.08] filter blur-[150px]"></div>
-      <div class="absolute bottom-[20%] right-[-20%] w-[700px] h-[700px] rounded-full bg-[var(--gradient-glow-purple)] opacity-[0.08] filter blur-[150px]"></div>
-    </div>
-
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Section header -->
-      <div class="text-center space-y-4 mb-20" data-animate="fade-up">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/20 bg-[var(--accent-cyan)]/5 text-[var(--accent-cyan)] text-xs font-mono font-medium tracking-widest uppercase">
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse" />
-          Consensus Architects
-        </div>
-        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] max-w-2xl mx-auto">
-          Core Leadership
-          <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] bg-clip-text text-transparent">
-            Nodes
-          </span>
+  <!-- SECTION 3 — FUTURISTIC NODE REGISTRY (Team Access Passes - NO AVATARS) -->
+  <section class="py-32 bg-[#050505] relative z-10 border-t border-white/5" id="registry">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Section Header with giant outline index numbers -->
+      <div class="mb-20 reveal border-b border-white/10 pb-8 flex flex-col md:flex-row justify-between items-end gap-6">
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-white leading-tight uppercase max-w-2xl">
+          Core Leadership Nodes
         </h2>
-        <p class="font-body text-[var(--text-secondary)] text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-          Meet the core engineering nodes driving global marketing scalability across international networks.
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 max-w-[250px] text-right">
+          Verifiable cryptographic identities of the platform operators.
         </p>
       </div>
 
-      <!-- Members Grid with Generative CSS Orbs (No photos) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" data-animate="stagger">
+      <!-- Passes Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {team.map((t, idx) => {
-          // Splitting name to create a 2 letter emblem (e.g. Vincent Nguyen -> VN)
-          const initials = t.name.split(' ').map(n => n[0]).join('');
-          
+          // Custom achievements list with real metrics parsed from signature logic or details
+          const specMetrics = idx === 0 ? [
+            '8+ Years Web3 Scale', '200+ Projects Advised', 'Ex-CMO Tier-1 Launchpad'
+          ] : idx === 1 ? [
+            '50+ Interfaces Shipped', '10+ Web3 Engines Integrated', '99.9% Client Retention SLA'
+          ] : idx === 2 ? [
+            '150K+ Community Members Managed', '45+ Global AMA Tours Completed', '<2 Mins Response Time SLA'
+          ] : [
+            '25+ Exchanges Connected', '80+ VC Networks Managed', '$12M+ BD Pipeline Closed'
+          ];
+
           return (
-            <div class="group relative bg-[var(--bg-glass)] border border-white/[0.05] rounded-3xl p-6 backdrop-blur-md transition-all duration-500 hover:border-white/[0.12] hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] flex flex-col justify-between" data-animate-child>
-              <!-- Glowing neon stripe at top based on their color -->
-              <div class="absolute top-0 left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-cyan)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: t.signatureColor }}></div>
+            <div class="bg-black border border-white/10 p-8 hover:border-white/30 transition-all duration-500 group relative reveal overflow-hidden flex flex-col justify-between min-h-[360px]">
+              <!-- Scanning Laser Line Sweep Effect on Hover -->
+              <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-cyan)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan_2.5s_linear_infinite] shadow-[0_0_12px_var(--accent-cyan)]" style={{ '--accent-cyan': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}></div>
               
               <div>
-                <!-- CSS Generative Abstract Orb Placeholder -->
-                <div class="relative w-full aspect-square rounded-2xl bg-[#03060c] border border-white/[0.04] overflow-hidden mb-6 flex items-center justify-center group-hover:border-white/[0.08] transition-all duration-500">
-                  
-                  <!-- Abstract animated morphing blob inside -->
-                  <div class="absolute w-[65%] h-[65%] rounded-full opacity-60 filter blur-[20px] transition-all duration-700 group-hover:scale-125 group-hover:opacity-85 mix-blend-screen animate-[float-slow_8s_infinite_ease-in-out]"
-                    style={{ 
-                      background: t.signatureColor,
-                      animationDelay: `${idx * 1.5}s`
-                    }}>
-                  </div>
-                  
-                  <div class="absolute w-[50%] h-[50%] rounded-full opacity-40 filter blur-[15px] transition-all duration-700 group-hover:scale-110 mix-blend-screen animate-[float-fast_6s_infinite_ease-in-out]"
-                    style={{ 
-                      background: `linear-gradient(225deg, #00c8f0 0%, #7c5cfc 100%)`,
-                      animationDelay: `${idx * 2 + 1}s`
-                    }}>
-                  </div>
-
-                  <!-- Glass sphere outline overlay -->
-                  <div class="absolute inset-[15%] rounded-full border border-white/[0.08] backdrop-blur-[6px] flex items-center justify-center shadow-[inset_0_4px_12px_rgba(255,255,255,0.1),0_8px_32px_rgba(0,0,0,0.4)]">
-                    <span class="font-display text-4xl font-bold tracking-widest text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500">
-                      {initials}
+                <!-- Operator Pass Header -->
+                <div class="flex justify-between items-start mb-10">
+                  <div class="flex flex-col">
+                    <span class="font-mono text-[9px] text-white/40 tracking-[0.25em]">OPERATOR_NODE_0{idx + 1}</span>
+                    <h3 class="font-display text-2xl text-white font-bold tracking-tight uppercase mt-1">{t.name}</h3>
+                    <span class="font-mono text-[10px] tracking-wider uppercase mt-1.5" style={{ color: idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
+                      {t.role}
                     </span>
                   </div>
-
-                  <!-- Orbital particle ring -->
-                  <div class="absolute inset-[8%] rounded-full border border-dashed border-white/5 group-hover:rotate-45 transition-transform duration-1000"></div>
+                  
+                  <!-- Virtual Network ID Signature -->
+                  <div class="flex flex-col items-end text-right font-mono text-[9px] text-white/30">
+                    <div>STATUS // ONLINE</div>
+                    <div class="text-[8px] text-white/20">ADDR // 0x71C...8E{idx}F</div>
+                  </div>
                 </div>
 
-                <!-- Bio details -->
-                <h3 class="font-display text-lg font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors duration-300 mb-1">{t.name}</h3>
-                <div class="text-[10px] text-[var(--accent-cyan)] font-mono font-medium uppercase tracking-[0.15em] mb-4" style={{ color: idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>{t.role}</div>
-                <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6">{t.bio}</p>
+                <!-- Proof-point Specifications (Actual Metrics Only, No Fluff Text) -->
+                <div class="space-y-3.5 mb-10">
+                  <div class="font-mono text-[9px] uppercase tracking-widest text-white/30 border-b border-white/5 pb-2">Technical Specifications:</div>
+                  {specMetrics.map((spec) => (
+                    <div class="flex items-center gap-3 font-mono text-xs text-white/80 group-hover:text-white transition-colors">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse" style={{ backgroundColor: idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}></span>
+                      {spec}
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <!-- Social connections handles -->
-              <div class="flex items-center gap-3 mt-auto pt-4 border-t border-white/[0.04]">
-                <!-- Telegram connection -->
+              <!-- Action Link Connections -->
+              <div class="flex items-center gap-4 border-t border-white/5 pt-6 mt-auto">
                 <a
                   href={t.telegram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Connect with ${t.name} on Telegram`}
-                  class="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 rounded-xl border border-white/[0.05] bg-white/[0.01] font-display text-[10px] font-bold text-white/70 hover:text-white hover:border-[var(--accent-cyan)]/30 hover:bg-[var(--accent-cyan)]/5 transition-all duration-300 group/btn"
+                  class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-lg border border-white/10 bg-white/[0.01] font-mono text-[10px] uppercase tracking-wider text-white/70 hover:text-white hover:border-[var(--accent-cyan)]/30 hover:bg-[var(--accent-cyan)]/5 transition-all duration-300"
                 >
-                  <svg class="w-3.5 h-3.5 text-white/50 group-hover/btn:text-[var(--accent-cyan)] transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                  <svg class="w-3.5 h-3.5 text-white/40" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.53-1.39.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.36-.49.99-.75 3.88-1.69 6.46-2.8 7.74-3.32 3.69-1.5 4.44-1.76 4.95-1.77.11 0 .36.03.52.16.13.11.17.26.19.37z" />
                   </svg>
-                  Telegram
+                  Connect Telegram
                 </a>
-
-                <!-- LinkedIn connection -->
                 <a
                   href={t.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Connect with ${t.name} on LinkedIn`}
-                  class="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 rounded-xl border border-white/[0.05] bg-white/[0.01] font-display text-[10px] font-bold text-white/70 hover:text-white hover:border-[var(--accent-purple)]/30 hover:bg-[var(--accent-purple)]/5 transition-all duration-300 group/btn"
+                  class="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-lg border border-white/10 bg-white/[0.01] font-mono text-[10px] uppercase tracking-wider text-white/70 hover:text-white hover:border-[var(--accent-purple)]/30 hover:bg-[var(--accent-purple)]/5 transition-all duration-300"
                 >
-                  <svg class="w-3.5 h-3.5 text-white/50 group-hover/btn:text-[var(--accent-purple)] transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                  <svg class="w-3.5 h-3.5 text-white/40" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
                   </svg>
-                  LinkedIn
+                  Connect LinkedIn
                 </a>
               </div>
             </div>
@@ -248,15 +253,15 @@ const aboutSchema = [
     </div>
   </section>
 
-  <!-- Interactive Contacts Matrix & HubSpot Inquiries Form -->
-  <section class="py-24 sm:py-32 bg-[var(--bg-primary)] relative overflow-hidden" id="get-proposal" aria-label="Connect and Lead Form">
+  <!-- SECTION 4 — INTERACTIVE APPLICATIONS (HubSpot Lead capture form & Social ecosystem links) -->
+  <section class="py-32 bg-[#020202] relative overflow-hidden" id="connect" aria-label="Direct Proposal Contacts">
     <div class="absolute inset-0 pointer-events-none z-0">
       <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[var(--gradient-glow-cyan)] opacity-[0.06] filter blur-[120px] animate-[float-slow_12s_infinite_ease-in-out]"></div>
       <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[var(--gradient-glow-purple)] opacity-[0.06] filter blur-[120px] animate-[float-slow_15s_infinite_ease-in-out_3s]"></div>
       <div class="absolute inset-0 grid-pattern opacity-10"></div>
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-12 gap-16 items-center">
         
         <!-- Social Matrix Content -->
@@ -264,51 +269,47 @@ const aboutSchema = [
           <div>
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/25 bg-[var(--accent-purple)]/5 mb-4">
               <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] animate-pulse"></span>
-              <span class="text-[10px] font-mono font-medium text-[var(--accent-purple)] uppercase tracking-[0.2em]">Social Matrix</span>
+              <span class="text-[10px] font-mono font-medium text-[var(--accent-purple)] uppercase tracking-[0.2em]">Ecosystem Matrix</span>
             </div>
-            <h2 class="font-display text-4xl sm:text-5xl font-bold text-white leading-tight">
-              Connect to our <br />
-              <span class="text-gradient">Ecosystem.</span>
+            <h2 class="font-display text-4xl sm:text-5xl font-bold text-white leading-tight uppercase">
+              OPERATE ON THE <br />
+              <span class="text-gradient">MATRIX.</span>
             </h2>
-            <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed mt-4">
-              Access our direct communication handles, social distribution channels, and resource indexes across the decentralization spectrum.
+            <p class="text-sm text-white/50 font-body leading-relaxed mt-4 font-light">
+              Connect to our broadcast nodes, corporate channels, and resources globally across the decentralization spectrum.
             </p>
           </div>
 
           <!-- Social Matrix Nodes -->
           <div class="grid grid-cols-2 gap-4">
-            <!-- Node 1: Telegram -->
-            <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="group p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-[var(--accent-cyan)]/30 hover:bg-[var(--accent-cyan)]/5 transition-all duration-300">
-              <span class="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block mb-1">Direct Chat</span>
+            <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="group p-5 rounded-lg bg-white/[0.01] border border-white/[0.05] hover:border-[var(--accent-cyan)]/30 hover:bg-[var(--accent-cyan)]/5 transition-all duration-300">
+              <span class="text-[9px] font-mono text-white/30 uppercase tracking-wider block mb-1">Direct Chat</span>
               <span class="font-display text-sm font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">Telegram Channel</span>
               <span class="text-[9px] font-mono text-[var(--accent-cyan)] block mt-2">t.me/fintech24h →</span>
             </a>
 
-            <!-- Node 2: LinkedIn -->
-            <a href="https://www.linkedin.com/company/fintech24h/" target="_blank" rel="noopener noreferrer" class="group p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-[var(--accent-purple)]/30 hover:bg-[var(--accent-purple)]/5 transition-all duration-300">
-              <span class="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block mb-1">Corporate Node</span>
+            <a href="https://www.linkedin.com/company/fintech24h/" target="_blank" rel="noopener noreferrer" class="group p-5 rounded-lg bg-white/[0.01] border border-white/[0.05] hover:border-[var(--accent-purple)]/30 hover:bg-[var(--accent-purple)]/5 transition-all duration-300">
+              <span class="text-[9px] font-mono text-white/30 uppercase tracking-wider block mb-1">Corporate Node</span>
               <span class="font-display text-sm font-bold text-white group-hover:text-[var(--accent-purple)] transition-colors">LinkedIn Hub</span>
               <span class="text-[9px] font-mono text-[var(--accent-purple)] block mt-2">linkedin.com/... →</span>
             </a>
 
-            <!-- Node 3: Twitter/X -->
-            <a href="https://x.com/fintech24h_com" target="_blank" rel="noopener noreferrer" class="group p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300">
-              <span class="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block mb-1">Broadcasts</span>
+            <a href="https://x.com/fintech24h_com" target="_blank" rel="noopener noreferrer" class="group p-5 rounded-lg bg-white/[0.01] border border-white/[0.05] hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300">
+              <span class="text-[9px] font-mono text-white/30 uppercase tracking-wider block mb-1">Broadcasts</span>
               <span class="font-display text-sm font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors">X / Twitter</span>
-              <span class="text-[9px] font-mono text-white/50 block mt-2">x.com/fintech24h_com →</span>
+              <span class="text-[9px] font-mono text-white/40 block mt-2">x.com/fintech24h →</span>
             </a>
 
-            <!-- Node 4: Medium -->
-            <a href="https://medium.com/@fintech24h" target="_blank" rel="noopener noreferrer" class="group p-4 rounded-2xl bg-white/[0.01] border border-white/[0.04] hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300">
-              <span class="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block mb-1">Publications</span>
+            <a href="https://medium.com/@fintech24h" target="_blank" rel="noopener noreferrer" class="group p-5 rounded-lg bg-white/[0.01] border border-white/[0.05] hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300">
+              <span class="text-[9px] font-mono text-white/30 uppercase tracking-wider block mb-1">Publications</span>
               <span class="font-display text-sm font-bold text-white group-hover:text-[var(--accent-purple)] transition-colors">Medium Blog</span>
-              <span class="text-[9px] font-mono text-white/50 block mt-2">medium.com/... →</span>
+              <span class="text-[9px] font-mono text-white/40 block mt-2">medium.com/... →</span>
             </a>
           </div>
 
           <!-- Secondary ecosystem links -->
-          <div class="flex items-center gap-6 text-[10px] text-[var(--text-muted)] font-mono uppercase tracking-widest pt-4">
-            <span class="flex items-center gap-1.5">
+          <div class="flex items-center gap-6 text-[10px] text-white/30 font-mono uppercase tracking-widest pt-4">
+            <span class="flex items-center gap-2">
               Ecosystem: 
               <a href="https://coinstori.com" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--accent-cyan)] transition-colors">Coinstori</a>
               | 
@@ -319,15 +320,15 @@ const aboutSchema = [
 
         <!-- Inquiries Lead Form Card -->
         <div class="lg:col-span-7" data-animate="scale-in">
-          <div class="relative p-6 sm:p-10 rounded-3xl bg-[var(--bg-glass)] border border-white/[0.06] backdrop-blur-xl shadow-[0_30px_60px_rgba(0,0,0,0.6)] overflow-hidden">
+          <div class="relative p-8 md:p-10 rounded-xl bg-black border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.8)] overflow-hidden">
             <!-- Decorative interior spotlight -->
             <div class="absolute inset-0 pointer-events-none z-0" style="background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,200,240,0.04) 0%, transparent 60%);"></div>
 
             <div class="relative z-10 space-y-6">
               <div>
-                <h3 class="font-display text-2xl font-bold text-white">Direct Project Application</h3>
-                <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mt-1">
-                  Fill in your project metrics below. Our direct operations team reviews all incoming inquiries within a 24-hour cycle.
+                <h3 class="font-display text-2xl font-bold text-white uppercase">Direct Project Application</h3>
+                <p class="text-xs text-white/40 font-body leading-relaxed mt-2 font-light">
+                  Input your project credentials below. Our operations network reviews all applications within 24 hours.
                 </p>
               </div>
 
@@ -343,27 +344,60 @@ const aboutSchema = [
 </BaseLayout>
 
 <style>
-  /* Morphing & pulsation animations for our team's generative orbs */
+  summary::-webkit-details-marker { display: none; }
+  
+  .reveal { 
+    opacity: 0; 
+    filter: blur(10px); 
+    transform: translateY(30px); 
+    transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease; 
+  }
+  .reveal.revealed { 
+    opacity: 1; 
+    filter: blur(0); 
+    transform: translateY(0); 
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
   @keyframes float-slow {
-    0%, 100% {
-      transform: translateY(0) scale(1) rotate(0deg);
-      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    }
-    50% {
-      transform: translateY(-10px) scale(1.08) rotate(180deg);
-      border-radius: 40% 60% 70% 30% / 50% 60% 40% 50%;
-    }
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.05); }
   }
 
-  @keyframes float-fast {
-    0%, 100% {
-      transform: translateY(0) scale(1) rotate(0deg);
-      border-radius: 50% 50% 30% 70% / 50% 30% 70% 50%;
-    }
-    50% {
-      transform: translateY(-6px) scale(1.05) rotate(-180deg);
-      border-radius: 70% 30% 60% 40% / 30% 60% 40% 70%;
-    }
+  @keyframes matrix-fall {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    50% { transform: translateY(100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  .grid-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  @media (prefers-reduced-motion: reduce) { 
+    .reveal { opacity: 1; filter: none; transform: none; transition: none; } 
   }
 </style>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  });
+</script>

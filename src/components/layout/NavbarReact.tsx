@@ -47,6 +47,7 @@ export default function NavbarReact() {
           {/* Centered Navigation Links (Desktop) */}
           <div className="hidden md:flex items-center gap-8 text-white/80 text-sm font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
             <a href="/" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">home</a>
+            <a href="/about" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">about us</a>
             
             {/* Services Dropdown */}
             <div 
@@ -130,6 +131,13 @@ export default function NavbarReact() {
                 className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
               >
                 home
+              </a>
+              <a
+                href="/about"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
+              >
+                about us
               </a>
               
               {/* Collapsed Services List header in mobile menu */}
