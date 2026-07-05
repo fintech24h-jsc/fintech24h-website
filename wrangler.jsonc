@@ -1,10 +1,28 @@
+// ⚠️ DO NOT DELETE THIS FILE OR REMOVE ANY FIELD BELOW.
+//
+// Without this file, Cloudflare's git-connected deploy for the
+// `fintech24h-website` Worker fails SILENTLY after a successful build —
+// `npx wrangler deploy` (the dashboard-configured deploy command) errors
+// with "Missing entry-point to Worker script or to assets directory" and
+// the live site never updates, even though the build step shows green.
+// See DEPLOYMENT.md at the repo root for the full incident writeup.
+//
+// Also required: public/.assetsignore (containing "_worker.js") — without
+// it, wrangler refuses to deploy at all, warning that the SSR server code
+// in dist/_worker.js would be uploaded as a public static asset.
 {
   "name": "fintech24h-website",
   "compatibility_date": "2024-01-01",
   "compatibility_flags": ["nodejs_compat"],
+  // Astro's @astrojs/cloudflare adapter emits the SSR Worker entry here.
+  // If you upgrade that adapter and it changes its output layout, update
+  // this path to match — check dist/_worker.js/ after a local build.
   "main": "./dist/_worker.js/index.js",
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS"
   }
+  // No "routes" field on purpose — routes for this zone are configured in
+  // the Cloudflare dashboard directly. Adding a routes field here would
+  // make wrangler try to manage (and potentially clobber) them.
 }
