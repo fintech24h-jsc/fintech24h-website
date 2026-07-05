@@ -1,5 +1,6 @@
 ---
 // src/pages/index.astro
+export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroSection from '../components/sections/HeroSection.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
@@ -8,6 +9,8 @@ import GlobalNetwork from '../components/sections/GlobalNetwork.astro';
 import CaseStudyWidget from '../components/sections/CaseStudyWidget.astro';
 import ProcessSection from '../components/sections/ProcessSection.astro';
 import BlogHighlight from '../components/sections/BlogHighlight.astro';
+
+Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
 import FaqSection from '../components/sections/FaqSection.astro';
 import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
 import PrCtaSection from '../components/sections/PrCtaSection.astro';

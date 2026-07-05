@@ -1,9 +1,12 @@
 ---
 // src/pages/blog/index.astro
+export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { getAllPosts, getAllCategories, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
 import { getReadingTime } from '../../lib/utils';
+
+Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
 
 const posts = await getAllPosts();
 const categories = await getAllCategories();

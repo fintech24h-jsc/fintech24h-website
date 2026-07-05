@@ -2,7 +2,7 @@
 // WordPress Headless API Client
 // WP runs in background at fintech24h.com/wp-json/
 
-const WP_API_BASE = (import.meta.env.WP_API_URL || 'https://fintech24h.com/wp-json/wp/v2').replace(/\/$/, '');
+const WP_API_BASE = (import.meta.env?.WP_API_URL || 'https://fintech24h.com/wp-json/wp/v2').replace(/\/$/, '');
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -247,30 +247,88 @@ const MOCK_CASE_STUDIES: CaseStudy[] = [
   }
 ];
 
+// ─── In-Memory Cache for Static Build ───────────────────────────────────────
+
+let cachedPosts: WPPost[] | null = null;
+let cachedCategories: WPCategory[] | null = null;
+let cachedCaseStudies: CaseStudy[] | null = null;
+
 // ─── Fetch Helpers ────────────────────────────────────────────────────────────
+//
+// NOTE ON CACHING: this fetch targets fintech24h.com/wp-json/*, which Cloudflare
+// routes to the separate `fintech24h-wp-proxy` Worker (see workers/wp-proxy).
+// Worker-to-Worker subrequests on the same zone bypass Cloudflare's automatic
+// edge cache, so the `cf: { cacheEverything, cacheTtl }` fetch option below is
+// NOT reliable here — every call was silently hitting WordPress live. Under
+// real traffic (every visit to `/`, `/blog`, `/blog/[slug]` re-fetches, since
+// those pages run SSR with `prerender = false`) this repeatedly triggered
+// WordPress/LiteSpeed's rate limiting (added after the 2026-07 bot-flood
+// incident) and *that* is what caused posts to intermittently fail and show
+// mock/empty data — not a bug in the Astro fetch logic itself.
+//
+// Fix: cache responses explicitly with the Workers Cache API (`caches.default`),
+// which we control directly and isn't subject to the Worker-to-Worker bypass.
+// A short "fresh" TTL absorbs traffic bursts across visitors sharing the same
+// edge location; a long-lived "stale" backup lets us keep serving real posts
+// (instead of hiding the blog) if WordPress is rate-limiting or briefly down.
+
+const FRESH_TTL_SECONDS = 180;   // normal cache window
+const STALE_TTL_SECONDS = 86400; // last-known-good fallback window
 
 async function fetchWP<T>(endpoint: string, params: Record<string, string> = {}): Promise<T> {
   const url = new URL(`${WP_API_BASE}${endpoint}`);
   url.searchParams.set('_embed', '1');
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
-  const res = await fetch(url.toString(), {
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    },
-    // ISR: cache 1 hour, auto-revalidate
-    // @ts-ignore
-    cf: { cacheTtl: 3600, cacheEverything: true },
-  });
+  // @ts-ignore — `caches` is a Workers runtime global, not a Node/browser type
+  const cache: Cache | undefined = typeof caches !== 'undefined' ? caches.default : undefined;
+  const freshKey = new Request(url.toString());
+  const staleUrl = new URL(url.toString());
+  staleUrl.searchParams.set('_stale_backup', '1');
+  const staleKey = new Request(staleUrl.toString());
 
-  if (!res.ok) throw new Error(`WP API Error ${res.status}: ${endpoint}`);
-  return res.json() as Promise<T>;
+  if (cache) {
+    const hit = await cache.match(freshKey);
+    if (hit) return hit.json() as Promise<T>;
+  }
+
+  try {
+    const res = await fetch(url.toString(), {
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Fintech24h-Astro-SSR/1.0',
+      },
+    });
+
+    if (!res.ok) throw new Error(`WP API Error ${res.status}: ${endpoint}`);
+    const data = await res.json();
+
+    if (cache) {
+      const body = JSON.stringify(data);
+      await cache.put(freshKey, new Response(body, {
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${FRESH_TTL_SECONDS}` },
+      }));
+      await cache.put(staleKey, new Response(body, {
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${STALE_TTL_SECONDS}` },
+      }));
+    }
+
+    return data as T;
+  } catch (err) {
+    if (cache) {
+      const stale = await cache.match(staleKey);
+      if (stale) {
+        console.warn(`WP API fail, serving stale cache for ${endpoint}:`, err);
+        return stale.json() as Promise<T>;
+      }
+    }
+    throw err;
+  }
 }
 
 // ─── Blog Posts ───────────────────────────────────────────────────────────────
 
-export async function getAllPosts(page = 1, perPage = 12): Promise<WPPost[]> {
+export async function getAllPosts(page = 1, perPage = 24): Promise<WPPost[]> {
   try {
     return await fetchWP<WPPost[]>('/posts', {
       page: String(page),
@@ -280,8 +338,8 @@ export async function getAllPosts(page = 1, perPage = 12): Promise<WPPost[]> {
       order: 'desc',
     });
   } catch (err) {
-    console.warn('WP API fail: returning mock posts.');
-    return MOCK_POSTS.slice((page - 1) * perPage, page * perPage);
+    console.warn('WP API fail: getAllPosts', err);
+    return import.meta.env.DEV ? MOCK_POSTS : [];
   }
 }
 
@@ -290,12 +348,12 @@ export async function getPostBySlug(slug: string): Promise<WPPost | null> {
     const posts = await fetchWP<WPPost[]>('/posts', { slug, status: 'publish' });
     return posts[0] || null;
   } catch (err) {
-    console.warn(`WP API fail: searching mock posts for slug: ${slug}`);
-    return MOCK_POSTS.find(p => p.slug === slug) || null;
+    console.warn(`WP API fail: getPostBySlug ${slug}`, err);
+    return import.meta.env.DEV ? (MOCK_POSTS.find(p => p.slug === slug) || null) : null;
   }
 }
 
-export async function getPostsByCategory(categorySlug: string, perPage = 12): Promise<WPPost[]> {
+export async function getPostsByCategory(categorySlug: string, perPage = 24): Promise<WPPost[]> {
   try {
     const categories = await fetchWP<WPCategory[]>('/categories', { slug: categorySlug });
     if (!categories[0]) return [];
@@ -303,9 +361,12 @@ export async function getPostsByCategory(categorySlug: string, perPage = 12): Pr
       categories: String(categories[0].id),
       per_page: String(perPage),
       status: 'publish',
+      orderby: 'date',
+      order: 'desc',
     });
   } catch (err) {
-    console.warn(`WP API fail: returning mock posts for category slug: ${categorySlug}`);
+    console.warn(`WP API fail: getPostsByCategory ${categorySlug}`, err);
+    if (!import.meta.env.DEV) return [];
     const cat = MOCK_CATEGORIES.find(c => c.slug === categorySlug);
     if (!cat) return [];
     return MOCK_POSTS.filter(p => p.categories.includes(cat.id)).slice(0, perPage);
@@ -313,29 +374,42 @@ export async function getPostsByCategory(categorySlug: string, perPage = 12): Pr
 }
 
 export async function getRecentPosts(count = 3): Promise<WPPost[]> {
-  try {
-    return await fetchWP<WPPost[]>('/posts', {
-      per_page: String(count),
-      status: 'publish',
-      orderby: 'date',
-      order: 'desc',
-    });
-  } catch (err) {
-    console.warn('WP API fail: returning recent mock posts.');
-    return MOCK_POSTS.slice(0, count);
+  return getAllPosts(1, count);
+}
+
+// ─── Blog Availability (used to hide blog nav/section when WP is unreachable) ─
+// Memoized so Navbar + Footer + BlogHighlight share a single check per
+// build/isolate instead of each triggering their own WP request (which was
+// tripping WP's rate limiter when called redundantly on every static page).
+
+let blogAvailablePromise: Promise<boolean> | null = null;
+
+export function isBlogAvailable(): Promise<boolean> {
+  if (!blogAvailablePromise) {
+    blogAvailablePromise = getAllPosts(1, 1).then((posts) => posts.length > 0);
   }
+  return blogAvailablePromise;
 }
 
 // ─── Case Studies (Custom Post Type) ─────────────────────────────────────────
 
 export async function getAllCaseStudies(): Promise<CaseStudy[]> {
+  if (cachedCaseStudies && cachedCaseStudies.length > 0) {
+    return cachedCaseStudies;
+  }
+
   try {
-    return await fetchWP<CaseStudy[]>('/case-study', {
+    const items = await fetchWP<CaseStudy[]>('/case-study', {
       per_page: '100',
       status: 'publish',
       orderby: 'date',
       order: 'desc',
     });
+    if (items && items.length > 0) {
+      cachedCaseStudies = items;
+      return items;
+    }
+    return MOCK_CASE_STUDIES;
   } catch (err) {
     console.warn('WP API fail: returning mock case studies.');
     return MOCK_CASE_STUDIES;
@@ -343,30 +417,29 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
 }
 
 export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | null> {
-  try {
-    const items = await fetchWP<CaseStudy[]>('/case-study', { slug, status: 'publish' });
-    return items[0] || null;
-  } catch (err) {
-    console.warn(`WP API fail: searching mock case studies for slug: ${slug}`);
-    return MOCK_CASE_STUDIES.find(cs => cs.slug === slug) || null;
-  }
+  const items = await getAllCaseStudies();
+  return items.find(cs => cs.slug === slug) || null;
 }
 
 export async function getFeaturedCaseStudy(): Promise<CaseStudy | null> {
-  try {
-    const items = await getAllCaseStudies();
-    return items.find((cs) => cs.acf?.featured) || items[0] || null;
-  } catch (err) {
-    console.warn('WP API fail: returning featured mock case study.');
-    return MOCK_CASE_STUDIES.find(cs => cs.acf?.featured) || MOCK_CASE_STUDIES[0] || null;
-  }
+  const items = await getAllCaseStudies();
+  return items.find((cs) => cs.acf?.featured) || items[0] || null;
 }
 
 // ─── Categories ───────────────────────────────────────────────────────────────
 
 export async function getAllCategories(): Promise<WPCategory[]> {
+  if (cachedCategories && cachedCategories.length > 0) {
+    return cachedCategories;
+  }
+
   try {
-    return await fetchWP<WPCategory[]>('/categories', { per_page: '100', hide_empty: 'true' });
+    const items = await fetchWP<WPCategory[]>('/categories', { per_page: '100', hide_empty: 'true' });
+    if (items && items.length > 0) {
+      cachedCategories = items;
+      return items;
+    }
+    return MOCK_CATEGORIES;
   } catch (err) {
     console.warn('WP API fail: returning mock categories.');
     return MOCK_CATEGORIES;

@@ -1,22 +1,17 @@
 ---
 // src/pages/blog/[slug].astro
+export const prerender = false;
 import BlogLayout from '../../layouts/BlogLayout.astro';
-import { getAllPosts } from '../../lib/wordpress';
-import type { WPPost } from '../../lib/wordpress';
+import { getPostBySlug } from '../../lib/wordpress';
 
-export async function getStaticPaths() {
-  const posts = await getAllPosts();
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post }
-  }));
+Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+const { slug } = Astro.params;
+const post = slug ? await getPostBySlug(slug) : null;
+
+if (!post) {
+  return Astro.redirect('/404');
 }
-
-interface Props {
-  post: WPPost;
-}
-
-const { post } = Astro.props;
 ---
 
 <BlogLayout post={post}>

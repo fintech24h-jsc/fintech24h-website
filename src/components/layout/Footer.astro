@@ -1,6 +1,12 @@
 ---
 // src/components/layout/Footer.astro
 import { footerLinks } from '../../data/navigation';
+import { isBlogAvailable } from '../../lib/wordpress';
+
+const showBlog = await isBlogAvailable();
+const resourceLinks = showBlog
+  ? footerLinks.resources
+  : footerLinks.resources.filter((link) => link.href !== '/blog');
 ---
 
 <footer class="relative border-t border-[var(--border-subtle)] bg-[var(--bg-primary)] pt-20 pb-10 overflow-hidden" aria-label="Agency Footer">
@@ -62,7 +68,7 @@ import { footerLinks } from '../../data/navigation';
       <div>
         <h2 class="font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-[0.15em] mb-6">Resources</h2>
         <ul class="space-y-4">
-          {footerLinks.resources.map((link) => (
+          {resourceLinks.map((link) => (
             <li>
               <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined} class="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] font-body transition-colors">
                 {link.label}

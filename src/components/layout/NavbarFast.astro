@@ -2,6 +2,8 @@
 // src/components/layout/NavbarFast.astro
 // Pixel-identical to NavbarReact.tsx — removes React 18 + Framer Motion + Lucide (≈44 KiB)
 // Every animation is replicated 1-to-1 with CSS transitions / keyframes + vanilla JS
+import { isBlogAvailable } from '../../lib/wordpress';
+const showBlog = await isBlogAvailable();
 ---
 
 <nav
@@ -66,7 +68,7 @@
         </div>
       </div>
 
-      <a href="/blog"    class="hover:text-[var(--accent-cyan)] transition-colors duration-300">blog</a>
+      {showBlog && <a href="/blog"    class="hover:text-[var(--accent-cyan)] transition-colors duration-300">blog</a>}
       <a href="/contact" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
     </div>
 
@@ -120,7 +122,7 @@
       </div>
     </div>
 
-    <a href="/blog"    class="hover:text-[var(--accent-cyan)] transition-colors duration-300">blog</a>
+    {showBlog && <a href="/blog"    class="hover:text-[var(--accent-cyan)] transition-colors duration-300">blog</a>}
     <a href="/contact" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
   </div>
 

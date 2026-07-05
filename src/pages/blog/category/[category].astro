@@ -1,26 +1,23 @@
 ---
 // src/pages/blog/category/[category].astro
+export const prerender = false;
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
 import { getAllCategories, getPostsByCategory, formatDate, getExcerpt, getFeaturedImage } from '../../../lib/wordpress';
 import { getReadingTime } from '../../../lib/utils';
-import type { WPCategory } from '../../../lib/wordpress';
 
-export async function getStaticPaths() {
-  const categories = await getAllCategories();
-  return categories.map((cat) => ({
-    params: { category: cat.slug },
-    props: { category: cat }
-  }));
-}
+Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
 
-interface Props {
-  category: WPCategory;
-}
-
-const { category } = Astro.props;
-const posts = await getPostsByCategory(category.slug);
+const { category: categorySlug } = Astro.params;
 const allCategories = await getAllCategories();
+const category = allCategories.find(c => c.slug === categorySlug) || {
+  id: 0,
+  name: categorySlug || 'Category',
+  slug: categorySlug || 'category',
+  count: 0,
+  description: ''
+};
+const posts = categorySlug ? await getPostsByCategory(categorySlug) : [];
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },

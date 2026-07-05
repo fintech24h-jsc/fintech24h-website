@@ -3,9 +3,14 @@ import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import partytown from '@astrojs/partytown';
+import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://fintech24h.com',
+  output: 'hybrid',
+  adapter: cloudflare({
+    imageService: 'passthrough',
+  }),
   integrations: [
     tailwind({
       // Dùng global.css làm entry point chính — chứa @tailwind directives + @layer components
@@ -55,7 +60,6 @@ export default defineConfig({
       },
     }),
   ],
-  output: 'static',
   build: {
     assets: '_assets',
   },

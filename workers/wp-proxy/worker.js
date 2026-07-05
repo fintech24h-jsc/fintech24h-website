@@ -2,15 +2,15 @@
 //
 // Architecture:
 //   fintech24h.com/@  → Pages (Astro) — KEEP AS IS
-//   proxy.fintech24h.com → 172.96.186.230 GRAY CLOUD (DNS only, not proxied)
+//   origin.fintech24h.com → 172.96.186.230 GRAY CLOUD (DNS only, not proxied)
 //
 // resolveOverride trick:
 //   - URL stays "http://fintech24h.com/..." → Host header = fintech24h.com ✅
-//   - DNS resolved via proxy.fintech24h.com (gray cloud) → TCP hits 172.96.186.230 directly ✅
+//   - DNS resolved via origin.fintech24h.com (gray cloud) → TCP hits 172.96.186.230 directly ✅
 //   - LiteSpeed has virtual host for fintech24h.com → serves WordPress ✅
 
 const SITE_HOST  = 'fintech24h.com';
-const PROXY_HOST = 'proxy.fintech24h.com'; // MUST be gray cloud (DNS only)
+const PROXY_HOST = 'origin.fintech24h.com'; // existing gray-cloud subdomain (DNS only)
 
 const STRIP_REQ = new Set([
   'cf-connecting-ip', 'cf-ipcountry', 'cf-ray', 'cf-visitor',
@@ -22,7 +22,8 @@ const STRIP_RES = new Set([
 
 function rewriteLocation(v) {
   return v
-    .replace(/^https?:\/\/172\.96\.186\.230/i, `https://${SITE_HOST}`)
+    .replaceAll('172.96.186.230', SITE_HOST)
+    .replaceAll(PROXY_HOST, SITE_HOST)
     .replace(/^http:\/\//i, 'https://');
 }
 
@@ -39,18 +40,15 @@ export default {
     }
     reqHeaders.set('X-Forwarded-Proto', 'https');
     reqHeaders.set('X-Forwarded-Host', SITE_HOST);
+    reqHeaders.set('Host', SITE_HOST);
 
-    const originReq = new Request(`http://${SITE_HOST}${url.pathname}${url.search}`, {
+    // Direct fetch to origin.fintech24h.com (gray-cloud DNS pointing directly to origin VPS 172.96.186.230)
+    // Avoids cf.resolveOverride which is an Enterprise-only Cloudflare feature
+    const originReq = new Request(`https://${PROXY_HOST}${url.pathname}${url.search}`, {
       method:  request.method,
       headers: reqHeaders,
       body:    ['GET', 'HEAD'].includes(request.method) ? undefined : request.body,
       redirect: 'manual',
-      // @ts-ignore
-      cf: {
-        // Gray-cloud DNS resolves proxy.fintech24h.com → 172.96.186.230 (direct IP, not Cloudflare)
-        // Host header in the request = fintech24h.com (from URL) → LiteSpeed serves WordPress
-        resolveOverride: PROXY_HOST,
-      },
     });
 
     let res;
