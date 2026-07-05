@@ -1,8 +1,18 @@
 // src/lib/wordpress.ts
 // WordPress Headless API Client
 // WP runs in background at fintech24h.com/wp-json/
+//
+// NOTE: this fetches origin.fintech24h.com (gray-cloud DNS-only, ->
+// 172.96.186.230) directly rather than the public fintech24h.com/wp-json/*
+// path. The public path gets routed by Cloudflare to the separate
+// `fintech24h-wp-proxy` Worker (Worker-to-Worker subrequest on the same
+// zone), which was intermittently timing out (`WP API Error 522`) in
+// production even though the origin itself responded reliably and fast to
+// direct requests. Fetching the origin directly removes that unreliable
+// extra hop. Caching is handled ourselves below via the Workers Cache API,
+// so it doesn't matter which URL we fetch through — see fetchWP().
 
-const WP_API_BASE = (import.meta.env?.WP_API_URL || 'https://fintech24h.com/wp-json/wp/v2').replace(/\/$/, '');
+const WP_API_BASE = (import.meta.env?.WP_API_URL || 'https://origin.fintech24h.com/wp-json/wp/v2').replace(/\/$/, '');
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -297,6 +307,7 @@ async function fetchWP<T>(endpoint: string, params: Record<string, string> = {})
       headers: {
         'Accept': 'application/json',
         'User-Agent': 'Fintech24h-Astro-SSR/1.0',
+        'Host': 'fintech24h.com',
       },
     });
 
