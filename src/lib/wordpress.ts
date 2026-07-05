@@ -282,8 +282,8 @@ let cachedCaseStudies: CaseStudy[] | null = null;
 // edge location; a long-lived "stale" backup lets us keep serving real posts
 // (instead of hiding the blog) if WordPress is rate-limiting or briefly down.
 
-const FRESH_TTL_SECONDS = 180;   // normal cache window
-const STALE_TTL_SECONDS = 86400; // last-known-good fallback window
+const FRESH_TTL_SECONDS = 180;          // normal cache window
+const STALE_TTL_SECONDS = 7 * 86400;    // last-known-good fallback window (7 days)
 
 async function fetchWP<T>(endpoint: string, params: Record<string, string> = {}): Promise<T> {
   const url = new URL(`${WP_API_BASE}${endpoint}`);
