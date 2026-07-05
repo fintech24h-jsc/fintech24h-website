@@ -4,8 +4,11 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import partytown from '@astrojs/partytown';
 
+import cloudflare from "@astrojs/cloudflare";
+
 export default defineConfig({
   site: 'https://fintech24h.com',
+
   integrations: [
     tailwind({
       // Dùng global.css làm entry point chính — chứa @tailwind directives + @layer components
@@ -55,16 +58,22 @@ export default defineConfig({
       },
     }),
   ],
-  output: 'static',
+
+  output: "hybrid",
+
   build: {
     assets: '_assets',
   },
+
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },
   },
+
   vite: {
     ssr: {
       noExternal: ['gsap'],
     },
   },
+
+  adapter: cloudflare()
 });

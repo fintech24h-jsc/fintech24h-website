@@ -24,3 +24,9 @@ workers/apps-script/Code.gs
 
 # macOS Finder metadata
 .DS_Store
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
