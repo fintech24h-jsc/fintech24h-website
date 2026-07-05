@@ -1,0 +1,11 @@
+name = "fintech24h-blog-monitor"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Every 2 hours.
+[triggers]
+crons = ["0 */2 * * *"]
+
+# Secrets (set via `wrangler secret put`, NOT stored here):
+#   TELEGRAM_TOKEN    — same bot token used in workers/apps-script/Code.gs
+#   TELEGRAM_CHAT_ID  — same chat ID used in workers/apps-script/Code.gs

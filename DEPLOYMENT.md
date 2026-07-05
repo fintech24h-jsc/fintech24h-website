@@ -68,3 +68,7 @@ Log cho thấy `getAllPosts()` fail với `WP API Error 522` (mã lỗi riêng c
 ```
 
 Xem thêm chi tiết kỹ thuật liên quan đến WordPress proxy tại [workers/wp-proxy/INCIDENT-README.md](workers/wp-proxy/INCIDENT-README.md).
+
+## Giám sát tự động — phát hiện sớm nếu tái phát
+
+Sau sự cố này, đã thêm Worker `fintech24h-blog-monitor` (cron mỗi 2 giờ, check `/blog` không có MOCK_POSTS và có bài viết thật, cảnh báo qua Telegram nếu fail). Xem [workers/blog-monitor/INCIDENT-README.md](workers/blog-monitor/INCIDENT-README.md). Worker này **đã deploy và đang chạy live**, dùng lại Telegram bot/chat của lead notification (secrets `TELEGRAM_TOKEN`/`TELEGRAM_CHAT_ID`, không hardcode trong code).
