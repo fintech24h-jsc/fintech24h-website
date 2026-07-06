@@ -140,15 +140,15 @@ const aboutSchema = [
         {[
           { 
             step: 'VISION', 
-            title: 'Consensus Horizon', 
-            desc: 'Architecting the convergence of decentralized ledgers and intelligence interfaces. We envision a global community sustained by cryptographically secure trust, transparent consensus, and uncompromised user sovereignty.', 
+            title: 'Empowering the Future of Blockchain, Fintech & AI', 
+            desc: 'We envision a globally connected ecosystem where transformative technologies achieve mass adoption through strategic marketing, meaningful partnerships, and thriving communities.', 
             marker: 'EST. FUTURE',
             glowClass: 'hover:shadow-[0_0_30px_rgba(0,200,240,0.12)] hover:border-[var(--accent-cyan)]/30'
           },
           { 
             step: 'MISSION', 
-            title: 'The Growth Engine', 
-            desc: 'Accelerating Web3 adoption through data-driven performance marketing and direct community seeding. We empower decentralization protocols by engineering scalable growth loops and transparent, high-integrity network distribution.', 
+            title: 'Scale from Visibility to Market Leadership', 
+            desc: 'By combining KOL marketing, PR, community growth, event marketing, AI-powered campaigns, and business development, we deliver measurable growth and sustainable success for the world\'s most ambitious technology companies.', 
             marker: 'ACTIVE_RUN',
             glowClass: 'hover:shadow-[0_0_30px_rgba(124,92,252,0.12)] hover:border-[var(--accent-purple)]/30'
           }
@@ -182,9 +182,84 @@ const aboutSchema = [
         ))}
       </div>
     </div>
+    </div>
   </section>
 
-  <!-- SECTION 3 — FUTURISTIC NODE REGISTRY (Team Access Passes - NO AVATARS) -->
+  <!-- SECTION 3 — CORE VALUES (Holographic Databanks) -->
+  <section class="py-32 bg-[#020202] relative z-10 border-t border-white/5">
+    <!-- Ambient glow -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--gradient-glow-cyan)] rounded-full opacity-[0.03] filter blur-[100px]"></div>
+      <div class="absolute inset-0 grid-pattern opacity-10"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-20 reveal">
+        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--accent-cyan)] mb-4">SYSTEM_PARAMETERS</span>
+        <h2 class="font-display text-[clamp(2rem,3.5vw,3rem)] text-white uppercase tracking-wider font-bold">Core Values</h2>
+        <div class="w-16 h-px bg-white/20 mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[
+          { 
+            id: '01', title: 'Ownership & Empowerment', 
+            desc: 'We trust our people to lead, make decisions, and create impact. Every team member is encouraged to take initiative and own outcomes.', 
+            gradient: 'via-[var(--accent-cyan)]', badge: 'bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] border-[var(--accent-cyan)]/20', dot: 'group-hover:bg-[var(--accent-cyan)]', corner: 'group-hover:border-[var(--accent-cyan)]/50'
+          },
+          { 
+            id: '02', title: 'Creativity Without Limits', 
+            desc: 'Innovation starts with bold ideas. We embrace experimentation, challenge conventional thinking, and continuously explore new possibilities.', 
+            gradient: 'via-[var(--accent-purple)]', badge: 'bg-[var(--accent-purple)]/10 text-[var(--accent-purple)] border-[var(--accent-purple)]/20', dot: 'group-hover:bg-[var(--accent-purple)]', corner: 'group-hover:border-[var(--accent-purple)]/50'
+          },
+          { 
+            id: '03', title: 'Global Mindset', 
+            desc: 'We operate beyond borders, connecting diverse perspectives, markets, and opportunities across the world.', 
+            gradient: 'via-[var(--accent-cyan)]', badge: 'bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] border-[var(--accent-cyan)]/20', dot: 'group-hover:bg-[var(--accent-cyan)]', corner: 'group-hover:border-[var(--accent-cyan)]/50'
+          },
+          { 
+            id: '04', title: 'Results With Integrity', 
+            desc: 'Growth matters, but sustainable growth matters more. We prioritize transparency, accountability, and long-term value creation.', 
+            gradient: 'via-[var(--accent-purple)]', badge: 'bg-[var(--accent-purple)]/10 text-[var(--accent-purple)] border-[var(--accent-purple)]/20', dot: 'group-hover:bg-[var(--accent-purple)]', corner: 'group-hover:border-[var(--accent-purple)]/50'
+          },
+          { 
+            id: '05', title: 'Collaboration First', 
+            desc: 'Great achievements are built together. We cultivate strong partnerships with clients, communities, investors, and ecosystem leaders.', 
+            gradient: 'via-[var(--accent-cyan)]', badge: 'bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] border-[var(--accent-cyan)]/20', dot: 'group-hover:bg-[var(--accent-cyan)]', corner: 'group-hover:border-[var(--accent-cyan)]/50'
+          },
+          { 
+            id: '06', title: 'Move Fast, Learn Faster', 
+            desc: 'The technology landscape evolves rapidly. We adapt quickly, learn continuously, and execute with speed and precision.', 
+            gradient: 'via-[var(--accent-purple)]', badge: 'bg-[var(--accent-purple)]/10 text-[var(--accent-purple)] border-[var(--accent-purple)]/20', dot: 'group-hover:bg-[var(--accent-purple)]', corner: 'group-hover:border-[var(--accent-purple)]/50'
+          }
+        ].map((v, i) => (
+          <div class="group relative bg-[#080808] border border-white/5 p-8 rounded-xl overflow-hidden hover:-translate-y-1 transition-all duration-500 reveal hover:shadow-[0_10px_40px_rgba(0,0,0,0.5)] hover:border-white/10" style={`transition-delay: ${i * 0.1}s`}>
+            <!-- Neon Accent Line -->
+            <div class={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent ${v.gradient} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+            
+            <div class="flex items-center justify-between mb-8">
+              <span class={`font-mono text-[10px] tracking-widest px-2.5 py-1 border ${v.badge} rounded-md`}>
+                VAL_NODE_{v.id}
+              </span>
+              <div class="flex gap-1.5">
+                <span class={`w-1.5 h-1.5 rounded-full bg-white/10 ${v.dot} transition-colors duration-300`}></span>
+                <span class={`w-1.5 h-1.5 rounded-full bg-white/10 ${v.dot} transition-colors duration-300 delay-75`}></span>
+                <span class={`w-1.5 h-1.5 rounded-full bg-white/10 ${v.dot} transition-colors duration-300 delay-150`}></span>
+              </div>
+            </div>
+            
+            <h3 class="font-display text-xl text-white font-bold mb-3">{v.title}</h3>
+            <p class="font-body text-white/50 text-sm leading-relaxed font-light">{v.desc}</p>
+            
+            <!-- Corner Brackets -->
+            <div class={`absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-transparent ${v.corner} transition-colors duration-500 m-4 rounded-br-lg`}></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — FUTURISTIC NODE REGISTRY (Team Access Passes) -->
   <section class="py-32 bg-[#050505] relative z-10 border-t border-white/5" id="registry">
     <div class="max-w-7xl mx-auto px-6">
       <!-- Section Header with giant outline index numbers -->
