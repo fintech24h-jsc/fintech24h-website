@@ -184,8 +184,12 @@ export default function JobApplicationForm({ jobTitle, jobId }: JobApplicationFo
   }
 
   return (
-    <div className="card-default p-6 sm:p-8 relative backdrop-blur-md rounded-2xl border border-white/5 space-y-6 shadow-2xl">
-      <div className="space-y-1">
+    <div className="relative backdrop-blur-2xl rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-white/[0.005] p-6 sm:p-8 space-y-6 shadow-[0_50px_100px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.1)] overflow-hidden">
+      {/* Liquid Glass Organic Glow Blobs */}
+      <div className="absolute -top-[30%] -right-[30%] w-60 h-60 rounded-full bg-[var(--accent-cyan)] opacity-[0.04] filter blur-[40px] pointer-events-none" />
+      <div className="absolute -bottom-[30%] -left-[30%] w-60 h-60 rounded-full bg-[var(--accent-purple)] opacity-[0.03] filter blur-[40px] pointer-events-none" />
+
+      <div className="space-y-1 relative z-10">
         <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--accent-cyan)] flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse" />
           Protocol // Career_Intake
@@ -197,12 +201,12 @@ export default function JobApplicationForm({ jobTitle, jobId }: JobApplicationFo
       </div>
 
       {error && (
-        <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/10 text-red-400 text-xs font-body backdrop-blur-md">
+        <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/10 text-red-400 text-xs font-body backdrop-blur-md relative z-10">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
         {/* Name & Email */}
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
