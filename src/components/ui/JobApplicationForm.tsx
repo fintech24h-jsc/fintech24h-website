@@ -117,28 +117,10 @@ export default function JobApplicationForm({ jobTitle, jobId }: JobApplicationFo
     setIsSubmitting(true);
     setError('');
 
-    const webhook = (import.meta.env.PUBLIC_CAREERS_WEBHOOK_URL || '').trim();
-
-    if (!webhook) {
-      console.warn('PUBLIC_CAREERS_WEBHOOK_URL is not set in .env. Running in simulation mode.');
-      try {
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        console.log('Submitted Application Data (MOCK):', {
-          ...formData,
-          jobTitle,
-          jobId,
-          cvName: selectedFile.name,
-          cvSize: `${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB`,
-          cvBase64Length: fileBase64.length,
-        });
-        setIsSuccess(true);
-      } catch (err) {
-        setError('Failed to process application simulation.');
-      } finally {
-        setIsSubmitting(false);
-      }
-      return;
-    }
+    const envWebhook = import.meta.env.PUBLIC_CAREERS_WEBHOOK_URL;
+    const webhook = (envWebhook && envWebhook.indexOf('PASTE_YOUR_DEPLOYED') === -1 && envWebhook.trim() !== '')
+      ? envWebhook.trim()
+      : 'https://script.google.com/macros/s/AKfycbzoleDR0LhwZZy0I2aYCFeAdTy1IYfdsqsRU5zqm0Vf2XyVEjfdOxSJt6QpPETshxvuDQ/exec';
 
     try {
       await fetch(webhook, {
