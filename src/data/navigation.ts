@@ -19,7 +19,6 @@ export const mainNavLinks: NavLink[] = [
       { label: 'Business Development', href: '/services/business-development' },
     ]
   },
-  { label: 'Careers', href: '/careers' },
   { label: 'Contact', href: '/contact' },
   { label: 'Partnership', href: 'https://docs.google.com/forms/d/e/1FAIpQLSeOhaoV-q4dyjEgVa5fVQToKPtHyqDmKBj9fHig9bNS3JrYqw/viewform' },
   { label: 'Get Proposal', href: '/#get-proposal' }
