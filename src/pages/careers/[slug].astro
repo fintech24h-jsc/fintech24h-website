@@ -1,0 +1,285 @@
+---
+// src/pages/careers/[slug].astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import Badge from '../../components/ui/Badge.astro';
+import JobApplicationForm from '../../components/ui/JobApplicationForm';
+import { jobs, type Job } from '../../data/jobs';
+
+export async function getStaticPaths() {
+  return jobs.map((job) => ({
+    params: { slug: job.slug },
+    props: { job }
+  }));
+}
+
+interface Props {
+  job: Job;
+}
+
+const { job } = Astro.props;
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Careers', item: 'https://fintech24h.com/careers' },
+  { name: job.title, item: `https://fintech24h.com/careers/${job.slug}` }
+];
+
+// Construct HTML description for Google JobPosting Schema
+const schemaDescription = `
+  <p><strong>About the Role:</strong></p>
+  <p>${job.about}</p>
+  
+  <p><strong>Responsibilities:</strong></p>
+  <ul>
+    ${job.responsibilities.map(r => `<li>${r}</li>`).join('')}
+  </ul>
+  
+  <p><strong>Requirements:</strong></p>
+  <ul>
+    ${job.requirements.map(r => `<li>${r}</li>`).join('')}
+  </ul>
+  
+  <p><strong>Nice to Have:</strong></p>
+  <ul>
+    ${job.niceToHave.map(n => `<li>${n}</li>`).join('')}
+  </ul>
+  
+  <p><strong>Why Join Fintech24h:</strong></p>
+  <ul>
+    ${job.benefits.map(b => `<li>${b}</li>`).join('')}
+  </ul>
+`;
+
+// Employment type mappings
+const getEmploymentTypes = (typeStr: string) => {
+  const types = [];
+  if (typeStr.toLowerCase().includes('full')) types.push('FULL_TIME');
+  if (typeStr.toLowerCase().includes('part')) types.push('PART_TIME');
+  if (typeStr.toLowerCase().includes('intern')) types.push('INTERN');
+  return types.length > 0 ? types : ['FULL_TIME'];
+};
+
+const jobSchema = {
+  "@context": "https://schema.org/",
+  "@type": "JobPosting",
+  "title": job.title,
+  "description": schemaDescription,
+  "identifier": {
+    "@type": "PropertyValue",
+    "name": "Fintech24h",
+    "value": job.id
+  },
+  "datePosted": "2026-07-07",
+  "validThrough": "2027-07-07",
+  "employmentType": getEmploymentTypes(job.type),
+  "hiringOrganization": {
+    "@type": "Organization",
+    "name": "Fintech24h",
+    "sameAs": "https://fintech24h.com",
+    "logo": "https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp"
+  },
+  "jobLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1014 Pham Van Dong Street, Hiep Binh",
+      "addressLocality": "Ho Chi Minh City",
+      "addressRegion": "VN-SG",
+      "addressCountry": "VN"
+    }
+  },
+  "jobLocationType": job.location.toLowerCase().includes('remote') ? "TELECOMMUTE" : undefined,
+  "applicantLocationRequirements": job.location.toLowerCase().includes('remote') ? {
+    "@type": "Country",
+    "name": "Worldwide"
+  } : undefined
+};
+
+const pageSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": `${job.title} Career Detail`,
+    "url": `https://fintech24h.com/careers/${job.slug}`,
+    "description": job.about,
+    "mainEntity": { "@type": "Organization", "@id": "https://fintech24h.com/#organization" }
+  },
+  jobSchema
+];
+---
+
+<BaseLayout
+  title={`${job.title} — Careers at Fintech24h`}
+  description={job.about}
+  schema={pageSchema}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- SECTION 1 — SPEC HERO (HUD Spotlight Display) -->
+  <section class="relative pt-36 pb-20 px-6 overflow-hidden bg-[#020202] border-b border-white/5">
+    <!-- CRT Scanlines Filter Overlay -->
+    <div class="absolute inset-0 pointer-events-none z-30 scanlines-overlay opacity-[0.03]" aria-hidden="true"></div>
+
+    <!-- Spotlight Accent -->
+    <div class="absolute top-[-20%] left-[30%] w-[60vw] h-[60vh] bg-[radial-gradient(ellipse_at_top,rgba(124,92,252,0.12),transparent_60%)] pointer-events-none z-10" aria-hidden="true"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[300px] h-[300px] rounded-full bg-[var(--gradient-glow-cyan)] opacity-10 filter blur-[80px] pointer-events-none animate-[orb-pulse_8s_infinite_ease-in-out]" aria-hidden="true"></div>
+
+    <!-- Cyber Grid Background -->
+    <div class="absolute inset-0 pointer-events-none opacity-[0.15] z-0" aria-hidden="true">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f008_1px,transparent_1px),linear-gradient(to_bottom,#00c8f008_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+    </div>
+
+    <!-- HUD Indicators -->
+    <div class="absolute top-36 left-8 hidden xl:block font-mono text-[9px] text-[var(--accent-cyan)] opacity-40 space-y-1 z-20" aria-hidden="true">
+      <div>SPEC.ID // {job.id}</div>
+      <div>ENCRYPT // AES_256</div>
+    </div>
+
+    <div class="relative z-20 max-w-5xl mx-auto flex flex-col items-start gap-4">
+      <a
+        href="/careers"
+        class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase text-white/50 hover:text-[var(--accent-cyan)] transition-colors duration-300 mb-2 group"
+      >
+        <svg class="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+        [ Back to registries ]
+      </a>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <Badge variant={job.department.includes('Community') ? 'purple' : 'cyan'}>
+          {job.department}
+        </Badge>
+        <span class="font-mono text-[9px] text-white/30 uppercase">{job.id}</span>
+      </div>
+
+      <h1 class="font-display text-h1 font-bold text-white uppercase mt-2 tracking-tight leading-tight max-w-4xl animate-[scale-in_0.65s_ease_forwards]">
+        {job.title}
+      </h1>
+
+      <div class="flex flex-wrap items-center gap-6 mt-4 font-mono text-xs text-white/50">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          Location: {job.location}
+        </span>
+        <span class="text-white/10 hidden sm:inline">•</span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-[var(--accent-purple)]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+          </svg>
+          Allocation: {job.type}
+        </span>
+        <span class="text-white/10 hidden sm:inline">•</span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          Status: ACTIVE_SELECTION
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 — JOB METRICS & APPLICATION SIDEBAR (Split Grid) -->
+  <section class="py-20 bg-[#020202] relative z-10">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left Column: Specs Detail -->
+        <div class="lg:col-span-7 space-y-12" data-animate="fade-up">
+          
+          <!-- About Section -->
+          <div class="space-y-4">
+            <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+              <span class="w-1.5 h-6 bg-[var(--accent-cyan)] rounded-full"></span>
+              About the Role
+            </h2>
+            <p class="font-body text-sm text-text-secondary leading-relaxed font-light">
+              {job.about}
+            </p>
+          </div>
+
+          <!-- Responsibilities Section -->
+          <div class="space-y-4">
+            <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+              <span class="w-1.5 h-6 bg-[var(--accent-purple)] rounded-full"></span>
+              Key Responsibilities
+            </h2>
+            <ul class="space-y-3 font-body text-sm text-text-secondary font-light">
+              {job.responsibilities.map((resp) => (
+                <li class="flex items-start gap-3">
+                  <span class="text-[var(--accent-cyan)] font-mono translate-y-[2px] shrink-0">▸</span>
+                  <span>{resp}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Requirements Section -->
+          <div class="space-y-4">
+            <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+              <span class="w-1.5 h-6 bg-white/40 rounded-full"></span>
+              Requirements
+            </h2>
+            <ul class="space-y-3 font-body text-sm text-text-secondary font-light">
+              {job.requirements.map((req) => (
+                <li class="flex items-start gap-3">
+                  <span class="text-[var(--accent-purple)] font-mono translate-y-[2px] shrink-0">▸</span>
+                  <span>{req}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Nice to Have Section -->
+          {job.niceToHave && job.niceToHave.length > 0 && (
+            <div class="space-y-4">
+              <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+                <span class="w-1.5 h-6 bg-cyan-400/25 rounded-full"></span>
+                Nice to Have
+              </h2>
+              <ul class="space-y-3 font-body text-sm text-text-secondary font-light">
+                {job.niceToHave.map((nice) => (
+                  <li class="flex items-start gap-3">
+                    <span class="text-white/30 font-mono translate-y-[2px] shrink-0">▸</span>
+                    <span>{nice}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <!-- Benefits Section -->
+          <div class="space-y-4">
+            <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+              <span class="w-1.5 h-6 bg-emerald-500/40 rounded-full"></span>
+              Why Join Fintech24h?
+            </h2>
+            <ul class="space-y-3 font-body text-sm text-text-secondary font-light">
+              {job.benefits.map((benefit) => (
+                <li class="flex items-start gap-3">
+                  <span class="text-emerald-400 font-mono translate-y-[2px] shrink-0">▸</span>
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+        </div>
+
+        <!-- Right Column: Sticky Application Form -->
+        <div class="lg:col-span-5 lg:sticky lg:top-28" data-animate="fade-up">
+          <JobApplicationForm client:load jobTitle={job.title} jobId={job.id} />
+        </div>
+        
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -6,7 +6,6 @@ routes = [
   { pattern = "fintech24h.com/wp-content/*",  zone_name = "fintech24h.com" },
   { pattern = "fintech24h.com/wp-admin/*",     zone_name = "fintech24h.com" },
   { pattern = "fintech24h.com/wp-login.php*",  zone_name = "fintech24h.com" },
-  { pattern = "fintech24h.com/wp-login",       zone_name = "fintech24h.com" },
   { pattern = "fintech24h.com/wp-includes/*",  zone_name = "fintech24h.com" },
   { pattern = "fintech24h.com/wp-cron.php*",   zone_name = "fintech24h.com" },
   { pattern = "fintech24h.com/wp-json/*",      zone_name = "fintech24h.com" },

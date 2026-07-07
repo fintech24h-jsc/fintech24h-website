@@ -1,0 +1,385 @@
+---
+// src/pages/careers.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+import Badge from '../components/ui/Badge.astro';
+import JobApplicationForm from '../components/ui/JobApplicationForm';
+import { jobs } from '../data/jobs';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Careers', item: 'https://fintech24h.com/careers' }
+];
+
+const careersSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Careers at Fintech24h",
+    "url": "https://fintech24h.com/careers",
+    "description": "Join Fintech24h, the premier marketing authority in blockchain and AI. Explore remote-friendly careers in Web3 community management, KOL marketing, PR, and content creation.",
+    "mainEntity": { "@type": "Organization", "@id": "https://fintech24h.com/#organization" }
+  }
+];
+
+// Unique list of departments for filtering
+const departments = ['All', ...new Set(jobs.map(job => job.department))];
+---
+
+<BaseLayout
+  title="Careers at Fintech24h — Join the Web3 & Blockchain Growth Core"
+  description="Join Fintech24h, the premier marketing authority in blockchain and AI. Explore remote-friendly careers in Web3 community management, KOL marketing, PR, and content creation."
+  schema={careersSchema}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- SECTION 1 — HERO (Cinematic HUD Spotlight & Protocol Node Grid) -->
+  <section class="relative min-h-[90vh] flex flex-col justify-center items-center px-4 overflow-hidden bg-[#020202]">
+    <!-- CRT Scanlines Filter Overlay -->
+    <div class="absolute inset-0 pointer-events-none z-30 scanlines-overlay opacity-[0.03]" aria-hidden="true"></div>
+
+    <!-- Spotlight / Neon Nebulae -->
+    <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-[radial-gradient(ellipse_at_top,rgba(0,200,240,0.15),transparent_60%)] pointer-events-none z-10" aria-hidden="true"></div>
+    <div class="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] rounded-full bg-[var(--gradient-glow-purple)] opacity-10 filter blur-[100px] pointer-events-none animate-[orb-drift_15s_infinite_ease-in-out]" aria-hidden="true"></div>
+    
+    <!-- Cyber Grid Background -->
+    <div class="absolute inset-0 pointer-events-none opacity-20 z-0" aria-hidden="true">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f012_1px,transparent_1px),linear-gradient(to_bottom,#00c8f012_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+      <div class="absolute top-0 left-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent opacity-20 animate-[shimmer_5s_linear_infinite]"></div>
+      <div class="absolute inset-0 grid-pattern opacity-10"></div>
+    </div>
+
+    <!-- HUD Indicators -->
+    <div class="absolute top-28 left-8 hidden lg:block font-mono text-[9px] text-[var(--accent-cyan)] opacity-60 space-y-1 z-20" aria-hidden="true">
+      <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span> SYS.STATUS // ONLINE</div>
+      <div>CORE.INTEGRITY // RECRUITMENT_OPEN</div>
+      <div class="text-white/30">PROTOCOL // TALENT_NODE_INDEX</div>
+    </div>
+    
+    <div class="absolute top-28 right-8 hidden lg:block font-mono text-[9px] text-[var(--accent-purple)] opacity-60 space-y-1 z-20 text-right" aria-hidden="true">
+      <div>LATENCY // 8ms</div>
+      <div>NETWORK // FINTECH24H_ECOSYSTEM</div>
+      <div class="text-white/30">OPERATOR // CAR_OP_V3.5</div>
+    </div>
+
+    <!-- Floating Cyber Particles -->
+    <div class="absolute inset-0 pointer-events-none z-10" aria-hidden="true">
+      <div class="absolute w-2 h-2 bg-cyan-400/20 rounded-full top-[40%] left-[15%] animate-[pulse_4s_infinite]"></div>
+      <div class="absolute w-1.5 h-1.5 bg-purple-400/30 rounded-full top-[65%] left-[25%] animate-[pulse_5s_infinite_1s]"></div>
+      <div class="absolute w-2.5 h-2.5 bg-cyan-400/10 rounded-full top-[35%] right-[15%] animate-[pulse_6s_infinite_2s]"></div>
+    </div>
+
+    <div class="relative z-20 text-center max-w-5xl mx-auto mt-20 px-4">
+      <div class="reveal">
+        <p class="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--accent-cyan)] mb-6">[ DIRECTORY // CAREERS_NODE ]</p>
+      </div>
+
+      <h1 class="font-display font-light max-w-5xl mx-auto leading-[1.1] tracking-tight">
+        <span class="block text-[clamp(2rem,4vw,3.5rem)] tracking-widest text-white/40 uppercase mb-2">BUILD THE FUTURE CONSENSUS</span>
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] font-bold tracking-tight text-white uppercase drop-shadow-[0_0_30px_rgba(0,200,240,0.25)]">JOIN FINTECH24H CORE</span>
+      </h1>
+
+      <p class="font-body text-base md:text-lg text-white/60 max-w-2xl mx-auto mt-8 mb-12 leading-[1.8] font-light">
+        We replace legacy marketing noise with Web3-native mathematical precision. Fintech24h is expanding its global network of specialists in KOL outreach, PR media distribution, and community acceleration protocols. Apply to link your node.
+      </p>
+
+      <div class="flex justify-center gap-6">
+        <a href="#open-positions" class="inline-flex items-center justify-center border border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/5 px-8 py-4 text-white font-mono text-xs uppercase tracking-[0.2em] hover:bg-[var(--accent-cyan)] hover:text-black hover:shadow-[0_0_30px_rgba(0,200,240,0.4)] hover:-translate-y-1 transition-all duration-500 backdrop-blur-sm">
+          Inspect Open Positions
+        </a>
+        <a href="#general-application" class="inline-flex items-center justify-center border border-white/10 px-8 py-4 text-white/50 font-mono text-xs uppercase tracking-[0.2em] hover:border-white/30 hover:text-white hover:-translate-y-1 transition-all duration-500 backdrop-blur-sm">
+          Submit Telemetry CV
+        </a>
+      </div>
+    </div>
+    
+    <!-- Bottom Fade -->
+    <div class="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[#020202] to-transparent pointer-events-none" aria-hidden="true"></div>
+  </section>
+
+  <!-- SECTION 2 — SYSTEM PERKS (Asymmetrical Creative Grid Layout) -->
+  <section class="py-24 bg-[#020202] relative z-10 border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center space-y-4 mb-20" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/5 text-[var(--accent-purple)] text-xs font-mono font-medium tracking-widest uppercase">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] animate-pulse" />
+          SYSTEM_BENEFITS
+        </div>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] max-w-2xl mx-auto">
+          Ecosystem Perks & 
+          <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] bg-clip-text text-transparent">
+            Culture Variables
+          </span>
+        </h2>
+        <div class="w-16 h-px bg-gradient-to-r from-transparent via-[var(--accent-purple)]/60 to-transparent mx-auto" />
+      </div>
+
+      <!-- Asymmetrical layout to break standard AI grid look -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <!-- Card 1: Featured (Large span-2) -->
+        <div class="card-default md:col-span-2 p-8 flex flex-col justify-between border-cyan-500/20 bg-gradient-to-br from-[var(--accent-cyan)]/[0.04] to-[var(--accent-purple)]/[0.04]" data-animate="fade-up">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded bg-[var(--accent-cyan)]/10 border border-[var(--accent-cyan)]/20 flex items-center justify-center text-[var(--accent-cyan)]">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              </svg>
+            </div>
+            <h3 class="font-display text-h3 font-bold text-white uppercase tracking-wide">Global Scope & Partner Network</h3>
+            <p class="font-body text-sm text-text-secondary leading-relaxed">
+              Plug directly into high-growth global protocols, foundation nodes, and venture-backed blockchain platforms. You will manage and direct marketing execution across premium markets globally (USA, SEA, India, UAE).
+            </p>
+          </div>
+          <div class="mt-8 font-mono text-[9px] text-[var(--accent-cyan)] uppercase tracking-wider">
+            [ VARIABLE // GLOBAL_OUTREACH_EXPONENT ]
+          </div>
+        </div>
+
+        <!-- Card 2: Remote Autonomy (Small) -->
+        <div class="card-default p-8 flex flex-col justify-between" data-animate="fade-up">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded bg-[var(--accent-purple)]/10 border border-[var(--accent-purple)]/20 flex items-center justify-center text-[var(--accent-purple)]">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            </div>
+            <h3 class="font-display text-lg font-bold text-white uppercase tracking-wide">Remote-Friendly</h3>
+            <p class="font-body text-xs text-text-secondary leading-relaxed">
+              Work from anywhere, whether you prefer your home lab or co-working nodes. We organize async workflows structured around targets rather than strict tracking clocks.
+            </p>
+          </div>
+          <div class="mt-8 font-mono text-[9px] text-white/20 uppercase tracking-wider">
+            [ VARIABLE // DISTRIBUTED_NODES ]
+          </div>
+        </div>
+
+        <!-- Card 3: Creative Freedom (Small) -->
+        <div class="card-default p-8 flex flex-col justify-between" data-animate="fade-up">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center text-white/60">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+              </svg>
+            </div>
+            <h3 class="font-display text-lg font-bold text-white uppercase tracking-wide">Creative Ownership</h3>
+            <p class="font-body text-xs text-text-secondary leading-relaxed">
+              We despise micromanagement. We empower team builders with the capital, assets, and trust to run, launch, and execute experiments independently.
+            </p>
+          </div>
+          <div class="mt-8 font-mono text-[9px] text-white/20 uppercase tracking-wider">
+            [ VARIABLE // ABSOLUTE_Sovereignty ]
+          </div>
+        </div>
+
+        <!-- Card 4: Career growth (Large span-2) -->
+        <div class="card-default md:col-span-2 p-8 flex flex-col justify-between border-purple-500/20 bg-gradient-to-br from-[var(--accent-purple)]/[0.02] to-transparent" data-animate="fade-up">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                <polyline points="17 6 23 6 23 12" />
+              </svg>
+            </div>
+            <h3 class="font-display text-h3 font-bold text-white uppercase tracking-wide">Asymmetric Growth Matrix</h3>
+            <p class="font-body text-sm text-text-secondary leading-relaxed">
+              We grow when you grow. Gain exposure to top-tier founders, global venture capitals, blockchain protocol leads, and international marketing structures. Your network value will scale exponentially.
+            </p>
+          </div>
+          <div class="mt-8 font-mono text-[9px] text-[var(--accent-purple)] uppercase tracking-wider">
+            [ VARIABLE // GROWTH_INDEX_MULTIPLIER ]
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — ACTIVE JOBS (HUD Data Stream & Vanilla JS Dynamic Filters) -->
+  <section id="open-positions" class="py-32 bg-[#020202] relative z-10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center space-y-4 mb-16" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/20 bg-[var(--accent-cyan)]/5 text-[var(--accent-cyan)] text-xs font-mono font-medium tracking-widest uppercase">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse" />
+          ACTIVE_JOB_STREAM
+        </div>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] max-w-2xl mx-auto">
+          Link Your Node: 
+          <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] bg-clip-text text-transparent">
+            Open Registries
+          </span>
+        </h2>
+        <div class="w-16 h-px bg-gradient-to-r from-transparent via-[var(--accent-cyan)]/60 to-transparent mx-auto" />
+      </div>
+
+      <!-- Interactive Filter Tabs -->
+      <div class="flex justify-center flex-wrap gap-3 mb-12" data-animate="fade-up">
+        {departments.map((dept) => (
+          <button
+            type="button"
+            data-filter={dept}
+            class="filter-tab px-4 py-2 border rounded-full font-mono text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer text-white/50 border-white/5 bg-white/[0.01] hover:border-white/20 hover:text-white"
+          >
+            {dept}
+          </button>
+        ))}
+      </div>
+
+      <!-- Jobs Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto" id="jobs-container">
+        {jobs.map((job) => (
+          <div
+            data-department={job.department}
+            class="job-card relative bg-[var(--bg-glass)] border border-white/[0.06] rounded-2xl p-6 sm:p-8 backdrop-blur-md transition-all duration-500 flex flex-col justify-between gap-6 hover:border-white/[0.12] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)]"
+            data-animate="fade-up"
+          >
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--accent-cyan)]/5 to-[var(--accent-purple)]/5 opacity-0 hover-glow transition-opacity duration-500 pointer-events-none" />
+            
+            <div class="space-y-4 relative z-10">
+              <div class="flex justify-between items-start gap-4">
+                <Badge variant={job.department.includes('Community') ? 'purple' : 'cyan'}>
+                  {job.department}
+                </Badge>
+                <span class="font-mono text-[9px] text-white/30 uppercase">{job.id}</span>
+              </div>
+              
+              <h3 class="font-display text-xl font-bold text-white uppercase group-hover:text-[var(--accent-cyan)] transition-colors">
+                {job.title}
+              </h3>
+              
+              <div class="flex items-center gap-4 text-xs font-mono text-white/40">
+                <span class="flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  {job.location}
+                </span>
+                <span class="text-white/10">•</span>
+                <span class="flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                  </svg>
+                  {job.type}
+                </span>
+              </div>
+
+              <p class="font-body text-xs text-text-secondary leading-relaxed line-clamp-3">
+                {job.about}
+              </p>
+            </div>
+
+            <div class="relative z-10 flex items-center justify-between mt-4">
+              <span class="font-mono text-[8px] text-[var(--accent-cyan)] tracking-widest uppercase">
+                // LINK_READY
+              </span>
+              <a
+                href={`/careers/${job.slug}`}
+                class="inline-flex items-center gap-2 border border-white/10 px-4 py-2 rounded font-mono text-[10px] uppercase tracking-wider text-white hover:border-[var(--accent-cyan)] hover:text-[var(--accent-cyan)] transition-colors duration-300"
+              >
+                Inspect Protocol
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — GENERAL APPLICATION (Interactive Form Island) -->
+  <section id="general-application" class="py-24 bg-[#020202] relative z-10 border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+        <!-- Left callout -->
+        <div class="lg:col-span-2 space-y-6" data-animate="fade-up">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/5 text-[var(--accent-purple)] text-xs font-mono font-medium tracking-widest uppercase">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] animate-pulse" />
+            OPEN_CHANNEL
+          </div>
+          <h2 class="font-display text-clamp-h2 font-bold text-white uppercase leading-tight tracking-wider">
+            Don't see your spec?
+          </h2>
+          <p class="font-body text-xs text-text-secondary leading-relaxed">
+            Fintech24h is a rapidly expanding universe. If your node has specialized protocols in community governance, developer relations, Web3 engineering, or crypto strategy that don't match our active streams, establish contact.
+          </p>
+          <div class="space-y-2 text-[10px] font-mono text-white/40">
+            <div>// DIRECT_COMMS: info@fintech24h.com</div>
+            <div>// TELEGRAM_SUPPORT: @fintech24h</div>
+          </div>
+        </div>
+
+        <!-- Right Form Island -->
+        <div class="lg:col-span-3" data-animate="fade-up">
+          <JobApplicationForm client:load jobTitle="General Application" jobId="GENERAL-NODE" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Ambient glowing state on hover */
+  .job-card:hover .hover-glow {
+    opacity: 1;
+  }
+</style>
+
+<!-- Vanilla JS Client Filtering Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.filter-tab');
+    const cards = document.querySelectorAll('.job-card');
+
+    if (tabs.length === 0) return;
+
+    // Set 'All' tab active by default
+    const allTab = document.querySelector('[data-filter="All"]');
+    if (allTab) allTab.classList.add('active-tab');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const filterVal = tab.getAttribute('data-filter') || 'All';
+
+        // Update active tab style
+        tabs.forEach(t => t.classList.remove('active-tab'));
+        tab.classList.add('active-tab');
+
+        // Filter cards with animations
+        cards.forEach(cardEl => {
+          const card = cardEl as HTMLElement;
+          const cardDept = card.getAttribute('data-department') || '';
+
+          if (filterVal === 'All' || cardDept === filterVal) {
+            card.style.display = 'flex';
+            // Trigger animation
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0) scale(1)';
+            }, 50);
+          } else {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(16px) scale(0.98)';
+            setTimeout(() => {
+              card.style.display = 'none';
+            }, 300); // matches transition speed
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<style is:global>
+  /* Custom filter tabs styles */
+  .filter-tab.active-tab {
+    border-color: var(--accent-cyan) !important;
+    background-color: rgba(0, 200, 240, 0.08) !important;
+    color: var(--accent-cyan) !important;
+    box-shadow: 0 0 12px rgba(0, 200, 240, 0.2);
+  }
+</style>
