@@ -117,23 +117,53 @@ export default function JobApplicationForm({ jobTitle, jobId }: JobApplicationFo
     setIsSubmitting(true);
     setError('');
 
+    const webhook = (import.meta.env.PUBLIC_CAREERS_WEBHOOK_URL || '').trim();
+
+    if (!webhook) {
+      console.warn('PUBLIC_CAREERS_WEBHOOK_URL is not set in .env. Running in simulation mode.');
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        console.log('Submitted Application Data (MOCK):', {
+          ...formData,
+          jobTitle,
+          jobId,
+          cvName: selectedFile.name,
+          cvSize: `${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB`,
+          cvBase64Length: fileBase64.length,
+        });
+        setIsSuccess(true);
+      } catch (err) {
+        setError('Failed to process application simulation.');
+      } finally {
+        setIsSubmitting(false);
+      }
+      return;
+    }
+
     try {
-      // Mocking submission since webhook parameters will be connected later
-      // We simulate a 1.5s network delay to show the futuristic loading/shimmer state
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      console.log('Submitted Application Data:', {
-        ...formData,
-        jobTitle,
-        jobId,
-        cvName: selectedFile.name,
-        cvSize: `${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB`,
-        cvBase64Length: fileBase64.length,
+      await fetch(webhook, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          telegram: formData.telegram,
+          linkedin: formData.linkedin,
+          coverLetter: formData.coverLetter,
+          jobTitle: jobTitle,
+          jobId: jobId,
+          cvFileName: selectedFile.name,
+          cvFileMimeType: selectedFile.type,
+          cvFileBase64: fileBase64,
+          submittedAt: new Date().toISOString(),
+        }),
       });
-
       setIsSuccess(true);
     } catch (err) {
-      setError('Failed to establish telemetry link. Please email info@fintech24h.com');
+      console.error('Submission failed:', err);
+      setError('Failed to establish telemetry link. Please try again or email info@fintech24h.com');
     } finally {
       setIsSubmitting(false);
     }
