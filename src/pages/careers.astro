@@ -24,16 +24,6 @@ const careersSchema = [
 
 // Unique list of departments for filtering
 const departments = ['All', ...new Set(jobs.map(job => job.department))];
-
-// Mock telemetry logs for the interactive terminal simulation
-const telemetryLogs = [
-  "SYSTEM_STATUS: ACTIVE // SECTOR: TALENT_OUTREACH",
-  "FETCHING GLOBAL_TALENT_NODE_INDEX... OK",
-  "DECRYPTING PROTOCOL_SPECS... DEPLOYED",
-  "EVALUATING ECOSYSTEM_GROWTH_OKR (TARGET: $60K/MO)... ON_TRACK",
-  "CONNECTING NETWORK_AGENT_COMMS... COMPLETED",
-  "LISTENING FOR CANDIDATE_METRICS..."
-];
 ---
 
 <BaseLayout
@@ -80,45 +70,59 @@ const telemetryLogs = [
 
     <div class="relative z-20 text-center max-w-5xl mx-auto mt-20 px-4">
       <div class="reveal">
-        <p class="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--accent-cyan)] mb-6 animate-[pulse_3s_infinite]">[ CORE_DIRECTORY // TALENT_INDUCTION ]</p>
+        <p class="font-mono text-[10px] uppercase tracking-[0.4em] text-[var(--accent-cyan)] mb-6 animate-[pulse_3s_infinite]">// CAREERS // TALENT INDEX</p>
       </div>
 
-      <h1 class="font-display font-light max-w-5xl mx-auto leading-[1.05] tracking-tight">
-        <span class="block text-[clamp(1.8rem,3.5vw,3rem)] tracking-[0.25em] text-white/30 uppercase mb-2 font-mono">RE-ENGINEERING WEB3 WORKSPACE</span>
-        <span class="block text-[clamp(2.5rem,6vw,5.5rem)] font-bold tracking-tight text-white uppercase drop-shadow-[0_0_40px_rgba(0,200,240,0.3)]">
-          LINK YOUR NODE
+      <h1 class="font-display max-w-5xl mx-auto leading-[1.1] tracking-tight">
+        <span class="block text-[clamp(2.5rem,6vw,5.5rem)] font-bold tracking-tight text-white uppercase drop-shadow-[0_0_40px_rgba(0,200,240,0.15)]">
+          Shape the Future of <br class="hidden sm:inline" />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-cyan)] via-white to-[var(--accent-purple)] drop-shadow-[0_0_30px_rgba(0,200,240,0.25)] font-extrabold">
+            Web3 Marketing
+          </span>
         </span>
       </h1>
 
-      <p class="font-body text-base md:text-lg text-white/60 max-w-2xl mx-auto mt-8 mb-12 leading-[1.8] font-light">
+      <p class="font-body text-base md:text-lg text-white/60 max-w-2xl mx-auto mt-8 mb-16 leading-[1.8] font-light">
         We replace standard marketing speculations with quantitative, data-driven Web3 architectures. Fintech24h is recruiting top-tier specialists to accelerate global blockchain protocols.
       </p>
 
-      <!-- Interactive Simulated Terminal Panel -->
-      <div class="max-w-2xl mx-auto bg-black/60 border border-white/10 rounded-xl p-4 text-left font-mono text-[11px] text-[var(--accent-cyan)] shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_20px_rgba(0,200,240,0.05)] backdrop-blur-md mb-12 relative overflow-hidden" data-animate="scale-in">
-        <div class="absolute top-0 right-0 p-2 text-[9px] text-white/20">SYSTEM_FEED</div>
-        <div class="flex items-center gap-1.5 mb-3 border-b border-white/5 pb-2 text-white/40">
-          <span class="w-2.5 h-2.5 rounded-full bg-red-500/40"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-green-500/40"></span>
-          <span class="ml-2 text-[9px] uppercase tracking-wider">Telemetry Logs // fintech24h_sys.sh</span>
+      <!-- Futuristic Metrics Dashboard Panel -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto mb-16 relative z-20" data-animate="scale-in">
+        <!-- Metric Node 1 -->
+        <div class="bg-white/[0.01] border border-white/5 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-[var(--accent-cyan)]/30 hover:bg-white/[0.03] transition-all duration-500">
+          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-white/10 select-none">// SCALE_01</div>
+          <div class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold font-display text-[var(--accent-cyan)] drop-shadow-[0_0_15px_rgba(0,200,240,0.2)] tracking-tight">50M+</div>
+          <div class="font-mono text-[9px] text-white/50 uppercase tracking-widest mt-1.5">Total Reach</div>
         </div>
-        <div class="space-y-1.5 opacity-80" id="terminal-feed">
-          {telemetryLogs.map((log) => (
-            <div class="flex items-start gap-2">
-              <span class="text-white/20 select-none">&gt;&gt;</span>
-              <span>{log}</span>
-            </div>
-          ))}
+
+        <!-- Metric Node 2 -->
+        <div class="bg-white/[0.01] border border-white/5 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-[var(--accent-purple)]/30 hover:bg-white/[0.03] transition-all duration-500">
+          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-white/10 select-none">// NETWORK_02</div>
+          <div class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold font-display text-[var(--accent-purple)] drop-shadow-[0_0_15px_rgba(124,92,252,0.2)] tracking-tight">150+</div>
+          <div class="font-mono text-[9px] text-white/50 uppercase tracking-widest mt-1.5">Elite KOL Partners</div>
+        </div>
+
+        <!-- Metric Node 3 -->
+        <div class="bg-white/[0.01] border border-white/5 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-[var(--accent-cyan)]/30 hover:bg-white/[0.03] transition-all duration-500">
+          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-white/10 select-none">// ECOSYSTEMS_03</div>
+          <div class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold font-display text-white tracking-tight">12+</div>
+          <div class="font-mono text-[9px] text-white/50 uppercase tracking-widest mt-1.5">Chains Supported</div>
+        </div>
+
+        <!-- Metric Node 4 -->
+        <div class="bg-white/[0.01] border border-white/5 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-emerald-500/30 hover:bg-white/[0.03] transition-all duration-500">
+          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-white/10 select-none">// GLOBAL_04</div>
+          <div class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold font-display text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.2)] tracking-tight">24/7</div>
+          <div class="font-mono text-[9px] text-white/50 uppercase tracking-widest mt-1.5">Distributed Nodes</div>
         </div>
       </div>
 
-      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 relative z-20">
         <a href="#open-positions" class="w-full sm:w-auto inline-flex items-center justify-center border border-[var(--accent-cyan)] bg-gradient-to-r from-[var(--accent-cyan)]/10 to-[var(--accent-purple)]/10 px-8 py-4 text-white font-mono text-xs uppercase tracking-[0.2em] hover:bg-[var(--accent-cyan)] hover:text-black hover:shadow-[0_0_30px_rgba(0,200,240,0.45)] hover:-translate-y-1 transition-all duration-500 backdrop-blur-sm">
-          [ ACCESS_OPEN_POSITIONS ]
+          [ View Open Positions ]
         </a>
         <a href="#general-application" class="w-full sm:w-auto inline-flex items-center justify-center border border-white/10 px-8 py-4 text-white/50 font-mono text-xs uppercase tracking-[0.2em] hover:border-white/30 hover:text-white hover:-translate-y-1 transition-all duration-500 backdrop-blur-sm">
-          [ INITIATE_GENERAL_COMM ]
+          [ Send General Application ]
         </a>
       </div>
     </div>
@@ -275,7 +279,7 @@ const telemetryLogs = [
             data-filter={dept}
             class="filter-tab px-6 py-2.5 border rounded-full font-mono text-[10px] uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer text-white/40 border-white/5 bg-white/[0.005] hover:border-[var(--accent-cyan)]/30 hover:text-white"
           >
-            {dept === 'All' ? '[ SHOW_ALL_NODES ]' : `[ DEPT: ${dept.toUpperCase()} ]`}
+            {dept === 'All' ? 'All Departments' : dept}
           </button>
         ))}
       </div>
@@ -285,17 +289,17 @@ const telemetryLogs = [
         {jobs.map((job, idx) => (
           <div
             data-department={job.department}
-            class="job-card relative bg-gradient-to-br from-white/[0.01] to-white/[0.002] border border-white/[0.05] rounded-2xl p-6 sm:p-8 backdrop-blur-md transition-all duration-500 flex flex-col justify-between gap-6 hover:border-[var(--accent-cyan)]/30 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(0,200,240,0.05)] group"
+            class="job-card relative bg-gradient-to-br from-white/[0.02] to-white/[0.005] border border-white/10 rounded-2xl p-6 sm:p-8 backdrop-blur-md transition-all duration-500 flex flex-col justify-between gap-6 hover:border-[var(--accent-cyan)]/40 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(0,200,240,0.05)] group"
             data-animate="fade-up"
           >
             <!-- Hover Glow Overlay -->
             <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--accent-cyan)]/5 via-transparent to-[var(--accent-purple)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
             
             <!-- Technical HUD Corner Accents -->
-            <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/10 group-hover:border-[var(--accent-cyan)]/30 transition-colors rounded-tl-2xl" aria-hidden="true"></div>
-            <div class="absolute top-0 right-0 w-3 h-3 border-t border-r border-white/10 group-hover:border-[var(--accent-cyan)]/30 transition-colors rounded-tr-2xl" aria-hidden="true"></div>
-            <div class="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-white/10 group-hover:border-[var(--accent-cyan)]/30 transition-colors rounded-bl-2xl" aria-hidden="true"></div>
-            <div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white/10 group-hover:border-[var(--accent-cyan)]/30 transition-colors rounded-br-2xl" aria-hidden="true"></div>
+            <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/15 group-hover:border-[var(--accent-cyan)]/30 transition-colors rounded-tl-2xl" aria-hidden="true"></div>
+            <div class="absolute top-0 right-0 w-3 h-3 border-t border-r border-white/15 group-hover:border-[var(--accent-cyan)]/30 transition-colors rounded-tr-2xl" aria-hidden="true"></div>
+            <div class="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-white/15 group-hover:border-[var(--accent-cyan)]/30 transition-colors rounded-bl-2xl" aria-hidden="true"></div>
+            <div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white/15 group-hover:border-[var(--accent-cyan)]/30 transition-colors rounded-br-2xl" aria-hidden="true"></div>
 
             <div class="space-y-4 relative z-10">
               <div class="flex justify-between items-center gap-4">
@@ -325,13 +329,13 @@ const telemetryLogs = [
             <!-- Command Action Block -->
             <div class="relative z-10 flex items-center justify-between mt-4 pt-4 border-t border-white/5">
               <span class="font-mono text-[8px] text-[var(--accent-cyan)] tracking-widest uppercase animate-pulse">
-                // COMPILATION_ACTIVE
+                // ACTIVE_LISTING
               </span>
               <a
                 href={`/careers/${job.slug}`}
                 class="inline-flex items-center gap-2 border border-white/10 bg-white/[0.01] px-5 py-2.5 rounded font-mono text-[9px] uppercase tracking-wider text-white hover:border-[var(--accent-cyan)] hover:bg-[var(--accent-cyan)] hover:text-black hover:shadow-[0_0_20px_rgba(0,200,240,0.3)] transition-all duration-300"
               >
-                [ EXECUTE_NODE_INSPECTION ]
+                [ VIEW POSITION DETAILS ]
               </a>
             </div>
           </div>
