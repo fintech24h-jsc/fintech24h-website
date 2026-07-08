@@ -1,0 +1,35 @@
+---
+// src/pages/[slug].astro
+export const prerender = false;
+
+import { getPostBySlug, getCaseStudyBySlug } from '../lib/wordpress';
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+// 1. Check if the slug belongs to a WordPress blog post
+try {
+  const post = await getPostBySlug(slug);
+  if (post) {
+    return Astro.redirect(`/blog/${slug}`, 301);
+  }
+} catch (err) {
+  console.error(`Error checking post slug redirect for "${slug}":`, err);
+}
+
+// 2. Check if the slug belongs to a Case Study
+try {
+  const caseStudy = await getCaseStudyBySlug(slug);
+  if (caseStudy) {
+    return Astro.redirect(`/case-studies/${slug}`, 301);
+  }
+} catch (err) {
+  console.error(`Error checking case study slug redirect for "${slug}":`, err);
+}
+
+// 3. Fallback to 404
+return Astro.redirect('/404');
+---

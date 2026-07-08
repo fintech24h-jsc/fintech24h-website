@@ -1,0 +1,12 @@
+---
+// src/pages/category/[slug].astro
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+if (slug) {
+  return Astro.redirect(`/blog/category/${slug}`, 301);
+}
+
+return Astro.redirect('/404');
+---
