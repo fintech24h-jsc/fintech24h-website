@@ -89,7 +89,7 @@ const TitleTag = isHero ? 'h1' : 'h2';
     }
   </style>
 
-  <script>
+  <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       const observer = new IntersectionObserver((entries) => {

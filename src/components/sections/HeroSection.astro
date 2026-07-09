@@ -322,24 +322,24 @@ const starsLarge = generateStars(30);
   }
 </style>
 
-<script>
+<script is:inline>
   // Hero text: pure CSS animation (data-hero-eyebrow + data-hero-line with --li var)
   // Counter: vanilla rAF — same power3.out easing, no GSAP dependency
   document.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
     const counterObs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
-        const el = entry.target as HTMLElement;
+        const el = entry.target;
         const target = parseInt(el.dataset.count || '0');
         const suffix = el.dataset.suffix || '';
         const duration = 2200;
         const start = performance.now();
 
-        const tick = (now: number) => {
+        const tick = (now) => {
           const t = Math.min((now - start) / duration, 1);
           el.textContent = Math.round(easeOutCubic(t) * target) + suffix;
           if (t < 1) requestAnimationFrame(tick);

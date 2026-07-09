@@ -142,7 +142,7 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
 
   <!-- Scroll reveals — native IntersectionObserver + CSS transitions, 0 KB JS overhead -->
   <!-- Visual result is identical to GSAP ScrollTrigger (same easing, same stagger) -->
-  <script>
+  <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -150,7 +150,7 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
       const observer = new IntersectionObserver((entries) => {
         const visible = entries.filter(e => e.isIntersecting);
         visible.forEach((entry, i) => {
-          const el = entry.target as HTMLElement;
+          const el = entry.target;
           el.style.transitionDelay = `${i * 0.06}s`;  // tighter stagger — items appear nearly together
           el.classList.add('is-visible');
           observer.unobserve(el);

@@ -242,13 +242,13 @@ const showBlog = await isBlogAvailable();
   #nb.menu-open #hb-l3 { transform: translateY(-6px) rotate(-45deg); }
 </style>
 
-<script>
-  const nb      = document.getElementById('nb')!;
-  const svcWrap = document.getElementById('svc-wrap')!;
-  const svcDD   = document.getElementById('svc-dropdown')!;
-  const svcChev = document.getElementById('svc-chevron')!;
-  const mobTog  = document.getElementById('mob-toggle')! as HTMLButtonElement;
-  const mobDraw = document.getElementById('mob-drawer')!;
+<script is:inline>
+  const nb      = document.getElementById('nb');
+  const svcWrap = document.getElementById('svc-wrap');
+  const svcDD   = document.getElementById('svc-dropdown');
+  const svcChev = document.getElementById('svc-chevron');
+  const mobTog  = document.getElementById('mob-toggle');
+  const mobDraw = document.getElementById('mob-drawer');
 
   /* ── Scroll → scrolled class (triggers bg + padding change) ── */
   let rafId = 0;
@@ -276,7 +276,7 @@ const showBlog = await isBlogAvailable();
 
   /* ── Mobile menu toggle ── */
   let menuOpen = false;
-  const mobOverlay = document.getElementById('mob-overlay')!;
+  const mobOverlay = document.getElementById('mob-overlay');
   mobTog.addEventListener('click', () => {
     menuOpen = !menuOpen;
     mobDraw.classList.toggle('open', menuOpen);
