@@ -507,43 +507,60 @@ const steps = [
       </div>
 
       <div class="bg-white/[0.02] border border-white/10 p-8 rounded-3xl backdrop-blur-xl relative overflow-hidden">
-        <form class="space-y-6" id="custom-rfp-form" action="https://formspree.io/f/xoqgkyrj" method="POST">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Full Name</label>
-              <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white transition-colors" />
-            </div>
-            <div class="space-y-2">
-              <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Email Address</label>
-              <input type="email" name="email" required class="w-full bg-white/5 border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white transition-colors" />
-            </div>
-          </div>
+        
+        <!-- Error Alert Container -->
+        <div id="form-error-alert" class="hidden mb-6 p-4 rounded-xl border border-red-500/20 bg-red-500/10 text-red-400 text-xs font-mono backdrop-blur-md"></div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Telegram or Discord Handle</label>
-              <input type="text" name="contact_handle" required placeholder="@username" class="w-full bg-white/5 border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white transition-colors" />
+        <!-- Success Alert Container -->
+        <div id="form-success-alert" class="hidden p-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 text-center space-y-4 backdrop-blur-md">
+          <div class="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3 class="font-display text-xl font-bold uppercase tracking-wide text-white">RFP Package Submitted</h3>
+          <p class="font-body text-xs sm:text-sm text-white/70 leading-relaxed font-light max-w-md mx-auto">
+            Thank you! Your custom operational blueprint has been sent to our coordinating team. We will reach out to you via Telegram or Email within 24 hours to schedule a discovery alignment call.
+          </p>
+        </div>
+
+        <form class="space-y-6" id="custom-rfp-form">
+          <div class="form-grid-wrapper space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Full Name *</label>
+                <input type="text" id="form-name" name="name" required placeholder="Alex Nguyen" class="w-full bg-white/[0.02] border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white transition-colors placeholder:text-white/20" />
+              </div>
+              <div class="space-y-2">
+                <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Email Address *</label>
+                <input type="email" id="form-email" name="email" required placeholder="alex@project.com" class="w-full bg-white/[0.02] border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white transition-colors placeholder:text-white/20" />
+              </div>
             </div>
-            <div class="space-y-2">
-              <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Organization Website / Project Link</label>
-              <input type="url" name="website" placeholder="https://..." class="w-full bg-white/5 border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white transition-colors" />
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Telegram Username *</label>
+                <input type="text" id="form-contact-handle" name="contact_handle" required placeholder="@username" class="w-full bg-white/[0.02] border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white transition-colors placeholder:text-white/20" />
+              </div>
+              <div class="space-y-2">
+                <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Organization Website / Project Link</label>
+                <input type="url" id="form-website" name="website" placeholder="https://..." class="w-full bg-white/[0.02] border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white transition-colors placeholder:text-white/20" />
+              </div>
             </div>
-          </div>
 
-          <div class="space-y-2">
-            <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Selected Strategy Modules</label>
-            <textarea id="form-selected-modules" name="selected_modules" readonly placeholder="No services selected yet. Add them using the Blueprint node explorer above!" class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-lg text-xs text-white/60 focus:outline-none h-20 resize-none font-mono"></textarea>
-          </div>
+            <div class="space-y-2">
+              <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Selected Strategy Modules</label>
+              <textarea id="form-selected-modules" name="selected_modules" readonly placeholder="No services selected yet. Add them using the Blueprint node explorer above!" class="w-full bg-white/[0.02] border border-white/10 px-4 py-3 rounded-lg text-xs text-white/60 focus:outline-none h-20 resize-none font-mono placeholder:text-white/20"></textarea>
+            </div>
 
-          <div class="space-y-2">
-            <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Additional Requirements or Core Goals</label>
-            <textarea name="message" class="w-full bg-white/5 border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white h-32 transition-colors" placeholder="Explain your targets, constraints, or key parameters..."></textarea>
-          </div>
+            <div class="space-y-2">
+              <label class="font-mono text-[9px] text-white/40 uppercase tracking-wider block">Additional Requirements or Core Goals</label>
+              <textarea id="form-message" name="message" class="w-full bg-white/[0.02] border border-white/10 focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-white h-32 transition-colors placeholder:text-white/20" placeholder="Explain your targets, constraints, or key parameters..."></textarea>
+            </div>
 
-          <div class="pt-4 text-center">
-            <button type="submit" class="btn-liquid-glass-primary w-full py-4 text-xs font-bold tracking-widest uppercase">
-              Submit RFP Package
-            </button>
+            <div class="pt-4 text-center">
+              <button type="submit" id="form-submit-btn" class="btn-liquid-glass-primary w-full py-4 text-xs font-bold tracking-widest uppercase">
+                Submit RFP Package
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -574,6 +591,8 @@ const steps = [
 </script>
 
 <script>
+  import { submitLead } from '../../lib/leadSubmit';
+
   interface Service {
     name: string;
     kpi: string;
@@ -1043,6 +1062,71 @@ const steps = [
       }, observerOptions);
 
       stepsElements.forEach(st => stepObserver.observe(st));
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 7. UNIFIED FORM SUBMISSION (Sheet + Telegram + Email)
+    // ══════════════════════════════════════════════════════════
+    const formElement = document.getElementById('custom-rfp-form') as HTMLFormElement;
+    const formErrorAlert = document.getElementById('form-error-alert');
+    const formSuccessAlert = document.getElementById('form-success-alert');
+    const formGridWrapper = document.querySelector('.form-grid-wrapper') as HTMLElement;
+    const formSubmitBtn = document.getElementById('form-submit-btn') as HTMLButtonElement;
+
+    const formName = document.getElementById('form-name') as HTMLInputElement;
+    const formEmail = document.getElementById('form-email') as HTMLInputElement;
+    const formContactHandle = document.getElementById('form-contact-handle') as HTMLInputElement;
+    const formWebsite = document.getElementById('form-website') as HTMLInputElement;
+    const formMessage = document.getElementById('form-message') as HTMLTextAreaElement;
+
+    if (formElement) {
+      formElement.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!formName || !formEmail || !formContactHandle || !formSubmitBtn || !formErrorAlert || !formSuccessAlert || !formGridWrapper) return;
+
+        if (!formName.value || !formEmail.value || !formContactHandle.value) {
+          formErrorAlert.innerText = 'Please fill in all required fields (*).';
+          formErrorAlert.classList.remove('hidden');
+          return;
+        }
+
+        formSubmitBtn.disabled = true;
+        formSubmitBtn.innerText = 'SUBMITTING...';
+        formErrorAlert.classList.add('hidden');
+
+        const messageContent = `[Selected Modules]:\n${formSelectedInput.value || 'None'}\n\n[Message]:\n${formMessage?.value || ''}`;
+
+        const result = await submitLead({
+          name: formName.value,
+          email: formEmail.value,
+          telegram: formContactHandle.value,
+          website: formWebsite?.value || '',
+          serviceInterest: 'Custom Solutions RFP',
+          message: messageContent
+        }, 'Custom Solutions RFP', [
+          { name: 'firstname', value: formName.value.split(' ')[0] || formName.value },
+          { name: 'lastname', value: formName.value.split(' ').slice(1).join(' ') || '' },
+          { name: 'email', value: formEmail.value },
+          { name: 'telegram_handle', value: formContactHandle.value },
+          { name: 'website', value: formWebsite?.value || '' },
+          { name: 'service_interest', value: 'Custom Solutions RFP' },
+          { name: 'message', value: messageContent }
+        ]);
+
+        if (result.ok) {
+          formGridWrapper.style.display = 'none';
+          formSuccessAlert.classList.remove('hidden');
+          // Reset selected modules
+          selectedModules.clear();
+          updateRfpCart();
+        } else {
+          formSubmitBtn.disabled = false;
+          formSubmitBtn.innerText = 'SUBMIT RFP PACKAGE';
+          formErrorAlert.innerText = result.error || 'Submission failed. Please try again or email info@fintech24h.com';
+          formErrorAlert.classList.remove('hidden');
+        }
+      });
     }
   });
 </script>
