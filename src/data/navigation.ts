@@ -17,6 +17,7 @@ export const mainNavLinks: NavLink[] = [
       { label: 'Event Marketing', href: '/services/event-marketing' },
       { label: 'AI Marketing', href: '/services/ai-marketing' },
       { label: 'Business Development', href: '/services/business-development' },
+      { label: 'Custom Solutions', href: '/services/custom-solutions' }
     ]
   },
   { label: 'Contact', href: '/contact' },
@@ -31,7 +32,8 @@ export const footerLinks = {
     { label: 'Community Growth', href: '/services/community-growth' },
     { label: 'Event Marketing', href: '/services/event-marketing' },
     { label: 'AI Marketing', href: '/services/ai-marketing' },
-    { label: 'Business Development', href: '/services/business-development' }
+    { label: 'Business Development', href: '/services/business-development' },
+    { label: 'Custom Solutions', href: '/services/custom-solutions' }
   ],
   company: [
     { label: 'About Us', href: '/about' },
