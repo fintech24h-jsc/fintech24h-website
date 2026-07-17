@@ -35,6 +35,13 @@ export interface WPPost {
       media_details: { width: number; height: number };
     }>;
     'wp:term'?: Array<Array<{ id: number; name: string; slug: string }>>;
+    author?: Array<{
+      id: number;
+      name: string;
+      slug: string;
+      description: string;
+      avatar_urls?: Record<string, string>;
+    }>;
   };
 }
 
@@ -480,4 +487,80 @@ export function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric',
   });
+}
+
+// ─── Author Integrations ─────────────────────────────────────────────────────
+
+import { team } from '../data/team';
+
+export interface WPUser {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  avatar_urls?: Record<string, string>;
+}
+
+export function getPostAuthor(post: WPPost) {
+  const wpAuthor = post._embedded?.['author']?.[0];
+  
+  // If no author is embedded, or the author is admin, default to Phat Vo
+  const isDefaultOrAdmin = !wpAuthor || wpAuthor.name === 'admin' || wpAuthor.slug === 'admin';
+  const authorName = isDefaultOrAdmin ? 'Phat Vo' : wpAuthor.name;
+  const authorSlug = isDefaultOrAdmin ? 'phat' : wpAuthor.slug;
+
+  // Find matching team member by slug or name
+  const teamMember = team.find(m => {
+    const nameMatch = m.name.toLowerCase().includes(authorName.toLowerCase()) || authorName.toLowerCase().includes(m.name.toLowerCase());
+    const slugMatch = m.name.toLowerCase().replace(/\s+/g, '-') === authorSlug || (authorSlug === 'phat' && m.name === 'Phat Vo');
+    return nameMatch || slugMatch;
+  });
+
+  if (teamMember) {
+    return {
+      name: teamMember.name,
+      role: teamMember.role,
+      image: teamMember.image || 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp',
+      slug: authorSlug,
+      telegram: teamMember.telegram,
+      linkedin: teamMember.linkedin,
+      bio: teamMember.bio
+    };
+  }
+
+  return {
+    name: authorName,
+    role: 'Contributor',
+    image: wpAuthor?.avatar_urls?.['96'] || 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp',
+    slug: authorSlug,
+    telegram: 'https://telegram.me/fintech24h',
+    linkedin: 'https://www.linkedin.com/company/fintech24h/',
+    bio: wpAuthor?.description || 'Fintech24h team member and contributor.'
+  };
+}
+
+export async function getUserBySlug(slug: string): Promise<WPUser | null> {
+  try {
+    const users = await fetchWP<WPUser[]>('/users', { slug });
+    return users[0] || null;
+  } catch (err) {
+    console.warn(`WP API fail: getUserBySlug ${slug}`, err);
+    return null;
+  }
+}
+
+export async function getPostsByAuthor(authorId: number, page = 1, perPage = 24): Promise<WPPost[]> {
+  try {
+    return await fetchWP<WPPost[]>('/posts', {
+      author: String(authorId),
+      page: String(page),
+      per_page: String(perPage),
+      status: 'publish',
+      orderby: 'date',
+      order: 'desc',
+    });
+  } catch (err) {
+    console.warn(`WP API fail: getPostsByAuthor ${authorId}`, err);
+    return [];
+  }
 }

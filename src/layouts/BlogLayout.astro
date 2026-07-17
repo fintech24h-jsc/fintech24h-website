@@ -2,7 +2,7 @@
 // src/layouts/BlogLayout.astro
 import BaseLayout from './BaseLayout.astro';
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
-import { formatDate, getFeaturedImage } from '../lib/wordpress';
+import { formatDate, getFeaturedImage, getPostAuthor } from '../lib/wordpress';
 import { getReadingTime } from '../lib/utils';
 import type { WPPost } from '../lib/wordpress';
 
@@ -16,6 +16,8 @@ const readingTime = getReadingTime(post.content.rendered);
 const currentUrl = `https://fintech24h.com/blog/${post.slug}`;
 const encodedTitle = encodeURIComponent(post.title.rendered);
 
+const postAuthor = getPostAuthor(post);
+
 // Article schema representation
 const articleSchema = {
   "@context": "https://schema.org",
@@ -26,9 +28,9 @@ const articleSchema = {
   "datePublished": post.date,
   "dateModified": post.modified,
   "author": {
-    "@type": "Organization",
-    "name": "Fintech24h",
-    "url": "https://fintech24h.com"
+    "@type": "Person",
+    "name": postAuthor.name,
+    "url": `https://fintech24h.com/author/${postAuthor.slug}`
   },
   "publisher": {
     "@type": "Organization",
@@ -89,14 +91,16 @@ const breadcrumbs = [
         
         <!-- Author -->
         <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-purple)] p-[2px]">
+          <a href={`/author/${postAuthor.slug}`} class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-purple)] p-[2px] transition-transform hover:scale-105 duration-300">
             <div class="w-full h-full rounded-full bg-[#0B1120] flex items-center justify-center overflow-hidden">
-               <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" class="w-8 h-8 object-contain opacity-80" />
+               <img src={postAuthor.image} alt={postAuthor.name} class="w-full h-full object-cover opacity-90" />
             </div>
-          </div>
+          </a>
           <div>
-            <div class="text-sm font-bold text-white">Fintech24h Research</div>
-            <div class="text-xs text-slate-400">Marketing & Growth Experts</div>
+            <a href={`/author/${postAuthor.slug}`} class="text-sm font-bold text-white hover:text-[var(--accent-cyan)] transition-colors">
+              {postAuthor.name}
+            </a>
+            <div class="text-xs text-slate-400">{postAuthor.role}</div>
           </div>
         </div>
 
