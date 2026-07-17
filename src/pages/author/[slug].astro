@@ -11,15 +11,19 @@ import { team } from '../../data/team';
 Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
 
 const { slug } = Astro.params;
-const user = slug ? await getUserBySlug(slug) : null;
+const wpSlug = slug === 'phat-vo' ? 'phat' : slug;
+const user = wpSlug ? await getUserBySlug(wpSlug) : null;
 
 if (!user) {
   return Astro.redirect('/404');
 }
 
+const isPhatVo = slug === 'phat' || slug === 'phat-vo';
+
 // Find local team member details (signature gradient, telegram, linkedin, etc)
 const member = team.find(m => {
   const slugMatch = m.name.toLowerCase().replace(/\s+/g, '-') === slug || 
+                    (slug === 'phat-vo' && m.name === 'Phat Vo') ||
                     (slug === 'phat' && m.name === 'Phat Vo') || 
                     (slug === 'vincent' && m.name === 'Vincent Nguyen') ||
                     (slug === 'jayc' && m.name === 'JayC') ||
@@ -37,7 +41,7 @@ const linkedin = member?.linkedin || 'https://www.linkedin.com/company/fintech24
 
 // Authentic CPO and Co-founder biography details for Phat Vo (No fabricated statistics)
 const phatBio = "Co-Founder & Chief Product Officer of Fintech24h.com. Phat Vo directs the technical product roadmap, engineering nodes, and design systems for the entire Fintech24h ecosystem. He oversees the development of core platforms, manages cross-functional product teams, and spearheads business operations, ensuring seamless Web3 integration and client growth.";
-const authorBio = slug === 'phat' ? phatBio : (member?.bio || user.description || "Fintech24h team member and contributor.");
+const authorBio = isPhatVo ? phatBio : (member?.bio || user.description || "Fintech24h team member and contributor.");
 
 // Fetch publications by the author
 const posts = await getPostsByAuthor(user.id);
@@ -78,7 +82,7 @@ const personSchema = {
     telegram,
     linkedin
   ].filter(Boolean),
-  "knowsAbout": slug === 'phat' ? [
+  "knowsAbout": isPhatVo ? [
     "Web3 Product Strategy",
     "Product Design Systems",
     "Fintech Operations",
@@ -152,7 +156,7 @@ const phatProducts = [
         
         <!-- Column 1: Operator Identity Dossier -->
         <div class="lg:col-span-3 flex flex-col justify-between bg-black/40 border border-white/5 p-6 rounded-2xl backdrop-blur-md hover:border-white/10 transition-colors duration-500 relative overflow-hidden group">
-          <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-cyan)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3s_linear_infinite]" style={{ '--accent-cyan': slug === 'phat' ? '#00c8f0' : '#7c5cfc' }}></div>
+          <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-cyan)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3s_linear_infinite]" style={{ '--accent-cyan': isPhatVo ? '#00c8f0' : '#7c5cfc' }}></div>
           
           <div class="flex flex-col items-center lg:items-start">
             <!-- HUD Interactive Avatar -->
@@ -194,22 +198,22 @@ const phatProducts = [
           <div class="space-y-2 mt-8 lg:mt-0">
             <a href={telegram} target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/[0.01] hover:border-cyan-400/30 hover:bg-cyan-400/5 hover:shadow-[0_0_15px_rgba(0,200,240,0.1)] transition-all duration-300 group/btn">
               <span class="font-mono text-[10px] uppercase text-white/50 group-hover/btn:text-white transition-colors">Telegram Node</span>
-              <span class="text-[var(--accent-cyan)] group-hover/btn:translate-x-0.5 transition-transform" style={{ color: slug === 'phat' ? '#00c8f0' : '#7c5cfc' }}>→</span>
+              <span class="text-[var(--accent-cyan)] group-hover/btn:translate-x-0.5 transition-transform" style={{ color: isPhatVo ? '#00c8f0' : '#7c5cfc' }}>→</span>
             </a>
             <a href={linkedin} target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/[0.01] hover:border-purple-500/30 hover:bg-purple-500/5 hover:shadow-[0_0_15px_rgba(124,92,252,0.1)] transition-all duration-300 group/btn">
               <span class="font-mono text-[10px] uppercase text-white/50 group-hover/btn:text-white transition-colors">LinkedIn Hub</span>
-              <span class="text-[var(--accent-purple)] group-hover/btn:translate-x-0.5 transition-transform" style={{ color: slug === 'phat' ? '#7c5cfc' : '#00c8f0' }}>→</span>
+              <span class="text-[var(--accent-purple)] group-hover/btn:translate-x-0.5 transition-transform" style={{ color: isPhatVo ? '#7c5cfc' : '#00c8f0' }}>→</span>
             </a>
           </div>
         </div>
 
         <!-- Column 2: CPO Diagnostics Console & Bio -->
         <div class="lg:col-span-6 flex flex-col justify-between bg-black/40 border border-white/5 p-8 rounded-2xl backdrop-blur-md hover:border-white/10 transition-colors duration-500 relative overflow-hidden group">
-          <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-purple)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3.5s_linear_infinite]" style={{ '--accent-purple': slug === 'phat' ? '#7c5cfc' : '#00c8f0' }}></div>
+          <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-purple)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3.5s_linear_infinite]" style={{ '--accent-purple': isPhatVo ? '#7c5cfc' : '#00c8f0' }}></div>
           
           <div class="space-y-6">
             <div>
-              <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--accent-cyan)] mb-1 block" style={{ color: slug === 'phat' ? '#00c8f0' : '#7c5cfc' }}>[ OPERATIONAL_OVERVIEW ]</span>
+              <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--accent-cyan)] mb-1 block" style={{ color: isPhatVo ? '#00c8f0' : '#7c5cfc' }}>[ OPERATIONAL_OVERVIEW ]</span>
               <h2 class="font-display text-2xl font-bold text-white uppercase">Operational Console</h2>
             </div>
             
@@ -231,7 +235,7 @@ const phatProducts = [
             <div>&gt; OPERATOR // {authorName.toUpperCase().replace(/\s+/g, '_')}</div>
             <div>&gt; ROLE // {authorRole.toUpperCase().replace(/[^a-zA-Z]/g, '_')}</div>
             <div>&gt; ECOSYSTEM_STATUS // ONLINE_SECURED</div>
-            {slug === 'phat' && (
+            {isPhatVo && (
               <>
                 <div>&gt; TARGET_SYSTEMS // CMO_INTERN, COINSTORI</div>
                 <div>&gt; PRODUCT_NODES // 3_ACTIVE_NODES</div>
@@ -247,7 +251,7 @@ const phatProducts = [
             [ ECOSYSTEM_PRODUCT_NODES ]
           </div>
           
-          {slug === 'phat' ? (
+          {isPhatVo ? (
             phatProducts.map((p, idx) => (
               <a href={p.url} target={p.url.startsWith('http') ? "_blank" : "_self"} rel={p.url.startsWith('http') ? "noopener noreferrer" : ""} class="bg-black/40 border border-white/5 p-4 rounded-xl backdrop-blur-md hover:border-cyan-400/30 hover:bg-cyan-400/5 hover:-translate-y-1 transition-all duration-300 block group relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-[1.5px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-0 group-hover:opacity-100 duration-500" style={{ '--accent': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}></div>

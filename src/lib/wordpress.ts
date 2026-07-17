@@ -507,12 +507,15 @@ export function getPostAuthor(post: WPPost) {
   // If no author is embedded, or the author is admin, default to Phat Vo
   const isDefaultOrAdmin = !wpAuthor || wpAuthor.name === 'admin' || wpAuthor.slug === 'admin';
   const authorName = isDefaultOrAdmin ? 'Phat Vo' : wpAuthor.name;
-  const authorSlug = isDefaultOrAdmin ? 'phat' : wpAuthor.slug;
+  
+  // Convert Phat Vo's slug from WordPress ('phat') to the public URL slug ('phat-vo')
+  const originalSlug = isDefaultOrAdmin ? 'phat' : wpAuthor.slug;
+  const authorSlug = originalSlug === 'phat' ? 'phat-vo' : originalSlug;
 
   // Find matching team member by slug or name
   const teamMember = team.find(m => {
     const nameMatch = m.name.toLowerCase().includes(authorName.toLowerCase()) || authorName.toLowerCase().includes(m.name.toLowerCase());
-    const slugMatch = m.name.toLowerCase().replace(/\s+/g, '-') === authorSlug || (authorSlug === 'phat' && m.name === 'Phat Vo');
+    const slugMatch = m.name.toLowerCase().replace(/\s+/g, '-') === authorSlug || (authorSlug === 'phat-vo' && m.name === 'Phat Vo');
     return nameMatch || slugMatch;
   });
 

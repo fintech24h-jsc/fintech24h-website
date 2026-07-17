@@ -309,12 +309,24 @@ const aboutSchema = [
                     {t.image && (
                       <div class="relative w-16 h-16 rounded-full overflow-hidden border border-white/10 group-hover:border-[var(--theme-accent)] transition-colors duration-500 shrink-0" style={{ '--theme-accent': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
                         <div class="absolute inset-0 bg-[var(--theme-accent)]/10 animate-pulse mix-blend-overlay z-10 pointer-events-none"></div>
-                        <img src={t.image} alt={t.name} class="w-full h-full object-cover filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 relative z-0" />
+                        {t.name === 'Phat Vo' ? (
+                          <a href="/author/phat-vo" class="w-full h-full block">
+                            <img src={t.image} alt={t.name} class="w-full h-full object-cover filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 relative z-0" />
+                          </a>
+                        ) : (
+                          <img src={t.image} alt={t.name} class="w-full h-full object-cover filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 relative z-0" />
+                        )}
                       </div>
                     )}
                     <div class="flex flex-col">
                       <span class="font-mono text-[9px] text-white/40 tracking-[0.25em]">OPERATOR_NODE_0{idx + 1}</span>
-                      <h3 class="font-display text-2xl text-white font-bold tracking-tight uppercase mt-1 transition-colors group-hover:text-[var(--theme-accent)]" style={{ '--theme-accent': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>{t.name}</h3>
+                      <h3 class="font-display text-2xl text-white font-bold tracking-tight uppercase mt-1 transition-colors group-hover:text-[var(--theme-accent)]" style={{ '--theme-accent': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
+                        {t.name === 'Phat Vo' ? (
+                          <a href="/author/phat-vo" class="hover:underline hover:text-[var(--theme-accent)] transition-colors">{t.name}</a>
+                        ) : (
+                          t.name
+                        )}
+                      </h3>
                       <span class="font-mono text-[10px] tracking-wider uppercase mt-1.5" style={{ color: idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
                         {t.role}
                       </span>
