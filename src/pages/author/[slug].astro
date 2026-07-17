@@ -30,11 +30,14 @@ const member = team.find(m => {
 // Merged Author Information
 const authorName = member?.name || user.name;
 const authorRole = member?.role || "Contributor";
-const authorBio = member?.bio || user.description || "Fintech24h team member and contributor.";
 const authorImage = member?.image || user.avatar_urls?.['96'] || 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp';
 const signatureColor = member?.signatureColor || 'linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%)';
 const telegram = member?.telegram || 'https://telegram.me/fintech24h';
 const linkedin = member?.linkedin || 'https://www.linkedin.com/company/fintech24h/';
+
+// Authentic CPO and Co-founder biography details for Phat Vo (No fabricated statistics)
+const phatBio = "Co-Founder & Chief Product Officer of Fintech24h.com. Phat Vo directs the technical product roadmap, engineering nodes, and design systems for the entire Fintech24h ecosystem. He oversees the development of core platforms, manages cross-functional product teams, and spearheads business operations, ensuring seamless Web3 integration and client growth.";
+const authorBio = slug === 'phat' ? phatBio : (member?.bio || user.description || "Fintech24h team member and contributor.");
 
 // Fetch publications by the author
 const posts = await getPostsByAuthor(user.id);
@@ -68,289 +71,307 @@ const personSchema = {
   "url": currentUrl
 };
 
-// Custom metrics/skills matrix to make it feel like a standalone site
-const skills = slug === 'phat' ? [
-  { name: 'Advanced UI/UX Design Systems', value: '98%', desc: 'Building seamless interaction models and dark mode layouts.' },
-  { name: 'Front-end Architecture', value: '95%', desc: 'Optimizing high-performance Astro components and dynamic JS bundles.' },
-  { name: 'Web3 Protocol UX Alignment', value: '92%', desc: 'Structuring user-centric interfaces for complex decentralized products.' }
-] : [
-  { name: 'Growth Loop Engineering', value: '94%', desc: 'Structuring scalable community networks and campaigns.' },
-  { name: 'PR & Editorial Distribution', value: '90%', desc: 'Placing strategic coverage across high-authority journals.' },
-  { name: 'Ecosystem Partnership Pipeline', value: '87%', desc: 'Forging business relations with Layer 1/2 developers.' }
+// Fintech24h Ecosystem products directed by Phat Vo (authentic products)
+const phatProducts = [
+  {
+    name: "CMO Intern",
+    tagline: "Web3 Growth Marketing Hub",
+    desc: "A specialized platform connecting protocols with vetted marketing and community management talent to scale Web3 ecosystems.",
+    url: "https://cmointern.com"
+  },
+  {
+    name: "Coinstori",
+    tagline: "Web3 Media Hub",
+    desc: "A premium marketing and publication network amplifying brand presence across high-authority cryptocurrency news outlets.",
+    url: "https://coinstori.com"
+  },
+  {
+    name: "Custom Client Solutions",
+    tagline: "Enterprise Architectures",
+    desc: "Bespoke technology dashboards, automated lead generation funnels, and programmatic growth engines for enterprise clients.",
+    url: "/services/custom-solutions"
+  }
 ];
 
 ---
 
 <BaseLayout
-  title={`${authorName} — ${authorRole} | Fintech24h Insights`}
+  title={`${authorName} — ${authorRole} | Fintech24h CPO Profile`}
   description={authorBio}
   schema={personSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- Premium Cinematic Hero Section -->
-  <section class="relative min-h-screen flex flex-col justify-center items-center px-4 overflow-hidden bg-[#020202] pt-32 pb-24" aria-label="Author Profile Hero">
-    <!-- Ambient glows using the author's signature color -->
+  <!-- Premium Futuristic 3-Column HUD Dashboard Hero -->
+  <section class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden bg-[#020202] pt-32 pb-20" aria-label="Author Profile Hero">
+    <!-- Background mesh & custom orbs -->
     <div class="absolute inset-0 pointer-events-none z-0">
-      <div class="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[60vh] rounded-full filter blur-[120px] opacity-[0.15]" style={{ background: signatureColor }}></div>
-      <div class="absolute bottom-[-10%] right-[10%] w-[350px] h-[350px] rounded-full filter blur-[100px] opacity-10 animate-[float-slow_15s_infinite_ease-in-out]" style={{ background: signatureColor }}></div>
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f005_1px,transparent_1px),linear-gradient(to_bottom,#00c8f005_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20"></div>
+      <div class="absolute top-[15%] left-1/2 -translate-x-1/2 w-[80vw] h-[65vh] rounded-full filter blur-[130px] opacity-[0.18]" style={{ background: signatureColor }}></div>
+      <div class="absolute bottom-[-15%] right-[5%] w-[400px] h-[400px] rounded-full filter blur-[110px] opacity-10 animate-[float-slow_15s_infinite_ease-in-out]" style={{ background: signatureColor }}></div>
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f005_1px,transparent_1px),linear-gradient(to_bottom,#00c8f005_1px,transparent_1px)] bg-[size:5rem_5rem] opacity-20"></div>
     </div>
 
-    <!-- HUD Systems Identifiers -->
-    <div class="absolute top-28 left-8 hidden lg:block font-mono text-[9px] text-[var(--accent-cyan)] opacity-40 space-y-1 z-20">
-      <div class="flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
-        NODE.IDENTITY // CONFIRMED
+    <!-- Scanning line overlay -->
+    <div class="absolute inset-0 pointer-events-none z-10 scanlines-overlay opacity-[0.02]"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto w-full">
+      
+      <!-- Top Cyber Tag -->
+      <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+        <div class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full animate-ping" style={{ background: signatureColor }}></span>
+          <span class="font-mono text-[10px] text-white/50 tracking-[0.3em] uppercase">SYSTEM.STATUS // NODE_ONLINE</span>
+        </div>
+        <div class="font-mono text-[10px] text-white/30 hidden md:block">
+          SECURE_CLEARANCE // LEVEL_4_CPO
+        </div>
       </div>
-      <div>SECTOR // {slug === 'phat' ? 'CPO_CORE_NODE' : 'LEADERSHIP_NODE'}</div>
-    </div>
-    <div class="absolute top-28 right-8 hidden lg:block font-mono text-[9px] text-[var(--accent-purple)] opacity-40 space-y-1 z-20 text-right">
-      <div>INTEGRITY // VERIFIED</div>
-      <div>METADATA // ACTIVE_PUBLISHER</div>
-    </div>
 
-    <div class="relative z-10 max-w-6xl mx-auto w-full grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-      <!-- Profile Visual Block -->
-      <div class="lg:col-span-5 flex flex-col items-center text-center lg:text-left lg:items-start" data-animate="fade-up">
-        <div class="relative group mb-8">
-          <!-- Animated rotating border ring around the avatar -->
-          <div class="absolute -inset-4 rounded-full border border-dashed border-white/10 group-hover:border-cyan-400/30 transition-colors duration-500 animate-[spin_40s_linear_infinite] z-0"></div>
-          <div class="absolute -inset-2 rounded-full border border-double border-purple-500/10 group-hover:border-purple-500/30 transition-colors duration-500 animate-[spin_20s_linear_infinite_reverse] z-0"></div>
-          
-          <!-- Colored theme glow wrapper -->
-          <div class="relative w-44 h-44 rounded-full p-[3px] z-10 transition-transform duration-500 group-hover:scale-[1.02]" style={{ background: signatureColor }}>
-            <div class="w-full h-full rounded-full bg-[#050810] overflow-hidden flex items-center justify-center border border-black">
-              <img 
-                src={authorImage} 
-                alt={authorName} 
-                class="w-full h-full object-cover filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-4">
-          <span class="w-1.5 h-1.5 rounded-full" style={{ background: signatureColor }}></span>
-          <span class="text-[9px] font-mono text-white/50 uppercase tracking-[0.2em]">{authorRole}</span>
-        </div>
-
-        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white tracking-tight uppercase leading-none">
-          {authorName}
-        </h1>
+      <!-- Main Dashboard Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        <p class="text-sm font-mono uppercase tracking-[0.15em] mt-3" style={{ background: signatureColor, webkitBackgroundClip: 'text', webkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-          Co-Founder & CPO @ Fintech24h
-        </p>
-
-        <p class="font-body text-slate-400 text-sm leading-relaxed max-w-md mt-6 font-light">
-          {authorBio}
-        </p>
-
-        <!-- Direct Social matrix shortcuts -->
-        <div class="flex flex-wrap gap-4 mt-8">
-          <a href={telegram} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-cyan-400/20 bg-cyan-400/5 font-mono text-[10px] uppercase tracking-wider text-cyan-400 hover:bg-cyan-400 hover:text-black hover:shadow-[0_0_20px_rgba(0,200,240,0.3)] transition-all duration-300">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.53-1.39.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.36-.49.99-.75 3.88-1.69 6.46-2.8 7.74-3.32 3.69-1.5 4.44-1.76 4.95-1.77.11 0 .36.03.52.16.13.11.17.26.19.37z"/></svg>
-            Telegram Node
-          </a>
-          <a href={linkedin} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-purple-500/20 bg-purple-500/5 font-mono text-[10px] uppercase tracking-wider text-purple-400 hover:bg-purple-500 hover:text-black hover:shadow-[0_0_20px_rgba(124,92,252,0.3)] transition-all duration-300">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
-            LinkedIn Hub
-          </a>
-        </div>
-      </div>
-
-      <!-- Skills Matrix Content Block (HUD Panel) -->
-      <div class="lg:col-span-7" data-animate="scale-in">
-        <div class="relative p-8 md:p-10 rounded-2xl bg-black/40 border border-white/5 hover:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden backdrop-blur-md transition-all duration-500 group">
-          <!-- Interior subtle radial glow -->
-          <div class="absolute inset-0 pointer-events-none z-0" style={{ background: `radial-gradient(circle at 70% 30%, rgba(255,255,255,0.015) 0%, transparent 60%)` }}></div>
-
-          <div class="relative z-10 space-y-8">
-            <div class="border-b border-white/5 pb-4 flex justify-between items-end">
-              <div>
-                <span class="font-mono text-[9px] text-[var(--accent-cyan)] uppercase tracking-[0.25em]">[ Operational Parameters ]</span>
-                <h3 class="font-display text-2xl font-bold text-white uppercase mt-1">Core Competency Matrix</h3>
-              </div>
-              <span class="font-mono text-[10px] text-white/30 hidden sm:block">INDEX_V3.09 // SYS_ACTIVE</span>
-            </div>
-
-            <!-- Parameters checklist -->
-            <div class="space-y-6">
-              {skills.map((skill) => (
-                <div class="space-y-2">
-                  <div class="flex justify-between items-center text-sm font-semibold font-display">
-                    <span class="text-white flex items-center gap-2">
-                      <span class="w-1.5 h-1.5 rounded-full" style={{ background: signatureColor }}></span>
-                      {skill.name}
-                    </span>
-                    <span class="font-mono text-xs text-slate-400" style={{ color: slug === 'phat' ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>{skill.value}</span>
-                  </div>
-                  <!-- Simulated loader bar -->
-                  <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
-                    <div 
-                      class="h-full rounded-full transition-all duration-1000 origin-left"
-                      style={{ 
-                        width: skill.value, 
-                        background: signatureColor,
-                        boxShadow: `0 0 8px ${slug === 'phat' ? 'rgba(0, 200, 240, 0.4)' : 'rgba(124, 92, 252, 0.4)'}`
-                      }}
-                    ></div>
-                  </div>
-                  <p class="text-xs text-slate-400 leading-relaxed font-body font-light pl-3.5">
-                    {skill.desc}
-                  </p>
+        <!-- Column 1: Operator Identity Dossier -->
+        <div class="lg:col-span-3 flex flex-col justify-between bg-black/40 border border-white/5 p-6 rounded-2xl backdrop-blur-md hover:border-white/10 transition-colors duration-500 relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-cyan)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3s_linear_infinite]" style={{ '--accent-cyan': slug === 'phat' ? '#00c8f0' : '#7c5cfc' }}></div>
+          
+          <div class="flex flex-col items-center lg:items-start">
+            <!-- HUD Interactive Avatar -->
+            <div class="relative mb-6">
+              <div class="absolute -inset-2.5 rounded-full border border-dashed border-white/10 group-hover:border-cyan-400/20 transition-colors duration-500 animate-[spin_45s_linear_infinite] z-0"></div>
+              <div class="absolute -inset-1.5 rounded-full border border-double border-purple-500/10 group-hover:border-purple-500/20 transition-colors duration-500 animate-[spin_25s_linear_infinite_reverse] z-0"></div>
+              
+              <div class="relative w-36 h-36 rounded-full p-[2px] z-10 transition-transform duration-500 group-hover:scale-[1.02]" style={{ background: signatureColor }}>
+                <div class="w-full h-full rounded-full bg-[#050810] overflow-hidden flex items-center justify-center border border-black">
+                  <img 
+                    src={authorImage} 
+                    alt={authorName} 
+                    class="w-full h-full object-cover filter grayscale opacity-95 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                  />
                 </div>
-              ))}
+              </div>
             </div>
 
-            <!-- Diagnostic HUD Footer -->
-            <div class="pt-4 border-t border-white/5 flex flex-wrap justify-between items-center gap-3 text-[10px] font-mono text-white/30">
-              <div>PULSE // ON-LINE</div>
-              <div>LOC.ADDR // c82e41d3d517002d...</div>
-              <div class="text-[var(--accent-cyan)] opacity-70">CONNECTION // ENCRYPTED_SSL</div>
+            <!-- Identity info -->
+            <div class="text-center lg:text-left space-y-1">
+              <span class="font-mono text-[9px] uppercase tracking-widest text-slate-500 block">Operator ID // 0x47C02</span>
+              <h1 class="font-display text-3xl font-bold text-white uppercase tracking-tight">
+                {authorName}
+              </h1>
+              <span class="font-mono text-xs uppercase font-medium tracking-wider" style={{ background: signatureColor, webkitBackgroundClip: 'text', webkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                {authorRole}
+              </span>
+            </div>
+
+            <!-- Monospaced Credentials Badge -->
+            <div class="w-full bg-white/5 border border-white/10 p-3 rounded-lg font-mono text-[10px] text-white/60 space-y-1 mt-6">
+              <div class="flex justify-between"><span>NODE:</span><span class="text-white">F24H_ROOT_2</span></div>
+              <div class="flex justify-between"><span>STATUS:</span><span class="text-emerald-400">ACTIVE</span></div>
+              <div class="flex justify-between"><span>OPERATIONS:</span><span class="text-white">CO-FOUNDER</span></div>
             </div>
           </div>
+
+          <!-- Social Matrix connections -->
+          <div class="space-y-2 mt-8 lg:mt-0">
+            <a href={telegram} target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/[0.01] hover:border-cyan-400/30 hover:bg-cyan-400/5 hover:shadow-[0_0_15px_rgba(0,200,240,0.1)] transition-all duration-300 group/btn">
+              <span class="font-mono text-[10px] uppercase text-white/50 group-hover/btn:text-white transition-colors">Telegram Node</span>
+              <span class="text-[var(--accent-cyan)] group-hover/btn:translate-x-0.5 transition-transform" style={{ color: slug === 'phat' ? '#00c8f0' : '#7c5cfc' }}>→</span>
+            </a>
+            <a href={linkedin} target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/[0.01] hover:border-purple-500/30 hover:bg-purple-500/5 hover:shadow-[0_0_15px_rgba(124,92,252,0.1)] transition-all duration-300 group/btn">
+              <span class="font-mono text-[10px] uppercase text-white/50 group-hover/btn:text-white transition-colors">LinkedIn Hub</span>
+              <span class="text-[var(--accent-purple)] group-hover/btn:translate-x-0.5 transition-transform" style={{ color: slug === 'phat' ? '#7c5cfc' : '#00c8f0' }}>→</span>
+            </a>
+          </div>
         </div>
+
+        <!-- Column 2: CPO Diagnostics Console & Bio -->
+        <div class="lg:col-span-6 flex flex-col justify-between bg-black/40 border border-white/5 p-8 rounded-2xl backdrop-blur-md hover:border-white/10 transition-colors duration-500 relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-purple)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3.5s_linear_infinite]" style={{ '--accent-purple': slug === 'phat' ? '#7c5cfc' : '#00c8f0' }}></div>
+          
+          <div class="space-y-6">
+            <div>
+              <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--accent-cyan)] mb-1 block" style={{ color: slug === 'phat' ? '#00c8f0' : '#7c5cfc' }}>[ OPERATIONAL_OVERVIEW ]</span>
+              <h2 class="font-display text-2xl font-bold text-white uppercase">Operational Console</h2>
+            </div>
+            
+            <p class="font-body text-slate-300 text-sm leading-[1.8] font-light">
+              {authorBio}
+            </p>
+          </div>
+
+          <!-- Live Terminal Simulator (Wow Factor) -->
+          <div class="w-full bg-[#050810] border border-white/10 rounded-xl p-4 mt-8 font-mono text-[10px] text-cyan-400 space-y-1.5 shadow-2xl relative overflow-hidden group-hover:border-cyan-400/20 transition-all duration-500">
+            <!-- Simulated grid pattern background inside terminal -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,200,240,0.02)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none"></div>
+            
+            <div class="flex items-center gap-1.5 text-white/40 border-b border-white/5 pb-2 mb-2 justify-between">
+              <span class="text-[9px]">DIAGNOSTICS_SHELL // V1.09</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+            <div>&gt; INITIALIZING CORE_NODE_LOGS... <span class="text-white">[OK]</span></div>
+            <div>&gt; OPERATOR // {authorName.toUpperCase().replace(/\s+/g, '_')}</div>
+            <div>&gt; ROLE // {authorRole.toUpperCase().replace(/[^a-zA-Z]/g, '_')}</div>
+            <div>&gt; ECOSYSTEM_STATUS // ONLINE_SECURED</div>
+            {slug === 'phat' && (
+              <>
+                <div>&gt; TARGET_SYSTEMS // CMO_INTERN, COINSTORI</div>
+                <div>&gt; PRODUCT_NODES // 3_ACTIVE_NODES</div>
+              </>
+            )}
+            <div class="text-white animate-pulse">&gt; MONITORING SYSTEMS_ACTIVE_FEED_</div>
+          </div>
+        </div>
+
+        <!-- Column 3: Ecosystem Products (Phat Vo Directives) -->
+        <div class="lg:col-span-3 flex flex-col gap-4">
+          <div class="font-mono text-[9px] uppercase tracking-widest text-slate-500 border-b border-white/5 pb-2">
+            [ ECOSYSTEM_PRODUCT_NODES ]
+          </div>
+          
+          {slug === 'phat' ? (
+            phatProducts.map((p, idx) => (
+              <a href={p.url} target={p.url.startsWith('http') ? "_blank" : "_self"} rel={p.url.startsWith('http') ? "noopener noreferrer" : ""} class="bg-black/40 border border-white/5 p-4 rounded-xl backdrop-blur-md hover:border-cyan-400/30 hover:bg-cyan-400/5 hover:-translate-y-1 transition-all duration-300 block group relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-[1.5px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-0 group-hover:opacity-100 duration-500" style={{ '--accent': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}></div>
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="font-display text-sm font-bold text-white group-hover:text-[var(--accent-cyan)] transition-colors" style={{ color: idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>{p.name}</h3>
+                    <span class="font-mono text-[8px] uppercase tracking-wider text-white/40 block mt-0.5">{p.tagline}</span>
+                  </div>
+                  <span class="text-xs text-white/30 group-hover:text-white transition-colors">↗</span>
+                </div>
+                <p class="font-body text-[11px] text-slate-400 leading-relaxed font-light mt-2.5">
+                  {p.desc}
+                </p>
+              </a>
+            ))
+          ) : (
+            <div class="bg-black/40 border border-white/5 p-6 rounded-xl backdrop-blur-md font-mono text-[10px] text-white/50 space-y-4">
+              <span class="uppercase tracking-widest text-[var(--accent-cyan)]">[ DEFAULT_PRODUCT_SCHEME ]</span>
+              <p class="font-body leading-relaxed font-light text-slate-400 text-xs">
+                This operator directs cross-functional campaigns, marketing networks, and partner nodes within the Fintech24h corporate grid.
+              </p>
+            </div>
+          )}
+        </div>
+
       </div>
+
     </div>
 
     <!-- Section bottom fade transition -->
     <div class="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[#020202] to-transparent pointer-events-none"></div>
   </section>
 
-  <!-- Publications & Articles Listing -->
+  <!-- Cyber Research Dossier (Timeline & Asymmetric Publications Layout) -->
   <section class="py-24 bg-[#020202] relative border-t border-white/5" id="publications" aria-label="Author Publications">
+    <!-- Cyber grid background -->
     <div class="absolute inset-0 pointer-events-none z-0">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--gradient-glow-cyan)] rounded-full opacity-[0.03] filter blur-[100px]"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-[var(--gradient-glow-cyan)] rounded-full opacity-[0.03] filter blur-[120px]"></div>
       <div class="absolute inset-0 grid-pattern opacity-10"></div>
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-6">
+    <div class="relative z-10 max-w-5xl mx-auto px-6">
       
       <!-- Section Header -->
-      <div class="max-w-3xl mx-auto text-center mb-16" data-animate="fade-up">
+      <div class="max-w-2xl mx-auto text-center mb-20" data-animate="fade-up">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/20 bg-cyan-400/5 mb-4">
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
-          <span class="text-[10px] font-mono font-medium text-cyan-400 uppercase tracking-widest">Publications</span>
+          <span class="text-[10px] font-mono font-medium text-cyan-400 uppercase tracking-widest">Research Index</span>
         </div>
         <h2 class="font-display text-4xl font-bold text-white uppercase tracking-tight">
-          Insights & Research Nodes
+          Dossier Publications
         </h2>
-        <p class="text-sm text-slate-400 font-body leading-relaxed mt-3 max-w-xl mx-auto font-light">
-          On-chain frameworks, marketing strategies, and system reviews authored by {authorName}.
+        <p class="text-xs text-slate-500 font-mono uppercase tracking-[0.2em] mt-3">
+          Verifiable marketing frameworks, research logs, and technical archives
         </p>
       </div>
 
       {posts.length > 0 ? (
-        <div class="space-y-8" data-animate="stagger">
-          <!-- Asymmetric grid: First article is featured & full-width -->
-          {posts.slice(0, 1).map((post) => {
+        <!-- Vertical Timeline Guidance Line -->
+        <div class="relative border-l border-white/10 ml-4 md:ml-32 pl-8 md:pl-12 space-y-16 py-8" data-animate="stagger">
+          {posts.map((post, idx) => {
             const rTime = getReadingTime(post.content.rendered);
-            const excerptText = getExcerpt(post, 220);
+            const excerptText = getExcerpt(post, 180);
             const featuredImage = getFeaturedImage(post);
+            
+            // Asymmetric design elements (Alternating styles, featured gradients)
+            const isFeatured = idx === 0;
+            const accentColor = idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)';
+
             return (
-              <article class="card-featured p-6 md:p-8 grid md:grid-cols-12 gap-8 items-center group relative overflow-hidden" data-animate-child>
-                <!-- Sweep overlay animation on featured card -->
-                <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-cyan)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3.5s_linear_infinite] shadow-[0_0_10px_rgba(0,200,240,0.5)]"></div>
+              <div class="relative group" data-animate-child>
                 
-                {featuredImage.url && (
-                  <div class="md:col-span-5 relative aspect-[16/10] md:aspect-square rounded-2xl overflow-hidden border border-white/10 group-hover:border-cyan-400/30 transition-colors duration-500 bg-[#050810] shadow-2xl">
-                    <img 
-                      src={featuredImage.url} 
-                      alt={featuredImage.alt}
-                      class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" 
-                      loading="eager"
-                    />
-                  </div>
-                )}
-                <div class="md:col-span-7 space-y-4">
-                  <!-- Info row -->
-                  <div class="flex items-center gap-3 text-xs text-[var(--accent-cyan)] font-mono tracking-wider uppercase">
-                    <span>{formatDate(post.date)}</span>
-                    <span class="w-1 h-1 rounded-full bg-cyan-400"></span>
-                    <span>{rTime} MIN READ</span>
-                  </div>
-
-                  <!-- Title -->
-                  <h3 class="font-display text-2xl md:text-3xl font-bold text-white leading-tight group-hover:text-cyan-400 transition-colors">
-                    <a href={`/blog/${post.slug}`}>{post.title.rendered}</a>
-                  </h3>
-
-                  <!-- Excerpt -->
-                  <p class="text-sm text-slate-400 font-body leading-relaxed font-light line-clamp-3">
-                    {excerptText}
-                  </p>
-
-                  <div class="pt-4 border-t border-white/5 flex items-center justify-between">
-                    <span class="font-mono text-[9px] text-white/30">ID // WP_POST_0{post.id}</span>
-                    <a 
-                      href={`/blog/${post.slug}`} 
-                      class="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 font-display uppercase tracking-wider transition-colors"
-                    >
-                      Analyze Brief
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                  </div>
+                <!-- Timeline dot node with ping effect -->
+                <div class="absolute -left-[41px] md:-left-[57px] top-6 w-5 h-5 rounded-full bg-[#050810] border border-white/20 flex items-center justify-center group-hover:border-cyan-400 transition-colors duration-300 z-10">
+                  <div class="w-2 h-2 rounded-full group-hover:scale-110 transition-transform" style={{ background: accentColor }}></div>
+                  <div class="absolute inset-0 rounded-full animate-ping opacity-0 group-hover:opacity-40" style={{ background: accentColor }}></div>
                 </div>
-              </article>
-            );
-          })}
 
-          {/* Subsequent articles in standard card layouts */}
-          {posts.length > 1 && (
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {posts.slice(1).map((post) => {
-                const rTime = getReadingTime(post.content.rendered);
-                const excerptText = getExcerpt(post, 130);
-                const featuredImage = getFeaturedImage(post);
-                return (
-                  <article class="card-default p-6 flex flex-col justify-between group" data-animate-child>
-                    <div>
-                      {featuredImage.url && (
-                        <div class="relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-white/5 shadow-inner bg-[#050810]">
-                          <img 
-                            src={featuredImage.url} 
-                            alt={featuredImage.alt}
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                            loading="lazy"
-                          />
-                        </div>
-                      )}
+                <!-- Left Column monospaced absolute meta (Desktop only) -->
+                <div class="absolute -left-[180px] top-4 hidden md:flex flex-col items-end text-right w-36 font-mono text-[10px] text-white/30 space-y-1">
+                  <div class="text-white/60 tracking-wider">[{formatDate(post.date).toUpperCase()}]</div>
+                  <div>ID // WP_0{post.id}</div>
+                  <div class="text-[9px] uppercase tracking-widest" style={{ color: accentColor }}>{rTime} MIN READ</div>
+                </div>
 
-                      <!-- Info row -->
-                      <div class="flex items-center gap-3 text-xs text-[#4a5470] font-mono tracking-wider uppercase mb-3">
-                        <span>{formatDate(post.date)}</span>
-                        <span class="w-1 h-1 rounded-full bg-[#4a5470]"></span>
-                        <span>{rTime} MIN</span>
+                <!-- Article Dossier Panel Card -->
+                <div class={`relative p-6 md:p-8 rounded-2xl bg-black/40 border border-white/5 group-hover:border-white/10 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7)] transition-all duration-500 overflow-hidden backdrop-blur-sm ${isFeatured ? 'ring-1 ring-cyan-500/10' : ''}`}>
+                  
+                  <!-- Glowing line laser sweep effect on hover -->
+                  <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3.5s_linear_infinite]" style={{ '--accent': accentColor }}></div>
+
+                  <!-- Asymmetric layout inside card -->
+                  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    
+                    {featuredImage.url && (
+                      <div class="lg:col-span-4 relative aspect-[16/10] rounded-xl overflow-hidden border border-white/5 group-hover:border-white/15 transition-colors duration-500 bg-[#050810]">
+                        <img 
+                          src={featuredImage.url} 
+                          alt={featuredImage.alt}
+                          class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" 
+                          loading={isFeatured ? "eager" : "lazy"}
+                        />
+                      </div>
+                    )}
+                    
+                    <div class={`${featuredImage.url ? 'lg:col-span-8' : 'lg:col-span-12'} space-y-4`}>
+                      <!-- HUD Category Tag & Index -->
+                      <div class="flex justify-between items-center text-[9px] font-mono tracking-widest text-slate-500">
+                        <span>[ ARCHIVE_INDEX // 0{idx + 1} ]</span>
+                        <span class="uppercase pl-2" style={{ color: accentColor }}>PUBLISHED_POST</span>
                       </div>
 
                       <!-- Title -->
-                      <h3 class="font-display text-lg font-bold text-white mb-2.5 group-hover:text-cyan-400 transition-colors line-clamp-2">
-                        <a href={`/blog/${post.slug}`}>{post.title.rendered}</a>
+                      <h3 class="font-display text-xl md:text-2xl font-bold text-white leading-tight group-hover:text-cyan-400 transition-colors">
+                        <a href={`/blog/${post.slug}`} set:html={post.title.rendered} />
                       </h3>
 
                       <!-- Excerpt -->
                       <p class="text-xs text-slate-400 font-body leading-relaxed font-light line-clamp-3">
                         {excerptText}
                       </p>
+
+                      <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+                        <!-- Mobile Meta Fallback -->
+                        <span class="font-mono text-[9px] text-white/30 md:hidden">{formatDate(post.date)} · {rTime} MIN</span>
+                        <span class="font-mono text-[9px] text-white/20 hidden md:block">STATUS // ACTIVE_NODE_LOG</span>
+                        
+                        <a 
+                          href={`/blog/${post.slug}`} 
+                          class="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 font-display uppercase tracking-wider transition-colors"
+                          style={{ color: accentColor }}
+                        >
+                          Unlock Report
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                      </div>
                     </div>
 
-                    <div class="flex justify-between items-center pt-4 border-t border-white/5 mt-6">
-                      <span class="font-mono text-[8px] text-white/20">WP_POST_{post.id}</span>
-                      <a 
-                        href={`/blog/${post.slug}`} 
-                        class="text-[10px] font-semibold text-cyan-400 hover:text-cyan-300 font-display uppercase tracking-wider flex items-center gap-1.5 transition-colors"
-                      >
-                        Read Brief
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-                      </a>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          )}
+                  </div>
+                </div>
+
+              </div>
+            );
+          })}
         </div>
       ) : (
         <!-- Fallback if no posts are published by this author -->
@@ -370,7 +391,7 @@ const skills = slug === 'phat' ? [
 </BaseLayout>
 
 <style>
-  /* Local Scoped Animations for absolute safety */
+  /* Custom anim parameters */
   @keyframes spin-clockwise {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -379,25 +400,10 @@ const skills = slug === 'phat' ? [
     0% { transform: rotate(360deg); }
     100% { transform: rotate(0deg); }
   }
-  @keyframes pulse-orb {
-    0%, 100% { transform: scale(1) translate(-50%, -50%); opacity: 0.15; }
-    50% { transform: scale(1.08) translate(-50%, -50%); opacity: 0.22; }
-  }
-  
-  /* Sweeping laser sweeps (Matrix HUD elements) */
-  @keyframes sweep-down {
-    0% { transform: translateY(-100%); }
-    50%, 100% { transform: translateY(100vh); }
-  }
-  @keyframes sweep-up {
-    0% { transform: translateY(100%); }
-    50%, 100% { transform: translateY(-100vh); }
-  }
-
   .animate-spin-clockwise {
-    animation: spin-clockwise 40s linear infinite;
+    animation: spin-clockwise 45s linear infinite;
   }
   .animate-spin-counter {
-    animation: spin-counter 20s linear infinite;
+    animation: spin-counter 25s linear infinite;
   }
 </style>
