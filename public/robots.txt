@@ -13,4 +13,5 @@ Disallow: /_assets/*.map
 Crawl-delay: 1
 
 Sitemap: https://fintech24h.com/sitemap-index.xml
+Sitemap: https://fintech24h.com/sitemap-blog.xml
 Sitemap: https://fintech24h.com/rss.xml
