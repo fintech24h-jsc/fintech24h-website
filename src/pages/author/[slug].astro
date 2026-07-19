@@ -47,6 +47,12 @@ const authorBio = isPhatVo ? phatBio : (member?.bio || user.description || "Fint
 // Fetch publications by the author
 const posts = await getPostsByAuthor(user.id);
 
+// Don't render empty author archives (e.g. legacy WP accounts like /author/admin
+// with zero published posts) — serve a real 404 so they're not shown or indexed.
+if (posts.length === 0) {
+  return Astro.rewrite('/404');
+}
+
 const currentUrl = `https://fintech24h.com/author/${slug}`;
 
 const breadcrumbs = [
