@@ -1,6 +1,13 @@
 ---
 // src/pages/404.astro
+export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Return a real HTTP 404 whenever this page renders — directly, as the
+// fallback for an unmatched route, or via Astro.rewrite('/404') from a
+// catch-all. Without this the page returned 200, making every not-found URL a
+// soft-404 that Google leaves in "Crawled - currently not indexed".
+Astro.response.status = 404;
 ---
 
 <BaseLayout

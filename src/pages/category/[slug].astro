@@ -8,5 +8,6 @@ if (slug) {
   return Astro.redirect(`/blog/category/${slug}`, 301);
 }
 
-return Astro.redirect('/404');
+// Render the 404 page here with a real 404 status (no soft-404 redirect).
+return Astro.rewrite('/404');
 ---

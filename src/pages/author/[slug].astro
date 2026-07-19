@@ -15,7 +15,8 @@ const wpSlug = slug === 'phat-vo' ? 'phat' : slug;
 const user = wpSlug ? await getUserBySlug(wpSlug) : null;
 
 if (!user) {
-  return Astro.redirect('/404');
+  // Render the 404 page here with a real 404 status (no soft-404 redirect).
+  return Astro.rewrite('/404');
 }
 
 const isPhatVo = slug === 'phat' || slug === 'phat-vo';

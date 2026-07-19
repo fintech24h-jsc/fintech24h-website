@@ -6,30 +6,47 @@ import { getPostBySlug, getCaseStudyBySlug } from '../lib/wordpress';
 
 const { slug } = Astro.params;
 
-if (!slug) {
-  return Astro.redirect('/404');
-}
+// Legacy WordPress URLs that have a direct equivalent on the new site — 301
+// them to the right page instead of letting them fall through to a 404
+// (preserves link equity; e.g. /about-us/ was the old About page).
+const LEGACY_REDIRECTS: Record<string, string> = {
+  'about-us': '/about',
+  'contact-us': '/contact',
+  'home.html': '/',
+  'home': '/',
+};
 
-// 1. Check if the slug belongs to a WordPress blog post
-try {
-  const post = await getPostBySlug(slug);
-  if (post) {
-    return Astro.redirect(`/blog/${slug}`, 301);
+if (slug) {
+  const key = slug.toLowerCase();
+
+  if (LEGACY_REDIRECTS[key]) {
+    return Astro.redirect(LEGACY_REDIRECTS[key], 301);
   }
-} catch (err) {
-  console.error(`Error checking post slug redirect for "${slug}":`, err);
-}
 
-// 2. Check if the slug belongs to a Case Study
-try {
-  const caseStudy = await getCaseStudyBySlug(slug);
-  if (caseStudy) {
-    return Astro.redirect(`/case-studies/${slug}`, 301);
+  // 1. Check if the slug belongs to a WordPress blog post
+  try {
+    const post = await getPostBySlug(slug);
+    if (post) {
+      return Astro.redirect(`/blog/${slug}`, 301);
+    }
+  } catch (err) {
+    console.error(`Error checking post slug redirect for "${slug}":`, err);
   }
-} catch (err) {
-  console.error(`Error checking case study slug redirect for "${slug}":`, err);
+
+  // 2. Check if the slug belongs to a Case Study
+  try {
+    const caseStudy = await getCaseStudyBySlug(slug);
+    if (caseStudy) {
+      return Astro.redirect(`/case-studies/${slug}`, 301);
+    }
+  } catch (err) {
+    console.error(`Error checking case study slug redirect for "${slug}":`, err);
+  }
 }
 
-// 3. Fallback to 404
-return Astro.redirect('/404');
+// 3. Genuine not-found — render the 404 page AT THIS URL with a real 404
+// status (via rewrite, no redirect). Previously this did
+// `Astro.redirect('/404')` = 302 -> /404 (200), a soft-404 that Google keeps
+// in "Crawled - currently not indexed". 404.astro now sets a 404 status.
+return Astro.rewrite('/404');
 ---
