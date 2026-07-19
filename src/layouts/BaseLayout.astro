@@ -20,7 +20,11 @@ interface Props {
 const {
   title,
   description,
-  canonical = Astro.url.href,
+  // Canonical must never include the query string — otherwise pages hit with
+  // junk params (e.g. /blog/?paged=50, ?amp=1, or leftover hack spam params)
+  // self-canonicalize to a duplicate URL and get stuck in Google's
+  // "Crawled - currently not indexed" bucket. Default to origin + pathname.
+  canonical = Astro.url.origin + Astro.url.pathname,
   ogImage = 'https://fintech24h.com/wp-content/uploads/2026/07/OG-FI24H.png',
   ogType = 'website',
   schema,

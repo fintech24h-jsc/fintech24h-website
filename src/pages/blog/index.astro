@@ -6,6 +6,14 @@ import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { getAllPosts, getAllCategories, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
 import { getReadingTime } from '../../lib/utils';
 
+// The blog is a single page with no pagination — every legacy WordPress
+// pagination/param URL (?paged=N, ?amp=1, and old hack spam params like
+// ?ku777=...) must collapse to the clean /blog with a 301, instead of
+// returning 200 duplicates that pile up in "Crawled - currently not indexed".
+if (Astro.url.search) {
+  return Astro.redirect('/blog', 301);
+}
+
 Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
 
 const posts = await getAllPosts();
