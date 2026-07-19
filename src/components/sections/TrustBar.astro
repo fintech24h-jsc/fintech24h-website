@@ -46,7 +46,6 @@ const row2Clients = clients.slice(Math.ceil(clients.length / 2));
       <div class="marquee-track">
         {[...row1Clients, ...row1Clients, ...row1Clients].map((client, i) => (
           <div
-            key={i}
             class="flex items-center justify-center flex-shrink-0 px-6 logo-container transition-all duration-300"
           >
             {client.logo ? (
@@ -78,7 +77,6 @@ const row2Clients = clients.slice(Math.ceil(clients.length / 2));
       <div class="marquee-track-reverse">
         {[...row2Clients, ...row2Clients, ...row2Clients].map((client, i) => (
           <div
-            key={i}
             class="flex items-center justify-center flex-shrink-0 px-6 logo-container transition-all duration-300"
           >
             {client.logo ? (

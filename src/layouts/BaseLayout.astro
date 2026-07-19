@@ -32,6 +32,10 @@ const {
 } = Astro.props;
 
 const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`;
+const canonicalUrl = new URL(canonical, Astro.url.origin);
+canonicalUrl.search = '';
+canonicalUrl.hash = '';
+const canonicalHref = canonicalUrl.href;
 ---
 
 <!DOCTYPE html>
@@ -44,12 +48,12 @@ const siteTitle = title.includes('Fintech24h') ? title : `${title} | Fintech24h`
   <!-- Primary Meta -->
   <title>{siteTitle}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={canonical} />
+  <link rel="canonical" href={canonicalHref} />
   {noIndex && <meta name="robots" content="noindex, nofollow" />}
   {!noIndex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
 
   <!-- Open Graph -->
-  <OpenGraph title={siteTitle} description={description} url={canonical} image={ogImage} type={ogType} />
+  <OpenGraph title={siteTitle} description={description} url={canonicalHref} image={ogImage} type={ogType} />
 
   <!-- Theme color for mobile browsers -->
   <meta name="theme-color" content="#050810" />

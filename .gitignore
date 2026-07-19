@@ -15,8 +15,7 @@ yarn-error.log*
 .env.local
 .env.*.local
 
-# secrets — Apps Script chứa Telegram bot token, KHÔNG commit
-workers/apps-script/Code.gs
+# Apps Script configuration uses Script Properties; source contains no secrets.
 
 # astro cache / metadata
 .astro/

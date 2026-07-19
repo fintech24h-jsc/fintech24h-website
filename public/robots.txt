@@ -4,6 +4,7 @@ Allow: /_assets/*.css
 Allow: /_assets/*.js
 Disallow: /wp-admin/
 Disallow: /wp-content/
+Allow: /wp-content/uploads/
 Disallow: /wp-json/
 Disallow: /wp-login.php
 Disallow: /wp-includes/

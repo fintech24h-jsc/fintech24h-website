@@ -30,9 +30,9 @@ export const services: Service[] = [
       'Localized campaigns that fit culture and language'
     ],
     metrics: [
-      { label: 'Vetted Web3 KOLs', value: '500+' },
-      { label: 'Avg Campaign Reach', value: '2.5M+' },
-      { label: 'Conversion Boost', value: '35%+' }
+      { label: 'Audience Fit', value: 'Vetted' },
+      { label: 'Campaign Reporting', value: 'Live' },
+      { label: 'Market Coverage', value: 'Global' }
     ]
   },
   {
@@ -54,9 +54,9 @@ export const services: Service[] = [
       'Widespread organic distribution across crypto syndicates'
     ],
     metrics: [
-      { label: 'Media Partners', value: '150+' },
-      { label: 'Placements Secured', value: '1,200+' },
-      { label: 'Domain Authority Increase', value: '20x+' }
+      { label: 'Editorial Strategy', value: 'Focused' },
+      { label: 'Coverage Reporting', value: 'Clear' },
+      { label: 'Media Outreach', value: 'Targeted' }
     ]
   },
   {
@@ -78,9 +78,9 @@ export const services: Service[] = [
       'High retention rates of active, supportive community advocates'
     ],
     metrics: [
-      { label: 'Members Managed', value: '100K+' },
-      { label: 'Anti-Sybil Filtering', value: '98%' },
-      { label: 'Avg Response Time', value: '<2 mins' }
+      { label: 'Community Operations', value: 'Active' },
+      { label: 'Security Design', value: 'Layered' },
+      { label: 'Engagement Reporting', value: 'Weekly' }
     ]
   },
   {
@@ -102,9 +102,9 @@ export const services: Service[] = [
       'High-conversion networking environments optimized for deal-flow'
     ],
     metrics: [
-      { label: 'Events Hosted', value: '50+' },
-      { label: 'Tier-1 Attendees', value: '5,000+' },
-      { label: 'Lead Conversion', value: '45%+' }
+      { label: 'Event Planning', value: 'End-to-End' },
+      { label: 'Audience Curation', value: 'Strategic' },
+      { label: 'Post-Event Follow-Up', value: 'Structured' }
     ]
   },
   {
@@ -126,9 +126,9 @@ export const services: Service[] = [
       'Hyper-personalized engagement at a massive scale'
     ],
     metrics: [
-      { label: 'Automated Interactions', value: '1M+' },
-      { label: 'Sentiment Accuracy', value: '95%' },
-      { label: 'Operational Savings', value: '$80K/mo' }
+      { label: 'Workflow Automation', value: 'Scoped' },
+      { label: 'Sentiment Monitoring', value: 'Continuous' },
+      { label: 'Human Oversight', value: 'Built In' }
     ]
   },
   {
@@ -150,9 +150,9 @@ export const services: Service[] = [
       'Co-marketing opportunities with major industry leaders'
     ],
     metrics: [
-      { label: 'VC Partner Network', value: '80+' },
-      { label: 'Exchanges Connected', value: '25+' },
-      { label: 'Capital Facilitated', value: '$12M+' }
+      { label: 'Partner Mapping', value: 'Relevant' },
+      { label: 'Market Entry', value: 'Planned' },
+      { label: 'Introductions', value: 'Qualified' }
     ]
   }
 ];

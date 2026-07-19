@@ -16,6 +16,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
     serviceInterest: defaultService,
     budget: '',
     message: '',
+    companyWebsite: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -77,6 +78,18 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
   return (
     <>
       <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
+        <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+          <label htmlFor="company-website">Company website</label>
+          <input
+            id="company-website"
+            name="companyWebsite"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={formData.companyWebsite}
+            onChange={e => update('companyWebsite', e.target.value)}
+          />
+        </div>
         {error && (
           <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/10 text-red-400 text-xs font-body backdrop-blur-md">
             {error}
@@ -287,6 +300,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
                     serviceInterest: defaultService,
                     budget: '',
                     message: '',
+                    companyWebsite: '',
                   });
                 }}
                 className="w-full py-3 px-5 text-xs font-semibold uppercase tracking-wider text-white/60 hover:text-white rounded-xl transition-all duration-300"

@@ -7,4 +7,5 @@ interface Props {
 const { schema } = Astro.props;
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<!-- Escape < so CMS-originated JSON cannot terminate this script element. -->
+<script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
