@@ -1,0 +1,21 @@
+---
+// Handle only legacy multi-segment URLs that have an equivalent destination.
+// All other unmatched paths keep the site's real 404 response so removed,
+// paginated, feed, and spam URLs do not become irrelevant soft-404 redirects.
+export const prerender = false;
+
+const { path } = Astro.params;
+const key = path?.replace(/\/$/, '').toLowerCase();
+
+const LEGACY_REDIRECTS: Record<string, string> = {
+  'service-post/influencer-marketing': '/services/kol-marketing/',
+  'service-post/pr-strategy': '/services/pr-media/',
+  'service-post/promotion-growth-hacking': '/services/',
+};
+
+if (key && LEGACY_REDIRECTS[key]) {
+  return Astro.redirect(LEGACY_REDIRECTS[key], 301);
+}
+
+return Astro.rewrite('/404');
+---

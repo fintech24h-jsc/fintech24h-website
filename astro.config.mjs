@@ -24,7 +24,8 @@ export default defineConfig({
       },
     }),
     sitemap({
-      filter: (page) => !page.includes('/wp-admin') && !page.includes('/wp-json'),
+      // Case studies are excluded until the CMS exposes verified records.
+      filter: (page) => !page.includes('/wp-admin') && !page.includes('/wp-json') && !page.includes('/case-studies'),
       // Priority & changefreq per URL type — helps Google prioritize crawl budget
       serialize(item) {
         const url = item.url;

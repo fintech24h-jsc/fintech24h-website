@@ -23,3 +23,6 @@ yarn-error.log*
 
 # macOS Finder metadata
 .DS_Store
+
+# wrangler local dev cache/state
+.wrangler/

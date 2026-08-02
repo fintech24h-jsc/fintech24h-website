@@ -10,8 +10,9 @@ const { slug } = Astro.params;
 // them to the right page instead of letting them fall through to a 404
 // (preserves link equity; e.g. /about-us/ was the old About page).
 const LEGACY_REDIRECTS: Record<string, string> = {
-  'about-us': '/about',
-  'contact-us': '/contact',
+  'about-us': '/about/',
+  'about-us.html': '/about/',
+  'contact-us': '/contact/',
   'home.html': '/',
   'home': '/',
 };
