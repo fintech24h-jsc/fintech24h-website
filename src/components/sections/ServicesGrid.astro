@@ -201,11 +201,29 @@ const colors = [
       '#f0a278': 'rgba(240, 162, 120, 0.05)'
     };
 
+    const lightAccentColors = {
+      '#ff6b83': '#c03555',
+      '#00c8f0': '#00738f',
+      '#7c5cfc': '#6548d8',
+      '#f0a278': '#a8440f'
+    };
+
+    let activeIndex = 0;
+
+    function getThemeColor(color) {
+      return document.documentElement.dataset.theme === 'light'
+        ? lightAccentColors[color] || color
+        : color;
+    }
+
     function updateBento(idx) {
       const s = services[idx];
       const tag = tags[idx];
-      const color = colors[idx];
-      const glowColor = accentColors[color] || 'rgba(0, 200, 240, 0.05)';
+      const sourceColor = colors[idx];
+      const color = getThemeColor(sourceColor);
+      const glowColor = accentColors[sourceColor] || 'rgba(0, 200, 240, 0.05)';
+      const isLight = document.documentElement.dataset.theme === 'light';
+      activeIndex = idx;
 
       // 1. Update Active States in Dock
       dockItems.forEach((item, index) => {
@@ -213,11 +231,11 @@ const colors = [
           item.setAttribute('aria-pressed', 'true');
           item.style.borderColor = color;
           item.style.backgroundColor = color + '08'; // 5% opacity hex
-          item.style.color = '#ffffff';
+          item.style.color = isLight ? color : '#ffffff';
         } else {
           item.setAttribute('aria-pressed', 'false');
-          item.style.borderColor = 'rgba(255, 255, 255, 0.05)';
-          item.style.backgroundColor = 'rgba(255, 255, 255, 0.01)';
+          item.style.borderColor = 'var(--border-subtle)';
+          item.style.backgroundColor = 'var(--surface-faint)';
           item.style.color = 'var(--text-secondary)';
         }
       });
@@ -294,6 +312,8 @@ const colors = [
         updateBento(idx);
       });
     });
+
+    window.addEventListener('fintech24h:themechange', () => updateBento(activeIndex));
   });
 </script>
 

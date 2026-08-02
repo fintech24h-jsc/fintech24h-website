@@ -39,11 +39,27 @@ const canonicalHref = canonicalUrl.href;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="color-scheme" content="dark light" />
+  <meta id="theme-color-meta" name="theme-color" content="#050810" />
+  <!-- Apply a saved theme before first paint. Dark remains the safe default. -->
+  <script is:inline>
+    (() => {
+      const root = document.documentElement;
+      let theme = 'dark';
+      try {
+        if (localStorage.getItem('fintech24h-theme') === 'light') theme = 'light';
+      } catch {}
+      root.dataset.theme = theme;
+      root.style.colorScheme = theme;
+      const themeColor = document.getElementById('theme-color-meta');
+      if (themeColor) themeColor.setAttribute('content', theme === 'light' ? '#f4f7fb' : '#050810');
+    })();
+  </script>
 
   <!-- Primary Meta -->
   <title>{siteTitle}</title>
@@ -54,9 +70,6 @@ const canonicalHref = canonicalUrl.href;
 
   <!-- Open Graph -->
   <OpenGraph title={siteTitle} description={description} url={canonicalHref} image={ogImage} type={ogType} />
-
-  <!-- Theme color for mobile browsers -->
-  <meta name="theme-color" content="#050810" />
 
   <!-- Geo tags for local SEO -->
   <meta name="geo.region" content="VN-SG" />
@@ -135,9 +148,9 @@ const canonicalHref = canonicalUrl.href;
   </script>
 </head>
 
-<body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased selection:bg-white selection:text-black">
+<body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased">
   <!-- Skip to main content (accessibility) -->
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--accent-cyan)] focus:text-black focus:rounded">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--accent-cyan)] focus:text-[var(--text-inverted)] focus:rounded">
     Skip to main content
   </a>
 
