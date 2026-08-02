@@ -12,6 +12,20 @@
     --bg-tertiary:       #0c1221;  /* Hover state, deepest card */
     --bg-glass:          rgba(8, 13, 26, 0.75);   /* Glassmorphism base */
     --bg-glass-light:    rgba(255, 255, 255, 0.03); /* Subtle highlight */
+    --surface-faint:     rgba(255, 255, 255, 0.02);
+    --surface-soft:      rgba(255, 255, 255, 0.04);
+    --surface-hover:     rgba(255, 255, 255, 0.06);
+    --surface-strong:    rgba(255, 255, 255, 0.10);
+    --overlay-backdrop:  rgba(5, 8, 16, 0.80);
+    --nav-surface:       rgba(8, 12, 26, 0.40);
+    --nav-glass:         rgba(255, 255, 255, 0.03);
+    --nav-border:        rgba(255, 255, 255, 0.10);
+    --nav-text:          rgba(255, 255, 255, 0.80);
+    --nav-link:          rgba(255, 255, 255, 0.70);
+    --nav-cta-text:      #ffffff;
+    --nav-drawer:        rgba(5, 8, 16, 0.90);
+    --nav-drawer-shadow: -30px 0 60px rgba(0, 0, 0, 0.80);
+    --dropdown-surface:  rgba(8, 12, 26, 0.95);
 
     /* ─── BRAND ACCENTS ─── */
     --accent-cyan:       #00c8f0;  /* Primary — Cyan lạnh (không phải #00ffff điện) */
@@ -20,6 +34,8 @@
     --accent-purple:     #7c5cfc;  /* Secondary — Tím indigo sâu */
     --accent-purple-dim: #5a3fd0;
     --accent-purple-glow: rgba(124, 92, 252, 0.12);
+    --accent-warm:       #f0a278;
+    --accent-rose:       #ff6b83;
 
     /* ─── TEXT ─── */
     --text-primary:      #e8edf8;  /* Body text — trắng ngà lạnh */
@@ -32,6 +48,13 @@
     --border-hover:      rgba(255, 255, 255, 0.12);  /* Card border khi hover */
     --border-accent:     rgba(0, 200, 240, 0.25);    /* Accent border (active, focus) */
     --border-subtle:     rgba(255, 255, 255, 0.03);  /* Section divider cực nhạt */
+    --grid-line:         rgba(255, 255, 255, 0.025);
+
+    /* ─── SHADOWS / EFFECTS ─── */
+    --shadow-card:       0 16px 48px rgba(0, 0, 0, 0.40), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --shadow-nav:        0 8px 32px rgba(0, 0, 0, 0.35);
+    --shadow-nav-scroll: 0 4px 20px rgba(0, 0, 0, 0.40);
+    --selection-bg:      rgba(0, 200, 240, 0.20);
 
     /* ─── SEMANTIC ─── */
     --color-success:     #10b981;
@@ -71,6 +94,74 @@
     --radius-xl:   16px;
     --radius-2xl:  20px;
     --radius-full: 9999px;
+
+    color-scheme: dark;
+  }
+
+  :root[data-theme='light'] {
+    /* Cool daylight palette: preserves the cyan/indigo brand and liquid glass. */
+    --bg-primary:        #f4f7fb;
+    --bg-secondary:      #ffffff;
+    --bg-tertiary:       #eaf0f7;
+    --bg-glass:          rgba(255, 255, 255, 0.78);
+    --bg-glass-light:    rgba(255, 255, 255, 0.62);
+    --surface-faint:     rgba(15, 23, 42, 0.025);
+    --surface-soft:      rgba(15, 23, 42, 0.045);
+    --surface-hover:     rgba(15, 23, 42, 0.075);
+    --surface-strong:    rgba(15, 23, 42, 0.11);
+    --overlay-backdrop:  rgba(235, 241, 248, 0.82);
+    --nav-surface:       rgba(244, 247, 251, 0.72);
+    --nav-glass:         rgba(255, 255, 255, 0.78);
+    --nav-border:        rgba(15, 23, 42, 0.11);
+    --nav-text:          #344054;
+    --nav-link:          #344054;
+    --nav-cta-text:      #101828;
+    --nav-drawer:        rgba(244, 247, 251, 0.92);
+    --nav-drawer-shadow: -30px 0 60px rgba(32, 52, 79, 0.18);
+    --dropdown-surface:  rgba(255, 255, 255, 0.94);
+
+    --accent-cyan:       #00738f;
+    --accent-cyan-dim:   #005f76;
+    --accent-cyan-glow:  rgba(0, 115, 143, 0.12);
+    --accent-purple:     #6548d8;
+    --accent-purple-dim: #5035bd;
+    --accent-purple-glow: rgba(101, 72, 216, 0.10);
+    --accent-warm:       #a8440f;
+    --accent-rose:       #c03555;
+
+    --text-primary:      #101828;
+    --text-secondary:    #344054;
+    --text-muted:        #475467;
+    --text-inverted:     #ffffff;
+
+    --color-success:     #067647;
+    --color-success-bg:  rgba(6, 118, 71, 0.08);
+    --color-warning:     #9a6700;
+    --color-danger:      #b42318;
+
+    --border-default:    rgba(15, 23, 42, 0.11);
+    --border-hover:      rgba(15, 23, 42, 0.20);
+    --border-accent:     rgba(0, 127, 157, 0.34);
+    --border-subtle:     rgba(15, 23, 42, 0.07);
+    --grid-line:         rgba(15, 23, 42, 0.045);
+
+    --shadow-card:       0 16px 42px rgba(32, 52, 79, 0.10), 0 0 0 1px rgba(15, 23, 42, 0.025);
+    --shadow-nav:        0 10px 34px rgba(32, 52, 79, 0.14);
+    --shadow-nav-scroll: 0 5px 22px rgba(32, 52, 79, 0.12);
+    --selection-bg:      rgba(0, 127, 157, 0.20);
+
+    --gradient-primary:  linear-gradient(135deg, #00738f 0%, #6548d8 100%);
+    --gradient-primary-hover: linear-gradient(135deg, #006f8a 0%, #583bc9 100%);
+    --gradient-hero-bg:  radial-gradient(ellipse 80% 60% at 50% -20%, rgba(101, 72, 216, 0.11) 0%, transparent 65%);
+    --gradient-card:     linear-gradient(135deg, rgba(0, 115, 143, 0.055) 0%, rgba(101, 72, 216, 0.05) 100%);
+    --gradient-glow-cyan: radial-gradient(ellipse at center, rgba(0, 115, 143, 0.12) 0%, transparent 70%);
+    --gradient-glow-purple: radial-gradient(ellipse at center, rgba(101, 72, 216, 0.10) 0%, transparent 70%);
+    --gradient-text:     linear-gradient(135deg, #00738f 0%, #6548d8 100%);
+    --gradient-mesh:
+      radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0,127,157,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 60%, rgba(101,72,216,0.07) 0%, transparent 60%);
+
+    color-scheme: light;
   }
 
   html {
@@ -96,7 +187,7 @@
   }
 
   ::selection {
-    background: rgba(0, 200, 240, 0.2);
+    background: var(--selection-bg);
     color: var(--text-primary);
   }
 }
@@ -138,7 +229,7 @@
   .card-default:hover {
     border-color: var(--border-hover);
     transform: translateY(-3px);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+    box-shadow: var(--shadow-card);
   }
 
   .card-featured {
@@ -319,7 +410,7 @@
   .input-field {
     width: 100%;
     padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--surface-soft);
     border: 1px solid var(--border-default);
     border-radius: 8px;
     color: var(--text-primary);
@@ -418,8 +509,19 @@
     animation: navbar-spotlight-sweep 2s linear infinite;
   }
 
+  html[data-theme='light'] .liquid-glass-premium {
+    background: var(--bg-glass);
+    box-shadow: var(--shadow-card);
+  }
+  html[data-theme='light'] .liquid-glass-premium::before {
+    background: var(--border-default);
+  }
+  html[data-theme='light'] .liquid-glass-premium:hover {
+    box-shadow: 0 14px 38px rgba(32, 52, 79, 0.14), 0 0 18px rgba(0, 115, 143, 0.07);
+  }
+
   .liquid-glass {
-    background: rgba(255, 255, 255, 0.01);
+    background: var(--nav-glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-default);
@@ -427,7 +529,7 @@
   }
 
   .glass-pill {
-    background: rgba(255,255,255,0.04);
+    background: var(--surface-soft);
     backdrop-filter: blur(16px) saturate(180%);
     border-radius: 9999px;
     box-shadow: none !important;
@@ -450,8 +552,8 @@
   /* Grid pattern overlay */
   .grid-pattern {
     background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 48px 48px;
     /* background-drift removed: 2px/s movement is imperceptible but costs main-thread repaint at 60fps */
   }
@@ -552,6 +654,15 @@ a, button, [role="button"], summary, label {
   touch-action: manipulation;
 }
 
+.brand-logo {
+  transition: filter 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+html[data-theme='light'] .brand-logo {
+  filter: brightness(0) saturate(100%);
+  opacity: 0.84;
+}
+
 @media (max-width: 767px) {
   /* ─── GPU relief: backdrop-filter is the single biggest GPU drain on mobile ─── */
   /* Removing it saves 1 compositing layer per card — with 6+ cards this is huge */
@@ -640,4 +751,199 @@ a, button, [role="button"], summary, label {
     0 4px 12px rgba(0, 0, 0, 0.15),
     inset 0 1px 2px rgba(255, 255, 255, 0.15) !important;
   transform: translateY(-2px) !important;
+}
+
+html[data-theme='light'] .btn-liquid-glass-primary {
+  background: var(--gradient-primary) !important;
+  border-color: var(--border-accent) !important;
+  color: var(--text-inverted) !important;
+  box-shadow: 0 10px 26px rgba(0, 127, 157, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.28) !important;
+}
+
+html[data-theme='light'] .btn-liquid-glass-primary:hover {
+  background: var(--gradient-primary-hover) !important;
+  color: var(--text-inverted) !important;
+}
+
+html[data-theme='light'] .btn-liquid-glass-ghost,
+html[data-theme='light'] .btn-liquid-glass-ghost:hover {
+  background: var(--bg-glass) !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 8px 24px rgba(32, 52, 79, 0.10), inset 0 1px 1px rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT THEME — LEGACY UTILITY BRIDGE
+   Older pages predate semantic tokens. These exact-token selectors keep
+   their dark rendering untouched while mapping light rendering to the
+   shared palette. They also cover class names injected by existing scripts.
+   ═══════════════════════════════════════════════════════════ */
+@layer utilities {
+  html[data-theme='light'] [class~='text-white'],
+  html[data-theme='light'] [class~='text-[#f0f4ff]'] {
+    color: var(--text-primary);
+  }
+  html[data-theme='light'] [class~='text-white/90'],
+  html[data-theme='light'] [class~='text-white/80'],
+  html[data-theme='light'] [class~='text-white/70'],
+  html[data-theme='light'] [class~='text-white/60'],
+  html[data-theme='light'] [class~='text-slate-300'],
+  html[data-theme='light'] [class~='text-slate-400'],
+  html[data-theme='light'] [class~='text-[#94a3b8]'] {
+    color: var(--text-secondary);
+  }
+  html[data-theme='light'] [class~='text-white/50'],
+  html[data-theme='light'] [class~='text-white/40'],
+  html[data-theme='light'] [class~='text-white/30'],
+  html[data-theme='light'] [class~='text-white/20'],
+  html[data-theme='light'] [class~='text-white/10'],
+  html[data-theme='light'] [class~='text-white/5'],
+  html[data-theme='light'] [class~='text-slate-500'],
+  html[data-theme='light'] [class~='text-slate-600'],
+  html[data-theme='light'] [class~='text-[#475569]'] {
+    color: var(--text-muted);
+  }
+  html[data-theme='light'] [class~='text-[#f0a278]'] {
+    color: var(--accent-warm);
+  }
+  html[data-theme='light'] [class~='text-[#ff6b83]'] {
+    color: var(--accent-rose);
+  }
+  html[data-theme='light'] [class~='text-[#a78bfa]'],
+  html[data-theme='light'] [class~='text-purple-300'],
+  html[data-theme='light'] [class~='text-purple-400'] {
+    color: var(--accent-purple);
+  }
+  html[data-theme='light'] [class~='text-[#00fff9]'],
+  html[data-theme='light'] [class~='text-cyan-300'],
+  html[data-theme='light'] [class~='text-cyan-400'],
+  html[data-theme='light'] [class~='text-cyan-400/90'],
+  html[data-theme='light'] [class~='text-cyan-500/70'] {
+    color: var(--accent-cyan);
+  }
+  html[data-theme='light'] [class~='text-[#57F287]'],
+  html[data-theme='light'] [class~='text-green-400'],
+  html[data-theme='light'] [class~='text-emerald-400'] {
+    color: var(--color-success);
+  }
+  html[data-theme='light'] [class~='text-red-400'] {
+    color: var(--color-danger);
+  }
+  html[data-theme='light'] [class~='text-yellow-400'] {
+    color: var(--color-warning);
+  }
+
+  html[data-theme='light'] [class~='bg-white/[0.005]'],
+  html[data-theme='light'] [class~='bg-white/[0.01]'],
+  html[data-theme='light'] [class~='bg-white/[0.02]'],
+  html[data-theme='light'] [class~='bg-white/[0.03]'],
+  html[data-theme='light'] [class~='bg-white/5'] {
+    background-color: var(--surface-soft) !important;
+  }
+  html[data-theme='light'] [class~='bg-white/[0.04]'],
+  html[data-theme='light'] [class~='bg-white/[0.05]'],
+  html[data-theme='light'] [class~='bg-white/10'] {
+    background-color: var(--surface-hover) !important;
+  }
+  html[data-theme='light'] [class~='bg-white/20'] {
+    background-color: var(--surface-strong) !important;
+  }
+  html[data-theme='light'] [class~='bg-black'],
+  html[data-theme='light'] [class~='bg-black/20'],
+  html[data-theme='light'] [class~='bg-black/40'],
+  html[data-theme='light'] [class~='bg-black/50'],
+  html[data-theme='light'] [class~='bg-black/60'] {
+    background-color: var(--bg-glass) !important;
+  }
+  html[data-theme='light'] [class~='bg-[#050810]'],
+  html[data-theme='light'] [class~='bg-[#05080C]'],
+  html[data-theme='light'] [class~='bg-[#050914]'],
+  html[data-theme='light'] [class~='bg-[#04060A]'],
+  html[data-theme='light'] [class~='bg-[#030508]'],
+  html[data-theme='light'] [class~='bg-[#020202]'],
+  html[data-theme='light'] [class~='bg-[#050505]'],
+  html[data-theme='light'] [class~='bg-[#0B1120]'],
+  html[data-theme='light'] [class~='bg-[#0A172B]'],
+  html[data-theme='light'] [class~='bg-[#0A0F15]'],
+  html[data-theme='light'] [class~='bg-[#0A0D14]'],
+  html[data-theme='light'] [class~='bg-[#0a0a0c]'],
+  html[data-theme='light'] [class~='bg-[#0a0a0a]'],
+  html[data-theme='light'] [class~='bg-[#080808]'],
+  html[data-theme='light'] [class~='bg-[#080C1A]'],
+  html[data-theme='light'] [class~='bg-[#080c1a]'],
+  html[data-theme='light'] [class~='bg-[#090d1f]'],
+  html[data-theme='light'] [class~='bg-[#121216]'] {
+    background-color: var(--bg-secondary) !important;
+  }
+  html[data-theme='light'] [class~='bg-[#050508]/80'],
+  html[data-theme='light'] [class~='bg-[#050810]/80'],
+  html[data-theme='light'] [class~='bg-[#050810]/95'],
+  html[data-theme='light'] [class~='bg-[#080C1A]/40'],
+  html[data-theme='light'] [class~='bg-[#080C1A]/80'],
+  html[data-theme='light'] [class~='bg-[#080c1a]/95'],
+  html[data-theme='light'] [class~='bg-[#080c1a]/98'],
+  html[data-theme='light'] [class~='bg-[#090d1f]/90'],
+  html[data-theme='light'] [class~='bg-[#0a0f1e]/50'],
+  html[data-theme='light'] [class~='bg-[#0c1226]/90'] {
+    background-color: var(--bg-glass) !important;
+  }
+
+  html[data-theme='light'] [class~='border-white/5'],
+  html[data-theme='light'] [class~='border-white/[0.04]'],
+  html[data-theme='light'] [class~='border-white/[0.05]'],
+  html[data-theme='light'] [class~='border-white/[0.06]'] {
+    border-color: var(--border-subtle) !important;
+  }
+  html[data-theme='light'] [class~='border-white'],
+  html[data-theme='light'] [class~='border-white/10'] {
+    border-color: var(--border-default) !important;
+  }
+  html[data-theme='light'] [class~='border-white/20'],
+  html[data-theme='light'] [class~='border-white/30'] {
+    border-color: var(--border-hover) !important;
+  }
+  html[data-theme='light'] [class~='border-[#050810]'] {
+    border-color: var(--bg-primary) !important;
+  }
+
+  html[data-theme='light'] [class~='placeholder:text-white/10']::placeholder,
+  html[data-theme='light'] [class~='placeholder:text-white/20']::placeholder {
+    color: var(--text-muted);
+  }
+
+  html[data-theme='light'] [class~='from-[#0B1120]'] {
+    --tw-gradient-from: var(--bg-secondary) var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: color-mix(in srgb, var(--bg-secondary) 0%, transparent) var(--tw-gradient-to-position) !important;
+  }
+  html[data-theme='light'] [class~='to-[#0A172B]'] {
+    --tw-gradient-to: var(--bg-tertiary) var(--tw-gradient-to-position) !important;
+  }
+  html[data-theme='light'] [class~='from-[#020202]'],
+  html[data-theme='light'] [class~='from-[#04060A]'] {
+    --tw-gradient-from: var(--bg-primary) var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: color-mix(in srgb, var(--bg-primary) 0%, transparent) var(--tw-gradient-to-position) !important;
+  }
+  html[data-theme='light'] [class~='to-[#121216]'] {
+    --tw-gradient-to: var(--bg-secondary) var(--tw-gradient-to-position) !important;
+  }
+  html[data-theme='light'] [class~='from-[#080c1a]/50'] {
+    --tw-gradient-from: color-mix(in srgb, var(--bg-secondary) 50%, transparent) var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: color-mix(in srgb, var(--bg-secondary) 0%, transparent) var(--tw-gradient-to-position) !important;
+  }
+}
+
+/* Unlayered legacy components that predate the shared surface tokens. */
+html[data-theme='light'] .stat-card {
+  background: var(--bg-glass);
+  border-color: var(--border-default);
+  box-shadow: 0 10px 28px rgba(32, 52, 79, 0.08);
+}
+
+html[data-theme='light'] .prose .ez-toc-link {
+  color: var(--text-secondary) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle svg { transition: none !important; }
 }
