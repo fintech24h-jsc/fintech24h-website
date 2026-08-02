@@ -91,9 +91,15 @@ const blogSchema = {
           return (
             <article class="card-default p-6 flex flex-col justify-between group" data-animate-child>
               <div>
-                {/* Image */}
+                {/* Image (clickable → article; hidden from tab order since the
+                    title below is the primary accessible link to the same post) */}
                 {featuredImage.url && (
-                  <div class="relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-white/5 shadow-inner">
+                  <a
+                    href={`/blog/${post.slug}`}
+                    tabindex="-1"
+                    aria-hidden="true"
+                    class="block relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-white/5 shadow-inner"
+                  >
                     <img
                       src={featuredImage.url}
                       alt={featuredImage.alt}
@@ -103,7 +109,7 @@ const blogSchema = {
                       loading="lazy"
                       decoding="async"
                     />
-                  </div>
+                  </a>
                 )}
 
                 <!-- Info row -->
@@ -114,8 +120,10 @@ const blogSchema = {
                 </div>
 
                 <!-- Title & Summary -->
-                <h2 class="font-display text-lg font-bold text-[#f0f4ff] mb-3 group-hover:text-cyan-400 transition-colors line-clamp-2">
-                  {post.title.rendered}
+                <h2 class="font-display text-lg font-bold text-[#f0f4ff] mb-3 line-clamp-2">
+                  <a href={`/blog/${post.slug}`} class="group-hover:text-cyan-400 hover:text-cyan-400 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400">
+                    {post.title.rendered}
+                  </a>
                 </h2>
                 <p class="text-xs text-[#94a3b8] font-body leading-relaxed mb-6 line-clamp-3">
                   {excerptText}

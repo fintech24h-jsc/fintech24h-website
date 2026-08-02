@@ -52,9 +52,16 @@ const posts = allPosts.slice(0, 6);
         return (
           <article class="btn-liquid-glass-card group flex flex-col justify-between" data-animate-child>
             <div>
-              {/* Image Container with Liquid Glass Shine effect on card hover */}
+              {/* Image Container with Liquid Glass Shine effect on card hover
+                  (clickable → article; hidden from tab order since the title
+                  below is the primary accessible link to the same post) */}
               {featuredImage.url && (
-                <div class="relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-white/5 shadow-inner">
+                <a
+                  href={`/blog/${post.slug}`}
+                  tabindex="-1"
+                  aria-hidden="true"
+                  class="block relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-white/5 shadow-inner"
+                >
                   <img
                     src={featuredImage.url}
                     alt={featuredImage.alt}
@@ -72,7 +79,7 @@ const posts = allPosts.slice(0, 6);
 
                   {/* Bottom Dark shadow for card integration */}
                   <div class="absolute inset-0 bg-gradient-to-t from-[#080c1a]/50 via-transparent to-transparent opacity-40"></div>
-                </div>
+                </a>
               )}
 
               <!-- Info row -->
@@ -83,8 +90,10 @@ const posts = allPosts.slice(0, 6);
               </div>
 
               <!-- Title & Summary -->
-              <h3 class="font-display text-lg font-bold text-white mb-3 group-hover:text-[var(--accent-cyan)] transition-colors duration-300 line-clamp-2 leading-snug">
-                {post.title.rendered}
+              <h3 class="font-display text-lg font-bold text-white mb-3 line-clamp-2 leading-snug">
+                <a href={`/blog/${post.slug}`} class="group-hover:text-[var(--accent-cyan)] hover:text-[var(--accent-cyan)] transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
+                  {post.title.rendered}
+                </a>
               </h3>
               <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6 line-clamp-3">
                 {excerptText}
