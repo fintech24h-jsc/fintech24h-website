@@ -6,28 +6,28 @@ interface Props {
 const { isHero = false } = Astro.props;
 const TitleTag = isHero ? 'h1' : 'h2';
 ---
-  <section class="relative min-h-[70vh] md:min-h-[90vh] flex flex-col justify-center pt-16 pb-12 md:pt-32 md:pb-20 px-4 overflow-hidden border-b border-white/10 bg-[#04060A]">
+  <section class="relative min-h-[70vh] md:min-h-[90vh] flex flex-col justify-center pt-16 pb-12 md:pt-32 md:pb-20 px-4 overflow-hidden border-b border-[var(--border-default)] bg-[#04060A]" data-theme-surface="midnight">
     <!-- Network Background Nodes -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
       <!-- Ambient overall glow for mobile -->
       <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,200,240,0.1),transparent_60%)] sm:opacity-50"></div>
 
       <!-- Node 1 -->
-      <div class="absolute top-[10%] left-[-5%] sm:left-[10%] w-40 h-40 sm:w-32 sm:h-32 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_6s_ease-in-out_infinite]">
+      <div class="absolute top-[10%] left-[-5%] sm:left-[10%] w-40 h-40 sm:w-32 sm:h-32 rounded-full border border-[var(--border-subtle)] flex items-center justify-center animate-[float-slow_6s_ease-in-out_infinite]">
         <div class="w-20 h-20 sm:w-12 sm:h-12 rounded-full bg-[var(--gradient-glow-cyan)] opacity-40 sm:opacity-20 blur-2xl sm:blur-xl"></div>
         <img src="https://i.pravatar.cc/100?img=11" alt="KOL influencer" width="40" height="40" class="w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-[var(--accent-cyan)] object-cover opacity-80 sm:opacity-60 absolute" loading="lazy" decoding="async" />
         <div class="absolute inset-0 rounded-full border border-[var(--accent-cyan)] opacity-30 animate-[pulse-ring_3s_ease-out_infinite]"></div>
       </div>
 
       <!-- Node 2 -->
-      <div class="absolute top-[40%] sm:top-[30%] right-[-10%] sm:right-[15%] w-56 h-56 sm:w-40 sm:h-40 rounded-full border border-white/5 flex items-center justify-center animate-[float-slow_8s_ease-in-out_infinite_reverse]">
+      <div class="absolute top-[40%] sm:top-[30%] right-[-10%] sm:right-[15%] w-56 h-56 sm:w-40 sm:h-40 rounded-full border border-[var(--border-subtle)] flex items-center justify-center animate-[float-slow_8s_ease-in-out_infinite_reverse]">
         <div class="w-28 h-28 sm:w-16 sm:h-16 rounded-full bg-[var(--gradient-glow-purple)] opacity-40 sm:opacity-20 blur-2xl sm:blur-xl"></div>
         <img src="https://i.pravatar.cc/100?img=12" alt="KOL influencer" width="48" height="48" class="w-14 h-14 sm:w-12 sm:h-12 rounded-full border border-[#a78bfa] object-cover opacity-80 sm:opacity-60 absolute" loading="lazy" decoding="async" />
         <div class="absolute inset-0 rounded-full border border-[#a78bfa] opacity-30 animate-[pulse-ring_4s_ease-out_infinite]"></div>
       </div>
 
       <!-- Node 3 -->
-      <div class="absolute bottom-[5%] sm:bottom-[20%] left-[10%] sm:left-[25%] w-32 h-32 sm:w-24 sm:h-24 rounded-full border border-white/5 flex items-center justify-center animate-[float-fast_5s_ease-in-out_infinite]">
+      <div class="absolute bottom-[5%] sm:bottom-[20%] left-[10%] sm:left-[25%] w-32 h-32 sm:w-24 sm:h-24 rounded-full border border-[var(--border-subtle)] flex items-center justify-center animate-[float-fast_5s_ease-in-out_infinite]">
         <div class="w-16 h-16 rounded-full bg-white opacity-10 blur-xl"></div>
         <img src="https://i.pravatar.cc/100?img=13" alt="KOL influencer" width="32" height="32" class="w-10 h-10 sm:w-8 sm:h-8 rounded-full border border-white/30 object-cover opacity-60 sm:opacity-40 absolute" loading="lazy" decoding="async" />
       </div>
@@ -41,7 +41,7 @@ const TitleTag = isHero ? 'h1' : 'h2';
     </div>
 
     <div class="relative z-10 max-w-5xl mx-auto w-full text-center px-4 sm:px-0">
-      <div class="relative p-6 sm:p-0 rounded-2xl sm:rounded-none bg-black/20 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-white/5 sm:border-none shadow-[0_0_30px_rgba(0,0,0,0.5)] sm:shadow-none">
+      <div class="relative p-6 sm:p-0 rounded-2xl sm:rounded-none bg-black/20 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-[var(--border-subtle)] sm:border-none shadow-[0_0_30px_rgba(0,0,0,0.5)] sm:shadow-none">
         <div class="inline-flex items-center justify-center mb-6 sm:mb-8 reveal reveal-delay-1">
           <span class="px-4 py-1.5 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] font-mono text-xs uppercase tracking-[0.14em] shadow-[0_0_15px_rgba(0,200,240,0.2)]">
             KOL & INFLUENCER MARKETING
@@ -49,7 +49,7 @@ const TitleTag = isHero ? 'h1' : 'h2';
         </div>
 
         <TitleTag class="font-display font-bold max-w-4xl mx-auto reveal reveal-delay-2 relative">
-          <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.03em] leading-[1.05] text-white">
+          <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.03em] leading-[1.05] text-[var(--text-primary)]">
             The Right Voice,<br/>
             <span class="bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent-cyan)] to-[#a78bfa]">Reaching the Right Audience.</span>
           </span>
@@ -62,12 +62,12 @@ const TitleTag = isHero ? 'h1' : 'h2';
 
       <div class="flex flex-col sm:flex-row justify-center items-center gap-6 reveal reveal-delay-4 mt-8">
         <!-- Liquid Glass Button -->
-        <a href="/services/kol-marketing" class="relative overflow-hidden font-mono text-sm uppercase tracking-widest font-bold text-white border border-[var(--accent-cyan)]/40 bg-[var(--accent-cyan)]/10 px-8 py-4 rounded-xl hover:bg-[var(--accent-cyan)]/20 hover:border-[var(--accent-cyan)] hover:shadow-[0_0_40px_rgba(0,200,240,0.3)] transition-all duration-500 group/btn backdrop-blur-md">
+        <a href="/services/kol-marketing" class="relative overflow-hidden font-mono text-sm uppercase tracking-widest font-bold text-[var(--text-primary)] border border-[var(--accent-cyan)]/40 bg-[var(--accent-cyan)]/10 px-8 py-4 rounded-xl hover:bg-[var(--accent-cyan)]/20 hover:border-[var(--accent-cyan)] hover:shadow-[0_0_40px_rgba(0,200,240,0.3)] transition-all duration-500 group/btn backdrop-blur-md">
           <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite]"></span>
           <span class="relative z-10 drop-shadow-[0_0_8px_rgba(0,200,240,0.8)]">Get a KOL Proposal</span>
         </a>
         
-        <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="font-mono text-sm uppercase tracking-widest font-bold text-white/70 hover:text-white transition-colors border-b border-transparent hover:border-white/50 pb-1">
+        <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="font-mono text-sm uppercase tracking-widest font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors border-b border-transparent hover:border-white/50 pb-1">
           Chat on Telegram
         </a>
       </div>

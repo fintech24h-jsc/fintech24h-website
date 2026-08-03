@@ -79,7 +79,7 @@ const combinedSchema = [serviceSchema, faqSchema];
     <div class="absolute top-24 left-8 hidden lg:block font-mono text-[10px] text-[var(--accent-cyan)] opacity-60">
       <div class="mb-1 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span> SYS.STATUS // ONLINE</div>
       <div class="mb-1">NODE.ID // 0x4F9...A1B</div>
-      <div class="mb-1 text-white/50">PROTOCOL // FINTECH24H_AI_V2</div>
+      <div class="mb-1 text-[var(--text-secondary)] opacity-70">PROTOCOL // FINTECH24H_AI_V2</div>
     </div>
 
     <div class="relative z-10 max-w-4xl mx-auto w-full">
@@ -104,14 +104,14 @@ const combinedSchema = [serviceSchema, faqSchema];
           <div class="typing-line text-red-400" style="animation-delay: 3s, 3s">> [WARNING] 90% of "AI Marketing" is empty hype.</div>
           <div class="typing-line text-red-400" style="animation-delay: 4.5s, 4.5s">> [ERROR] Projects burning capital on ineffective engagement.</div>
           <div class="typing-line text-[var(--text-secondary)]" style="animation-delay: 6s, 6s">> COMPILING SOLUTION...</div>
-          <div class="typing-line text-white font-bold" style="animation-delay: 7.5s, 7.5s">> MOUNTING: Fintech24h AI Marketing Suite.</div>
+          <div class="typing-line text-[var(--text-primary)] font-bold" style="animation-delay: 7.5s, 7.5s">> MOUNTING: Fintech24h AI Marketing Suite.</div>
           <div class="typing-line text-[var(--accent-cyan)]" style="animation-delay: 9s, 9s">> EXECUTING: Data-driven narratives & Targeted deployment.</div>
           <div class="typing-line text-green-400" style="animation-delay: 10.5s, 10.5s">> STATUS: System Ready for Dominance. <span class="animate-pulse">_</span></div>
         </div>
       </div>
 
       <div class="flex justify-center reveal reveal-delay-3 mt-12">
-        <a href="/contact" class="relative overflow-hidden font-mono text-sm uppercase tracking-widest font-bold text-white border border-[var(--accent-cyan)]/40 bg-[var(--accent-cyan)]/10 backdrop-blur-xl px-10 py-5 rounded-2xl hover:bg-[var(--accent-cyan)]/20 hover:border-[var(--accent-cyan)] hover:shadow-[0_0_40px_rgba(0,200,240,0.4)] transition-all duration-500 group">
+        <a href="/contact" class="relative overflow-hidden font-mono text-sm uppercase tracking-widest font-bold text-[var(--text-primary)] border border-[var(--accent-cyan)]/40 bg-[var(--accent-cyan)]/10 backdrop-blur-xl px-10 py-5 rounded-2xl hover:bg-[var(--accent-cyan)]/20 hover:border-[var(--accent-cyan)] hover:shadow-[0_0_40px_rgba(0,200,240,0.4)] transition-all duration-500 group">
           <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
           <span class="relative z-10 flex items-center gap-2 drop-shadow-[0_0_8px_rgba(0,200,240,0.8)]">
             [EXECUTE_STRATEGY]
@@ -147,7 +147,7 @@ const combinedSchema = [serviceSchema, faqSchema];
               </div>
             </div>
             
-            <h3 class="font-display text-2xl text-white font-bold mb-4 uppercase tracking-tight">{mod.title}</h3>
+            <h3 class="font-display text-2xl text-[var(--text-primary)] font-bold mb-4 uppercase tracking-tight">{mod.title}</h3>
             <p class="font-mono text-sm text-[var(--text-secondary)] leading-relaxed mb-8">{mod.desc}</p>
             
             <!-- Neural Chart Visualization -->
@@ -167,7 +167,7 @@ const combinedSchema = [serviceSchema, faqSchema];
   <section class="py-24 bg-[#05080C] relative z-10 border-t border-[var(--accent-cyan)]/20">
     <div class="max-w-5xl mx-auto px-4 lg:px-8">
       <div class="text-center mb-16 reveal">
-        <h2 class="font-mono text-2xl text-white uppercase tracking-widest border border-white/20 inline-block px-6 py-2 bg-white/5">BENCHMARK_RESULTS</h2>
+        <h2 class="font-mono text-2xl text-[var(--text-primary)] uppercase tracking-widest border border-[var(--border-default)] inline-block px-6 py-2 bg-[var(--surface-soft)]">BENCHMARK_RESULTS</h2>
       </div>
 
       <div class="bg-[#030508] border border-[var(--accent-cyan)]/30 p-4 md:p-8 font-mono text-xs md:text-sm shadow-[0_0_30px_rgba(0,0,0,0.8)] reveal">
@@ -184,7 +184,7 @@ const combinedSchema = [serviceSchema, faqSchema];
           { m: 'Content Localization', h: '2-3 Locales', a: '15+ Native Translations' }
         ].map((row, i) => (
           <div class="flex border-b border-[var(--accent-cyan)]/10 py-5 hover:bg-[var(--accent-cyan)]/10 transition-colors group">
-            <div class="w-2/5 text-white group-hover:text-[var(--accent-cyan)] transition-colors">{row.m}</div>
+            <div class="w-2/5 text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors">{row.m}</div>
             <div class="w-1/5 text-center text-[var(--text-muted)] line-through hidden sm:block">{row.h}</div>
             <div class="w-full sm:w-2/5 text-right text-[var(--accent-cyan)] font-bold">{row.a}</div>
           </div>
@@ -207,7 +207,7 @@ const combinedSchema = [serviceSchema, faqSchema];
       <div class="space-y-4">
         {faqs.map((faq, i) => (
           <details class="group bg-[#030508] border border-[var(--accent-cyan)]/20 reveal hover:border-[var(--accent-cyan)]/60 transition-colors" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-mono text-sm md:text-base text-white">
+            <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-mono text-sm md:text-base text-[var(--text-primary)]">
               <span class="flex items-start gap-4">
                 <span class="text-[var(--accent-cyan)] mt-1">></span>
                 <span>{faq.q}</span>

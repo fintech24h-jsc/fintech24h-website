@@ -34,7 +34,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
   <BreadcrumbSchema items={breadcrumbs} />
 
   <!-- SECTION 1 — HERO (Web3 HUD Command Center & Glitch Spotlight) -->
-  <section class="relative min-h-[95vh] flex flex-col justify-center items-center px-4 overflow-hidden bg-[#020202]">
+  <section class="relative min-h-[95vh] flex flex-col justify-center items-center px-4 overflow-hidden bg-[var(--bg-primary)]">
     <!-- CRT Scanlines Filter Overlay -->
     <div class="absolute inset-0 pointer-events-none z-30 scanlines-overlay opacity-[0.03]" aria-hidden="true"></div>
 
@@ -59,13 +59,13 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
     <div class="absolute top-28 left-8 hidden lg:block font-mono text-[9px] text-[var(--accent-cyan)] opacity-60 space-y-1.5 z-20" aria-hidden="true">
       <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span> SYS.STATUS // ONLINE</div>
       <div>CORE.INTEGRITY // RECRUITMENT_OPEN</div>
-      <div class="text-white/30">PROTOCOL // TALENT_NODE_INDEX</div>
+      <div class="text-[var(--text-muted)]">PROTOCOL // TALENT_NODE_INDEX</div>
     </div>
     
     <div class="absolute top-28 right-8 hidden lg:block font-mono text-[9px] text-[var(--accent-purple)] opacity-60 space-y-1.5 z-20 text-right" aria-hidden="true">
       <div>LATENCY // 7ms</div>
       <div>NETWORK // FINTECH24H_ECOSYSTEM</div>
-      <div class="text-white/30">SEC_OP // CYBER_CORE_V3.8</div>
+      <div class="text-[var(--text-muted)]">SEC_OP // CYBER_CORE_V3.8</div>
     </div>
 
     <div class="relative z-20 text-center max-w-5xl mx-auto mt-20 px-4">
@@ -74,7 +74,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
       </div>
 
       <h1 class="font-display max-w-5xl mx-auto leading-[1.1] tracking-tight">
-        <span class="block text-[clamp(2.5rem,6vw,5.5rem)] font-bold tracking-tight text-white uppercase drop-shadow-[0_0_40px_rgba(0,200,240,0.15)]">
+        <span class="block text-[clamp(2.5rem,6vw,5.5rem)] font-bold tracking-tight text-[var(--text-primary)] uppercase drop-shadow-[0_0_40px_rgba(0,200,240,0.15)]">
           Shape the Future of <br class="hidden sm:inline" />
           <span class="text-[var(--accent-cyan)] drop-shadow-[0_0_30px_rgba(0,200,240,0.25)] font-extrabold">
             Web3 Marketing
@@ -82,7 +82,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
         </span>
       </h1>
 
-      <p class="font-body text-base md:text-lg text-white/60 max-w-2xl mx-auto mt-8 mb-16 leading-[1.8] font-light">
+      <p class="font-body text-base md:text-lg text-[var(--text-primary)]/60 max-w-2xl mx-auto mt-8 mb-16 leading-[1.8] font-light">
         We replace standard marketing speculations with quantitative, data-driven Web3 architectures. Fintech24h is recruiting top-tier specialists to accelerate global blockchain protocols.
       </p>
 
@@ -90,30 +90,30 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto mb-16 relative z-20" data-animate="scale-in">
         <!-- Metric Node 1 -->
         <div class="liquid-glass-premium p-6 relative group hover:-translate-y-1 transition-all duration-300">
-          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-white/10 select-none">// SCALE_01</div>
+          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-[var(--text-primary)]/10 select-none">// SCALE_01</div>
           <div class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold font-display text-[var(--accent-cyan)] drop-shadow-[0_0_15px_rgba(0,200,240,0.2)] tracking-tight">50M+</div>
-          <div class="font-mono text-[9px] text-white/50 uppercase tracking-widest mt-1.5">Total Reach</div>
+          <div class="font-mono text-[9px] text-[var(--text-secondary)] opacity-70 uppercase tracking-widest mt-1.5">Total Reach</div>
         </div>
 
         <!-- Metric Node 2 -->
         <div class="liquid-glass-premium p-6 relative group hover:-translate-y-1 transition-all duration-300">
-          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-white/10 select-none">// NETWORK_02</div>
+          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-[var(--text-primary)]/10 select-none">// NETWORK_02</div>
           <div class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold font-display text-[var(--accent-purple)] drop-shadow-[0_0_15px_rgba(124,92,252,0.2)] tracking-tight">150+</div>
-          <div class="font-mono text-[9px] text-white/50 uppercase tracking-widest mt-1.5">Elite KOL Partners</div>
+          <div class="font-mono text-[9px] text-[var(--text-secondary)] opacity-70 uppercase tracking-widest mt-1.5">Elite KOL Partners</div>
         </div>
 
         <!-- Metric Node 3 -->
         <div class="liquid-glass-premium p-6 relative group hover:-translate-y-1 transition-all duration-300">
-          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-white/10 select-none">// ECOSYSTEMS_03</div>
-          <div class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold font-display text-white tracking-tight">12+</div>
-          <div class="font-mono text-[9px] text-white/50 uppercase tracking-widest mt-1.5">Chains Supported</div>
+          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-[var(--text-primary)]/10 select-none">// ECOSYSTEMS_03</div>
+          <div class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold font-display text-[var(--text-primary)] tracking-tight">12+</div>
+          <div class="font-mono text-[9px] text-[var(--text-secondary)] opacity-70 uppercase tracking-widest mt-1.5">Chains Supported</div>
         </div>
 
         <!-- Metric Node 4 -->
         <div class="liquid-glass-premium p-6 relative group hover:-translate-y-1 transition-all duration-300">
-          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-white/10 select-none">// GLOBAL_04</div>
+          <div class="absolute top-0 right-0 p-2 font-mono text-[7px] text-[var(--text-primary)]/10 select-none">// GLOBAL_04</div>
           <div class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold font-display text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.2)] tracking-tight">24/7</div>
-          <div class="font-mono text-[9px] text-white/50 uppercase tracking-widest mt-1.5">Distributed Nodes</div>
+          <div class="font-mono text-[9px] text-[var(--text-secondary)] opacity-70 uppercase tracking-widest mt-1.5">Distributed Nodes</div>
         </div>
       </div>
 
@@ -128,11 +128,11 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
     </div>
     
     <!-- Cinematic Fade Bottom -->
-    <div class="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[#020202] to-transparent pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[var(--bg-primary)] to-transparent pointer-events-none" aria-hidden="true"></div>
   </section>
 
   <!-- SECTION 2 — SYSTEM PERKS (Asymmetrical Creative Blueprint Layout) -->
-  <section class="py-24 bg-[#020202] relative z-10 border-y border-white/5">
+  <section class="py-24 bg-[var(--bg-primary)] relative z-10 border-y border-[var(--border-subtle)]">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center space-y-4 mb-20" data-animate="fade-up">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/5 text-[var(--accent-purple)] text-xs font-mono font-medium tracking-widest uppercase">
@@ -154,7 +154,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
         <!-- Perks 1: Global (Span 7) -->
         <div class="liquid-glass-premium md:col-span-7 p-8 flex flex-col justify-between group hover:-translate-y-1.5 transition-all duration-500" data-animate="fade-up">
           <div class="absolute -top-[20%] -right-[20%] w-48 h-48 rounded-full bg-[var(--accent-cyan)] opacity-[0.03] filter blur-[30px] pointer-events-none group-hover:opacity-[0.06] transition-opacity" />
-          <div class="absolute top-0 right-0 p-4 font-mono text-[8px] text-white/5 opacity-40 select-none group-hover:text-[var(--accent-cyan)]/10 transition-colors">
+          <div class="absolute top-0 right-0 p-4 font-mono text-[8px] text-[var(--text-primary)]/5 opacity-40 select-none group-hover:text-[var(--accent-cyan)]/10 transition-colors">
             NODE.ADDR: GLOBAL_NET
           </div>
           <div class="space-y-4 relative z-10">
@@ -165,14 +165,14 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
               </svg>
             </div>
-            <h3 class="font-display text-h3 font-bold text-white uppercase tracking-wide">
+            <h3 class="font-display text-h3 font-bold text-[var(--text-primary)] uppercase tracking-wide">
               Global Scale & Foundation Networks
             </h3>
             <p class="font-body text-sm text-text-secondary leading-relaxed font-light">
               Connect directly with Tier-1 blockchain ecosystems, venture capitals, and high-performance Web3 nodes globally. You will deploy campaigns that hit core audiences across target regional zones.
             </p>
           </div>
-          <div class="mt-8 pt-4 border-t border-white/5 flex justify-between items-center text-[9px] font-mono text-[var(--accent-cyan)] uppercase tracking-widest relative z-10">
+          <div class="mt-8 pt-4 border-t border-[var(--border-subtle)] flex justify-between items-center text-[9px] font-mono text-[var(--accent-cyan)] uppercase tracking-widest relative z-10">
             <span>[ EXPONENT: GLOBAL_GROWTH ]</span>
             <span>OK // 1.0</span>
           </div>
@@ -181,7 +181,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
         <!-- Perks 2: Remote Autonomy (Span 5) -->
         <div class="liquid-glass-premium md:col-span-5 p-8 flex flex-col justify-between group hover:-translate-y-1.5 transition-all duration-500" data-animate="fade-up">
           <div class="absolute -bottom-[20%] -right-[20%] w-40 h-40 rounded-full bg-[var(--accent-purple)] opacity-[0.03] filter blur-[30px] pointer-events-none group-hover:opacity-[0.06] transition-opacity" />
-          <div class="absolute top-0 right-0 p-4 font-mono text-[8px] text-white/5 opacity-40 select-none group-hover:text-[var(--accent-purple)]/10 transition-colors">
+          <div class="absolute top-0 right-0 p-4 font-mono text-[8px] text-[var(--text-primary)]/5 opacity-40 select-none group-hover:text-[var(--accent-purple)]/10 transition-colors">
             NODE.ADDR: ASYNC_NODE
           </div>
           <div class="space-y-4 relative z-10">
@@ -191,14 +191,14 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
                 <polyline points="9 22 9 12 15 12 15 22" />
               </svg>
             </div>
-            <h3 class="font-display text-lg font-bold text-white uppercase tracking-wide">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">
               Distributed Remote Nodes
             </h3>
             <p class="font-body text-xs text-text-secondary leading-relaxed font-light">
               Collaborate seamlessly via async channels. We value results over timezone surveillance, allowing you absolute autonomy to design your ideal workspace architecture.
             </p>
           </div>
-          <div class="mt-8 pt-4 border-t border-white/5 flex justify-between items-center text-[9px] font-mono text-[var(--accent-purple)] uppercase tracking-widest relative z-10">
+          <div class="mt-8 pt-4 border-t border-[var(--border-subtle)] flex justify-between items-center text-[9px] font-mono text-[var(--accent-purple)] uppercase tracking-widest relative z-10">
             <span>[ METRIC: TOTAL_AUTONOMY ]</span>
             <span>100%</span>
           </div>
@@ -207,23 +207,23 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
         <!-- Perks 3: Creative Freedom (Span 5) -->
         <div class="liquid-glass-premium md:col-span-5 p-8 flex flex-col justify-between group hover:-translate-y-1.5 transition-all duration-500" data-animate="fade-up">
           <div class="absolute -top-[20%] -left-[20%] w-40 h-40 rounded-full bg-white opacity-[0.015] filter blur-[30px] pointer-events-none group-hover:opacity-[0.03] transition-opacity" />
-          <div class="absolute top-0 right-0 p-4 font-mono text-[8px] text-white/5 opacity-40 select-none group-hover:text-white/10 transition-colors">
+          <div class="absolute top-0 right-0 p-4 font-mono text-[8px] text-[var(--text-primary)]/5 opacity-40 select-none group-hover:text-[var(--text-primary)]/10 transition-colors">
             NODE.ADDR: CREATIVE_CORE
           </div>
           <div class="space-y-4 relative z-10">
-            <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60">
+            <div class="w-12 h-12 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-default)] flex items-center justify-center text-[var(--text-primary)]/60">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
               </svg>
             </div>
-            <h3 class="font-display text-lg font-bold text-white uppercase tracking-wide">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">
               Creative Autonomy Protocol
             </h3>
             <p class="font-body text-xs text-text-secondary leading-relaxed font-light">
               We empower builders to run, test, and iterate marketing vectors. We back our contributors with the budget and resources to build real ecosystem influence.
             </p>
           </div>
-          <div class="mt-8 pt-4 border-t border-white/5 flex justify-between items-center text-[9px] font-mono text-white/30 uppercase tracking-widest relative z-10">
+          <div class="mt-8 pt-4 border-t border-[var(--border-subtle)] flex justify-between items-center text-[9px] font-mono text-[var(--text-muted)] uppercase tracking-widest relative z-10">
             <span>[ CRITERIA: OWNERSHIP ]</span>
             <span>ACTIVE // 1</span>
           </div>
@@ -232,7 +232,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
         <!-- Perks 4: Career Matrix (Span 7) -->
         <div class="liquid-glass-premium md:col-span-7 p-8 flex flex-col justify-between group hover:-translate-y-1.5 transition-all duration-500" data-animate="fade-up">
           <div class="absolute -bottom-[20%] -left-[20%] w-48 h-48 rounded-full bg-emerald-500 opacity-[0.02] filter blur-[30px] pointer-events-none group-hover:opacity-[0.05] transition-opacity" />
-          <div class="absolute top-0 right-0 p-4 font-mono text-[8px] text-white/5 opacity-40 select-none group-hover:text-emerald-500/10 transition-colors">
+          <div class="absolute top-0 right-0 p-4 font-mono text-[8px] text-[var(--text-primary)]/5 opacity-40 select-none group-hover:text-emerald-500/10 transition-colors">
             NODE.ADDR: GROWTH_MTX
           </div>
           <div class="space-y-4 relative z-10">
@@ -242,14 +242,14 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
                 <polyline points="17 6 23 6 23 12" />
               </svg>
             </div>
-            <h3 class="font-display text-h3 font-bold text-white uppercase tracking-wide">
+            <h3 class="font-display text-h3 font-bold text-[var(--text-primary)] uppercase tracking-wide">
               Asymmetrical Network Scaling
             </h3>
             <p class="font-body text-sm text-text-secondary leading-relaxed font-light">
               We build your value index. You will interface directly with foundation leads, venture capitals, and Web3 protocol architects, scaling your professional network and authority in this space.
             </p>
           </div>
-          <div class="mt-8 pt-4 border-t border-white/5 flex justify-between items-center text-[9px] font-mono text-emerald-400 uppercase tracking-widest relative z-10">
+          <div class="mt-8 pt-4 border-t border-[var(--border-subtle)] flex justify-between items-center text-[9px] font-mono text-emerald-400 uppercase tracking-widest relative z-10">
             <span>[ EXPONENT: VALUE_INDEXER ]</span>
             <span>SYS_READY // OK</span>
           </div>
@@ -259,7 +259,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
   </section>
 
   <!-- SECTION 3 — ACTIVE JOBS (HUD Data Nodes & Vanilla JS Filter Stream) -->
-  <section id="open-positions" class="py-32 bg-[#020202] relative z-10">
+  <section id="open-positions" class="py-32 bg-[var(--bg-primary)] relative z-10">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center space-y-4 mb-20" data-animate="fade-up">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/20 bg-[var(--accent-cyan)]/5 text-[var(--accent-cyan)] text-xs font-mono font-medium tracking-widest uppercase">
@@ -281,7 +281,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
           <button
             type="button"
             data-filter={dept}
-            class="filter-tab px-6 py-2.5 border rounded-full font-mono text-[10px] uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer text-white/40 border-white/5 bg-white/[0.005] hover:border-[var(--accent-cyan)]/30 hover:text-white"
+            class="filter-tab px-6 py-2.5 border rounded-full font-mono text-[10px] uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer text-[var(--text-muted)] border-[var(--border-subtle)] bg-white/[0.005] hover:border-[var(--accent-cyan)]/30 hover:text-[var(--text-primary)]"
           >
             {dept === 'All' ? 'All Departments' : dept}
           </button>
@@ -301,22 +301,22 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
                 <Badge variant={job.department.includes('Community') ? 'purple' : 'cyan'}>
                   {job.department.toUpperCase()}
                 </Badge>
-                <span class="font-mono text-[9px] text-white/20 uppercase tracking-widest font-medium">INDEX // 0{idx + 1}</span>
+                <span class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-widest font-medium">INDEX // 0{idx + 1}</span>
               </div>
               
-              <h3 class="font-display text-xl font-bold text-white uppercase group-hover:text-[var(--accent-cyan)] transition-colors tracking-wide pt-1 relative z-10">
+              <h3 class="font-display text-xl font-bold text-[var(--text-primary)] uppercase group-hover:text-[var(--accent-cyan)] transition-colors tracking-wide pt-1 relative z-10">
                 {job.title}
               </h3>
               
               <!-- Clean Specs Badges -->
               <div class="flex flex-wrap gap-2 pt-1 relative z-10">
-                <span class="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/5 font-mono text-[9px] uppercase tracking-wider text-white/60">
+                <span class="px-2.5 py-1 rounded-md bg-[var(--surface-soft)] border border-[var(--border-subtle)] font-mono text-[9px] uppercase tracking-wider text-[var(--text-primary)]/60">
                   {job.type}
                 </span>
-                <span class="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/5 font-mono text-[9px] uppercase tracking-wider text-white/60">
+                <span class="px-2.5 py-1 rounded-md bg-[var(--surface-soft)] border border-[var(--border-subtle)] font-mono text-[9px] uppercase tracking-wider text-[var(--text-primary)]/60">
                   {job.location}
                 </span>
-                <span class="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/5 font-mono text-[9px] uppercase tracking-wider text-white/60">
+                <span class="px-2.5 py-1 rounded-md bg-[var(--surface-soft)] border border-[var(--border-subtle)] font-mono text-[9px] uppercase tracking-wider text-[var(--text-primary)]/60">
                   ID: {job.id}
                 </span>
               </div>
@@ -327,13 +327,13 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
             </div>
 
             <!-- Action Block -->
-            <div class="relative z-10 flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+            <div class="relative z-10 flex items-center justify-between mt-4 pt-4 border-t border-[var(--border-subtle)]">
               <span class="font-mono text-[8px] text-[var(--accent-cyan)] tracking-widest uppercase animate-pulse">
                 // ACTIVE_LISTING
               </span>
               <a
                 href={`/careers/${job.slug}`}
-                class="btn-liquid-glass-primary py-2 px-5 font-mono text-[9px] uppercase tracking-wider text-white transition-all duration-300"
+                class="btn-liquid-glass-primary py-2 px-5 font-mono text-[9px] uppercase tracking-wider text-[var(--text-primary)] transition-all duration-300"
               >
                 <span>View Position Details</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="inline ml-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -346,7 +346,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
   </section>
 
   <!-- SECTION 4 — GENERAL APPLICATION (Interactive Form Island) -->
-  <section id="general-application" class="py-24 bg-[#020202] relative z-10 border-t border-white/5">
+  <section id="general-application" class="py-24 bg-[#020202] relative z-10 border-t border-[var(--border-subtle)]" data-theme-surface="midnight">
     <div class="max-w-5xl mx-auto px-6">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <!-- Left callout -->
@@ -355,7 +355,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
             <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] animate-pulse" />
             TELEMETRY_LINK_OPEN
           </div>
-          <h2 class="font-display text-[clamp(2rem,4vw,3.2rem)] font-bold text-white uppercase leading-none tracking-wider">
+          <h2 class="font-display text-[clamp(2rem,4vw,3.2rem)] font-bold text-[var(--text-primary)] uppercase leading-none tracking-wider">
             Establish<br/>
             Contact Node.
           </h2>
@@ -364,7 +364,7 @@ const departments = ['All', ...new Set(jobs.map(job => job.department))];
           </p>
           
           <!-- Mock System Logs Panel -->
-          <div class="bg-black/40 border border-white/5 rounded-lg p-3.5 font-mono text-[9px] text-white/30 space-y-1" aria-hidden="true">
+          <div class="bg-black/40 border border-[var(--border-subtle)] rounded-lg p-3.5 font-mono text-[9px] text-[var(--text-muted)] space-y-1" aria-hidden="true">
             <div>// DIRECT_CHANNEL // info@fintech24h.com</div>
             <div>// TELEGRAM_HANDLE // @fintech24h</div>
             <div class="text-[var(--accent-cyan)]">// INBOUND_LINK: STATUS_LISTENING</div>

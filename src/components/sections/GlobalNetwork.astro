@@ -189,6 +189,20 @@
   .connection-line {
     animation: dash-flow 2s linear infinite;
   }
+ 
+  :global(html[data-theme='light']) img[src="/images/world-map.svg"] {
+    filter: none !important;
+    opacity: 0.08 !important;
+  }
+  :global(html[data-theme='light']) .special-pill {
+    background: linear-gradient(90deg, rgba(0,115,143,0.06), rgba(101,72,216,0.06)) !important;
+    border-color: rgba(101, 72, 216, 0.25) !important;
+  }
+  :global(html[data-theme='light']) .special-pill .name {
+    background: linear-gradient(to right, var(--text-primary), var(--text-secondary)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
 </style>
 
 <script>

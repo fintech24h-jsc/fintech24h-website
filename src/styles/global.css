@@ -99,68 +99,73 @@
   }
 
   :root[data-theme='light'] {
-    /* Cool daylight palette: preserves the cyan/indigo brand and liquid glass. */
-    --bg-primary:        #f4f7fb;
-    --bg-secondary:      #ffffff;
-    --bg-tertiary:       #eaf0f7;
-    --bg-glass:          rgba(255, 255, 255, 0.78);
-    --bg-glass-light:    rgba(255, 255, 255, 0.62);
-    --surface-faint:     rgba(15, 23, 42, 0.025);
-    --surface-soft:      rgba(15, 23, 42, 0.045);
-    --surface-hover:     rgba(15, 23, 42, 0.075);
-    --surface-strong:    rgba(15, 23, 42, 0.11);
-    --overlay-backdrop:  rgba(235, 241, 248, 0.82);
-    --nav-surface:       rgba(244, 247, 251, 0.72);
-    --nav-glass:         rgba(255, 255, 255, 0.78);
-    --nav-border:        rgba(15, 23, 42, 0.11);
-    --nav-text:          #344054;
-    --nav-link:          #344054;
-    --nav-cta-text:      #101828;
-    --nav-drawer:        rgba(244, 247, 251, 0.92);
-    --nav-drawer-shadow: -30px 0 60px rgba(32, 52, 79, 0.18);
-    --dropdown-surface:  rgba(255, 255, 255, 0.94);
-
-    --accent-cyan:       #00738f;
-    --accent-cyan-dim:   #005f76;
-    --accent-cyan-glow:  rgba(0, 115, 143, 0.12);
-    --accent-purple:     #6548d8;
-    --accent-purple-dim: #5035bd;
-    --accent-purple-glow: rgba(101, 72, 216, 0.10);
-    --accent-warm:       #a8440f;
-    --accent-rose:       #c03555;
-
-    --text-primary:      #101828;
-    --text-secondary:    #344054;
-    --text-muted:        #475467;
+    /* Daylight Liquid Glass Theme: rich, frosted ice glacier vibe */
+    --bg-primary:        #e6ecf5; /* Frosty light blue-gray instead of flat #f4f7fb */
+    --bg-secondary:      #f0f4f9; /* Icy white-blue instead of pure white #ffffff */
+    --bg-tertiary:       #dbe3f0; /* Frosted shadow gray */
+    --bg-glass:          rgba(255, 255, 255, 0.42); /* High transparency glass */
+    --bg-glass-light:    rgba(255, 255, 255, 0.22);
+    --surface-faint:     rgba(0, 115, 143, 0.02);
+    --surface-soft:      rgba(0, 115, 143, 0.04);
+    --surface-hover:     rgba(0, 115, 143, 0.08);
+    --surface-strong:    rgba(0, 115, 143, 0.12);
+    --overlay-backdrop:  rgba(230, 236, 245, 0.85);
+    --nav-surface:       rgba(230, 236, 245, 0.65);
+    --nav-glass:         rgba(255, 255, 255, 0.45);
+    --nav-border:        rgba(0, 115, 143, 0.15);
+    --nav-text:          #1e293b;
+    --nav-link:          #334155;
+    --nav-cta-text:      #0f172a;
+    --nav-drawer:        rgba(230, 236, 245, 0.95);
+    --nav-drawer-shadow: -20px 0 50px rgba(15, 23, 42, 0.08);
+    --dropdown-surface:  rgba(255, 255, 255, 0.85);
+ 
+    /* Brand Accents - Rich and high contrast for light mode */
+    --accent-cyan:       #007a99; /* Deep cyan */
+    --accent-cyan-dim:   #006078;
+    --accent-cyan-glow:  rgba(0, 122, 153, 0.15);
+    --accent-purple:     #6b46f2; /* Royal purple */
+    --accent-purple-dim: #5431d6;
+    --accent-purple-glow: rgba(107, 70, 242, 0.12);
+    --accent-warm:       #b24b16;
+    --accent-rose:       #c73c5e;
+ 
+    /* Text */
+    --text-primary:      #0f172a; /* Slate 900 for premium dark text */
+    --text-secondary:    #334155; /* Slate 700 */
+    --text-muted:        #64748b; /* Slate 500 */
     --text-inverted:     #ffffff;
-
-    --color-success:     #067647;
-    --color-success-bg:  rgba(6, 118, 71, 0.08);
-    --color-warning:     #9a6700;
-    --color-danger:      #b42318;
-
-    --border-default:    rgba(15, 23, 42, 0.11);
-    --border-hover:      rgba(15, 23, 42, 0.20);
-    --border-accent:     rgba(0, 127, 157, 0.34);
-    --border-subtle:     rgba(15, 23, 42, 0.07);
-    --grid-line:         rgba(15, 23, 42, 0.045);
-
-    --shadow-card:       0 16px 42px rgba(32, 52, 79, 0.10), 0 0 0 1px rgba(15, 23, 42, 0.025);
-    --shadow-nav:        0 10px 34px rgba(32, 52, 79, 0.14);
-    --shadow-nav-scroll: 0 5px 22px rgba(32, 52, 79, 0.12);
-    --selection-bg:      rgba(0, 127, 157, 0.20);
-
-    --gradient-primary:  linear-gradient(135deg, #00738f 0%, #6548d8 100%);
-    --gradient-primary-hover: linear-gradient(135deg, #006f8a 0%, #583bc9 100%);
-    --gradient-hero-bg:  radial-gradient(ellipse 80% 60% at 50% -20%, rgba(101, 72, 216, 0.11) 0%, transparent 65%);
-    --gradient-card:     linear-gradient(135deg, rgba(0, 115, 143, 0.055) 0%, rgba(101, 72, 216, 0.05) 100%);
-    --gradient-glow-cyan: radial-gradient(ellipse at center, rgba(0, 115, 143, 0.12) 0%, transparent 70%);
-    --gradient-glow-purple: radial-gradient(ellipse at center, rgba(101, 72, 216, 0.10) 0%, transparent 70%);
-    --gradient-text:     linear-gradient(135deg, #00738f 0%, #6548d8 100%);
+ 
+    --color-success:     #059669;
+    --color-success-bg:  rgba(5, 150, 105, 0.08);
+    --color-warning:     #d97706;
+    --color-danger:      #dc2626;
+ 
+    /* Borders */
+    --border-default:    rgba(0, 115, 143, 0.12); /* Cyan-tinted borders for high tech look */
+    --border-hover:      rgba(0, 115, 143, 0.25);
+    --border-accent:     rgba(0, 122, 153, 0.35);
+    --border-subtle:     rgba(0, 115, 143, 0.08);
+    --grid-line:         rgba(0, 115, 143, 0.05);
+ 
+    /* Shadows & Selection */
+    --shadow-card:       0 12px 32px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(0, 115, 143, 0.04);
+    --shadow-nav:        0 10px 30px rgba(15, 23, 42, 0.06);
+    --shadow-nav-scroll: 0 5px 20px rgba(15, 23, 42, 0.05);
+    --selection-bg:      rgba(0, 122, 153, 0.18);
+ 
+    /* Gradients */
+    --gradient-primary:  linear-gradient(135deg, #007a99 0%, #6b46f2 100%);
+    --gradient-primary-hover: linear-gradient(135deg, #006078 0%, #5431d6 100%);
+    --gradient-hero-bg:  radial-gradient(ellipse 80% 60% at 50% -25%, rgba(0, 200, 240, 0.22) 0%, rgba(107, 70, 242, 0.18) 40%, transparent 70%);
+    --gradient-card:     linear-gradient(135deg, rgba(0, 122, 153, 0.06) 0%, rgba(107, 70, 242, 0.05) 100%);
+    --gradient-glow-cyan: radial-gradient(ellipse at center, rgba(0, 122, 153, 0.16) 0%, transparent 70%);
+    --gradient-glow-purple: radial-gradient(ellipse at center, rgba(107, 70, 242, 0.12) 0%, transparent 70%);
+    --gradient-text:     linear-gradient(135deg, #007a99 0%, #6b46f2 100%);
     --gradient-mesh:
-      radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0,127,157,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 60% at 80% 60%, rgba(101,72,216,0.07) 0%, transparent 60%);
-
+      radial-gradient(ellipse 70% 60% at 15% 30%, rgba(0, 200, 240, 0.16) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 70% at 85% 70%, rgba(107, 70, 242, 0.14) 0%, transparent 70%);
+ 
     color-scheme: light;
   }
 
@@ -176,6 +181,18 @@
     color: var(--text-primary);
     font-family: var(--font-body);
     overflow-x: hidden;
+    position: relative;
+  }
+ 
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--gradient-mesh);
+    pointer-events: none;
+    opacity: 0.85;
+    transition: background-image 0.5s ease;
   }
 
   /* Custom scrollbar */
@@ -780,156 +797,31 @@ html[data-theme='light'] .btn-liquid-glass-ghost:hover {
    shared palette. They also cover class names injected by existing scripts.
    ═══════════════════════════════════════════════════════════ */
 @layer utilities {
-  html[data-theme='light'] [class~='text-white'],
-  html[data-theme='light'] [class~='text-[#f0f4ff]'] {
-    color: var(--text-primary);
+  /* Form submit and telegram button styles for React forms */
+  .form-submit-btn {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255,255,255,0.2) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    color: #ffffff !important;
   }
-  html[data-theme='light'] [class~='text-white/90'],
-  html[data-theme='light'] [class~='text-white/80'],
-  html[data-theme='light'] [class~='text-white/70'],
-  html[data-theme='light'] [class~='text-white/60'],
-  html[data-theme='light'] [class~='text-slate-300'],
-  html[data-theme='light'] [class~='text-slate-400'],
-  html[data-theme='light'] [class~='text-[#94a3b8]'] {
-    color: var(--text-secondary);
-  }
-  html[data-theme='light'] [class~='text-white/50'],
-  html[data-theme='light'] [class~='text-white/40'],
-  html[data-theme='light'] [class~='text-white/30'],
-  html[data-theme='light'] [class~='text-white/20'],
-  html[data-theme='light'] [class~='text-white/10'],
-  html[data-theme='light'] [class~='text-white/5'],
-  html[data-theme='light'] [class~='text-slate-500'],
-  html[data-theme='light'] [class~='text-slate-600'],
-  html[data-theme='light'] [class~='text-[#475569]'] {
-    color: var(--text-muted);
-  }
-  html[data-theme='light'] [class~='text-[#f0a278]'] {
-    color: var(--accent-warm);
-  }
-  html[data-theme='light'] [class~='text-[#ff6b83]'] {
-    color: var(--accent-rose);
-  }
-  html[data-theme='light'] [class~='text-[#a78bfa]'],
-  html[data-theme='light'] [class~='text-purple-300'],
-  html[data-theme='light'] [class~='text-purple-400'] {
-    color: var(--accent-purple);
-  }
-  html[data-theme='light'] [class~='text-[#00fff9]'],
-  html[data-theme='light'] [class~='text-cyan-300'],
-  html[data-theme='light'] [class~='text-cyan-400'],
-  html[data-theme='light'] [class~='text-cyan-400/90'],
-  html[data-theme='light'] [class~='text-cyan-500/70'] {
-    color: var(--accent-cyan);
-  }
-  html[data-theme='light'] [class~='text-[#57F287]'],
-  html[data-theme='light'] [class~='text-green-400'],
-  html[data-theme='light'] [class~='text-emerald-400'] {
-    color: var(--color-success);
-  }
-  html[data-theme='light'] [class~='text-red-400'] {
-    color: var(--color-danger);
-  }
-  html[data-theme='light'] [class~='text-yellow-400'] {
-    color: var(--color-warning);
+  html[data-theme='light'] .form-submit-btn {
+    background: var(--gradient-primary) !important;
+    box-shadow: 0 8px 32px 0 rgba(32, 52, 79, 0.12), inset 0 1px 1px rgba(255,255,255,0.28) !important;
+    border: 1px solid var(--border-accent) !important;
+    color: var(--text-inverted) !important;
   }
 
-  html[data-theme='light'] [class~='bg-white/[0.005]'],
-  html[data-theme='light'] [class~='bg-white/[0.01]'],
-  html[data-theme='light'] [class~='bg-white/[0.02]'],
-  html[data-theme='light'] [class~='bg-white/[0.03]'],
-  html[data-theme='light'] [class~='bg-white/5'] {
-    background-color: var(--surface-soft) !important;
+  .telegram-connect-btn {
+    background: linear-gradient(145deg, rgba(0,200,240,0.14) 0%, rgba(124,92,252,0.12) 100%) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.25) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: #ffffff !important;
   }
-  html[data-theme='light'] [class~='bg-white/[0.04]'],
-  html[data-theme='light'] [class~='bg-white/[0.05]'],
-  html[data-theme='light'] [class~='bg-white/10'] {
-    background-color: var(--surface-hover) !important;
-  }
-  html[data-theme='light'] [class~='bg-white/20'] {
-    background-color: var(--surface-strong) !important;
-  }
-  html[data-theme='light'] [class~='bg-black'],
-  html[data-theme='light'] [class~='bg-black/20'],
-  html[data-theme='light'] [class~='bg-black/40'],
-  html[data-theme='light'] [class~='bg-black/50'],
-  html[data-theme='light'] [class~='bg-black/60'] {
-    background-color: var(--bg-glass) !important;
-  }
-  html[data-theme='light'] [class~='bg-[#050810]'],
-  html[data-theme='light'] [class~='bg-[#05080C]'],
-  html[data-theme='light'] [class~='bg-[#050914]'],
-  html[data-theme='light'] [class~='bg-[#04060A]'],
-  html[data-theme='light'] [class~='bg-[#030508]'],
-  html[data-theme='light'] [class~='bg-[#020202]'],
-  html[data-theme='light'] [class~='bg-[#050505]'],
-  html[data-theme='light'] [class~='bg-[#0B1120]'],
-  html[data-theme='light'] [class~='bg-[#0A172B]'],
-  html[data-theme='light'] [class~='bg-[#0A0F15]'],
-  html[data-theme='light'] [class~='bg-[#0A0D14]'],
-  html[data-theme='light'] [class~='bg-[#0a0a0c]'],
-  html[data-theme='light'] [class~='bg-[#0a0a0a]'],
-  html[data-theme='light'] [class~='bg-[#080808]'],
-  html[data-theme='light'] [class~='bg-[#080C1A]'],
-  html[data-theme='light'] [class~='bg-[#080c1a]'],
-  html[data-theme='light'] [class~='bg-[#090d1f]'],
-  html[data-theme='light'] [class~='bg-[#121216]'] {
-    background-color: var(--bg-secondary) !important;
-  }
-  html[data-theme='light'] [class~='bg-[#050508]/80'],
-  html[data-theme='light'] [class~='bg-[#050810]/80'],
-  html[data-theme='light'] [class~='bg-[#050810]/95'],
-  html[data-theme='light'] [class~='bg-[#080C1A]/40'],
-  html[data-theme='light'] [class~='bg-[#080C1A]/80'],
-  html[data-theme='light'] [class~='bg-[#080c1a]/95'],
-  html[data-theme='light'] [class~='bg-[#080c1a]/98'],
-  html[data-theme='light'] [class~='bg-[#090d1f]/90'],
-  html[data-theme='light'] [class~='bg-[#0a0f1e]/50'],
-  html[data-theme='light'] [class~='bg-[#0c1226]/90'] {
-    background-color: var(--bg-glass) !important;
-  }
-
-  html[data-theme='light'] [class~='border-white/5'],
-  html[data-theme='light'] [class~='border-white/[0.04]'],
-  html[data-theme='light'] [class~='border-white/[0.05]'],
-  html[data-theme='light'] [class~='border-white/[0.06]'] {
-    border-color: var(--border-subtle) !important;
-  }
-  html[data-theme='light'] [class~='border-white'],
-  html[data-theme='light'] [class~='border-white/10'] {
-    border-color: var(--border-default) !important;
-  }
-  html[data-theme='light'] [class~='border-white/20'],
-  html[data-theme='light'] [class~='border-white/30'] {
-    border-color: var(--border-hover) !important;
-  }
-  html[data-theme='light'] [class~='border-[#050810]'] {
-    border-color: var(--bg-primary) !important;
-  }
-
-  html[data-theme='light'] [class~='placeholder:text-white/10']::placeholder,
-  html[data-theme='light'] [class~='placeholder:text-white/20']::placeholder {
-    color: var(--text-muted);
-  }
-
-  html[data-theme='light'] [class~='from-[#0B1120]'] {
-    --tw-gradient-from: var(--bg-secondary) var(--tw-gradient-from-position) !important;
-    --tw-gradient-to: color-mix(in srgb, var(--bg-secondary) 0%, transparent) var(--tw-gradient-to-position) !important;
-  }
-  html[data-theme='light'] [class~='to-[#0A172B]'] {
-    --tw-gradient-to: var(--bg-tertiary) var(--tw-gradient-to-position) !important;
-  }
-  html[data-theme='light'] [class~='from-[#020202]'],
-  html[data-theme='light'] [class~='from-[#04060A]'] {
-    --tw-gradient-from: var(--bg-primary) var(--tw-gradient-from-position) !important;
-    --tw-gradient-to: color-mix(in srgb, var(--bg-primary) 0%, transparent) var(--tw-gradient-to-position) !important;
-  }
-  html[data-theme='light'] [class~='to-[#121216]'] {
-    --tw-gradient-to: var(--bg-secondary) var(--tw-gradient-to-position) !important;
-  }
-  html[data-theme='light'] [class~='from-[#080c1a]/50'] {
-    --tw-gradient-from: color-mix(in srgb, var(--bg-secondary) 50%, transparent) var(--tw-gradient-from-position) !important;
-    --tw-gradient-to: color-mix(in srgb, var(--bg-secondary) 0%, transparent) var(--tw-gradient-to-position) !important;
+  html[data-theme='light'] .telegram-connect-btn {
+    background: var(--gradient-primary) !important;
+    box-shadow: 0 8px 32px rgba(32, 52, 79, 0.12), inset 0 1px 1px rgba(255,255,255,0.28) !important;
+    border: 1px solid var(--border-accent) !important;
+    color: var(--text-inverted) !important;
   }
 }
 

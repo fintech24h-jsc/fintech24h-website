@@ -48,36 +48,36 @@
         <!-- Step 1 (Left on Desktop, Right on Mobile) -->
         <div class="flex flex-col md:flex-row md:justify-start items-start group relative animate-trigger" data-animate="fade-up">
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-cyan)] bg-[#050810] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[#f0a278] group-hover:shadow-[0_0_15px_#f0a278]">
+          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-cyan)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[#f0a278] group-hover:shadow-[0_0_15px_#f0a278]">
             <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] group-hover:bg-[#f0a278] transition-all"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-cyan)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
-
+ 
           <div class="w-full md:w-[45%] pl-10 md:pl-0 md:pr-10 text-left relative">
             {/* Step Card */}
-            <div class="p-8 rounded-[20px] border border-white/5 bg-white/[0.01] hover:bg-white/[0.02] hover:border-[var(--accent-cyan)]/30 hover:shadow-[0_15px_35px_rgba(0,200,240,0.04)] transition-all duration-500 relative overflow-hidden">
+            <div class="p-8 rounded-[20px] border border-[var(--border-default)] bg-[var(--surface-faint)] hover:bg-[var(--surface-soft)] hover:border-[var(--accent-cyan)]/30 hover:shadow-[0_15px_35px_rgba(0,200,240,0.04)] transition-all duration-500 relative overflow-hidden">
               
               {/* Nebula Point Glow */}
               <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style="background: radial-gradient(circle at 10% 10%, rgba(0,200,240,0.05) 0%, transparent 60%);">
               </div>
-
+ 
               <div class="relative z-10">
                 <div class="flex justify-between items-center mb-4">
                   <span class="font-mono text-xs text-[#f0a278] font-semibold">01 / WEEK 1-2</span>
-                  <div class="text-3xl font-display font-bold text-white/5 group-hover:text-[var(--accent-cyan)]/10 transition-all duration-300">01</div>
+                  <div class="text-3xl font-display font-bold text-[var(--text-primary)]/5 group-hover:text-[var(--accent-cyan)]/10 transition-all duration-300">01</div>
                 </div>
-
-                <h3 class="font-display text-xl font-bold text-white mb-3 group-hover:text-[var(--accent-cyan)] transition-colors">Audit &amp; Alignment</h3>
+ 
+                <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3 group-hover:text-[var(--accent-cyan)] transition-colors">Audit &amp; Alignment</h3>
                 <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6">
                   We review your current tokenomics, community metrics, and target positioning. Then, we construct a custom OKR template defining conversion targets.
                 </p>
-
-                <div class="border-t border-white/[0.04] pt-4">
+ 
+                <div class="border-t border-[var(--border-subtle)] pt-4">
                   <span class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block mb-2">Deliverables</span>
                   <ul class="flex flex-wrap gap-1.5">
                     {['Positioning Audit', 'KPI Alignment Map', 'Competitor Review'].map(d => (
-                      <li class="tag bg-white/5 border-none text-[10px] text-[var(--text-secondary)] py-0.5 px-2 rounded-full">{d}</li>
+                      <li class="tag bg-[var(--surface-soft)] border-none text-[10px] text-[var(--text-secondary)] py-0.5 px-2 rounded-full">{d}</li>
                     ))}
                   </ul>
                 </div>
@@ -85,40 +85,40 @@
             </div>
           </div>
         </div>
-
+ 
         <!-- Step 2 (Right on Desktop, Right on Mobile) -->
         <div class="flex flex-col md:flex-row md:justify-end items-start group relative animate-trigger" data-animate="fade-up">
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[#050810] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[#f0a278] group-hover:shadow-[0_0_15px_#f0a278]">
+          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[#f0a278] group-hover:shadow-[0_0_15px_#f0a278]">
             <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] group-hover:bg-[#f0a278] transition-all"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-purple)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
-
+ 
           <div class="w-full md:w-[45%] pl-10 text-left relative">
             {/* Step Card */}
-            <div class="p-8 rounded-[20px] border border-white/5 bg-white/[0.01] hover:bg-white/[0.02] hover:border-[var(--accent-purple)]/30 hover:shadow-[0_15px_35px_rgba(124,92,252,0.04)] transition-all duration-500 relative overflow-hidden">
+            <div class="p-8 rounded-[20px] border border-[var(--border-default)] bg-[var(--surface-faint)] hover:bg-[var(--surface-soft)] hover:border-[var(--accent-purple)]/30 hover:shadow-[0_15px_35px_rgba(124,92,252,0.04)] transition-all duration-500 relative overflow-hidden">
               
               {/* Nebula Point Glow */}
               <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style="background: radial-gradient(circle at 90% 10%, rgba(124,92,252,0.05) 0%, transparent 60%);">
               </div>
-
+ 
               <div class="relative z-10">
                 <div class="flex justify-between items-center mb-4">
                   <span class="font-mono text-xs text-[#f0a278] font-semibold">02 / WEEK 2-4</span>
-                  <div class="text-3xl font-display font-bold text-white/5 group-hover:text-[var(--accent-purple)]/10 transition-all duration-300">02</div>
+                  <div class="text-3xl font-display font-bold text-[var(--text-primary)]/5 group-hover:text-[var(--accent-purple)]/10 transition-all duration-300">02</div>
                 </div>
-
-                <h3 class="font-display text-xl font-bold text-white mb-3 group-hover:text-[var(--accent-purple)] transition-colors">Campaign Formula</h3>
+ 
+                <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3 group-hover:text-[var(--accent-purple)] transition-colors">Campaign Formula</h3>
                 <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6">
                   We list and approve vetted regional KOL networks, design marketing briefs, write PR drafts, and secure publisher editorial calendars.
                 </p>
-
-                <div class="border-t border-white/[0.04] pt-4">
+ 
+                <div class="border-t border-[var(--border-subtle)] pt-4">
                   <span class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block mb-2">Deliverables</span>
                   <ul class="flex flex-wrap gap-1.5">
                     {['KOL Seeding List', 'PR Calendar Draft', 'Community Setup'].map(d => (
-                      <li class="tag bg-white/5 border-none text-[10px] text-[var(--text-secondary)] py-0.5 px-2 rounded-full">{d}</li>
+                      <li class="tag bg-[var(--surface-soft)] border-none text-[10px] text-[var(--text-secondary)] py-0.5 px-2 rounded-full">{d}</li>
                     ))}
                   </ul>
                 </div>
@@ -126,15 +126,15 @@
             </div>
           </div>
         </div>
-
+ 
         <!-- Step 3 (Left on Desktop, Right on Mobile) - SOFTER WARM ACCENT -->
         <div class="flex flex-col md:flex-row md:justify-start items-start group relative animate-trigger" data-animate="fade-up">
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-5 h-5 rounded-full border-2 border-[#ff6b83] bg-[#050810] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:shadow-[0_0_20px_#ff6b83] animate-pulse">
+          <div class="absolute left-4 md:left-1/2 top-8 w-5 h-5 rounded-full border-2 border-[#ff6b83] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:shadow-[0_0_20px_#ff6b83] animate-pulse">
             <span class="w-2 h-2 rounded-full bg-[#f0a278]"></span>
             <span class="absolute inset-0 rounded-full bg-[#ff6b83] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
-
+ 
           <div class="w-full md:w-[45%] pl-10 md:pl-0 md:pr-10 text-left relative">
             {/* Step Card with softer warm border */}
             <div class="p-8 rounded-[24px] border border-[#ff6b83]/20 bg-[rgba(255,107,131,0.01)] hover:bg-[rgba(255,107,131,0.02)] hover:border-[#f0a278]/40 hover:shadow-[0_20px_45px_rgba(255,107,131,0.04)] transition-all duration-500 relative overflow-hidden">
@@ -143,20 +143,20 @@
               <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style="background: radial-gradient(circle at 10% 10%, rgba(255,107,131,0.05) 0%, transparent 60%);">
               </div>
-
+ 
               <div class="relative z-10">
                 <div class="flex justify-between items-center mb-4">
                   <span class="font-mono text-xs text-[#f0a278] font-bold tracking-wider">03 / MONTH 1 (LAUNCH)</span>
-                  <div class="text-3xl font-display font-bold text-white/5 group-hover:text-[#ff6b83]/10 transition-all duration-300">03</div>
+                  <div class="text-3xl font-display font-bold text-[var(--text-primary)]/5 group-hover:text-[#ff6b83]/10 transition-all duration-300">03</div>
                 </div>
-
-                <h3 class="font-display text-xl font-bold text-white mb-3 bg-gradient-to-r from-white to-[#f0a278] bg-clip-text text-transparent group-hover:text-[#ff6b83] transition-colors">Launch &amp; Engagement</h3>
+ 
+                <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3 bg-gradient-to-r from-[var(--text-primary)] to-[#f0a278] bg-clip-text text-transparent group-hover:text-[#ff6b83] transition-colors">Launch &amp; Engagement</h3>
                 <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6">
                   Campaigns go live. Our 24/7 moderators manage group chat channels, Quest platforms are activated, and regional PR releases go in sync.
                 </p>
-
+ 
                 {/* Inline Stats to highlight success */}
-                <div class="grid grid-cols-3 divide-x divide-white/[0.05] border-y border-white/[0.04] py-4 mb-5 text-center">
+                <div class="grid grid-cols-3 divide-x divide-[var(--border-subtle)] border-y border-[var(--border-subtle)] py-4 mb-5 text-center">
                   <div>
                     <span class="font-display text-lg font-bold text-[#f0a278]">24/7</span>
                     <span class="font-mono text-[8px] text-[var(--text-muted)] uppercase tracking-wider block mt-0.5">Moderation</span>
@@ -170,12 +170,12 @@
                     <span class="font-mono text-[8px] text-[var(--text-muted)] uppercase tracking-wider block mt-0.5">KOL Channels</span>
                   </div>
                 </div>
-
+ 
                 <div>
                   <span class="font-mono text-[9px] text-[#f0a278] uppercase tracking-wider block mb-2">Deliverables</span>
                   <ul class="flex flex-wrap gap-1.5">
                     {['Active Chat Moderation', 'KOL Placement Live', 'Quests Activation'].map(d => (
-                      <li class="tag bg-white/5 border-none text-[10px] text-[var(--text-secondary)] py-0.5 px-2 rounded-full">{d}</li>
+                      <li class="tag bg-[var(--surface-soft)] border-none text-[10px] text-[var(--text-secondary)] py-0.5 px-2 rounded-full">{d}</li>
                     ))}
                   </ul>
                 </div>
@@ -183,40 +183,40 @@
             </div>
           </div>
         </div>
-
+ 
         <!-- Step 4 (Right on Desktop, Right on Mobile) -->
         <div class="flex flex-col md:flex-row md:justify-end items-start group relative animate-trigger" data-animate="fade-up">
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[#050810] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[#f0a278] group-hover:shadow-[0_0_15px_#f0a278]">
+          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[#f0a278] group-hover:shadow-[0_0_15px_#f0a278]">
             <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] group-hover:bg-[#f0a278] transition-all"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-purple)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
-
+ 
           <div class="w-full md:w-[45%] pl-10 text-left relative">
             {/* Step Card */}
-            <div class="p-8 rounded-[20px] border border-white/5 bg-white/[0.01] hover:bg-white/[0.02] hover:border-[var(--accent-purple)]/30 hover:shadow-[0_15px_35px_rgba(124,92,252,0.04)] transition-all duration-500 relative overflow-hidden">
+            <div class="p-8 rounded-[20px] border border-[var(--border-default)] bg-[var(--surface-faint)] hover:bg-[var(--surface-soft)] hover:border-[var(--accent-purple)]/30 hover:shadow-[0_15px_35px_rgba(124,92,252,0.04)] transition-all duration-500 relative overflow-hidden">
               
               {/* Nebula Point Glow */}
               <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style="background: radial-gradient(circle at 90% 10%, rgba(124,92,252,0.05) 0%, transparent 60%);">
               </div>
-
+ 
               <div class="relative z-10">
                 <div class="flex justify-between items-center mb-4">
                   <span class="font-mono text-xs text-[#f0a278] font-semibold">04 / ONGOING</span>
-                  <div class="text-3xl font-display font-bold text-white/5 group-hover:text-[var(--accent-purple)]/10 transition-all duration-300">04</div>
+                  <div class="text-3xl font-display font-bold text-[var(--text-primary)]/5 group-hover:text-[var(--accent-purple)]/10 transition-all duration-300">04</div>
                 </div>
-
-                <h3 class="font-display text-xl font-bold text-white mb-3 group-hover:text-[var(--accent-purple)] transition-colors">Growth Optimization</h3>
+ 
+                <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3 group-hover:text-[var(--accent-purple)] transition-colors">Growth Optimization</h3>
                 <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6">
                   Weekly ROI dashboards, pruning underperforming channels, scaling highest-converting campaigns.
                 </p>
-
-                <div class="border-t border-white/[0.04] pt-4">
+ 
+                <div class="border-t border-[var(--border-subtle)] pt-4">
                   <span class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block mb-2">Deliverables</span>
                   <ul class="flex flex-wrap gap-1.5">
                     {['Weekly ROI Analytics', 'Ad Spend Optimization', 'Growth Playbook'].map(d => (
-                      <li class="tag bg-white/5 border-none text-[10px] text-[var(--text-secondary)] py-0.5 px-2 rounded-full">{d}</li>
+                      <li class="tag bg-[var(--surface-soft)] border-none text-[10px] text-[var(--text-secondary)] py-0.5 px-2 rounded-full">{d}</li>
                     ))}
                   </ul>
                 </div>

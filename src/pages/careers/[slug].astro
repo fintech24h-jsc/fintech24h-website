@@ -117,7 +117,7 @@ const pageSchema = [
   <BreadcrumbSchema items={breadcrumbs} />
 
   <!-- SECTION 1 — SPEC HERO (HUD Spotlight Display) -->
-  <section class="relative pt-36 pb-20 px-6 overflow-hidden bg-[#020202] border-b border-white/5">
+  <section class="relative pt-36 pb-20 px-6 overflow-hidden bg-[#020202] border-b border-[var(--border-subtle)]">
     <!-- CRT Scanlines Filter Overlay -->
     <div class="absolute inset-0 pointer-events-none z-30 scanlines-overlay opacity-[0.03]" aria-hidden="true"></div>
 
@@ -139,7 +139,7 @@ const pageSchema = [
     <div class="relative z-20 max-w-5xl mx-auto flex flex-col items-start gap-4">
       <a
         href="/careers"
-        class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase text-white/50 hover:text-[var(--accent-cyan)] transition-colors duration-300 mb-2 group"
+        class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase text-[var(--text-secondary)] opacity-70 hover:text-[var(--accent-cyan)] transition-colors duration-300 mb-2 group"
       >
         <svg class="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <line x1="19" y1="12" x2="5" y2="12" />
@@ -152,14 +152,14 @@ const pageSchema = [
         <Badge variant={job.department.includes('Community') ? 'purple' : 'cyan'}>
           {job.department}
         </Badge>
-        <span class="font-mono text-[9px] text-white/30 uppercase">{job.id}</span>
+        <span class="font-mono text-[9px] text-[var(--text-muted)] uppercase">{job.id}</span>
       </div>
 
-      <h1 class="font-display text-h1 font-bold text-white uppercase mt-2 tracking-tight leading-tight max-w-4xl animate-[scale-in_0.65s_ease_forwards]">
+      <h1 class="font-display text-h1 font-bold text-[var(--text-primary)] uppercase mt-2 tracking-tight leading-tight max-w-4xl animate-[scale-in_0.65s_ease_forwards]">
         {job.title}
       </h1>
 
-      <div class="flex flex-wrap items-center gap-6 mt-4 font-mono text-xs text-white/50">
+      <div class="flex flex-wrap items-center gap-6 mt-4 font-mono text-xs text-[var(--text-secondary)] opacity-70">
         <span class="flex items-center gap-1.5">
           <svg class="w-4 h-4 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
@@ -167,7 +167,7 @@ const pageSchema = [
           </svg>
           Location: {job.location}
         </span>
-        <span class="text-white/10 hidden sm:inline">•</span>
+        <span class="text-[var(--text-primary)]/10 hidden sm:inline">•</span>
         <span class="flex items-center gap-1.5">
           <svg class="w-4 h-4 text-[var(--accent-purple)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
@@ -175,7 +175,7 @@ const pageSchema = [
           </svg>
           Allocation: {job.type}
         </span>
-        <span class="text-white/10 hidden sm:inline">•</span>
+        <span class="text-[var(--text-primary)]/10 hidden sm:inline">•</span>
         <span class="flex items-center gap-1.5">
           <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10" />
@@ -197,7 +197,7 @@ const pageSchema = [
           
           <!-- About Section -->
           <div class="space-y-4">
-            <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+            <h2 class="font-display text-h3 font-bold text-[var(--text-primary)] uppercase tracking-wide flex items-center gap-2">
               <span class="w-1.5 h-6 bg-[var(--accent-cyan)] rounded-full"></span>
               About the Role
             </h2>
@@ -208,7 +208,7 @@ const pageSchema = [
 
           <!-- Responsibilities Section -->
           <div class="space-y-4">
-            <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+            <h2 class="font-display text-h3 font-bold text-[var(--text-primary)] uppercase tracking-wide flex items-center gap-2">
               <span class="w-1.5 h-6 bg-[var(--accent-purple)] rounded-full"></span>
               Key Responsibilities
             </h2>
@@ -224,7 +224,7 @@ const pageSchema = [
 
           <!-- Requirements Section -->
           <div class="space-y-4">
-            <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+            <h2 class="font-display text-h3 font-bold text-[var(--text-primary)] uppercase tracking-wide flex items-center gap-2">
               <span class="w-1.5 h-6 bg-white/40 rounded-full"></span>
               Requirements
             </h2>
@@ -241,14 +241,14 @@ const pageSchema = [
           <!-- Nice to Have Section -->
           {job.niceToHave && job.niceToHave.length > 0 && (
             <div class="space-y-4">
-              <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+              <h2 class="font-display text-h3 font-bold text-[var(--text-primary)] uppercase tracking-wide flex items-center gap-2">
                 <span class="w-1.5 h-6 bg-cyan-400/25 rounded-full"></span>
                 Nice to Have
               </h2>
               <ul class="space-y-3 font-body text-sm text-text-secondary font-light">
                 {job.niceToHave.map((nice) => (
                   <li class="flex items-start gap-3">
-                    <span class="text-white/30 font-mono translate-y-[2px] shrink-0">▸</span>
+                    <span class="text-[var(--text-muted)] font-mono translate-y-[2px] shrink-0">▸</span>
                     <span>{nice}</span>
                   </li>
                 ))}
@@ -258,7 +258,7 @@ const pageSchema = [
 
           <!-- Benefits Section -->
           <div class="space-y-4">
-            <h2 class="font-display text-h3 font-bold text-white uppercase tracking-wide flex items-center gap-2">
+            <h2 class="font-display text-h3 font-bold text-[var(--text-primary)] uppercase tracking-wide flex items-center gap-2">
               <span class="w-1.5 h-6 bg-emerald-500/40 rounded-full"></span>
               Why Join Fintech24h?
             </h2>

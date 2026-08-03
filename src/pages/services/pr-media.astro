@@ -73,12 +73,12 @@ const combinedSchema = [serviceSchema, faqSchema];
   <PrCtaSection isHero={true} />
 
   <!-- MARQUEE SECTION -->
-  <div class="border-b border-white/10 bg-white/[0.02] overflow-hidden py-4 flex relative">
+  <div class="border-b border-[var(--border-default)] bg-[var(--surface-soft)] overflow-hidden py-4 flex relative">
     <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#04060A] to-transparent z-10"></div>
     <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#04060A] to-transparent z-10"></div>
     <div class="flex gap-16 whitespace-nowrap animate-[marquee-scroll_20s_linear_infinite]">
       {[...logos, ...logos, ...logos].map(logo => (
-        <span class="font-display font-bold text-2xl text-white/20 uppercase tracking-wider">{logo}</span>
+        <span class="font-display font-bold text-2xl text-[var(--text-muted)] uppercase tracking-wider">{logo}</span>
       ))}
     </div>
   </div>
@@ -86,25 +86,25 @@ const combinedSchema = [serviceSchema, faqSchema];
   <!-- SECTION 2 — THE PROBLEM (Editorial Columns) -->
   <section class="py-24 bg-[#04060A] relative z-10">
     <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-      <div class="mb-16 reveal border-b border-white/10 pb-8 flex flex-col md:flex-row justify-between items-end gap-6">
-        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-white leading-tight uppercase max-w-2xl">
+      <div class="mb-16 reveal border-b border-[var(--border-default)] pb-8 flex flex-col md:flex-row justify-between items-end gap-6">
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-[var(--text-primary)] leading-tight uppercase max-w-2xl">
           The Illusion of Coverage
         </h2>
-        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 max-w-[200px] text-right">
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)] max-w-[200px] text-right">
           Why most PR campaigns fail to deliver ROI.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-[var(--border-default)]">
         {[
           { title: 'The Syndication Trap', desc: 'Agencies sell you "200+ publications" but fail to mention they are all automated syndication feeds. It looks good on a report, but no human being ever reads them. Real influence requires real editorial placement.' },
           { title: 'Boring Narratives', desc: 'Crypto journalists receive hundreds of pitches daily. If your pitch is just "We launched a new token," it goes to the trash. If you don\'t have a narrative that connects to broader market trends, you are invisible.' },
           { title: 'Lack of SEO Strategy', desc: 'A great article is useless if it doesn\'t include a high-authority backlink. Many PR efforts fail to capitalize on the SEO benefits of media coverage, leaving long-term domain authority on the table.' }
         ].map((item, i) => (
-          <div class={`p-10 border-b md:border-b-0 ${i !== 2 ? 'md:border-r border-white/10' : ''} hover:bg-white/[0.02] transition-colors group reveal`} style={`transition-delay: ${i * 0.15}s`}>
-            <span class="block font-display text-[4rem] text-white/5 font-bold leading-none mb-6 group-hover:text-[var(--accent-cyan)]/20 transition-colors">0{i+1}</span>
-            <h3 class="font-display text-xl font-bold text-white mb-4 uppercase">{item.title}</h3>
-            <p class="font-body text-white/60 leading-relaxed text-sm">{item.desc}</p>
+          <div class={`p-10 border-b md:border-b-0 ${i !== 2 ? 'md:border-r border-[var(--border-default)]' : ''} hover:bg-[var(--surface-soft)] transition-colors group reveal`} style={`transition-delay: ${i * 0.15}s`}>
+            <span class="block font-display text-[4rem] text-[var(--text-primary)]/5 font-bold leading-none mb-6 group-hover:text-[var(--accent-cyan)]/20 transition-colors">0{i+1}</span>
+            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-4 uppercase">{item.title}</h3>
+            <p class="font-body text-[var(--text-primary)]/60 leading-relaxed text-sm">{item.desc}</p>
           </div>
         ))}
       </div>
@@ -112,27 +112,27 @@ const combinedSchema = [serviceSchema, faqSchema];
   </section>
 
   <!-- SECTION 3 — OUR APPROACH (Magazine Layout) -->
-  <section class="py-24 bg-[#0A0D14] relative z-10 border-y border-white/10">
+  <section class="py-24 bg-[#0A0D14] relative z-10 border-y border-[var(--border-default)]">
     <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
       <div class="text-center mb-20 reveal">
         <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--accent-cyan)] mb-4">THE STRATEGY</span>
-        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-white uppercase">How We Shape The Narrative</h2>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-[var(--text-primary)] uppercase">How We Shape The Narrative</h2>
       </div>
 
-      <div class="space-y-0 border-t border-white/10">
+      <div class="space-y-0 border-t border-[var(--border-default)]">
         {[
           { step: '01', title: 'Narrative Architecture', desc: 'Before pitching anyone, we find the "hook". We connect your product update to macroeconomic trends, regulatory shifts, or technological breakthroughs. We don\'t pitch a product; we pitch a story.' },
           { step: '02', title: 'Targeted Pitching', desc: 'We don\'t mass-email journalists. We match your story with specific editors and writers at Tier-1 publications who have a track record of covering your specific niche (DeFi, AI, Layer 2, etc.).' },
           { step: '03', title: 'Content Drafting', desc: 'Our team of native-English, crypto-fluent writers drafts the press releases and op-eds. We write in journalistic style (AP format), making it as easy as possible for an editor to hit publish.' },
           { step: '04', title: 'Distribution & Amplification', desc: 'Once published, we don\'t stop. We syndicate the coverage across Web3 communities, leverage KOLs to amplify the article, and ensure maximum eyeballs on the piece.' }
         ].map((item, i) => (
-          <div class="flex flex-col md:flex-row border-b border-white/10 group reveal">
-            <div class="w-full md:w-1/3 py-8 md:py-12 md:pr-12 border-b md:border-b-0 md:border-r border-white/10 flex items-center">
+          <div class="flex flex-col md:flex-row border-b border-[var(--border-default)] group reveal">
+            <div class="w-full md:w-1/3 py-8 md:py-12 md:pr-12 border-b md:border-b-0 md:border-r border-[var(--border-default)] flex items-center">
               <span class="font-mono text-sm text-[var(--accent-cyan)] mr-6">{item.step}</span>
-              <h3 class="font-display text-2xl font-bold text-white uppercase group-hover:pl-4 transition-all duration-300">{item.title}</h3>
+              <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] uppercase group-hover:pl-4 transition-all duration-300">{item.title}</h3>
             </div>
             <div class="w-full md:w-2/3 py-8 md:py-12 md:pl-12 flex items-center">
-              <p class="font-body text-white/70 leading-relaxed text-lg">{item.desc}</p>
+              <p class="font-body text-[var(--text-secondary)] leading-relaxed text-lg">{item.desc}</p>
             </div>
           </div>
         ))}
@@ -144,16 +144,16 @@ const combinedSchema = [serviceSchema, faqSchema];
   <section class="py-24 bg-[#04060A]">
     <div class="max-w-4xl mx-auto px-6">
       <div class="mb-16 reveal">
-        <h2 class="font-display text-3xl font-bold text-white uppercase border-b border-white/10 pb-6">Editorial FAQ</h2>
+        <h2 class="font-display text-3xl font-bold text-[var(--text-primary)] uppercase border-b border-[var(--border-default)] pb-6">Editorial FAQ</h2>
       </div>
       <div class="space-y-2">
         {faqs.map((faq, i) => (
-          <details class="group border-b border-white/10 pb-4 reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex justify-between items-center font-display text-lg text-white font-bold cursor-pointer list-none hover:text-[var(--accent-cyan)] transition-colors py-4">
+          <details class="group border-b border-[var(--border-default)] pb-4 reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <summary class="flex justify-between items-center font-display text-lg text-[var(--text-primary)] font-bold cursor-pointer list-none hover:text-[var(--accent-cyan)] transition-colors py-4">
               {faq.q}
-              <span class="text-white/30 group-open:rotate-45 transition-transform duration-300 font-mono text-2xl">+</span>
+              <span class="text-[var(--text-muted)] group-open:rotate-45 transition-transform duration-300 font-mono text-2xl">+</span>
             </summary>
-            <div class="text-white/60 font-body text-sm leading-relaxed pb-4 pr-12">
+            <div class="text-[var(--text-primary)]/60 font-body text-sm leading-relaxed pb-4 pr-12">
               <p>{faq.a}</p>
             </div>
           </details>
