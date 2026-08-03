@@ -1,0 +1,121 @@
+---
+// src/components/ui/GlacialParticles.astro
+---
+<canvas id="glacial-canvas" aria-hidden="true"></canvas>
+
+<style>
+  #glacial-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -3; /* Placed deep behind cards and overlays */
+    opacity: 0.75;
+    transition: opacity 0.5s ease;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('glacial-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let particles: Particle[] = [];
+    const maxParticles = 30; // Kept small for high framerate and low battery usage
+
+    // Resize handler
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      
+      // Support Retina and High-DPI screens without performance drops
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx!.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Particle Object
+    class Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      alpha: number;
+      fadeSpeed: number;
+
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 8 + 3; // Float sizes between 3px and 11px
+        this.speedX = Math.random() * 0.2 - 0.1; // Slow side-drift
+        this.speedY = -(Math.random() * 0.3 + 0.15); // Slow upward float
+        this.alpha = Math.random() * 0.2 + 0.05; // Faint, subtle look
+        this.fadeSpeed = Math.random() * 0.002 + 0.001;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // If particle moves off the screen, reset at the bottom
+        if (this.y < -this.size) {
+          this.y = height + this.size;
+          this.x = Math.random() * width;
+          this.alpha = Math.random() * 0.2 + 0.05;
+        }
+        if (this.x < -this.size) this.x = width + this.size;
+        if (this.x > width + this.size) this.x = -this.size;
+      }
+
+      draw(isLightMode: boolean) {
+        if (!ctx) return;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        
+        // Define color based on theme
+        if (isLightMode) {
+          // Soft icy light blue glow in light mode
+          ctx.fillStyle = `rgba(0, 122, 153, ${this.alpha})`;
+        } else {
+          // Soft celestial white/cyan glow in dark mode
+          ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha * 0.7})`;
+        }
+        
+        ctx.fill();
+      }
+    }
+
+    // Initialize particles
+    for (let i = 0; i < maxParticles; i++) {
+      particles.push(new Particle());
+    }
+
+    // Animation Loop
+    function animate() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
+
+      const isLightMode = document.documentElement.dataset.theme === 'light';
+
+      particles.forEach((p) => {
+        p.update();
+        p.draw(isLightMode);
+      });
+
+      requestAnimationFrame(animate);
+    }
+    
+    // Start animation loop
+    animate();
+  });
+</script>

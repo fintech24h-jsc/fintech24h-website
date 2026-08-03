@@ -1,0 +1,179 @@
+---
+// src/components/ui/LiquidGlassCursor.astro
+---
+<div class="custom-cursor-container" aria-hidden="true">
+  <div id="custom-cursor-dot"></div>
+  <div id="custom-cursor-ring"></div>
+</div>
+
+<style is:global>
+  /* Only enable custom cursor on devices that support hover (desktops) */
+  @media (hover: hover) and (pointer: fine) {
+    html, body, a, button, [role="button"], input, select, textarea {
+      cursor: none !important;
+    }
+
+    .custom-cursor-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 99999;
+    }
+
+    #custom-cursor-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background-color 0.3s;
+      z-index: 100000;
+      opacity: 0;
+    }
+
+    #custom-cursor-ring {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid var(--accent-purple);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 99999;
+      opacity: 0;
+      /* Smooth transitions for size adjustments */
+      transition: 
+        width 0.25s cubic-bezier(0.25, 1, 0.5, 1), 
+        height 0.25s cubic-bezier(0.25, 1, 0.5, 1), 
+        border-radius 0.25s,
+        border-color 0.3s,
+        background 0.3s,
+        opacity 0.2s;
+    }
+
+    /* Snapped state over interactive items */
+    .cursor-active #custom-cursor-ring {
+      width: 52px;
+      height: 52px;
+      border-color: var(--accent-cyan);
+      background: rgba(0, 200, 240, 0.08);
+      backdrop-filter: blur(8px) saturate(180%);
+      -webkit-backdrop-filter: blur(8px) saturate(180%);
+    }
+
+    .cursor-active #custom-cursor-dot {
+      background: var(--accent-purple);
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  @media (pointer: coarse) {
+    .custom-cursor-container {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Only run cursor logic on desktop devices
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const dot = document.getElementById('custom-cursor-dot');
+    const ring = document.getElementById('custom-cursor-ring');
+    const container = document.querySelector('.custom-cursor-container');
+
+    if (!dot || !ring || !container) return;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let ringX = 0;
+    let ringY = 0;
+    let isHoveringInteractive = false;
+    let targetEl: HTMLElement | null = null;
+
+    // Smooth inertia settings
+    const speed = 0.16; // Lerp speed for lag effect
+
+    // Update mouse position
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (dot.style.opacity === '0') {
+        dot.style.opacity = '1';
+        ring.style.opacity = '1';
+      }
+    });
+
+    // Hide custom cursor when mouse leaves the document window
+    document.addEventListener('mouseleave', () => {
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+    });
+
+    document.addEventListener('mouseenter', () => {
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
+    });
+
+    // Lerp loop for organic ring tracking
+    function animate() {
+      // Inner dot follows mouse instantly
+      dot.style.left = `${mouseX}px`;
+      dot.style.top = `${mouseY}px`;
+
+      if (isHoveringInteractive && targetEl) {
+        // Snapped magnetic tracking: ring locks onto the center of the hovered element
+        const rect = targetEl.getBoundingClientRect();
+        const center_x = rect.left + rect.width / 2;
+        const center_y = rect.top + rect.height / 2;
+        
+        // Slowly pull towards center to avoid harsh snapping
+        ringX += (center_x - ringX) * 0.35;
+        ringY += (center_y - ringY) * 0.35;
+      } else {
+        // Standard lag follow: linear interpolation
+        ringX += (mouseX - ringX) * speed;
+        ringY += (mouseY - ringY) * speed;
+      }
+
+      ring.style.left = `${ringX}px`;
+      ring.style.top = `${ringY}px`;
+
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    // Event delegation for magnetic snaps
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target as HTMLElement;
+      const interactive = target.closest('a, button, [role="button"], input, select, textarea, .service-dock-item, .filter-tab');
+      
+      if (interactive) {
+        isHoveringInteractive = true;
+        targetEl = interactive as HTMLElement;
+        container.classList.add('cursor-active');
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      const target = e.target as HTMLElement;
+      const interactive = target.closest('a, button, [role="button"], input, select, textarea, .service-dock-item, .filter-tab');
+      
+      if (interactive) {
+        isHoveringInteractive = false;
+        targetEl = null;
+        container.classList.remove('cursor-active');
+      }
+    });
+  });
+</script>

@@ -4,6 +4,8 @@ import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
 import NavbarFast from '../components/layout/NavbarFast.astro';
 import Footer from '../components/layout/Footer.astro';
+import LiquidGlassCursor from '../components/ui/LiquidGlassCursor.astro';
+import GlacialParticles from '../components/ui/GlacialParticles.astro';
 import '../styles/global.css';
 import '../styles/animations.css';
 
@@ -159,15 +161,89 @@ const canonicalHref = canonicalUrl.href;
   <main id="main-content" class="relative w-full flex flex-col overflow-hidden shrink-0">
     <slot />
   </main>
-
+ 
   <Footer />
-
+ 
+  <!-- High-Fidelity Creative Upgrades -->
+  <GlacialParticles />
+  <LiquidGlassCursor />
+ 
+  <style is:global>
+    /* 3D Tilt and Specular Sheen global styles */
+    @media (hover: hover) and (pointer: fine) {
+      .btn-liquid-glass-card, .card-default, .liquid-glass-premium, [data-tilt="true"] {
+        position: relative;
+        transform-style: preserve-3d;
+        will-change: transform;
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+      }
+ 
+      .card-sheen {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 10;
+        opacity: 0;
+        mix-blend-mode: overlay;
+        background: radial-gradient(circle at var(--sheen-x, 0px) var(--sheen-y, 0px), rgba(255, 255, 255, 0.22) 0%, transparent 65%);
+        transition: opacity 0.3s ease;
+        border-radius: inherit;
+      }
+    }
+  </style>
+ 
+  <script>
+    // Global 3D Card Tilt & Specular Sheen Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+ 
+      const cards = document.querySelectorAll('.btn-liquid-glass-card, .card-default, .liquid-glass-premium, [data-tilt="true"]');
+ 
+      cards.forEach((cardEl) => {
+        const card = cardEl as HTMLElement;
+ 
+        // Skip specific dynamic UI widgets if they handle their own interactions (e.g. process step anchors or tiny buttons)
+        if (card.classList.contains('service-dock-item') || card.tagName === 'BUTTON') return;
+ 
+        // Inject sheen element if not exists
+        let sheen = card.querySelector('.card-sheen') as HTMLElement;
+        if (!sheen) {
+          sheen = document.createElement('div');
+          sheen.className = 'card-sheen';
+          card.appendChild(sheen);
+        }
+ 
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+ 
+          // Rotations: range from -6 to 6 degrees for subtle high-fidelity tilt
+          const rotateY = ((x / rect.width) - 0.5) * 12;
+          const rotateX = -(((y / rect.height) - 0.5) * 12);
+ 
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
+          
+          sheen.style.setProperty('--sheen-x', `${x}px`);
+          sheen.style.setProperty('--sheen-y', `${y}px`);
+          sheen.style.opacity = '1';
+        });
+ 
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+          sheen.style.opacity = '0';
+        });
+      });
+    });
+  </script>
+ 
   <!-- Scroll reveals — native IntersectionObserver + CSS transitions, 0 KB JS overhead -->
   <!-- Visual result is identical to GSAP ScrollTrigger (same easing, same stagger) -->
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
+ 
       // rootMargin '-6%' — triggers earlier so animation completes as element enters view
       const observer = new IntersectionObserver((entries) => {
         const visible = entries.filter(e => e.isIntersecting);
@@ -178,7 +254,7 @@ const canonicalHref = canonicalUrl.href;
           observer.unobserve(el);
         });
       }, { threshold: 0, rootMargin: '0px 0px -6% 0px' });
-
+ 
       document
         .querySelectorAll('[data-animate="fade-up"], [data-animate="scale-in"]')
         .forEach(el => observer.observe(el));
