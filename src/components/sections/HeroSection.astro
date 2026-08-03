@@ -121,12 +121,12 @@ const starsLarge = generateStars(30);
     </div>
 
     <!-- Bottom Block: Stats (Text-only layout with neon growth sparklines) -->
-    <div class="w-full max-w-4xl grid grid-cols-3 gap-4 sm:gap-8 mt-2 border-t border-white/5 pt-6 lg:pt-8">
+    <div class="w-full max-w-4xl grid grid-cols-3 gap-4 sm:gap-8 mt-2 border-t border-[var(--border-subtle)] pt-6 lg:pt-8">
       
       <!-- Stat 1 -->
       <div class="flex flex-col items-center group cursor-default transition-all duration-300 transform hover:scale-105">
         <div class="relative">
-          <div class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight transition-all duration-300 group-hover:text-[var(--accent-cyan)] group-hover:glow-text">Global</div>
+          <div class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] tracking-tight transition-all duration-300 group-hover:text-[var(--accent-cyan)] group-hover:glow-text">Global</div>
         </div>
         <div class="font-mono text-[8px] sm:text-[9px] lg:text-[10px] text-[var(--text-secondary)] uppercase tracking-widest mt-2 font-medium transition-colors duration-300 group-hover:text-[var(--accent-cyan)]">Market Network</div>
         <!-- Sparkline wave -->
@@ -138,7 +138,7 @@ const starsLarge = generateStars(30);
       <!-- Stat 2 -->
       <div class="flex flex-col items-center group cursor-default transition-all duration-300 transform hover:scale-105">
         <div class="relative">
-          <div class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight transition-all duration-300 group-hover:text-[#f0a278] group-hover:glow-text-orange">Measured</div>
+          <div class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] tracking-tight transition-all duration-300 group-hover:text-[#f0a278] group-hover:glow-text-orange">Measured</div>
         </div>
         <div class="font-mono text-[8px] sm:text-[9px] lg:text-[10px] text-[var(--text-secondary)] uppercase tracking-widest mt-2 font-medium transition-colors duration-300 group-hover:text-[#f0a278]">Execution Reporting</div>
         <!-- Sparkline wave -->
@@ -150,7 +150,7 @@ const starsLarge = generateStars(30);
       <!-- Stat 3 -->
       <div class="flex flex-col items-center group cursor-default transition-all duration-300 transform hover:scale-105">
         <div class="relative">
-          <div class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight tabular-nums transition-all duration-300 group-hover:text-[var(--accent-purple)] group-hover:glow-text-purple" data-count="12" data-suffix="+">12+</div>
+          <div class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] tracking-tight tabular-nums transition-all duration-300 group-hover:text-[var(--accent-purple)] group-hover:glow-text-purple" data-count="12" data-suffix="+">12+</div>
         </div>
         <div class="font-mono text-[8px] sm:text-[9px] lg:text-[10px] text-[var(--text-secondary)] uppercase tracking-widest mt-2 font-medium transition-colors duration-300 group-hover:text-[var(--accent-purple)]">Countries</div>
         <!-- Sparkline wave -->

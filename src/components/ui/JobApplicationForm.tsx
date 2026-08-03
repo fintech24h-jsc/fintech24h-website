@@ -1,392 +1,295 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
+import { submitLead } from '../../lib/leadSubmit';
 
 interface JobApplicationFormProps {
-  jobTitle: string;
-  jobId: string;
+  jobTitle?: string;
 }
 
-export default function JobApplicationForm({ jobTitle, jobId }: JobApplicationFormProps) {
+export default function JobApplicationForm({ jobTitle = 'General Application' }: JobApplicationFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
     telegram: '',
     linkedin: '',
-    coverLetter: '',
+    portfolio: '',
+    message: '',
+    companyWebsite: '',
   });
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [fileBase64, setFileBase64] = useState<string>('');
-  const [fileError, setFileError] = useState<string>('');
-  const [isDragOver, setIsDragOver] = useState<boolean>(false);
-
+  const [resume, setResume] = useState<File | null>(null);
+  const [resumeBase64, setResumeBase64] = useState<string>('');
+  const [resumeFileName, setResumeFileName] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
-
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const updateField = (field: string, value: string) => {
+  const update = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleFile = (file: File) => {
-    // Limits size to 10MB
-    if (file.size > 10 * 1024 * 1024) {
-      setFileError('File size exceeds the 10MB limit.');
-      setSelectedFile(null);
-      setFileBase64('');
-      return;
-    }
-
-    // Accepts PDF, DOC, DOCX
-    const validExtensions = ['.pdf', '.doc', '.docx'];
-    const fileNameLower = file.name.toLowerCase();
-    const isValidExtension = validExtensions.some(ext => fileNameLower.endsWith(ext));
-    
-    const validMimeTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ];
-    const isValidMime = validMimeTypes.includes(file.type);
-
-    if (!isValidExtension && !isValidMime) {
-      setFileError('Only PDF, DOC, or DOCX documents are allowed.');
-      setSelectedFile(null);
-      setFileBase64('');
-      return;
-    }
-
-    setFileError('');
-    setSelectedFile(file);
-
-    // Convert file to base64
-    const reader = new FileReader();
-    reader.onload = () => {
-      const rawResult = reader.result as string;
-      const base64Str = rawResult.split(',')[1] || '';
-      setFileBase64(base64Str);
-    };
-    reader.onerror = () => {
-      setFileError('Failed to read file contents.');
-    };
-    reader.readAsDataURL(file);
-  };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) handleFile(file);
-  };
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.size > 5 * 1024 * 1024) {
+        setError('Resume file size must be less than 5MB.');
+        return;
+      }
+      setResume(file);
+      setResumeFileName(file.name);
+      setError('');
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragOver(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragOver(false);
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) handleFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setResumeBase64(base64String);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const triggerFileSelect = () => {
-    fileInputRef.current?.click();
-  };
-
-  const removeFile = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setSelectedFile(null);
-    setFileBase64('');
-    setFileError('');
-    if (fileInputRef.current) fileInputRef.current.value = '';
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.telegram || !selectedFile) {
-      setError('Please fill in all required fields and upload your CV.');
+    if (!formData.name || !formData.email || !formData.telegram || !resumeBase64) {
+      setError('Please fill in all required fields (*) and upload your resume.');
       return;
     }
 
     setIsSubmitting(true);
     setError('');
 
-    const envWebhook = import.meta.env.PUBLIC_CAREERS_WEBHOOK_URL;
-    const webhook = (envWebhook && envWebhook.indexOf('PASTE_YOUR_DEPLOYED') === -1 && envWebhook.trim() !== '')
-      ? envWebhook.trim()
-      : 'https://script.google.com/macros/s/AKfycbzoleDR0LhwZZy0I2aYCFeAdTy1IYfdsqsRU5zqm0Vf2XyVEjfdOxSJt6QpPETshxvuDQ/exec';
+    const fields = [
+      { name: 'firstname', value: formData.name.split(' ')[0] || formData.name },
+      { name: 'lastname', value: formData.name.split(' ').slice(1).join(' ') || '' },
+      { name: 'email', value: formData.email },
+      { name: 'telegram_handle', value: formData.telegram },
+      { name: 'linkedin', value: formData.linkedin },
+      { name: 'portfolio_url', value: formData.portfolio },
+      { name: 'message', value: formData.message },
+      { name: 'job_title', value: jobTitle },
+    ];
 
-    try {
-      await fetch(webhook, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          telegram: formData.telegram,
-          linkedin: formData.linkedin,
-          coverLetter: formData.coverLetter,
-          jobTitle: jobTitle,
-          jobId: jobId,
-          cvFileName: selectedFile.name,
-          cvFileMimeType: selectedFile.type,
-          cvFileBase64: fileBase64,
-          submittedAt: new Date().toISOString(),
-        }),
-      });
+    const attachment = {
+      name: resumeFileName,
+      content: resumeBase64,
+    };
+
+    const result = await submitLead(formData, `Job Application: ${jobTitle}`, fields, attachment);
+
+    setIsSubmitting(false);
+
+    if (result.ok) {
       setIsSuccess(true);
-    } catch (err) {
-      console.error('Submission failed:', err);
-      setError('Failed to establish telemetry link. Please try again or email info@fintech24h.com');
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      setError(result.error || 'An error occurred. Please email careers@fintech24h.com');
     }
   };
 
-  if (isSuccess) {
-    return (
-      <div className="card-featured p-8 text-center space-y-6 relative overflow-hidden backdrop-blur-md border border-[var(--accent-cyan)]/30 rounded-2xl animate-scale-in">
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-cyan)]/5 to-[var(--accent-purple)]/5 pointer-events-none" />
-        <div className="w-16 h-16 rounded-full bg-[var(--accent-cyan)]/10 border border-[var(--accent-cyan)]/30 flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(0,200,240,0.15)]">
-          <svg className="w-8 h-8 text-[var(--accent-cyan)] animate-[pulse-dot_2s_infinite]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-        </div>
-        <div className="space-y-2">
-          <h3 className="font-display text-h3 font-bold text-white uppercase tracking-wider">Node Registered</h3>
-          <p className="font-mono text-[9px] text-[var(--accent-cyan)] tracking-[0.2em] uppercase">Status: APPLICATION_RECEIVED_OK</p>
-        </div>
-        <p className="font-body text-xs text-text-secondary max-w-sm mx-auto leading-relaxed">
-          Thank you for applying for the <strong>{jobTitle}</strong> position. Our recruiting core has indexed your profile. We will reach out to you via Telegram or Email shortly.
-        </p>
-        <div className="w-12 h-px bg-white/10 mx-auto" />
-        <button
-          onClick={() => {
-            setIsSuccess(false);
-            setFormData({ name: '', email: '', phone: '', telegram: '', linkedin: '', coverLetter: '' });
-            setSelectedFile(null);
-            setFileBase64('');
-          }}
-          className="text-[10px] font-mono text-[var(--accent-cyan)] uppercase hover:text-white transition-colors duration-300 tracking-wider"
-        >
-          [ Submit Another Application ]
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="relative backdrop-blur-2xl rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-white/[0.005] p-6 sm:p-8 space-y-6 shadow-[0_50px_100px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.1)] overflow-hidden">
-      {/* Liquid Glass Organic Glow Blobs */}
-      <div className="absolute -top-[30%] -right-[30%] w-60 h-60 rounded-full bg-[var(--accent-cyan)] opacity-[0.04] filter blur-[40px] pointer-events-none" />
-      <div className="absolute -bottom-[30%] -left-[30%] w-60 h-60 rounded-full bg-[var(--accent-purple)] opacity-[0.03] filter blur-[40px] pointer-events-none" />
-
-      <div className="space-y-1 relative z-10">
-        <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--accent-cyan)] flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse" />
-          Protocol // Career_Intake
-        </span>
-        <h3 className="font-display text-lg font-bold text-white uppercase tracking-wider">Apply for this Position</h3>
-        <p className="font-body text-xs text-text-secondary">
-          Enter your metrics to register as a network contributor candidate.
-        </p>
-      </div>
-
-      {error && (
-        <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/10 text-red-400 text-xs font-body backdrop-blur-md relative z-10">
-          {error}
-        </div>
-      )}
-
+    <>
       <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
-        {/* Name & Email */}
+        <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+          <label htmlFor="company-website">Company website</label>
+          <input
+            id="company-website"
+            name="companyWebsite"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={formData.companyWebsite}
+            onChange={e => update('companyWebsite', e.target.value)}
+          />
+        </div>
+        {error && (
+          <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/10 text-red-400 text-xs font-body backdrop-blur-md">
+            {error}
+          </div>
+        )}
+
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-[9px] font-semibold text-white/40 mb-1.5 font-mono uppercase tracking-wider">Full Name *</label>
+            <label className="block text-[10px] font-semibold text-[var(--text-secondary)] opacity-70 mb-1.5 font-body uppercase tracking-wider">Full Name *</label>
             <input
               type="text"
               required
-              disabled={isSubmitting}
               value={formData.name}
-              onChange={e => updateField('name', e.target.value)}
-              placeholder="Vincent Nguyen"
-              className="w-full bg-white/[0.01] border border-white/5 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--accent-cyan)]/40 focus:bg-white/[0.03] transition-all duration-300 font-body placeholder:text-white/10"
+              onChange={e => update('name', e.target.value)}
+              placeholder="Alex Nguyen"
+              className="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] rounded-lg px-3 py-2.5 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-accent)] focus:bg-[var(--surface-hover)] transition-all duration-300 font-body placeholder:text-[var(--text-muted)] shadow-inner backdrop-blur-md"
             />
           </div>
           <div>
-            <label className="block text-[9px] font-semibold text-white/40 mb-1.5 font-mono uppercase tracking-wider">Email Address *</label>
+            <label className="block text-[10px] font-semibold text-[var(--text-secondary)] opacity-70 mb-1.5 font-body uppercase tracking-wider">Email Address *</label>
             <input
               type="email"
               required
-              disabled={isSubmitting}
               value={formData.email}
-              onChange={e => updateField('email', e.target.value)}
-              placeholder="vincent@fintech24h.com"
-              className="w-full bg-white/[0.01] border border-white/5 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--accent-cyan)]/40 focus:bg-white/[0.03] transition-all duration-300 font-body placeholder:text-white/10"
+              onChange={e => update('email', e.target.value)}
+              placeholder="alex@project.io"
+              className="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] rounded-lg px-3 py-2.5 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-accent)] focus:bg-[var(--surface-hover)] transition-all duration-300 font-body placeholder:text-[var(--text-muted)] shadow-inner backdrop-blur-md"
             />
           </div>
         </div>
 
-        {/* Telegram & Phone */}
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-[9px] font-semibold text-white/40 mb-1.5 font-mono uppercase tracking-wider">Telegram Username *</label>
+            <label className="block text-[10px] font-semibold text-[var(--text-secondary)] opacity-70 mb-1.5 font-body uppercase tracking-wider">Telegram Username *</label>
             <input
               type="text"
               required
-              disabled={isSubmitting}
               value={formData.telegram}
-              onChange={e => updateField('telegram', e.target.value)}
-              placeholder="@username"
-              className="w-full bg-white/[0.01] border border-white/5 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--accent-cyan)]/40 focus:bg-white/[0.03] transition-all duration-300 font-body placeholder:text-white/10"
+              onChange={e => update('telegram', e.target.value)}
+              placeholder="@alex_handle"
+              className="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] rounded-lg px-3 py-2.5 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-accent)] focus:bg-[var(--surface-hover)] transition-all duration-300 font-body placeholder:text-[var(--text-muted)] shadow-inner backdrop-blur-md"
             />
           </div>
           <div>
-            <label className="block text-[9px] font-semibold text-white/40 mb-1.5 font-mono uppercase tracking-wider">Phone Number</label>
+            <label className="block text-[10px] font-semibold text-[var(--text-secondary)] opacity-70 mb-1.5 font-body uppercase tracking-wider">LinkedIn Profile URL</label>
             <input
-              type="tel"
-              disabled={isSubmitting}
-              value={formData.phone}
-              onChange={e => updateField('phone', e.target.value)}
-              placeholder="+84 90 1234 567"
-              className="w-full bg-white/[0.01] border border-white/5 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--accent-cyan)]/40 focus:bg-white/[0.03] transition-all duration-300 font-body placeholder:text-white/10"
+              type="url"
+              value={formData.linkedin}
+              onChange={e => update('linkedin', e.target.value)}
+              placeholder="https://linkedin.com/in/..."
+              className="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] rounded-lg px-3 py-2.5 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-accent)] focus:bg-[var(--surface-hover)] transition-all duration-300 font-body placeholder:text-[var(--text-muted)] shadow-inner backdrop-blur-md"
             />
           </div>
         </div>
 
-        {/* LinkedIn */}
         <div>
-          <label className="block text-[9px] font-semibold text-white/40 mb-1.5 font-mono uppercase tracking-wider">LinkedIn URL</label>
+          <label className="block text-[10px] font-semibold text-[var(--text-secondary)] opacity-70 mb-1.5 font-body uppercase tracking-wider">Portfolio / GitHub / Website</label>
           <input
             type="url"
-            disabled={isSubmitting}
-            value={formData.linkedin}
-            onChange={e => updateField('linkedin', e.target.value)}
-            placeholder="https://linkedin.com/in/username"
-            className="w-full bg-white/[0.01] border border-white/5 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--accent-cyan)]/40 focus:bg-white/[0.03] transition-all duration-300 font-body placeholder:text-white/10"
+            value={formData.portfolio}
+            onChange={e => update('portfolio', e.target.value)}
+            placeholder="https://mywork.com"
+            className="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] rounded-lg px-3 py-2.5 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-accent)] focus:bg-[var(--surface-hover)] transition-all duration-300 font-body placeholder:text-[var(--text-muted)] shadow-inner backdrop-blur-md"
           />
         </div>
 
-        {/* Cover Letter */}
         <div>
-          <label className="block text-[9px] font-semibold text-white/40 mb-1.5 font-mono uppercase tracking-wider">Introduction / Cover Letter</label>
-          <textarea
-            disabled={isSubmitting}
-            value={formData.coverLetter}
-            onChange={e => updateField('coverLetter', e.target.value)}
-            rows={3}
-            placeholder="Tell us why you are interested in this role and how you fit our ecosystem..."
-            className="w-full bg-white/[0.01] border border-white/5 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--accent-cyan)]/40 focus:bg-white/[0.03] transition-all duration-300 font-body placeholder:text-white/10 resize-y min-h-[80px]"
-          />
-        </div>
-
-        {/* CV Upload Area */}
-        <div>
-          <label className="block text-[9px] font-semibold text-white/40 mb-1.5 font-mono uppercase tracking-wider">Upload CV (PDF, DOC, DOCX) *</label>
-          
+          <label className="block text-[10px] font-semibold text-[var(--text-secondary)] opacity-70 mb-1.5 font-body uppercase tracking-wider">Upload Resume (PDF only, max 5MB) *</label>
           <input
             type="file"
             ref={fileInputRef}
+            accept=".pdf"
             onChange={handleFileChange}
-            disabled={isSubmitting}
-            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             className="hidden"
           />
-
           <div
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
             onClick={triggerFileSelect}
-            className={`border border-dashed rounded-lg p-5 text-center cursor-pointer transition-all duration-300 flex flex-col items-center gap-2 ${
-              isDragOver
-                ? 'border-[var(--accent-cyan)] bg-[var(--accent-cyan)]/5 scale-[1.01]'
-                : selectedFile
-                ? 'border-emerald-500/40 bg-emerald-500/2'
-                : 'border-white/10 bg-white/[0.005] hover:border-white/20 hover:bg-white/[0.01]'
-            }`}
+            className="relative group/upload border border-dashed border-[var(--border-default)] rounded-xl p-6 bg-[var(--surface-faint)] hover:bg-[var(--surface-soft)] hover:border-[var(--border-accent)] transition-all duration-300 flex flex-col items-center justify-center text-center cursor-pointer"
           >
-            {selectedFile ? (
-              <div className="w-full flex items-center justify-between gap-3 text-left">
-                <div className="flex items-center gap-2.5 overflow-hidden">
-                  <div className="w-8 h-8 rounded bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
-                    <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <polyline points="14 2 14 8 20 8" />
-                    </svg>
-                  </div>
-                  <div className="overflow-hidden">
-                    <p className="text-xs text-white font-medium truncate font-body">{selectedFile.name}</p>
-                    <p className="text-[10px] text-emerald-400/80 font-mono">
-                      {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB // LOADED_OK
-                    </p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={removeFile}
-                  disabled={isSubmitting}
-                  className="w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-red-500/20 hover:border-red-500/30 transition-all cursor-pointer"
-                  title="Remove CV"
-                >
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="17 8 12 3 7 8" />
-                    <line x1="12" y1="3" x2="12" y2="15" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs text-white/60 font-body">
-                    Drag and drop your CV file, or <span className="text-[var(--accent-cyan)] font-medium">browse files</span>
-                  </p>
-                  <p className="text-[9px] text-white/30 font-mono mt-1">PDF, DOC, DOCX UP TO 10MB</p>
-                </div>
-              </>
-            )}
+            <svg
+              className="w-8 h-8 text-[var(--text-muted)] group-hover/upload:text-[var(--accent-cyan)] transition-colors duration-300 mb-3"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+            </svg>
+            <span className="text-xs font-semibold text-[var(--text-primary)] mb-1 font-body">
+              {resumeFileName ? (
+                <span className="text-[var(--accent-cyan)]">{resumeFileName}</span>
+              ) : (
+                'Select Resume PDF'
+              )}
+            </span>
+            <span className="text-[10px] text-[var(--text-secondary)] opacity-70 font-body">
+              Drag and drop or click to browse
+            </span>
           </div>
-          {fileError && <p className="text-[10px] text-red-400 mt-1.5 font-body">{fileError}</p>}
         </div>
 
-        {/* Submit Button */}
+        <div>
+          <label className="block text-[10px] font-semibold text-[var(--text-secondary)] opacity-70 mb-1.5 font-body uppercase tracking-wider">Short Bio / Cover Letter</label>
+          <textarea
+            value={formData.message}
+            onChange={e => update('message', e.target.value)}
+            placeholder="Tell us why you want to join Fintech24h and what impact you can make..."
+            rows={3}
+            className="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] rounded-lg px-3 py-2.5 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-accent)] focus:bg-[var(--surface-hover)] transition-all duration-300 font-body placeholder:text-[var(--text-muted)] shadow-inner backdrop-blur-md resize-none"
+          ></textarea>
+        </div>
+
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full relative flex items-center justify-center gap-2 px-6 py-3 font-display font-bold text-xs uppercase tracking-widest text-[#050810] bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] rounded-lg transition-all duration-300 hover:shadow-[0_0_24px_rgba(0,200,240,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer disabled:opacity-50 disabled:pointer-events-none disabled:transform-none select-none"
+          className="form-submit-btn relative w-full group flex items-center justify-center py-3.5 rounded-xl overflow-hidden transition-all duration-500 hover:scale-[1.01] active:scale-[0.98]"
         >
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer-slide_1.5s_ease-out_infinite]" />
+          <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.03] transition-colors duration-500 backdrop-blur-[2px]" />
+          
           {isSubmitting ? (
-            <>
-              {/* Spinner */}
-              <div className="w-3.5 h-3.5 border-2 border-[#050810] border-t-transparent rounded-full animate-spin" />
-              <span>Transmitting Metrics...</span>
-            </>
-          ) : (
-            <>
-              <span>Submit Core Application</span>
-              <svg className="w-3 h-3 translate-y-[-0.5px]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
+            <span className="relative z-10 font-display text-xs font-semibold tracking-widest text-[var(--text-inverted)]/70 uppercase flex items-center gap-2">
+              <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-            </>
+              Submitting Application...
+            </span>
+          ) : (
+            <span className="relative z-10 font-display text-xs font-semibold tracking-[0.2em] text-[var(--text-inverted)] uppercase flex items-center gap-2">
+              Submit Application
+              <svg className="w-4 h-4 text-[var(--text-inverted)] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </span>
           )}
         </button>
       </form>
-    </div>
+
+      {/* Success Modal Popup */}
+      {isSuccess && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-[var(--overlay-backdrop)] backdrop-blur-md animate-[fadeIn_0.3s_ease-out]">
+          <div className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl border border-[var(--border-default)] bg-[var(--bg-tertiary)]/95 backdrop-blur-2xl shadow-xl text-center animate-[scale-in_0.3s_ease-out] overflow-hidden">
+            {/* Spotlight glow */}
+            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(124,92,252,0.08) 0%, transparent 60%)' }} />
+            
+            {/* Success Icon */}
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[var(--accent-purple)] to-[var(--accent-cyan)] flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(124,92,252,0.3)]">
+              <svg className="w-8 h-8 text-[#050810]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
+            </div>
+
+            <h3 className="text-2xl font-display font-bold text-[var(--text-primary)] mb-3">
+              Application Received!
+            </h3>
+
+            <p className="text-sm text-[var(--text-secondary)] font-body max-w-sm mx-auto mb-8 leading-relaxed">
+              Thank you for applying. Our talent acquisition team has received your profile and will review your resume shortly.
+            </p>
+
+            <button
+              onClick={() => {
+                setIsSuccess(false);
+                setFormData({
+                  name: '',
+                  email: '',
+                  telegram: '',
+                  linkedin: '',
+                  portfolio: '',
+                  message: '',
+                  companyWebsite: '',
+                });
+                setResume(null);
+                setResumeFileName('');
+                setResumeBase64('');
+              }}
+              className="w-full py-3 px-5 text-xs font-semibold uppercase tracking-wider bg-[var(--surface-soft)] border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] rounded-xl transition-all duration-300"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

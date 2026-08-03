@@ -73,16 +73,16 @@ const colors = [
           <button
             class={`service-dock-item text-left py-3.5 lg:py-5 px-4 lg:px-6 rounded-xl lg:rounded-2xl border transition-all duration-300 flex items-center justify-between group ${
               idx === 0
-                ? 'border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/5 text-white active-item'
-                : 'border-white/5 bg-white/[0.01] text-[var(--text-secondary)] hover:border-white/10 hover:bg-white/[0.02]'
+                ? 'border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/5 text-[var(--text-primary)] active-item'
+                : 'border-[var(--border-subtle)] bg-[var(--surface-faint)] text-[var(--text-secondary)] hover:border-[var(--border-default)] hover:bg-[var(--surface-soft)]'
             }`}
             data-index={idx}
             data-color={colors[idx]}
             aria-pressed={idx === 0 ? "true" : "false"}
           >
             <div class="flex items-center gap-3 lg:gap-4">
-              <span class="font-mono text-[10px] lg:text-xs text-[var(--text-muted)] group-hover:text-white transition-colors">0{idx + 1}</span>
-              <div class="transition-colors group-hover:text-white" set:html={icons[s.id]} />
+              <span class="font-mono text-[10px] lg:text-xs text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">0{idx + 1}</span>
+              <div class="transition-colors group-hover:text-[var(--text-primary)]" set:html={icons[s.id]} />
               <span class="text-xs lg:text-base font-bold font-display tracking-wide">{s.title}</span>
             </div>
             <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -94,38 +94,38 @@ const colors = [
 
       <!-- Right Side: Bento Board Info Display (8 columns) -->
       <div class="lg:col-span-8 relative">
-        <div class="h-full p-5 sm:p-7 lg:p-12 rounded-[20px] lg:rounded-[24px] border border-white/5 bg-gradient-to-br from-white/[0.01] to-white/[0.03] shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative overflow-hidden flex flex-col justify-between min-h-[auto] lg:min-h-[480px]" id="bento-board">
+        <div class="h-full p-5 sm:p-7 lg:p-12 rounded-[20px] lg:rounded-[24px] border border-[var(--border-default)] bg-gradient-to-br from-[var(--surface-faint)] to-[var(--surface-soft)] shadow-[var(--shadow-card)] relative overflow-hidden flex flex-col justify-between min-h-[auto] lg:min-h-[480px]" id="bento-board">
           
           <!-- Dynamic Background Glow based on Active Color -->
           <div class="absolute inset-0 bg-radial-gradient(circle, rgba(255,107,131,0.03) 0%, transparent 60%) pointer-events-none transition-all duration-700" id="bento-glow"></div>
           
           <div class="relative z-10">
             <!-- Header tag info -->
-            <div class="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
+            <div class="flex items-center justify-between mb-8 border-b border-[var(--border-subtle)] pb-6">
               <span class="text-[9px] font-mono font-bold tracking-widest text-[#f0a278] uppercase border border-[#ff6b83]/30 bg-[#ff6b83]/5 px-2.5 py-1 rounded" id="bento-tag">
                 {tags[0]}
               </span>
               <span class="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider" id="bento-index">01 / FEATURED SOLUTION</span>
             </div>
-
+ 
             <!-- Service Details -->
-            <h3 class="font-display text-3xl lg:text-4xl font-bold text-white mb-4 transition-colors" id="bento-title">
+            <h3 class="font-display text-3xl lg:text-4xl font-bold text-[var(--text-primary)] mb-4 transition-colors" id="bento-title">
               {services[0].title}
             </h3>
             <p class="text-sm sm:text-base text-[var(--text-secondary)] font-body leading-relaxed mb-8 max-w-2xl" id="bento-desc">
               {services[0].longDescription}
             </p>
-
+ 
             <!-- Metrics grid inside Bento -->
-            <div class="grid grid-cols-3 gap-4 border-y border-white/5 py-6 mb-8 text-center" id="bento-metrics">
+            <div class="grid grid-cols-3 gap-4 border-y border-[var(--border-subtle)] py-6 mb-8 text-center" id="bento-metrics">
               {services[0].metrics.map(m => (
                 <div>
                   <span class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block mb-1">{m.label}</span>
-                  <span class="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">{m.value}</span>
+                  <span class="font-display text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-tight">{m.value}</span>
                 </div>
               ))}
             </div>
-
+ 
             <!-- Deliverables -->
             <div class="mb-8">
               <span class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block mb-3">Key Scope & Deliverables</span>
@@ -141,12 +141,12 @@ const colors = [
               </ul>
             </div>
           </div>
-
+ 
           <!-- Bottom Action -->
-          <div class="relative z-10 flex flex-wrap gap-4 justify-between items-center border-t border-white/5 pt-6 mt-6">
+          <div class="relative z-10 flex flex-wrap gap-4 justify-between items-center border-t border-[var(--border-subtle)] pt-6 mt-6">
             <a
               href={`/services/${services[0].slug}`}
-              class="inline-flex items-center justify-center backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-2.5 px-5 rounded-full border transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
+              class="inline-flex items-center justify-center backdrop-blur-md text-[var(--text-primary)] font-mono font-semibold uppercase tracking-wider text-[10px] py-2.5 px-5 rounded-full border border-[var(--border-default)] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
               id="bento-cta"
             >
               <span>Read Service Details</span>
@@ -156,7 +156,7 @@ const colors = [
             </a>
             <a
               href="/contact/"
-              class="inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-2.5 px-5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08),inset_0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-[rgba(0,200,240,0.18)] hover:border-[rgba(0,200,240,0.6)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15),inset_0_1px_3px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer"
+              class="inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-[var(--text-primary)] font-mono font-semibold uppercase tracking-wider text-[10px] py-2.5 px-5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08),inset_0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-[rgba(0,200,240,0.18)] hover:border-[rgba(0,200,240,0.6)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15),inset_0_1px_3px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer"
             >
               <span>Configure Custom Setup</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="inline ml-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -262,7 +262,7 @@ const colors = [
         bentoMetrics.innerHTML = s.metrics.map(m => `
           <div>
             <span class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block mb-1">${m.label}</span>
-            <span class="font-display text-xl sm:text-2xl font-bold text-white tracking-tight">${m.value}</span>
+            <span class="font-display text-xl sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">${m.value}</span>
           </div>
         `).join('');
 
@@ -281,7 +281,7 @@ const colors = [
         const rgb = hexToRgb(color);
         bentoCta.style.background = `rgba(${rgb}, 0.1)`;
         bentoCta.style.borderColor = `rgba(${rgb}, 0.35)`;
-        bentoCta.style.boxShadow = `0 8px 24px rgba(${rgb}, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.25)`;
+        bentoCta.style.boxShadow = isLight ? `0 8px 24px rgba(${rgb}, 0.05)` : `0 8px 24px rgba(${rgb}, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.25)`;
 
         // Hover listeners for dynamic glassmorphic response
         bentoCta.onmouseenter = () => {

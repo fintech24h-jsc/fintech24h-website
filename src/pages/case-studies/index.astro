@@ -74,7 +74,7 @@ const collectionSchema = {
       {hasVerifiedCaseStudies ? (
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-animate="stagger">
           {caseStudies.map((cs) => (
-          <div class="glass-card rounded-2xl p-8 sm:p-10 border border-white/5 flex flex-col justify-between group hover:border-cyan-400/35 transition-all duration-300" data-animate-child>
+          <div class="glass-card rounded-2xl p-8 sm:p-10 border border-[var(--border-subtle)] flex flex-col justify-between group hover:border-cyan-400/35 transition-all duration-300" data-animate-child>
             <div>
               <!-- Client & Industry header -->
               <div class="flex items-center justify-between gap-4 mb-6">
@@ -93,7 +93,7 @@ const collectionSchema = {
               </p>
 
               <!-- Highlights list -->
-              <div class="grid grid-cols-3 gap-4 py-6 my-6 border-y border-white/5 text-center">
+              <div class="grid grid-cols-3 gap-4 py-6 my-6 border-y border-[var(--border-subtle)] text-center">
                 <div>
                   <div class="text-lg sm:text-xl font-display font-bold text-cyan-400">{cs.acf.result_roi}</div>
                   <div class="text-[9px] text-[#475569] font-body uppercase tracking-wider mt-0.5">Campaign ROI</div>
@@ -125,11 +125,11 @@ const collectionSchema = {
           ))}
         </div>
       ) : (
-        <div class="max-w-2xl mx-auto rounded-2xl border border-white/10 bg-white/[0.02] p-8 text-center">
+        <div class="max-w-2xl mx-auto rounded-2xl border border-[var(--border-default)] bg-[var(--surface-soft)] p-8 text-center">
           <p class="font-body text-[var(--text-secondary)] leading-relaxed">
             Verified case studies are being prepared. Contact our team for relevant, permissioned references.
           </p>
-          <a href="/contact/" class="mt-6 inline-flex text-sm font-display font-semibold text-[var(--accent-cyan)] hover:text-white transition-colors">
+          <a href="/contact/" class="mt-6 inline-flex text-sm font-display font-semibold text-[var(--accent-cyan)] hover:text-[var(--text-primary)] transition-colors">
             Request references →
           </a>
         </div>

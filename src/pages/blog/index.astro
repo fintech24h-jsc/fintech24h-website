@@ -75,7 +75,7 @@ const blogSchema = {
         {categories.map((c) => (
           <a
             href={`/blog/category/${c.slug}`}
-            class="px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:border-white/30 text-xs font-semibold font-body text-[#94a3b8] hover:text-[#f0f4ff] transition-all"
+            class="px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] hover:border-white/30 text-xs font-semibold font-body text-[#94a3b8] hover:text-[#f0f4ff] transition-all"
           >
             {c.name} ({c.count || 0})
           </a>
@@ -98,7 +98,7 @@ const blogSchema = {
                     href={`/blog/${post.slug}`}
                     tabindex="-1"
                     aria-hidden="true"
-                    class="block relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-white/5 shadow-inner"
+                    class="block relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-[var(--border-subtle)] shadow-inner"
                   >
                     <img
                       src={featuredImage.url}
@@ -131,7 +131,7 @@ const blogSchema = {
               </div>
 
               <!-- Redirect link -->
-              <div class="flex justify-end pt-4 border-t border-white/5 mt-6">
+              <div class="flex justify-end pt-4 border-t border-[var(--border-subtle)] mt-6">
                 <a
                   href={`/blog/${post.slug}`}
                   class="text-[10px] font-semibold text-cyan-400 hover:text-cyan-300 font-display uppercase tracking-wider flex items-center gap-1.5 transition-colors"

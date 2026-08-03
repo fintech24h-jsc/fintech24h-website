@@ -73,21 +73,21 @@ const combinedSchema = [serviceSchema, faqSchema];
     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#121216] pointer-events-none"></div>
     
     <!-- Massive Glass Container -->
-    <div class="max-w-[1400px] w-full mx-auto bg-white/[0.01] border border-white/5 backdrop-blur-3xl rounded-3xl p-8 md:p-16 lg:p-24 relative overflow-hidden shadow-2xl reveal">
+    <div class="max-w-[1400px] w-full mx-auto bg-[var(--surface-faint)] border border-[var(--border-subtle)] backdrop-blur-3xl rounded-3xl p-8 md:p-16 lg:p-24 relative overflow-hidden shadow-2xl reveal">
       
       <!-- Subtle Purple Monolith Glow -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#a78bfa] opacity-[0.03] blur-[120px] rounded-full pointer-events-none"></div>
 
       <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-7">
-          <span class="inline-block px-4 py-2 rounded-full border border-white/10 bg-white/5 font-mono text-[10px] text-white/70 uppercase tracking-[0.2em] mb-8">
+          <span class="inline-block px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-8">
             Strategic Advisory & Execution
           </span>
-          <h1 class="font-display font-light text-[clamp(2.5rem,4vw,4.5rem)] text-white leading-[1.1] tracking-tight mb-8">
+          <h1 class="font-display font-light text-[clamp(2.5rem,4vw,4.5rem)] text-[var(--text-primary)] leading-[1.1] tracking-tight mb-8">
           The Relationships That Take Years to Build <br/>
           <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/50">— We Already Have Them.</span>
         </h1>
-          <p class="font-body text-lg text-white/50 max-w-xl leading-relaxed mb-10 font-light">
+          <p class="font-body text-lg text-[var(--text-secondary)] opacity-70 max-w-xl leading-relaxed mb-10 font-light">
             In Web3, who you integrate with, where you're listed, and who backs you is as important as what you've built. We operate as an extension of your team to secure the partnerships that drive real adoption.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
@@ -99,21 +99,21 @@ const combinedSchema = [serviceSchema, faqSchema];
         
         <div class="lg:col-span-5 hidden lg:flex justify-end relative">
           <!-- Web3 Deal Flow / Network Mockup -->
-          <div class="w-full max-w-md bg-[#050508]/80 border border-white/10 rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden group">
+          <div class="w-full max-w-md bg-[#050508]/80 border border-[var(--border-default)] rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden group">
             
             <!-- Scanning Light Effect -->
             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#a78bfa]/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan_3s_linear_infinite] pointer-events-none"></div>
 
             <!-- Top Bar -->
-            <div class="flex justify-between items-center mb-8 border-b border-white/5 pb-4">
+            <div class="flex justify-between items-center mb-8 border-b border-[var(--border-subtle)] pb-4">
               <div class="flex items-center gap-3">
                 <div class="relative w-8 h-8 rounded-full bg-gradient-to-br from-[#a78bfa] to-purple-800 flex items-center justify-center">
                   <div class="absolute inset-0 rounded-full bg-[#a78bfa] animate-ping opacity-20"></div>
-                  <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+                  <svg class="w-4 h-4 text-[var(--text-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
                 </div>
                 <div>
-                  <div class="font-mono text-[10px] text-white/50 tracking-widest">NETWORK_STATUS</div>
-                  <div class="font-display text-sm text-white font-medium">Global Deal Pipeline</div>
+                  <div class="font-mono text-[10px] text-[var(--text-secondary)] opacity-70 tracking-widest">NETWORK_STATUS</div>
+                  <div class="font-display text-sm text-[var(--text-primary)] font-medium">Global Deal Pipeline</div>
                 </div>
               </div>
               <div class="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 font-mono text-[10px] animate-pulse">
@@ -130,18 +130,18 @@ const combinedSchema = [serviceSchema, faqSchema];
 
               <!-- Node 1 -->
               <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md group-hover:border-[#a78bfa]/50 group-hover:shadow-[0_0_15px_rgba(167,139,250,0.3)] transition-all duration-300">
-                  <span class="text-white font-display font-bold">P</span>
+                <div class="w-12 h-12 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-default)] flex items-center justify-center backdrop-blur-md group-hover:border-[#a78bfa]/50 group-hover:shadow-[0_0_15px_rgba(167,139,250,0.3)] transition-all duration-300">
+                  <span class="text-[var(--text-primary)] font-display font-bold">P</span>
                 </div>
-                <span class="font-mono text-[9px] text-white/40">PROJECT</span>
+                <span class="font-mono text-[9px] text-[var(--text-muted)]">PROJECT</span>
               </div>
               
               <!-- Node 2 -->
               <div class="relative z-10 flex flex-col items-center gap-2 mt-12">
-                <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md group-hover:border-white/30 transition-all duration-300 delay-100">
-                  <svg class="w-4 h-4 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                <div class="w-10 h-10 rounded-full bg-[var(--surface-soft)] border border-[var(--border-default)] flex items-center justify-center backdrop-blur-md group-hover:border-white/30 transition-all duration-300 delay-100">
+                  <svg class="w-4 h-4 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                 </div>
-                <span class="font-mono text-[9px] text-white/40">VC/KOLS</span>
+                <span class="font-mono text-[9px] text-[var(--text-muted)]">VC/KOLS</span>
               </div>
 
               <!-- Node 3 -->
@@ -155,15 +155,15 @@ const combinedSchema = [serviceSchema, faqSchema];
 
             <!-- Action Logs -->
             <div class="space-y-3 font-mono text-[10px]">
-              <div class="flex items-center gap-3 text-white/40 bg-white/5 rounded-lg p-2">
+              <div class="flex items-center gap-3 text-[var(--text-muted)] bg-[var(--surface-soft)] rounded-lg p-2">
                 <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                 <span>[09:41] Pitch Deck verified & sent to Partners.</span>
               </div>
-              <div class="flex items-center gap-3 text-white/40 bg-white/5 rounded-lg p-2">
+              <div class="flex items-center gap-3 text-[var(--text-muted)] bg-[var(--surface-soft)] rounded-lg p-2">
                 <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
                 <span>[10:15] Meeting scheduled with Listing Committee.</span>
               </div>
-              <div class="flex items-center gap-3 text-white/90 bg-[#a78bfa]/10 border border-[#a78bfa]/30 rounded-lg p-2 transform group-hover:-translate-y-1 transition-transform">
+              <div class="flex items-center gap-3 text-[var(--text-primary)]/90 bg-[#a78bfa]/10 border border-[#a78bfa]/30 rounded-lg p-2 transform group-hover:-translate-y-1 transition-transform">
                 <span class="w-1.5 h-1.5 rounded-full bg-[#a78bfa] animate-pulse"></span>
                 <span>[11:00] Due Diligence Approved. Proceed to Listing.</span>
               </div>
@@ -178,10 +178,10 @@ const combinedSchema = [serviceSchema, faqSchema];
   <section class="py-32 bg-[#121216] relative">
     <div class="max-w-[1400px] mx-auto px-4 md:px-8">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 reveal">
-        <h2 class="font-display text-4xl md:text-5xl font-light text-white max-w-2xl">
-          Why Most Web3 BD Efforts <span class="font-bold text-white/50">Stall.</span>
+        <h2 class="font-display text-4xl md:text-5xl font-light text-[var(--text-primary)] max-w-2xl">
+          Why Most Web3 BD Efforts <span class="font-bold text-[var(--text-secondary)] opacity-70">Stall.</span>
         </h2>
-        <p class="font-mono text-xs text-white/30 uppercase tracking-[0.2em] mt-6 md:mt-0">Market Realities</p>
+        <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-[0.2em] mt-6 md:mt-0">Market Realities</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
@@ -192,12 +192,12 @@ const combinedSchema = [serviceSchema, faqSchema];
           { title: 'Lack of Localization', desc: 'Entering Asian or UAE markets with a purely Western approach fails. Local networks control access.' },
           { title: 'Founders as BD', desc: 'When technical founders spend 80% of their time chasing partnerships, the product suffers. BD is a full-time function.' }
         ].map((item, i) => (
-          <div class={`bg-white/[0.02] p-10 hover:bg-white/[0.04] transition-colors duration-500 reveal ${i === 3 ? 'md:col-span-2' : ''} ${i === 4 ? 'md:col-span-1' : ''}`} style={`transition-delay: ${i * 0.1}s`}>
-            <div class="w-10 h-10 border border-white/10 rounded-lg flex items-center justify-center mb-16">
-              <span class="font-mono text-xs text-white/40">0{i+1}</span>
+          <div class={`bg-[var(--surface-soft)] p-10 hover:bg-[var(--surface-soft)] transition-colors duration-500 reveal ${i === 3 ? 'md:col-span-2' : ''} ${i === 4 ? 'md:col-span-1' : ''}`} style={`transition-delay: ${i * 0.1}s`}>
+            <div class="w-10 h-10 border border-[var(--border-default)] rounded-lg flex items-center justify-center mb-16">
+              <span class="font-mono text-xs text-[var(--text-muted)]">0{i+1}</span>
             </div>
-            <h3 class="font-display text-2xl text-white font-light mb-4">{item.title}</h3>
-            <p class="font-body text-white/50 font-light leading-relaxed">{item.desc}</p>
+            <h3 class="font-display text-2xl text-[var(--text-primary)] font-light mb-4">{item.title}</h3>
+            <p class="font-body text-[var(--text-secondary)] opacity-70 font-light leading-relaxed">{item.desc}</p>
           </div>
         ))}
       </div>
@@ -208,10 +208,10 @@ const combinedSchema = [serviceSchema, faqSchema];
   <section class="py-32 bg-[#0a0a0c]">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <div class="text-center mb-24 reveal">
-        <h2 class="font-display text-4xl text-white font-light">The Execution Framework</h2>
+        <h2 class="font-display text-4xl text-[var(--text-primary)] font-light">The Execution Framework</h2>
       </div>
 
-      <div class="space-y-0 border-t border-white/10">
+      <div class="space-y-0 border-t border-[var(--border-default)]">
         {[
           { step: '01', title: 'Asset Audit & Readiness Review', desc: 'Before making introductions, we audit your project through the lens of a potential partner or exchange. Are your metrics healthy? Is your documentation clear? Is your legal structure sound? We fix the gaps before we go to market.' },
           { step: '02', title: 'Target Mapping & Strategy', desc: 'We identify the specific exchanges, protocols, or enterprise partners that will move the needle for your project. We map the decision-makers, determine the value proposition for them, and define the engagement strategy.' },
@@ -219,11 +219,11 @@ const combinedSchema = [serviceSchema, faqSchema];
           { step: '04', title: 'Deal Structuring & Negotiation', desc: 'From exchange listing agreements to co-marketing partnerships, we advise on standard market terms, identify hidden costs, and help negotiate structures that align with your long-term tokenomics and runway.' },
           { step: '05', title: 'Post-Deal Activation', desc: 'Signing the partnership is the beginning, not the end. We oversee the activation phase — ensuring technical integrations happen, co-marketing is executed, and the partnership actually delivers the promised value.' }
         ].map((item, i) => (
-          <div class="group border-b border-white/10 py-12 flex flex-col md:flex-row gap-8 md:gap-16 hover:bg-white/[0.01] transition-colors px-6 reveal">
-            <div class="font-mono text-sm text-white/30 shrink-0 mt-1">{item.step}</div>
+          <div class="group border-b border-[var(--border-default)] py-12 flex flex-col md:flex-row gap-8 md:gap-16 hover:bg-[var(--surface-faint)] transition-colors px-6 reveal">
+            <div class="font-mono text-sm text-[var(--text-muted)] shrink-0 mt-1">{item.step}</div>
             <div class="flex-1">
-              <h3 class="font-display text-3xl text-white font-light mb-6">{item.title}</h3>
-              <p class="font-body text-white/50 text-lg leading-relaxed font-light max-w-2xl">{item.desc}</p>
+              <h3 class="font-display text-3xl text-[var(--text-primary)] font-light mb-6">{item.title}</h3>
+              <p class="font-body text-[var(--text-secondary)] opacity-70 text-lg leading-relaxed font-light max-w-2xl">{item.desc}</p>
             </div>
           </div>
         ))}
@@ -241,9 +241,9 @@ const combinedSchema = [serviceSchema, faqSchema];
           { title: 'Regional Market Entry', desc: 'Acting as your localized BD team in SE Asia and UAE. We navigate local culture and connect you with regional partners.' },
           { title: 'B2B Sales', desc: 'For enterprise-facing Web3 tools. We build the sales pipeline, manage outreach, and drive qualified leads to your tech team.' }
         ].map((s, i) => (
-          <div class="bg-[#0a0a0c] border border-white/5 rounded-2xl p-8 hover:border-white/20 transition-all duration-500 reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <h3 class="font-display text-xl text-white font-medium mb-4">{s.title}</h3>
-            <p class="font-body text-white/40 leading-relaxed font-light text-sm">{s.desc}</p>
+          <div class="bg-[#0a0a0c] border border-[var(--border-subtle)] rounded-2xl p-8 hover:border-[var(--border-default)] transition-all duration-500 reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <h3 class="font-display text-xl text-[var(--text-primary)] font-medium mb-4">{s.title}</h3>
+            <p class="font-body text-[var(--text-muted)] leading-relaxed font-light text-sm">{s.desc}</p>
           </div>
         ))}
       </div>
@@ -253,15 +253,15 @@ const combinedSchema = [serviceSchema, faqSchema];
   <!-- FAQ SECTION -->
   <section class="py-32 bg-[#0a0a0c]">
     <div class="max-w-3xl mx-auto px-4">
-      <h2 class="font-display text-3xl text-white font-light text-center mb-16 reveal">Frequently Asked Questions</h2>
+      <h2 class="font-display text-3xl text-[var(--text-primary)] font-light text-center mb-16 reveal">Frequently Asked Questions</h2>
       <div class="space-y-4">
         {faqs.map((faq, i) => (
-          <details class="group bg-white/[0.02] border border-white/5 rounded-xl reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white/80 font-medium hover:text-white transition-colors">
+          <details class="group bg-[var(--surface-soft)] border border-[var(--border-subtle)] rounded-xl reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-[var(--text-primary)]/80 font-medium hover:text-[var(--text-primary)] transition-colors">
               {faq.q}
-              <span class="text-white/30 group-open:rotate-45 transition-transform duration-300">+</span>
+              <span class="text-[var(--text-muted)] group-open:rotate-45 transition-transform duration-300">+</span>
             </summary>
-            <div class="p-6 pt-0 text-white/50 font-light leading-relaxed">
+            <div class="p-6 pt-0 text-[var(--text-secondary)] opacity-70 font-light leading-relaxed">
               <p>{faq.a}</p>
             </div>
           </details>
