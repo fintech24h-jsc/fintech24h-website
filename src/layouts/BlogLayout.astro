@@ -192,6 +192,30 @@ const breadcrumbs = [
 <style is:global>
   /* Base paragraph spacings */
   .prose p { margin-bottom: 2rem; }
+
+  /*
+   * WordPress injects article HTML at runtime, so utility variants such as
+   * `prose-a:*` are not generated without the Typography plugin. Style the
+   * actual CMS links here instead, scoped strictly to blog content.
+   */
+  .prose a[href] {
+    /* Override the occasional `color: inherit` inline style from WordPress. */
+    color: var(--accent-cyan) !important;
+    font-weight: 500;
+    /* Some WordPress links have an inline underline; remove it consistently. */
+    text-decoration: none !important;
+    transition: color 0.2s ease-out;
+  }
+
+  .prose a[href]:hover {
+    color: var(--text-primary) !important;
+  }
+
+  .prose a[href]:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
   
   /* Beautiful Headings - Friendlier */
   .prose h2 {
