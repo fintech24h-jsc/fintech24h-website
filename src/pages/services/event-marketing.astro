@@ -6,8 +6,8 @@ import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
-  { name: 'Services', item: 'https://fintech24h.com/services' },
-  { name: 'Event Marketing', item: 'https://fintech24h.com/services/event-marketing' }
+  { name: 'Services', item: 'https://fintech24h.com/services/' },
+  { name: 'Event Marketing', item: 'https://fintech24h.com/services/event-marketing/' }
 ];
 
 const faqs = [
@@ -37,7 +37,7 @@ const serviceSchema = {
     "@type": "Organization",
     "name": "Fintech24h"
   },
-  "url": "https://fintech24h.com/services/event-marketing",
+  "url": "https://fintech24h.com/services/event-marketing/",
   "description": "Maximize your presence at Web3 conferences. Fintech24h secures speaking slots, manages media partnerships, activates sponsors, and amplifies event coverage."
 };
 
@@ -86,7 +86,7 @@ const combinedSchema = [serviceSchema, faqSchema];
       </p>
 
       <div class="reveal reveal-delay-3">
-        <a href="/contact" class="inline-flex items-center justify-center border border-white/30 px-10 py-4 text-white font-mono text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 backdrop-blur-sm">
+        <a href="/contact/" class="inline-flex items-center justify-center border border-white/30 px-10 py-4 text-white font-mono text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 backdrop-blur-sm">
           Plan Your Event
         </a>
       </div>

@@ -6,7 +6,7 @@ import { services } from '../../data/services';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
-  { name: 'Services', item: 'https://fintech24h.com/services' }
+  { name: 'Services', item: 'https://fintech24h.com/services/' }
 ];
 // Services ItemList Schema
 const itemListSchema = {
@@ -15,7 +15,7 @@ const itemListSchema = {
   "itemListElement": services.map((s, index) => ({
     "@type": "ListItem",
     "position": index + 1,
-    "url": `https://fintech24h.com/services/${s.slug}`,
+    "url": `https://fintech24h.com/services/${s.slug}/`,
     "name": s.title
   }))
 };

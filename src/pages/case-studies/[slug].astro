@@ -22,8 +22,8 @@ const { acf } = caseStudy;
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
-  { name: 'Case Studies', item: 'https://fintech24h.com/case-studies' },
-  { name: acf.client_name, item: `https://fintech24h.com/case-studies/${caseStudy.slug}` }
+  { name: 'Case Studies', item: 'https://fintech24h.com/case-studies/' },
+  { name: acf.client_name, item: `https://fintech24h.com/case-studies/${caseStudy.slug}/` }
 ];
 ---
 
@@ -44,7 +44,7 @@ const breadcrumbs = [
     <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Back Link -->
-      <a href="/case-studies" class="inline-flex items-center gap-2 text-sm text-[var(--accent-cyan)] hover:text-cyan-300 transition-colors mb-8 font-body">
+      <a href="/case-studies/" class="inline-flex items-center gap-2 text-sm text-[var(--accent-cyan)] hover:text-cyan-300 transition-colors mb-8 font-body">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         Back to case studies
       </a>
@@ -147,10 +147,10 @@ const breadcrumbs = [
           Get in touch today. Our builders will audit your product and deliver a tailored proposal within 24 hours.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
-          <a href="/contact" class="btn-primary font-display font-semibold text-sm">
+          <a href="/contact/" class="btn-primary font-display font-semibold text-sm">
             <span>Get My Proposal</span>
           </a>
-          <a href="/contact" class="btn-ghost font-display font-semibold text-sm">
+          <a href="/contact/" class="btn-ghost font-display font-semibold text-sm">
             <span>Book Discovery Call</span>
           </a>
         </div>

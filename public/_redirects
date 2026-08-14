@@ -1,0 +1,19 @@
+# Canonical static-page URLs. Astro emits these pages as index.html files, so
+# Cloudflare would otherwise issue a temporary 307 for the slashless variant.
+# Keep each historic form to one permanent, single-hop canonical URL.
+/about /about/ 301
+/careers /careers/ 301
+/careers/content-social-media-specialist /careers/content-social-media-specialist/ 301
+/careers/community-partnership-specialist /careers/community-partnership-specialist/ 301
+/case-studies /case-studies/ 301
+/contact /contact/ 301
+/privacy /privacy/ 301
+/services /services/ 301
+/services/ai-marketing /services/ai-marketing/ 301
+/services/business-development /services/business-development/ 301
+/services/community-growth /services/community-growth/ 301
+/services/custom-solutions /services/custom-solutions/ 301
+/services/event-marketing /services/event-marketing/ 301
+/services/kol-marketing /services/kol-marketing/ 301
+/services/pr-media /services/pr-media/ 301
+/terms /terms/ 301

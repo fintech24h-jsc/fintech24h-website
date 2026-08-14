@@ -47,7 +47,7 @@ export default function NavbarReact() {
           {/* Centered Navigation Links (Desktop) */}
           <div className="hidden md:flex items-center gap-8 text-white/80 text-sm font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
             <a href="/" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">home</a>
-            <a href="/about" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">about us</a>
+            <a href="/about/" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">about us</a>
             
             {/* Services Dropdown */}
             <div 
@@ -87,13 +87,13 @@ export default function NavbarReact() {
             </div>
 
             <a href="/blog" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">blog</a>
-            <a href="/contact" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
+            <a href="/contact/" className="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
           </div>
 
           {/* Right Side: CTA Button & Hamburger */}
           <div className="flex items-center gap-4">
             <a
-              href="/contact"
+              href="/contact/"
               className="inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-2 px-5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08),inset_0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-[rgba(0,200,240,0.18)] hover:border-[rgba(0,200,240,0.6)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15),inset_0_1px_3px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer"
             >
               <span>Get Proposal</span>
@@ -133,7 +133,7 @@ export default function NavbarReact() {
                 home
               </a>
               <a
-                href="/about"
+                href="/about/"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
               >
@@ -165,7 +165,7 @@ export default function NavbarReact() {
                 blog
               </a>
               <a
-                href="/contact"
+                href="/contact/"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="hover:text-[var(--accent-cyan)] transition-colors duration-300"
               >
@@ -175,7 +175,7 @@ export default function NavbarReact() {
 
             <div className="mt-auto border-t border-white/5 pt-6">
               <a
-                href="/contact"
+                href="/contact/"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full text-center inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-3 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08)] cursor-pointer"
               >

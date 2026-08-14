@@ -23,8 +23,10 @@ const {
   // Canonical must never include the query string — otherwise pages hit with
   // junk params (e.g. /blog/?paged=50, ?amp=1, or leftover hack spam params)
   // self-canonicalize to a duplicate URL and get stuck in Google's
-  // "Crawled - currently not indexed" bucket. Default to origin + pathname.
-  canonical = Astro.url.origin + Astro.url.pathname,
+  // "Crawled - currently not indexed" bucket. The public canonical host is
+  // fixed so a request reaching www (or a preview host) never emits a
+  // self-referential duplicate canonical.
+  canonical = `https://fintech24h.com${Astro.url.pathname}`,
   ogImage = 'https://fintech24h.com/wp-content/uploads/2026/07/OG-FI24H.png',
   ogType = 'website',
   schema,

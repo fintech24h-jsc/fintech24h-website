@@ -12,14 +12,14 @@ const pageDescription = hasVerifiedCaseStudies
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
-  { name: 'Case Studies', item: 'https://fintech24h.com/case-studies' }
+  { name: 'Case Studies', item: 'https://fintech24h.com/case-studies/' }
 ];
 
 const collectionSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "name": "Fintech24h Case Studies — Web3 Campaign Results",
-  "url": "https://fintech24h.com/case-studies",
+  "url": "https://fintech24h.com/case-studies/",
   "description": pageDescription,
   "provider": {
     "@type": "Organization",
@@ -30,7 +30,7 @@ const collectionSchema = {
     "@type": "Article",
     "position": i + 1,
     "name": cs.title.rendered,
-    "url": `https://fintech24h.com/case-studies/${cs.slug}`
+    "url": `https://fintech24h.com/case-studies/${cs.slug}/`
   }))
 };
 ---

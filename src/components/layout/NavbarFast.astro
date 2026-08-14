@@ -29,7 +29,7 @@ const showBlog = await isBlogAvailable();
     <!-- Desktop nav — same classes, absolute-centered -->
     <div class="hidden md:flex items-center gap-8 text-white/80 text-sm font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
       <a href="/" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">home</a>
-      <a href="/about" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">about us</a>
+      <a href="/about/" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">about us</a>
 
       <!-- Services dropdown (hover) -->
       <div id="svc-wrap" class="relative">
@@ -59,24 +59,24 @@ const showBlog = await isBlogAvailable();
           id="svc-dropdown"
           class="svc-dd absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 bg-[#080c1a]/95 backdrop-blur-2xl border border-white/10 p-3 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col gap-1 z-50 text-left"
         >
-          <a href="/services/kol-marketing"       class="svc-link">kol marketing</a>
-          <a href="/services/pr-media"             class="svc-link">pr campaigns</a>
-          <a href="/services/community-growth"     class="svc-link">community growth</a>
-          <a href="/services/event-marketing"      class="svc-link">event marketing</a>
-          <a href="/services/ai-marketing"         class="svc-link">ai marketing</a>
-          <a href="/services/business-development" class="svc-link">business development</a>
-          <a href="/services/custom-solutions"     class="svc-link text-[var(--accent-cyan)] font-bold">custom solutions</a>
+          <a href="/services/kol-marketing/"       class="svc-link">kol marketing</a>
+          <a href="/services/pr-media/"             class="svc-link">pr campaigns</a>
+          <a href="/services/community-growth/"     class="svc-link">community growth</a>
+          <a href="/services/event-marketing/"      class="svc-link">event marketing</a>
+          <a href="/services/ai-marketing/"         class="svc-link">ai marketing</a>
+          <a href="/services/business-development/" class="svc-link">business development</a>
+          <a href="/services/custom-solutions/"     class="svc-link text-[var(--accent-cyan)] font-bold">custom solutions</a>
         </div>
       </div>
 
       {showBlog && <a href="/blog"    class="hover:text-[var(--accent-cyan)] transition-colors duration-300">blog</a>}
-      <a href="/contact" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
+      <a href="/contact/" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
     </div>
 
     <!-- Right: CTA button + hamburger -->
     <div class="flex items-center gap-4">
       <a
-        href="/contact"
+        href="/contact/"
         class="inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-2 px-5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.08),inset_0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-300 hover:bg-[rgba(0,200,240,0.18)] hover:border-[rgba(0,200,240,0.6)] hover:shadow-[0_4px_12px_rgba(0,200,240,0.15),inset_0_1px_3px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 cursor-pointer"
       >
         <span>Get Proposal</span>
@@ -116,29 +116,29 @@ const showBlog = await isBlogAvailable();
 >
   <div class="flex flex-col gap-5 text-sm font-semibold tracking-widest font-mono text-white/80">
     <a href="/"       class="hover:text-[var(--accent-cyan)] transition-colors duration-300">home</a>
-    <a href="/about"  class="hover:text-[var(--accent-cyan)] transition-colors duration-300">about us</a>
+    <a href="/about/"  class="hover:text-[var(--accent-cyan)] transition-colors duration-300">about us</a>
 
     <div>
       <span class="text-[var(--accent-cyan)] text-[10px] tracking-widest block mb-3 font-mono border-b border-white/10 pb-2">SERVICES</span>
       <div class="flex flex-col gap-4 pl-3 border-l border-white/5">
-        <a href="/services/kol-marketing"       class="text-xs font-sans text-white/70 hover:text-white transition-colors">kol marketing</a>
-        <a href="/services/pr-media"             class="text-xs font-sans text-white/70 hover:text-white transition-colors">pr campaigns</a>
-        <a href="/services/community-growth"     class="text-xs font-sans text-white/70 hover:text-white transition-colors">community growth</a>
-        <a href="/services/event-marketing"      class="text-xs font-sans text-white/70 hover:text-white transition-colors">event marketing</a>
-        <a href="/services/ai-marketing"         class="text-xs font-sans text-white/70 hover:text-white transition-colors">ai marketing</a>
-        <a href="/services/business-development" class="text-xs font-sans text-white/70 hover:text-white transition-colors">business development</a>
-        <a href="/services/custom-solutions"     class="text-xs font-sans text-[var(--accent-cyan)] font-semibold hover:text-white transition-colors">custom solutions</a>
+        <a href="/services/kol-marketing/"       class="text-xs font-sans text-white/70 hover:text-white transition-colors">kol marketing</a>
+        <a href="/services/pr-media/"             class="text-xs font-sans text-white/70 hover:text-white transition-colors">pr campaigns</a>
+        <a href="/services/community-growth/"     class="text-xs font-sans text-white/70 hover:text-white transition-colors">community growth</a>
+        <a href="/services/event-marketing/"      class="text-xs font-sans text-white/70 hover:text-white transition-colors">event marketing</a>
+        <a href="/services/ai-marketing/"         class="text-xs font-sans text-white/70 hover:text-white transition-colors">ai marketing</a>
+        <a href="/services/business-development/" class="text-xs font-sans text-white/70 hover:text-white transition-colors">business development</a>
+        <a href="/services/custom-solutions/"     class="text-xs font-sans text-[var(--accent-cyan)] font-semibold hover:text-white transition-colors">custom solutions</a>
       </div>
     </div>
 
     {showBlog && <a href="/blog"    class="hover:text-[var(--accent-cyan)] transition-colors duration-300 mt-2">blog</a>}
-    <a href="/contact" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
+    <a href="/contact/" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">contact</a>
   </div>
 
   <div class="mt-auto border-t border-white/10 pt-6 relative">
     <div class="absolute inset-0 bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] opacity-10 blur-xl"></div>
     <a
-      href="/contact"
+      href="/contact/"
       class="relative w-full text-center inline-flex items-center justify-center bg-[rgba(0,200,240,0.1)] border border-[rgba(0,200,240,0.35)] backdrop-blur-md text-white font-mono font-semibold uppercase tracking-wider text-[10px] py-3.5 rounded-full shadow-[0_8px_24px_rgba(0,200,240,0.15)] transition-colors hover:bg-[rgba(0,200,240,0.2)] cursor-pointer"
     >
       Get Proposal
