@@ -2,6 +2,7 @@ import { defineMiddleware } from 'astro:middleware';
 
 const CANONICAL_HOST = 'fintech24h.com';
 const WWW_HOST = `www.${CANONICAL_HOST}`;
+const LEGACY_PAGED_CATEGORY_SLUGS = new Set(['knowledge', 'news', 'partner-relationship']);
 
 function canonicalPathname(pathname: string): string {
   const lowercasePath = pathname.toLowerCase();
@@ -9,6 +10,10 @@ function canonicalPathname(pathname: string): string {
   // Historic homepage files have a single equivalent and should not create
   // an additional hop through the legacy dynamic route.
   if (lowercasePath === '/home' || lowercasePath === '/home.html') return '/';
+
+  // WordPress commonly exposed this underscore variant; Astro publishes the
+  // canonical hyphenated sitemap index instead.
+  if (lowercasePath === '/sitemap_index.xml') return '/sitemap-index.xml';
 
   // Dynamic blog, category and author routes are canonical without a trailing
   // slash. These routes otherwise serve both variants as separate 200 pages.
@@ -27,17 +32,43 @@ export const onRequest = defineMiddleware((context, next) => {
   const target = new URL(context.url);
   const normalizedPathname = canonicalPathname(target.pathname);
   const isLegacyCategory = /^\/category\/([^/]+)\/?$/i.exec(target.pathname);
+  const isLegacyPagedCategory = /^\/category\/([^/]+)\/page\/\d+\/?$/i.exec(target.pathname);
+  const isLegacyBlogPage = /^\/blog\/page\/\d+\/?$/i.test(normalizedPathname);
+  const isLegacyBlogFeed = /^\/blog\/feed\/?$/i.test(normalizedPathname);
+  const isLegacyAdminArchive = /^\/author\/admin(?:\/page\/\d+)?\/?$/i.test(normalizedPathname);
   const isBlogIndex = normalizedPathname === '/blog';
 
   if (isLegacyCategory) {
     target.pathname = `/blog/category/${isLegacyCategory[1]}`;
     target.search = '';
+  } else if (isLegacyPagedCategory && LEGACY_PAGED_CATEGORY_SLUGS.has(isLegacyPagedCategory[1].toLowerCase())) {
+    // The current blog has no crawlable archive pagination. Preserve the
+    // topical archive instead of returning a 404 for historic WP page URLs.
+    target.pathname = `/blog/category/${isLegacyPagedCategory[1].toLowerCase()}`;
+    target.search = '';
   } else {
     target.pathname = normalizedPathname;
 
-    // The blog index intentionally has no query-string variants. Preserve the
-    // existing behaviour, but collapse the URL in the same permanent redirect.
-    if (isBlogIndex && target.search) target.search = '';
+    if (isLegacyBlogFeed) {
+      // Astro's site-wide RSS feed replaces the legacy WordPress blog feed.
+      target.pathname = '/rss.xml';
+      target.search = '';
+    } else if (isLegacyBlogPage) {
+      // Historic WordPress pagination has no one-to-one page in the current
+      // blog, so consolidate it with the canonical blog index.
+      target.pathname = '/blog';
+      target.search = '';
+    } else if (isLegacyAdminArchive) {
+      // Only admin has a current author archive. Collapse its obsolete
+      // pagination/query variants without guessing destinations for other
+      // removed authors.
+      target.pathname = '/author/admin';
+      target.search = '';
+      // The blog index intentionally has no query-string variants. Preserve the
+      // existing behaviour, but collapse the URL in the same permanent redirect.
+    } else if (isBlogIndex && target.search) {
+      target.search = '';
+    }
   }
 
   const isWrongHost = target.hostname.toLowerCase() === WWW_HOST;

@@ -4,6 +4,8 @@
 // paginated, feed, and spam URLs do not become irrelevant soft-404 redirects.
 export const prerender = false;
 
+import { getPostBySlug } from '../lib/wordpress';
+
 const { path } = Astro.params;
 const key = path?.replace(/\/$/, '').toLowerCase();
 
@@ -15,6 +17,14 @@ const LEGACY_REDIRECTS: Record<string, string> = {
 
 if (key && LEGACY_REDIRECTS[key]) {
   return Astro.redirect(LEGACY_REDIRECTS[key], 301);
+}
+
+// WordPress exposed a per-post RSS feed at /{post-slug}/feed/. Redirect only
+// when the post still exists, avoiding blanket redirects for invented paths.
+const legacyPostFeed = key && /^([^/]+)\/feed$/.exec(key);
+if (legacyPostFeed) {
+  const post = await getPostBySlug(legacyPostFeed[1]);
+  if (post) return Astro.redirect(`/blog/${post.slug}`, 301);
 }
 
 return Astro.rewrite('/404');
