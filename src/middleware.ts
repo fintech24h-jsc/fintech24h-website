@@ -41,9 +41,13 @@ export const onRequest = defineMiddleware((context, next) => {
   }
 
   const isWrongHost = target.hostname.toLowerCase() === WWW_HOST;
+  const isInsecureProtocol = target.protocol !== 'https:';
   const hasChangedUrl = target.pathname !== context.url.pathname || target.search !== context.url.search;
 
-  if (isWrongHost || hasChangedUrl) {
+  // A canonical tag is only a hint, so protocol variants must redirect rather
+  // than serve a second 200 response. This keeps HTTP, www, legacy paths and
+  // query variants on a single permanent URL.
+  if (isWrongHost || isInsecureProtocol || hasChangedUrl) {
     target.protocol = 'https:';
     target.hostname = CANONICAL_HOST;
     target.port = '';
