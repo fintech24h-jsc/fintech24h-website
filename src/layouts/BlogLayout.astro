@@ -520,7 +520,11 @@ const breadcrumbs = [
      background, so the currently-read section stands out without adding
      visual weight to the list. */
   .toc-link.is-active {
-    color: var(--accent-cyan);
-    font-weight: 600;
+    /* !important: Tailwind's own .text-slate-400 utility (already on this
+       link for the default/inactive state) otherwise wins the cascade here
+       despite this selector's higher specificity — same reason the
+       .prose a[href] rules above need it. */
+    color: var(--accent-cyan) !important;
+    font-weight: 600 !important;
   }
 </style>
