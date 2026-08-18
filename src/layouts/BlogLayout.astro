@@ -284,10 +284,12 @@ const breadcrumbs = [
     // block) + scroll-spy highlight for the "On This Page" sidebar nav.
     // Guarded to only run when the TOC/CTA sidebar is actually rendered.
     //
-    // Plain JS on purpose (no TypeScript syntax like `: string | null` or
-    // `querySelectorAll<HTMLAnchorElement>`) — Astro's inline <script>
-    // pipeline did not strip those annotations, so the file shipped broken
-    // to the browser (SyntaxError on load) and none of this ever ran.
+    // Plain JS on purpose, no TypeScript type annotations. NOTE: never spell
+    // out an HTML tag delimiter around the word "script" inside this block,
+    // not even in a comment — the HTML parser scans raw tag content for that
+    // exact sequence and will end the element early, truncating everything
+    // after it and breaking this block with a stray syntax error in whatever
+    // text spills out afterward.
     (function () {
       var content = document.getElementById('article-content');
       var progressBar = document.getElementById('reading-progress-bar');
