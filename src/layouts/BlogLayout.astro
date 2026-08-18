@@ -3,7 +3,7 @@
 import BaseLayout from './BaseLayout.astro';
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 import { formatDate, getFeaturedImage, getPostAuthor } from '../lib/wordpress';
-import { getReadingTime, getTableOfContents } from '../lib/utils';
+import { getReadingTime, getTableOfContents, decodeHtmlEntities } from '../lib/utils';
 import type { WPPost } from '../lib/wordpress';
 
 interface Props {
@@ -28,7 +28,7 @@ const articleSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": post.title.rendered,
-  "description": post.excerpt.rendered.replace(/<[^>]*>/g, '').trim(),
+  "description": decodeHtmlEntities(post.excerpt.rendered.replace(/<[^>]*>/g, '')).trim(),
   "image": featuredImage.url,
   "datePublished": post.date,
   "dateModified": post.modified,
@@ -69,7 +69,7 @@ const breadcrumbs = [
 
 <BaseLayout
   title={post.title.rendered}
-  description={post.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160).trim()}
+  description={decodeHtmlEntities(post.excerpt.rendered.replace(/<[^>]*>/g, '')).slice(0, 160).trim()}
   ogImage={featuredImage.url}
   ogType="article"
   schema={articleSchema}

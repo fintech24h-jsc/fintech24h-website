@@ -12,6 +12,8 @@
 // extra hop. Caching is handled ourselves below via the Workers Cache API,
 // so it doesn't matter which URL we fetch through — see fetchWP().
 
+import { decodeHtmlEntities } from './utils';
+
 const WP_API_BASE = (import.meta.env?.WP_API_URL || 'https://origin.fintech24h.com/wp-json/wp/v2').replace(/\/$/, '');
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -161,15 +163,25 @@ async function fetchWP<T>(endpoint: string, params: Record<string, string> = {})
 
 // ─── Blog Posts ───────────────────────────────────────────────────────────────
 
+// WP's REST API returns `title.rendered` already HTML-entity-encoded (e.g. a
+// literal `&#8217;` for a curly apostrophe). That's fine when inserted via
+// `set:html`, but breaks the moment a caller renders it as plain text —
+// decode it once here so every consumer across the site gets clean text
+// automatically instead of each having to remember to do it.
+function decodeTitle<T extends { title: { rendered: string } }>(item: T): T {
+  return { ...item, title: { rendered: decodeHtmlEntities(item.title.rendered) } };
+}
+
 export async function getAllPosts(page = 1, perPage = 24): Promise<WPPost[]> {
   try {
-    return await fetchWP<WPPost[]>('/posts', {
+    const posts = await fetchWP<WPPost[]>('/posts', {
       page: String(page),
       per_page: String(perPage),
       status: 'publish',
       orderby: 'date',
       order: 'desc',
     });
+    return posts.map(decodeTitle);
   } catch (err) {
     console.warn('WP API fail: getAllPosts', err);
     return [];
@@ -179,7 +191,7 @@ export async function getAllPosts(page = 1, perPage = 24): Promise<WPPost[]> {
 export async function getPostBySlug(slug: string): Promise<WPPost | null> {
   try {
     const posts = await fetchWP<WPPost[]>('/posts', { slug, status: 'publish' });
-    return posts[0] || null;
+    return posts[0] ? decodeTitle(posts[0]) : null;
   } catch (err) {
     console.warn(`WP API fail: getPostBySlug ${slug}`, err);
     return null;
@@ -190,13 +202,14 @@ export async function getPostsByCategory(categorySlug: string, perPage = 24): Pr
   try {
     const categories = await fetchWP<WPCategory[]>('/categories', { slug: categorySlug });
     if (!categories[0]) return [];
-    return await fetchWP<WPPost[]>('/posts', {
+    const posts = await fetchWP<WPPost[]>('/posts', {
       categories: String(categories[0].id),
       per_page: String(perPage),
       status: 'publish',
       orderby: 'date',
       order: 'desc',
     });
+    return posts.map(decodeTitle);
   } catch (err) {
     console.warn(`WP API fail: getPostsByCategory ${categorySlug}`, err);
     return [];
@@ -229,12 +242,12 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
   }
 
   try {
-    const items = await fetchWP<CaseStudy[]>('/case-study', {
+    const items = (await fetchWP<CaseStudy[]>('/case-study', {
       per_page: '100',
       status: 'publish',
       orderby: 'date',
       order: 'desc',
-    });
+    })).map(decodeTitle);
     if (items && items.length > 0) {
       cachedCaseStudies = items;
       return items;
@@ -267,7 +280,8 @@ export async function getAllCategories(): Promise<WPCategory[]> {
   }
 
   try {
-    const items = await fetchWP<WPCategory[]>('/categories', { per_page: '100', hide_empty: 'true' });
+    const items = (await fetchWP<WPCategory[]>('/categories', { per_page: '100', hide_empty: 'true' }))
+      .map((c) => ({ ...c, name: decodeHtmlEntities(c.name), description: decodeHtmlEntities(c.description) }));
     if (items && items.length > 0) {
       cachedCategories = items;
       return items;
@@ -282,7 +296,7 @@ export async function getAllCategories(): Promise<WPCategory[]> {
 // ─── Utility: Strip HTML ─────────────────────────────────────────────────────
 
 export function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim();
+  return decodeHtmlEntities(html.replace(/<[^>]*>/g, '')).trim();
 }
 
 export function getExcerpt(post: WPPost, maxLength = 160): string {
@@ -321,7 +335,7 @@ export function getPostAuthor(post: WPPost) {
   
   // If no author is embedded, or the author is admin, default to Phat Vo
   const isDefaultOrAdmin = !wpAuthor || wpAuthor.name === 'admin' || wpAuthor.slug === 'admin';
-  const authorName = isDefaultOrAdmin ? 'Phat Vo' : wpAuthor.name;
+  const authorName = isDefaultOrAdmin ? 'Phat Vo' : decodeHtmlEntities(wpAuthor.name);
   
   // Convert Phat Vo's slug from WordPress ('phat') to the public URL slug ('phat-vo')
   const originalSlug = isDefaultOrAdmin ? 'phat' : wpAuthor.slug;
@@ -353,14 +367,15 @@ export function getPostAuthor(post: WPPost) {
     slug: authorSlug,
     telegram: 'https://telegram.me/fintech24h',
     linkedin: 'https://www.linkedin.com/company/fintech24h/',
-    bio: wpAuthor?.description || 'Fintech24h team member and contributor.'
+    bio: (wpAuthor?.description && decodeHtmlEntities(wpAuthor.description)) || 'Fintech24h team member and contributor.'
   };
 }
 
 export async function getUserBySlug(slug: string): Promise<WPUser | null> {
   try {
     const users = await fetchWP<WPUser[]>('/users', { slug });
-    return users[0] || null;
+    const user = users[0];
+    return user ? { ...user, name: decodeHtmlEntities(user.name), description: decodeHtmlEntities(user.description) } : null;
   } catch (err) {
     console.warn(`WP API fail: getUserBySlug ${slug}`, err);
     return null;
@@ -369,7 +384,7 @@ export async function getUserBySlug(slug: string): Promise<WPUser | null> {
 
 export async function getPostsByAuthor(authorId: number, page = 1, perPage = 24): Promise<WPPost[]> {
   try {
-    return await fetchWP<WPPost[]>('/posts', {
+    const posts = await fetchWP<WPPost[]>('/posts', {
       author: String(authorId),
       page: String(page),
       per_page: String(perPage),
@@ -377,6 +392,7 @@ export async function getPostsByAuthor(authorId: number, page = 1, perPage = 24)
       orderby: 'date',
       order: 'desc',
     });
+    return posts.map(decodeTitle);
   } catch (err) {
     console.warn(`WP API fail: getPostsByAuthor ${authorId}`, err);
     return [];

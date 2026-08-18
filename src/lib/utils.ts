@@ -27,6 +27,32 @@ export function getReadingTime(text: string): number {
   return Math.ceil(words / wordsPerMinute);
 }
 
+const HTML_NAMED_ENTITIES: Record<string, string> = {
+  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
+};
+
+/**
+ * Decodes HTML entities (numeric — decimal and hex — plus the handful of
+ * named entities WordPress's REST API actually emits) back into real
+ * characters. WP's `.rendered` text fields (post titles, heading text pulled
+ * out of post content, etc.) come back already entity-encoded — e.g. a
+ * literal `&#8217;` for a curly apostrophe. That's correct as-is when
+ * inserted via `set:html` (the browser's HTML parser decodes it once), but
+ * fatal when a caller strips tags and renders it as plain text through
+ * Astro's `{expr}` — Astro escapes the literal `&` a second time, so the
+ * page shows the raw entity code instead of the character.
+ */
+export function decodeHtmlEntities(text: string): string {
+  return text.replace(/&(#x?[0-9a-fA-F]+|[a-zA-Z]+);/g, (match, entity: string) => {
+    if (entity[0] === '#') {
+      const isHex = entity[1] === 'x' || entity[1] === 'X';
+      const code = parseInt(entity.slice(isHex ? 2 : 1), isHex ? 16 : 10);
+      return Number.isNaN(code) ? match : String.fromCodePoint(code);
+    }
+    return HTML_NAMED_ENTITIES[entity] ?? match;
+  });
+}
+
 export interface TocItem {
   id: string;
   text: string;
@@ -42,7 +68,7 @@ export function getTableOfContents(html: string): { html: string; items: TocItem
   const usedSlugs = new Set<string>();
 
   const withIds = html.replace(/<h2([^>]*)>([\s\S]*?)<\/h2>/gi, (match, attrs: string, inner: string) => {
-    const text = inner.replace(/<[^>]+>/g, '').trim();
+    const text = decodeHtmlEntities(inner.replace(/<[^>]+>/g, '').trim());
     if (!text) return match;
 
     const existingId = attrs.match(/\bid=["']([^"']+)["']/);
