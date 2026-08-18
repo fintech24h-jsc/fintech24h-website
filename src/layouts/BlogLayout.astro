@@ -85,110 +85,146 @@ const breadcrumbs = [
       </a>
     </div>
 
-    <!-- Head Section: metadata, title, author/share, hero image -->
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-
-      <!-- Metadata Row -->
-      <div class="flex flex-wrap items-center gap-4 text-sm font-medium text-slate-400 mb-6 uppercase tracking-wider">
-        <span>{formatDate(post.date)}</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
-        <span>{readingTime} MIN READ</span>
-      </div>
-
-      <!-- Title -->
-      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.2] mb-8">
-        {post.title.rendered}
-      </h1>
-
-      <!-- Author & Social Share Row -->
-      <div class="flex flex-wrap items-center justify-between gap-6 py-6 border-y border-white/10 mb-12">
-
-        <!-- Author -->
-        <div class="flex items-center gap-4">
-          <a href={`/author/${postAuthor.slug}`} class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-purple)] p-[2px] transition-transform hover:scale-105 duration-300">
-            <div class="w-full h-full rounded-full bg-[#0B1120] flex items-center justify-center overflow-hidden">
-               <img src={postAuthor.image} alt={postAuthor.name} class="w-full h-full object-cover opacity-90" />
-            </div>
-          </a>
-          <div>
-            <a href={`/author/${postAuthor.slug}`} class="text-sm font-bold text-white hover:text-[var(--accent-cyan)] transition-colors">
-              {postAuthor.name}
-            </a>
-            <div class="text-xs text-slate-400">{postAuthor.role}</div>
-          </div>
-        </div>
-
-        <!-- Social Share -->
-        <div class="flex items-center gap-3">
-          <span class="text-xs text-slate-500 uppercase tracking-widest font-mono mr-2 hidden sm:block">Share:</span>
-
-          <!-- Twitter / X -->
-          <a href={`https://twitter.com/intent/tweet?url=${currentUrl}&text=${encodedTitle}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white transition-colors" title="Share on Twitter">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.195 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-          </a>
-
-          <!-- LinkedIn -->
-          <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${currentUrl}&title=${encodedTitle}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-colors" title="Share on LinkedIn">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-
-          <!-- Facebook -->
-          <a href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-colors" title="Share on Facebook">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
-
-          <!-- Telegram -->
-          <a href={`https://t.me/share/url?url=${currentUrl}&text=${encodedTitle}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#229ED9] hover:text-white transition-colors" title="Share on Telegram">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.87 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.538-.196 1.006.128.832.941z"/></svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Hero Image (Clean, Standard Layout) -->
-      {featuredImage.url && (
-        <div class="mb-12 rounded-3xl overflow-hidden shadow-2xl bg-white/5">
-          <img
-            src={featuredImage.url}
-            alt={featuredImage.alt}
-            width="1200"
-            height="675"
-            class="w-full h-auto aspect-[16/9] object-cover"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </div>
-      )}
-
-      <!-- Short posts (no meaningful TOC): CTA shown inline, single column -->
-      {!hasToc && (
-        <div class="card-default rounded-2xl p-6 sm:p-8 mb-12 flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-          <img
-            src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp"
-            alt="Fintech24h"
-            width="56"
-            height="39"
-            class="h-10 w-auto object-contain flex-shrink-0"
-            loading="lazy"
-            decoding="async"
-          />
-          <div class="flex-1">
-            <h3 class="font-display text-lg font-bold text-white mb-1">Ready to scale your Web3 project?</h3>
-            <p class="text-sm text-slate-400">Get a free, custom-tailored marketing proposal from Fintech24h.</p>
-          </div>
-          <a href="/contact/" class="flex-shrink-0 btn-liquid-glass-primary px-6 py-3 text-xs tracking-widest whitespace-nowrap">
-            Get Proposal
-          </a>
-        </div>
-      )}
-    </div>
-
-    <!-- Body: sidebar (TOC + CTA) + article content. Grid only activates at
-         lg: — on mobile the sidebar and content simply stack in DOM order. -->
+    <!-- Article body: everything (title, hero image, content) shares ONE
+         grid column with the sidebar, so the image/content edges always line
+         up exactly, and the sidebar's sticky offset spans the article's real
+         full height (title through the footer CTA) instead of just the part
+         below the hero image. On mobile the grid collapses to a single
+         column and lg:order flips the sidebar to render after the article
+         (DOM order keeps it there for no-JS/no-grid fallback too). -->
     <div class:list={["mx-auto px-4 sm:px-6 lg:px-8", hasToc ? "max-w-6xl lg:grid lg:grid-cols-[280px_1fr] lg:gap-12 lg:items-start" : "max-w-4xl"]}>
 
+      <div class="min-w-0 lg:order-2">
+
+        <!-- Metadata Row -->
+        <div class="flex flex-wrap items-center gap-4 text-sm font-medium text-slate-400 mb-6 uppercase tracking-wider">
+          <span>{formatDate(post.date)}</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
+          <span>{readingTime} MIN READ</span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.2] mb-8">
+          {post.title.rendered}
+        </h1>
+
+        <!-- Author & Social Share Row -->
+        <div class="flex flex-wrap items-center justify-between gap-6 py-6 border-y border-white/10 mb-12">
+
+          <!-- Author -->
+          <div class="flex items-center gap-4">
+            <a href={`/author/${postAuthor.slug}`} class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--accent-cyan)] to-[var(--accent-purple)] p-[2px] transition-transform hover:scale-105 duration-300">
+              <div class="w-full h-full rounded-full bg-[#0B1120] flex items-center justify-center overflow-hidden">
+                 <img src={postAuthor.image} alt={postAuthor.name} class="w-full h-full object-cover opacity-90" />
+              </div>
+            </a>
+            <div>
+              <a href={`/author/${postAuthor.slug}`} class="text-sm font-bold text-white hover:text-[var(--accent-cyan)] transition-colors">
+                {postAuthor.name}
+              </a>
+              <div class="text-xs text-slate-400">{postAuthor.role}</div>
+            </div>
+          </div>
+
+          <!-- Social Share -->
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-500 uppercase tracking-widest font-mono mr-2 hidden sm:block">Share:</span>
+
+            <!-- Twitter / X -->
+            <a href={`https://twitter.com/intent/tweet?url=${currentUrl}&text=${encodedTitle}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white transition-colors" title="Share on Twitter">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.195 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${currentUrl}&title=${encodedTitle}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-colors" title="Share on LinkedIn">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+
+            <!-- Facebook -->
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-colors" title="Share on Facebook">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+
+            <!-- Telegram -->
+            <a href={`https://t.me/share/url?url=${currentUrl}&text=${encodedTitle}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#229ED9] hover:text-white transition-colors" title="Share on Telegram">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.87 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.538-.196 1.006.128.832.941z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Image (Clean, Standard Layout) -->
+        {featuredImage.url && (
+          <div class="mb-12 rounded-3xl overflow-hidden shadow-2xl bg-white/5">
+            <img
+              src={featuredImage.url}
+              alt={featuredImage.alt}
+              width="1200"
+              height="675"
+              class="w-full h-auto aspect-[16/9] object-cover"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+        )}
+
+        <!-- Short posts (no meaningful TOC): CTA shown inline, single column -->
+        {!hasToc && (
+          <div class="card-default rounded-2xl p-6 sm:p-8 mb-12 flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+            <img
+              src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp"
+              alt="Fintech24h"
+              width="56"
+              height="39"
+              class="h-10 w-auto object-contain flex-shrink-0"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="flex-1">
+              <h3 class="font-display text-lg font-bold text-white mb-1">Ready to scale your Web3 project?</h3>
+              <p class="text-sm text-slate-400">Get a free, custom-tailored marketing proposal from Fintech24h.</p>
+            </div>
+            <a href="/contact/" class="flex-shrink-0 btn-liquid-glass-primary px-6 py-3 text-xs tracking-widest whitespace-nowrap">
+              Get Proposal
+            </a>
+          </div>
+        )}
+
+        <!-- Main Content (Friendlier Typography) -->
+        <div
+          id="article-content"
+          class="prose prose-invert prose-lg md:prose-xl max-w-none
+                    prose-headings:font-display prose-headings:font-bold prose-headings:text-white prose-headings:tracking-tight
+                    prose-p:font-body prose-p:text-slate-300 prose-p:leading-[1.8]
+                    prose-a:text-[var(--accent-cyan)] prose-a:no-underline hover:prose-a:underline hover:prose-a:text-white prose-a:transition-colors
+                    prose-strong:text-white prose-strong:font-semibold
+                    prose-ul:list-none prose-ol:list-decimal prose-ol:text-slate-300
+                    prose-img:rounded-2xl prose-img:shadow-xl"
+          set:html={contentHtml}
+        />
+
+        <!-- Liquid Glass Footer CTA -->
+        <div class="mt-24 relative overflow-hidden rounded-3xl border border-[var(--accent-cyan)]/20 bg-gradient-to-br from-[#0B1120] to-[#0A172B] p-10 md:p-16 text-center shadow-[0_0_50px_rgba(0,200,240,0.05)]">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_top,rgba(0,200,240,0.1),transparent_50%)] pointer-events-none"></div>
+          <div class="relative z-10">
+            <h3 class="font-display text-3xl font-bold text-white mb-4">Ready to Grow?</h3>
+            <p class="font-body text-slate-400 mb-10 max-w-xl mx-auto text-lg">
+              Stop reading, start scaling. Get a free, custom-tailored marketing proposal and GTM strategy from Fintech24h.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a href="/contact/" class="btn-liquid-glass-primary px-8 py-4 text-xs tracking-widest">
+                Get Your Growth Proposal
+              </a>
+              <a href="/contact/" class="btn-liquid-glass-ghost px-8 py-4 text-xs tracking-widest">
+                Book Call
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {hasToc && (
-        <aside class="mb-10 lg:mb-0 lg:sticky lg:top-32">
+        <aside class="mt-10 lg:mt-0 lg:order-1 lg:sticky lg:top-32">
           <!-- Reading progress + CTA card -->
           <div class="card-default rounded-2xl p-5 mb-6 relative overflow-hidden">
             <div class="h-1 w-full rounded-full bg-white/10 mb-5 overflow-hidden" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100">
@@ -234,40 +270,6 @@ const breadcrumbs = [
           </details>
         </aside>
       )}
-
-      <div class="min-w-0">
-        <!-- Main Content (Friendlier Typography) -->
-        <div
-          id="article-content"
-          class="prose prose-invert prose-lg md:prose-xl max-w-none
-                    prose-headings:font-display prose-headings:font-bold prose-headings:text-white prose-headings:tracking-tight
-                    prose-p:font-body prose-p:text-slate-300 prose-p:leading-[1.8]
-                    prose-a:text-[var(--accent-cyan)] prose-a:no-underline hover:prose-a:underline hover:prose-a:text-white prose-a:transition-colors
-                    prose-strong:text-white prose-strong:font-semibold
-                    prose-ul:list-none prose-ol:list-decimal prose-ol:text-slate-300
-                    prose-img:rounded-2xl prose-img:shadow-xl"
-          set:html={contentHtml}
-        />
-
-        <!-- Liquid Glass Footer CTA -->
-        <div class="mt-24 relative overflow-hidden rounded-3xl border border-[var(--accent-cyan)]/20 bg-gradient-to-br from-[#0B1120] to-[#0A172B] p-10 md:p-16 text-center shadow-[0_0_50px_rgba(0,200,240,0.05)]">
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_top,rgba(0,200,240,0.1),transparent_50%)] pointer-events-none"></div>
-          <div class="relative z-10">
-            <h3 class="font-display text-3xl font-bold text-white mb-4">Ready to Grow?</h3>
-            <p class="font-body text-slate-400 mb-10 max-w-xl mx-auto text-lg">
-              Stop reading, start scaling. Get a free, custom-tailored marketing proposal and GTM strategy from Fintech24h.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a href="/contact/" class="btn-liquid-glass-primary px-8 py-4 text-xs tracking-widest">
-                Get Your Growth Proposal
-              </a>
-              <a href="/contact/" class="btn-liquid-glass-ghost px-8 py-4 text-xs tracking-widest">
-                Book Call
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
 
     </div>
   </article>
