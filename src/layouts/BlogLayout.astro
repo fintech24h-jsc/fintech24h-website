@@ -99,7 +99,7 @@ const breadcrumbs = [
          evenly on both sides — the reading column (and everything in it,
          hero image included) ends up visually centered on the page instead
          of drifting toward the right the wider the screen gets. -->
-    <div class:list={["mx-auto px-4 sm:px-6 lg:px-8", hasToc ? "max-w-4xl lg:max-w-6xl lg:grid lg:grid-cols-[280px_1fr] lg:gap-12 lg:items-start xl:max-w-[1440px] xl:grid-cols-[280px_minmax(0,760px)_280px] xl:justify-center" : "max-w-4xl"]}>
+    <div id="blog-grid" class:list={["relative mx-auto px-4 sm:px-6 lg:px-8", hasToc ? "max-w-4xl lg:max-w-6xl lg:grid lg:grid-cols-[280px_1fr] lg:gap-12 lg:items-start xl:max-w-[1440px] xl:grid-cols-[280px_minmax(0,760px)_280px] xl:justify-center" : "max-w-4xl"]}>
 
       <div class="min-w-0 lg:order-2">
 
@@ -231,53 +231,65 @@ const breadcrumbs = [
       </div>
 
       {hasToc && (
-        <aside class="relative mt-10 lg:mt-0 lg:order-1 lg:sticky lg:top-32">
-          <!-- Ambient glow so the glass panel reads as floating, not flat -->
-          <div class="bg-orb bg-orb-cyan w-[280px] h-[280px] absolute -top-16 -left-16 opacity-[0.12] pointer-events-none" aria-hidden="true"></div>
+        <!-- Grid cell that always reserves the sidebar's column space —
+             `#sidebar-inner` is what actually toggles to `position: fixed`
+             while scrolling (see the script below for why: BaseLayout's
+             <main>/<body> need overflow-x:hidden to clip decorative bleed
+             elements, and per the CSS overflow spec, forcing overflow-x to
+             non-visible forces overflow-y to compute as `auto` on that same
+             element even if never explicitly set — which silently breaks
+             `position: sticky` for any descendant, no matter how deep. Fixed
+             positioning isn't subject to that rule, so it's driven by JS
+             instead once CSS sticky proved unusable here.) -->
+        <aside id="sidebar-spacer" class="relative mt-10 lg:mt-0 lg:order-1">
+          <div id="sidebar-inner" class="lg:w-[280px]">
+            <!-- Ambient glow so the glass panel reads as floating, not flat -->
+            <div class="bg-orb bg-orb-cyan w-[280px] h-[280px] absolute -top-16 -left-16 opacity-[0.12] pointer-events-none" aria-hidden="true"></div>
 
-          <!-- Reading progress + CTA card -->
-          <div class="liquid-glass relative rounded-2xl p-5 mb-4 shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
-            <div class="h-1 w-full rounded-full bg-white/10 mb-5 overflow-hidden" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100">
-              <div id="reading-progress-bar" class="h-full rounded-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)]" style="width: 0%"></div>
+            <!-- Reading progress + CTA card -->
+            <div class="liquid-glass relative rounded-2xl p-5 mb-4 shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
+              <div class="h-1 w-full rounded-full bg-white/10 mb-5 overflow-hidden" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100">
+                <div id="reading-progress-bar" class="h-full rounded-full bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)]" style="width: 0%"></div>
+              </div>
+              <img
+                src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp"
+                alt="Fintech24h"
+                width="56"
+                height="39"
+                class="h-8 w-auto object-contain mb-3"
+                loading="lazy"
+                decoding="async"
+              />
+              <h3 class="font-display text-sm font-bold text-white mb-1.5">Ready to scale your Web3 project?</h3>
+              <p class="text-xs text-slate-400 mb-4 leading-relaxed">Get a free, custom-tailored marketing proposal from Fintech24h.</p>
+              <a href="/contact/" class="btn-liquid-glass-primary w-full flex items-center justify-center px-5 py-3 text-xs tracking-widest">
+                Get Proposal
+              </a>
             </div>
-            <img
-              src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp"
-              alt="Fintech24h"
-              width="56"
-              height="39"
-              class="h-8 w-auto object-contain mb-3"
-              loading="lazy"
-              decoding="async"
-            />
-            <h3 class="font-display text-sm font-bold text-white mb-1.5">Ready to scale your Web3 project?</h3>
-            <p class="text-xs text-slate-400 mb-4 leading-relaxed">Get a free, custom-tailored marketing proposal from Fintech24h.</p>
-            <a href="/contact/" class="btn-liquid-glass-primary w-full flex items-center justify-center px-5 py-3 text-xs tracking-widest">
-              Get Proposal
-            </a>
-          </div>
 
-          <!-- Table of contents -->
-          <details class="liquid-glass relative rounded-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.35)]" open>
-            <summary class="flex items-center justify-between cursor-pointer list-none font-display text-xs font-semibold uppercase tracking-widest text-white select-none">
-              On This Page
-              <svg class="w-3.5 h-3.5 text-slate-400 transition-transform [details[open]_&]:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-            </summary>
-            <nav aria-label="Table of contents" class="mt-4 max-h-[50vh] overflow-y-auto pr-1">
-              <ul id="toc-list" class="space-y-1">
-                {tocItems.map((item) => (
-                  <li>
-                    <a
-                      href={`#${item.id}`}
-                      data-toc-link={item.id}
-                      class="toc-link block rounded-lg px-3 py-2 text-xs text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200 line-clamp-2"
-                    >
-                      {item.text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </details>
+            <!-- Table of contents -->
+            <details class="liquid-glass relative rounded-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.35)]" open>
+              <summary class="flex items-center justify-between cursor-pointer list-none font-display text-xs font-semibold uppercase tracking-widest text-white select-none">
+                On This Page
+                <svg class="w-3.5 h-3.5 text-slate-400 transition-transform [details[open]_&]:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <nav aria-label="Table of contents" class="mt-4 max-h-[50vh] overflow-y-auto pr-1">
+                <ul id="toc-list" class="space-y-1">
+                  {tocItems.map((item) => (
+                    <li>
+                      <a
+                        href={`#${item.id}`}
+                        data-toc-link={item.id}
+                        class="toc-link block rounded-lg px-3 py-2 text-xs text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200 line-clamp-2"
+                      >
+                        {item.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </details>
+          </div>
         </aside>
       )}
 
@@ -302,6 +314,65 @@ const breadcrumbs = [
       var progressBar = document.getElementById('reading-progress-bar');
       var tocLinks = Array.prototype.slice.call(document.querySelectorAll('[data-toc-link]'));
       var headings = content ? Array.prototype.slice.call(content.querySelectorAll('h2[id]')) : [];
+
+      // Manual "sticky" for the sidebar via position:fixed, driven by scroll
+      // position. Real CSS `position: sticky` doesn't work here: BaseLayout's
+      // <main>/<body> need overflow-x hidden to clip decorative elements that
+      // bleed past the viewport edges, and per the CSS overflow spec, giving
+      // one axis (x) a non-visible value forces the OTHER axis (y) to compute
+      // as `auto` on that same element — even though nothing set overflow-y
+      // directly. `auto` still counts as "not visible", which silently
+      // breaks sticky for every descendant, no matter how deep. Fixed
+      // positioning doesn't have that restriction (only ancestor transform /
+      // filter / will-change / contain affect it, and none are present in
+      // this layout), so the "stuck" behavior is reproduced by hand instead.
+      var spacer = document.getElementById('sidebar-spacer');
+      var inner = document.getElementById('sidebar-inner');
+      var grid = document.getElementById('blog-grid');
+      var STUCK_TOP = 128; // px from viewport top while pinned — matches the navbar clearance the old `lg:top-32` used
+
+      function isDesktop() {
+        return window.matchMedia('(min-width: 1024px)').matches;
+      }
+
+      function unpinSidebar() {
+        if (!inner) return;
+        inner.style.position = '';
+        inner.style.top = '';
+        inner.style.left = '';
+        inner.style.width = '';
+      }
+
+      function updateSidebarPosition() {
+        if (!spacer || !inner || !grid) return;
+        if (!isDesktop()) { unpinSidebar(); return; }
+
+        var spacerRect = spacer.getBoundingClientRect();
+        var gridRect = grid.getBoundingClientRect();
+        var innerHeight = inner.offsetHeight;
+        var spaceBelowPin = gridRect.bottom - STUCK_TOP;
+
+        if (spacerRect.top > STUCK_TOP) {
+          // Haven't scrolled down to the sidebar's natural position yet.
+          unpinSidebar();
+        } else if (innerHeight <= spaceBelowPin) {
+          // Pin it to the viewport while there's still article left to read.
+          inner.style.position = 'fixed';
+          inner.style.top = STUCK_TOP + 'px';
+          inner.style.left = spacerRect.left + 'px';
+          inner.style.width = spacerRect.width + 'px';
+        } else {
+          // Near the end of the article: rest it at the article's bottom
+          // edge instead of floating past it. Positioned relative to
+          // #sidebar-spacer (which stays in normal flow and has
+          // `position: relative`), so it scrolls away naturally with the
+          // page afterward rather than staying glued to the viewport.
+          inner.style.position = 'absolute';
+          inner.style.left = '0px';
+          inner.style.width = spacerRect.width + 'px';
+          inner.style.top = (gridRect.bottom - spacerRect.top - innerHeight) + 'px';
+        }
+      }
 
       function updateProgress() {
         if (!content || !progressBar) return;
@@ -344,9 +415,21 @@ const breadcrumbs = [
         });
       });
 
-      window.addEventListener('scroll', updateProgress, { passive: true });
-      window.addEventListener('resize', updateProgress);
+      var ticking = false;
+      function onScrollOrResize() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          updateProgress();
+          updateSidebarPosition();
+          ticking = false;
+        });
+      }
+
+      window.addEventListener('scroll', onScrollOrResize, { passive: true });
+      window.addEventListener('resize', onScrollOrResize);
       updateProgress();
+      updateSidebarPosition();
     })();
   </script>
 )}
