@@ -92,7 +92,14 @@ const breadcrumbs = [
          below the hero image. On mobile the grid collapses to a single
          column and lg:order flips the sidebar to render after the article
          (DOM order keeps it there for no-JS/no-grid fallback too). -->
-    <div class:list={["mx-auto px-4 sm:px-6 lg:px-8", hasToc ? "max-w-6xl lg:grid lg:grid-cols-[280px_1fr] lg:gap-12 lg:items-start" : "max-w-4xl"]}>
+    <!-- lg: (1024–1279px) keeps the simple 2-col [sidebar][content] split so
+         the content column isn't squeezed too narrow on smaller laptops.
+         xl: (1280px+) adds a third, empty phantom column the same width as
+         the sidebar, then `justify-center` distributes the leftover space
+         evenly on both sides — the reading column (and everything in it,
+         hero image included) ends up visually centered on the page instead
+         of drifting toward the right the wider the screen gets. -->
+    <div class:list={["mx-auto px-4 sm:px-6 lg:px-8", hasToc ? "max-w-4xl lg:max-w-6xl lg:grid lg:grid-cols-[280px_1fr] lg:gap-12 lg:items-start xl:max-w-[1440px] xl:grid-cols-[280px_minmax(0,760px)_280px] xl:justify-center" : "max-w-4xl"]}>
 
       <div class="min-w-0 lg:order-2">
 

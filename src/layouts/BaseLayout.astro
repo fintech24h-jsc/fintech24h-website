@@ -145,7 +145,13 @@ const canonicalHref = canonicalUrl.href;
 
   <NavbarFast />
 
-  <main id="main-content" class="relative w-full flex flex-col overflow-hidden shrink-0">
+  <main id="main-content" class="relative w-full flex flex-col overflow-x-hidden shrink-0">
+    <!-- overflow-x only (not overflow-hidden on both axes): clips decorative
+         elements that bleed past the viewport edges horizontally, same as
+         before. Clipping the Y axis too breaks `position: sticky` for any
+         descendant (like the blog sidebar) because sticky needs an ancestor
+         chain with no non-visible overflow up to the real scrolling
+         viewport. -->
     <slot />
   </main>
 
