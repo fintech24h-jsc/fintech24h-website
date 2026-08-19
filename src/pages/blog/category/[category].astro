@@ -44,23 +44,23 @@ const breadcrumbs = [
       
       <!-- Section Header -->
       <div class="text-center max-w-3xl mx-auto mb-16" data-animate="fade-up">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/5 mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-          <span class="text-xs font-semibold text-cyan-400 font-body uppercase tracking-wider">Category Archives</span>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/5 mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+          <span class="text-xs font-semibold text-[var(--accent-cyan)] font-body uppercase tracking-wider">Category Archives</span>
         </div>
-        <h1 class="font-display text-h1 font-bold text-[#f0f4ff] mb-6">
+        <h1 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-6">
           Category: {category.name}
         </h1>
-        <p class="text-lg text-[#94a3b8] font-body leading-relaxed">
+        <p class="text-lg text-[var(--text-secondary)] font-body leading-relaxed">
           {category.description || `Browse marketing playbooks and research related to ${category.name}.`}
         </p>
       </div>
 
       <!-- Categories Filter bar -->
       <div class="flex flex-wrap justify-center gap-3 mb-16" data-animate="fade-up">
-        <a 
-          href="/blog" 
-          class="px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] hover:border-white/30 text-xs font-semibold font-body text-[#94a3b8] hover:text-[#f0f4ff] transition-all"
+        <a
+          href="/blog"
+          class="px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] hover:border-[var(--border-hover)] text-xs font-semibold font-body text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all"
         >
           All Articles
         </a>
@@ -69,9 +69,9 @@ const breadcrumbs = [
             href={`/blog/category/${c.slug}`}
             class:list={[
               "px-4 py-2 rounded-full border text-xs font-semibold font-body transition-all",
-              c.slug === category.slug 
-                ? "border-cyan-400 bg-cyan-400/10 text-cyan-400"
-                : "border-[var(--border-default)] bg-[var(--surface-soft)] text-[#94a3b8] hover:text-[#f0f4ff] hover:border-white/30"
+              c.slug === category.slug
+                ? "border-[var(--accent-cyan)] bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)]"
+                : "border-[var(--border-default)] bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)]"
             ]}
           >
             {c.name} ({c.count || 0})
@@ -111,19 +111,19 @@ const breadcrumbs = [
                   )}
 
                   <!-- Info row -->
-                  <div class="flex items-center gap-3 text-xs text-[#475569] font-body mb-4">
+                  <div class="flex items-center gap-3 text-xs text-[var(--text-muted)] font-body mb-4">
                     <span>{formatDate(post.date)}</span>
-                    <span class="w-1 h-1 rounded-full bg-[#475569]"></span>
+                    <span class="w-1 h-1 rounded-full bg-[var(--text-muted)]"></span>
                     <span>{rTime} min read</span>
                   </div>
 
                   <!-- Title & Summary -->
-                  <h2 class="font-display text-lg font-bold text-[#f0f4ff] mb-3 line-clamp-2">
-                    <a href={`/blog/${post.slug}`} class="group-hover:text-cyan-400 hover:text-cyan-400 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400">
+                  <h2 class="font-display text-lg font-bold text-[var(--text-primary)] mb-3 line-clamp-2">
+                    <a href={`/blog/${post.slug}`} class="group-hover:text-[var(--accent-cyan)] hover:text-[var(--accent-cyan)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
                       {post.title.rendered}
                     </a>
                   </h2>
-                  <p class="text-xs text-[#94a3b8] font-body leading-relaxed mb-6 line-clamp-3">
+                  <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6 line-clamp-3">
                     {excerptText}
                   </p>
                 </div>
@@ -132,7 +132,7 @@ const breadcrumbs = [
                 <div class="flex justify-end pt-4 border-t border-[var(--border-subtle)] mt-6">
                   <a
                     href={`/blog/${post.slug}`}
-                    class="text-[10px] font-semibold text-cyan-400 hover:text-cyan-300 font-display uppercase tracking-wider flex items-center gap-1.5 transition-colors"
+                    class="text-[10px] font-semibold text-[var(--accent-cyan)] hover:text-[var(--accent-cyan-dim)] font-display uppercase tracking-wider flex items-center gap-1.5 transition-colors"
                     aria-label={`Read ${post.title.rendered}`}
                   >
                     Read Article
@@ -145,7 +145,7 @@ const breadcrumbs = [
         </div>
       ) : (
         <div class="text-center py-12">
-          <p class="text-[#94a3b8] font-body">No articles found in this category yet. Check back soon!</p>
+          <p class="text-[var(--text-secondary)] font-body">No articles found in this category yet. Check back soon!</p>
         </div>
       )}
 

@@ -169,6 +169,43 @@
     color-scheme: light;
   }
 
+  /* "Midnight" surfaces — sections deliberately kept permanently dark for
+     visual drama/contrast (terminal windows, code demos, hero showcases)
+     regardless of the site-wide theme, e.g. KolCtaSection, PrCtaSection, the
+     service-page hero/pricing sections. These sections already mark
+     themselves with `data-theme-surface="midnight"` and already use the
+     `var(--text-primary)` etc. tokens for their text/borders/accents against
+     a hardcoded near-black background — but until now nothing actually
+     pinned those tokens to dark values, so switching to the light theme
+     turned the text dark too, against a background that never changes:
+     illegible dark-on-dark. Scoping the dark palette to this attribute (CSS
+     custom properties cascade to all descendants) fixes every one of those
+     sections at once, in every file, without touching their markup. */
+  [data-theme-surface='midnight'] {
+    --bg-primary:        #050810;
+    --bg-secondary:      #080d1a;
+    --bg-glass:          rgba(8, 13, 26, 0.75);
+    --surface-faint:     rgba(255, 255, 255, 0.02);
+    --surface-soft:      rgba(255, 255, 255, 0.04);
+    --surface-hover:     rgba(255, 255, 255, 0.06);
+    --surface-strong:    rgba(255, 255, 255, 0.10);
+    --text-primary:      #e8edf8;
+    --text-secondary:    #a3b1cc;
+    --text-muted:        #8594ad;
+    --text-inverted:     #050810;
+    --border-default:    rgba(255, 255, 255, 0.06);
+    --border-hover:      rgba(255, 255, 255, 0.12);
+    --border-accent:     rgba(0, 200, 240, 0.25);
+    --border-subtle:     rgba(255, 255, 255, 0.03);
+    --accent-cyan:       #00c8f0;
+    --accent-cyan-dim:   #0090b0;
+    --accent-cyan-glow:  rgba(0, 200, 240, 0.15);
+    --accent-purple:     #7c5cfc;
+    --accent-purple-dim: #5a3fd0;
+    --accent-purple-glow: rgba(124, 92, 252, 0.12);
+    color-scheme: dark;
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -182,8 +219,17 @@
     font-family: var(--font-body);
     overflow-x: hidden;
     position: relative;
+    /* Smooths the light/dark toggle — the ambient mesh below already fades,
+       but without this the base page background/text still hard-cut. */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
   }
- 
+
+  @media (prefers-reduced-motion: reduce) {
+    body, body::before {
+      transition: none !important;
+    }
+  }
+
   body::before {
     content: '';
     position: fixed;
@@ -220,15 +266,22 @@
     background-clip: text;
   }
 
-  /* Alias helpers */
+  /* Alias helpers
+     Token-driven (not hardcoded hex) so these track the theme's accent
+     colors — the light theme's accents are deliberately deeper/more
+     saturated (e.g. cyan #007a99 vs dark mode's #00c8f0) for contrast
+     against a light background. Hardcoded dark-mode hex here previously
+     rendered large stat numbers (ROI/Reach/Leads on case studies, service
+     metrics) at ~1.7:1 contrast in light mode — well under WCAG's 3:1
+     floor for large text, effectively illegible. */
   .gradient-text-cyan {
-    background: linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%);
+    background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .gradient-text-purple {
-    background: linear-gradient(135deg, #7c5cfc 0%, #c084fc 100%);
+    background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-cyan) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -241,7 +294,7 @@
     border-radius: 16px;   /* đúng spec: 16px */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   }
   .card-default:hover {
     border-color: var(--border-hover);
@@ -543,6 +596,7 @@
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-default);
     border-radius: 16px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .glass-pill {

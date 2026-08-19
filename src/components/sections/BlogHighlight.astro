@@ -121,26 +121,24 @@ const posts = allPosts.slice(0, 6);
 )}
 
 <style>
-  /* Custom Liquid Glass Cards */
+  /* Custom Liquid Glass Cards — token-driven (not hardcoded rgba(255,255,255,*))
+     so the card stays visible against the theme's own background instead of
+     nearly disappearing on the light theme's already-pale surface. */
   .btn-liquid-glass-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-glass);
+    border: 1px solid var(--border-default);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 24px;
     padding: 24px;
-    box-shadow: 
-      0 8px 32px 0 rgba(0, 0, 0, 0.25),
-      inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: var(--shadow-card);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .btn-liquid-glass-card:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(0, 200, 240, 0.25);
+    background: var(--surface-hover);
+    border-color: var(--accent-cyan-glow);
     transform: translateY(-8px);
-    box-shadow: 
-      0 20px 48px 0 rgba(0, 200, 240, 0.08),
-      inset 0 1px 2px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: 0 20px 48px 0 var(--accent-cyan-glow), var(--shadow-card);
   }
 </style>
