@@ -15,7 +15,7 @@ Astro.response.status = 404;
   description="This block has been dropped from the chain. Return to the Fintech24h mainnet."
   noIndex={true}
 >
-  <section class="relative min-h-[100vh] flex items-center justify-center overflow-hidden bg-[#050914] pt-24" aria-label="Error 404">
+  <section class="relative min-h-[100vh] flex items-center justify-center overflow-hidden bg-[#050914] pt-24" aria-label="Error 404" data-theme-surface="midnight">
     
     <!-- Deep Space / Grid Background -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -252,25 +252,10 @@ Astro.response.status = 404;
       z-index: 1;
     }
 
-    :global(html[data-theme='light']) .glitch {
-      color: var(--text-primary);
-      text-shadow: 0 0 32px rgba(0, 115, 143, 0.24);
-    }
-
-    :global(html[data-theme='light']) .cyber-btn {
-      color: var(--accent-cyan);
-      background: rgba(0, 115, 143, 0.06);
-      border-color: var(--accent-cyan);
-      box-shadow: 0 8px 24px rgba(0, 115, 143, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.7);
-    }
-
-    :global(html[data-theme='light']) .cyber-btn-bg {
-      background: var(--accent-cyan);
-    }
-
-    :global(html[data-theme='light']) .cyber-btn:hover {
-      color: var(--text-inverted);
-    }
+    /* This whole page is a deliberately dark "terminal / deep space" scene
+       (data-theme-surface="midnight" above pins its var()-based text/accent
+       tokens to their dark values) — it never switches to the light theme's
+       palette, so no light-mode override block is needed here. */
 
     @media (prefers-reduced-motion: reduce) {
       .glitch::before,

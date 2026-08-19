@@ -245,7 +245,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,200,240,0.08) 0%, transparent 60%)' }} />
             
             {/* Success Icon */}
-            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#ff6b83] to-[#f0a278] flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(255,107,131,0.3)]">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[var(--accent-rose)] to-[var(--accent-warm)] flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(255,107,131,0.3)]">
               <svg className="w-8 h-8 text-[#050810]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
               </svg>
@@ -256,7 +256,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
             </h3>
 
             <p className="text-sm text-[var(--text-secondary)] font-body max-w-sm mx-auto mb-8 leading-relaxed">
-              Thank you. The <span className="text-[#f0a278] font-bold">Fintech24h</span> strategy team will reach out to you shortly to discuss your campaign.
+              Thank you. The <span className="text-[var(--accent-warm)] font-bold">Fintech24h</span> strategy team will reach out to you shortly to discuss your campaign.
             </p>
 
             <div className="flex flex-col gap-3 relative z-10">

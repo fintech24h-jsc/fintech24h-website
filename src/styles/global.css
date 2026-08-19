@@ -203,6 +203,8 @@
     --accent-purple:     #7c5cfc;
     --accent-purple-dim: #5a3fd0;
     --accent-purple-glow: rgba(124, 92, 252, 0.12);
+    --accent-warm:       #f0a278;
+    --accent-rose:       #ff6b83;
     color-scheme: dark;
   }
 

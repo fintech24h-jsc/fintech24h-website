@@ -21,12 +21,12 @@
 
     <!-- Section Heading -->
     <div class="text-center max-w-3xl mx-auto mb-28" data-animate="fade-up">
-      <p class="font-mono text-xs text-[#f0a278] uppercase tracking-[0.15em] mb-4 flex items-center justify-center gap-2">
-        <span class="w-1.5 h-1.5 rounded-full bg-[#ff6b83]"></span>
+      <p class="font-mono text-xs text-[var(--accent-warm)] uppercase tracking-[0.15em] mb-4 flex items-center justify-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-rose)]"></span>
         Execution Blueprint
       </p>
       <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] mb-4 tracking-tight">
-        The Plug &amp; Play <span class="bg-gradient-to-r from-[var(--accent-cyan)] via-[#f0a278] to-[#ff6b83] bg-clip-text text-transparent">Growth Funnel</span>
+        The Plug &amp; Play <span class="bg-gradient-to-r from-[var(--accent-cyan)] via-[var(--accent-warm)] to-[var(--accent-rose)] bg-clip-text text-transparent">Growth Funnel</span>
       </h2>
       <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed">
         Our campaigns align direct conversions with measurable marketing OKRs. Here is how we launch and scale your project.
@@ -37,10 +37,10 @@
     <div class="relative max-w-5xl mx-auto">
       
       <!-- Central vertical timeline line -->
-      <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--accent-cyan)] via-[var(--accent-purple)] to-[#f0a278] -translate-x-1/2 z-0 opacity-20" aria-hidden="true"></div>
+      <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--accent-cyan)] via-[var(--accent-purple)] to-[var(--accent-warm)] -translate-x-1/2 z-0 opacity-20" aria-hidden="true"></div>
       
       <!-- Moving light dot down the timeline -->
-      <div class="absolute left-4 md:left-1/2 top-0 w-1 h-32 bg-gradient-to-b from-transparent via-[#f0a278] to-transparent -translate-x-1/2 z-0 blur-[1px] animate-flow-timeline" aria-hidden="true"></div>
+      <div class="absolute left-4 md:left-1/2 top-0 w-1 h-32 bg-gradient-to-b from-transparent via-[var(--accent-warm)] to-transparent -translate-x-1/2 z-0 blur-[1px] animate-flow-timeline" aria-hidden="true"></div>
 
       <!-- Timeline steps -->
       <div class="space-y-16 relative z-10">
@@ -48,8 +48,8 @@
         <!-- Step 1 (Left on Desktop, Right on Mobile) -->
         <div class="flex flex-col md:flex-row md:justify-start items-start group relative animate-trigger" data-animate="fade-up">
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-cyan)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[#f0a278] group-hover:shadow-[0_0_15px_#f0a278]">
-            <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] group-hover:bg-[#f0a278] transition-all"></span>
+          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-cyan)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[var(--accent-warm)] group-hover:shadow-[0_0_15px_var(--accent-warm)]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] group-hover:bg-[var(--accent-warm)] transition-all"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-cyan)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
  
@@ -64,7 +64,7 @@
  
               <div class="relative z-10">
                 <div class="flex justify-between items-center mb-4">
-                  <span class="font-mono text-xs text-[#f0a278] font-semibold">01 / WEEK 1-2</span>
+                  <span class="font-mono text-xs text-[var(--accent-warm)] font-semibold">01 / WEEK 1-2</span>
                   <div class="text-3xl font-display font-bold text-[var(--text-primary)]/5 group-hover:text-[var(--accent-cyan)]/10 transition-all duration-300">01</div>
                 </div>
  
@@ -89,8 +89,8 @@
         <!-- Step 2 (Right on Desktop, Right on Mobile) -->
         <div class="flex flex-col md:flex-row md:justify-end items-start group relative animate-trigger" data-animate="fade-up">
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[#f0a278] group-hover:shadow-[0_0_15px_#f0a278]">
-            <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] group-hover:bg-[#f0a278] transition-all"></span>
+          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[var(--accent-warm)] group-hover:shadow-[0_0_15px_var(--accent-warm)]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] group-hover:bg-[var(--accent-warm)] transition-all"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-purple)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
  
@@ -105,7 +105,7 @@
  
               <div class="relative z-10">
                 <div class="flex justify-between items-center mb-4">
-                  <span class="font-mono text-xs text-[#f0a278] font-semibold">02 / WEEK 2-4</span>
+                  <span class="font-mono text-xs text-[var(--accent-warm)] font-semibold">02 / WEEK 2-4</span>
                   <div class="text-3xl font-display font-bold text-[var(--text-primary)]/5 group-hover:text-[var(--accent-purple)]/10 transition-all duration-300">02</div>
                 </div>
  
@@ -130,14 +130,14 @@
         <!-- Step 3 (Left on Desktop, Right on Mobile) - SOFTER WARM ACCENT -->
         <div class="flex flex-col md:flex-row md:justify-start items-start group relative animate-trigger" data-animate="fade-up">
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-5 h-5 rounded-full border-2 border-[#ff6b83] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:shadow-[0_0_20px_#ff6b83] animate-pulse">
-            <span class="w-2 h-2 rounded-full bg-[#f0a278]"></span>
-            <span class="absolute inset-0 rounded-full bg-[#ff6b83] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
+          <div class="absolute left-4 md:left-1/2 top-8 w-5 h-5 rounded-full border-2 border-[var(--accent-rose)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:shadow-[0_0_20px_var(--accent-rose)] animate-pulse">
+            <span class="w-2 h-2 rounded-full bg-[var(--accent-warm)]"></span>
+            <span class="absolute inset-0 rounded-full bg-[var(--accent-rose)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
  
           <div class="w-full md:w-[45%] pl-10 md:pl-0 md:pr-10 text-left relative">
             {/* Step Card with softer warm border */}
-            <div class="p-8 rounded-[24px] border border-[#ff6b83]/20 bg-[rgba(255,107,131,0.01)] hover:bg-[rgba(255,107,131,0.02)] hover:border-[#f0a278]/40 hover:shadow-[0_20px_45px_rgba(255,107,131,0.04)] transition-all duration-500 relative overflow-hidden">
+            <div class="p-8 rounded-[24px] border border-[var(--accent-rose)]/20 bg-[rgba(255,107,131,0.01)] hover:bg-[rgba(255,107,131,0.02)] hover:border-[var(--accent-warm)]/40 hover:shadow-[0_20px_45px_rgba(255,107,131,0.04)] transition-all duration-500 relative overflow-hidden">
               
               {/* Nebula Point Glow */}
               <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
@@ -146,11 +146,11 @@
  
               <div class="relative z-10">
                 <div class="flex justify-between items-center mb-4">
-                  <span class="font-mono text-xs text-[#f0a278] font-bold tracking-wider">03 / MONTH 1 (LAUNCH)</span>
-                  <div class="text-3xl font-display font-bold text-[var(--text-primary)]/5 group-hover:text-[#ff6b83]/10 transition-all duration-300">03</div>
+                  <span class="font-mono text-xs text-[var(--accent-warm)] font-bold tracking-wider">03 / MONTH 1 (LAUNCH)</span>
+                  <div class="text-3xl font-display font-bold text-[var(--text-primary)]/5 group-hover:text-[var(--accent-rose)]/10 transition-all duration-300">03</div>
                 </div>
  
-                <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3 bg-gradient-to-r from-[var(--text-primary)] to-[#f0a278] bg-clip-text text-transparent group-hover:text-[#ff6b83] transition-colors">Launch &amp; Engagement</h3>
+                <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3 bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent-warm)] bg-clip-text text-transparent group-hover:text-[var(--accent-rose)] transition-colors">Launch &amp; Engagement</h3>
                 <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6">
                   Campaigns go live. Our 24/7 moderators manage group chat channels, Quest platforms are activated, and regional PR releases go in sync.
                 </p>
@@ -158,21 +158,21 @@
                 {/* Inline Stats to highlight success */}
                 <div class="grid grid-cols-3 divide-x divide-[var(--border-subtle)] border-y border-[var(--border-subtle)] py-4 mb-5 text-center">
                   <div>
-                    <span class="font-display text-lg font-bold text-[#f0a278]">24/7</span>
+                    <span class="font-display text-lg font-bold text-[var(--accent-warm)]">24/7</span>
                     <span class="font-mono text-[8px] text-[var(--text-muted)] uppercase tracking-wider block mt-0.5">Moderation</span>
                   </div>
                   <div>
-                    <span class="font-display text-lg font-bold text-[#f0a278]">Day 14</span>
+                    <span class="font-display text-lg font-bold text-[var(--accent-warm)]">Day 14</span>
                     <span class="font-mono text-[8px] text-[var(--text-muted)] uppercase tracking-wider block mt-0.5">PR Placement</span>
                   </div>
                   <div>
-                    <span class="font-display text-lg font-bold text-[#f0a278]">30+</span>
+                    <span class="font-display text-lg font-bold text-[var(--accent-warm)]">30+</span>
                     <span class="font-mono text-[8px] text-[var(--text-muted)] uppercase tracking-wider block mt-0.5">KOL Channels</span>
                   </div>
                 </div>
  
                 <div>
-                  <span class="font-mono text-[9px] text-[#f0a278] uppercase tracking-wider block mb-2">Deliverables</span>
+                  <span class="font-mono text-[9px] text-[var(--accent-warm)] uppercase tracking-wider block mb-2">Deliverables</span>
                   <ul class="flex flex-wrap gap-1.5">
                     {['Active Chat Moderation', 'KOL Placement Live', 'Quests Activation'].map(d => (
                       <li class="tag bg-[var(--surface-soft)] border-none text-[10px] text-[var(--text-secondary)] py-0.5 px-2 rounded-full">{d}</li>
@@ -187,8 +187,8 @@
         <!-- Step 4 (Right on Desktop, Right on Mobile) -->
         <div class="flex flex-col md:flex-row md:justify-end items-start group relative animate-trigger" data-animate="fade-up">
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[#f0a278] group-hover:shadow-[0_0_15px_#f0a278]">
-            <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] group-hover:bg-[#f0a278] transition-all"></span>
+          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[var(--accent-warm)] group-hover:shadow-[0_0_15px_var(--accent-warm)]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] group-hover:bg-[var(--accent-warm)] transition-all"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-purple)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
  
@@ -203,7 +203,7 @@
  
               <div class="relative z-10">
                 <div class="flex justify-between items-center mb-4">
-                  <span class="font-mono text-xs text-[#f0a278] font-semibold">04 / ONGOING</span>
+                  <span class="font-mono text-xs text-[var(--accent-warm)] font-semibold">04 / ONGOING</span>
                   <div class="text-3xl font-display font-bold text-[var(--text-primary)]/5 group-hover:text-[var(--accent-purple)]/10 transition-all duration-300">04</div>
                 </div>
  

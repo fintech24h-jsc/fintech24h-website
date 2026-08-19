@@ -33,7 +33,7 @@ const { acf } = caseStudy;
         <span class="text-[10px] font-mono font-bold text-[var(--accent-cyan)] uppercase tracking-[0.15em]">Proof of Concept</span>
       </div>
       <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] mb-5">
-        Driving <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[#f0a278] bg-clip-text text-transparent">On-Chain Acceleration</span>
+        Driving <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-warm)] bg-clip-text text-transparent">On-Chain Acceleration</span>
       </h2>
       <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed max-w-xl">
         Explore how our custom strategy led to explosive engagement metrics, building verified sustainable liquidity channels for <span class="text-[var(--text-primary)] font-semibold">{acf.client_name}</span>.
@@ -47,14 +47,14 @@ const { acf } = caseStudy;
       <div class="lg:col-span-5 flex flex-col gap-6" data-animate="stagger">
         
         {/* Metric 1 */}
-        <div class="p-8 rounded-[24px] border border-[#ff6b83]/20 bg-gradient-to-br from-[rgba(255,107,131,0.03)] to-transparent shadow-[0_15px_30px_rgba(255,107,131,0.02)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group" data-animate-child>
+        <div class="p-8 rounded-[24px] border border-[var(--accent-rose)]/20 bg-gradient-to-br from-[rgba(255,107,131,0.03)] to-transparent shadow-[0_15px_30px_rgba(255,107,131,0.02)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group" data-animate-child>
           <div class="absolute inset-0 bg-radial-gradient(circle, rgba(255,107,131,0.03) 0%, transparent 60%) pointer-events-none"></div>
           <div class="relative z-10 flex justify-between items-start">
             <div>
-              <span class="font-mono text-[9px] text-[#f0a278] uppercase tracking-wider block mb-2">Campaign Performance</span>
+              <span class="font-mono text-[9px] text-[var(--accent-warm)] uppercase tracking-wider block mb-2">Campaign Performance</span>
               <h3 class="font-display text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-tight">{acf.result_roi}</h3>
             </div>
-            <div class="w-8 h-8 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-default)] flex items-center justify-center text-[#f0a278]">
+            <div class="w-8 h-8 rounded-lg bg-[var(--surface-soft)] border border-[var(--border-default)] flex items-center justify-center text-[var(--accent-warm)]">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
             </div>
           </div>
@@ -121,7 +121,7 @@ const { acf } = caseStudy;
           <!-- Testimonial Quote Block -->
           {acf.testimonial_quote && (
             <blockquote class="border-t border-[var(--border-subtle)] pt-8 mt-6">
-              <svg class="w-8 h-8 text-[#ff6b83]/30 mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.748-9.791 9-10.455v2.894c-3.057.586-4.947 2.767-4.947 5.756h4.053V21h-8.106zm-12 0v-7.391c0-5.704 3.748-9.791 9-10.455v2.894c-3.057.586-4.947 2.767-4.947 5.756h4.053V21H2.017z"/></svg>
+              <svg class="w-8 h-8 text-[var(--accent-rose)]/30 mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.748-9.791 9-10.455v2.894c-3.057.586-4.947 2.767-4.947 5.756h4.053V21h-8.106zm-12 0v-7.391c0-5.704 3.748-9.791 9-10.455v2.894c-3.057.586-4.947 2.767-4.947 5.756h4.053V21H2.017z"/></svg>
               <p class="text-[var(--text-primary)] font-body italic text-xs sm:text-sm leading-relaxed mb-4">
                 "{acf.testimonial_quote}"
               </p>
