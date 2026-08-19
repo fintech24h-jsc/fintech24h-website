@@ -191,8 +191,12 @@
   }
  
   :global(html[data-theme='light']) img[src="/images/world-map.svg"] {
-    filter: none !important;
-    opacity: 0.08 !important;
+    filter: brightness(0.4) contrast(1.15) !important;
+    opacity: 0.32 !important;
+  }
+  :global(html[data-theme='light']) .country-pill img {
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.22), 0 0 0 2px var(--bg-primary);
+    filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.2));
   }
   :global(html[data-theme='light']) .special-pill {
     background: linear-gradient(90deg, rgba(0,115,143,0.06), rgba(101,72,216,0.06)) !important;

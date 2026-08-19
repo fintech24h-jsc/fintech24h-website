@@ -67,18 +67,18 @@ const posts = allPosts.slice(0, 6);
                     alt={featuredImage.alt}
                     width="800"
                     height="500"
-                    class="w-full h-full object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-105"
+                    class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
                   />
-                  {/* Slate Gray Filter Overlay (No Blur) */}
-                  <div class="absolute inset-0 bg-slate-900/60 pointer-events-none transition-all duration-500 group-hover:bg-slate-900/20" aria-hidden="true"></div>
+                  {/* Specular diagonal sheen sweep on hover */}
+                  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" aria-hidden="true"></div>
 
-                  {/* Specular Diagonal Glass Sheen Sweep */}
-                  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" aria-hidden="true"></div>
+                  {/* Soft bottom shadow so the photo blends into the card instead of hard-cutting */}
+                  <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)]/45 via-transparent to-transparent pointer-events-none"></div>
 
-                  {/* Bottom Dark shadow for card integration */}
-                  <div class="absolute inset-0 bg-gradient-to-t from-[#080c1a]/50 via-transparent to-transparent opacity-40"></div>
+                  {/* Accent-tinted ring that appears on hover */}
+                  <div class="absolute inset-0 ring-1 ring-inset ring-[var(--accent-cyan)]/0 group-hover:ring-[var(--accent-cyan)]/40 transition-all duration-500 pointer-events-none rounded-xl"></div>
                 </a>
               )}
 
