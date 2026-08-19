@@ -67,10 +67,15 @@ const posts = allPosts.slice(0, 6);
                     alt={featuredImage.alt}
                     width="800"
                     height="500"
-                    class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    class="blog-thumb-img w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
                   />
+                  {/* Dark-mode liquid-glass tint (moody by design in dark mode; the
+                      light theme shows the photo in full color instead — see style
+                      block below) */}
+                  <div class="blog-thumb-tint absolute inset-0 pointer-events-none transition-all duration-500" aria-hidden="true"></div>
+
                   {/* Specular diagonal sheen sweep on hover */}
                   <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" aria-hidden="true"></div>
 
@@ -121,6 +126,24 @@ const posts = allPosts.slice(0, 6);
 )}
 
 <style>
+  /* Thumbnails: dark mode keeps the original moody grayscale + slate tint
+     ("liquid glass") treatment; light mode shows the photo in full, natural
+     color — a flat gray wash read poorly against the light theme's own pale
+     background, but it's the intended look for dark mode and shouldn't
+     change there. */
+  .blog-thumb-tint {
+    background: transparent;
+  }
+  :global(html:not([data-theme='light'])) .blog-thumb-img {
+    filter: grayscale(1);
+  }
+  :global(html:not([data-theme='light'])) .blog-thumb-tint {
+    background: rgba(15, 23, 42, 0.6);
+  }
+  :global(html:not([data-theme='light'])) .group:hover .blog-thumb-tint {
+    background: rgba(15, 23, 42, 0.2);
+  }
+
   /* Custom Liquid Glass Cards — token-driven (not hardcoded rgba(255,255,255,*))
      so the card stays visible against the theme's own background instead of
      nearly disappearing on the light theme's already-pale surface. */
