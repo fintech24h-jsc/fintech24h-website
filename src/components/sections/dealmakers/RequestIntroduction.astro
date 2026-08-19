@@ -1,0 +1,57 @@
+---
+// src/components/sections/dealmakers/RequestIntroduction.astro
+// "Request Introduction có điều phối" — trust-building without promising
+// outcomes we don't control (no "guaranteed connection" language).
+const steps = [
+  {
+    n: '01',
+    title: 'Yêu cầu có bối cảnh',
+    body: 'Bạn nêu rõ mục tiêu, giá trị mang lại và lý do hai phía nên nói chuyện. Không có inbox đại trà.',
+  },
+  {
+    n: '02',
+    title: 'Fintech24h rà soát',
+    body: 'Đội ngũ kiểm tra mức độ phù hợp: nhu cầu, stage, khu vực và người ra quyết định trước khi cân nhắc kết nối.',
+  },
+  {
+    n: '03',
+    title: 'Xin đồng ý phía nhận',
+    body: 'Chúng tôi liên hệ phía nhận trước, xin đồng ý và chuẩn bị bối cảnh — không chia sẻ contact trực tiếp.',
+  },
+  {
+    n: '04',
+    title: 'Warm introduction',
+    body: 'Nếu đủ điều kiện, Fintech24h gửi giới thiệu có bối cảnh. Không phải mọi request đều được chấp thuận.',
+  },
+];
+---
+
+<section class="relative py-20 lg:py-28" aria-label="Request Introduction có điều phối">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto text-center mb-14">
+      <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-3">Request Introduction có điều phối</p>
+      <h2 class="font-display font-bold text-h2 text-[var(--text-primary)] mb-5">
+        Chúng tôi bảo vệ thời gian của <span class="text-gradient">mọi người trong network.</span>
+      </h2>
+      <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
+        Một introduction tốt không phải là chuyển contact. Đó là một cuộc gặp có lý do rõ ràng, được chuẩn bị đúng bối cảnh và chỉ mở khi cả hai phía có lý do để nói chuyện.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {steps.map((s, i) => (
+        <div class="relative card-numbered p-6" data-step={s.n}>
+          <p class="font-mono text-[10px] text-[var(--accent-cyan)] tracking-widest mb-3">{s.n}</p>
+          <h3 class="font-display font-bold text-sm text-[var(--text-primary)] mb-2">{s.title}</h3>
+          <p class="text-xs text-[var(--text-secondary)] leading-relaxed">{s.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="text-center mt-10">
+      <a href="#apply" data-dm-prefill-interest="Tham gia DealMakers’ Club" class="btn-liquid-glass-primary py-3 px-6 text-xs" data-dm-track="request_intro_cta">
+        Request an Introduction
+      </a>
+    </p>
+  </div>
+</section>

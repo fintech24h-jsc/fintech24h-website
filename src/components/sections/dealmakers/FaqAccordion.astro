@@ -1,0 +1,41 @@
+---
+// src/components/sections/dealmakers/FaqAccordion.astro
+// Native <details>/<summary> accordion — keyboard accessible by default,
+// no JS needed. FAQPage JSON-LD is emitted by the parent page from the same
+// data source so copy and schema never drift apart.
+import { faq } from '../../../data/dealmakers/ss3';
+---
+
+<section id="faq" class="relative py-20 lg:py-28 bg-[var(--bg-secondary)]" aria-label="Câu hỏi thường gặp">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-12">
+      <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-3">FAQ</p>
+      <h2 class="font-display font-bold text-h2 text-[var(--text-primary)]">Câu hỏi thường gặp</h2>
+    </div>
+
+    <div class="space-y-3">
+      {faq.map((item, i) => (
+        <details class="card-default p-0 border border-white/5 hover:border-[var(--accent-cyan)]/20 transition-all duration-300 group overflow-hidden">
+          <summary class="flex items-center justify-between gap-4 p-5 sm:p-6 cursor-pointer list-none">
+            <span class="flex items-center gap-4 min-w-0">
+              <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest w-7 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-display font-bold text-sm text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors">
+                {item.question}
+              </span>
+            </span>
+            <svg class="w-4 h-4 shrink-0 text-[var(--text-muted)] group-hover:text-[var(--accent-cyan)] transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div class="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed border-t border-white/[0.03] pt-4 pl-16 sm:pl-17">
+            {item.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  summary::-webkit-details-marker { display: none; }
+</style>

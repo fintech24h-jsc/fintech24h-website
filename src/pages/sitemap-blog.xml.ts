@@ -18,7 +18,13 @@ import { getAllPosts } from '../lib/wordpress';
 import type { WPPost } from '../lib/wordpress';
 
 const PER_PAGE = 100;
-const MAX_PAGES = 20; // safety cap (2000 posts) so a WP glitch can't loop forever
+// Safety cap on how many pages we're willing to request (600 posts of
+// headroom). Pages are fetched CONCURRENTLY (see below) — a single WP page
+// request takes ~8.5s, and fetching pages sequentially was blowing past the
+// Worker's execution time limit once the corpus grew past ~200 posts,
+// which made the whole sitemap silently come back empty. Fetching them in
+// parallel keeps total latency close to a single request instead of N.
+const MAX_PAGES = 6;
 
 function escapeXml(value: string): string {
   return value
@@ -30,13 +36,16 @@ function escapeXml(value: string): string {
 }
 
 async function getEveryPost(): Promise<WPPost[]> {
+  const pages = await Promise.all(
+    Array.from({ length: MAX_PAGES }, (_, i) => getAllPosts(i + 1, PER_PAGE))
+  );
+
   const all: WPPost[] = [];
-  for (let page = 1; page <= MAX_PAGES; page++) {
-    const batch = await getAllPosts(page, PER_PAGE);
+  for (const batch of pages) {
     all.push(...batch);
-    // A short (or empty) page means we're done. getAllPosts returns [] on
-    // error in production, so this also terminates cleanly if WordPress is
-    // briefly unreachable.
+    // A short (or empty) page means that was the last real page — any pages
+    // requested past it are out-of-range and were already resolved (as []),
+    // so this just stops us from trusting anything beyond the true end.
     if (batch.length < PER_PAGE) break;
   }
   return all;

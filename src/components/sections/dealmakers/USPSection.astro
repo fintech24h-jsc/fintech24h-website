@@ -1,0 +1,57 @@
+---
+// src/components/sections/dealmakers/USPSection.astro
+// "USP thực tế" — responsible proof points, no invented KPIs. Describes the
+// review process instead of numbers we don't have yet for Season 3.
+const points = [
+  {
+    icon: 'signal',
+    title: 'Signal rõ ràng',
+    body: 'Member công khai We Offer / We Are Looking For ngay trên profile — giảm cold outreach mơ hồ, người xem biết ngay bạn có gì và cần gì.',
+  },
+  {
+    icon: 'verified',
+    title: 'Verified decision-makers',
+    body: 'Ưu tiên người có quyền ra quyết định trực tiếp hoặc đại diện được uỷ quyền rõ ràng — không phải tài khoản đại diện chung chung.',
+  },
+  {
+    icon: 'curate',
+    title: 'Curated introduction',
+    body: 'Fintech24h đọc mục tiêu của cả hai phía, kiểm tra mức độ phù hợp và xin đồng ý trước khi kết nối — không có warm intro nào được gửi đại trà.',
+  },
+  {
+    icon: 'region',
+    title: 'Regional deal flow',
+    body: 'Trọng tâm kết nối Web3 / fintech tại Việt Nam và Đông Nam Á, mở rộng ra quốc tế khi mức độ phù hợp đủ cao.',
+  },
+];
+
+const icons: Record<string, string> = {
+  signal: 'M13 2 3 14h7l-1 8 10-12h-7l1-8z',
+  verified: 'm9 12 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',
+  curate: 'M12 2v4m0 12v4m-8-10h4m12 0h4M5.6 5.6l2.8 2.8m7.2 7.2 2.8 2.8m0-12.8-2.8 2.8M8.4 15.6l-2.8 2.8',
+  region: 'M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21zM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+};
+---
+
+<section class="relative py-20 lg:py-28" aria-label="USP">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mb-12">
+      <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-3">Không mở rộng danh bạ</p>
+      <h2 class="font-display font-bold text-h2 text-[var(--text-primary)]">
+        Chúng tôi tạo <span class="text-gradient">đúng cuộc gặp.</span>
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {points.map((p) => (
+        <div class="card-default p-6 flex flex-col gap-4">
+          <div class="w-11 h-11 rounded-xl bg-[var(--accent-cyan)]/8 border border-[var(--accent-cyan)]/20 flex items-center justify-center text-[var(--accent-cyan)] shrink-0">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={`<path d="${icons[p.icon]}"/>`} />
+          </div>
+          <h3 class="font-display font-bold text-sm text-[var(--text-primary)]">{p.title}</h3>
+          <p class="text-xs text-[var(--text-secondary)] leading-relaxed font-body">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,114 @@
+---
+// src/components/sections/dealmakers/DealMakersHero.astro
+// Hero + current-season partners. Capital Partner gets center/largest
+// billing; the 3 category partners sit smaller beside it. Any partner
+// without `confirmed: true` renders as a neutral "Đang xác nhận" slot —
+// never a fake logo.
+import { heroPartners } from '../../../data/dealmakers/ss3';
+
+const capital = heroPartners.find((p) => p.category === 'capital')!;
+const others = heroPartners.filter((p) => p.category !== 'capital');
+---
+
+<section class="relative overflow-hidden pt-28 pb-20 lg:pt-36 lg:pb-28" aria-label="DealMakers Hero">
+  <!-- Ambient background: mesh gradient + 2 drifting orbs (Loại 1 — Ambient, đúng luật CLAUDE.md) -->
+  <div class="absolute inset-0" style="background: var(--gradient-hero-bg);" aria-hidden="true"></div>
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute w-[560px] h-[560px] rounded-full opacity-40 mix-blend-screen"
+      style="top: -12%; left: -6%; background: var(--gradient-glow-cyan); filter: blur(90px); animation: orb-drift 14s ease-in-out infinite, orb-pulse 9s ease-in-out infinite;"></div>
+    <div class="absolute w-[480px] h-[480px] rounded-full opacity-40 mix-blend-screen"
+      style="bottom: -8%; right: -8%; background: var(--gradient-glow-purple); filter: blur(90px); animation: orb-drift 17s ease-in-out infinite 3s, orb-pulse 11s ease-in-out infinite 2s;"></div>
+    <div class="absolute inset-0 grid-pattern" style="opacity: 0.25;"></div>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center text-center gap-5 max-w-3xl mx-auto">
+      <p class="font-mono text-[10px] lg:text-xs text-[var(--accent-cyan)] uppercase tracking-[0.18em] flex items-center gap-2" data-dm-eyebrow>
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
+        Fintech24h presents · Season 3
+      </p>
+
+      <h1 class="font-display font-bold leading-[1.08] text-[clamp(2.4rem,6vw,4.4rem)] tracking-[-0.03em]" data-dm-title>
+        Nơi người ra quyết định
+        <span class="block bg-clip-text text-transparent dm-sheen-text">gặp nhau để tạo deal.</span>
+      </h1>
+
+      <p class="text-sm sm:text-base text-[var(--text-secondary)] font-body leading-relaxed max-w-2xl" data-dm-title style="--dmi:1">
+        DealMakers’ Club – F-Matching là cộng đồng kết nối có chọn lọc dành cho Founder, Investor, Exchange và Web3 builders. Không chỉ networking: đây là nơi <strong class="text-[var(--text-primary)] font-semibold">verified decision-makers</strong>, <strong class="text-[var(--text-primary)] font-semibold">qualified deal flow</strong> và <strong class="text-[var(--text-primary)] font-semibold">strategic introductions</strong> được nhìn thấy, xác minh và kết nối đúng người.
+      </p>
+
+      <div class="flex flex-wrap gap-4 justify-center mt-4" data-dm-title style="--dmi:2">
+        <a href="#apply" class="btn-liquid-glass-primary py-3 px-6 text-xs" aria-label="Trở thành DealMaker">
+          <span>Trở thành DealMaker</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline ml-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#featured" class="btn-liquid-glass-ghost py-3 px-6 text-xs" aria-label="Khám phá Featured DealMakers">
+          <span>Khám phá Featured DealMakers</span>
+        </a>
+      </div>
+
+      <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center mt-2 text-[var(--text-muted)] text-xs font-body" data-dm-title style="--dmi:3">
+        <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></i>Thành viên được xác minh</span>
+        <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></i>Kết nối có điều phối</span>
+        <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></i>Ưu tiên cơ hội thật</span>
+      </div>
+    </div>
+
+    <!-- Season partner strip -->
+    <div class="mt-16 lg:mt-20" data-dm-title style="--dmi:4">
+      <p class="text-center font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-[0.15em] mb-6">
+        Co-host &amp; Sponsorship Partner — Season 3
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-[1.3fr_1fr_1fr_1fr] gap-4 items-stretch max-w-4xl mx-auto">
+        <!-- Capital Partner — largest, center billing -->
+        <div class="dm-partner-slot dm-partner-slot--capital group relative liquid-glass-premium rounded-2xl p-6 flex flex-col items-center justify-center gap-2 min-h-[120px]">
+          <span class="font-mono text-[9px] text-[var(--accent-cyan)] uppercase tracking-[0.15em]">{capital.label}</span>
+          {capital.confirmed && capital.logoUrl ? (
+            <img src={capital.logoUrl} alt={`Logo của ${capital.name}, Capital Partner của F-Matching Season 3`} class="h-10 w-auto object-contain" loading="eager" />
+          ) : (
+            <span class="font-display text-sm text-[var(--text-muted)]">Đang xác nhận</span>
+          )}
+        </div>
+
+        <!-- 3 category partners -->
+        {others.map((p) => (
+          <div class="dm-partner-slot group relative liquid-glass-premium rounded-2xl p-4 flex flex-col items-center justify-center gap-2 min-h-[120px]">
+            <span class="font-mono text-[8px] text-[var(--text-muted)] uppercase tracking-[0.12em]">{p.label}</span>
+            {p.confirmed && p.logoUrl ? (
+              <img src={p.logoUrl} alt={`Logo của ${p.name}, ${p.label} của F-Matching Season 3`} class="h-7 w-auto object-contain" loading="lazy" />
+            ) : (
+              <span class="font-body text-xs text-[var(--text-muted)]">Đang xác nhận</span>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dm-sheen-text {
+    background: linear-gradient(120deg,
+      var(--accent-cyan) 0%, var(--accent-cyan) 25%,
+      #ffffff 45%, #ffffff 55%,
+      var(--accent-purple) 75%, var(--accent-purple) 100%);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: dm-sheen-sweep 8s linear infinite;
+    transform: translateZ(0);
+    isolation: isolate;
+  }
+  @keyframes dm-sheen-sweep {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  [data-dm-eyebrow] { opacity: 0; animation: hero-line-reveal 0.6s cubic-bezier(0.215,0.61,0.355,1) 0.05s both; }
+  [data-dm-title] { opacity: 0; animation: hero-line-reveal 1s cubic-bezier(0.23,1,0.32,1) both; animation-delay: calc(0.12s + var(--dmi, 0) * 0.1s); }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dm-eyebrow], [data-dm-title], .dm-sheen-text { animation: none !important; opacity: 1 !important; }
+  }
+</style>
