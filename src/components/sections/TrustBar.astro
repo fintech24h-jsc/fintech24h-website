@@ -153,6 +153,19 @@ const row2Clients = clients.slice(Math.ceil(clients.length / 2));
     filter: grayscale(0) opacity(1);
   }
 
+  /* These partner marks are mostly white/monochrome artwork made for the
+     dark theme's near-black chip background — on the light theme's pale
+     glass chip they all but disappear. Force them to a solid dark
+     silhouette instead (brightness(0) turns any opaque pixel black while
+     respecting the source alpha channel, so transparency is preserved). */
+  :global(html[data-theme='light']) .logo-img {
+    filter: brightness(0) saturate(100%);
+    opacity: 0.72;
+  }
+  :global(html[data-theme='light']) .logo-chip:hover .logo-img {
+    opacity: 1;
+  }
+
   /* Adjust scrolling speeds: faster on mobile for dynamics, slower on desktop for readability */
   .marquee-track {
     animation-duration: 20s;
