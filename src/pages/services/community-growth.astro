@@ -175,7 +175,7 @@ const combinedSchema = [serviceSchema, faqSchema];
         ].map((msg, i) => (
           <div class={`flex ${msg.isUser ? 'justify-end' : 'justify-start'} reveal`} style={`transition-delay: ${i * 0.08}s`}>
             {msg.isUser ? (
-              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tr-sm border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] bg-gradient-to-br from-[var(--accent-cyan)]/12 to-[var(--accent-purple)]/10 backdrop-blur-md shadow-[0_4px_20px_rgba(0,200,240,0.08)]">
+              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tr-sm border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] bg-gradient-to-br from-[color-mix(in_srgb,var(--accent-cyan)_12%,transparent)] to-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] backdrop-blur-md shadow-[0_4px_20px_rgba(0,200,240,0.08)]">
                 <span class="block text-[10px] font-mono text-[var(--accent-cyan)] mb-1.5 tracking-wider">Fintech24h</span>
                 <p class="font-body text-[15px] leading-relaxed text-[var(--text-primary)]">{msg.text}</p>
               </div>
@@ -250,7 +250,7 @@ const combinedSchema = [serviceSchema, faqSchema];
             <!-- Top gradient bar -->
             <div class={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r ${item.bar}`}></div>
             <!-- Hover glow -->
-            <div class="absolute inset-0 bg-gradient-to-br from-[var(--accent-cyan)]/3 to-[var(--accent-purple)]/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-[color-mix(in_srgb,var(--accent-cyan)_3%,transparent)] to-[color-mix(in_srgb,var(--accent-purple)_3%,transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none"></div>
 
             <div class={`w-12 h-12 rounded-xl flex items-center justify-center font-black text-[11px] mb-6 border ${item.badge}`}>
               {item.level}
