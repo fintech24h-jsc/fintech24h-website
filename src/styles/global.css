@@ -121,7 +121,7 @@
     --dropdown-surface:  rgba(255, 255, 255, 0.85);
  
     /* Brand Accents - Rich and high contrast for light mode */
-    --accent-cyan:       #007a99; /* Deep cyan */
+    --accent-cyan:       #00708c; /* Deep cyan, darkened from #007a99 (4.17:1) to clear 4.5:1 for the small mono eyebrow labels that use it as text */
     --accent-cyan-dim:   #006078;
     --accent-cyan-glow:  rgba(0, 122, 153, 0.15);
     --accent-purple:     #6b46f2; /* Royal purple */
@@ -133,10 +133,10 @@
     /* Text */
     --text-primary:      #0f172a; /* Slate 900 for premium dark text */
     --text-secondary:    #334155; /* Slate 700 */
-    --text-muted:        #64748b; /* Slate 500 */
+    --text-muted:        #5c6b81; /* Slate 500, darkened slightly — #64748b was 4.01:1 on this bg, just under AA's 4.5:1 for small text */
     --text-inverted:     #ffffff;
  
-    --color-success:     #059669;
+    --color-success:     #047a57; /* darkened from #059669 (3.17:1) to hit 4.5:1 on this bg for small text */
     --color-success-bg:  rgba(5, 150, 105, 0.08);
     --color-warning:     #d97706;
     --color-danger:      #dc2626;
