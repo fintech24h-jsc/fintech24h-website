@@ -1,57 +1,64 @@
 ---
 // src/components/sections/dealmakers/USPSection.astro
-// Responsible proof points — no invented KPIs. Describes the review
-// process instead of numbers we don't have yet for Season 3.
-const points = [
-  {
-    icon: 'signal',
-    title: 'Clear signal',
-    body: 'Members publish We Offer / We Are Looking For directly on their profile — cutting through vague cold outreach so visitors know exactly what you have and need.',
-  },
-  {
-    icon: 'verified',
-    title: 'Verified decision-makers',
-    body: 'Priority goes to direct decision-makers or clearly authorized representatives — not generic account handlers.',
-  },
-  {
-    icon: 'curate',
-    title: 'Curated introductions',
-    body: 'Fintech24h reviews both parties’ goals, checks fit, and asks for consent before connecting — no warm intro is ever sent in bulk.',
-  },
-  {
-    icon: 'region',
-    title: 'Regional deal flow',
-    body: 'Focused on connecting Web3 / fintech in Vietnam and Southeast Asia, extending internationally when fit is high enough.',
-  },
-];
-
-const icons: Record<string, string> = {
-  signal: 'M13 2 3 14h7l-1 8 10-12h-7l1-8z',
-  verified: 'm9 12 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',
-  curate: 'M12 2v4m0 12v4m-8-10h4m12 0h4M5.6 5.6l2.8 2.8m7.2 7.2 2.8 2.8m0-12.8-2.8 2.8M8.4 15.6l-2.8 2.8',
-  region: 'M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21zM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
-};
+// Asymmetric bento layout instead of four identical icon+title+text cards
+// (the classic template pattern) — one wide anchor tile carries the core
+// claim, three narrower tiles carry the supporting points.
 ---
 
-<section class="relative py-20 lg:py-28" aria-label="Value proposition">
+<section class="relative py-20 lg:py-28" aria-label="Why DealMakers' Club">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="max-w-2xl mb-12">
+    <div class="max-w-2xl mb-12" data-dm-reveal>
       <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Not another contact list</p>
       <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)]">
         We create <span class="dm-text-gradient">the right meeting.</span>
       </h2>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      {points.map((p) => (
-        <div class="dm-card p-6 flex flex-col gap-4">
-          <div class="w-11 h-11 rounded-xl bg-[rgba(212,175,106,0.08)] border border-[var(--dm-border-accent)] flex items-center justify-center text-[var(--dm-gold)] shrink-0">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={`<path d="${icons[p.icon]}"/>`} />
-          </div>
-          <h3 class="font-display font-semibold text-sm text-[var(--dm-text-primary)]">{p.title}</h3>
-          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed font-body">{p.body}</p>
+    <div class="grid lg:grid-cols-3 gap-5 lg:auto-rows-[220px]">
+      <!-- Anchor tile: wide, carries the core claim -->
+      <div class="dm-card-featured lg:col-span-2 lg:row-span-1 p-8 flex flex-col justify-between relative overflow-hidden" data-dm-reveal>
+        <svg class="absolute -right-6 -bottom-8 w-40 h-40 opacity-[0.06]" viewBox="0 0 24 24" fill="none" stroke="var(--dm-gold)" stroke-width="1" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        <div class="w-11 h-11 rounded-xl bg-[rgba(217,178,106,0.1)] border border-[var(--dm-border-accent)] flex items-center justify-center text-[var(--dm-gold)]">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
         </div>
-      ))}
+        <div>
+          <h3 class="font-display font-semibold text-xl text-[var(--dm-text-primary)] mb-2">Clear signal, not cold outreach</h3>
+          <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed max-w-md">Members publish We Offer / We Are Looking For directly on their profile, so visitors know exactly what you have and need before a single message is sent.</p>
+        </div>
+      </div>
+
+      <!-- Supporting tile -->
+      <div class="dm-card lg:row-span-1 p-6 flex flex-col justify-between" data-dm-reveal>
+        <div class="w-10 h-10 rounded-lg bg-[rgba(52,168,120,0.1)] border border-[rgba(52,168,120,0.3)] flex items-center justify-center text-[var(--dm-emerald-bright)]">
+          <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+        </div>
+        <div>
+          <h3 class="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-1.5">Verified decision-makers</h3>
+          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed">Priority for direct decision-makers or clearly authorized representatives.</p>
+        </div>
+      </div>
+
+      <!-- Supporting tile -->
+      <div class="dm-card p-6 flex flex-col justify-between" data-dm-reveal>
+        <div class="w-10 h-10 rounded-lg bg-[rgba(217,178,106,0.1)] border border-[var(--dm-border-accent)] flex items-center justify-center text-[var(--dm-gold)]">
+          <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4m-8-10h4m12 0h4M5.6 5.6l2.8 2.8m7.2 7.2 2.8 2.8m0-12.8-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>
+        </div>
+        <div>
+          <h3 class="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-1.5">Curated introductions</h3>
+          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed">Fintech24h reviews fit and asks for consent before connecting anyone.</p>
+        </div>
+      </div>
+
+      <!-- Supporting tile spanning the remaining width -->
+      <div class="dm-card lg:col-span-2 p-6 flex items-center gap-6" data-dm-reveal>
+        <div class="w-10 h-10 rounded-lg bg-[rgba(52,168,120,0.1)] border border-[rgba(52,168,120,0.3)] flex items-center justify-center text-[var(--dm-emerald-bright)] shrink-0">
+          <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21zM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg>
+        </div>
+        <div>
+          <h3 class="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-1">Regional deal flow, global reach</h3>
+          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed">Focused on Web3 / fintech in Vietnam and Southeast Asia, extending internationally when fit is high enough.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>

@@ -1,51 +1,74 @@
 ---
 // src/pages/dealmakers/index.astro
-// Season index — lists every DealMakers' Club / F-Matching season so users
-// landing on /dealmakers/ can pick which one to view. New seasons only need
-// an entry in src/data/dealmakers/seasons.ts. Standalone microsite layout —
-// not the main fintech24h.com chrome.
+// Season index. With only one active season, sending visitors straight to
+// it (after a brief visible redirect notice, per the project owner) is
+// better UX than a listing page with a single card. Once a second season
+// exists, flip `seasons.length > 1` below to show the picker grid again —
+// the grid markup is kept, just gated, so no rework is needed later.
 import DealMakersLayout from '../../layouts/DealMakersLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { seasons } from '../../data/dealmakers/seasons';
 
 const title = 'DealMakers’ Club | Fintech24h';
 const description =
-  'Fintech24h DealMakers’ Club — the F-Matching program connecting Founders, Investors, Exchanges, and strategic partners in Web3/fintech. See active and past seasons.';
+  'Fintech24h DealMakers’ Club — the F-Matching program connecting Founders, Investors, Exchanges, and strategic partners in Web3/fintech.';
 const canonical = 'https://fintech24h.com/dealmakers/';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'DealMakers’ Club', item: canonical },
 ];
+
+const activeSeason = seasons.find((s) => s.status === 'active') ?? seasons[0];
+const showPicker = seasons.length > 1;
 ---
 
-<DealMakersLayout title={title} description={description} canonical={canonical}>
+<DealMakersLayout title={title} description={description} canonical={showPicker ? canonical : activeSeason.href}>
   <BreadcrumbSchema items={breadcrumbs} />
+  {!showPicker && <meta http-equiv="refresh" content={`1;url=${activeSeason.href}`} />}
 
-  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="DealMakers Club seasons">
-    <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
-    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">Fintech24h</p>
-      <h1 class="font-display font-semibold text-h1 text-[var(--dm-text-primary)] mb-6">DealMakers&rsquo; Club</h1>
-      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-2xl mx-auto mb-16">
-        A curated F-Matching program connecting Founders, Investors, Exchanges, and strategic partners in Web3/fintech. Pick a season to see details.
-      </p>
+  {showPicker ? (
+    <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="DealMakers Club seasons">
+      <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
+      <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">Fintech24h</p>
+        <h1 class="font-display font-semibold text-h1 text-[var(--dm-text-primary)] mb-6">DealMakers&rsquo; Club</h1>
+        <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-2xl mx-auto mb-16">
+          A curated F-Matching program connecting Founders, Investors, Exchanges, and strategic partners in Web3/fintech. Pick a season to see details.
+        </p>
 
-      <div class="grid sm:grid-cols-2 gap-6 text-left">
-        {seasons.map((s) => (
-          <a href={s.href} class="group relative dm-card rounded-2xl p-6 flex flex-col gap-3">
-            <span class={`self-start px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider ${s.status === 'active' ? 'dm-tag dm-tag-gold' : 'dm-tag dm-tag-gray'}`}>
-              {s.status === 'active' ? 'Active now' : s.status === 'upcoming' ? 'Coming soon' : 'Archived'}
-            </span>
-            <h2 class="font-display font-semibold text-lg text-[var(--dm-text-primary)]">{s.name}</h2>
-            <p class="text-sm text-[var(--dm-text-secondary)]">{s.tagline}</p>
-            <span class="mt-2 inline-flex items-center gap-1 text-[var(--dm-gold)] font-display text-xs font-semibold group-hover:gap-2 transition-all">
-              View details
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </span>
-          </a>
-        ))}
+        <div class="grid sm:grid-cols-2 gap-6 text-left">
+          {seasons.map((s) => (
+            <a href={s.href} class="group relative dm-card rounded-2xl p-6 flex flex-col gap-3">
+              <span class={`self-start px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider ${s.status === 'active' ? 'dm-tag dm-tag-gold' : 'dm-tag dm-tag-gray'}`}>
+                {s.status === 'active' ? 'Active now' : s.status === 'upcoming' ? 'Coming soon' : 'Archived'}
+              </span>
+              <h2 class="font-display font-semibold text-lg text-[var(--dm-text-primary)]">{s.name}</h2>
+              <p class="text-sm text-[var(--dm-text-secondary)]">{s.tagline}</p>
+              <span class="mt-2 inline-flex items-center gap-1 text-[var(--dm-gold)] font-display text-xs font-semibold group-hover:gap-2 transition-all">
+                View details
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  ) : (
+    <Fragment>
+      <section class="relative min-h-[70vh] flex items-center justify-center py-24 px-4" aria-label="Redirecting to the active season">
+        <div class="relative z-10 flex flex-col items-center text-center gap-5 max-w-md">
+          <span class="w-10 h-10 rounded-full border-2 border-[var(--dm-border)] border-t-[var(--dm-gold)] animate-spin" aria-hidden="true"></span>
+          <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em]">Fintech24h</p>
+          <h1 class="font-display font-semibold text-2xl text-[var(--dm-text-primary)]">Redirecting to DealMakers&rsquo; Club — {activeSeason.name}&hellip;</h1>
+          <p class="text-sm text-[var(--dm-text-secondary)]">
+            If you’re not redirected automatically, <a href={activeSeason.href} class="text-[var(--dm-gold)] underline hover:text-[var(--dm-gold-bright)]">continue to {activeSeason.name}</a>.
+          </p>
+        </div>
+      </section>
+      <script define:vars={{ redirectTo: activeSeason.href }} is:inline>
+        window.location.replace(redirectTo);
+      </script>
+    </Fragment>
+  )}
 </DealMakersLayout>

@@ -124,7 +124,7 @@ export default function QualifiedDirectory() {
 
       {/* Deal list */}
       <div className="grid gap-3" role="list" aria-label="Qualified Listing Directory">
-        {visibleProfiles.map((p) => (
+        {visibleProfiles.map((p, i) => (
           <article
             key={p.slug}
             role="button"
@@ -136,9 +136,10 @@ export default function QualifiedDirectory() {
                 openProfile(p.slug, e);
               }
             }}
-            className={`group grid grid-cols-[auto_1fr_auto] items-center gap-4 p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all duration-200 ${
+            style={{ animationDelay: `${Math.min(i, 6) * 60}ms` }}
+            className={`dm-anim-in group grid grid-cols-[auto_1fr_auto] items-center gap-4 p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all duration-200 hover:-translate-y-0.5 ${
               p.sponsored
-                ? 'border-[var(--dm-border-accent)] bg-gradient-to-r from-[rgba(212,175,106,0.08)] to-transparent hover:border-[var(--dm-gold)]'
+                ? 'border-[var(--dm-border-accent)] bg-gradient-to-r from-[rgba(217,178,106,0.1)] to-transparent hover:border-[var(--dm-gold)] shadow-[0_0_0_1px_rgba(217,178,106,0.06)]'
                 : 'border-[var(--dm-border)] bg-white/[0.02] hover:border-[var(--dm-border-hover)] hover:bg-white/[0.04]'
             } focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--dm-gold)] focus-visible:outline-offset-2`}
           >
@@ -149,7 +150,7 @@ export default function QualifiedDirectory() {
               <h4 className="font-display font-semibold text-sm text-[var(--dm-text-primary)] flex items-center gap-2 flex-wrap">
                 {p.companyName}
                 {p.sponsored && (
-                  <span className="dm-tag dm-tag-gold text-[9px] py-0.5 px-2">✦ Sponsored</span>
+                  <span className="dm-badge-sponsored">✦ Sponsored</span>
                 )}
               </h4>
               <p className="text-xs text-[var(--dm-text-muted)] truncate">{p.contactName} · {p.role} · {p.dealGoal}</p>
@@ -194,7 +195,7 @@ export default function QualifiedDirectory() {
               <div className="min-w-0">
                 <h3 id="dm-profile-title" className="font-display font-semibold text-xl text-[var(--dm-text-primary)]">{activeProfile.companyName}</h3>
                 <p className="text-xs text-[var(--dm-text-muted)]">{activeProfile.contactName} · {activeProfile.role}</p>
-                {activeProfile.sponsored && <span className="dm-tag dm-tag-gold text-[9px] py-0.5 px-2 mt-2 inline-block">✦ Sponsored profile</span>}
+                {activeProfile.sponsored && <span className="dm-badge-sponsored mt-2">✦ Sponsored profile</span>}
               </div>
             </div>
 

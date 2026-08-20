@@ -2,14 +2,14 @@
 // src/components/sections/dealmakers/FeaturedDealMakers.astro
 // Featured DealMaker cards. `illustrative: true` profiles are fictional
 // placeholders (Season 3 has not onboarded real Featured DealMakers yet) —
-// each card carries a visible "Sample profile" tag so nobody mistakes them
-// for real applicants. Hover reveals a specular sweep + subtle pointer-tilt.
+// each card carries a small "Preview" tag so nobody mistakes them for real
+// applicants. Hover reveals a specular sweep + subtle pointer-tilt.
 import { featuredDealMakers } from '../../../data/dealmakers/ss3';
 ---
 
 <section id="featured" class="relative py-20 lg:py-28" aria-label="Featured DealMakers">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12" data-dm-reveal>
       <div>
         <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Featured DealMakers</p>
         <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] max-w-xl">
@@ -21,20 +21,16 @@ import { featuredDealMakers } from '../../../data/dealmakers/ss3';
       </a>
     </div>
 
-    <p class="text-sm text-[var(--dm-text-secondary)] max-w-2xl mb-4">
+    <p class="text-sm text-[var(--dm-text-secondary)] max-w-2xl mb-10">
       Every Featured DealMaker gets an intro video up to 2 minutes, a company profile, and public deal signals for the entire Season 3.
-    </p>
-    <p class="text-xs text-[var(--dm-text-muted)] max-w-2xl mb-10 flex items-center gap-2">
-      <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      The profiles below are <strong class="text-[var(--dm-text-secondary)]">sample profiles</strong> to illustrate the layout — Season 3 has no confirmed Featured DealMakers yet.
     </p>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      {featuredDealMakers.map((dm) => (
-        <article class="dm-card group relative rounded-[20px] overflow-hidden" data-dm-tilt>
+      {featuredDealMakers.map((dm, i) => (
+        <article class="dm-card dm-sweep-trigger group relative rounded-[20px] overflow-hidden" data-dm-tilt data-dm-reveal style={`--dm-reveal-delay: ${i * 80}`}>
           {dm.illustrative && (
-            <span class="absolute top-3 left-3 z-20 px-2 py-1 rounded-full bg-[rgba(10,9,8,0.75)] border border-[var(--dm-border)] text-[9px] font-mono uppercase tracking-wider text-[var(--dm-text-muted)]">
-              Sample profile
+            <span class="absolute top-3 left-3 z-20 px-2 py-1 rounded-full bg-[rgba(9,8,10,0.8)] border border-[var(--dm-border)] text-[9px] font-mono uppercase tracking-wider text-[var(--dm-text-muted)]">
+              Preview
             </span>
           )}
 
@@ -91,25 +87,15 @@ import { featuredDealMakers } from '../../../data/dealmakers/ss3';
 </section>
 
 <style>
-  .dm-sweep {
-    background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
-    transform: translateX(-120%);
-    transition: transform 0.7s ease;
-  }
-  [data-dm-tilt]:hover .dm-sweep {
-    transform: translateX(120%);
-  }
   [data-dm-tilt] {
     transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, box-shadow 0.3s ease;
-    transform: perspective(800px) rotateX(0deg) rotateY(0deg);
   }
   [data-dm-tilt]:hover {
-    border-color: rgba(212,175,106,0.35);
+    border-color: rgba(217,178,106,0.4);
   }
 
   @media (prefers-reduced-motion: reduce) {
     [data-dm-tilt] { transition: none !important; }
-    .dm-sweep { display: none !important; }
   }
 </style>
 

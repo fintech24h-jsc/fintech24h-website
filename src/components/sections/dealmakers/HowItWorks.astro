@@ -1,0 +1,117 @@
+---
+// src/components/sections/dealmakers/HowItWorks.astro
+// The signature "how it works" moment: Fintech24h sits between Company and
+// Investor as the moderating hub — same visual language as the
+// Global Deal Pipeline panel on /services/business-development/, adapted
+// to this microsite's gold/emerald glass system. Replaces a generic
+// 4-card numbered-steps grid (a classic template pattern) with one
+// asymmetric, illustrated centerpiece.
+const feed = [
+  { time: 'Live', text: 'Deal signal reviewed by Fintech24h', tone: 'gold' },
+  { time: 'Live', text: 'Consent requested from receiving party', tone: 'amber' },
+  { time: 'Live', text: 'Introduction sent — connection made', tone: 'emerald' },
+];
+---
+
+<section class="relative py-20 lg:py-28 overflow-hidden" aria-label="How F-Matching works">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute w-[420px] h-[420px] rounded-full opacity-25 mix-blend-screen dm-orb-emerald"
+      style="top: 10%; left: -8%; filter: blur(100px); animation: orb-pulse 11s ease-in-out infinite;"></div>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-16 items-center">
+      <!-- Copy column -->
+      <div data-dm-reveal>
+        <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">How F-Matching works</p>
+        <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-5">
+          We protect <span class="dm-text-gradient">everyone’s time</span> in the network.
+        </h2>
+        <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed mb-8">
+          A good introduction isn’t a handed-over contact. Fintech24h sits between every Company and Investor in the network — reviewing fit, requesting consent, and only opening a connection when both sides have a real reason to talk.
+        </p>
+
+        <ul class="space-y-5">
+          <li class="flex gap-4">
+            <span class="w-7 h-7 rounded-full border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.08)] flex items-center justify-center text-[var(--dm-gold)] text-[11px] font-mono font-bold shrink-0">1</span>
+            <p class="text-sm text-[var(--dm-text-secondary)]"><strong class="text-[var(--dm-text-primary)] font-semibold">State the signal</strong> — a company or investor submits a request with clear intent, no mass outreach.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="w-7 h-7 rounded-full border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.08)] flex items-center justify-center text-[var(--dm-gold)] text-[11px] font-mono font-bold shrink-0">2</span>
+            <p class="text-sm text-[var(--dm-text-secondary)]"><strong class="text-[var(--dm-text-primary)] font-semibold">Fintech24h reviews fit</strong> — need, stage, region, and decision-maker status, before anything moves forward.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="w-7 h-7 rounded-full border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.08)] flex items-center justify-center text-[var(--dm-gold)] text-[11px] font-mono font-bold shrink-0">3</span>
+            <p class="text-sm text-[var(--dm-text-secondary)]"><strong class="text-[var(--dm-text-primary)] font-semibold">A warm introduction is made</strong> — only after the receiving party consents. Direct contact info is never shared outright.</p>
+          </li>
+        </ul>
+
+        <a href="#apply" data-dm-prefill-interest="Join DealMakers’ Club" class="dm-btn-primary py-3 px-6 text-xs mt-8" data-dm-track="request_intro_cta">
+          Request an Introduction
+        </a>
+      </div>
+
+      <!-- Hub diagram -->
+      <div class="dm-card rounded-[26px] p-6 sm:p-8" data-dm-reveal>
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: var(--dm-gradient-primary);">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#0a0908" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M4 12l4-4m-4 4 4 4"/></svg>
+            </span>
+            <div class="leading-none">
+              <p class="font-mono text-[9px] text-[var(--dm-text-muted)] uppercase tracking-widest mb-1">Network status</p>
+              <p class="font-display font-semibold text-sm text-[var(--dm-text-primary)]">Deal Pipeline</p>
+            </div>
+          </div>
+          <span class="dm-tag dm-tag-emerald text-[9px] py-1 px-2.5 flex items-center gap-1.5">
+            <i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald-bright)]" style="animation: dm-pulse-dot 1.6s ease-in-out infinite;"></i>
+            Connected
+          </span>
+        </div>
+
+        <!-- Nodes -->
+        <div class="relative flex items-center justify-between px-2 mb-8">
+          <div class="flex flex-col items-center gap-2 z-10">
+            <div class="w-14 h-14 rounded-2xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] flex items-center justify-center text-[var(--dm-text-primary)] font-display font-semibold">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11"/><path d="M9 22V12h6v10M4 9l8-6 8 6"/></svg>
+            </div>
+            <span class="font-mono text-[8px] text-[var(--dm-text-muted)] uppercase tracking-widest">Company</span>
+          </div>
+
+          <svg class="absolute left-[22%] right-[58%] top-[28px] h-px w-auto" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="0" y1="1" x2="100" y2="1" stroke="var(--dm-gold)" stroke-width="2" stroke-dasharray="4 4" style="animation: dm-dash-flow 1.2s linear infinite;" />
+          </svg>
+
+          <div class="flex flex-col items-center gap-2 z-10">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center shrink-0" style="background: var(--dm-gradient-primary); box-shadow: 0 0 30px rgba(217,178,106,0.35);">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#0a0908" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+            </div>
+            <span class="font-mono text-[8px] text-[var(--dm-gold)] uppercase tracking-widest">Fintech24h</span>
+          </div>
+
+          <svg class="absolute left-[58%] right-[22%] top-[28px] h-px w-auto" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="0" y1="1" x2="100" y2="1" stroke="var(--dm-emerald)" stroke-width="2" stroke-dasharray="4 4" style="animation: dm-dash-flow 1.2s linear infinite;" />
+          </svg>
+
+          <div class="flex flex-col items-center gap-2 z-10">
+            <div class="w-14 h-14 rounded-2xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] flex items-center justify-center text-[var(--dm-text-primary)]">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2m0 16v2M4.2 4.2l1.4 1.4m12.8 12.8 1.4 1.4M2 12h2m16 0h2M4.2 19.8l1.4-1.4m12.8-12.8 1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+            <span class="font-mono text-[8px] text-[var(--dm-text-muted)] uppercase tracking-widest">Investor</span>
+          </div>
+        </div>
+
+        <!-- Live feed -->
+        <div class="space-y-2">
+          {feed.map((f) => (
+            <div class="flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-[rgba(255,255,255,0.025)] border border-[var(--dm-border)]">
+              <i class={`w-1.5 h-1.5 rounded-full shrink-0 ${f.tone === 'gold' ? 'bg-[var(--dm-gold)]' : f.tone === 'emerald' ? 'bg-[var(--dm-emerald-bright)]' : 'bg-[#e0a94a]'}`}></i>
+              <span class="font-mono text-[9px] text-[var(--dm-text-muted)] uppercase tracking-wider shrink-0">{f.time}</span>
+              <span class="text-xs text-[var(--dm-text-secondary)]">{f.text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

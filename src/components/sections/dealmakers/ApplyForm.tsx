@@ -9,14 +9,13 @@ interface FormState {
   email: string;
   telegram: string;
   linkedin: string;
-  website: string;
   interest: string;
   note: string;
   companyWebsite: string; // honeypot
 }
 
 const emptyForm: FormState = {
-  name: '', company: '', role: '', email: '', telegram: '', linkedin: '', website: '',
+  name: '', company: '', role: '', email: '', telegram: '', linkedin: '',
   interest: interestOptions[0], note: '', companyWebsite: '',
 };
 
@@ -62,6 +61,8 @@ export default function ApplyForm() {
     return () => window.removeEventListener('dm:prefill', onPrefill as EventListener);
   }, []);
 
+  const dealSignalCount = offers.length + lookingFor.length;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.company || !form.role || !form.email || !form.telegram) {
@@ -84,7 +85,6 @@ export default function ApplyForm() {
         { name: 'lastname', value: form.name.split(' ').slice(1).join(' ') || '' },
         { name: 'email', value: form.email },
         { name: 'company', value: form.company },
-        { name: 'website', value: form.website },
         { name: 'telegram_handle', value: form.telegram },
         { name: 'linkedin', value: form.linkedin },
         { name: 'service_interest', value: form.interest },
@@ -97,7 +97,7 @@ export default function ApplyForm() {
       track('form_submit', form.interest);
       setIsSuccess(true);
     } else {
-      setError(result.error || 'Something went wrong. Please email partnership@fintech24h.com');
+      setError(result.error || 'Something went wrong. Please email info@fintech24h.com');
     }
   };
 
@@ -124,7 +124,7 @@ export default function ApplyForm() {
             <input id="dm-name" required className="dm-input" placeholder="Alex Nguyen" value={form.name} onChange={(e) => update('name', e.target.value)} />
           </div>
           <div>
-            <label htmlFor="dm-company" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Company / organization *</label>
+            <label htmlFor="dm-company" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Company *</label>
             <input id="dm-company" required className="dm-input" placeholder="Company name" value={form.company} onChange={(e) => update('company', e.target.value)} />
           </div>
         </div>
@@ -146,15 +146,9 @@ export default function ApplyForm() {
             <input id="dm-telegram" required className="dm-input" placeholder="@yourhandle" value={form.telegram} onChange={(e) => update('telegram', e.target.value)} />
           </div>
           <div>
-            <label htmlFor="dm-linkedin" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">LinkedIn (recommended)</label>
-            <input id="dm-linkedin" className="dm-input" placeholder="https://linkedin.com/in/..." value={form.linkedin} onChange={(e) => update('linkedin', e.target.value)} />
-            <p className="text-[10px] text-[var(--dm-text-muted)] mt-1">LinkedIn helps our team verify you faster.</p>
+            <label htmlFor="dm-linkedin" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">LinkedIn</label>
+            <input id="dm-linkedin" className="dm-input" placeholder="linkedin.com/in/..." value={form.linkedin} onChange={(e) => update('linkedin', e.target.value)} />
           </div>
-        </div>
-
-        <div>
-          <label htmlFor="dm-website" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Website / company URL</label>
-          <input id="dm-website" type="url" className="dm-input" placeholder="https://yourproject.io" value={form.website} onChange={(e) => update('website', e.target.value)} />
         </div>
 
         <div>
@@ -164,44 +158,55 @@ export default function ApplyForm() {
           </select>
         </div>
 
-        <fieldset>
-          <legend className="block text-[10px] font-semibold text-white/50 mb-2 uppercase tracking-wider">We Offer</legend>
-          <div className="flex flex-wrap gap-2">
-            {weOfferOptions.map((opt) => (
-              <button
-                type="button"
-                key={opt}
-                aria-pressed={offers.includes(opt)}
-                className="dm-select-option text-[11px] py-1.5 px-3"
-                onClick={() => { setOffers((prev) => toggle(prev, opt)); if (!startedRef.current) { startedRef.current = true; track('form_begin'); } }}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-        </fieldset>
+        {/* Collapsible deal-signal picker — closed by default, not a wall of chips */}
+        <details className="dm-disclosure">
+          <summary>
+            <span className="dm-disclosure-trigger">
+              <span>Deal signal — We Offer / We Are Looking For {dealSignalCount > 0 && <b className="text-[var(--dm-gold)]">({dealSignalCount})</b>}</span>
+              <svg className="dm-disclosure-chevron w-4 h-4 text-[var(--dm-text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </span>
+          </summary>
+          <div className="dm-disclosure-panel space-y-4">
+            <fieldset>
+              <legend className="block text-[10px] font-semibold text-white/50 mb-2 uppercase tracking-wider">We Offer</legend>
+              <div className="flex flex-wrap gap-2">
+                {weOfferOptions.map((opt) => (
+                  <button
+                    type="button"
+                    key={opt}
+                    aria-pressed={offers.includes(opt)}
+                    className="dm-select-option text-[11px] py-1.5 px-3"
+                    onClick={() => { setOffers((prev) => toggle(prev, opt)); if (!startedRef.current) { startedRef.current = true; track('form_begin'); } }}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
 
-        <fieldset>
-          <legend className="block text-[10px] font-semibold text-white/50 mb-2 uppercase tracking-wider">We Are Looking For</legend>
-          <div className="flex flex-wrap gap-2">
-            {weAreLookingForOptions.map((opt) => (
-              <button
-                type="button"
-                key={opt}
-                aria-pressed={lookingFor.includes(opt)}
-                className="dm-select-option text-[11px] py-1.5 px-3"
-                onClick={() => { setLookingFor((prev) => toggle(prev, opt)); if (!startedRef.current) { startedRef.current = true; track('form_begin'); } }}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-        </fieldset>
+            <fieldset>
+              <legend className="block text-[10px] font-semibold text-white/50 mb-2 uppercase tracking-wider">We Are Looking For</legend>
+              <div className="flex flex-wrap gap-2">
+                {weAreLookingForOptions.map((opt) => (
+                  <button
+                    type="button"
+                    key={opt}
+                    aria-pressed={lookingFor.includes(opt)}
+                    className="dm-select-option text-[11px] py-1.5 px-3"
+                    onClick={() => { setLookingFor((prev) => toggle(prev, opt)); if (!startedRef.current) { startedRef.current = true; track('form_begin'); } }}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
 
-        <div>
-          <label htmlFor="dm-note" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Additional notes</label>
-          <textarea id="dm-note" rows={3} className="dm-input resize-none" placeholder="Share more context, deal goals..." value={form.note} onChange={(e) => update('note', e.target.value)} />
-        </div>
+            <div>
+              <label htmlFor="dm-note" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Additional notes</label>
+              <textarea id="dm-note" rows={2} className="dm-input resize-none" placeholder="Share more context, deal goals..." value={form.note} onChange={(e) => update('note', e.target.value)} />
+            </div>
+          </div>
+        </details>
 
         <p className="text-[10px] text-[var(--dm-text-muted)] leading-relaxed">
           Your information is used only to review / contact you about F-Matching Season 3 and will not be made public without consent. See our <a href="/privacy/" className="underline hover:text-[var(--dm-gold)]">Privacy Policy</a>.
@@ -214,7 +219,7 @@ export default function ApplyForm() {
 
       {isSuccess && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-[rgba(6,5,4,0.8)] backdrop-blur-md">
-          <div className="relative w-full max-w-md p-7 rounded-3xl border border-[var(--dm-border)] bg-[rgba(19,17,16,0.97)] backdrop-blur-2xl shadow-[0_20px_50px_rgba(212,175,106,0.15)] text-center">
+          <div className="relative w-full max-w-md p-7 rounded-3xl border border-[var(--dm-border)] bg-[rgba(19,17,16,0.97)] backdrop-blur-2xl shadow-[0_20px_50px_rgba(217,178,106,0.15)] text-center">
             <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: 'var(--dm-gradient-primary)' }}>
               <svg className="w-7 h-7 text-[#0a0908]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
             </div>

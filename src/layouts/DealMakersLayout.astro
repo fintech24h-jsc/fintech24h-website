@@ -82,16 +82,16 @@ const currentYear = new Date().getFullYear();
 </head>
 
 <body class="dm-root antialiased">
+  <div class="dm-grain" aria-hidden="true"></div>
   <header class="dm-glass-panel sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-      <a href="/dealmakers/" class="flex items-center gap-2.5 shrink-0" aria-label="DealMakers' Club home">
+      <a href="/dealmakers/" class="flex items-center gap-3 shrink-0" aria-label="DealMakers' Club home">
         <span class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: var(--dm-gradient-primary);">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#0a0908" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
         </span>
-        <span class="flex flex-col leading-none">
-          <span class="font-display font-semibold text-sm text-[var(--dm-text-primary)] tracking-tight">DealMakers&rsquo; Club</span>
-          <span class="font-mono text-[9px] text-[var(--dm-text-muted)] uppercase tracking-widest">by Fintech24h</span>
-        </span>
+        <span class="font-display font-semibold text-sm text-[var(--dm-text-primary)] tracking-tight">DealMakers&rsquo; Club</span>
+        <span class="hidden sm:block w-px h-4 bg-[var(--dm-border)]" aria-hidden="true"></span>
+        <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="hidden sm:block h-4 w-auto object-contain opacity-80" loading="eager" />
       </a>
 
       <nav class="hidden md:flex items-center gap-7 font-mono text-[11px] uppercase tracking-widest text-[var(--dm-text-secondary)]" aria-label="Section navigation">
@@ -145,7 +145,7 @@ const currentYear = new Date().getFullYear();
           <ul class="space-y-3">
             <li><a href="/privacy/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Privacy Policy</a></li>
             <li><a href="/terms/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Terms of Service</a></li>
-            <li><a href="mailto:partnership@fintech24h.com" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">partnership@fintech24h.com</a></li>
+            <li><a href="mailto:info@fintech24h.com" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">info@fintech24h.com</a></li>
           </ul>
         </div>
       </div>
@@ -154,9 +154,41 @@ const currentYear = new Date().getFullYear();
 
       <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
         <p class="text-xs text-[var(--dm-text-muted)]">&copy; {currentYear} DealMakers&rsquo; Club. All rights reserved.</p>
-        <a href="https://fintech24h.com" class="text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors">A Fintech24h Company</a>
+        <a href="https://fintech24h.com" class="flex items-center gap-2 text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors">
+          A
+          <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-3.5 w-auto object-contain opacity-70" loading="lazy" />
+          Company
+        </a>
       </div>
     </div>
   </footer>
+
+  <script is:inline>
+    // Shared scroll-reveal entrance for every [data-dm-reveal] element across
+    // the microsite — one observer, staggered by sibling position, so each
+    // component doesn't need to reimplement it. Skips entirely under
+    // prefers-reduced-motion (CSS also has a hard fallback for that).
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('[data-dm-reveal]').forEach((el) => el.classList.add('dm-in'));
+        return;
+      }
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('dm-in');
+            obs.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -6% 0px' }
+      );
+      document.querySelectorAll('[data-dm-reveal]').forEach((el) => {
+        const idx = Array.prototype.indexOf.call(el.parentElement ? el.parentElement.children : [], el);
+        el.style.setProperty('--dm-reveal-delay', String(Math.min(Math.max(idx, 0), 6) * 70));
+        obs.observe(el);
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -1,9 +1,11 @@
 ---
 // src/components/sections/dealmakers/DealMakersHero.astro
-// Hero + current-season partners. Capital Partner gets center/largest
-// billing; the 3 category partners sit smaller beside it. Any partner
-// without `confirmed: true` renders as a neutral "Confirming..." slot —
-// never a fake logo.
+// Hero + current-season partners. Capital Partner is NOT a peer of the
+// other three — it's the lead sponsor funding the most, so it gets its own
+// full-width spotlight band with an animated gradient border. The other
+// three partners sit in a secondary row beneath, visibly smaller. Any
+// partner without `confirmed: true` renders as a neutral "Confirming
+// soon" slot — never a fake logo.
 import { heroPartners } from '../../../data/dealmakers/ss3';
 
 const capital = heroPartners.find((p) => p.category === 'capital')!;
@@ -23,21 +25,21 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
 
   <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col items-center text-center gap-5 max-w-3xl mx-auto">
-      <p class="font-mono text-[10px] lg:text-xs text-[var(--dm-gold)] uppercase tracking-[0.18em] flex items-center gap-2" data-dm-eyebrow>
+      <p class="font-mono text-[10px] lg:text-xs text-[var(--dm-gold)] uppercase tracking-[0.18em] flex items-center gap-2" data-dm-reveal>
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)] animate-pulse"></span>
         Fintech24h presents · Season 3
       </p>
 
-      <h1 class="font-display font-semibold leading-[1.1] text-[clamp(2.4rem,6vw,4.2rem)] tracking-[-0.01em]" data-dm-title>
+      <h1 class="font-display font-semibold leading-[1.1] text-[clamp(2.4rem,6vw,4.2rem)] tracking-[-0.01em]" data-dm-reveal>
         Where decision-makers
         <span class="block dm-text-gradient">meet to make deals.</span>
       </h1>
 
-      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] font-body leading-relaxed max-w-2xl" data-dm-title style="--dmi:1">
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] font-body leading-relaxed max-w-2xl" data-dm-reveal>
         DealMakers’ Club – F-Matching is a curated network for Founders, Investors, Exchanges, and Web3 builders. More than networking: it’s where <strong class="text-[var(--dm-text-primary)] font-semibold">verified decision-makers</strong>, <strong class="text-[var(--dm-text-primary)] font-semibold">qualified deal flow</strong>, and <strong class="text-[var(--dm-text-primary)] font-semibold">strategic introductions</strong> are seen, verified, and connected to the right people.
       </p>
 
-      <div class="flex flex-wrap gap-4 justify-center mt-4" data-dm-title style="--dmi:2">
+      <div class="flex flex-wrap gap-4 justify-center mt-4" data-dm-reveal>
         <a href="#apply" class="dm-btn-primary py-3 px-6 text-xs" aria-label="Become a DealMaker">
           <span>Become a DealMaker</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline ml-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -47,37 +49,40 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
         </a>
       </div>
 
-      <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center mt-2 text-[var(--dm-text-muted)] text-xs font-body" data-dm-title style="--dmi:3">
+      <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center mt-2 text-[var(--dm-text-muted)] text-xs font-body" data-dm-reveal>
         <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)]"></i>Verified members</span>
         <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)]"></i>Moderated introductions</span>
         <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)]"></i>Real opportunities, prioritized</span>
       </div>
     </div>
 
-    <!-- Season partner strip -->
-    <div class="mt-16 lg:mt-20" data-dm-title style="--dmi:4">
-      <p class="text-center font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-6">
-        Co-host &amp; Sponsorship Partners — Season 3
+    <!-- Capital Partner — lead sponsor spotlight, full width, own tier -->
+    <div class="mt-16 lg:mt-20 max-w-3xl mx-auto" data-dm-reveal>
+      <p class="text-center font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-4">
+        Official Capital Partner — Season 3
       </p>
-      <div class="grid grid-cols-1 sm:grid-cols-[1.3fr_1fr_1fr_1fr] gap-4 items-stretch max-w-4xl mx-auto">
-        <!-- Capital Partner — largest, center billing -->
-        <div class="dm-card rounded-2xl p-6 flex flex-col items-center justify-center gap-2 min-h-[120px]">
-          <span class="font-mono text-[9px] text-[var(--dm-gold)] uppercase tracking-[0.15em]">{capital.label}</span>
+      <div class="dm-spotlight">
+        <div class="dm-spotlight-inner px-8 py-10 flex flex-col items-center justify-center gap-3 min-h-[140px]">
+          <span class="dm-badge-sponsored">Lead Sponsor</span>
           {capital.confirmed && capital.logoUrl ? (
-            <img src={capital.logoUrl} alt={`${capital.name} logo, Capital Partner of F-Matching Season 3`} class="h-10 w-auto object-contain" loading="eager" />
+            <img src={capital.logoUrl} alt={`${capital.name} logo, Official Capital Partner of F-Matching Season 3`} class="h-12 w-auto object-contain mt-1" loading="eager" />
           ) : (
-            <span class="font-display text-sm text-[var(--dm-text-muted)]">Confirming soon</span>
+            <span class="font-display font-semibold text-xl text-[var(--dm-text-secondary)] mt-1">Confirming soon</span>
           )}
         </div>
+      </div>
+    </div>
 
-        <!-- 3 category partners -->
+    <!-- Secondary partners — smaller, clearly a lower tier -->
+    <div class="mt-6 max-w-3xl mx-auto">
+      <div class="grid grid-cols-3 gap-3">
         {others.map((p) => (
-          <div class="dm-card rounded-2xl p-4 flex flex-col items-center justify-center gap-2 min-h-[120px]">
-            <span class="font-mono text-[8px] text-[var(--dm-text-muted)] uppercase tracking-[0.12em]">{p.label}</span>
+          <div class="dm-card rounded-xl p-3.5 flex flex-col items-center justify-center gap-1.5 min-h-[84px]" data-dm-reveal>
+            <span class="font-mono text-[7px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em] text-center leading-tight">{p.label}</span>
             {p.confirmed && p.logoUrl ? (
-              <img src={p.logoUrl} alt={`${p.name} logo, ${p.label} of F-Matching Season 3`} class="h-7 w-auto object-contain" loading="lazy" />
+              <img src={p.logoUrl} alt={`${p.name} logo, ${p.label} of F-Matching Season 3`} class="h-5 w-auto object-contain" loading="lazy" />
             ) : (
-              <span class="font-body text-xs text-[var(--dm-text-muted)]">Confirming soon</span>
+              <span class="font-body text-[11px] text-[var(--dm-text-muted)]">Confirming soon</span>
             )}
           </div>
         ))}
@@ -85,12 +90,3 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
     </div>
   </div>
 </section>
-
-<style>
-  [data-dm-eyebrow] { opacity: 0; animation: hero-line-reveal 0.6s cubic-bezier(0.215,0.61,0.355,1) 0.05s both; }
-  [data-dm-title] { opacity: 0; animation: hero-line-reveal 1s cubic-bezier(0.23,1,0.32,1) both; animation-delay: calc(0.12s + var(--dmi, 0) * 0.1s); }
-
-  @media (prefers-reduced-motion: reduce) {
-    [data-dm-eyebrow], [data-dm-title] { animation: none !important; opacity: 1 !important; }
-  }
-</style>

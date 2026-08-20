@@ -10,7 +10,7 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
   </div>
 
   <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="max-w-2xl mb-14">
+    <div class="max-w-2xl mb-14" data-dm-reveal>
       <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Core revenue packages</p>
       <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
         Fewer packages. <span class="dm-text-gradient">Clearer value.</span>
@@ -21,8 +21,8 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
     </div>
 
     <div class="grid lg:grid-cols-3 gap-5 items-stretch">
-      {pricingPackages.map((pkg) => (
-        <div class={`relative flex flex-col p-7 rounded-[20px] ${pkg.highlight ? 'dm-card-featured' : 'dm-card'}`}>
+      {pricingPackages.map((pkg, i) => (
+        <div class={`relative flex flex-col p-7 rounded-[20px] ${pkg.highlight ? 'dm-card-featured lg:-translate-y-2' : 'dm-card'}`} data-dm-reveal style={`--dm-reveal-delay: ${i * 90}`}>
           {pkg.ribbon && (
             <span class="absolute top-5 right-5 px-2.5 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-widest text-[var(--dm-text-inverted)]" style="background: var(--dm-gold);">
               {pkg.ribbon}

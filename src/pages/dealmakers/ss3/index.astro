@@ -10,7 +10,7 @@ import FeaturedDealMakers from '../../../components/sections/dealmakers/Featured
 import USPSection from '../../../components/sections/dealmakers/USPSection.astro';
 import LastSeasonPartners from '../../../components/sections/dealmakers/LastSeasonPartners.astro';
 import QualifiedDirectory from '../../../components/sections/dealmakers/QualifiedDirectory.tsx';
-import RequestIntroduction from '../../../components/sections/dealmakers/RequestIntroduction.astro';
+import HowItWorks from '../../../components/sections/dealmakers/HowItWorks.astro';
 import PricingPackages from '../../../components/sections/dealmakers/PricingPackages.astro';
 import MediaPartners from '../../../components/sections/dealmakers/MediaPartners.astro';
 import ApplyForm from '../../../components/sections/dealmakers/ApplyForm.tsx';
@@ -53,7 +53,7 @@ const faqSchema = {
 
   <section id="directory" class="relative py-20 lg:py-28" aria-label="Qualified Listing Directory">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-2xl mb-10">
+      <div class="max-w-2xl mb-10" data-dm-reveal>
         <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Qualified Listing Directory</p>
         <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
           10 verified profiles, <span class="dm-text-gradient">each one a clear signal.</span>
@@ -61,13 +61,12 @@ const faqSchema = {
         <p class="text-sm text-[var(--dm-text-secondary)]">
           Click any profile to see We Offer, We Are Looking For details, and send a Request Introduction through Fintech24h.
         </p>
-        <p class="text-xs text-[var(--dm-text-muted)] mt-2">The profiles below are sample profiles to illustrate the layout.</p>
       </div>
       <QualifiedDirectory client:load />
     </div>
   </section>
 
-  <RequestIntroduction />
+  <HowItWorks />
   <PricingPackages />
   <MediaPartners />
 
@@ -77,7 +76,7 @@ const faqSchema = {
         style="bottom: 0; left: -10%; filter: blur(90px); animation: orb-pulse 9s ease-in-out infinite;"></div>
     </div>
     <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
-      <div>
+      <div data-dm-reveal>
         <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Apply to join · Season 3</p>
         <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-5">Do you have a clear deal signal?</h2>
         <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed mb-6">
