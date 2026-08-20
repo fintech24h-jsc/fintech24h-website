@@ -19,7 +19,7 @@ export const seasons: SeasonMeta[] = [
     slug: 'ss3',
     seasonNumber: 3,
     name: 'F-Matching Season 3',
-    tagline: 'Nơi Web3 decision-makers gặp nhau để tạo deal.',
+    tagline: 'Where Web3 decision-makers meet to make deals.',
     status: 'active',
     href: '/dealmakers/ss3/',
   },

@@ -1,7 +1,9 @@
 ---
 // src/pages/dealmakers/ss3/index.astro
-// DealMakers' Club — F-Matching Season 3 landing page. Full 11-section build.
-import BaseLayout from '../../../layouts/BaseLayout.astro';
+// DealMakers' Club — F-Matching Season 3 landing page. Standalone microsite:
+// its own layout/header/footer/color system (DealMakersLayout), not the
+// main fintech24h.com chrome.
+import DealMakersLayout from '../../../layouts/DealMakersLayout.astro';
 import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
 import DealMakersHero from '../../../components/sections/dealmakers/DealMakersHero.astro';
 import FeaturedDealMakers from '../../../components/sections/dealmakers/FeaturedDealMakers.astro';
@@ -40,7 +42,7 @@ const faqSchema = {
 };
 ---
 
-<BaseLayout title={seasonMeta.title} description={seasonMeta.description} canonical={seasonMeta.canonical} schema={webPageSchema}>
+<DealMakersLayout title={seasonMeta.title} description={seasonMeta.description} canonical={seasonMeta.canonical} schema={webPageSchema}>
   <BreadcrumbSchema items={breadcrumbs} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema).replace(/</g, '\\u003c')} />
 
@@ -52,14 +54,14 @@ const faqSchema = {
   <section id="directory" class="relative py-20 lg:py-28" aria-label="Qualified Listing Directory">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-2xl mb-10">
-        <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-3">Qualified Listing Directory</p>
-        <h2 class="font-display font-bold text-h2 text-[var(--text-primary)] mb-4">
-          10 profile đã xác minh, <span class="text-gradient">mỗi profile là một tín hiệu rõ ràng.</span>
+        <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Qualified Listing Directory</p>
+        <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
+          10 verified profiles, <span class="dm-text-gradient">each one a clear signal.</span>
         </h2>
-        <p class="text-sm text-[var(--text-secondary)]">
-          Nhấp vào bất kỳ profile nào để xem chi tiết We Offer, We Are Looking For và gửi Request Introduction qua Fintech24h.
+        <p class="text-sm text-[var(--dm-text-secondary)]">
+          Click any profile to see We Offer, We Are Looking For details, and send a Request Introduction through Fintech24h.
         </p>
-        <p class="text-xs text-[var(--text-muted)] mt-2">Các profile bên dưới là ví dụ minh hoạ để hình dung layout.</p>
+        <p class="text-xs text-[var(--dm-text-muted)] mt-2">The profiles below are sample profiles to illustrate the layout.</p>
       </div>
       <QualifiedDirectory client:load />
     </div>
@@ -71,20 +73,20 @@ const faqSchema = {
 
   <section id="apply" class="relative py-20 lg:py-28" aria-label="Apply to Join">
     <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <div class="absolute w-[480px] h-[480px] rounded-full opacity-30 mix-blend-screen"
-        style="bottom: 0; left: -10%; background: var(--gradient-glow-cyan); filter: blur(90px); animation: orb-pulse 9s ease-in-out infinite;"></div>
+      <div class="absolute w-[480px] h-[480px] rounded-full opacity-30 mix-blend-screen dm-orb-gold"
+        style="bottom: 0; left: -10%; filter: blur(90px); animation: orb-pulse 9s ease-in-out infinite;"></div>
     </div>
     <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
       <div>
-        <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-3">Apply to join · Season 3</p>
-        <h2 class="font-display font-bold text-h2 text-[var(--text-primary)] mb-5">Bạn có một tín hiệu deal rõ ràng?</h2>
-        <p class="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
-          Hãy bắt đầu bằng việc cho chúng tôi biết bạn đang xây gì, mang lại giá trị gì và muốn gặp ai. Đội Fintech24h sẽ phản hồi nếu có mức độ phù hợp.
+        <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Apply to join · Season 3</p>
+        <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-5">Do you have a clear deal signal?</h2>
+        <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed mb-6">
+          Start by telling us what you’re building, the value you bring, and who you want to meet. The Fintech24h team will follow up if there’s a fit.
         </p>
-        <ul class="space-y-3 text-sm text-[var(--text-secondary)]">
-          <li class="flex gap-2.5"><span class="text-[var(--accent-cyan)]">✦</span>Phù hợp với Founder, Investor, Exchange, Service Provider và Strategic Partner.</li>
-          <li class="flex gap-2.5"><span class="text-[var(--accent-cyan)]">✦</span>Ưu tiên thành viên có người ra quyết định trực tiếp tham gia.</li>
-          <li class="flex gap-2.5"><span class="text-[var(--accent-cyan)]">✦</span>Telegram là bắt buộc để đội ngũ liên hệ xác minh nhanh nhất.</li>
+        <ul class="space-y-3 text-sm text-[var(--dm-text-secondary)]">
+          <li class="flex gap-2.5"><span class="text-[var(--dm-gold)]">✦</span>Fits Founders, Investors, Exchanges, Service Providers, and Strategic Partners.</li>
+          <li class="flex gap-2.5"><span class="text-[var(--dm-gold)]">✦</span>Priority for members with a direct decision-maker involved.</li>
+          <li class="flex gap-2.5"><span class="text-[var(--dm-gold)]">✦</span>Telegram is required so our team can verify you as fast as possible.</li>
         </ul>
       </div>
       <ApplyForm client:load />
@@ -92,7 +94,7 @@ const faqSchema = {
   </section>
 
   <FaqAccordion />
-</BaseLayout>
+</DealMakersLayout>
 
 <script is:inline>
   // Delegated click handling for the whole Season 3 page:
@@ -107,7 +109,7 @@ const faqSchema = {
     const introEl = target.closest('[data-dm-intro]');
     if (introEl) {
       window.dispatchEvent(new CustomEvent('dm:prefill', {
-        detail: { interest: 'Tham gia DealMakers’ Club', context: introEl.getAttribute('data-dm-intro') },
+        detail: { interest: 'Join DealMakers’ Club', context: introEl.getAttribute('data-dm-intro') },
       }));
     }
 

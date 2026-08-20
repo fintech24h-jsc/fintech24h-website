@@ -3,53 +3,53 @@
 import { pricingPackages } from '../../../data/dealmakers/ss3';
 ---
 
-<section id="packages" class="relative py-20 lg:py-28" aria-label="Gói tham gia">
+<section id="packages" class="relative py-20 lg:py-28" aria-label="Packages">
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="absolute w-[500px] h-[500px] rounded-full opacity-30 mix-blend-screen"
-      style="top: 5%; right: -10%; background: var(--gradient-glow-purple); filter: blur(90px); animation: orb-pulse 10s ease-in-out infinite 2s;"></div>
+    <div class="absolute w-[500px] h-[500px] rounded-full opacity-30 mix-blend-screen dm-orb-emerald"
+      style="top: 5%; right: -10%; filter: blur(90px); animation: orb-pulse 10s ease-in-out infinite 2s;"></div>
   </div>
 
   <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mb-14">
-      <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-3">Các gói tạo doanh thu chủ lực</p>
-      <h2 class="font-display font-bold text-h2 text-[var(--text-primary)] mb-4">
-        Ít gói hơn. <span class="text-gradient">Giá trị rõ hơn.</span>
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Core revenue packages</p>
+      <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
+        Fewer packages. <span class="dm-text-gradient">Clearer value.</span>
       </h2>
-      <p class="text-sm text-[var(--text-secondary)]">
-        Season 3 tập trung vào ba sản phẩm có chất lượng: partnership độc quyền, Featured DealMaker và kết nối đã được sàng lọc.
+      <p class="text-sm text-[var(--dm-text-secondary)]">
+        Season 3 focuses on three quality products: exclusive partnership, Featured DealMaker, and vetted connections.
       </p>
     </div>
 
     <div class="grid lg:grid-cols-3 gap-5 items-stretch">
       {pricingPackages.map((pkg) => (
-        <div class={`relative flex flex-col p-7 rounded-[20px] ${pkg.highlight ? 'card-featured' : 'card-default'}`}>
+        <div class={`relative flex flex-col p-7 rounded-[20px] ${pkg.highlight ? 'dm-card-featured' : 'dm-card'}`}>
           {pkg.ribbon && (
-            <span class="absolute top-5 right-5 px-2.5 py-1 rounded-full bg-[var(--accent-cyan)] text-[9px] font-mono font-bold uppercase tracking-widest text-[#050810]">
+            <span class="absolute top-5 right-5 px-2.5 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-widest text-[var(--dm-text-inverted)]" style="background: var(--dm-gold);">
               {pkg.ribbon}
             </span>
           )}
-          <span class="font-mono text-[10px] uppercase tracking-widest text-[var(--accent-purple)] mb-2">{pkg.kicker}</span>
-          <h3 class="font-display font-bold text-lg text-[var(--text-primary)] mb-2">{pkg.title}</h3>
-          <p class="text-xs text-[var(--text-secondary)] leading-relaxed min-h-[46px]">{pkg.description}</p>
+          <span class="font-mono text-[10px] uppercase tracking-widest text-[var(--dm-emerald)] mb-2">{pkg.kicker}</span>
+          <h3 class="font-display font-semibold text-lg text-[var(--dm-text-primary)] mb-2">{pkg.title}</h3>
+          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed min-h-[46px]">{pkg.description}</p>
 
           <div class="flex items-baseline gap-1.5 mt-6 mb-1">
-            <span class="font-display font-bold text-3xl text-[var(--text-primary)] tracking-tight">{pkg.price}</span>
-            <span class="text-xs text-[var(--text-muted)]">{pkg.priceQualifier}</span>
+            <span class="font-display font-semibold text-3xl text-[var(--dm-text-primary)] tracking-tight">{pkg.price}</span>
+            <span class="text-xs text-[var(--dm-text-muted)]">{pkg.priceQualifier}</span>
           </div>
 
-          <div class="divider-gradient my-5"></div>
+          <div class="dm-divider my-5"></div>
 
           <ul class="space-y-3 mb-6 flex-1">
             {pkg.benefits.map((b) => (
-              <li class="flex items-start gap-2.5 text-xs text-[var(--text-secondary)]">
-                <svg class="w-3.5 h-3.5 mt-0.5 shrink-0 text-[var(--accent-cyan)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 13 4 4L19 7"/></svg>
+              <li class="flex items-start gap-2.5 text-xs text-[var(--dm-text-secondary)]">
+                <svg class="w-3.5 h-3.5 mt-0.5 shrink-0 text-[var(--dm-gold)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 13 4 4L19 7"/></svg>
                 <span>{b}</span>
               </li>
             ))}
           </ul>
 
           {pkg.addOn && (
-            <p class="text-xs text-[var(--accent-cyan)] bg-[var(--accent-cyan)]/6 border border-[var(--accent-cyan)]/20 rounded-lg px-3 py-2 mb-5">
+            <p class="text-xs text-[var(--dm-gold)] bg-[rgba(212,175,106,0.06)] border border-[var(--dm-border-accent)] rounded-lg px-3 py-2 mb-5">
               <strong>{pkg.addOn.label}:</strong> {pkg.addOn.description}
             </p>
           )}
@@ -59,7 +59,7 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
             data-dm-prefill-interest={pkg.ctaInterest}
             data-dm-track="package_cta"
             data-dm-track-label={pkg.id}
-            class={pkg.highlight ? 'btn-primary justify-center text-xs' : 'btn-ghost justify-center text-xs border border-[var(--border-default)]'}
+            class={pkg.highlight ? 'dm-btn-primary justify-center text-xs' : 'dm-btn-ghost justify-center text-xs'}
           >
             {pkg.ctaLabel} <span aria-hidden="true">→</span>
           </a>
@@ -67,8 +67,8 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
       ))}
     </div>
 
-    <p class="text-xs text-[var(--text-muted)] max-w-3xl mx-auto text-center mt-10">
-      <strong class="text-[var(--text-secondary)]">Qualified Listing không phải mua contact list.</strong> Fintech24h vẫn là đầu mối sàng lọc và điều phối Request Introduction. Giá tham chiếu áp dụng cho Season 3.
+    <p class="text-xs text-[var(--dm-text-muted)] max-w-3xl mx-auto text-center mt-10">
+      <strong class="text-[var(--dm-text-secondary)]">A Qualified Listing is not a purchased contact list.</strong> Fintech24h remains the screening point and coordinates every Request Introduction. Reference pricing applies to Season 3.
     </p>
   </div>
 </section>

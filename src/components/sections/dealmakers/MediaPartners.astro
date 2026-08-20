@@ -3,27 +3,27 @@
 import { mediaPartners } from '../../../data/dealmakers/ss3';
 ---
 
-<section class="relative py-20 lg:py-24 bg-[var(--bg-secondary)]" aria-label="Media Partners">
+<section class="relative py-20 lg:py-24 bg-[var(--dm-bg-secondary)]" aria-label="Media Partners">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-3">Media Partners · Community support</p>
-    <h2 class="font-display font-bold text-h3 text-[var(--text-primary)] mb-4">
-      Được lan toả bởi các đối tác truyền thông trong hệ sinh thái.
+    <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Media Partners · Community support</p>
+    <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-4">
+      Amplified by media partners across the ecosystem.
     </h2>
-    <p class="text-sm text-[var(--text-secondary)] max-w-xl mx-auto mb-10">
-      Media Partner là chương trình hợp tác <strong class="text-[var(--text-primary)]">miễn phí</strong>: đối tác hỗ trợ truyền thông về F-Matching Season 3 trên kênh của mình, đổi lại nhận hiện diện logo tại đây.
+    <p class="text-sm text-[var(--dm-text-secondary)] max-w-xl mx-auto mb-10">
+      Media Partnership is a <strong class="text-[var(--dm-text-primary)]">free</strong> collaboration: partners cover F-Matching Season 3 on their own channels in exchange for logo placement here.
     </p>
 
     <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 max-w-3xl mx-auto mb-10">
       {mediaPartners.map((p) => (
-        <div class="flex items-center justify-center min-h-[68px] rounded-xl border border-[var(--border-subtle)] bg-white/[0.015] hover:border-[var(--accent-cyan)]/25 hover:bg-white/[0.03] transition-all duration-300">
-          <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--text-muted)]">
+        <div class="flex items-center justify-center min-h-[68px] rounded-xl border border-[var(--dm-border)] bg-white/[0.015] hover:border-[var(--dm-border-accent)] hover:bg-white/[0.03] transition-all duration-300">
+          <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--dm-text-muted)]">
             {p.name ?? 'Your logo'}
           </span>
         </div>
       ))}
     </div>
 
-    <a href="#apply" data-dm-prefill-interest="Media Partner" data-dm-track="media_partner_cta" class="btn-liquid-glass-ghost py-2.5 px-6 text-[10px]">
+    <a href="#apply" data-dm-prefill-interest="Media Partner" data-dm-track="media_partner_cta" class="dm-btn-ghost py-2.5 px-6 text-[10px]">
       Become a Media Partner
     </a>
   </div>

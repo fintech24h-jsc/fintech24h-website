@@ -2,14 +2,15 @@
 // src/pages/dealmakers/index.astro
 // Season index — lists every DealMakers' Club / F-Matching season so users
 // landing on /dealmakers/ can pick which one to view. New seasons only need
-// an entry in src/data/dealmakers/seasons.ts.
-import BaseLayout from '../../layouts/BaseLayout.astro';
+// an entry in src/data/dealmakers/seasons.ts. Standalone microsite layout —
+// not the main fintech24h.com chrome.
+import DealMakersLayout from '../../layouts/DealMakersLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { seasons } from '../../data/dealmakers/seasons';
 
 const title = 'DealMakers’ Club | Fintech24h';
 const description =
-  'Fintech24h DealMakers’ Club — chương trình F-Matching kết nối Founder, Investor, Exchange và đối tác chiến lược trong Web3/fintech. Xem các mùa đang diễn ra và đã kết thúc.';
+  'Fintech24h DealMakers’ Club — the F-Matching program connecting Founders, Investors, Exchanges, and strategic partners in Web3/fintech. See active and past seasons.';
 const canonical = 'https://fintech24h.com/dealmakers/';
 
 const breadcrumbs = [
@@ -18,28 +19,28 @@ const breadcrumbs = [
 ];
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical}>
+<DealMakersLayout title={title} description={description} canonical={canonical}>
   <BreadcrumbSchema items={breadcrumbs} />
 
   <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="DealMakers Club seasons">
-    <div class="absolute inset-0" style="background: var(--gradient-hero-bg);" aria-hidden="true"></div>
+    <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-4">Fintech24h</p>
-      <h1 class="font-display font-bold text-h1 text-[var(--text-primary)] mb-6">DealMakers’ Club</h1>
-      <p class="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl mx-auto mb-16">
-        Chương trình F-Matching kết nối có chọn lọc dành cho Founder, Investor, Exchange và đối tác chiến lược Web3/fintech. Chọn một mùa để xem chi tiết.
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">Fintech24h</p>
+      <h1 class="font-display font-semibold text-h1 text-[var(--dm-text-primary)] mb-6">DealMakers&rsquo; Club</h1>
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-2xl mx-auto mb-16">
+        A curated F-Matching program connecting Founders, Investors, Exchanges, and strategic partners in Web3/fintech. Pick a season to see details.
       </p>
 
       <div class="grid sm:grid-cols-2 gap-6 text-left">
         {seasons.map((s) => (
-          <a href={s.href} class="group relative liquid-glass-premium rounded-2xl p-6 flex flex-col gap-3 transition-transform duration-300 hover:-translate-y-1">
-            <span class={`self-start px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider ${s.status === 'active' ? 'tag-cyan' : 'tag-gray'}`}>
-              {s.status === 'active' ? 'Đang diễn ra' : s.status === 'upcoming' ? 'Sắp ra mắt' : 'Đã kết thúc'}
+          <a href={s.href} class="group relative dm-card rounded-2xl p-6 flex flex-col gap-3">
+            <span class={`self-start px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider ${s.status === 'active' ? 'dm-tag dm-tag-gold' : 'dm-tag dm-tag-gray'}`}>
+              {s.status === 'active' ? 'Active now' : s.status === 'upcoming' ? 'Coming soon' : 'Archived'}
             </span>
-            <h2 class="font-display font-bold text-lg text-[var(--text-primary)]">{s.name}</h2>
-            <p class="text-sm text-[var(--text-secondary)]">{s.tagline}</p>
-            <span class="mt-2 inline-flex items-center gap-1 text-[var(--accent-cyan)] font-display text-xs font-semibold group-hover:gap-2 transition-all">
-              Xem chi tiết
+            <h2 class="font-display font-semibold text-lg text-[var(--dm-text-primary)]">{s.name}</h2>
+            <p class="text-sm text-[var(--dm-text-secondary)]">{s.tagline}</p>
+            <span class="mt-2 inline-flex items-center gap-1 text-[var(--dm-gold)] font-display text-xs font-semibold group-hover:gap-2 transition-all">
+              View details
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>
           </a>
@@ -47,4 +48,4 @@ const breadcrumbs = [
       </div>
     </div>
   </section>
-</BaseLayout>
+</DealMakersLayout>

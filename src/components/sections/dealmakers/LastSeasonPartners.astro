@@ -1,32 +1,32 @@
 ---
 // src/components/sections/dealmakers/LastSeasonPartners.astro
-// "Đối tác nổi bật của Last Season" — 8 logo slots. Only entries with
+// "Featured Partners from Last Season" — 8 logo slots. Only entries with
 // confirmed:true + an actual logoUrl render a real logo; everything else
 // (including confirmed-name-but-no-asset rows) renders a neutral wordmark
 // placeholder so we never fabricate a logo file we don't have.
 import { lastSeasonPartners } from '../../../data/dealmakers/ss3';
 ---
 
-<section class="relative py-20 lg:py-24 border-y border-[var(--border-subtle)]" aria-label="Đối tác nổi bật của Last Season">
+<section class="relative py-20 lg:py-24 border-y border-[var(--dm-border)]" aria-label="Featured partners from last season">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-3">A growing ecosystem</p>
-    <h2 class="font-display font-bold text-h3 text-[var(--text-primary)] mb-10">Đối tác nổi bật của Last Season</h2>
+    <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">A growing ecosystem</p>
+    <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-10">Featured Partners from Last Season</h2>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto">
       {lastSeasonPartners.map((p) => (
-        <div class="group flex items-center justify-center min-h-[76px] rounded-xl border border-[var(--border-default)] bg-[var(--bg-glass)] transition-all duration-300 hover:border-[var(--accent-cyan)]/30 hover:bg-white/[0.03]">
+        <div class="group flex items-center justify-center min-h-[76px] rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-glass)] transition-all duration-300 hover:border-[var(--dm-border-accent)] hover:bg-white/[0.03]">
           {p.name ? (
-            <span class="font-display font-bold text-sm tracking-tight text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
+            <span class="font-display font-semibold text-sm tracking-tight text-[var(--dm-text-secondary)] group-hover:text-[var(--dm-text-primary)] transition-colors">
               {p.name}
             </span>
           ) : (
-            <span class="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)]">Your logo</span>
+            <span class="font-mono text-[10px] uppercase tracking-widest text-[var(--dm-text-muted)]">Your logo</span>
           )}
         </div>
       ))}
     </div>
-    <p class="text-xs text-[var(--text-muted)] max-w-lg mx-auto mt-6">
-      Các ô "Your logo" là vị trí còn trống — sẽ được thay bằng logo chính thức khi đối tác Season 3 xác nhận.
+    <p class="text-xs text-[var(--dm-text-muted)] max-w-lg mx-auto mt-6">
+      The "Your logo" tiles are open slots — they’ll be replaced with confirmed logos as Season 3 partners sign on.
     </p>
   </div>
 </section>

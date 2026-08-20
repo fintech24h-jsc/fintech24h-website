@@ -1,0 +1,357 @@
+/* src/styles/dealmakers.css
+ * Standalone design system for the DealMakers' Club microsite
+ * (/dealmakers/*). Deliberately NOT the fintech24h.com design system —
+ * separate palette, separate component classes (dm-*) — so this campaign
+ * reads as its own product, not a reskinned service page. Loaded only by
+ * DealMakersLayout.astro; never imported by the main site. Fonts are
+ * loaded non-blocking via <link> tags in the layout, not @import here.
+ *
+ * IMPORTANT: this is a separate Tailwind entry point (its own @tailwind
+ * directives below) because DealMakersLayout does not import global.css —
+ * without this, every Tailwind utility class (flex, grid, w-[560px], …)
+ * used in the dealmakers/* components would compile to nothing.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Backgrounds — warm near-black, not the site's cool blue-black */
+  --dm-bg:            #0a0908;
+  --dm-bg-secondary:  #131110;
+  --dm-bg-tertiary:   #1a1714;
+  --dm-bg-glass:      rgba(19, 17, 16, 0.74);
+
+  /* Accents — champagne gold + emerald, a "private dealmaking club" pair,
+     nowhere near fintech24h.com's cyan/purple */
+  --dm-gold:          #d4af6a;
+  --dm-gold-dim:      #a9854f;
+  --dm-gold-glow:     rgba(212, 175, 106, 0.18);
+  --dm-emerald:       #2f9e6e;
+  --dm-emerald-dim:   #1f6f4d;
+  --dm-emerald-glow:  rgba(47, 158, 110, 0.16);
+
+  /* Text — warm ivory, not cool white */
+  --dm-text-primary:   #f3ede0;
+  --dm-text-secondary: #b7b0a0;
+  --dm-text-muted:     #7d7668;
+  --dm-text-inverted:  #0a0908;
+
+  /* Borders */
+  --dm-border:         rgba(255, 255, 255, 0.08);
+  --dm-border-hover:   rgba(255, 255, 255, 0.16);
+  --dm-border-accent:  rgba(212, 175, 106, 0.35);
+
+  /* Gradients */
+  --dm-gradient-primary:     linear-gradient(135deg, #d4af6a 0%, #2f9e6e 100%);
+  --dm-gradient-text:        linear-gradient(120deg, #d4af6a 0%, #f3ede0 50%, #2f9e6e 100%);
+  --dm-gradient-hero-bg:     radial-gradient(ellipse 80% 60% at 50% -10%, rgba(212, 175, 106, 0.16) 0%, transparent 60%);
+  --dm-gradient-glow-gold:   radial-gradient(ellipse at center, rgba(212, 175, 106, 0.2) 0%, transparent 70%);
+  --dm-gradient-glow-emerald:radial-gradient(ellipse at center, rgba(47, 158, 110, 0.16) 0%, transparent 70%);
+  --dm-gradient-card:        linear-gradient(135deg, rgba(212, 175, 106, 0.05) 0%, rgba(47, 158, 110, 0.05) 100%);
+
+  /* Typography — Fraunces (serif, optical-size display) sets this apart
+     from the main site's geometric Space Grotesk */
+  --dm-font-display: 'Fraunces', serif;
+  --dm-font-body:    'Inter', sans-serif;
+  --dm-font-mono:    'JetBrains Mono', monospace;
+
+  --dm-radius-sm:  4px;
+  --dm-radius-md:  8px;
+  --dm-radius-lg:  14px;
+  --dm-radius-xl:  20px;
+  --dm-radius-2xl: 26px;
+  --dm-radius-full: 9999px;
+}
+
+.dm-root {
+  background-color: var(--dm-bg);
+  color: var(--dm-text-primary);
+  font-family: var(--dm-font-body);
+}
+
+/* tailwind.config.mjs maps the shared `font-display`/`font-body`/`font-mono`
+   utilities to the main site's Space Grotesk/Inter/JetBrains Mono. Since
+   dealmakers components use those same utility class names for convenience,
+   redirect them to this microsite's own font stack. */
+.dm-root .font-display { font-family: var(--dm-font-display) !important; }
+.dm-root .font-body    { font-family: var(--dm-font-body) !important; }
+.dm-root .font-mono    { font-family: var(--dm-font-mono) !important; }
+
+.dm-root ::selection {
+  background: rgba(212, 175, 106, 0.25);
+  color: var(--dm-text-primary);
+}
+
+/* ─── Typography helpers ─── */
+.dm-text-gradient {
+  background: var(--dm-gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ─── Glass card system ─── */
+.dm-card {
+  background: var(--dm-bg-glass);
+  border: 1px solid var(--dm-border);
+  border-radius: var(--dm-radius-xl);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.dm-card:hover {
+  border-color: var(--dm-border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.dm-card-featured {
+  background: var(--dm-gradient-card);
+  border: 1px solid var(--dm-border-accent);
+  border-radius: var(--dm-radius-2xl);
+  box-shadow: 0 0 0 1px rgba(212, 175, 106, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.dm-card-numbered {
+  background: var(--dm-bg-secondary);
+  border: 1px solid var(--dm-border);
+  border-radius: var(--dm-radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+.dm-card-numbered::before {
+  content: attr(data-step);
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  font-family: var(--dm-font-display);
+  font-size: 4.5rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.03);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ─── Glass panel (header/nav) ─── */
+.dm-glass-panel {
+  background: rgba(10, 9, 8, 0.78);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid var(--dm-border);
+}
+
+/* ─── Buttons ─── */
+.dm-btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--dm-font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dm-text-inverted);
+  background: var(--dm-gradient-primary);
+  border-radius: var(--dm-radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.dm-btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-25deg);
+}
+.dm-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px rgba(212, 175, 106, 0.4), 0 0 48px rgba(47, 158, 110, 0.2), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.dm-btn-primary:hover::before { left: 150%; transition: left 0.8s ease-in-out; }
+
+.dm-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--dm-font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dm-text-primary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--dm-border);
+  border-radius: var(--dm-radius-full);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  text-decoration: none;
+}
+.dm-btn-ghost:hover {
+  border-color: var(--dm-border-accent);
+  color: var(--dm-gold);
+  background: rgba(212, 175, 106, 0.06);
+  transform: translateY(-2px);
+}
+
+.dm-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--dm-border);
+  border-radius: var(--dm-radius-md);
+  color: var(--dm-text-secondary);
+  background: transparent;
+  transition: all 0.2s ease;
+}
+.dm-btn-icon:hover {
+  border-color: var(--dm-gold);
+  color: var(--dm-gold);
+  background: rgba(212, 175, 106, 0.06);
+}
+
+/* ─── Tags ─── */
+.dm-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-family: var(--dm-font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  border-radius: var(--dm-radius-sm);
+  border: 1px solid;
+}
+.dm-tag-gold {
+  color: var(--dm-gold);
+  border-color: rgba(212, 175, 106, 0.3);
+  background: rgba(212, 175, 106, 0.08);
+}
+.dm-tag-emerald {
+  color: var(--dm-emerald);
+  border-color: rgba(47, 158, 110, 0.3);
+  background: rgba(47, 158, 110, 0.08);
+}
+.dm-tag-gray {
+  color: var(--dm-text-secondary);
+  border-color: var(--dm-border);
+  background: var(--dm-bg-glass);
+}
+
+/* ─── Form elements ─── */
+.dm-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--dm-border);
+  border-radius: var(--dm-radius-md);
+  color: var(--dm-text-primary);
+  font-family: var(--dm-font-body);
+  font-size: 0.9375rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+.dm-input::placeholder { color: var(--dm-text-muted); }
+.dm-input:focus {
+  border-color: var(--dm-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 106, 0.12);
+}
+
+.dm-select-option {
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--dm-border);
+  border-radius: var(--dm-radius-md);
+  color: var(--dm-text-secondary);
+  font-family: var(--dm-font-body);
+  font-size: 0.8125rem;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.dm-select-option:hover { border-color: var(--dm-border-hover); color: var(--dm-text-primary); }
+.dm-select-option[aria-pressed='true'] {
+  border-color: var(--dm-gold);
+  background: rgba(212, 175, 106, 0.1);
+  color: var(--dm-gold);
+}
+.dm-select-option:focus-visible {
+  outline: 2px solid var(--dm-gold);
+  outline-offset: 2px;
+}
+
+/* ─── Decorative ─── */
+.dm-orb-gold { background: var(--dm-gradient-glow-gold); }
+.dm-orb-emerald { background: var(--dm-gradient-glow-emerald); }
+
+.dm-grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.dm-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 106, 0.4), rgba(47, 158, 110, 0.3), transparent);
+}
+
+.dm-glow-gold { box-shadow: 0 0 20px rgba(212, 175, 106, 0.3), 0 0 60px rgba(212, 175, 106, 0.1); }
+
+/* ─── Focus-visible baseline for interactive elements ─── */
+.dm-root a:focus-visible,
+.dm-root button:focus-visible {
+  outline: 2px solid var(--dm-gold);
+  outline-offset: 2px;
+}
+
+/* ─── Scrollbar (scoped) ─── */
+.dm-root { scrollbar-color: var(--dm-gold-dim) var(--dm-bg-secondary); }
+
+/* ─── Keyframes ───
+   This layout does not import the main site's animations.css, so anything
+   this microsite's components rely on must be defined here. */
+@keyframes orb-pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
+}
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0); }
+  33%       { transform: translate(12px, -8px); }
+  66%       { transform: translate(-8px, 6px); }
+}
+@keyframes hero-line-reveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes dm-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 767px) {
+  .dm-card, [class*='backdrop-blur'] {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  @media (hover: none) {
+    .dm-card:hover, .dm-btn-primary:hover, .dm-btn-ghost:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}

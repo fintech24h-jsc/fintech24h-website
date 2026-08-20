@@ -1,27 +1,27 @@
 ---
 // src/components/sections/dealmakers/USPSection.astro
-// "USP thực tế" — responsible proof points, no invented KPIs. Describes the
-// review process instead of numbers we don't have yet for Season 3.
+// Responsible proof points — no invented KPIs. Describes the review
+// process instead of numbers we don't have yet for Season 3.
 const points = [
   {
     icon: 'signal',
-    title: 'Signal rõ ràng',
-    body: 'Member công khai We Offer / We Are Looking For ngay trên profile — giảm cold outreach mơ hồ, người xem biết ngay bạn có gì và cần gì.',
+    title: 'Clear signal',
+    body: 'Members publish We Offer / We Are Looking For directly on their profile — cutting through vague cold outreach so visitors know exactly what you have and need.',
   },
   {
     icon: 'verified',
     title: 'Verified decision-makers',
-    body: 'Ưu tiên người có quyền ra quyết định trực tiếp hoặc đại diện được uỷ quyền rõ ràng — không phải tài khoản đại diện chung chung.',
+    body: 'Priority goes to direct decision-makers or clearly authorized representatives — not generic account handlers.',
   },
   {
     icon: 'curate',
-    title: 'Curated introduction',
-    body: 'Fintech24h đọc mục tiêu của cả hai phía, kiểm tra mức độ phù hợp và xin đồng ý trước khi kết nối — không có warm intro nào được gửi đại trà.',
+    title: 'Curated introductions',
+    body: 'Fintech24h reviews both parties’ goals, checks fit, and asks for consent before connecting — no warm intro is ever sent in bulk.',
   },
   {
     icon: 'region',
     title: 'Regional deal flow',
-    body: 'Trọng tâm kết nối Web3 / fintech tại Việt Nam và Đông Nam Á, mở rộng ra quốc tế khi mức độ phù hợp đủ cao.',
+    body: 'Focused on connecting Web3 / fintech in Vietnam and Southeast Asia, extending internationally when fit is high enough.',
   },
 ];
 
@@ -33,23 +33,23 @@ const icons: Record<string, string> = {
 };
 ---
 
-<section class="relative py-20 lg:py-28" aria-label="USP">
+<section class="relative py-20 lg:py-28" aria-label="Value proposition">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mb-12">
-      <p class="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-[0.18em] mb-3">Không mở rộng danh bạ</p>
-      <h2 class="font-display font-bold text-h2 text-[var(--text-primary)]">
-        Chúng tôi tạo <span class="text-gradient">đúng cuộc gặp.</span>
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Not another contact list</p>
+      <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)]">
+        We create <span class="dm-text-gradient">the right meeting.</span>
       </h2>
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
       {points.map((p) => (
-        <div class="card-default p-6 flex flex-col gap-4">
-          <div class="w-11 h-11 rounded-xl bg-[var(--accent-cyan)]/8 border border-[var(--accent-cyan)]/20 flex items-center justify-center text-[var(--accent-cyan)] shrink-0">
+        <div class="dm-card p-6 flex flex-col gap-4">
+          <div class="w-11 h-11 rounded-xl bg-[rgba(212,175,106,0.08)] border border-[var(--dm-border-accent)] flex items-center justify-center text-[var(--dm-gold)] shrink-0">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={`<path d="${icons[p.icon]}"/>`} />
           </div>
-          <h3 class="font-display font-bold text-sm text-[var(--text-primary)]">{p.title}</h3>
-          <p class="text-xs text-[var(--text-secondary)] leading-relaxed font-body">{p.body}</p>
+          <h3 class="font-display font-semibold text-sm text-[var(--dm-text-primary)]">{p.title}</h3>
+          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed font-body">{p.body}</p>
         </div>
       ))}
     </div>

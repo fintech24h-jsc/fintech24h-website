@@ -4,11 +4,11 @@ import { directoryProfiles, type DirectoryCategory, type DirectoryProfile } from
 type FilterKey = 'all' | 'sponsored' | DirectoryCategory;
 
 const filters: { key: FilterKey; label: string }[] = [
-  { key: 'all', label: 'Tất cả profile' },
+  { key: 'all', label: 'All profiles' },
   { key: 'sponsored', label: 'Sponsored' },
-  { key: 'capital', label: 'Tìm vốn' },
+  { key: 'capital', label: 'Raising capital' },
   { key: 'listing', label: 'Listing & liquidity' },
-  { key: 'partner', label: 'Đối tác chiến lược' },
+  { key: 'partner', label: 'Strategic partner' },
   { key: 'service', label: 'Growth & services' },
 ];
 
@@ -90,35 +90,35 @@ export default function QualifiedDirectory() {
   return (
     <div className="grid lg:grid-cols-[300px_1fr] gap-6">
       {/* Filters */}
-      <aside className="card-default p-5 h-fit">
-        <h3 className="font-display font-bold text-sm text-[var(--text-primary)] mb-1">Lọc profile</h3>
-        <p className="text-xs text-[var(--text-secondary)] mb-4">Khám phá theo mục tiêu deal hoặc profile được ưu tiên hiển thị.</p>
+      <aside className="dm-card p-5 h-fit">
+        <h3 className="font-display font-semibold text-sm text-[var(--dm-text-primary)] mb-1">Filter profiles</h3>
+        <p className="text-xs text-[var(--dm-text-secondary)] mb-4">Browse by deal goal or profiles prioritized for visibility.</p>
         <div className="grid gap-2">
           {filters.map((f) => (
             <button
               key={f.key}
               onClick={() => setActiveFilter(f.key)}
               aria-pressed={activeFilter === f.key}
-              className="select-option flex items-center justify-between text-left"
+              className="dm-select-option flex items-center justify-between text-left"
               data-dm-track="directory_filter"
               data-dm-track-label={f.key}
             >
               <span>{f.label}</span>
-              <b className="font-mono text-[10px] text-[var(--text-muted)]">{String(countFor(f.key)).padStart(2, '0')}</b>
+              <b className="font-mono text-[10px] text-[var(--dm-text-muted)]">{String(countFor(f.key)).padStart(2, '0')}</b>
             </button>
           ))}
         </div>
-        <p className="text-xs text-[var(--text-secondary)] mt-5 leading-relaxed">
-          <strong className="text-[var(--text-primary)]">Qualified Listing: $200 / season.</strong><br />
-          Thêm <strong className="text-[var(--accent-cyan)]">$150</strong> để gắn nhãn Sponsored và ưu tiên xuất hiện.
+        <p className="text-xs text-[var(--dm-text-secondary)] mt-5 leading-relaxed">
+          <strong className="text-[var(--dm-text-primary)]">Qualified Listing: $200 / season.</strong><br />
+          Add <strong className="text-[var(--dm-gold)]">$150</strong> for a Sponsored label and priority placement.
         </p>
         <a
           href="#apply"
           data-dm-prefill-interest="Qualified Listing — $200/season"
           data-dm-track="directory_post_listing"
-          className="btn-ghost w-full justify-center text-xs mt-4 border border-[var(--border-default)]"
+          className="dm-btn-ghost w-full justify-center text-xs mt-4"
         >
-          Đăng profile của bạn
+          Submit your profile
         </a>
       </aside>
 
@@ -138,27 +138,27 @@ export default function QualifiedDirectory() {
             }}
             className={`group grid grid-cols-[auto_1fr_auto] items-center gap-4 p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all duration-200 ${
               p.sponsored
-                ? 'border-[var(--accent-cyan)]/35 bg-gradient-to-r from-[var(--accent-cyan)]/8 to-transparent hover:border-[var(--accent-cyan)]/55'
-                : 'border-[var(--border-default)] bg-white/[0.02] hover:border-[var(--border-hover)] hover:bg-white/[0.04]'
-            } focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-cyan)] focus-visible:outline-offset-2`}
+                ? 'border-[var(--dm-border-accent)] bg-gradient-to-r from-[rgba(212,175,106,0.08)] to-transparent hover:border-[var(--dm-gold)]'
+                : 'border-[var(--dm-border)] bg-white/[0.02] hover:border-[var(--dm-border-hover)] hover:bg-white/[0.04]'
+            } focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--dm-gold)] focus-visible:outline-offset-2`}
           >
-            <span className="w-11 h-11 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-default)] flex items-center justify-center font-mono text-[11px] font-bold text-[var(--accent-cyan)]">
+            <span className="w-11 h-11 rounded-xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-[11px] font-bold text-[var(--dm-gold)]">
               {p.companyInitials}
             </span>
             <div className="min-w-0">
-              <h4 className="font-display font-bold text-sm text-[var(--text-primary)] flex items-center gap-2 flex-wrap">
+              <h4 className="font-display font-semibold text-sm text-[var(--dm-text-primary)] flex items-center gap-2 flex-wrap">
                 {p.companyName}
                 {p.sponsored && (
-                  <span className="tag tag-cyan text-[9px] py-0.5 px-2">✦ Sponsored</span>
+                  <span className="dm-tag dm-tag-gold text-[9px] py-0.5 px-2">✦ Sponsored</span>
                 )}
               </h4>
-              <p className="text-xs text-[var(--text-muted)] truncate">{p.contactName} · {p.role} · {p.dealGoal}</p>
+              <p className="text-xs text-[var(--dm-text-muted)] truncate">{p.contactName} · {p.role} · {p.dealGoal}</p>
               <div className="flex flex-wrap gap-1.5 mt-2">
-                {p.tags.map((t) => <span key={t} className="tag tag-gray text-[9px] py-0.5 px-1.5">{t}</span>)}
+                {p.tags.map((t) => <span key={t} className="dm-tag dm-tag-gray text-[9px] py-0.5 px-1.5">{t}</span>)}
               </div>
             </div>
-            <span className="hidden sm:inline-flex items-center gap-1 text-[var(--accent-cyan)] text-xs font-display font-semibold group-hover:gap-2 transition-all">
-              Xem profile
+            <span className="hidden sm:inline-flex items-center gap-1 text-[var(--dm-gold)] text-xs font-display font-semibold group-hover:gap-2 transition-all">
+              View profile
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>
           </article>
@@ -168,7 +168,7 @@ export default function QualifiedDirectory() {
       {/* Profile modal */}
       {activeProfile && (
         <div
-          className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-[#020310]/80 backdrop-blur-md"
+          className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-[rgba(6,5,4,0.8)] backdrop-blur-md"
           onMouseDown={(e) => { if (e.target === e.currentTarget) closeProfile(); }}
         >
           <div
@@ -176,52 +176,52 @@ export default function QualifiedDirectory() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="dm-profile-title"
-            className="relative w-full max-w-lg max-h-[calc(100vh-2rem)] overflow-y-auto rounded-3xl border border-white/10 bg-[#0c1226]/95 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-6 sm:p-7"
+            className="relative w-full max-w-lg max-h-[calc(100vh-2rem)] overflow-y-auto rounded-3xl border border-[var(--dm-border)] bg-[rgba(19,17,16,0.97)] backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-6 sm:p-7"
           >
             <button
               onClick={closeProfile}
-              aria-label="Đóng profile"
-              className="absolute right-4 top-4 w-8 h-8 rounded-lg border border-[var(--border-default)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-white hover:border-[var(--border-hover)] flex items-center justify-center transition-colors"
+              aria-label="Close profile"
+              className="absolute right-4 top-4 w-8 h-8 rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] text-[var(--dm-text-secondary)] hover:text-[var(--dm-text-primary)] hover:border-[var(--dm-border-hover)] flex items-center justify-center transition-colors"
             >
               ×
             </button>
 
-            <p className="font-mono text-[10px] text-[var(--accent-cyan)] uppercase tracking-widest mb-3">Qualified profile</p>
+            <p className="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-widest mb-3">Qualified profile</p>
             <div className="flex items-start gap-4 mb-5">
-              <span className="w-14 h-14 rounded-2xl bg-[var(--bg-tertiary)] border border-[var(--border-default)] flex items-center justify-center font-mono text-sm font-bold text-[var(--accent-cyan)] shrink-0">
+              <span className="w-14 h-14 rounded-2xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-sm font-bold text-[var(--dm-gold)] shrink-0">
                 {activeProfile.companyInitials}
               </span>
               <div className="min-w-0">
-                <h3 id="dm-profile-title" className="font-display font-bold text-xl text-[var(--text-primary)]">{activeProfile.companyName}</h3>
-                <p className="text-xs text-[var(--text-muted)]">{activeProfile.contactName} · {activeProfile.role}</p>
-                {activeProfile.sponsored && <span className="tag tag-cyan text-[9px] py-0.5 px-2 mt-2 inline-block">✦ Sponsored profile</span>}
+                <h3 id="dm-profile-title" className="font-display font-semibold text-xl text-[var(--dm-text-primary)]">{activeProfile.companyName}</h3>
+                <p className="text-xs text-[var(--dm-text-muted)]">{activeProfile.contactName} · {activeProfile.role}</p>
+                {activeProfile.sponsored && <span className="dm-tag dm-tag-gold text-[9px] py-0.5 px-2 mt-2 inline-block">✦ Sponsored profile</span>}
               </div>
             </div>
 
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-5">{activeProfile.about}</p>
+            <p className="text-sm text-[var(--dm-text-secondary)] leading-relaxed mb-5">{activeProfile.about}</p>
 
             <div className="grid sm:grid-cols-2 gap-3 mb-4">
-              <div className="p-3.5 rounded-xl border border-[var(--border-default)] bg-[var(--bg-tertiary)]">
-                <strong className="block text-[10px] uppercase tracking-widest text-[var(--accent-cyan)] mb-1.5">We Offer</strong>
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{activeProfile.weOffer}</p>
+              <div className="p-3.5 rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)]">
+                <strong className="block text-[10px] uppercase tracking-widest text-[var(--dm-gold)] mb-1.5">We Offer</strong>
+                <p className="text-xs text-[var(--dm-text-secondary)] leading-relaxed">{activeProfile.weOffer}</p>
               </div>
-              <div className="p-3.5 rounded-xl border border-[var(--border-default)] bg-[var(--bg-tertiary)]">
-                <strong className="block text-[10px] uppercase tracking-widest text-[var(--accent-purple)] mb-1.5">We Are Looking For</strong>
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{activeProfile.weAreLookingFor}</p>
+              <div className="p-3.5 rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)]">
+                <strong className="block text-[10px] uppercase tracking-widest text-[var(--dm-emerald)] mb-1.5">We Are Looking For</strong>
+                <p className="text-xs text-[var(--dm-text-secondary)] leading-relaxed">{activeProfile.weAreLookingFor}</p>
               </div>
             </div>
-            <div className="p-3.5 rounded-xl border border-[var(--border-default)] bg-[var(--bg-tertiary)] mb-6">
-              <strong className="block text-[10px] uppercase tracking-widest text-[var(--text-muted)] mb-1.5">Focus & markets</strong>
-              <p className="text-xs text-[var(--text-secondary)]">{activeProfile.focusMarket}</p>
+            <div className="p-3.5 rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] mb-6">
+              <strong className="block text-[10px] uppercase tracking-widest text-[var(--dm-text-muted)] mb-1.5">Focus &amp; markets</strong>
+              <p className="text-xs text-[var(--dm-text-secondary)]">{activeProfile.focusMarket}</p>
             </div>
 
             <a
               href="#apply"
               onClick={() => {
-                dispatchPrefill('Tham gia DealMakers’ Club', `${activeProfile.companyName} — ${activeProfile.contactName}`);
+                dispatchPrefill('Join DealMakers’ Club', `${activeProfile.companyName} — ${activeProfile.contactName}`);
                 closeProfile();
               }}
-              className="btn-primary w-full justify-center text-xs"
+              className="dm-btn-primary w-full justify-center text-xs"
             >
               Request Introduction →
             </a>
