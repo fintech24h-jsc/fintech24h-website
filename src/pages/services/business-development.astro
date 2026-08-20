@@ -69,8 +69,8 @@ const combinedSchema = [serviceSchema, faqSchema];
   <BreadcrumbSchema items={breadcrumbs} />
 
   <!-- SECTION 1 — HERO (Corporate Glass Monolith) -->
-  <section class="min-h-screen flex items-center justify-center pt-24 pb-12 px-4 bg-[#0a0a0c] relative" data-theme-surface="midnight">
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#121216] pointer-events-none"></div>
+  <section class="min-h-screen flex items-center justify-center pt-24 pb-12 px-4 bg-[var(--bg-primary)] relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--bg-secondary)] pointer-events-none"></div>
     
     <!-- Massive Glass Container -->
     <div class="max-w-[1400px] w-full mx-auto bg-[var(--surface-faint)] border border-[var(--border-subtle)] backdrop-blur-3xl rounded-3xl p-8 md:p-16 lg:p-24 relative overflow-hidden shadow-2xl reveal">
@@ -85,21 +85,21 @@ const combinedSchema = [serviceSchema, faqSchema];
           </span>
           <h1 class="font-display font-light text-[clamp(2.5rem,4vw,4.5rem)] text-[var(--text-primary)] leading-[1.1] tracking-tight mb-8">
           The Relationships That Take Years to Build <br/>
-          <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/50">— We Already Have Them.</span>
+          <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[color-mix(in_srgb,var(--text-primary)_50%,transparent)]">— We Already Have Them.</span>
         </h1>
           <p class="font-body text-lg text-[var(--text-secondary)] opacity-70 max-w-xl leading-relaxed mb-10 font-light">
             In Web3, who you integrate with, where you're listed, and who backs you is as important as what you've built. We operate as an extension of your team to secure the partnerships that drive real adoption.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
-            <a href="/contact/" class="bg-white text-black px-8 py-4 rounded-xl font-medium hover:bg-white/90 transition-colors text-center shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+            <a href="/contact/" class="bg-[var(--text-primary)] text-[var(--bg-primary)] px-8 py-4 rounded-xl font-medium hover:opacity-90 transition-opacity text-center shadow-[0_0_20px_rgba(255,255,255,0.1)]">
               Discuss BD Strategy
             </a>
           </div>
         </div>
-        
+
         <div class="lg:col-span-5 hidden lg:flex justify-end relative">
-          <!-- Web3 Deal Flow / Network Mockup -->
-          <div class="w-full max-w-md bg-[#050508]/80 border border-[var(--border-default)] rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden group">
+          <!-- Web3 Deal Flow / Network Mockup — a fixed dark "app dashboard" screenshot, like the site's other terminal/mockup widgets -->
+          <div class="w-full max-w-md bg-[#050508]/80 border border-[var(--border-default)] rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden group" data-theme-surface="midnight">
             
             <!-- Scanning Light Effect -->
             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#a78bfa]/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan_3s_linear_infinite] pointer-events-none"></div>
@@ -175,7 +175,7 @@ const combinedSchema = [serviceSchema, faqSchema];
   </section>
 
   <!-- SECTION 2 — THE PROBLEM (Sleek Grid) -->
-  <section class="py-32 bg-[#121216] relative" data-theme-surface="midnight">
+  <section class="py-32 bg-[var(--bg-secondary)] relative">
     <div class="max-w-[1400px] mx-auto px-4 md:px-8">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 reveal">
         <h2 class="font-display text-4xl md:text-5xl font-light text-[var(--text-primary)] max-w-2xl">
@@ -205,7 +205,7 @@ const combinedSchema = [serviceSchema, faqSchema];
   </section>
 
   <!-- SECTION 3 — OUR APPROACH (Ultra-Clean Accordion List) -->
-  <section class="py-32 bg-[#0a0a0c]" data-theme-surface="midnight">
+  <section class="py-32 bg-[var(--bg-primary)]">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <div class="text-center mb-24 reveal">
         <h2 class="font-display text-4xl text-[var(--text-primary)] font-light">The Execution Framework</h2>
@@ -232,7 +232,7 @@ const combinedSchema = [serviceSchema, faqSchema];
   </section>
 
   <!-- SECTION 4 — SERVICES (Monolith Cards) -->
-  <section class="py-32 bg-[#121216]" data-theme-surface="midnight">
+  <section class="py-32 bg-[var(--bg-secondary)]">
     <div class="max-w-[1400px] mx-auto px-4 md:px-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
@@ -241,7 +241,7 @@ const combinedSchema = [serviceSchema, faqSchema];
           { title: 'Regional Market Entry', desc: 'Acting as your localized BD team in SE Asia and UAE. We navigate local culture and connect you with regional partners.' },
           { title: 'B2B Sales', desc: 'For enterprise-facing Web3 tools. We build the sales pipeline, manage outreach, and drive qualified leads to your tech team.' }
         ].map((s, i) => (
-          <div class="bg-[#0a0a0c] border border-[var(--border-subtle)] rounded-2xl p-8 hover:border-[var(--border-default)] transition-all duration-500 reveal" style={`transition-delay: ${i * 0.1}s`}>
+          <div class="bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-2xl p-8 hover:border-[var(--border-default)] transition-all duration-500 reveal" style={`transition-delay: ${i * 0.1}s`}>
             <h3 class="font-display text-xl text-[var(--text-primary)] font-medium mb-4">{s.title}</h3>
             <p class="font-body text-[var(--text-muted)] leading-relaxed font-light text-sm">{s.desc}</p>
           </div>
@@ -251,7 +251,7 @@ const combinedSchema = [serviceSchema, faqSchema];
   </section>
 
   <!-- FAQ SECTION -->
-  <section class="py-32 bg-[#0a0a0c]" data-theme-surface="midnight">
+  <section class="py-32 bg-[var(--bg-primary)]">
     <div class="max-w-3xl mx-auto px-4">
       <h2 class="font-display text-3xl text-[var(--text-primary)] font-light text-center mb-16 reveal">Frequently Asked Questions</h2>
       <div class="space-y-4">

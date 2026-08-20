@@ -65,11 +65,11 @@ const combinedSchema = [serviceSchema, faqSchema];
   <BreadcrumbSchema items={breadcrumbs} />
 
   <!-- SECTION 1 — HERO (Cinematic Spotlight) -->
-  <section class="relative min-h-screen flex flex-col justify-center items-center px-4 overflow-hidden bg-[#020202]" data-theme-surface="midnight">
+  <section class="relative min-h-screen flex flex-col justify-center items-center px-4 overflow-hidden bg-[var(--bg-primary)]">
     <!-- Spotlight Effect -->
-    <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.15),transparent_60%)] pointer-events-none"></div>
+    <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-[var(--gradient-glow-cyan)] opacity-70 pointer-events-none"></div>
     <!-- Particles/Dust -->
-    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none mix-blend-screen"></div>
+    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none mix-blend-luminosity"></div>
 
     <div class="relative z-10 text-center max-w-5xl mx-auto mt-20">
       <div class="reveal">
@@ -78,7 +78,7 @@ const combinedSchema = [serviceSchema, faqSchema];
 
       <h1 class="font-display font-light max-w-5xl mx-auto reveal reveal-delay-1">
         <span class="block text-[clamp(2.5rem,5vw,4.5rem)] tracking-widest text-[var(--text-muted)] uppercase mb-2">Be the Project Everyone's Talking About</span>
-        <span class="block text-[clamp(3rem,6vw,5.5rem)] font-bold tracking-tight text-[var(--text-primary)] uppercase drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">— Before, During, and After the Event.</span>
+        <span class="block text-[clamp(3rem,6vw,5.5rem)] font-bold tracking-tight text-[var(--text-primary)] uppercase drop-shadow-[0_0_30px_var(--accent-cyan-glow)]">— Before, During, and After the Event.</span>
       </h1>
 
       <p class="font-body text-lg text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] max-w-2xl mx-auto mt-8 mb-12 leading-[1.8] reveal reveal-delay-2 font-light">
@@ -86,18 +86,18 @@ const combinedSchema = [serviceSchema, faqSchema];
       </p>
 
       <div class="reveal reveal-delay-3">
-        <a href="/contact/" class="inline-flex items-center justify-center border border-white/30 px-10 py-4 text-[var(--text-primary)] font-mono text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 backdrop-blur-sm">
+        <a href="/contact/" class="inline-flex items-center justify-center border border-[var(--border-hover)] px-10 py-4 text-[var(--text-primary)] font-mono text-xs uppercase tracking-[0.2em] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all duration-500 backdrop-blur-sm">
           Plan Your Event
         </a>
       </div>
     </div>
-    
+
     <!-- Cinematic Bottom Fade -->
-    <div class="absolute bottom-0 w-full h-48 bg-gradient-to-t from-[#020202] to-transparent pointer-events-none"></div>
+    <div class="absolute bottom-0 w-full h-48 bg-gradient-to-t from-[var(--bg-primary)] to-transparent pointer-events-none"></div>
   </section>
 
   <!-- SECTION 2 — THE PROBLEM (Dark Minimal Text) -->
-  <section class="py-32 bg-[#020202] relative z-10" data-theme-surface="midnight">
+  <section class="py-32 bg-[var(--bg-primary)] relative z-10">
     <div class="max-w-5xl mx-auto px-6 text-center">
       <h2 class="font-display text-2xl text-[var(--text-secondary)] opacity-70 uppercase tracking-[0.2em] mb-16 reveal">Why Most Event Budgets Are Wasted</h2>
       
@@ -117,11 +117,11 @@ const combinedSchema = [serviceSchema, faqSchema];
   </section>
 
   <!-- SECTION 3 — OUR APPROACH (Event Ticket Layout) -->
-  <section class="py-32 bg-[#050505] relative z-10 border-y border-[var(--border-subtle)]" data-theme-surface="midnight">
+  <section class="py-32 bg-[var(--bg-secondary)] relative z-10 border-y border-[var(--border-subtle)]">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-24 reveal">
         <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] text-[var(--text-primary)] uppercase tracking-wider font-bold">The Blueprint</h2>
-        <div class="w-24 h-px bg-white/20 mx-auto mt-6"></div>
+        <div class="w-24 h-px bg-[var(--border-hover)] mx-auto mt-6"></div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8">
@@ -131,29 +131,29 @@ const combinedSchema = [serviceSchema, faqSchema];
           { step: 'PHASE 03', title: 'Guest Curation', desc: 'We leverage our network to invite Tier-1 VCs, KOLs, and partners. We manually approve RSVPs to ensure the room is filled with high-intent individuals.', time: 'T-Minus 14 Days' },
           { step: 'PHASE 04', title: 'On-Site Execution & Follow-Up', desc: 'Our team manages check-in, flow, and VIP handling on the day. Afterward, we execute a segmented follow-up strategy to turn conversations into closed deals.', time: 'Event Day & Beyond' }
         ].map((item, i) => (
-          <div class="relative bg-[#0a0a0a] border border-[var(--border-default)] rounded-lg flex flex-col md:flex-row overflow-hidden group hover:border-white/30 transition-colors reveal">
+          <div class="relative bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-lg flex flex-col md:flex-row overflow-hidden group hover:border-[var(--border-hover)] transition-colors reveal">
             <!-- Ticket Left Tear -->
             <div class="hidden md:flex flex-col justify-between items-center w-16 bg-[var(--surface-soft)] border-r border-[var(--border-default)] border-dashed py-6 relative">
-              <div class="w-6 h-6 rounded-full bg-[#050505] absolute -left-3 top-6 border-r border-[var(--border-default)]"></div>
-              <div class="w-6 h-6 rounded-full bg-[#050505] absolute -left-3 bottom-6 border-r border-[var(--border-default)]"></div>
+              <div class="w-6 h-6 rounded-full bg-[var(--bg-secondary)] absolute -left-3 top-6 border-r border-[var(--border-default)]"></div>
+              <div class="w-6 h-6 rounded-full bg-[var(--bg-secondary)] absolute -left-3 bottom-6 border-r border-[var(--border-default)]"></div>
               <span class="transform -rotate-90 font-mono text-[10px] text-[var(--text-muted)] tracking-[0.3em] whitespace-nowrap">{item.time}</span>
             </div>
-            
+
             <!-- Ticket Content -->
             <div class="p-8 md:p-10 flex-1">
               <span class="font-mono text-[10px] text-[var(--text-secondary)] opacity-70 tracking-[0.2em] uppercase block mb-4">{item.step}</span>
               <h3 class="font-display text-2xl text-[var(--text-primary)] font-medium mb-4 group-hover:text-[var(--text-primary)] transition-colors">{item.title}</h3>
               <p class="font-body text-[var(--text-secondary)] opacity-70 leading-relaxed font-light">{item.desc}</p>
             </div>
-            
+
             <!-- Ticket Right Barcode -->
             <div class="hidden md:flex flex-col justify-center items-center w-20 bg-[var(--surface-soft)] border-l border-[var(--border-default)]">
               <div class="flex gap-1 h-24 opacity-20 group-hover:opacity-40 transition-opacity">
-                <div class="w-1 h-full bg-white"></div>
-                <div class="w-[2px] h-full bg-white"></div>
-                <div class="w-2 h-full bg-white"></div>
-                <div class="w-1 h-full bg-white"></div>
-                <div class="w-[3px] h-full bg-white"></div>
+                <div class="w-1 h-full bg-[var(--text-primary)]"></div>
+                <div class="w-[2px] h-full bg-[var(--text-primary)]"></div>
+                <div class="w-2 h-full bg-[var(--text-primary)]"></div>
+                <div class="w-1 h-full bg-[var(--text-primary)]"></div>
+                <div class="w-[3px] h-full bg-[var(--text-primary)]"></div>
               </div>
             </div>
           </div>
@@ -163,7 +163,7 @@ const combinedSchema = [serviceSchema, faqSchema];
   </section>
 
   <!-- FAQ SECTION (Cinematic Accordion) -->
-  <section class="py-32 bg-[#020202]" data-theme-surface="midnight">
+  <section class="py-32 bg-[var(--bg-primary)]">
     <div class="max-w-4xl mx-auto px-6">
       <div class="text-center mb-20 reveal">
         <h2 class="font-display text-sm text-[var(--text-secondary)] opacity-70 uppercase tracking-[0.3em]">Logistics & Operations</h2>
