@@ -194,7 +194,7 @@ const phatProducts = [
             </div>
 
             <!-- Monospaced Credentials Badge -->
-            <div class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] p-3 rounded-lg font-mono text-[10px] text-[var(--text-primary)]/60 space-y-1 mt-6">
+            <div class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] p-3 rounded-lg font-mono text-[10px] text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] space-y-1 mt-6">
               <div class="flex justify-between"><span>NODE:</span><span class="text-[var(--text-primary)]">F24H_ROOT_2</span></div>
               <div class="flex justify-between"><span>STATUS:</span><span class="text-emerald-400">ACTIVE</span></div>
               <div class="flex justify-between"><span>OPERATIONS:</span><span class="text-[var(--text-primary)]">CO-FOUNDER</span></div>
@@ -339,7 +339,7 @@ const phatProducts = [
 
                 <!-- Left Column monospaced absolute meta (Desktop only) -->
                 <div class="absolute -left-[180px] top-4 hidden md:flex flex-col items-end text-right w-36 font-mono text-[10px] text-[var(--text-muted)] space-y-1">
-                  <div class="text-[var(--text-primary)]/60 tracking-wider">[{formatDate(post.date).toUpperCase()}]</div>
+                  <div class="text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] tracking-wider">[{formatDate(post.date).toUpperCase()}]</div>
                   <div>ID // WP_0{post.id}</div>
                   <div class="text-[9px] uppercase tracking-widest" style={{ color: accentColor }}>{rTime} MIN READ</div>
                 </div>

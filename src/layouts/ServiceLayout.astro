@@ -90,7 +90,7 @@ const serviceSchema = {
       <!-- Service-Specific Key Metrics -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-20" data-animate="stagger">
         {service.metrics.map((m) => (
-          <div class="card-default p-6 text-center border-[var(--accent-cyan)]/10" data-animate-child>
+          <div class="card-default p-6 text-center border-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)]" data-animate-child>
             <div class="text-3xl lg:text-4xl font-display font-bold gradient-text-cyan mb-1">{m.value}</div>
             <div class="text-xs text-[var(--text-secondary)] font-body uppercase tracking-wider">{m.label}</div>
           </div>
@@ -117,7 +117,7 @@ const serviceSchema = {
         </div>
 
         <div class="lg:col-span-5">
-          <div class="card-default p-8 border-[var(--accent-purple)]/15 relative overflow-hidden">
+          <div class="card-default p-8 border-[color-mix(in_srgb,var(--accent-purple)_15%,transparent)] relative overflow-hidden">
             <div class="absolute inset-0 bg-radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 80%) pointer-events-none"></div>
             <h3 class="font-display text-xl font-semibold text-[var(--text-primary)] mb-6">Expected Business Outcomes</h3>
             <ul class="space-y-4 font-body text-[var(--text-secondary)] text-sm">
@@ -133,7 +133,7 @@ const serviceSchema = {
       </div>
 
       <!-- Calendly Interactive Embed Booking Area -->
-      <div id="book-call" class="card-default p-8 lg:p-12 border-[var(--accent-cyan)]/20 max-w-5xl mx-auto">
+      <div id="book-call" class="card-default p-8 lg:p-12 border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] max-w-5xl mx-auto">
         <div class="text-center max-w-2xl mx-auto mb-10">
           <h2 class="font-display text-3xl font-bold text-[var(--text-primary)] mb-4">
             Schedule a Growth Audit

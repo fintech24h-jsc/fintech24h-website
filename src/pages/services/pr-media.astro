@@ -102,9 +102,9 @@ const combinedSchema = [serviceSchema, faqSchema];
           { title: 'Lack of SEO Strategy', desc: 'A great article is useless if it doesn\'t include a high-authority backlink. Many PR efforts fail to capitalize on the SEO benefits of media coverage, leaving long-term domain authority on the table.' }
         ].map((item, i) => (
           <div class={`p-10 border-b md:border-b-0 ${i !== 2 ? 'md:border-r border-[var(--border-default)]' : ''} hover:bg-[var(--surface-soft)] transition-colors group reveal`} style={`transition-delay: ${i * 0.15}s`}>
-            <span class="block font-display text-[4rem] text-[var(--text-primary)]/5 font-bold leading-none mb-6 group-hover:text-[var(--accent-cyan)]/20 transition-colors">0{i+1}</span>
+            <span class="block font-display text-[4rem] text-[color-mix(in_srgb,var(--text-primary)_5%,transparent)] font-bold leading-none mb-6 group-hover:text-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] transition-colors">0{i+1}</span>
             <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-4 uppercase">{item.title}</h3>
-            <p class="font-body text-[var(--text-primary)]/60 leading-relaxed text-sm">{item.desc}</p>
+            <p class="font-body text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] leading-relaxed text-sm">{item.desc}</p>
           </div>
         ))}
       </div>
@@ -153,7 +153,7 @@ const combinedSchema = [serviceSchema, faqSchema];
               {faq.q}
               <span class="text-[var(--text-muted)] group-open:rotate-45 transition-transform duration-300 font-mono text-2xl">+</span>
             </summary>
-            <div class="text-[var(--text-primary)]/60 font-body text-sm leading-relaxed pb-4 pr-12">
+            <div class="text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] font-body text-sm leading-relaxed pb-4 pr-12">
               <p>{faq.a}</p>
             </div>
           </details>

@@ -90,7 +90,7 @@ const combinedSchema = [serviceSchema, faqSchema];
         </div>
 
         <!-- Bento 2 -->
-        <div class="card-default border border-[var(--border-subtle)] bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end group hover:border-[var(--accent-cyan)]/30 transition-all reveal reveal-delay-1">
+        <div class="card-default border border-[var(--border-subtle)] bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end group hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] transition-all reveal reveal-delay-1">
           <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-2">Wrong Audience</h3>
           <p class="text-[var(--text-secondary)] text-sm">A KOL with 500K followers in gaming does nothing for a DeFi protocol. Reach without relevance is noise.</p>
         </div>
@@ -182,10 +182,10 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
     <div class="space-y-4">
       {faqs.map((faq, i) => (
-        <details class="card-default p-0 border border-[var(--border-subtle)] hover:border-[var(--accent-cyan)]/30 transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
+        <details class="card-default p-0 border border-[var(--border-subtle)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
           <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
             <span class="font-display font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors pr-6">{faq.q}</span>
-            <div class="w-8 h-8 rounded-full border border-[var(--border-default)] flex items-center justify-center text-[var(--text-secondary)] opacity-70 group-hover:text-[var(--accent-cyan)] group-hover:border-[var(--accent-cyan)]/30 shrink-0">
+            <div class="w-8 h-8 rounded-full border border-[var(--border-default)] flex items-center justify-center text-[var(--text-secondary)] opacity-70 group-hover:text-[var(--accent-cyan)] group-hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] shrink-0">
               <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </div>
           </summary>

@@ -73,7 +73,7 @@ const colors = [
           <button
             class={`service-dock-item text-left py-3.5 lg:py-5 px-4 lg:px-6 rounded-xl lg:rounded-2xl border transition-all duration-300 flex items-center justify-between group ${
               idx === 0
-                ? 'border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/5 text-[var(--text-primary)] active-item'
+                ? 'border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] text-[var(--text-primary)] active-item'
                 : 'border-[var(--border-subtle)] bg-[var(--surface-faint)] text-[var(--text-secondary)] hover:border-[var(--border-default)] hover:bg-[var(--surface-soft)]'
             }`}
             data-index={idx}

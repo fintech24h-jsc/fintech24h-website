@@ -114,7 +114,7 @@ const row2Clients = clients.slice(Math.ceil(clients.length / 2));
           href={b.url}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] text-xs font-body text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] hover:border-[var(--accent-cyan)]/25 transition-all duration-200 group shadow-lg"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] text-xs font-body text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] transition-all duration-200 group shadow-lg"
           aria-label={`Fintech24h on ${b.name}`}
         >
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-success)] group-hover:bg-[var(--accent-cyan)] transition-colors" aria-hidden="true"></span>

@@ -79,7 +79,7 @@ const combinedSchema = [serviceSchema, faqSchema];
     <div class="relative z-10 max-w-5xl mx-auto w-full text-center">
 
       <!-- Status badge -->
-      <div class="inline-flex items-center justify-center gap-2 mb-8 px-4 py-2 rounded-full border border-[var(--accent-cyan)]/25 bg-[var(--accent-cyan)]/5 backdrop-blur-md reveal">
+      <div class="inline-flex items-center justify-center gap-2 mb-8 px-4 py-2 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] backdrop-blur-md reveal">
         <span class="w-2.5 h-2.5 rounded-full bg-[#57F287] shadow-[0_0_8px_rgba(87,242,135,0.8)] animate-pulse"></span>
         <span class="font-mono text-sm text-[var(--accent-cyan)] font-bold tracking-widest uppercase">LFG // Online</span>
       </div>
@@ -94,7 +94,7 @@ const combinedSchema = [serviceSchema, faqSchema];
       </h1>
 
       <!-- Glass description card -->
-      <div class="max-w-2xl mx-auto mt-8 mb-12 p-6 bg-[var(--bg-glass)] backdrop-blur-md rounded-2xl border border-white/[0.07] shadow-2xl reveal reveal-delay-2 text-left relative overflow-hidden">
+      <div class="max-w-2xl mx-auto mt-8 mb-12 p-6 bg-[var(--bg-glass)] backdrop-blur-md rounded-2xl border border-[var(--border-default)] shadow-2xl reveal reveal-delay-2 text-left relative overflow-hidden">
         <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--accent-cyan)] to-[var(--accent-purple)] rounded-l-full"></div>
         <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] pl-2">
           <strong class="text-[var(--text-primary)]">Daily active engagement</strong>, organic sharing, and community-led growth is what moves the needle. From anti-sybil airdrops to deep engagement tracking, we handle the entire funnel.
@@ -153,11 +153,11 @@ const combinedSchema = [serviceSchema, faqSchema];
   <!-- ═══════════════════════════════════════════════════
        SECTION 2 — THE PROBLEM (Chat Bubbles)
   ═══════════════════════════════════════════════════ -->
-  <section class="py-20 bg-[var(--bg-secondary)] relative z-10 border-t border-white/[0.04]">
+  <section class="py-20 bg-[var(--bg-secondary)] relative z-10 border-t border-[var(--border-subtle)]">
     <div class="max-w-4xl mx-auto px-4">
 
       <div class="text-center mb-16 reveal">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/20 bg-[var(--accent-cyan)]/5 mb-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] mb-4">
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
           <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-widest">Real Conversations</span>
         </div>
@@ -175,12 +175,12 @@ const combinedSchema = [serviceSchema, faqSchema];
         ].map((msg, i) => (
           <div class={`flex ${msg.isUser ? 'justify-end' : 'justify-start'} reveal`} style={`transition-delay: ${i * 0.08}s`}>
             {msg.isUser ? (
-              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tr-sm border border-[var(--accent-cyan)]/25 bg-gradient-to-br from-[var(--accent-cyan)]/12 to-[var(--accent-purple)]/10 backdrop-blur-md shadow-[0_4px_20px_rgba(0,200,240,0.08)]">
+              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tr-sm border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] bg-gradient-to-br from-[var(--accent-cyan)]/12 to-[var(--accent-purple)]/10 backdrop-blur-md shadow-[0_4px_20px_rgba(0,200,240,0.08)]">
                 <span class="block text-[10px] font-mono text-[var(--accent-cyan)] mb-1.5 tracking-wider">Fintech24h</span>
                 <p class="font-body text-[15px] leading-relaxed text-[var(--text-primary)]">{msg.text}</p>
               </div>
             ) : (
-              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tl-sm border border-white/[0.06] bg-[var(--bg-primary)] shadow-inner">
+              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tl-sm border border-[var(--border-default)] bg-[var(--bg-primary)] shadow-inner">
                 <span class="block text-[10px] font-mono text-[var(--text-muted)] mb-1.5 tracking-wider">Client</span>
                 <p class="font-body text-[15px] leading-relaxed text-[var(--text-secondary)]">{msg.text}</p>
               </div>
@@ -205,7 +205,7 @@ const combinedSchema = [serviceSchema, faqSchema];
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
       <div class="text-center mb-20 reveal">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/5 mb-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-purple)_20%,transparent)] bg-[color-mix(in_srgb,var(--accent-purple)_5%,transparent)] mb-4">
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
           <span class="text-xs font-mono font-medium text-[var(--accent-purple)] uppercase tracking-widest">Growth Framework</span>
         </div>
@@ -219,32 +219,32 @@ const combinedSchema = [serviceSchema, faqSchema];
             title: 'Viral Loop Design',
             desc: 'We design Zealy/Galxe campaigns that require users to invite friends, create content, and engage deeply to earn roles, not just click buttons.',
             bar: 'from-[var(--accent-cyan)] to-[var(--accent-cyan)]',
-            badge: 'bg-[var(--accent-cyan)]/10 border-[var(--accent-cyan)]/30 text-[var(--accent-cyan)]'
+            badge: 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] text-[var(--accent-cyan)]'
           },
           {
             level: 'LVL 2',
             title: 'Sybil Defense',
             desc: 'We filter out bots and low-quality airdrop hunters using on-chain reputation scores, Discord age requirements, and CAPTCHA workflows.',
             bar: 'from-[var(--accent-cyan)] to-[var(--accent-purple)]',
-            badge: 'bg-[var(--accent-purple)]/10 border-[var(--accent-purple)]/30 text-[var(--accent-purple)]'
+            badge: 'bg-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] text-[var(--accent-purple)]'
           },
           {
             level: 'LVL 3',
             title: 'Proactive Moderation',
             desc: 'Our 24/7 global team doesn\'t just delete spam. We spark conversations, answer technical questions, and identify power users.',
             bar: 'from-[var(--accent-purple)] to-[var(--accent-cyan)]',
-            badge: 'bg-[var(--accent-cyan)]/10 border-[var(--accent-cyan)]/30 text-[var(--accent-cyan)]'
+            badge: 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] text-[var(--accent-cyan)]'
           },
           {
             level: 'LVL 4',
             title: 'Advocate Activation',
             desc: 'We identify the top 1% of your community and recruit them into private Ambassador programs to scale your reach organically.',
             bar: 'from-[var(--accent-purple)] to-[var(--accent-purple)]',
-            badge: 'bg-[var(--accent-purple)]/10 border-[var(--accent-purple)]/30 text-[var(--accent-purple)]'
+            badge: 'bg-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] text-[var(--accent-purple)]'
           }
         ].map((item, i) => (
           <div
-            class="relative bg-[var(--bg-glass)] rounded-2xl p-6 border border-white/[0.06] hover:border-[var(--accent-cyan)]/25 hover:-translate-y-2 transition-all duration-300 overflow-hidden group reveal"
+            class="relative bg-[var(--bg-glass)] rounded-2xl p-6 border border-[var(--border-default)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] hover:-translate-y-2 transition-all duration-300 overflow-hidden group reveal"
             style={`transition-delay: ${i * 0.12}s`}
           >
             <!-- Top gradient bar -->
@@ -266,7 +266,7 @@ const combinedSchema = [serviceSchema, faqSchema];
   <!-- ═══════════════════════════════════════════════════
        SECTION 4 — FAQ (Discord Channel Style)
   ═══════════════════════════════════════════════════ -->
-  <section class="py-20 bg-[var(--bg-secondary)] border-t border-white/[0.04]">
+  <section class="py-20 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
     <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row gap-10">
 
       <!-- Left: channel list -->
@@ -274,8 +274,8 @@ const combinedSchema = [serviceSchema, faqSchema];
         <h2 class="font-mono text-xl font-black text-[var(--text-primary)] mb-6 tracking-tight">
           <span class="text-[var(--accent-cyan)]">#</span> faq-channel
         </h2>
-        <div class="space-y-1 border-l-2 border-white/[0.06] pl-3">
-          <div class="py-2 text-[var(--accent-cyan)] font-bold text-sm bg-[var(--accent-cyan)]/8 px-3 rounded-lg border border-[var(--accent-cyan)]/15">
+        <div class="space-y-1 border-l-2 border-[var(--border-default)] pl-3">
+          <div class="py-2 text-[var(--accent-cyan)] font-bold text-sm bg-[color-mix(in_srgb,var(--accent-cyan)_8%,transparent)] px-3 rounded-lg border border-[color-mix(in_srgb,var(--accent-cyan)_15%,transparent)]">
             1. Anti-Sybil
           </div>
           <div class="py-2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors text-sm px-3 cursor-default">2. Moderation</div>
@@ -287,7 +287,7 @@ const combinedSchema = [serviceSchema, faqSchema];
       <!-- Right: FAQ items -->
       <div class="w-full md:w-2/3 space-y-3">
         {faqs.map((faq, i) => (
-          <details class="bg-[var(--bg-primary)] rounded-xl border border-white/[0.06] group reveal" style={`transition-delay: ${i * 0.08}s`}>
+          <details class="bg-[var(--bg-primary)] rounded-xl border border-[var(--border-default)] group reveal" style={`transition-delay: ${i * 0.08}s`}>
             <summary class="flex justify-between items-center p-5 cursor-pointer list-none font-bold text-[var(--text-primary)] hover:text-[var(--accent-cyan)] transition-colors">
               <span class="flex items-center gap-2 text-sm">
                 <span class="text-[var(--text-muted)] font-mono">Q:</span>
@@ -295,7 +295,7 @@ const combinedSchema = [serviceSchema, faqSchema];
               </span>
               <svg class="w-4 h-4 text-[var(--accent-cyan)] shrink-0 ml-3 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
             </summary>
-            <div class="px-5 pb-5 text-[var(--text-secondary)] text-sm leading-relaxed border-t border-white/[0.05] pt-3">
+            <div class="px-5 pb-5 text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--border-subtle)] pt-3">
               <span class="text-[var(--color-success)] font-bold font-mono">A:</span> {faq.a}
             </div>
           </details>

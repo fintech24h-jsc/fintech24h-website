@@ -53,7 +53,7 @@ const breadcrumbs = [
       <header class="mb-12">
         <div class="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-wider text-[var(--accent-cyan)] font-display mb-6">
           <span>{acf.industry}</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]/50"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--accent-cyan)_50%,transparent)]"></span>
           <span>{acf.result_timeline}</span>
         </div>
 
@@ -64,19 +64,19 @@ const breadcrumbs = [
 
       <!-- Key Campaign metrics bar -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-        <div class="card-default p-6 text-center border-[var(--accent-cyan)]/25">
+        <div class="card-default p-6 text-center border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)]">
           <div class="text-3xl font-display font-bold gradient-text-cyan mb-1">{acf.result_roi}</div>
           <div class="text-[10px] text-[var(--text-secondary)] font-body uppercase tracking-wider">Campaign ROI</div>
         </div>
-        <div class="card-default p-6 text-center border-[var(--accent-purple)]/15">
+        <div class="card-default p-6 text-center border-[color-mix(in_srgb,var(--accent-purple)_15%,transparent)]">
           <div class="text-3xl font-display font-bold gradient-text-purple mb-1">{acf.result_reach}</div>
           <div class="text-[10px] text-[var(--text-secondary)] font-body uppercase tracking-wider">Campaign Reach</div>
         </div>
-        <div class="card-default p-6 text-center border-[var(--accent-purple)]/15">
+        <div class="card-default p-6 text-center border-[color-mix(in_srgb,var(--accent-purple)_15%,transparent)]">
           <div class="text-3xl font-display font-bold gradient-text-purple mb-1">{acf.result_leads}</div>
           <div class="text-[10px] text-[var(--text-secondary)] font-body uppercase tracking-wider font-semibold">Leads/Members</div>
         </div>
-        <div class="card-default p-6 text-center border-[var(--accent-cyan)]/25">
+        <div class="card-default p-6 text-center border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)]">
           <div class="text-3xl font-display font-bold text-[var(--text-primary)] mb-1">{acf.result_timeline}</div>
           <div class="text-[10px] text-[var(--text-secondary)] font-body uppercase tracking-wider">Timeline</div>
         </div>
@@ -122,7 +122,7 @@ const breadcrumbs = [
 
           <!-- Testimonial box -->
           {acf.testimonial_quote && (
-            <div class="card-default p-6 border-[var(--accent-purple)]/15 relative overflow-hidden">
+            <div class="card-default p-6 border-[color-mix(in_srgb,var(--accent-purple)_15%,transparent)] relative overflow-hidden">
               <div class="absolute inset-0 bg-radial-gradient(circle, rgba(139,92,246,0.03) 0%, transparent 80%) pointer-events-none"></div>
               <p class="text-xs text-[var(--text-secondary)] font-body italic leading-relaxed mb-4">
                 "{acf.testimonial_quote}"
@@ -139,7 +139,7 @@ const breadcrumbs = [
       </div>
 
       <!-- Proposal Form CTA -->
-      <div class="card-default p-8 lg:p-12 text-center border-[var(--accent-cyan)]/20 max-w-4xl mx-auto">
+      <div class="card-default p-8 lg:p-12 text-center border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] max-w-4xl mx-auto">
         <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-4">
           Ready to Deliver Similar Metrics?
         </h3>

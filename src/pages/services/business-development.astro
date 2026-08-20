@@ -163,7 +163,7 @@ const combinedSchema = [serviceSchema, faqSchema];
                 <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
                 <span>[10:15] Meeting scheduled with Listing Committee.</span>
               </div>
-              <div class="flex items-center gap-3 text-[var(--text-primary)]/90 bg-[#a78bfa]/10 border border-[#a78bfa]/30 rounded-lg p-2 transform group-hover:-translate-y-1 transition-transform">
+              <div class="flex items-center gap-3 text-[color-mix(in_srgb,var(--text-primary)_90%,transparent)] bg-[#a78bfa]/10 border border-[#a78bfa]/30 rounded-lg p-2 transform group-hover:-translate-y-1 transition-transform">
                 <span class="w-1.5 h-1.5 rounded-full bg-[#a78bfa] animate-pulse"></span>
                 <span>[11:00] Due Diligence Approved. Proceed to Listing.</span>
               </div>
@@ -257,7 +257,7 @@ const combinedSchema = [serviceSchema, faqSchema];
       <div class="space-y-4">
         {faqs.map((faq, i) => (
           <details class="group bg-[var(--surface-soft)] border border-[var(--border-subtle)] rounded-xl reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-[var(--text-primary)]/80 font-medium hover:text-[var(--text-primary)] transition-colors">
+            <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-[color-mix(in_srgb,var(--text-primary)_80%,transparent)] font-medium hover:text-[var(--text-primary)] transition-colors">
               {faq.q}
               <span class="text-[var(--text-muted)] group-open:rotate-45 transition-transform duration-300">+</span>
             </summary>

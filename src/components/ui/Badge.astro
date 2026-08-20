@@ -8,8 +8,8 @@ interface Props {
 const { variant = 'cyan', class: className } = Astro.props;
 
 const styles = {
-  cyan: 'border-[var(--accent-cyan)]/30 bg-[var(--accent-cyan)]/5 text-[var(--accent-cyan)]',
-  purple: 'border-[var(--accent-purple)]/30 bg-[var(--accent-purple)]/5 text-[var(--accent-purple)]',
+  cyan: 'border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] text-[var(--accent-cyan)]',
+  purple: 'border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] bg-[color-mix(in_srgb,var(--accent-purple)_5%,transparent)] text-[var(--accent-purple)]',
   pink: 'border-pink-400/30 bg-pink-400/5 text-pink-400',
   gray: 'border-[var(--border-default)] bg-[var(--surface-soft)] text-[var(--text-secondary)]'
 };

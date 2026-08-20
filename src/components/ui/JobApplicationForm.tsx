@@ -227,7 +227,7 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
           <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.03] transition-colors duration-500 backdrop-blur-[2px]" />
           
           {isSubmitting ? (
-            <span className="relative z-10 font-display text-xs font-semibold tracking-widest text-[var(--text-inverted)]/70 uppercase flex items-center gap-2">
+            <span className="relative z-10 font-display text-xs font-semibold tracking-widest text-[color-mix(in_srgb,var(--text-inverted)_70%,transparent)] uppercase flex items-center gap-2">
               <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -248,7 +248,7 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
       {/* Success Modal Popup */}
       {isSuccess && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-[var(--overlay-backdrop)] backdrop-blur-md animate-[fadeIn_0.3s_ease-out]">
-          <div className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl border border-[var(--border-default)] bg-[var(--bg-tertiary)]/95 backdrop-blur-2xl shadow-xl text-center animate-[scale-in_0.3s_ease-out] overflow-hidden">
+          <div className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--bg-tertiary)_95%,transparent)] backdrop-blur-2xl shadow-xl text-center animate-[scale-in_0.3s_ease-out] overflow-hidden">
             {/* Spotlight glow */}
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(124,92,252,0.08) 0%, transparent 60%)' }} />
             

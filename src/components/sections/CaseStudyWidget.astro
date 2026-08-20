@@ -28,7 +28,7 @@ const { acf } = caseStudy;
     
     <!-- Header Intro -->
     <div class="max-w-3xl mb-24" data-animate="fade-up">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--accent-cyan)]/25 bg-[var(--accent-cyan)]/5 mb-6">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
         <span class="text-[10px] font-mono font-bold text-[var(--accent-cyan)] uppercase tracking-[0.15em]">Proof of Concept</span>
       </div>
@@ -47,7 +47,7 @@ const { acf } = caseStudy;
       <div class="lg:col-span-5 flex flex-col gap-6" data-animate="stagger">
         
         {/* Metric 1 */}
-        <div class="p-8 rounded-[24px] border border-[var(--accent-rose)]/20 bg-gradient-to-br from-[rgba(255,107,131,0.03)] to-transparent shadow-[0_15px_30px_rgba(255,107,131,0.02)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group" data-animate-child>
+        <div class="p-8 rounded-[24px] border border-[color-mix(in_srgb,var(--accent-rose)_20%,transparent)] bg-gradient-to-br from-[rgba(255,107,131,0.03)] to-transparent shadow-[0_15px_30px_rgba(255,107,131,0.02)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group" data-animate-child>
           <div class="absolute inset-0 bg-radial-gradient(circle, rgba(255,107,131,0.03) 0%, transparent 60%) pointer-events-none"></div>
           <div class="relative z-10 flex justify-between items-start">
             <div>
@@ -61,7 +61,7 @@ const { acf } = caseStudy;
         </div>
  
         {/* Metric 2 */}
-        <div class="p-8 rounded-[24px] border border-[var(--border-default)] bg-[var(--surface-faint)] hover:border-[var(--accent-cyan)]/30 hover:bg-[var(--surface-soft)] shadow-[var(--shadow-card)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group" data-animate-child>
+        <div class="p-8 rounded-[24px] border border-[var(--border-default)] bg-[var(--surface-faint)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] hover:bg-[var(--surface-soft)] shadow-[var(--shadow-card)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group" data-animate-child>
           <div class="absolute inset-0 bg-radial-gradient(circle, rgba(0,200,240,0.03) 0%, transparent 60%) pointer-events-none"></div>
           <div class="relative z-10 flex justify-between items-start">
             <div>
@@ -75,7 +75,7 @@ const { acf } = caseStudy;
         </div>
  
         {/* Metric 3 */}
-        <div class="p-8 rounded-[24px] border border-[var(--border-default)] bg-[var(--surface-faint)] hover:border-[var(--accent-purple)]/30 hover:bg-[var(--surface-soft)] shadow-[var(--shadow-card)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group" data-animate-child>
+        <div class="p-8 rounded-[24px] border border-[var(--border-default)] bg-[var(--surface-faint)] hover:border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] hover:bg-[var(--surface-soft)] shadow-[var(--shadow-card)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group" data-animate-child>
           <div class="absolute inset-0 bg-radial-gradient(circle, rgba(124,92,252,0.03) 0%, transparent 60%) pointer-events-none"></div>
           <div class="relative z-10 flex justify-between items-start">
             <div>
@@ -107,11 +107,11 @@ const { acf } = caseStudy;
             </h3>
  
             <div class="space-y-8 text-sm text-[var(--text-secondary)] font-body leading-relaxed">
-              <div class="border-l-2 border-[var(--accent-cyan)]/30 pl-4">
+              <div class="border-l-2 border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] pl-4">
                 <h4 class="text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[var(--accent-cyan)] mb-2">The Challenge</h4>
                 <p class="text-xs sm:text-sm">{acf.challenge}</p>
               </div>
-              <div class="border-l-2 border-[var(--accent-purple)]/30 pl-4">
+              <div class="border-l-2 border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] pl-4">
                 <h4 class="text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[var(--accent-purple)] mb-2">The Solution</h4>
                 <p class="text-xs sm:text-sm">{acf.solution}</p>
               </div>
@@ -121,7 +121,7 @@ const { acf } = caseStudy;
           <!-- Testimonial Quote Block -->
           {acf.testimonial_quote && (
             <blockquote class="border-t border-[var(--border-subtle)] pt-8 mt-6">
-              <svg class="w-8 h-8 text-[var(--accent-rose)]/30 mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.748-9.791 9-10.455v2.894c-3.057.586-4.947 2.767-4.947 5.756h4.053V21h-8.106zm-12 0v-7.391c0-5.704 3.748-9.791 9-10.455v2.894c-3.057.586-4.947 2.767-4.947 5.756h4.053V21H2.017z"/></svg>
+              <svg class="w-8 h-8 text-[color-mix(in_srgb,var(--accent-rose)_30%,transparent)] mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.748-9.791 9-10.455v2.894c-3.057.586-4.947 2.767-4.947 5.756h4.053V21h-8.106zm-12 0v-7.391c0-5.704 3.748-9.791 9-10.455v2.894c-3.057.586-4.947 2.767-4.947 5.756h4.053V21H2.017z"/></svg>
               <p class="text-[var(--text-primary)] font-body italic text-xs sm:text-sm leading-relaxed mb-4">
                 "{acf.testimonial_quote}"
               </p>
