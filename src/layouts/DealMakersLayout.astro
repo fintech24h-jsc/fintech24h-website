@@ -8,11 +8,17 @@ import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
 import '../styles/dealmakers.css';
 import { heroPartners } from '../data/dealmakers/ss3';
+import { seasons } from '../data/dealmakers/seasons';
 
 // The Fintech24h × Capital Partner co-brand lockup lives in the header and
 // footer (site-wide identity), never inside the hero — the hero's spotlight
 // is reserved for the Capital Partner's own logo alone.
 const capitalPartner = heroPartners.find((p) => p.category === 'capital')!;
+
+// The header logo links straight to the active season, not to /dealmakers/
+// (which only exists to 301 there) — clicking it from ss3 would otherwise
+// round-trip through that redirect instead of just staying put.
+const activeSeasonHref = (seasons.find((s) => s.status === 'active') ?? seasons[0]).href;
 
 interface Props {
   title: string;
@@ -115,7 +121,7 @@ const currentYear = new Date().getFullYear();
   <div class="dm-grain" aria-hidden="true"></div>
   <header class="dm-glass-panel sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-      <a href="/dealmakers/" class="flex items-center gap-3 shrink-0" aria-label="DealMakers' Club home — presented by Fintech24h, Official Capital Partner Season 3">
+      <a href={activeSeasonHref} class="flex items-center gap-3 shrink-0" aria-label="DealMakers' Club home — presented by Fintech24h, Official Capital Partner Season 3">
         <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-8 sm:h-9 w-auto object-contain" loading="eager" />
         <span class="font-display font-light text-xl text-[var(--dm-border-accent)]" aria-hidden="true">|</span>
         {capitalPartner.confirmed && capitalPartner.logoUrl ? (
