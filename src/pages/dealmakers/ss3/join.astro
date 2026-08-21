@@ -19,9 +19,22 @@ const breadcrumbs = [
   { name: 'Season 3', item: 'https://fintech24h.com/dealmakers/ss3/' },
   { name: 'Join', item: canonical },
 ];
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: canonical,
+  isPartOf: {
+    '@type': 'WebPage',
+    name: 'Fintech24h DealMakers’ Club: F-Matching Season 3',
+    url: 'https://fintech24h.com/dealmakers/ss3/',
+  },
+};
 ---
 
-<DealMakersLayout title={title} description={description} canonical={canonical}>
+<DealMakersLayout title={title} description={description} canonical={canonical} schema={webPageSchema}>
   <BreadcrumbSchema items={breadcrumbs} />
 
   <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="Join the Telegram community">

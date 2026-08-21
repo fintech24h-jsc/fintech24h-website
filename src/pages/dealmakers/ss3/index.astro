@@ -16,7 +16,7 @@ import PricingPackages from '../../../components/sections/dealmakers/PricingPack
 import MediaPartners from '../../../components/sections/dealmakers/MediaPartners.astro';
 import ApplyForm from '../../../components/sections/dealmakers/ApplyForm.tsx';
 import FaqAccordion from '../../../components/sections/dealmakers/FaqAccordion.astro';
-import { seasonMeta, faq } from '../../../data/dealmakers/ss3';
+import { seasonMeta, faq, pricingPackages } from '../../../data/dealmakers/ss3';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -41,11 +41,44 @@ const faqSchema = {
     acceptedAnswer: { '@type': 'Answer', text: item.answer },
   })),
 };
+
+// "From $5,000" / "$1,000" / "$200" -> numeric price for schema. Packages
+// with a leading "From" are a starting price, not a fixed one — expose
+// that distinction with priceSpecification's minPrice instead of price.
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${seasonMeta.name} — Packages`,
+  itemListElement: pricingPackages.map((pkg, i) => {
+    const numericPrice = Number(pkg.price.replace(/[^0-9.]/g, ''));
+    const isFromPrice = /from/i.test(pkg.price);
+    return {
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Product',
+        name: pkg.title,
+        description: pkg.description,
+        brand: { '@type': 'Brand', name: 'Fintech24h DealMakers’ Club' },
+        offers: {
+          '@type': 'Offer',
+          url: seasonMeta.canonical,
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          ...(isFromPrice
+            ? { priceSpecification: { '@type': 'UnitPriceSpecification', minPrice: numericPrice, priceCurrency: 'USD' } }
+            : { price: numericPrice }),
+        },
+      },
+    };
+  }),
+};
 ---
 
 <DealMakersLayout title={seasonMeta.title} description={seasonMeta.description} canonical={seasonMeta.canonical} keywords={seasonMeta.keywords} schema={webPageSchema}>
   <BreadcrumbSchema items={breadcrumbs} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema).replace(/</g, '\\u003c')} />
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema).replace(/</g, '\\u003c')} />
 
   <DealMakersHero />
   <TelegramJoinBanner />

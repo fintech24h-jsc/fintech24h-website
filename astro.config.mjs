@@ -37,6 +37,10 @@ export default defineConfig({
         if (/\/services\/[^/]+\/?$/.test(url)) {
           return { ...item, changefreq: 'monthly', priority: 0.9 };
         }
+        // DealMakers' Club — active revenue-driving campaign, not a static page
+        if (/\/dealmakers\//.test(url)) {
+          return { ...item, changefreq: 'weekly', priority: 0.9 };
+        }
         // Services index
         if (/\/services\/?$/.test(url)) {
           return { ...item, changefreq: 'monthly', priority: 0.8 };
