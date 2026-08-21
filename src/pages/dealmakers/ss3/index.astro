@@ -78,7 +78,7 @@ const packagesSchema = {
 };
 ---
 
-<DealMakersLayout title={seasonMeta.title} description={seasonMeta.description} canonical={seasonMeta.canonical} keywords={seasonMeta.keywords} schema={webPageSchema}>
+<DealMakersLayout title={seasonMeta.title} description={seasonMeta.description} canonical={seasonMeta.canonical} keywords={seasonMeta.keywords} schema={webPageSchema} ogImage="https://fintech24h.com/dealmakers/og-ss3.png">
   <BreadcrumbSchema items={breadcrumbs} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema).replace(/</g, '\\u003c')} />
   <script type="application/ld+json" set:html={JSON.stringify(packagesSchema).replace(/</g, '\\u003c')} />
