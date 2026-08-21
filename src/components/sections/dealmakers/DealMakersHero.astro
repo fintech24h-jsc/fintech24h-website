@@ -12,7 +12,7 @@ const capital = heroPartners.find((p) => p.category === 'capital')!;
 const others = heroPartners.filter((p) => p.category !== 'capital');
 ---
 
-<section class="relative overflow-hidden pt-28 pb-20 lg:pt-36 lg:pb-28" aria-label="DealMakers Hero">
+<section class="relative overflow-hidden pt-24 pb-16 lg:pt-12 lg:pb-14" aria-label="DealMakers Hero">
   <!-- Ambient background: mesh gradient + 2 drifting orbs (gold + emerald) -->
   <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -24,7 +24,7 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
   </div>
 
   <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col items-center text-center gap-5 max-w-3xl mx-auto">
+    <div class="flex flex-col items-center text-center gap-3 lg:gap-4 max-w-3xl mx-auto">
       <p class="font-mono text-[10px] lg:text-xs text-[var(--dm-gold)] uppercase tracking-[0.18em] flex items-center gap-2" data-dm-reveal>
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)] animate-pulse"></span>
         Fintech24h presents · Season 3
@@ -59,12 +59,12 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
     <!-- Capital Partner — lead sponsor spotlight, its own tier. This slot is
     reserved exclusively for the Capital Partner's own logo; Fintech24h's
     brand already appears in the header and footer and does not belong here. -->
-    <div class="mt-16 lg:mt-20 max-w-3xl mx-auto" data-dm-reveal>
-      <p class="text-center font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-4">
+    <div class="mt-10 lg:mt-4 max-w-3xl mx-auto" data-dm-reveal>
+      <p class="text-center font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-3 lg:mb-2">
         Official Capital Partner · Season 3
       </p>
       <div class="dm-spotlight">
-        <div class="dm-spotlight-inner px-8 py-10 flex flex-col items-center justify-center gap-5 min-h-[160px]">
+        <div class="dm-spotlight-inner px-8 py-6 lg:py-4 flex flex-col items-center justify-center gap-3 lg:gap-2 min-h-[130px] lg:min-h-[100px]">
           <span class="dm-badge-sponsored">Lead Sponsor</span>
           <div class="flex items-center justify-center w-full">
             {capital.confirmed && capital.logoUrl ? (

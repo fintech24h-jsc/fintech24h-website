@@ -121,7 +121,7 @@ const currentYear = new Date().getFullYear();
         {capitalPartner.confirmed && capitalPartner.logoUrl ? (
           <img src={capitalPartner.logoUrl} alt={`${capitalPartner.name}, Official Capital Partner`} class="h-8 sm:h-9 w-auto object-contain" loading="eager" />
         ) : (
-          <span class="font-mono text-[9px] sm:text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em] leading-tight">Capital<br />Partner</span>
+          <span class="font-mono text-[9px] sm:text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em] leading-tight whitespace-nowrap">Capital<br class="max-[374px]:inline hidden" /> Partner</span>
         )}
       </a>
 
