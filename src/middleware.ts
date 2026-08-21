@@ -1,4 +1,5 @@
 import { defineMiddleware } from 'astro:middleware';
+import { seasons } from './data/dealmakers/seasons';
 
 const CANONICAL_HOST = 'fintech24h.com';
 const WWW_HOST = `www.${CANONICAL_HOST}`;
@@ -37,6 +38,13 @@ export const onRequest = defineMiddleware((context, next) => {
   const isLegacyBlogFeed = /^\/blog\/feed\/?$/i.test(normalizedPathname);
   const isLegacyAdminArchive = /^\/author\/admin(?:\/page\/\d+)?\/?$/i.test(normalizedPathname);
   const isBlogIndex = normalizedPathname === '/blog';
+  // With only one season, /dealmakers/ is a stub that just points at it —
+  // a real 301 here beats the page's client-side meta-refresh (no flash,
+  // no 1s delay, unambiguous for crawlers). Once a second season exists
+  // this stops firing and /dealmakers/ becomes a real picker page again,
+  // matching the `seasons.length > 1` gate in dealmakers/index.astro.
+  const isDealmakersRoot = normalizedPathname === '/dealmakers' || normalizedPathname === '/dealmakers/';
+  const activeSeason = seasons.find((s) => s.status === 'active') ?? seasons[0];
 
   if (isLegacyCategory) {
     target.pathname = `/blog/category/${isLegacyCategory[1]}`;
@@ -49,7 +57,10 @@ export const onRequest = defineMiddleware((context, next) => {
   } else {
     target.pathname = normalizedPathname;
 
-    if (isLegacyBlogFeed) {
+    if (isDealmakersRoot && seasons.length === 1) {
+      target.pathname = activeSeason.href;
+      target.search = '';
+    } else if (isLegacyBlogFeed) {
       // Astro's site-wide RSS feed replaces the legacy WordPress blog feed.
       target.pathname = '/rss.xml';
       target.search = '';

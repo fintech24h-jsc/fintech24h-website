@@ -9,11 +9,11 @@ export const seasonMeta = {
   seasonNumber: 3,
   name: 'F-Matching Season 3',
   status: 'active' as const,
-  title: 'Fintech24h DealMakers’ Club: F-Matching Season 3',
+  title: 'Join Verified Web3 & Fintech Deal Flow | DealMakers’ Club',
   description:
-    'Fintech24h DealMakers’ Club connects verified Web3 and fintech Founders, Investors, and Exchanges through curated, moderated introductions.',
+    'Curated, moderated intros between verified Web3/fintech Founders, Investors & Exchanges. Real deal flow, no cold outreach. Apply to join Season 3 now.',
   canonical: 'https://fintech24h.com/dealmakers/ss3/',
-  keywords: 'Fintech24h DealMakers Club, F-Matching, Web3 deal flow, fintech investor introductions, DealMakers Club Season 3',
+  keywords: 'Fintech24h DealMakers Club, F-Matching, Web3 deal flow network, fintech investor introductions, Web3 investor network Vietnam, Southeast Asia deal flow, DealMakers Club Season 3',
 };
 
 // ─── Hero partners ────────────────────────────────────────────────────────
