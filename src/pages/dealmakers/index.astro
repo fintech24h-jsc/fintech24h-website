@@ -9,6 +9,13 @@ import DealMakersLayout from '../../layouts/DealMakersLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { seasons } from '../../data/dealmakers/seasons';
 
+// Cloudflare's static-assets binding serves an exact-path static file
+// directly and never invokes the Worker (so never runs astro:middleware)
+// when one exists. This route needs the middleware's real 301 to the
+// active season to actually fire in production, so it must stay an
+// on-demand (SSR) route rather than a prerendered static file.
+export const prerender = false;
+
 const title = 'Fintech24h DealMakers’ Club | F-Matching Program';
 const description =
   'Fintech24h DealMakers’ Club is the F-Matching program connecting Founders, Investors, Exchanges, and strategic partners in Web3 and fintech.';
