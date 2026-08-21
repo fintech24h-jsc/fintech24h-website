@@ -88,7 +88,7 @@ const resourceLinks = showBlog
         <ul class="space-y-4">
           {footerLinks.ecosystem.map((link) => (
             <li>
-              <a href={link.href} target="_blank" rel="noopener noreferrer" class="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] font-body transition-colors">
+              <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined} class="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] font-body transition-colors">
                 {link.label}
               </a>
             </li>

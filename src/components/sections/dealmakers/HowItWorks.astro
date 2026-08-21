@@ -71,6 +71,35 @@ const feed = [
 
         <!-- Nodes -->
         <div class="relative flex items-center justify-between px-2 mb-8">
+          <!-- Connector lines: viewBox and rendered box share the exact same
+          aspect ratio (via CSS aspect-ratio), so scaling is always uniform —
+          no preserveAspectRatio="none" hacks that stretch the stroke and
+          the moving dot into an ugly, overflowing ellipse at other widths. -->
+          <svg class="absolute left-[13%] right-[13%] top-[32px] -translate-y-1/2 w-auto overflow-visible" style="aspect-ratio: 320 / 40;" viewBox="0 0 320 40" aria-hidden="true">
+            <defs>
+              <linearGradient id="dm-flow-gold" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="var(--dm-gold)" stop-opacity="0.12" />
+                <stop offset="50%" stop-color="var(--dm-gold)" stop-opacity="0.55" />
+                <stop offset="100%" stop-color="var(--dm-gold)" stop-opacity="0.12" />
+              </linearGradient>
+              <linearGradient id="dm-flow-emerald" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="var(--dm-emerald)" stop-opacity="0.12" />
+                <stop offset="50%" stop-color="var(--dm-emerald)" stop-opacity="0.55" />
+                <stop offset="100%" stop-color="var(--dm-emerald)" stop-opacity="0.12" />
+              </linearGradient>
+            </defs>
+
+            <path d="M0,20 C48,7 82,7 130,20" fill="none" stroke="url(#dm-flow-gold)" stroke-width="1.5" stroke-linecap="round" />
+            <circle r="2" fill="var(--dm-gold-bright)" style="filter: drop-shadow(0 0 5px var(--dm-gold));">
+              <animateMotion dur="2.2s" repeatCount="indefinite" path="M0,20 C48,7 82,7 130,20" />
+            </circle>
+
+            <path d="M190,20 C238,33 272,33 320,20" fill="none" stroke="url(#dm-flow-emerald)" stroke-width="1.5" stroke-linecap="round" />
+            <circle r="2" fill="var(--dm-emerald-bright)" style="filter: drop-shadow(0 0 5px var(--dm-emerald));">
+              <animateMotion dur="2.2s" repeatCount="indefinite" begin="0.6s" path="M190,20 C238,33 272,33 320,20" />
+            </circle>
+          </svg>
+
           <div class="flex flex-col items-center gap-2 z-10">
             <div class="w-14 h-14 rounded-2xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] flex items-center justify-center text-[var(--dm-text-primary)] font-display font-semibold">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11"/><path d="M9 22V12h6v10M4 9l8-6 8 6"/></svg>
@@ -78,26 +107,12 @@ const feed = [
             <span class="font-mono text-[8px] text-[var(--dm-text-muted)] uppercase tracking-widest">Company</span>
           </div>
 
-          <svg class="absolute left-[22%] right-[58%] top-[28px] h-[6px] w-auto overflow-visible" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="0" y1="1" x2="100" y2="1" stroke="var(--dm-gold)" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.4" />
-            <circle r="2.2" fill="var(--dm-gold-bright)" style="filter: drop-shadow(0 0 6px var(--dm-gold));">
-              <animateMotion dur="1.8s" repeatCount="indefinite" path="M0,1 L100,1" />
-            </circle>
-          </svg>
-
           <div class="flex flex-col items-center gap-2 z-10">
             <div class="w-16 h-16 rounded-full flex items-center justify-center shrink-0 p-3 bg-[var(--dm-bg-tertiary)] border-2 border-[var(--dm-gold)]" style="box-shadow: 0 0 30px rgba(217,178,106,0.4);">
               <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="w-full h-full object-contain" loading="lazy" />
             </div>
             <span class="font-mono text-[8px] text-[var(--dm-gold)] uppercase tracking-widest">Fintech24h</span>
           </div>
-
-          <svg class="absolute left-[58%] right-[22%] top-[28px] h-[6px] w-auto overflow-visible" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="0" y1="1" x2="100" y2="1" stroke="var(--dm-emerald)" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.4" />
-            <circle r="2.2" fill="var(--dm-emerald-bright)" style="filter: drop-shadow(0 0 6px var(--dm-emerald));">
-              <animateMotion dur="1.8s" repeatCount="indefinite" path="M0,1 L100,1" begin="0.4s" />
-            </circle>
-          </svg>
 
           <div class="flex flex-col items-center gap-2 z-10">
             <div class="w-14 h-14 rounded-2xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] flex items-center justify-center text-[var(--dm-text-primary)]">

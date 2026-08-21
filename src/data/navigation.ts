@@ -50,6 +50,7 @@ export const footerLinks = {
     { label: 'Book a discovery call', href: '/contact/#book-call' }
   ],
   ecosystem: [
+    { label: "DealMakers' Club", href: '/dealmakers/' },
     { label: 'Coinstori', href: 'https://coinstori.com' },
     { label: 'CMO Intern', href: 'https://cmointern.com' }
   ],

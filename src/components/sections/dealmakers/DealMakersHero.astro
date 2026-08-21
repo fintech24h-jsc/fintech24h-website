@@ -56,7 +56,9 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
       </div>
     </div>
 
-    <!-- Capital Partner — lead sponsor spotlight, paired with Fintech24h, its own tier -->
+    <!-- Capital Partner — lead sponsor spotlight, its own tier. This slot is
+    reserved exclusively for the Capital Partner's own logo; Fintech24h's
+    brand already appears in the header and footer and does not belong here. -->
     <div class="mt-16 lg:mt-20 max-w-3xl mx-auto" data-dm-reveal>
       <p class="text-center font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-4">
         Official Capital Partner · Season 3
@@ -64,11 +66,9 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
       <div class="dm-spotlight">
         <div class="dm-spotlight-inner px-8 py-10 flex flex-col items-center justify-center gap-5 min-h-[160px]">
           <span class="dm-badge-sponsored">Lead Sponsor</span>
-          <div class="flex items-center justify-center gap-6 sm:gap-9 w-full">
-            <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-11 sm:h-14 w-auto object-contain" loading="eager" />
-            <span class="text-2xl sm:text-3xl font-display font-light text-[var(--dm-border-accent)]" aria-hidden="true">|</span>
+          <div class="flex items-center justify-center w-full">
             {capital.confirmed && capital.logoUrl ? (
-              <img src={capital.logoUrl} alt={`${capital.name} logo, Official Capital Partner of F-Matching Season 3`} class="h-11 sm:h-14 w-auto object-contain" loading="eager" />
+              <img src={capital.logoUrl} alt={`${capital.name} logo, Official Capital Partner of F-Matching Season 3`} class="h-14 sm:h-16 w-auto object-contain" loading="eager" />
             ) : (
               <span class="font-display font-semibold text-lg sm:text-xl text-[var(--dm-text-secondary)]">Confirming soon</span>
             )}
