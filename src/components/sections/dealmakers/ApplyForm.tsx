@@ -78,7 +78,10 @@ export default function ApplyForm() {
     const fullNote = [weOfferLine, lookingForLine, form.note].filter(Boolean).join('\n');
 
     const result = await submitLead(
-      { ...form, note: fullNote, weOffer: offers.join(', '), weAreLookingFor: lookingFor.join(', ') },
+      // Keep `note` as the visitor's own free-text (not merged with the We
+      // Offer / We Are Looking For chips) so the backend sheet can show all
+      // three as clean, separate columns instead of one blended paragraph.
+      { ...form, weOffer: offers.join(', '), weAreLookingFor: lookingFor.join(', ') },
       'dealmakers-ss3',
       [
         { name: 'firstname', value: form.name.split(' ')[0] || form.name },
