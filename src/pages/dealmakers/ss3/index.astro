@@ -6,6 +6,7 @@
 import DealMakersLayout from '../../../layouts/DealMakersLayout.astro';
 import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
 import DealMakersHero from '../../../components/sections/dealmakers/DealMakersHero.astro';
+import TelegramJoinBanner from '../../../components/sections/dealmakers/TelegramJoinBanner.astro';
 import FeaturedDealMakers from '../../../components/sections/dealmakers/FeaturedDealMakers.astro';
 import USPSection from '../../../components/sections/dealmakers/USPSection.astro';
 import LastSeasonPartners from '../../../components/sections/dealmakers/LastSeasonPartners.astro';
@@ -42,11 +43,12 @@ const faqSchema = {
 };
 ---
 
-<DealMakersLayout title={seasonMeta.title} description={seasonMeta.description} canonical={seasonMeta.canonical} schema={webPageSchema}>
+<DealMakersLayout title={seasonMeta.title} description={seasonMeta.description} canonical={seasonMeta.canonical} keywords={seasonMeta.keywords} schema={webPageSchema}>
   <BreadcrumbSchema items={breadcrumbs} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema).replace(/</g, '\\u003c')} />
 
   <DealMakersHero />
+  <TelegramJoinBanner />
   <FeaturedDealMakers />
   <USPSection />
   <LastSeasonPartners />

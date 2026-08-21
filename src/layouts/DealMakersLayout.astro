@@ -13,6 +13,7 @@ interface Props {
   description: string;
   canonical: string;
   ogImage?: string;
+  keywords?: string;
   schema?: object;
 }
 
@@ -21,8 +22,28 @@ const {
   description,
   canonical,
   ogImage = 'https://fintech24h.com/wp-content/uploads/2026/07/OG-FI24H.png',
+  keywords,
   schema,
 } = Astro.props;
+
+// Same Organization schema BaseLayout injects site-wide. This microsite
+// doesn't use BaseLayout, so it needs its own copy to carry brand identity
+// (logo, sameAs social profiles) into Google's knowledge panel.
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Fintech24h',
+  url: 'https://fintech24h.com',
+  logo: 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp',
+  sameAs: [
+    'https://www.linkedin.com/company/fintech24h/',
+    'https://www.facebook.com/fintech24hnews',
+    'https://x.com/fintech24h_com',
+    'https://t.me/fintech24h',
+    'https://medium.com/@fintech24h',
+    'https://www.instagram.com/fintech24h/',
+  ],
+};
 
 const navLinks = [
   { label: 'Featured', href: '#featured' },
@@ -49,10 +70,13 @@ const currentYear = new Date().getFullYear();
 
   <title>{title}</title>
   <meta name="description" content={description} />
+  {keywords && <meta name="keywords" content={keywords} />}
   <link rel="canonical" href={canonical} />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="author" content="Fintech24h" />
 
   <OpenGraph title={title} description={description} url={canonical} image={ogImage} />
+  <SchemaOrg schema={organizationSchema} />
   {schema && <SchemaOrg schema={schema} />}
 
   <meta name="theme-color" content="#0a0908" />
@@ -119,7 +143,7 @@ const currentYear = new Date().getFullYear();
             <span class="font-display font-semibold text-base text-[var(--dm-text-primary)]">DealMakers&rsquo; Club</span>
           </div>
           <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed max-w-sm mb-5">
-            A curated matching program for verified Web3 and fintech decision-makers — connecting qualified deal flow through moderated introductions.
+            A curated matching program for verified Web3 and fintech decision-makers, connecting qualified deal flow through moderated introductions.
           </p>
           <div class="flex gap-3">
             {socialLinks.map((s) => (
@@ -136,6 +160,7 @@ const currentYear = new Date().getFullYear();
             <li><a href="#featured" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Featured DealMakers</a></li>
             <li><a href="#directory" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Qualified Directory</a></li>
             <li><a href="#packages" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Packages</a></li>
+            <li><a href="/dealmakers/ss3/join/" class="text-xs text-[var(--dm-gold)] hover:text-[var(--dm-gold-bright)] transition-colors font-semibold">Join Fi24h DealMakers&rsquo; Club</a></li>
             <li><a href="#faq" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">FAQ</a></li>
           </ul>
         </div>

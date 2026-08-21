@@ -114,7 +114,7 @@ export default function QualifiedDirectory() {
         </p>
         <a
           href="#apply"
-          data-dm-prefill-interest="Qualified Listing — $200/season"
+          data-dm-prefill-interest="Qualified Listing ($200/season)"
           data-dm-track="directory_post_listing"
           className="dm-btn-ghost w-full justify-center text-xs mt-4"
         >
@@ -219,7 +219,7 @@ export default function QualifiedDirectory() {
             <a
               href="#apply"
               onClick={() => {
-                dispatchPrefill('Join DealMakers’ Club', `${activeProfile.companyName} — ${activeProfile.contactName}`);
+                dispatchPrefill('Join DealMakers’ Club', `${activeProfile.companyName} (${activeProfile.contactName})`);
                 closeProfile();
               }}
               className="dm-btn-primary w-full justify-center text-xs"

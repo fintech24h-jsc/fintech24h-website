@@ -158,11 +158,11 @@ export default function ApplyForm() {
           </select>
         </div>
 
-        {/* Collapsible deal-signal picker — closed by default, not a wall of chips */}
+        {/* Collapsible deal-signal picker: closed by default, not a wall of chips */}
         <details className="dm-disclosure">
           <summary>
             <span className="dm-disclosure-trigger">
-              <span>Deal signal — We Offer / We Are Looking For {dealSignalCount > 0 && <b className="text-[var(--dm-gold)]">({dealSignalCount})</b>}</span>
+              <span>Deal signal: We Offer / We Are Looking For {dealSignalCount > 0 && <b className="text-[var(--dm-gold)]">({dealSignalCount})</b>}</span>
               <svg className="dm-disclosure-chevron w-4 h-4 text-[var(--dm-text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </span>
           </summary>

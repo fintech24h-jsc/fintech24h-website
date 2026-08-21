@@ -1,7 +1,7 @@
 ---
 // src/components/sections/dealmakers/HowItWorks.astro
 // The signature "how it works" moment: Fintech24h sits between Company and
-// Investor as the moderating hub — same visual language as the
+// Investor as the moderating hub, using the same visual language as the
 // Global Deal Pipeline panel on /services/business-development/, adapted
 // to this microsite's gold/emerald glass system. Replaces a generic
 // 4-card numbered-steps grid (a classic template pattern) with one
@@ -9,7 +9,7 @@
 const feed = [
   { time: 'Live', text: 'Deal signal reviewed by Fintech24h', tone: 'gold' },
   { time: 'Live', text: 'Consent requested from receiving party', tone: 'amber' },
-  { time: 'Live', text: 'Introduction sent — connection made', tone: 'emerald' },
+  { time: 'Live', text: 'Introduction sent, connection confirmed', tone: 'emerald' },
 ];
 ---
 
@@ -28,21 +28,21 @@ const feed = [
           We protect <span class="dm-text-gradient">everyone’s time</span> in the network.
         </h2>
         <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed mb-8">
-          A good introduction isn’t a handed-over contact. Fintech24h sits between every Company and Investor in the network — reviewing fit, requesting consent, and only opening a connection when both sides have a real reason to talk.
+          A good introduction isn’t a handed-over contact. Fintech24h sits between every Company and Investor in the network, reviewing fit, requesting consent, and only opening a connection when both sides have a real reason to talk.
         </p>
 
         <ul class="space-y-5">
           <li class="flex gap-4">
             <span class="w-7 h-7 rounded-full border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.08)] flex items-center justify-center text-[var(--dm-gold)] text-[11px] font-mono font-bold shrink-0">1</span>
-            <p class="text-sm text-[var(--dm-text-secondary)]"><strong class="text-[var(--dm-text-primary)] font-semibold">State the signal</strong> — a company or investor submits a request with clear intent, no mass outreach.</p>
+            <p class="text-sm text-[var(--dm-text-secondary)]"><strong class="text-[var(--dm-text-primary)] font-semibold">State the signal:</strong> a company or investor submits a request with clear intent, no mass outreach.</p>
           </li>
           <li class="flex gap-4">
             <span class="w-7 h-7 rounded-full border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.08)] flex items-center justify-center text-[var(--dm-gold)] text-[11px] font-mono font-bold shrink-0">2</span>
-            <p class="text-sm text-[var(--dm-text-secondary)]"><strong class="text-[var(--dm-text-primary)] font-semibold">Fintech24h reviews fit</strong> — need, stage, region, and decision-maker status, before anything moves forward.</p>
+            <p class="text-sm text-[var(--dm-text-secondary)]"><strong class="text-[var(--dm-text-primary)] font-semibold">Fintech24h reviews fit:</strong> need, stage, region, and decision-maker status, before anything moves forward.</p>
           </li>
           <li class="flex gap-4">
             <span class="w-7 h-7 rounded-full border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.08)] flex items-center justify-center text-[var(--dm-gold)] text-[11px] font-mono font-bold shrink-0">3</span>
-            <p class="text-sm text-[var(--dm-text-secondary)]"><strong class="text-[var(--dm-text-primary)] font-semibold">A warm introduction is made</strong> — only after the receiving party consents. Direct contact info is never shared outright.</p>
+            <p class="text-sm text-[var(--dm-text-secondary)]"><strong class="text-[var(--dm-text-primary)] font-semibold">A warm introduction is made</strong> only after the receiving party consents. Direct contact info is never shared outright.</p>
           </li>
         </ul>
 
@@ -78,19 +78,25 @@ const feed = [
             <span class="font-mono text-[8px] text-[var(--dm-text-muted)] uppercase tracking-widest">Company</span>
           </div>
 
-          <svg class="absolute left-[22%] right-[58%] top-[28px] h-px w-auto" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="0" y1="1" x2="100" y2="1" stroke="var(--dm-gold)" stroke-width="2" stroke-dasharray="4 4" style="animation: dm-dash-flow 1.2s linear infinite;" />
+          <svg class="absolute left-[22%] right-[58%] top-[28px] h-[6px] w-auto overflow-visible" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="0" y1="1" x2="100" y2="1" stroke="var(--dm-gold)" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.4" />
+            <circle r="2.2" fill="var(--dm-gold-bright)" style="filter: drop-shadow(0 0 6px var(--dm-gold));">
+              <animateMotion dur="1.8s" repeatCount="indefinite" path="M0,1 L100,1" />
+            </circle>
           </svg>
 
           <div class="flex flex-col items-center gap-2 z-10">
-            <div class="w-16 h-16 rounded-full flex items-center justify-center shrink-0" style="background: var(--dm-gradient-primary); box-shadow: 0 0 30px rgba(217,178,106,0.35);">
-              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#0a0908" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+            <div class="w-16 h-16 rounded-full flex items-center justify-center shrink-0 p-3 bg-[var(--dm-bg-tertiary)] border-2 border-[var(--dm-gold)]" style="box-shadow: 0 0 30px rgba(217,178,106,0.4);">
+              <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="w-full h-full object-contain" loading="lazy" />
             </div>
             <span class="font-mono text-[8px] text-[var(--dm-gold)] uppercase tracking-widest">Fintech24h</span>
           </div>
 
-          <svg class="absolute left-[58%] right-[22%] top-[28px] h-px w-auto" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="0" y1="1" x2="100" y2="1" stroke="var(--dm-emerald)" stroke-width="2" stroke-dasharray="4 4" style="animation: dm-dash-flow 1.2s linear infinite;" />
+          <svg class="absolute left-[58%] right-[22%] top-[28px] h-[6px] w-auto overflow-visible" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="0" y1="1" x2="100" y2="1" stroke="var(--dm-emerald)" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.4" />
+            <circle r="2.2" fill="var(--dm-emerald-bright)" style="filter: drop-shadow(0 0 6px var(--dm-emerald));">
+              <animateMotion dur="1.8s" repeatCount="indefinite" path="M0,1 L100,1" begin="0.4s" />
+            </circle>
           </svg>
 
           <div class="flex flex-col items-center gap-2 z-10">

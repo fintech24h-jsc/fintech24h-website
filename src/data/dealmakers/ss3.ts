@@ -9,10 +9,11 @@ export const seasonMeta = {
   seasonNumber: 3,
   name: 'F-Matching Season 3',
   status: 'active' as const,
-  title: 'DealMakers’ Club — F-Matching Season 3 | Fintech24h',
+  title: 'Fintech24h DealMakers’ Club: F-Matching Season 3',
   description:
-    'Fintech24h DealMakers’ Club — F-Matching Season 3. Where verified Web3 decision-makers meet to make deals.',
+    'Fintech24h DealMakers’ Club connects verified Web3 and fintech Founders, Investors, and Exchanges through curated, moderated introductions.',
   canonical: 'https://fintech24h.com/dealmakers/ss3/',
+  keywords: 'Fintech24h DealMakers Club, F-Matching, Web3 deal flow, fintech investor introductions, DealMakers Club Season 3',
 };
 
 // ─── Hero partners ────────────────────────────────────────────────────────
@@ -395,7 +396,7 @@ export const pricingPackages: PricingPackage[] = [
       'One social / community feature',
     ],
     ctaLabel: 'Apply as Featured',
-    ctaInterest: 'Featured DealMaker — $1,000/season',
+    ctaInterest: 'Featured DealMaker ($1,000/season)',
   },
   {
     id: 'qualified-listing',
@@ -415,7 +416,7 @@ export const pricingPackages: PricingPackage[] = [
       description: 'Priority placement with a Sponsored label.',
     },
     ctaLabel: 'Submit Qualified Listing',
-    ctaInterest: 'Qualified Listing — $200/season',
+    ctaInterest: 'Qualified Listing ($200/season)',
   },
 ];
 
@@ -423,9 +424,9 @@ export const pricingPackages: PricingPackage[] = [
 
 export const faq: { question: string; answer: string }[] = [
   {
-    question: 'What is DealMakers’ Club – F-Matching?',
+    question: 'What is DealMakers’ Club: F-Matching?',
     answer:
-      'It’s Fintech24h’s curated matching program for Founders, Investors, Exchanges, and strategic partners in Web3/fintech — where deal signals are stated clearly and introductions are moderated, not an open contact directory.',
+      'It’s Fintech24h’s curated matching program for Founders, Investors, Exchanges, and strategic partners in Web3/fintech. Deal signals are stated clearly and introductions are moderated, not left to an open contact directory.',
   },
   {
     question: 'Who is this program for, and who is it not for?',
@@ -470,7 +471,7 @@ export const faq: { question: string; answer: string }[] = [
   {
     question: 'How do I become a Category Partner or Media Partner?',
     answer:
-      'Submit the Apply to Join form and select "Category Partner" or reach out directly via Telegram/Email — the Fintech24h team will send a partner deck and confirm category exclusivity.',
+      'Submit the Apply to Join form and select "Category Partner," or reach out directly via Telegram or email. The Fintech24h team will send a partner deck and confirm category exclusivity.',
   },
 ];
 
@@ -504,9 +505,23 @@ export const weAreLookingForOptions: string[] = [
 
 export const interestOptions: string[] = [
   'Join DealMakers’ Club',
-  'Featured DealMaker — $1,000/season',
-  'Qualified Listing — $200/season',
-  'Sponsored Listing — add $150',
+  'Featured DealMaker ($1,000/season)',
+  'Qualified Listing ($200/season)',
+  'Sponsored Listing (add $150)',
   'Category Partner / Sponsorship',
   'Media Partner',
+];
+
+// ─── Telegram community join form ──────────────────────────────────────────
+// A standalone, shareable page (/dealmakers/ss3/join/) so the team can send
+// this link directly to a prospect for vetting, without them having to find
+// a button on the full landing page first.
+
+export const telegramGroupUrl = 'https://t.me/Fi24h_DealMakers_Club';
+export const telegramGroupName = 'Fi24h DealMakers’ Club';
+
+export const fundingStatusOptions: string[] = [
+  'Looking for capital',
+  'Have capital to deploy',
+  'Not raising or investing right now',
 ];
