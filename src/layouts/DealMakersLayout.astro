@@ -7,6 +7,12 @@
 import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
 import '../styles/dealmakers.css';
+import { heroPartners } from '../data/dealmakers/ss3';
+
+// The Fintech24h × Capital Partner co-brand lockup lives in the header and
+// footer (site-wide identity), never inside the hero — the hero's spotlight
+// is reserved for the Capital Partner's own logo alone.
+const capitalPartner = heroPartners.find((p) => p.category === 'capital')!;
 
 interface Props {
   title: string;
@@ -109,14 +115,24 @@ const currentYear = new Date().getFullYear();
   <div class="dm-grain" aria-hidden="true"></div>
   <header class="dm-glass-panel sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-      <a href="/dealmakers/" class="flex items-center gap-3 shrink-0" aria-label="DealMakers' Club home">
-        <span class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: var(--dm-gradient-primary);">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#0a0908" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
-        </span>
-        <span class="font-display font-semibold text-sm text-[var(--dm-text-primary)] tracking-tight">DealMakers&rsquo; Club</span>
-        <span class="hidden sm:block w-px h-4 bg-[var(--dm-border)]" aria-hidden="true"></span>
-        <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="hidden sm:block h-4 w-auto object-contain opacity-80" loading="eager" />
-      </a>
+      <div class="flex items-center gap-4 min-w-0">
+        <a href="/dealmakers/" class="flex items-center gap-3 shrink-0" aria-label="DealMakers' Club home">
+          <span class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: var(--dm-gradient-primary);">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#0a0908" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+          </span>
+          <span class="font-display font-semibold text-sm text-[var(--dm-text-primary)] tracking-tight">DealMakers&rsquo; Club</span>
+        </a>
+        <span class="hidden sm:block w-px h-6 bg-[var(--dm-border)] shrink-0" aria-hidden="true"></span>
+        <div class="hidden sm:flex items-center gap-3 shrink-0" aria-label="Presented by Fintech24h, Official Capital Partner Season 3">
+          <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-7 w-auto object-contain" loading="eager" />
+          <span class="font-display font-light text-lg text-[var(--dm-border-accent)]" aria-hidden="true">|</span>
+          {capitalPartner.confirmed && capitalPartner.logoUrl ? (
+            <img src={capitalPartner.logoUrl} alt={`${capitalPartner.name}, Official Capital Partner`} class="h-7 w-auto object-contain" loading="eager" />
+          ) : (
+            <span class="font-mono text-[9px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em] leading-tight max-w-[64px]">Capital<br />Partner</span>
+          )}
+        </div>
+      </div>
 
       <nav class="hidden md:flex items-center gap-7 font-mono text-[11px] uppercase tracking-widest text-[var(--dm-text-secondary)]" aria-label="Section navigation">
         {navLinks.map((l) => (
@@ -145,6 +161,15 @@ const currentYear = new Date().getFullYear();
           <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed max-w-sm mb-5">
             A curated matching program for verified Web3 and fintech decision-makers, connecting qualified deal flow through moderated introductions.
           </p>
+          <div class="flex items-center gap-3 mb-6" aria-label="Presented by Fintech24h, Official Capital Partner Season 3">
+            <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-7 w-auto object-contain" loading="lazy" />
+            <span class="font-display font-light text-lg text-[var(--dm-border-accent)]" aria-hidden="true">|</span>
+            {capitalPartner.confirmed && capitalPartner.logoUrl ? (
+              <img src={capitalPartner.logoUrl} alt={`${capitalPartner.name}, Official Capital Partner`} class="h-7 w-auto object-contain" loading="lazy" />
+            ) : (
+              <span class="font-mono text-[9px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em]">Capital Partner</span>
+            )}
+          </div>
           <div class="flex gap-3">
             {socialLinks.map((s) => (
               <a href={s.href} target="_blank" rel="noopener noreferrer" class="dm-btn-icon" aria-label={`DealMakers' Club on ${s.label}`}>
@@ -181,7 +206,7 @@ const currentYear = new Date().getFullYear();
         <p class="text-xs text-[var(--dm-text-muted)]">&copy; {currentYear} DealMakers&rsquo; Club. All rights reserved.</p>
         <a href="https://fintech24h.com" class="flex items-center gap-2 text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors">
           A
-          <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-3.5 w-auto object-contain opacity-70" loading="lazy" />
+          <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-5 w-auto object-contain opacity-80" loading="lazy" />
           Company
         </a>
       </div>
