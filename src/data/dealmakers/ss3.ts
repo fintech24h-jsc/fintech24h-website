@@ -142,10 +142,10 @@ export interface PartnerLogo {
 
 export const lastSeasonPartners: PartnerLogo[] = [
   { name: 'MEXC', logoUrl: null, confirmed: true },
-  { name: 'CoinGape', logoUrl: null, confirmed: true },
-  { name: 'BeInCrypto', logoUrl: null, confirmed: true },
-  { name: null, logoUrl: null, confirmed: false },
-  { name: null, logoUrl: null, confirmed: false },
+  { name: 'CoinGape', logoUrl: '/dealmakers/partners/coingape.png', confirmed: true },
+  { name: 'BeInCrypto', logoUrl: '/dealmakers/partners/beincrypto.png', confirmed: true },
+  { name: 'Cointelegraph', logoUrl: '/dealmakers/partners/cointelegraph.png', confirmed: true },
+  { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', confirmed: true },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
