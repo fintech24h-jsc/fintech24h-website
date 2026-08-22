@@ -119,6 +119,13 @@ const currentYear = new Date().getFullYear();
 
 <body class="dm-root antialiased">
   <div class="dm-grain" aria-hidden="true"></div>
+  <div class="dm-starfield" aria-hidden="true">
+    <div class="dm-stars-layer dm-stars-1"></div>
+    <div class="dm-stars-layer dm-stars-2"></div>
+    <div class="dm-stars-layer dm-stars-3"></div>
+    <div class="dm-stars-layer dm-stars-4"></div>
+  </div>
+  <div class="dm-cursor-glow" id="dm-cursor-glow" aria-hidden="true"></div>
   <header class="dm-glass-panel sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       <a href={activeSeasonHref} class="flex items-center gap-3 shrink-0" aria-label="DealMakers' Club home — presented by Fintech24h, Official Capital Partner Season 3">
@@ -286,6 +293,30 @@ const currentYear = new Date().getFullYear();
       window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
         if (e.matches) setOpen(false);
       });
+    })();
+  </script>
+
+  <script is:inline>
+    // Cursor spotlight — only on devices with a real pointer, and only
+    // without prefers-reduced-motion (this tracks continuous pointer
+    // motion, which is exactly what that preference asks sites to avoid).
+    (function () {
+      const glow = document.getElementById('dm-cursor-glow');
+      if (!glow) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+
+      let raf = null;
+      window.addEventListener('pointermove', (e) => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          glow.style.setProperty('--dm-spot-x', e.clientX + 'px');
+          glow.style.setProperty('--dm-spot-y', e.clientY + 'px');
+          glow.classList.add('is-active');
+          raf = null;
+        });
+      });
+      document.addEventListener('mouseleave', () => glow.classList.remove('is-active'));
     })();
   </script>
 </body>
