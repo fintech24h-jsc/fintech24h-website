@@ -137,8 +137,34 @@ const currentYear = new Date().getFullYear();
         ))}
       </nav>
 
-      <a href="#apply" class="dm-btn-primary py-2 px-4 text-[10px] shrink-0" data-dm-track="header_cta">Apply to Join</a>
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="hidden sm:inline-flex">
+          <a href="#apply" class="dm-btn-primary py-2 px-4 text-[10px]" data-dm-track="header_cta">Apply to Join</a>
+        </span>
+        <button
+          id="dm-nav-toggle"
+          type="button"
+          class="dm-btn-icon md:hidden"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="dm-mobile-nav"
+        >
+          <svg id="dm-nav-icon-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg id="dm-nav-icon-close" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
     </div>
+
+    <nav id="dm-mobile-nav" class="dm-mobile-nav md:hidden" aria-label="Mobile section navigation" hidden>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col">
+        {navLinks.map((l) => (
+          <a href={l.href} class="dm-mobile-nav-link" data-dm-close-menu>{l.label}</a>
+        ))}
+        <span class="sm:hidden flex my-3">
+          <a href="#apply" class="dm-btn-primary w-full justify-center py-3 text-xs" data-dm-track="header_cta" data-dm-close-menu>Apply to Join</a>
+        </span>
+      </div>
+    </nav>
   </header>
 
   <main>
@@ -228,6 +254,37 @@ const currentYear = new Date().getFullYear();
         const idx = Array.prototype.indexOf.call(el.parentElement ? el.parentElement.children : [], el);
         el.style.setProperty('--dm-reveal-delay', String(Math.min(Math.max(idx, 0), 6) * 70));
         obs.observe(el);
+      });
+    })();
+  </script>
+
+  <script is:inline>
+    // Mobile nav toggle for the header hamburger — desktop already shows the
+    // section nav inline, this only covers the sub-md breakpoint where it's
+    // hidden. Vanilla JS, no framework: this is a single show/hide toggle.
+    (function () {
+      const toggle = document.getElementById('dm-nav-toggle');
+      const menu = document.getElementById('dm-mobile-nav');
+      const iconOpen = document.getElementById('dm-nav-icon-open');
+      const iconClose = document.getElementById('dm-nav-icon-close');
+      if (!toggle || !menu || !iconOpen || !iconClose) return;
+
+      function setOpen(open) {
+        menu.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+        iconOpen.classList.toggle('hidden', open);
+        iconClose.classList.toggle('hidden', !open);
+      }
+
+      toggle.addEventListener('click', () => setOpen(menu.hidden));
+      menu.querySelectorAll('[data-dm-close-menu]').forEach((link) => {
+        link.addEventListener('click', () => setOpen(false));
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      });
+      window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+        if (e.matches) setOpen(false);
       });
     })();
   </script>

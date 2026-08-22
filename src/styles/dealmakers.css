@@ -188,6 +188,29 @@
     0 8px 32px rgba(0, 0, 0, 0.35);
 }
 
+/* ─── Mobile nav panel (sub-md header dropdown) — sits inside the same
+   .dm-glass-panel header, just a divider below the row of links. ─── */
+.dm-mobile-nav {
+  border-top: 1px solid var(--dm-border);
+}
+.dm-mobile-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 0.25rem;
+  font-family: var(--dm-font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--dm-text-secondary);
+  border-top: 1px solid var(--dm-border);
+  transition: color 0.2s ease;
+}
+.dm-mobile-nav-link:first-child { border-top: none; }
+.dm-mobile-nav-link:hover,
+.dm-mobile-nav-link:active {
+  color: var(--dm-gold);
+}
+
 /* ─── Capital Partner spotlight — deliberately NOT peer to the other
    partners: full-width band, larger type, animated gradient border. ─── */
 .dm-spotlight {
