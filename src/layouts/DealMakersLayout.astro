@@ -10,6 +10,23 @@ import '../styles/dealmakers.css';
 import { heroPartners } from '../data/dealmakers/ss3';
 import { seasons } from '../data/dealmakers/seasons';
 
+// Same box-shadow star-dot technique as the main site's Hero
+// (src/components/sections/HeroSection.astro) — generated per-render,
+// warm ivory instead of pure white to match the gold/emerald palette.
+const generateStars = (count: number) => {
+  const shadows: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const x = Math.floor(Math.random() * 2000);
+    const y = Math.floor(Math.random() * 2000);
+    const alpha = (Math.random() * 0.6 + 0.2).toFixed(2);
+    shadows.push(`${x}px ${y}px rgba(245, 239, 226, ${alpha})`);
+  }
+  return shadows.join(', ');
+};
+const dmStarsSmall = generateStars(250);
+const dmStarsMedium = generateStars(80);
+const dmStarsLarge = generateStars(25);
+
 // The Fintech24h × Capital Partner co-brand lockup lives in the header and
 // footer (site-wide identity), never inside the hero — the hero's spotlight
 // is reserved for the Capital Partner's own logo alone.
@@ -107,6 +124,12 @@ const currentYear = new Date().getFullYear();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
   </noscript>
 
+  <!-- Consent Mode v2 default — must run on the real main thread, before
+       gtag.js loads, so GA4 starts in denied/cookieless mode until the
+       cookie banner grants it. Same /consent.js and same first-party
+       cookie as the main site — a choice made there carries over here. -->
+  <script is:inline src="/consent.js"></script>
+
   <!-- Google Analytics 4 via Partytown — same property as the main site -->
   <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-4TDZQMBWLR"></script>
   <script type="text/partytown">
@@ -120,10 +143,9 @@ const currentYear = new Date().getFullYear();
 <body class="dm-root antialiased">
   <div class="dm-grain" aria-hidden="true"></div>
   <div class="dm-starfield" aria-hidden="true">
-    <div class="dm-stars-layer dm-stars-1"></div>
-    <div class="dm-stars-layer dm-stars-2"></div>
-    <div class="dm-stars-layer dm-stars-3"></div>
-    <div class="dm-stars-layer dm-stars-4"></div>
+    <div id="dm-stars-small" class="dm-stars-layer" style={`--dm-star-shadow-small: ${dmStarsSmall};`}></div>
+    <div id="dm-stars-medium" class="dm-stars-layer" style={`--dm-star-shadow-medium: ${dmStarsMedium};`}></div>
+    <div id="dm-stars-large" class="dm-stars-layer" style={`--dm-star-shadow-large: ${dmStarsLarge};`}></div>
   </div>
   <div class="dm-cursor-glow" id="dm-cursor-glow" aria-hidden="true"></div>
   <header class="dm-glass-panel sticky top-0 z-50">
@@ -219,6 +241,7 @@ const currentYear = new Date().getFullYear();
           <ul class="space-y-3">
             <li><a href="/privacy/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Privacy Policy</a></li>
             <li><a href="/terms/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Terms of Service</a></li>
+            <li><button type="button" id="dm-cookie-preferences-link" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Cookie Preferences</button></li>
             <li><a href="mailto:info@fintech24h.com" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">info@fintech24h.com</a></li>
           </ul>
         </div>
@@ -236,6 +259,109 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
   </footer>
+
+  <!-- GDPR-style opt-in cookie banner — same consent state as the main
+       site (see /consent.js), themed to the dm-* gold/emerald system so
+       it never reads as the main site's cyan/purple banner leaking in. -->
+  <div
+    id="dm-cookie-banner"
+    class="fixed inset-x-0 bottom-0 z-[100] px-4 pb-4 sm:px-6 sm:pb-6 translate-y-full opacity-0 transition-all duration-500 ease-out motion-reduce:transition-none"
+    role="dialog"
+    aria-live="polite"
+    aria-label="Cookie consent"
+    hidden
+  >
+    <div class="mx-auto max-w-3xl dm-glass-panel rounded-2xl p-5 sm:p-6">
+      <div id="dm-cookie-banner-summary">
+        <p class="font-body text-sm text-[var(--dm-text-secondary)] leading-relaxed mb-4">
+          We use cookies to understand site traffic (Google Analytics). Nothing runs until you choose —
+          see our <a href="/privacy/#cookies" class="text-[var(--dm-gold)] hover:underline">Privacy Policy</a> for details.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <button type="button" id="dm-cookie-accept" class="dm-btn-primary py-2.5 px-5 text-xs">Accept</button>
+          <button type="button" id="dm-cookie-reject" class="dm-btn-ghost py-2.5 px-5 text-xs">Reject non-essential</button>
+          <button type="button" id="dm-cookie-customize" class="font-mono text-[10px] uppercase tracking-widest px-3 py-2.5 text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-2">Customize</button>
+        </div>
+      </div>
+
+      <div id="dm-cookie-banner-detail" class="hidden">
+        <div class="flex items-center gap-3 py-1 mb-4">
+          <span class="font-body text-sm text-[var(--dm-text-primary)] font-medium">Necessary</span>
+          <span class="text-xs text-[var(--dm-text-muted)] font-body">Always on — required for the site to function</span>
+        </div>
+        <div class="flex items-center justify-between gap-4 mb-5">
+          <div class="flex flex-col">
+            <span class="font-body text-sm text-[var(--dm-text-primary)] font-medium">Analytics</span>
+            <span class="text-xs text-[var(--dm-text-muted)] font-body">Google Analytics — aggregate traffic only, no ad tracking</span>
+          </div>
+          <button type="button" id="dm-cookie-analytics-toggle" role="switch" aria-checked="false" aria-label="Toggle Analytics cookies" class="relative w-11 h-6 rounded-full bg-white/10 transition-colors duration-200 shrink-0">
+            <span class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200"></span>
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button type="button" id="dm-cookie-save" class="dm-btn-primary py-2.5 px-5 text-xs">Save preferences</button>
+          <button type="button" id="dm-cookie-back" class="font-mono text-[10px] uppercase tracking-widest px-3 py-2.5 text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const banner = document.getElementById('dm-cookie-banner');
+      const summary = document.getElementById('dm-cookie-banner-summary');
+      const detail = document.getElementById('dm-cookie-banner-detail');
+      const toggle = document.getElementById('dm-cookie-analytics-toggle');
+      const toggleDot = toggle ? toggle.firstElementChild : null;
+      const prefsLink = document.getElementById('dm-cookie-preferences-link');
+      if (!banner || !window.Fi24hConsent) return;
+
+      function paintToggle(on) {
+        toggle.setAttribute('aria-checked', String(on));
+        toggle.style.background = on ? 'var(--dm-gold)' : 'rgba(255,255,255,0.1)';
+        toggleDot.style.transform = on ? 'translateX(20px)' : 'translateX(0)';
+      }
+
+      function show() {
+        banner.hidden = false;
+        requestAnimationFrame(() => banner.classList.remove('translate-y-full', 'opacity-0'));
+      }
+
+      function hide() {
+        banner.classList.add('translate-y-full', 'opacity-0');
+        window.setTimeout(() => { banner.hidden = true; }, 500);
+      }
+
+      function showSummary() {
+        summary.classList.remove('hidden');
+        detail.classList.add('hidden');
+      }
+
+      function showDetail() {
+        const existing = window.Fi24hConsent.get();
+        paintToggle(existing ? existing.analytics : false);
+        summary.classList.add('hidden');
+        detail.classList.remove('hidden');
+      }
+
+      document.getElementById('dm-cookie-accept').addEventListener('click', () => { window.Fi24hConsent.set(true); hide(); });
+      document.getElementById('dm-cookie-reject').addEventListener('click', () => { window.Fi24hConsent.set(false); hide(); });
+      document.getElementById('dm-cookie-customize').addEventListener('click', showDetail);
+      document.getElementById('dm-cookie-back').addEventListener('click', showSummary);
+      toggle.addEventListener('click', () => paintToggle(toggle.getAttribute('aria-checked') !== 'true'));
+      document.getElementById('dm-cookie-save').addEventListener('click', () => {
+        window.Fi24hConsent.set(toggle.getAttribute('aria-checked') === 'true');
+        hide();
+      });
+      if (prefsLink) prefsLink.addEventListener('click', () => window.Fi24hConsent.openPreferences());
+
+      document.addEventListener('fi24h-consent-reopen', () => { showDetail(); show(); });
+
+      if (!window.Fi24hConsent.get()) {
+        window.setTimeout(show, 600);
+      }
+    })();
+  </script>
 
   <script is:inline>
     // Shared scroll-reveal entrance for every [data-dm-reveal] element across
