@@ -4,6 +4,7 @@ import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
 import NavbarFast from '../components/layout/NavbarFast.astro';
 import Footer from '../components/layout/Footer.astro';
+import CookieBanner from '../components/ui/CookieBanner.astro';
 import '../styles/global.css';
 import '../styles/animations.css';
 
@@ -140,6 +141,11 @@ const canonicalHref = canonicalUrl.href;
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
+  <!-- Consent Mode v2 default — must run on the real main thread, before
+       gtag.js loads, so GA4 starts in denied/cookieless mode until the
+       cookie banner grants it. See /consent.js. -->
+  <script is:inline src="/consent.js"></script>
+
   <!-- Google Analytics 4 via Partytown — runs in Web Worker, zero main-thread cost -->
   <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-4TDZQMBWLR"></script>
   <script type="text/partytown">
@@ -169,6 +175,8 @@ const canonicalHref = canonicalUrl.href;
   </main>
 
   <Footer />
+
+  <CookieBanner />
 
   <!-- Scroll reveals — native IntersectionObserver + CSS transitions, 0 KB JS overhead -->
   <!-- Visual result is identical to GSAP ScrollTrigger (same easing, same stagger) -->

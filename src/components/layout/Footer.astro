@@ -131,7 +131,23 @@ const resourceLinks = showBlog
             {link.label}
           </a>
         ))}
+        <button
+          type="button"
+          id="cookie-preferences-link"
+          class="text-xs text-[var(--text-muted)] hover:text-[var(--accent-cyan)] font-body transition-colors"
+        >
+          Cookie Preferences
+        </button>
       </div>
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById('cookie-preferences-link');
+    if (btn) btn.addEventListener('click', function () {
+      if (window.Fi24hConsent) window.Fi24hConsent.openPreferences();
+    });
+  })();
+</script>
