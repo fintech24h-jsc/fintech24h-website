@@ -16,12 +16,12 @@ import { lastSeasonPartners } from '../../../data/dealmakers/ss3';
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto">
       {lastSeasonPartners.map((p, i) => (
-        <div class="group flex items-center justify-center min-h-[76px] px-4 rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-glass)] transition-all duration-300 hover:border-[var(--dm-border-accent)] hover:bg-white/[0.04] hover:-translate-y-1" data-dm-reveal style={`--dm-reveal-delay: ${i * 50}`}>
+        <div class="group flex items-center justify-center min-h-[108px] px-5 rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-glass)] transition-all duration-300 hover:border-[var(--dm-border-accent)] hover:bg-white/[0.04] hover:-translate-y-1" data-dm-reveal style={`--dm-reveal-delay: ${i * 50}`}>
           {p.logoUrl ? (
             <img
               src={p.logoUrl}
               alt={`${p.name} logo, Featured Partner from last season of DealMakers' Club`}
-              class="h-6 sm:h-7 w-auto max-w-full object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+              class="h-11 sm:h-14 w-auto max-w-full object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300"
               loading="lazy"
             />
           ) : p.name ? (
