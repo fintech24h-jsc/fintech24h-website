@@ -14,6 +14,7 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
     portfolio: '',
     message: '',
     companyWebsite: '',
+    keepOnFile: false,
   });
 
   const [resume, setResume] = useState<File | null>(null);
@@ -73,6 +74,7 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
       { name: 'portfolio_url', value: formData.portfolio },
       { name: 'message', value: formData.message },
       { name: 'job_title', value: jobTitle },
+      { name: 'keep_on_file', value: formData.keepOnFile ? 'true' : 'false' },
     ];
 
     const attachment = {
@@ -218,6 +220,23 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
           ></textarea>
         </div>
 
+        <p className="text-[11px] text-[var(--text-secondary)] opacity-70 font-body leading-relaxed">
+          Your information is used only to review this application. See our{' '}
+          <a href="/privacy/" className="underline hover:text-[var(--accent-cyan)]">Privacy Policy</a>.
+        </p>
+
+        <label className="flex items-start gap-2.5 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={formData.keepOnFile}
+            onChange={e => setFormData(prev => ({ ...prev, keepOnFile: e.target.checked }))}
+            className="mt-0.5 w-4 h-4 rounded border-[var(--border-default)] bg-[var(--surface-soft)] accent-[var(--accent-cyan)] shrink-0"
+          />
+          <span className="text-[11px] text-[var(--text-secondary)] opacity-70 font-body leading-relaxed">
+            Keep my profile on file for future openings (optional — not required for this application).
+          </span>
+        </label>
+
         <button
           type="submit"
           disabled={isSubmitting}
@@ -225,7 +244,7 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
         >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer-slide_1.5s_ease-out_infinite]" />
           <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.03] transition-colors duration-500 backdrop-blur-[2px]" />
-          
+
           {isSubmitting ? (
             <span className="relative z-10 font-display text-xs font-semibold tracking-widest text-[color-mix(in_srgb,var(--text-inverted)_70%,transparent)] uppercase flex items-center gap-2">
               <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
@@ -278,6 +297,7 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
                   portfolio: '',
                   message: '',
                   companyWebsite: '',
+                  keepOnFile: false,
                 });
                 setResume(null);
                 setResumeFileName('');

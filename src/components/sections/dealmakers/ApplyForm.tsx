@@ -12,11 +12,12 @@ interface FormState {
   interest: string;
   note: string;
   companyWebsite: string; // honeypot
+  marketingOptIn: boolean;
 }
 
 const emptyForm: FormState = {
   name: '', company: '', role: '', email: '', telegram: '', linkedin: '',
-  interest: interestOptions[0], note: '', companyWebsite: '',
+  interest: interestOptions[0], note: '', companyWebsite: '', marketingOptIn: false,
 };
 
 function track(event: string, label?: string) {
@@ -81,7 +82,7 @@ export default function ApplyForm() {
       // Keep `note` as the visitor's own free-text (not merged with the We
       // Offer / We Are Looking For chips) so the backend sheet can show all
       // three as clean, separate columns instead of one blended paragraph.
-      { ...form, weOffer: offers.join(', '), weAreLookingFor: lookingFor.join(', ') },
+      { ...form, weOffer: offers.join(', '), weAreLookingFor: lookingFor.join(', '), marketingOptIn: String(form.marketingOptIn) },
       'dealmakers-ss3',
       [
         { name: 'firstname', value: form.name.split(' ')[0] || form.name },
@@ -92,6 +93,7 @@ export default function ApplyForm() {
         { name: 'linkedin', value: form.linkedin },
         { name: 'service_interest', value: form.interest },
         { name: 'message', value: fullNote },
+        { name: 'marketing_opt_in', value: form.marketingOptIn ? 'true' : 'false' },
       ]
     );
 
@@ -214,6 +216,18 @@ export default function ApplyForm() {
         <p className="text-[10px] text-[var(--dm-text-muted)] leading-relaxed">
           Your information is used only to review / contact you about F-Matching Season 3 and will not be made public without consent. See our <a href="/privacy/" className="underline hover:text-[var(--dm-gold)]">Privacy Policy</a>.
         </p>
+
+        <label className="flex items-start gap-2.5 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={form.marketingOptIn}
+            onChange={(e) => setForm((p) => ({ ...p, marketingOptIn: e.target.checked }))}
+            className="mt-0.5 w-4 h-4 rounded border-[var(--dm-border)] bg-white/5 accent-[var(--dm-gold)] shrink-0"
+          />
+          <span className="text-[10px] text-[var(--dm-text-muted)] leading-relaxed">
+            Send me updates about future DealMakers' Club seasons (optional — you can unsubscribe anytime).
+          </span>
+        </label>
 
         <button type="submit" disabled={isSubmitting} className="dm-btn-primary w-full justify-center text-xs">
           {isSubmitting ? 'Sending...' : 'Submit Application'} <span aria-hidden="true">→</span>

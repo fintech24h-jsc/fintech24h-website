@@ -17,6 +17,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
     budget: '',
     message: '',
     companyWebsite: '',
+    marketingOptIn: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,7 +54,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
     setIsSubmitting(true);
     setError('');
 
-    const result = await submitLead(formData, 'Service Inquiry', [
+    const result = await submitLead({ ...formData, marketingOptIn: String(formData.marketingOptIn) }, 'Service Inquiry', [
       { name: 'firstname', value: formData.name.split(' ')[0] || formData.name },
       { name: 'lastname', value: formData.name.split(' ').slice(1).join(' ') || '' },
       { name: 'email', value: formData.email },
@@ -64,6 +65,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
       { name: 'service_interest', value: formData.serviceInterest },
       { name: 'budget_range', value: formData.budget },
       { name: 'message', value: formData.message },
+      { name: 'marketing_opt_in', value: formData.marketingOptIn ? 'true' : 'false' },
     ]);
 
     setIsSubmitting(false);
@@ -210,6 +212,23 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
           ></textarea>
         </div>
 
+        <p className="text-[11px] text-[var(--text-secondary)] opacity-70 font-body leading-relaxed">
+          Your information is used only to review and respond to this inquiry. See our{' '}
+          <a href="/privacy/" className="underline hover:text-[var(--accent-cyan)]">Privacy Policy</a>.
+        </p>
+
+        <label className="flex items-start gap-2.5 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={formData.marketingOptIn}
+            onChange={e => setFormData(prev => ({ ...prev, marketingOptIn: e.target.checked }))}
+            className="mt-0.5 w-4 h-4 rounded border-[var(--border-default)] bg-[var(--surface-soft)] accent-[var(--accent-cyan)] shrink-0"
+          />
+          <span className="text-[11px] text-[var(--text-secondary)] opacity-70 font-body leading-relaxed">
+            Send me occasional updates about Fintech24h's services (optional — you can unsubscribe anytime).
+          </span>
+        </label>
+
         <button
           type="submit"
           disabled={isSubmitting}
@@ -217,7 +236,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
         >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer-slide_1.5s_ease-out_infinite]" />
           <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.03] transition-colors duration-500 backdrop-blur-[2px]" />
-          
+
           {isSubmitting ? (
             <span className="relative z-10 font-display text-xs font-semibold tracking-widest text-[color-mix(in_srgb,var(--text-inverted)_70%,transparent)] uppercase flex items-center gap-2">
               <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
@@ -291,6 +310,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
                     budget: '',
                     message: '',
                     companyWebsite: '',
+                    marketingOptIn: false,
                   });
                 }}
                 className="w-full py-3 px-5 text-xs font-semibold uppercase tracking-wider bg-[var(--surface-soft)] border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] rounded-xl transition-all duration-300"
