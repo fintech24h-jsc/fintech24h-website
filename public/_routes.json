@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "description": "Force every request through the Worker (middleware.ts) instead of Cloudflare's default static-asset-first serving. Without this, HTTPS-upgrade/www-stripping/legacy-redirect logic in middleware.ts silently never runs for any prerendered page's own exact URL — see the run_worker_first change in wrangler.jsonc, which this backs up in case the installed Wrangler version doesn't honor that field.",
+  "include": ["/*"],
+  "exclude": []
+}
