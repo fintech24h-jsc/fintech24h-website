@@ -74,6 +74,25 @@ export default function TelegramJoinForm() {
         >
           Join {telegramGroupName} on Telegram
         </a>
+
+        <div className="mt-6 pt-6 border-t border-[var(--dm-border)] text-left">
+          <p className="text-[11px] text-[var(--dm-text-muted)] leading-relaxed mb-3">
+            <strong className="text-[var(--dm-text-secondary)]">Please note:</strong> {telegramGroupName} is
+            reserved for C-level executives, founders, and senior business leaders, so approval here is
+            deliberately selective. If you're a professional, freelancer, or industry expert, you'll be approved
+            far faster in our general community instead — a space built for professionals, freelancers, and
+            builders to connect, collaborate, and exchange opportunities.
+          </p>
+          <a
+            href="https://t.me/Fintech24h_Vietnam_Official"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="dm-btn-ghost w-full justify-center text-xs py-3"
+            onClick={() => track('telegram_join_alt_community')}
+          >
+            Join the Fintech24h Vietnam Community
+          </a>
+        </div>
       </div>
     );
   }
