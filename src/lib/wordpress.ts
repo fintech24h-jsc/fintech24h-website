@@ -30,6 +30,14 @@ export interface WPPost {
   categories: number[];
   tags: number[];
   acf?: Record<string, any>;
+  // AIOSEO exposes its saved SEO title/description on the REST response
+  // itself (not post meta) — this is the CTR-optimized title editors set in
+  // the AIOSEO panel, distinct from (and usually shorter than) the raw post
+  // title/H1 in `title.rendered`.
+  aioseo_meta_data?: {
+    title?: string | null;
+    description?: string | null;
+  };
   _embedded?: {
     'wp:featuredmedia'?: Array<{
       source_url: string;
@@ -170,6 +178,15 @@ async function fetchWP<T>(endpoint: string, params: Record<string, string> = {})
 // automatically instead of each having to remember to do it.
 function decodeTitle<T extends { title: { rendered: string } }>(item: T): T {
   return { ...item, title: { rendered: decodeHtmlEntities(item.title.rendered) } };
+}
+
+// The <title>/og:title/twitter:title tags must use the CTR-optimized title
+// saved in AIOSEO, not the raw post title/H1 — AIOSEO exposes it on the REST
+// response itself as `aioseo_meta_data.title` (not regular post meta).
+// Falls back to the post title for the (rare) post with no AIOSEO title set.
+export function getSeoTitle(post: WPPost): string {
+  const aioseoTitle = post.aioseo_meta_data?.title?.trim();
+  return aioseoTitle ? decodeHtmlEntities(aioseoTitle) : post.title.rendered;
 }
 
 export async function getAllPosts(page = 1, perPage = 24): Promise<WPPost[]> {

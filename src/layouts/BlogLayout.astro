@@ -2,7 +2,7 @@
 // src/layouts/BlogLayout.astro
 import BaseLayout from './BaseLayout.astro';
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
-import { formatDate, getFeaturedImage, getPostAuthor } from '../lib/wordpress';
+import { formatDate, getFeaturedImage, getPostAuthor, getSeoTitle } from '../lib/wordpress';
 import { getReadingTime, getTableOfContents, decodeHtmlEntities } from '../lib/utils';
 import type { WPPost } from '../lib/wordpress';
 
@@ -15,6 +15,9 @@ const featuredImage = getFeaturedImage(post);
 const readingTime = getReadingTime(post.content.rendered);
 const currentUrl = `https://fintech24h.com/blog/${post.slug}`;
 const encodedTitle = encodeURIComponent(post.title.rendered);
+// <title>/og:title/twitter:title use the AIOSEO-saved title (CTR-optimized,
+// usually shorter) — falls back to the raw post title if AIOSEO has none set.
+const seoTitle = getSeoTitle(post);
 
 const postAuthor = getPostAuthor(post);
 
@@ -68,7 +71,7 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title={post.title.rendered}
+  title={seoTitle}
   description={decodeHtmlEntities(post.excerpt.rendered.replace(/<[^>]*>/g, '')).slice(0, 160).trim()}
   ogImage={featuredImage.url}
   ogType="article"
