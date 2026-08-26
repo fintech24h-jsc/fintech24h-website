@@ -5,6 +5,20 @@ const CANONICAL_HOST = 'fintech24h.com';
 const WWW_HOST = `www.${CANONICAL_HOST}`;
 const LEGACY_PAGED_CATEGORY_SLUGS = new Set(['knowledge', 'news', 'partner-relationship']);
 
+// Astro emits these as static index.html files under a trailing-slash path,
+// so the slashless form 404s unless something adds the slash. public/_redirects
+// already does this — but only when the request already has the right host
+// and protocol. A www/http request for one of these hits this middleware
+// first, which fixes the host/protocol but (without this list) leaves the
+// slash missing, forcing a second redirect through _redirects. Listing them
+// here too means both fixes land in the same 301.
+const TRAILING_SLASH_PATHS = new Set([
+  '/about', '/careers', '/careers/content-social-media-specialist', '/careers/community-partnership-specialist',
+  '/case-studies', '/contact', '/privacy', '/services', '/services/ai-marketing', '/services/business-development',
+  '/services/community-growth', '/services/custom-solutions', '/services/event-marketing', '/services/kol-marketing',
+  '/services/pr-media', '/terms',
+]);
+
 function canonicalPathname(pathname: string): string {
   const lowercasePath = pathname.toLowerCase();
 
@@ -25,6 +39,8 @@ function canonicalPathname(pathname: string): string {
   ) {
     return pathname.slice(0, -1);
   }
+
+  if (TRAILING_SLASH_PATHS.has(pathname)) return `${pathname}/`;
 
   return pathname;
 }
