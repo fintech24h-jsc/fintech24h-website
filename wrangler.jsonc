@@ -31,7 +31,16 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "run_worker_first": true
+    "run_worker_first": true,
+    // The actual root cause of the GSC redirect-validation failures:
+    // Cloudflare's asset serving defaults to html_handling
+    // "auto-trailing-slash", which transparently serves dist/careers/
+    // index.html for BOTH /careers and /careers/ as separate 200s — no
+    // redirect, so middleware.ts and public/_redirects never even get a
+    // chance to run (confirmed: identical <title> from both URLs).
+    // "force-trailing-slash" makes Cloudflare itself 301 the slashless
+    // form instead of serving duplicate content.
+    "html_handling": "force-trailing-slash"
   }
   // No "routes" field on purpose — routes for this zone are configured in
   // the Cloudflare dashboard directly. Adding a routes field here would
