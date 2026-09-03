@@ -18,21 +18,23 @@
   // If you upgrade that adapter and it changes its output layout, update
   // this path to match — check dist/_worker.js/ after a local build.
   "main": "./dist/_worker.js/index.js",
-  // run_worker_first: Cloudflare's default is to serve a matching static
-  // asset BEFORE ever invoking this Worker. That silently bypassed
-  // middleware.ts's HTTPS-upgrade/www-stripping/legacy-redirect logic for
-  // every prerendered page's own canonical URL (about/, careers/,
-  // services/*/, terms/, privacy/, etc.) — plain http://fintech24h.com/about/
-  // was serving 200 over insecure HTTP with no redirect at all, discovered
-  // while chasing a Google Search Console redirect-validation failure.
-  // Forcing the Worker to run first makes middleware.ts apply uniformly to
-  // every request; it still calls next() to serve the same static assets
-  // for anything that doesn't need rewriting.
+  // run_worker_first was tried and REVERTED: forcing the Worker to run for
+  // every request also runs it for static files the sitemap integration
+  // writes straight to dist/ (sitemap-index.xml, sitemap-0.xml) — those
+  // aren't registered in Astro's own route manifest, so with the Worker
+  // running first they fell through to the catch-all src/pages/[...path].astro
+  // (prerender:false, matches anything) which rewrote them to a 404 instead
+  // of ever reaching Cloudflare's real static-asset lookup. Confirmed by the
+  // 404 carrying an `x-astro-rewrite: yes` header. Do not re-enable this
+  // without also teaching [...path].astro to ignore known static filenames.
+  //
+  // The actual fix for the GSC redirect-validation failures was
+  // html_handling below, combined with enabling "Always Use HTTPS" in the
+  // Cloudflare dashboard (SSL/TLS > Edge Certificates) for the HTTP->HTTPS
+  // part — neither depends on run_worker_first.
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "run_worker_first": true,
-    // The actual root cause of the GSC redirect-validation failures:
     // Cloudflare's asset serving defaults to html_handling
     // "auto-trailing-slash", which transparently serves dist/careers/
     // index.html for BOTH /careers and /careers/ as separate 200s — no
