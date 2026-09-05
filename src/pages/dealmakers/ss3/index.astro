@@ -10,6 +10,7 @@ import TelegramJoinBanner from '../../../components/sections/dealmakers/Telegram
 import FeaturedDealMakers from '../../../components/sections/dealmakers/FeaturedDealMakers.astro';
 import USPSection from '../../../components/sections/dealmakers/USPSection.astro';
 import LastSeasonPartners from '../../../components/sections/dealmakers/LastSeasonPartners.astro';
+import CommunityActivity from '../../../components/sections/dealmakers/CommunityActivity.tsx';
 import QualifiedDirectory from '../../../components/sections/dealmakers/QualifiedDirectory.tsx';
 import HowItWorks from '../../../components/sections/dealmakers/HowItWorks.astro';
 import PricingPackages from '../../../components/sections/dealmakers/PricingPackages.astro';
@@ -88,6 +89,7 @@ const packagesSchema = {
   <FeaturedDealMakers />
   <USPSection />
   <LastSeasonPartners />
+  <CommunityActivity client:visible />
 
   <section id="directory" class="relative py-20 lg:py-28" aria-label="Qualified Listing Directory">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

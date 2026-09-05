@@ -146,6 +146,19 @@
   #dm-stars-small, #dm-stars-medium, #dm-stars-large { animation: none !important; }
 }
 
+.dm-live-dot {
+  animation: dm-live-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes dm-live-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(52, 168, 120, 0.45); }
+  50% { box-shadow: 0 0 0 5px rgba(52, 168, 120, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-live-dot { animation: none !important; }
+}
+
 /* ─── Cursor spotlight — a faint gold/emerald glow that follows the
    pointer, simulating light catching the liquid-glass surface. Position
    is driven by JS (see DealMakersLayout script) via --dm-spot-x/-y;

@@ -1,0 +1,15 @@
+name = "fintech24h-dealmakers-community"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Create the database first, then replace the placeholder ID:
+#   npx wrangler d1 create fintech24h-dealmakers-community
+#   npx wrangler d1 execute fintech24h-dealmakers-community --file=./schema.sql
+[[d1_databases]]
+binding = "DB"
+database_name = "fintech24h-dealmakers-community"
+database_id = "f9913ef3-0519-4951-bb98-c8ad0c7a7263"
+
+# Set these as Worker secrets; never commit them:
+#   npx wrangler secret put TELEGRAM_WEBHOOK_SECRET
+#   npx wrangler secret put TELEGRAM_CHAT_ID
