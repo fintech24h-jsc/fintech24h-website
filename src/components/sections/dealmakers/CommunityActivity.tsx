@@ -1,4 +1,12 @@
 import { useEffect, useState } from 'react';
+import { telegramGroupUrl } from '../../../data/dealmakers/ss3';
+
+// One-off role notes for specific real members, keyed by Telegram username
+// (lowercase). Not a general feature — just how this specific person's
+// title is surfaced next to their activity.
+const MEMBER_ROLE_NOTES: Record<string, string> = {
+  phatvt: 'Co-Founder & CPO, Fintech24h',
+};
 
 type CommunityMember = {
   telegramUserId?: string;
@@ -133,42 +141,29 @@ export default function CommunityActivity() {
         </div>
 
         {hasActivity && pulse ? (
-          <div className="grid lg:grid-cols-[0.75fr_1.25fr] gap-5 lg:gap-6 items-start" aria-live="polite">
-            <div className="dm-card p-6 sm:p-7 lg:sticky lg:top-24">
-              <p className="font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.16em] mb-6">Club pulse</p>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="relative rounded-2xl border border-[var(--dm-border)] bg-gradient-to-br from-[rgba(217,178,106,0.07)] to-transparent p-4 overflow-hidden">
-                  <strong className="block font-display text-4xl text-[var(--dm-text-primary)] mb-1 tabular-nums">{pulse.activeMembersLast24Hours}</strong>
-                  <span className="text-[10px] text-[var(--dm-text-muted)] uppercase tracking-wider">Active today</span>
-                </div>
-                <div className="relative rounded-2xl border border-[var(--dm-border)] bg-gradient-to-br from-[rgba(52,168,120,0.07)] to-transparent p-4 overflow-hidden">
-                  <strong className="block font-display text-4xl text-[var(--dm-text-primary)] mb-1 tabular-nums">{pulse.activeMembersLast7Days}</strong>
-                  <span className="text-[10px] text-[var(--dm-text-muted)] uppercase tracking-wider">Active this week</span>
-                </div>
-              </div>
-              <div className="mt-6 pt-5 border-t border-[var(--dm-border)] flex items-start gap-2.5">
-                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald)] shrink-0" aria-hidden="true" />
-                <p className="text-xs text-[var(--dm-text-secondary)] leading-relaxed">
-                  Activity is measured from recent participation in the Telegram group, never from message content.
-                </p>
-              </div>
+          <div className="dm-card max-w-5xl mx-auto overflow-hidden" aria-live="polite">
+            <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-[var(--dm-border)]">
+              <h3 className="font-display font-semibold text-base text-[var(--dm-text-primary)]">Recently active members</h3>
+              <span className="font-mono text-[10px] text-[var(--dm-emerald-bright)] whitespace-nowrap">{updatedTime(pulse.updatedAt)}</span>
             </div>
-
-            <div className="dm-card overflow-hidden">
-              <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-[var(--dm-border)]">
-                <h3 className="font-display font-semibold text-base text-[var(--dm-text-primary)]">Recently active members</h3>
-                <span className="font-mono text-[10px] text-[var(--dm-emerald-bright)] whitespace-nowrap">{updatedTime(pulse.updatedAt)}</span>
-              </div>
-              <div className="divide-y divide-[var(--dm-border)]">
-                {pulse.members.map((member) => (
-                  <div
+            <div className="grid sm:grid-cols-2 gap-px bg-[var(--dm-border)]">
+              {pulse.members.map((member) => {
+                const roleNote = member.username ? MEMBER_ROLE_NOTES[member.username.toLowerCase()] : undefined;
+                return (
+                  <a
                     key={`${member.telegramUserId ?? member.username ?? member.displayName}-${member.lastActiveAt}`}
-                    className="flex items-center gap-3 sm:gap-4 px-5 sm:px-6 py-3.5 transition-colors duration-200 hover:bg-white/[0.02]"
+                    href={telegramGroupUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 sm:gap-4 px-5 sm:px-6 py-4 bg-[var(--dm-bg-secondary)] transition-colors duration-200 hover:bg-white/[0.03]"
                   >
                     <MemberAvatar member={member} />
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-[var(--dm-text-primary)] truncate">{member.displayName}</p>
-                      <p className="text-[11px] text-[var(--dm-text-muted)] truncate">{member.username ? `@${member.username}` : 'Fi24h DealMakers member'}</p>
+                      <p className="text-[11px] text-[var(--dm-text-muted)] truncate">
+                        {member.username ? `@${member.username}` : 'Fi24h DealMakers member'}
+                        {roleNote ? <span className="text-[var(--dm-gold-bright)]"> · {roleNote}</span> : null}
+                      </p>
                     </div>
                     {member.source === 'admin_seed' ? (
                       <span className="dm-tag dm-tag-gold shrink-0">Team</span>
@@ -178,9 +173,9 @@ export default function CommunityActivity() {
                         {relativeTime(member.lastActiveAt)}
                       </span>
                     )}
-                  </div>
-                ))}
-              </div>
+                  </a>
+                );
+              })}
             </div>
           </div>
         ) : (
