@@ -3,14 +3,17 @@
 // Fully redesigned to be a centered, high-impact astronomical landing hero.
 // Features centered copy, larger brand text, and highly creative glowing stats.
 
-// Generate static star coordinates at build time for the parallax starfield
+// Generate static star coordinates at build time for the parallax starfield.
+// Coordinates use vw/vh (viewport-relative) instead of fixed px so the field
+// covers the full width on any screen size — a fixed 0-2000px box left large
+// monitors (>2000px wide) with a bare right half.
 const generateStars = (count: number) => {
   let shadows = [];
   for (let i = 0; i < count; i++) {
-    const x = Math.floor(Math.random() * 2000);
-    const y = Math.floor(Math.random() * 2000);
+    const x = (Math.random() * 100).toFixed(2);
+    const y = (Math.random() * 100).toFixed(2);
     const alpha = (Math.random() * 0.6 + 0.2).toFixed(2);
-    shadows.push(`${x}px ${y}px rgba(255, 255, 255, ${alpha})`);
+    shadows.push(`${x}vw ${y}vh rgba(255, 255, 255, ${alpha})`);
   }
   return shadows.join(', ');
 };
@@ -179,7 +182,7 @@ const starsLarge = generateStars(30);
   #stars-small::after, #stars-medium::after, #stars-large::after {
     content: " ";
     position: absolute;
-    top: 2000px;
+    top: 100vh;
     border-radius: 50%;
     background: transparent;
     box-shadow: var(--star-shadow);
@@ -189,8 +192,8 @@ const starsLarge = generateStars(30);
   #stars-large::after { width: 3px; height: 3px; }
 
   @keyframes animStar {
-    from { transform: translateY(0px); }
-    to { transform: translateY(-2000px); }
+    from { transform: translateY(0); }
+    to { transform: translateY(-100vh); }
   }
 
   /* Sheen text shine animation */
