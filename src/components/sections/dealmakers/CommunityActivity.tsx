@@ -89,6 +89,16 @@ function MemberAvatar({ member }: { member: CommunityMember }) {
 export default function CommunityActivity() {
   const [pulse, setPulse] = useState<CommunityPulse | null>(null);
   const [hasError, setHasError] = useState(false);
+  // Ticks every second purely to re-render — relativeTime()/updatedTime()
+  // read Date.now() fresh each render, so "Active 2m ago" visibly counts up
+  // in real time between the 60s network refetches instead of looking
+  // frozen. No data changes here, just a render trigger.
+  const [, setTick] = useState(0);
+
+  useEffect(() => {
+    const clock = window.setInterval(() => setTick((t) => t + 1), 1000);
+    return () => window.clearInterval(clock);
+  }, []);
 
   useEffect(() => {
     if (!pulseApiUrl) return;
@@ -144,9 +154,12 @@ export default function CommunityActivity() {
           <div className="dm-card max-w-5xl mx-auto overflow-hidden" aria-live="polite">
             <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-[var(--dm-border)]">
               <h3 className="font-display font-semibold text-base text-[var(--dm-text-primary)]">Recently active members</h3>
-              <span className="font-mono text-[10px] text-[var(--dm-emerald-bright)] whitespace-nowrap">{updatedTime(pulse.updatedAt)}</span>
+              <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-[var(--dm-emerald-bright)] whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald-bright)] dm-live-dot" aria-hidden="true" />
+                {updatedTime(pulse.updatedAt)}
+              </span>
             </div>
-            <div className="grid sm:grid-cols-2 gap-px bg-[var(--dm-border)]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[var(--dm-border)]">
               {pulse.members.map((member) => {
                 const roleNote = member.username ? MEMBER_ROLE_NOTES[member.username.toLowerCase()] : undefined;
                 return (
@@ -169,7 +182,7 @@ export default function CommunityActivity() {
                       <span className="dm-tag dm-tag-gold shrink-0">Team</span>
                     ) : (
                       <span className="dm-tag dm-tag-emerald shrink-0 whitespace-nowrap">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald-bright)]" aria-hidden="true" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald-bright)] dm-live-dot" aria-hidden="true" />
                         {relativeTime(member.lastActiveAt)}
                       </span>
                     )}
