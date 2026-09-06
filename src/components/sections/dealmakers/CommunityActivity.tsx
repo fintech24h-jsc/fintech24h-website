@@ -4,6 +4,7 @@ type CommunityMember = {
   displayName: string;
   username?: string | null;
   lastActiveAt: string;
+  source?: 'message' | 'admin_seed';
 };
 
 type CommunityPulse = {
@@ -104,7 +105,7 @@ export default function CommunityActivity() {
 
         {hasActivity && pulse ? (
           <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-5 lg:gap-8 items-start" aria-live="polite">
-            <div className="dm-card p-6 sm:p-7" data-dm-reveal>
+            <div className="dm-card p-6 sm:p-7">
               <p className="font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.16em] mb-6">Club pulse</p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-2xl border border-[var(--dm-border)] bg-white/[0.025] p-4">
@@ -124,7 +125,7 @@ export default function CommunityActivity() {
               </div>
             </div>
 
-            <div className="dm-card overflow-hidden" data-dm-reveal>
+            <div className="dm-card overflow-hidden">
               <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-[var(--dm-border)]">
                 <h3 className="font-display font-semibold text-base text-[var(--dm-text-primary)]">Recently active members</h3>
                 <span className="font-mono text-[10px] text-[var(--dm-emerald-bright)] whitespace-nowrap">{updatedTime(pulse.updatedAt)}</span>
@@ -139,10 +140,14 @@ export default function CommunityActivity() {
                       <p className="text-sm font-medium text-[var(--dm-text-primary)] truncate">{member.displayName}</p>
                       <p className="text-[11px] text-[var(--dm-text-muted)] truncate">{member.username ? `@${member.username}` : 'Fi24h DealMakers member'}</p>
                     </div>
-                    <span className="flex items-center gap-2 text-[10px] text-[var(--dm-emerald-bright)] whitespace-nowrap">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald)]" aria-hidden="true" />
-                      {relativeTime(member.lastActiveAt)}
-                    </span>
+                    {member.source === 'admin_seed' ? (
+                      <span className="text-[10px] text-[var(--dm-gold-bright)] whitespace-nowrap font-mono uppercase tracking-wider">Team</span>
+                    ) : (
+                      <span className="flex items-center gap-2 text-[10px] text-[var(--dm-emerald-bright)] whitespace-nowrap">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald)]" aria-hidden="true" />
+                        {relativeTime(member.lastActiveAt)}
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
