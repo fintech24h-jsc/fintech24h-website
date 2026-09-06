@@ -37,6 +37,29 @@ or exposes message text, media, links, message IDs, or chat history.
      --data-urlencode 'allowed_updates=["message"]'
    ```
 
+5b. (Optional, recommended) Seed the section with real admin/team profiles so
+    it isn't empty before the first tracked message. This calls Telegram's
+    `getChatAdministrators` — real people, no fabricated activity — and marks
+    them `source = 'admin_seed'` so they're never counted as "active" and the
+    frontend shows a "Team" badge instead of a fake activity time for them:
+
+   ```sh
+   # The bot needs its own token as an outbound secret to call Telegram's API:
+   npx wrangler secret put TELEGRAM_BOT_TOKEN
+
+   # A separate secret just to authorize this one-off admin action:
+   ADMIN_SEED_SECRET=$(openssl rand -hex 32)
+   echo "$ADMIN_SEED_SECRET" | npx wrangler secret put ADMIN_SEED_SECRET
+
+   curl -sS -X POST "https://YOUR-WORKER.workers.dev/telegram/seed-admins" \
+     -H "X-Admin-Secret: $ADMIN_SEED_SECRET"
+   # => {"ok":true,"seeded":N}
+   ```
+
+   Re-run this any time the admin list changes — it's idempotent (upserts by
+   Telegram user ID) and never downgrades a member who has since sent a real
+   tracked message back to "admin_seed".
+
 6. In the main website deployment environment, set:
 
    ```sh
@@ -50,8 +73,15 @@ than fabricated activity.
 ## Data policy
 
 - Public fields: Telegram display name, username when available, and last
-  activity time.
-- Aggregates: unique members active in the prior 24 hours and 7 days.
+  activity time (message-sourced members only — see below).
+- Aggregates: unique members active in the prior 24 hours and 7 days, counted
+  from real messages only.
 - Never stored: message content, media, URLs, message identifiers, or files.
-- Collection starts when the bot is added; the Bot API cannot backfill group
-  history into this dataset.
+- Collection of real activity starts when the bot is added; the Bot API
+  cannot backfill message history into this dataset.
+- The one exception: `getChatAdministrators` (step 5b) is a live snapshot of
+  the group's actual current admins/team, fetched on demand — not history.
+  These rows are tagged `source = 'admin_seed'`, are never counted in the
+  activity aggregates, and render with a "Team" badge instead of a claimed
+  activity time, so the section can show real people on day one without
+  implying an activity signal that doesn't exist.

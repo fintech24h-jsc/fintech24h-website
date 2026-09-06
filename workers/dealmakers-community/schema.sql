@@ -7,7 +7,13 @@ CREATE TABLE IF NOT EXISTS telegram_members (
   username TEXT,
   first_seen_at TEXT NOT NULL,
   last_active_at TEXT NOT NULL,
-  total_messages INTEGER NOT NULL DEFAULT 0
+  total_messages INTEGER NOT NULL DEFAULT 0,
+  -- 'message': last_active_at is a real message timestamp from the webhook.
+  -- 'admin_seed': backfilled once from Telegram's admin list so the section
+  -- isn't empty on day one; last_active_at here is only the seed time, never
+  -- a real activity signal, so the frontend must not render it as "Active
+  -- ... ago" for this source.
+  source TEXT NOT NULL DEFAULT 'message'
 );
 
 CREATE INDEX IF NOT EXISTS idx_telegram_members_last_active
