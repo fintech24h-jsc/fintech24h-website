@@ -233,7 +233,7 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
             className="mt-0.5 w-4 h-4 rounded border-[var(--border-default)] bg-[var(--surface-soft)] accent-[var(--accent-cyan)] shrink-0"
           />
           <span className="text-[11px] text-[var(--text-secondary)] opacity-70 font-body leading-relaxed">
-            Keep my profile on file for future openings (optional — not required for this application).
+            Keep my profile on file for future openings (optional, not required for this application).
           </span>
         </label>
 

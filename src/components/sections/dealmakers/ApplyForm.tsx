@@ -225,7 +225,7 @@ export default function ApplyForm() {
             className="mt-0.5 w-4 h-4 rounded border-[var(--dm-border)] bg-white/5 accent-[var(--dm-gold)] shrink-0"
           />
           <span className="text-[10px] text-[var(--dm-text-muted)] leading-relaxed">
-            Send me updates about future DealMakers' Club seasons (optional — you can unsubscribe anytime).
+            Send me updates about future DealMakers' Club seasons (optional, you can unsubscribe anytime).
           </span>
         </label>
 

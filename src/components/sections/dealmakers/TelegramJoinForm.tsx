@@ -80,7 +80,7 @@ export default function TelegramJoinForm() {
             <strong className="text-[var(--dm-text-secondary)]">Please note:</strong> {telegramGroupName} is
             reserved for C-level executives, founders, and senior business leaders, so approval here is
             deliberately selective. If you're a professional, freelancer, or industry expert, you'll be approved
-            far faster in our general community instead — a space built for professionals, freelancers, and
+            far faster in our general community instead, a space built for professionals, freelancers, and
             builders to connect, collaborate, and exchange opportunities.
           </p>
           <a
@@ -168,7 +168,7 @@ export default function TelegramJoinForm() {
             className="mt-0.5 w-4 h-4 rounded border-[var(--dm-border)] bg-white/5 accent-[var(--dm-gold)] shrink-0"
           />
           <span className="text-[10px] text-[var(--dm-text-muted)] leading-relaxed">
-            Send me updates about future DealMakers' Club seasons (optional — you can unsubscribe anytime).
+            Send me updates about future DealMakers' Club seasons (optional, you can unsubscribe anytime).
           </span>
         </label>
 
