@@ -43,6 +43,59 @@ function isoFromTelegramDate(date) {
   return new Date((Number(date) || Math.floor(Date.now() / 1000)) * 1000).toISOString();
 }
 
+// Resolves a member's current profile photo to a Telegram file_id, once.
+// Only called when the member has no avatar_file_id yet, so a returning
+// sender never triggers a repeat Telegram API call. Picks the smallest
+// available size — this renders at ~40px, no need for the largest photo.
+async function resolveAvatarFileId(env, memberId) {
+  const existing = await env.DB.prepare(
+    'SELECT avatar_file_id FROM telegram_members WHERE telegram_user_id = ?'
+  ).bind(memberId).first();
+  if (existing && existing.avatar_file_id) return;
+
+  try {
+    const url = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/getUserProfilePhotos?user_id=${encodeURIComponent(memberId)}&limit=1`;
+    const response = await fetch(url);
+    const payload = await response.json();
+    const sizes = payload.ok ? payload.result?.photos?.[0] : null;
+    if (!sizes || !sizes.length) return;
+
+    const fileId = sizes[0].file_id; // smallest size Telegram offers for this photo
+    await env.DB.prepare(
+      'UPDATE telegram_members SET avatar_file_id = ? WHERE telegram_user_id = ?'
+    ).bind(fileId, memberId).run();
+  } catch (error) {
+    // Best-effort only — a missing avatar just falls back to initials.
+  }
+}
+
+async function getAvatar(env, memberId) {
+  const row = await env.DB.prepare(
+    'SELECT avatar_file_id FROM telegram_members WHERE telegram_user_id = ?'
+  ).bind(memberId).first();
+  if (!row?.avatar_file_id) return new Response(null, { status: 404 });
+
+  const fileInfoUrl = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/getFile?file_id=${encodeURIComponent(row.avatar_file_id)}`;
+  const fileInfo = await (await fetch(fileInfoUrl)).json();
+  if (!fileInfo.ok || !fileInfo.result?.file_path) return new Response(null, { status: 404 });
+
+  // The bot token lives only in this server-side request — the browser only
+  // ever sees this Worker's own /v1/avatar URL, never Telegram's file URL.
+  const fileUrl = `https://api.telegram.org/file/bot${env.TELEGRAM_BOT_TOKEN}/${fileInfo.result.file_path}`;
+  const imageResponse = await fetch(fileUrl);
+  if (!imageResponse.ok) return new Response(null, { status: 404 });
+
+  return new Response(imageResponse.body, {
+    status: 200,
+    headers: {
+      'Content-Type': imageResponse.headers.get('Content-Type') || 'image/jpeg',
+      'Cache-Control': 'public, max-age=86400',
+      'Access-Control-Allow-Origin': 'https://fintech24h.com',
+      'Vary': 'Origin',
+    },
+  });
+}
+
 async function handleTelegramUpdate(request, env) {
   if (request.headers.get('X-Telegram-Bot-Api-Secret-Token') !== env.TELEGRAM_WEBHOOK_SECRET) {
     return json({ ok: false }, 401);
@@ -82,6 +135,8 @@ async function handleTelegramUpdate(request, env) {
     `).bind(activityDay, memberId),
   ]);
 
+  if (env.TELEGRAM_BOT_TOKEN) await resolveAvatarFileId(env, memberId);
+
   return json({ ok: true });
 }
 
@@ -97,7 +152,7 @@ async function getPulse(env) {
     env.DB.prepare("SELECT COUNT(*) AS count FROM telegram_members WHERE source = 'message' AND last_active_at >= ?").bind(todaySince),
     env.DB.prepare("SELECT COUNT(*) AS count FROM telegram_members WHERE source = 'message' AND last_active_at >= ?").bind(weekSince),
     env.DB.prepare(`
-      SELECT display_name AS displayName, username, last_active_at AS lastActiveAt, source
+      SELECT telegram_user_id AS telegramUserId, display_name AS displayName, username, last_active_at AS lastActiveAt, source, avatar_file_id IS NOT NULL AS hasAvatar
       FROM telegram_members
       WHERE source = 'message' AND last_active_at >= ?
       ORDER BY last_active_at DESC
@@ -106,7 +161,7 @@ async function getPulse(env) {
     // Fills remaining slots with real admin profiles so the section isn't
     // empty before the first tracked message — never counted as "active".
     env.DB.prepare(`
-      SELECT display_name AS displayName, username, last_active_at AS lastActiveAt, source
+      SELECT telegram_user_id AS telegramUserId, display_name AS displayName, username, last_active_at AS lastActiveAt, source, avatar_file_id IS NOT NULL AS hasAvatar
       FROM telegram_members
       WHERE source = 'admin_seed'
       ORDER BY first_seen_at ASC
@@ -165,6 +220,12 @@ async function seedAdmins(request, env) {
   }
 
   if (writes.length) await env.DB.batch(writes);
+
+  for (const entry of payload.result ?? []) {
+    if (!entry.user || entry.user.is_bot) continue;
+    await resolveAvatarFileId(env, String(entry.user.id));
+  }
+
   return json({ ok: true, seeded });
 }
 
@@ -176,6 +237,11 @@ export default {
     if (request.method === 'POST' && url.pathname === '/telegram/webhook') return handleTelegramUpdate(request, env);
     if (request.method === 'POST' && url.pathname === '/telegram/seed-admins') return seedAdmins(request, env);
     if (request.method === 'GET' && url.pathname === '/v1/pulse') return getPulse(env);
+    if (request.method === 'GET' && url.pathname.startsWith('/v1/avatar/')) {
+      const memberId = url.pathname.slice('/v1/avatar/'.length);
+      if (!env.TELEGRAM_BOT_TOKEN || !memberId) return new Response(null, { status: 404 });
+      return getAvatar(env, memberId);
+    }
 
     return json({ error: 'Not found' }, 404);
   },

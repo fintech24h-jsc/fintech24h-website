@@ -13,7 +13,14 @@ CREATE TABLE IF NOT EXISTS telegram_members (
   -- isn't empty on day one; last_active_at here is only the seed time, never
   -- a real activity signal, so the frontend must not render it as "Active
   -- ... ago" for this source.
-  source TEXT NOT NULL DEFAULT 'message'
+  source TEXT NOT NULL DEFAULT 'message',
+  -- Telegram file_id for the member's current profile photo (small size),
+  -- resolved lazily via getUserProfilePhotos. NULL until first resolved, or
+  -- if the member has no profile photo — the frontend falls back to
+  -- initials in either case. Never the raw Telegram file URL (that embeds
+  -- the bot token) — always fetched through this Worker's own /v1/avatar
+  -- proxy so the token never reaches the browser.
+  avatar_file_id TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_telegram_members_last_active

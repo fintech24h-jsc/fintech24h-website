@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 
 type CommunityMember = {
+  telegramUserId?: string;
   displayName: string;
   username?: string | null;
   lastActiveAt: string;
   source?: 'message' | 'admin_seed';
+  hasAvatar?: boolean;
 };
 
 type CommunityPulse = {
@@ -19,6 +21,7 @@ type CommunityPulse = {
 // staging Worker without requiring a component change.
 const pulseApiUrl = import.meta.env.PUBLIC_DEALMAKERS_PULSE_API_URL
   || 'https://fintech24h-dealmakers-community.fintech24hvn.workers.dev/v1/pulse';
+const workerBaseUrl = pulseApiUrl.replace(/\/v1\/pulse\/?$/, '');
 const refreshIntervalMs = 60_000;
 
 function initials(name: string) {
@@ -47,6 +50,32 @@ function updatedTime(iso: string) {
   if (seconds < 60) return 'Updated just now';
   const minutes = Math.floor(seconds / 60);
   return `Updated ${minutes} min ago`;
+}
+
+// Real Telegram profile photo when available, proxied through the Worker
+// so the bot token never reaches the browser — falls back to an
+// initials badge on 404 (no photo set) or any load error.
+function MemberAvatar({ member }: { member: CommunityMember }) {
+  const [failed, setFailed] = useState(false);
+  const showPhoto = member.hasAvatar && member.telegramUserId && !failed;
+
+  return (
+    <span className="relative w-11 h-11 shrink-0 rounded-full p-[1.5px]" style={{ background: 'linear-gradient(135deg, var(--dm-gold), var(--dm-emerald))' }}>
+      <span className="flex w-full h-full items-center justify-center rounded-full bg-[var(--dm-bg-secondary)] overflow-hidden">
+        {showPhoto ? (
+          <img
+            src={`${workerBaseUrl}/v1/avatar/${member.telegramUserId}`}
+            alt=""
+            className="w-full h-full object-cover"
+            loading="lazy"
+            onError={() => setFailed(true)}
+          />
+        ) : (
+          <span className="font-mono font-medium text-[12px] text-[var(--dm-gold-bright)]">{initials(member.displayName)}</span>
+        )}
+      </span>
+    </span>
+  );
 }
 
 export default function CommunityActivity() {
@@ -104,16 +133,16 @@ export default function CommunityActivity() {
         </div>
 
         {hasActivity && pulse ? (
-          <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-5 lg:gap-8 items-start" aria-live="polite">
-            <div className="dm-card p-6 sm:p-7">
+          <div className="grid lg:grid-cols-[0.75fr_1.25fr] gap-5 lg:gap-6 items-start" aria-live="polite">
+            <div className="dm-card p-6 sm:p-7 lg:sticky lg:top-24">
               <p className="font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.16em] mb-6">Club pulse</p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="rounded-2xl border border-[var(--dm-border)] bg-white/[0.025] p-4">
-                  <strong className="block font-display text-3xl text-[var(--dm-text-primary)] mb-1">{pulse.activeMembersLast24Hours}</strong>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="relative rounded-2xl border border-[var(--dm-border)] bg-gradient-to-br from-[rgba(217,178,106,0.07)] to-transparent p-4 overflow-hidden">
+                  <strong className="block font-display text-4xl text-[var(--dm-text-primary)] mb-1 tabular-nums">{pulse.activeMembersLast24Hours}</strong>
                   <span className="text-[10px] text-[var(--dm-text-muted)] uppercase tracking-wider">Active today</span>
                 </div>
-                <div className="rounded-2xl border border-[var(--dm-border)] bg-white/[0.025] p-4">
-                  <strong className="block font-display text-3xl text-[var(--dm-text-primary)] mb-1">{pulse.activeMembersLast7Days}</strong>
+                <div className="relative rounded-2xl border border-[var(--dm-border)] bg-gradient-to-br from-[rgba(52,168,120,0.07)] to-transparent p-4 overflow-hidden">
+                  <strong className="block font-display text-4xl text-[var(--dm-text-primary)] mb-1 tabular-nums">{pulse.activeMembersLast7Days}</strong>
                   <span className="text-[10px] text-[var(--dm-text-muted)] uppercase tracking-wider">Active this week</span>
                 </div>
               </div>
@@ -132,19 +161,20 @@ export default function CommunityActivity() {
               </div>
               <div className="divide-y divide-[var(--dm-border)]">
                 {pulse.members.map((member) => (
-                  <div key={`${member.username ?? member.displayName}-${member.lastActiveAt}`} className="flex items-center gap-3 sm:gap-4 px-5 sm:px-6 py-4">
-                    <span className="w-10 h-10 shrink-0 rounded-xl border border-[var(--dm-border-accent)] bg-gradient-to-br from-[rgba(217,178,106,0.18)] to-[rgba(52,168,120,0.16)] flex items-center justify-center font-mono font-medium text-[11px] text-[var(--dm-gold-bright)]">
-                      {initials(member.displayName)}
-                    </span>
+                  <div
+                    key={`${member.telegramUserId ?? member.username ?? member.displayName}-${member.lastActiveAt}`}
+                    className="flex items-center gap-3 sm:gap-4 px-5 sm:px-6 py-3.5 transition-colors duration-200 hover:bg-white/[0.02]"
+                  >
+                    <MemberAvatar member={member} />
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-[var(--dm-text-primary)] truncate">{member.displayName}</p>
                       <p className="text-[11px] text-[var(--dm-text-muted)] truncate">{member.username ? `@${member.username}` : 'Fi24h DealMakers member'}</p>
                     </div>
                     {member.source === 'admin_seed' ? (
-                      <span className="text-[10px] text-[var(--dm-gold-bright)] whitespace-nowrap font-mono uppercase tracking-wider">Team</span>
+                      <span className="dm-tag dm-tag-gold shrink-0">Team</span>
                     ) : (
-                      <span className="flex items-center gap-2 text-[10px] text-[var(--dm-emerald-bright)] whitespace-nowrap">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald)]" aria-hidden="true" />
+                      <span className="dm-tag dm-tag-emerald shrink-0 whitespace-nowrap">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald-bright)]" aria-hidden="true" />
                         {relativeTime(member.lastActiveAt)}
                       </span>
                     )}
