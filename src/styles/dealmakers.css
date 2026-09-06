@@ -82,6 +82,14 @@
 .dm-root .font-body    { font-family: var(--dm-font-body) !important; }
 .dm-root .font-mono    { font-family: var(--dm-font-mono) !important; }
 
+/* DealMakersLayout renders its own standalone <html> (not shared with the
+   main site), so bumping the root size here only affects this microsite —
+   every rem-based Tailwind utility across every dm-* component scales up
+   with it, no per-component changes needed. ~6% up from the 16px default. */
+html {
+  font-size: 17px;
+}
+
 .dm-root ::selection {
   background: rgba(217, 178, 106, 0.28);
   color: var(--dm-text-primary);

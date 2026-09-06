@@ -52,7 +52,7 @@ const faqSchema = {
 const packagesSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: `${seasonMeta.name} — Packages`,
+  name: `${seasonMeta.name} Packages`,
   itemListElement: pricingPackages.map((pkg, i) => {
     const numericPrice = Number(pkg.price.replace(/[^0-9.]/g, ''));
     const isFromPrice = /from/i.test(pkg.price);
