@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { getAllCaseStudies } from '../../lib/wordpress';
 import type { CaseStudy } from '../../lib/wordpress';
+import { stripEmbeddedJsonLd } from '../../lib/utils';
 
 export async function getStaticPaths() {
   const items = await getAllCaseStudies();
@@ -100,7 +101,7 @@ const breadcrumbs = [
           {caseStudy.content.rendered && (
             <div class="border-t border-[var(--border-subtle)] pt-10 prose prose-invert prose-headings:font-display prose-headings:font-bold prose-p:font-body text-[var(--text-secondary)]">
               <h2 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-4">Execution Blueprint</h2>
-              <div set:html={caseStudy.content.rendered} />
+              <div set:html={stripEmbeddedJsonLd(caseStudy.content.rendered)} />
             </div>
           )}
         </div>

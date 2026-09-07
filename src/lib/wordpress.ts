@@ -313,7 +313,12 @@ export async function getAllCategories(): Promise<WPCategory[]> {
 // ─── Utility: Strip HTML ─────────────────────────────────────────────────────
 
 export function stripHtml(html: string): string {
-  return decodeHtmlEntities(html.replace(/<[^>]*>/g, '')).trim();
+  // Strip <script>/<style> blocks (content included, not just the tags) first —
+  // some posts embed a raw <script type="application/ld+json"> in the body
+  // (see stripEmbeddedJsonLd in lib/utils.ts), and a plain tag-strip would
+  // leave that JSON text dangling in the excerpt/meta description.
+  const withoutScripts = html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, '');
+  return decodeHtmlEntities(withoutScripts.replace(/<[^>]*>/g, '')).trim();
 }
 
 export function getExcerpt(post: WPPost, maxLength = 160): string {

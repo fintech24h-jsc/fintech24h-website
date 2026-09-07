@@ -3,7 +3,7 @@
 import BaseLayout from './BaseLayout.astro';
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 import { formatDate, getFeaturedImage, getPostAuthor, getSeoTitle } from '../lib/wordpress';
-import { getReadingTime, getTableOfContents, decodeHtmlEntities } from '../lib/utils';
+import { getReadingTime, getTableOfContents, decodeHtmlEntities, stripEmbeddedJsonLd } from '../lib/utils';
 import type { WPPost } from '../lib/wordpress';
 
 interface Props {
@@ -23,7 +23,8 @@ const postAuthor = getPostAuthor(post);
 
 // Table of contents: WordPress doesn't add ids to headings, so inject them
 // and only show the sidebar nav when there's enough structure to be useful.
-const { html: contentHtml, items: tocItems } = getTableOfContents(post.content.rendered);
+const sanitizedContent = stripEmbeddedJsonLd(post.content.rendered);
+const { html: contentHtml, items: tocItems } = getTableOfContents(sanitizedContent);
 const hasToc = tocItems.length >= 3;
 
 // Article schema representation
