@@ -13,13 +13,19 @@ import { seasons } from '../data/dealmakers/seasons';
 // Same box-shadow star-dot technique as the main site's Hero
 // (src/components/sections/HeroSection.astro) — generated per-render,
 // warm ivory instead of pure white to match the gold/emerald palette.
+// Coordinates use vw/vh (viewport-relative) instead of fixed px so the
+// field covers the full width on any screen size — a fixed 0-2000px box
+// left large/ultrawide monitors with a bare right half (same bug fixed on
+// the main site's HeroSection.astro on 2026-07-05; this layout has its own
+// separate copy of the technique per the DealMakers design isolation, so it
+// never got that fix).
 const generateStars = (count: number) => {
   const shadows: string[] = [];
   for (let i = 0; i < count; i++) {
-    const x = Math.floor(Math.random() * 2000);
-    const y = Math.floor(Math.random() * 2000);
+    const x = (Math.random() * 100).toFixed(2);
+    const y = (Math.random() * 100).toFixed(2);
     const alpha = (Math.random() * 0.6 + 0.2).toFixed(2);
-    shadows.push(`${x}px ${y}px rgba(245, 239, 226, ${alpha})`);
+    shadows.push(`${x}vw ${y}vh rgba(245, 239, 226, ${alpha})`);
   }
   return shadows.join(', ');
 };

@@ -138,7 +138,7 @@ html {
 #dm-stars-small::after, #dm-stars-medium::after, #dm-stars-large::after {
   content: '';
   position: absolute;
-  top: 2000px;
+  top: 100vh;
   border-radius: 50%;
   background: transparent;
 }
@@ -148,7 +148,7 @@ html {
 
 @keyframes dm-star-drift {
   from { transform: translateY(0); }
-  to   { transform: translateY(-2000px); }
+  to   { transform: translateY(-100vh); }
 }
 @media (prefers-reduced-motion: reduce) {
   #dm-stars-small, #dm-stars-medium, #dm-stars-large { animation: none !important; }
