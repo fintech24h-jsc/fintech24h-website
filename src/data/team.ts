@@ -35,12 +35,12 @@ export const team: TeamMember[] = [
   {
     name: 'Phat Vo',
     role: 'Co-Founder & CPO',
-    bio: 'Designing cutting-edge user interfaces and technical protocols, aligning user-centric UX systems with next-generation Web3 engines.',
+    bio: 'Leading product research and development, running product and service operations, and growing strategic partner and client relationships across the Web3 ecosystem.',
     telegram: 'https://telegram.me/phatvt',
     linkedin: 'https://www.linkedin.com/in/phatvt/',
     signatureColor: 'linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%)', // Cyber Glow
     image: 'https://fintech24h.com/wp-content/uploads/2026/07/Phat-vo-300x300.png',
-    specs: ['Advanced UI/UX Protocols', 'Web3 Client Integrations', 'Front-end Architecture']
+    specs: ['Product Research & Development', 'Product & Service Operations', 'Partner & Client Development']
   },
   {
     name: 'JayC',
