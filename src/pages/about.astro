@@ -32,7 +32,7 @@ const aboutSchema = [
       "Blockchain Marketing","Web3 Growth Hacking","KOL Marketing","Crypto PR",
       "Community Management","DeFi Marketing","NFT Campaigns","Token Launch Marketing"
     ],
-    "member": team.map(m => ({
+    "member": team.filter(m => !m.mascot).map(m => ({
       "@type": "OrganizationRole",
       "member": {
         "@type": "Person",
@@ -274,16 +274,12 @@ const aboutSchema = [
       <!-- Passes Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {team.map((t, idx) => {
-          // General specifications (strictly without specific unproven statistics)
-          const specMetrics = idx === 0 ? [
-            'Web3 Growth Architecture', 'Global Ecosystem Seeding', 'Launchpad Advisory Node'
-          ] : idx === 1 ? [
-            'Advanced UI/UX Protocols', 'Web3 Client Integrations', 'Front-end Architecture'
-          ] : idx === 2 ? [
-            'Community Infrastructure', 'Interactive Campaign Design', 'Multi-channel Moderation'
-          ] : [
-            'Strategic Capital Matchmaking', 'CEX/DEX Integrations', 'Global BD Pipeline'
-          ];
+          // Per-member operational specs (defined in team.ts, order-independent)
+          const specMetrics = t.specs ?? [];
+          // Mascot avatar stays in full color; everyone else uses the grayscale-on-idle treatment
+          const avatarImgClass = t.mascot
+            ? 'w-full h-full object-cover transition-transform duration-500 relative z-0 group-hover:scale-105'
+            : 'w-full h-full object-cover filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 relative z-0';
 
           return (
             <div class="bg-black border border-[var(--border-default)] p-8 hover:-translate-y-1.5 transition-all duration-500 group relative reveal overflow-hidden flex flex-col justify-between min-h-[360px]"
@@ -310,10 +306,10 @@ const aboutSchema = [
                         <div class="absolute inset-0 bg-[color-mix(in_srgb,var(--theme-accent)_10%,transparent)] animate-pulse mix-blend-overlay z-10 pointer-events-none"></div>
                         {t.name === 'Phat Vo' ? (
                           <a href="/author/phat-vo" class="w-full h-full block">
-                            <img src={t.image} alt={t.name} width="64" height="64" class="w-full h-full object-cover filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 relative z-0" />
+                            <img src={t.image} alt={t.name} width="64" height="64" class={avatarImgClass} />
                           </a>
                         ) : (
-                          <img src={t.image} alt={t.name} width="64" height="64" class="w-full h-full object-cover filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 relative z-0" />
+                          <img src={t.image} alt={t.name} width="64" height="64" class={avatarImgClass} />
                         )}
                       </div>
                     )}
