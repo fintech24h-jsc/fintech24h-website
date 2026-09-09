@@ -23,6 +23,17 @@ export const team: TeamMember[] = [
     mascot: true
   },
   {
+    name: 'Mr Bông',
+    role: 'Chief Security & Reception Officer',
+    bio: 'On patrol 24/7 — running, playing, and keeping the office lively, with a joyful welcome ready for every visitor who walks through the door.',
+    telegram: 'https://t.me/fintech24h',
+    linkedin: 'https://www.linkedin.com/company/fintech24h/',
+    signatureColor: 'linear-gradient(135deg, #f0a278 0%, #a855f7 100%)', // Golden Bark
+    image: 'https://fintech24h.com/wp-content/uploads/2026/09/Mr-Bong-Fintech24h.jpeg',
+    specs: ['Run & wreck everything', 'Eat, then nap', 'Greet strangers with pure joy'],
+    mascot: true
+  },
+  {
     name: 'Vincent Nguyen',
     role: 'Co-Founder & CEO',
     bio: 'Pioneering strategic growth architectures with 8+ years scaling high-performance blockchain operations and Web3 protocols globally.',
