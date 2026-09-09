@@ -261,10 +261,14 @@ const currentYear = new Date().getFullYear();
 
       <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
         <p class="text-xs text-[var(--dm-text-muted)]">&copy; {currentYear} DealMakers&rsquo; Club. All rights reserved.</p>
-        <a href="https://fintech24h.com" class="flex items-center gap-2 text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors">
-          A
+        <a href="https://fintech24h.com" class="flex items-center gap-2 text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors" aria-label="Fintech24h, Official Capital Partner Season 3">
           <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-5 w-auto object-contain opacity-80" loading="lazy" />
-          Company
+          <span class="font-display font-light text-[var(--dm-border-accent)]" aria-hidden="true">|</span>
+          {capitalPartner.confirmed && capitalPartner.logoUrl ? (
+            <img src={capitalPartner.logoUrl} alt={`${capitalPartner.name}, Official Capital Partner`} class="h-5 w-auto object-contain opacity-80" loading="lazy" />
+          ) : (
+            <span class="font-mono text-[10px] uppercase tracking-[0.1em]">Capital Partner</span>
+          )}
         </a>
       </div>
     </div>
