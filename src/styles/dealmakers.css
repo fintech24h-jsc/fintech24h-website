@@ -154,6 +154,19 @@ html {
   #dm-stars-small, #dm-stars-medium, #dm-stars-large { animation: none !important; }
 }
 
+/* The star count is fixed (generated once server-side, same 355 dots for
+   every viewport) but it's positioned by vw/vh percentage of the screen, so
+   the same dot count lands in a much smaller physical area on a phone than
+   on desktop — the field reads roughly 4x denser on a 375px-wide screen and
+   starts competing with headings/badges sitting directly on top of it
+   instead of reading as a faint backdrop. Dial the layers down (not off) at
+   the same breakpoint the rest of the microsite treats as "mobile". */
+@media (max-width: 640px) {
+  #dm-stars-small  { opacity: 0.32; }
+  #dm-stars-medium { opacity: 0.4; }
+  #dm-stars-large  { opacity: 0.48; }
+}
+
 .dm-live-dot {
   animation: dm-live-pulse 2.4s ease-in-out infinite;
 }
