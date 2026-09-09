@@ -12,14 +12,14 @@ export interface TeamMember {
 
 export const team: TeamMember[] = [
   {
-    name: 'Mr Cá',
+    name: 'Mr Cá (Mr Fish)',
     role: 'Chief Happiness Officer',
     bio: 'The heart of the office — keeping morale high, energy positive, and reminding everyone that great work happens when the team is happy.',
     telegram: 'https://t.me/fintech24h',
     linkedin: 'https://www.linkedin.com/company/fintech24h/',
     signatureColor: 'linear-gradient(135deg, #00c8f0 0%, #06b6d4 100%)', // Aqua Current
     image: 'https://fintech24h.com/wp-content/uploads/2026/09/CHPO-Fintech24h-Mr-Ca-Mr-Fish.jpeg',
-    specs: ['Team Happiness Protocol', 'Culture & Vibe Ops', 'Daily Morale Node'],
+    specs: ['Eat, Eat a lot', 'Just mew mew', 'Sleep, just sleep'],
     mascot: true
   },
   {
@@ -65,4 +65,3 @@ export const team: TeamMember[] = [
 ];
 
 export const advisors: TeamMember[] = [];
-

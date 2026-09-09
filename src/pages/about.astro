@@ -272,20 +272,21 @@ const aboutSchema = [
       </div>
 
       <!-- Passes Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 items-start gap-8">
         {team.map((t, idx) => {
           // Per-member operational specs (defined in team.ts, order-independent)
           const specMetrics = t.specs ?? [];
+          const isMascot = Boolean(t.mascot);
           // Mascot avatar stays in full color; everyone else uses the grayscale-on-idle treatment
-          const avatarImgClass = t.mascot
-            ? 'w-full h-full object-cover transition-transform duration-500 relative z-0 group-hover:scale-105'
+          const avatarImgClass = isMascot
+            ? 'w-full h-full object-cover object-center transition-transform duration-500 relative z-0 group-hover:scale-105'
             : 'w-full h-full object-cover filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 relative z-0';
 
           return (
-            <div class={`bg-black border p-8 hover:-translate-y-1.5 transition-all duration-500 group relative reveal overflow-hidden flex flex-col justify-between min-h-[360px] ${t.mascot ? 'lg:col-span-2' : ''}`}
+            <div class={`bg-black border hover:-translate-y-1.5 transition-all duration-500 group relative reveal overflow-hidden flex flex-col justify-between ${isMascot ? 'min-h-[272px] p-5 sm:p-6' : 'min-h-[360px] p-8'}`}
                  style={{
-                   boxShadow: t.mascot ? '0 12px 44px rgba(0,200,240,0.16), 0 10px 30px rgba(0,0,0,0.5)' : '0 10px 30px rgba(0,0,0,0.5)',
-                   borderColor: t.mascot ? 'color-mix(in srgb, var(--accent-cyan) 35%, transparent)' : 'rgba(255,255,255,0.06)'
+                   boxShadow: isMascot ? '0 12px 44px rgba(0,200,240,0.16), 0 10px 30px rgba(0,0,0,0.5)' : '0 10px 30px rgba(0,0,0,0.5)',
+                   borderColor: isMascot ? 'color-mix(in srgb, var(--accent-cyan) 35%, transparent)' : 'rgba(255,255,255,0.06)'
                  }}>
               <!-- Dual Scanning Laser Line Sweep Effect on Hover -->
               <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--theme-accent)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3s_linear_infinite] shadow-[0_0_12px_var(--theme-accent)]" 
@@ -299,47 +300,62 @@ const aboutSchema = [
 
               <div>
                 <!-- Operator Pass Header -->
-                <div class="flex justify-between items-start mb-10">
-                  <div class="flex gap-4 items-center">
+                <div class:list={[
+                  'flex',
+                  isMascot ? 'relative flex-col items-center text-center mb-4' : 'justify-between items-start mb-10',
+                ]}>
+                  <div class:list={[
+                    'flex',
+                    isMascot ? 'flex-col items-center gap-2' : 'gap-4 items-center',
+                  ]}>
                     {t.image && (
-                      <div class={`relative ${t.mascot ? 'w-24 h-24 md:w-28 md:h-28' : 'w-16 h-16'} rounded-full overflow-hidden border border-[var(--border-default)] group-hover:border-[var(--theme-accent)] transition-colors duration-500 shrink-0`} style={{ '--theme-accent': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
+                      <div class={`relative ${isMascot ? 'w-16 h-16 sm:w-20 sm:h-20' : 'w-16 h-16'} rounded-full overflow-hidden border border-[var(--border-default)] group-hover:border-[var(--theme-accent)] transition-colors duration-500 shrink-0`} style={{ '--theme-accent': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
                         <div class="absolute inset-0 bg-[color-mix(in_srgb,var(--theme-accent)_10%,transparent)] animate-pulse mix-blend-overlay z-10 pointer-events-none"></div>
                         {t.name === 'Phat Vo' ? (
                           <a href="/author/phat-vo" class="w-full h-full block">
-                            <img src={t.image} alt={t.name} width="64" height="64" class={avatarImgClass} />
+                            <img src={t.image} alt={t.name} width={isMascot ? 96 : 64} height={isMascot ? 96 : 64} class={avatarImgClass} />
                           </a>
                         ) : (
-                          <img src={t.image} alt={t.name} width="64" height="64" class={avatarImgClass} />
+                          <img src={t.image} alt={t.name} width={isMascot ? 96 : 64} height={isMascot ? 96 : 64} class={avatarImgClass} />
                         )}
                       </div>
                     )}
-                    <div class="flex flex-col">
-                      <span class="font-mono text-[9px] text-[var(--text-muted)] tracking-[0.25em]">OPERATOR_NODE_0{idx + 1}</span>
-                      <h3 class={`font-display ${t.mascot ? 'text-3xl md:text-4xl' : 'text-2xl'} text-[var(--text-primary)] font-bold tracking-tight uppercase mt-1 transition-colors group-hover:text-[var(--theme-accent)]`} style={{ '--theme-accent': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
+                    <div class:list={['flex flex-col', isMascot && 'items-center']}>
+                      <span class={`font-mono text-[9px] text-[var(--text-muted)] ${isMascot ? 'tracking-[0.18em]' : 'tracking-[0.25em]'}`}>OPERATOR_NODE_0{idx + 1}</span>
+                      <h3 class={`font-display ${isMascot ? 'text-xl sm:text-2xl' : 'text-2xl'} text-[var(--text-primary)] font-bold tracking-tight uppercase mt-1 transition-colors group-hover:text-[var(--theme-accent)]`} style={{ '--theme-accent': idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
                         {t.name === 'Phat Vo' ? (
                           <a href="/author/phat-vo" class="hover:underline hover:text-[var(--theme-accent)] transition-colors">{t.name}</a>
                         ) : (
                           t.name
                         )}
                       </h3>
-                      <span class="font-mono text-[10px] tracking-wider uppercase mt-1.5" style={{ color: idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
+                      <span class={`font-mono text-[10px] tracking-wider uppercase ${isMascot ? 'mt-1' : 'mt-1.5'}`} style={{ color: idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}>
                         {t.role}
                       </span>
                     </div>
                   </div>
                   
                   <!-- Virtual Network ID Signature -->
-                  <div class="flex flex-col items-end text-right font-mono text-[9px] text-[var(--text-muted)]">
+                  <div class:list={[
+                    'flex flex-col items-end text-right font-mono text-[9px] text-[var(--text-muted)]',
+                    isMascot && 'absolute right-0 top-0',
+                  ]}>
                     <div>STATUS // ONLINE</div>
                     <div class="text-[8px] text-[var(--text-muted)]">ADDR // 0x71C...8E{idx}F</div>
                   </div>
                 </div>
 
                 <!-- Proof-point Specifications (Generic Roles, No Fluff Text, No Hardcoded Stats) -->
-                <div class="space-y-3.5 mb-10">
-                  <div class="font-mono text-[9px] uppercase tracking-widest text-[var(--text-muted)] border-b border-[var(--border-subtle)] pb-2">Operational Node Registry:</div>
+                <div class:list={[
+                  isMascot ? 'space-y-2' : 'space-y-3.5 mb-10',
+                  isMascot && 'text-center',
+                ]}>
+                  <div class={`font-mono text-[9px] uppercase tracking-widest text-[var(--text-muted)] border-b border-[var(--border-subtle)] ${isMascot ? 'pb-1.5' : 'pb-2'}`}>Operational Node Registry:</div>
                   {specMetrics.map((spec) => (
-                    <div class="flex items-center gap-3 font-mono text-xs text-[color-mix(in_srgb,var(--text-primary)_80%,transparent)] group-hover:text-[var(--text-primary)] transition-colors">
+                    <div class:list={[
+                      `flex items-center ${isMascot ? 'gap-2' : 'gap-3'} font-mono text-xs text-[color-mix(in_srgb,var(--text-primary)_80%,transparent)] group-hover:text-[var(--text-primary)] transition-colors`,
+                      isMascot && 'justify-center',
+                    ]}>
                       <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse" style={{ backgroundColor: idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)' }}></span>
                       {spec}
                     </div>
@@ -348,7 +364,7 @@ const aboutSchema = [
               </div>
 
               <!-- Action Link Connections -->
-              <div class="flex items-center gap-4 border-t border-[var(--border-subtle)] pt-6 mt-auto">
+              {!isMascot && <div class="flex items-center gap-4 border-t border-[var(--border-subtle)] pt-6 mt-auto">
                 <a
                   href={t.telegram}
                   target="_blank"
@@ -371,7 +387,7 @@ const aboutSchema = [
                   </svg>
                   Connect LinkedIn
                 </a>
-              </div>
+              </div>}
             </div>
           );
         })}
