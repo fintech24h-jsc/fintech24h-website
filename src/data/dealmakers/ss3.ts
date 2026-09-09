@@ -14,6 +14,7 @@ export const seasonMeta = {
     'Curated, moderated intros between verified Web3/fintech Founders, Investors & Exchanges. Real deal flow, no cold outreach. Apply to join Season 3 now.',
   canonical: 'https://fintech24h.com/dealmakers/ss3/',
   keywords: 'Fintech24h DealMakers Club, F-Matching, Web3 deal flow network, fintech investor introductions, Web3 investor network Vietnam, Southeast Asia deal flow, DealMakers Club Season 3',
+  ogImage: 'https://fintech24h.com/dealmakers/og-ss3.png',
 };
 
 // ─── Hero partners ────────────────────────────────────────────────────────
