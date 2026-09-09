@@ -29,7 +29,7 @@ export const team: TeamMember[] = [
     telegram: 'https://telegram.me/vincentnguyen0501',
     linkedin: 'https://www.linkedin.com/in/vincentnguyen0501/',
     signatureColor: 'linear-gradient(135deg, #ff6b83 0%, #f0a278 100%)', // Solar Flare
-    image: 'https://fintech24h.com/wp-content/uploads/2026/07/Vincent-300x300.png',
+    image: 'https://fintech24h.com/wp-content/uploads/2026/09/Vincent.jpeg',
     specs: ['Web3 Growth Architecture', 'Global Ecosystem Seeding', 'Launchpad Advisory Node']
   },
   {
@@ -49,7 +49,7 @@ export const team: TeamMember[] = [
     telegram: 'https://telegram.me/Fintech24hIJAYC',
     linkedin: 'https://www.linkedin.com/in/jayc24h/',
     signatureColor: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)', // Hyper Aura
-    image: 'https://fintech24h.com/wp-content/uploads/2026/07/JayC-300x300.png',
+    image: 'https://fintech24h.com/wp-content/uploads/2026/09/jayC.jpeg',
     specs: ['Community Infrastructure', 'Interactive Campaign Design', 'Multi-channel Moderation']
   },
   {
@@ -59,7 +59,7 @@ export const team: TeamMember[] = [
     telegram: 'https://telegram.me/qviet0706',
     linkedin: 'https://www.linkedin.com/in/quangviet0706/',
     signatureColor: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)', // Mint Nebula
-    image: 'https://fintech24h.com/wp-content/uploads/2026/07/Gemi-300x300.png',
+    image: 'https://fintech24h.com/wp-content/uploads/2026/09/GEMI.jpeg',
     specs: ['Strategic Capital Matchmaking', 'CEX/DEX Integrations', 'Global BD Pipeline']
   }
 ];
