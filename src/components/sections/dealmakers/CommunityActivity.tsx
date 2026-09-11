@@ -6,6 +6,8 @@ import { telegramGroupUrl } from '../../../data/dealmakers/ss3';
 // title is surfaced next to their activity.
 const MEMBER_ROLE_NOTES: Record<string, string> = {
   phatvt: 'Co-Founder & CPO, Fintech24h',
+  vincentnguyen0501: 'Co-Founder & CEO, Fintech24h',
+  fintech24hijayc: 'Head of CM, Fintech24h',
 };
 
 type CommunityMember = {
