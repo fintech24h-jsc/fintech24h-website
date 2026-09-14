@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Fintech24h Team Directory
  * Description:       Minimal, dependency-free custom post type ("Team Member": LinkedIn/Telegram/Instagram/email, "has left Fintech24h" flag) plus a free-form Ecosystem Links registry, powering the public anti-impersonation lookup at fintech24h.com/verify-members/. No third-party libraries, no external network calls, no update mechanism.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires at least: 6.4
  * Requires PHP:      8.0
  * Author:            Fintech24h
@@ -73,7 +73,16 @@ function fi24h_register_team_member_cpt(): void {
         'show_in_rest'          => true,
         'rest_base'             => 'team-members',
         'rest_controller_class' => 'WP_REST_Posts_Controller',
-        'supports'              => ['title', 'thumbnail'], // no content/excerpt/comments — nothing to store or expose beyond what's needed
+        // 'custom-fields' is REQUIRED here even though nothing uses the
+        // classic custom-fields meta box (the one below is a dedicated meta
+        // box instead) — WordPress core only registers the 'meta' field on
+        // this post type's REST schema at all when
+        // post_type_supports($post_type, 'custom-fields') is true. Without
+        // it, register_post_meta()'s show_in_rest is silently a no-op: role/
+        // linkedin/telegram/instagram/email/left_company/departure_date
+        // would never appear in the REST response no matter how correctly
+        // they're registered or filled in.
+        'supports'              => ['title', 'thumbnail', 'custom-fields'],
         'has_archive'           => false,
         'rewrite'               => false,
         'capability_type'       => 'post', // maps to the standard Administrator/Editor capabilities already governing this site's 2 admin accounts
@@ -254,6 +263,15 @@ function fi24h_add_team_member_meta_box(): void {
         'normal',
         'high'
     );
+
+    // 'custom-fields' post-type support (see the register_post_type() call
+    // above — required for meta to appear in REST at all) also makes
+    // WordPress add its own generic "Custom Fields" key/value box. Its saves
+    // still go through the same registered sanitize_callback (WordPress
+    // applies that at the update_post_meta() level, not per-UI), so it's not
+    // a validation bypass — just a confusing, redundant second place to edit
+    // the same fields. Remove it.
+    remove_meta_box('postcustom', 'team_member', 'normal');
 }
 
 function fi24h_render_team_member_meta_box(WP_Post $post): void {
