@@ -259,8 +259,19 @@ const currentYear = new Date().getFullYear();
 
       <div class="dm-divider mb-6"></div>
 
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
         <p class="text-xs text-[var(--dm-text-muted)]">&copy; {currentYear} DealMakers&rsquo; Club. All rights reserved.</p>
+
+        <a
+          href="https://fi24h-dealmakersclub.super.site/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group dm-btn-ghost py-2 px-4 text-[10px] font-mono uppercase tracking-[0.1em] inline-flex items-center gap-1.5 shrink-0"
+        >
+          <svg class="w-3 h-3 transition-transform duration-300 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+          Back to Season 2
+        </a>
+
         <a href="https://fintech24h.com" class="flex items-center gap-2 text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors" aria-label="Fintech24h, Official Capital Partner Season 3">
           <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-5 w-auto object-contain opacity-80" loading="lazy" />
           <span class="font-display font-light text-[var(--dm-border-accent)]" aria-hidden="true">|</span>
