@@ -1,21 +1,15 @@
-import { useMemo, useState } from 'react';
-import { dealMakersMembers } from '../../../data/dealmakers/members';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { dealMakersMembers, type DealMakerMember } from '../../../data/dealmakers/members';
 
 const PAGE_SIZE = 24;
-
-function initials(name: string) {
-  return name
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join('')
-    .toUpperCase();
-}
 
 export default function MembersDirectory() {
   const [query, setQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -28,6 +22,88 @@ export default function MembersDirectory() {
   }, [query]);
 
   const visible = filtered.slice(0, visibleCount);
+  const activeMember: DealMakerMember | undefined = dealMakersMembers.find((m) => m.slug === activeSlug);
+
+  const openMember = (slug: string, e?: React.MouseEvent | React.KeyboardEvent) => {
+    if (e) triggerRef.current = e.currentTarget as HTMLElement;
+    setActiveSlug(slug);
+    setCopied(false);
+    window.history.pushState(null, '', `#${slug}`);
+  };
+
+  const closeMember = () => {
+    setActiveSlug(null);
+    window.history.pushState(null, '', window.location.pathname + window.location.search);
+    triggerRef.current?.focus();
+  };
+
+  // Deep-link support: open the matching member on load, and react to
+  // back/forward navigation (so a copied #slug link and the browser's own
+  // history both work).
+  useEffect(() => {
+    const applyHash = () => {
+      const slug = window.location.hash.replace(/^#/, '');
+      if (slug && dealMakersMembers.some((m) => m.slug === slug)) {
+        setActiveSlug(slug);
+      } else {
+        setActiveSlug(null);
+      }
+    };
+    applyHash();
+    window.addEventListener('hashchange', applyHash);
+    window.addEventListener('popstate', applyHash);
+    return () => {
+      window.removeEventListener('hashchange', applyHash);
+      window.removeEventListener('popstate', applyHash);
+    };
+  }, []);
+
+  // Focus trap + Escape + return focus, same pattern as QualifiedDirectory.
+  useEffect(() => {
+    if (!activeSlug) return;
+    const dialog = dialogRef.current;
+    const focusable = dialog?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    focusable?.[0]?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeMember();
+        return;
+      }
+      if (e.key === 'Tab' && focusable && focusable.length > 0) {
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    document.body.classList.add('overflow-hidden');
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.classList.remove('overflow-hidden');
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSlug]);
+
+  const copyLink = async () => {
+    if (!activeMember) return;
+    const url = `${window.location.origin}${window.location.pathname}#${activeMember.slug}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API unavailable — the URL is already in the address bar.
+    }
+  };
 
   return (
     <div>
@@ -57,72 +133,26 @@ export default function MembersDirectory() {
         </p>
       ) : (
         <>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {visible.map((m, i) => (
-              <article
+              <button
                 key={m.slug}
-                className="dm-card group p-5 flex flex-col items-center text-center"
+                type="button"
+                onClick={(e) => openMember(m.slug, e)}
                 style={{ animationDelay: `${Math.min(i, 10) * 40}ms` }}
+                className="dm-card group text-left overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--dm-gold)] focus-visible:outline-offset-2"
+                aria-haspopup="dialog"
+                aria-label={`View ${m.name}'s DealMakers card`}
               >
-                <img
-                  src={m.photo}
-                  alt={m.name}
-                  width={72}
-                  height={72}
-                  loading="lazy"
-                  className="w-16 h-16 rounded-full object-cover border border-[var(--dm-border)] mb-3"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).style.display = 'none';
-                    const fallback = (e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement | null;
-                    if (fallback) fallback.style.display = 'flex';
-                  }}
-                />
-                <span
-                  className="hidden w-16 h-16 rounded-full border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] items-center justify-center font-mono text-xs font-bold text-[var(--dm-gold)] mb-3"
-                  aria-hidden="true"
-                >
-                  {initials(m.name)}
+                <span className="block aspect-[916/768] overflow-hidden">
+                  <img
+                    src={m.photo}
+                    alt={`${m.name} — Fi24h DealMakers' Club invite card`}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
                 </span>
-
-                <h3 className="font-display font-semibold text-sm text-[var(--dm-text-primary)] leading-snug">{m.name}</h3>
-                {(m.role || m.company) && (
-                  <p className="text-[11px] text-[var(--dm-text-muted)] mt-1 leading-snug">
-                    {m.role}
-                    {m.role && m.company && <br />}
-                    {m.company}
-                  </p>
-                )}
-
-                <div className="flex items-center gap-2 mt-4">
-                  {m.website && (
-                    <a
-                      href={m.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${m.name}'s website`}
-                      className="dm-btn-icon"
-                    >
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="9" />
-                        <path strokeLinecap="round" d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18" />
-                      </svg>
-                    </a>
-                  )}
-                  {m.telegramLink && (
-                    <a
-                      href={m.telegramLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${m.name} on Telegram`}
-                      className="dm-btn-icon"
-                    >
-                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.1.02-1.62 1.03-4.57 3.02-.43.3-.82.45-1.17.44-.39-.01-1.15-.22-1.71-.41-.69-.23-1.24-.35-1.19-.74.03-.2.3-.41.82-.62 3.2-1.39 5.34-2.31 6.42-2.76 3.05-1.28 3.68-1.5 4.1-.11.02.04.05.09.05.14z"/>
-                      </svg>
-                    </a>
-                  )}
-                </div>
-              </article>
+              </button>
             ))}
           </div>
 
@@ -138,6 +168,76 @@ export default function MembersDirectory() {
             </div>
           )}
         </>
+      )}
+
+      {activeMember && (
+        <div
+          className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-[rgba(6,5,4,0.8)] backdrop-blur-md"
+          onMouseDown={(e) => { if (e.target === e.currentTarget) closeMember(); }}
+        >
+          <div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="dm-member-title"
+            className="relative w-full max-w-md max-h-[calc(100vh-2rem)] overflow-y-auto rounded-3xl border border-[var(--dm-border)] bg-[rgba(19,17,16,0.97)] backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+          >
+            <button
+              onClick={closeMember}
+              aria-label="Close"
+              className="absolute right-4 top-4 z-10 w-8 h-8 rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] text-[var(--dm-text-secondary)] hover:text-[var(--dm-text-primary)] hover:border-[var(--dm-border-hover)] flex items-center justify-center transition-colors"
+            >
+              ×
+            </button>
+
+            <img
+              src={activeMember.photo}
+              alt={`${activeMember.name} — Fi24h DealMakers' Club invite card`}
+              className="w-full aspect-[916/768] object-cover"
+            />
+
+            <div className="p-6 sm:p-7">
+              <h3 id="dm-member-title" className="font-display font-semibold text-xl text-[var(--dm-text-primary)]">{activeMember.name}</h3>
+              {(activeMember.role || activeMember.company) && (
+                <p className="text-sm text-[var(--dm-text-secondary)] mt-1">
+                  {activeMember.role}
+                  {activeMember.role && activeMember.company && ' · '}
+                  {activeMember.company}
+                </p>
+              )}
+
+              <div className="flex flex-wrap items-center gap-2.5 mt-5">
+                {activeMember.website && (
+                  <a href={activeMember.website} target="_blank" rel="noopener noreferrer" className="dm-btn-ghost py-2 px-4 text-[10px]">
+                    Website ↗
+                  </a>
+                )}
+                {activeMember.linkedin && (
+                  <a href={activeMember.linkedin} target="_blank" rel="noopener noreferrer" className="dm-btn-ghost py-2 px-4 text-[10px]">
+                    LinkedIn ↗
+                  </a>
+                )}
+                {activeMember.telegramLink && (
+                  <a href={activeMember.telegramLink} target="_blank" rel="noopener noreferrer" className="dm-btn-primary py-2 px-4 text-[10px]">
+                    Telegram ↗
+                  </a>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={copyLink}
+                className="w-full mt-5 flex items-center justify-center gap-2 py-2.5 rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-text-primary)] hover:border-[var(--dm-border-hover)] transition-colors"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <rect x="9" y="9" width="11" height="11" rx="2" />
+                  <path d="M5 15V5a2 2 0 012-2h10" />
+                </svg>
+                {copied ? 'Link copied!' : 'Copy link to this card'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -106,16 +106,11 @@ async function fetchTelegramLink(uri) {
   return m2 ? m2[0].replace(/\\\//g, '/') : null;
 }
 
-// ── Step 3: download + crop each photo ─────────────────────────────────────
-// Every member's "photo" property is not a plain headshot — it's a branded
-// 916×768 "Dealmakers' Club invitation card" graphic (logo, event tagline,
-// QR code) with the actual headshot inset in a fixed rectangle on the left.
-// That rectangle's pixel position is identical across every card (verified
-// across multiple samples), so we crop it out locally with ffmpeg before
-// using it as an avatar — using the raw card image would show mostly badge/
-// QR code at avatar size instead of a face.
-const FACE_CROP = { w: 313, h: 485, x: 92, y: 110 };
-
+// ── Step 3: download each member's photo ───────────────────────────────────
+// Every member's "photo" property is the full branded 916×768 "Dealmakers'
+// Club invitation card" graphic (logo, event tagline, QR code, headshot) —
+// we keep the whole card as-is (just downscaled for file size), since that
+// card *is* the member's visual identity in the club, not just their face.
 function slugify(id) {
   return id.replace(/^member-/, '').replace(/^members-1-/, '');
 }
@@ -129,11 +124,10 @@ async function downloadPhoto(photoUrl, slug) {
 
   const filename = `${slug}.jpg`;
   const outFile = path.join(PHOTOS_DIR, filename);
-  const { w, h, x, y } = FACE_CROP;
   try {
     await execFileAsync('ffmpeg', [
       '-y', '-i', tmpFile,
-      '-vf', `crop=${w}:${h}:${x}:${y},scale=300:-2`,
+      '-vf', 'scale=800:-2',
       '-q:v', '4',
       outFile,
     ]);
