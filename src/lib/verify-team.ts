@@ -54,8 +54,14 @@ export type VerifyResult =
   // "@phatvt") checked across every platform at once rather than one
   // specific link — see findMemberByBareHandleAnyPlatform() below.
   | { status: 'not_found'; platform?: Platform }
-  | { status: 'verified'; platform: Platform; member: VerifiableMember }
-  | { status: 'former'; platform: Platform; member: VerifiableMember; departureDate?: string }
+  // platforms (plural) — a bare handle can legitimately match a person on
+  // more than one platform at once (people often reuse the same handle for
+  // LinkedIn and Telegram); every platform that matched is reported rather
+  // than picking just one, so the result never implies the others are
+  // somehow less confirmed. A full-URL/email match still only ever
+  // populates the one platform that was actually pasted.
+  | { status: 'verified'; platforms: Platform[]; member: VerifiableMember }
+  | { status: 'former'; platforms: Platform[]; member: VerifiableMember; departureDate?: string }
   | { status: 'verified_ecosystem'; label: string }
   | { status: 'email_not_activated' }
   | { status: 'email_outside_ecosystem' };
@@ -182,24 +188,28 @@ function normalizeBareHandle(raw: string): string | null {
  * which platform it's from (someone's LinkedIn vanity slug, Telegram
  * @username, and Instagram handle are all the same shape). Rather than
  * force them to guess the right URL format, check the handle against every
- * platform for every member at once; a same-company handle collision across
- * two different platforms/people is vanishingly unlikely in practice, and
- * either way the visitor still gets a real, correct answer for who it is.
+ * platform for every member at once. If the winning member matches on more
+ * than one platform (a common case — people often reuse the same handle),
+ * every matching platform is returned, not just the first one found; a
+ * same-handle collision across two DIFFERENT people is vanishingly unlikely
+ * in practice, so the first member with any match at all is the one used.
  */
 function findMemberByBareHandleAnyPlatform(
   directory: VerifiableMember[],
   bareHandle: string
-): { member: VerifiableMember; platform: Platform } | null {
+): { member: VerifiableMember; platforms: Platform[] } | null {
   const platforms: Exclude<Platform, 'email'>[] = ['linkedin', 'telegram', 'instagram'];
   for (const member of directory) {
+    const matchedPlatforms: Platform[] = [];
     for (const platform of platforms) {
       const url = platform === 'linkedin' ? member.linkedin : platform === 'telegram' ? member.telegram : member.instagram;
       if (!url) continue;
       const extracted = extractHandle(url);
       if (extracted && extracted.platform === platform && extracted.handle === bareHandle) {
-        return { member, platform };
+        matchedPlatforms.push(platform);
       }
     }
+    if (matchedPlatforms.length > 0) return { member, platforms: matchedPlatforms };
   }
   return null;
 }
@@ -216,11 +226,11 @@ function findEcosystemByBareHandle(ecosystemLinks: EcosystemLink[], bareHandle: 
   return null;
 }
 
-function memberResult(member: VerifiableMember, platform: Platform): VerifyResult {
+function memberResult(member: VerifiableMember, platforms: Platform[]): VerifyResult {
   if (member.leftCompany) {
-    return { status: 'former', platform, member, departureDate: member.departureDate };
+    return { status: 'former', platforms, member, departureDate: member.departureDate };
   }
-  return { status: 'verified', platform, member };
+  return { status: 'verified', platforms, member };
 }
 
 export function verifyMember(
@@ -237,7 +247,7 @@ export function verifyMember(
   const handle = extractHandle(raw);
   if (handle) {
     const member = findMemberByHandle(directory, handle);
-    if (member) return memberResult(member, handle.platform);
+    if (member) return memberResult(member, [handle.platform]);
 
     const ecosystemMatch = findEcosystemMatch(raw, ecosystemLinks);
     if (ecosystemMatch) return { status: 'verified_ecosystem', label: ecosystemMatch.label };
@@ -253,7 +263,7 @@ export function verifyMember(
   if (isValidEmail(trimmed)) {
     const email = trimmed.toLowerCase();
     const member = directory.find((m) => m.email?.toLowerCase() === email);
-    if (member) return memberResult(member, 'email');
+    if (member) return memberResult(member, ['email']);
 
     const ecosystemMatch = findEcosystemMatch(trimmed, ecosystemLinks);
     if (ecosystemMatch) return { status: 'verified_ecosystem', label: ecosystemMatch.label };
@@ -270,7 +280,7 @@ export function verifyMember(
   const bareHandle = normalizeBareHandle(raw);
   if (bareHandle) {
     const memberMatch = findMemberByBareHandleAnyPlatform(directory, bareHandle);
-    if (memberMatch) return memberResult(memberMatch.member, memberMatch.platform);
+    if (memberMatch) return memberResult(memberMatch.member, memberMatch.platforms);
 
     const ecosystemHandleMatch = findEcosystemByBareHandle(ecosystemLinks, bareHandle);
     if (ecosystemHandleMatch) return { status: 'verified_ecosystem', label: ecosystemHandleMatch.label };
