@@ -50,7 +50,10 @@ export interface ExtractedHandle {
 export type VerifyResult =
   | { status: 'empty' }
   | { status: 'invalid' }
-  | { status: 'not_found'; platform: Platform }
+  // platform is omitted when the input was a bare handle (e.g. "phatvt" or
+  // "@phatvt") checked across every platform at once rather than one
+  // specific link — see findMemberByBareHandleAnyPlatform() below.
+  | { status: 'not_found'; platform?: Platform }
   | { status: 'verified'; platform: Platform; member: VerifiableMember }
   | { status: 'former'; platform: Platform; member: VerifiableMember; departureDate?: string }
   | { status: 'verified_ecosystem'; label: string }
@@ -59,9 +62,10 @@ export type VerifyResult =
 
 /**
  * Pulls a lowercase, platform-qualified handle out of a LinkedIn, Telegram,
- * or Instagram URL. Returns null for anything else (including bare
- * @handles, which are ambiguous about platform and rejected on purpose
- * rather than guessed).
+ * or Instagram URL. Returns null for anything else — including a bare
+ * @handle, which has no domain to say which platform it's from; that case
+ * is handled separately in verifyMember() by searching every platform at
+ * once instead of guessing one here.
  */
 export function extractHandle(raw: string): ExtractedHandle | null {
   let s = raw.trim();
@@ -163,6 +167,55 @@ function findMemberByHandle(directory: VerifiableMember[], input: ExtractedHandl
   return null;
 }
 
+const BARE_HANDLE_RE = /^[A-Za-z0-9_.\-]{2,100}$/;
+
+/** Strips an optional leading "@" and lowercases; returns null if what's left
+ *  doesn't even look like a plausible username (spaces, punctuation, etc.) —
+ *  that's the only remaining case that's genuinely "invalid" input. */
+function normalizeBareHandle(raw: string): string | null {
+  const stripped = raw.trim().replace(/^@/, '');
+  return BARE_HANDLE_RE.test(stripped) ? stripped.toLowerCase() : null;
+}
+
+/**
+ * A visitor who only has a handle — not a full link — has no way to say
+ * which platform it's from (someone's LinkedIn vanity slug, Telegram
+ * @username, and Instagram handle are all the same shape). Rather than
+ * force them to guess the right URL format, check the handle against every
+ * platform for every member at once; a same-company handle collision across
+ * two different platforms/people is vanishingly unlikely in practice, and
+ * either way the visitor still gets a real, correct answer for who it is.
+ */
+function findMemberByBareHandleAnyPlatform(
+  directory: VerifiableMember[],
+  bareHandle: string
+): { member: VerifiableMember; platform: Platform } | null {
+  const platforms: Exclude<Platform, 'email'>[] = ['linkedin', 'telegram', 'instagram'];
+  for (const member of directory) {
+    for (const platform of platforms) {
+      const url = platform === 'linkedin' ? member.linkedin : platform === 'telegram' ? member.telegram : member.instagram;
+      if (!url) continue;
+      const extracted = extractHandle(url);
+      if (extracted && extracted.platform === platform && extracted.handle === bareHandle) {
+        return { member, platform };
+      }
+    }
+  }
+  return null;
+}
+
+/** Same idea as above, but against the free-form Ecosystem Links table —
+ *  only entries whose value is itself a LinkedIn/Telegram/Instagram URL can
+ *  match a bare handle this way (an email or a plain website has no
+ *  "handle" to compare against). */
+function findEcosystemByBareHandle(ecosystemLinks: EcosystemLink[], bareHandle: string): EcosystemLink | null {
+  for (const link of ecosystemLinks) {
+    const extracted = extractHandle(link.value);
+    if (extracted && extracted.handle === bareHandle) return link;
+  }
+  return null;
+}
+
 function memberResult(member: VerifiableMember, platform: Platform): VerifyResult {
   if (member.leftCompany) {
     return { status: 'former', platform, member, departureDate: member.departureDate };
@@ -210,11 +263,29 @@ export function verifyMember(
     return { status: 'email_outside_ecosystem' };
   }
 
-  // 3. Not a recognized social URL, not an email — the ecosystem table is
-  //    the only thing left that could possibly match (a Facebook page, a
-  //    plain website, anything else registered there).
+  // 3. Not a recognized social URL, not an email — try it as a bare handle
+  //    (e.g. "phatvt" or "@phatvt") searched across every platform for
+  //    every member and every Ecosystem Link at once (see the doc comment
+  //    on findMemberByBareHandleAnyPlatform for why platform is skipped).
+  const bareHandle = normalizeBareHandle(raw);
+  if (bareHandle) {
+    const memberMatch = findMemberByBareHandleAnyPlatform(directory, bareHandle);
+    if (memberMatch) return memberResult(memberMatch.member, memberMatch.platform);
+
+    const ecosystemHandleMatch = findEcosystemByBareHandle(ecosystemLinks, bareHandle);
+    if (ecosystemHandleMatch) return { status: 'verified_ecosystem', label: ecosystemHandleMatch.label };
+  }
+
+  // 4. Last resort: the ecosystem table matched by its normal URL/email
+  //    comparison (covers a plain website or anything else registered
+  //    there that isn't handle-shaped, e.g. "coinstori.com").
   const ecosystemMatch = findEcosystemMatch(raw, ecosystemLinks);
   if (ecosystemMatch) return { status: 'verified_ecosystem', label: ecosystemMatch.label };
+
+  // A plausible-looking handle that matched nobody is still a meaningful
+  // "not found" (could be a scammer's handle) rather than "we don't
+  // understand your input" — only truly unparseable text is 'invalid'.
+  if (bareHandle) return { status: 'not_found' };
 
   return { status: 'invalid' };
 }

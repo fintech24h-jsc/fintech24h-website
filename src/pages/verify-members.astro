@@ -139,7 +139,7 @@ for (const member of [...wpMembers, ...founders]) {
               id="verify-input"
               type="text"
               inputmode="url"
-              placeholder="https://www.linkedin.com/in/… , https://t.me/… , or name@…"
+              placeholder="A link, @username, or email — e.g. https://t.me/…, @phatvt, or name@…"
               class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] rounded-lg px-4 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-accent)] focus:bg-[var(--surface-hover)] transition-all duration-300 font-body placeholder:text-[var(--text-muted)] shadow-inner backdrop-blur-md"
             />
             <button
@@ -294,7 +294,7 @@ for (const member of [...wpMembers, ...founders]) {
         resultEl.appendChild(wrap);
       }
 
-      function renderNotFound(platform: Platform) {
+      function renderNotFound(platform: Platform | undefined) {
         clearResult();
         const wrap = document.createElement('div');
         wrap.className = 'p-4 rounded-xl border border-[color-mix(in_srgb,var(--color-danger)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-danger)_8%,transparent)]';
@@ -304,9 +304,10 @@ for (const member of [...wpMembers, ...founders]) {
         badge.textContent = '⚠ Not a verified team member';
         wrap.appendChild(badge);
 
+        const subject = platform ? `This ${PLATFORM_LABELS[platform]}` : 'This handle';
         const msg = document.createElement('p');
         msg.className = 'font-body text-sm text-[var(--text-secondary)] leading-relaxed';
-        msg.textContent = `This ${PLATFORM_LABELS[platform]} does not match anyone or anything in the current or former Fintech24h ecosystem. Do not send funds, send seed phrases, or trust "deals" from this account — please report it and confirm with us directly at info@fintech24h.com.`;
+        msg.textContent = `${subject} does not match anyone or anything in the current or former Fintech24h ecosystem. Do not send funds, send seed phrases, or trust "deals" from this account — please report it and confirm with us directly at info@fintech24h.com.`;
         wrap.appendChild(msg);
 
         resultEl.appendChild(wrap);
@@ -354,7 +355,7 @@ for (const member of [...wpMembers, ...founders]) {
         wrap.className = 'p-4 rounded-xl border border-[var(--border-default)] bg-[var(--surface-soft)]';
         const msg = document.createElement('p');
         msg.className = 'font-body text-sm text-[var(--text-secondary)] leading-relaxed';
-        msg.textContent = 'That doesn\'t look like a LinkedIn, Telegram, or Instagram link, or an email address — paste the full profile URL (or email) you were given.';
+        msg.textContent = 'That doesn\'t look like a link, a username, or an email address — paste the profile URL, @handle, or email you were given, with no spaces.';
         wrap.appendChild(msg);
         resultEl.appendChild(wrap);
       }
