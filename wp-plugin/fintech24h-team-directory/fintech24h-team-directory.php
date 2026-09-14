@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Fintech24h Team Directory
  * Description:       Minimal, dependency-free custom post type ("Team Member": LinkedIn/Telegram/Instagram/email, "has left Fintech24h" flag) plus a free-form Ecosystem Links registry, powering the public anti-impersonation lookup at fintech24h.com/verify-members/. No third-party libraries, no external network calls, no update mechanism.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Requires at least: 6.4
  * Requires PHP:      8.0
  * Author:            Fintech24h
@@ -484,23 +484,47 @@ function fi24h_get_ecosystem_links(): array {
  * whole save — a stray blank line or missing `|` shouldn't lose everything
  * else that was fine.
  */
+/**
+ * Returns ['entries' => [...valid rows], 'rejected' => ['line text — reason', ...]].
+ * Every line is accounted for one way or the other — nothing is dropped
+ * silently, unlike the previous version of this function, so a line that
+ * doesn't survive (bad separator, unparseable value) shows up explicitly in
+ * the admin notice instead of just quietly not being there after Save.
+ */
 function fi24h_parse_ecosystem_links(string $raw_text): array {
     $lines = preg_split('/\r\n|\r|\n/', $raw_text) ?: [];
-    $out = [];
+    $entries = [];
+    $rejected = [];
+
     foreach ($lines as $line) {
         $line = trim($line);
         if ($line === '') continue;
 
         $parts = explode('|', $line, 2);
-        if (count($parts) !== 2) continue;
+        if (count($parts) !== 2) {
+            $rejected[] = "\"$line\" — missing the \"|\" separator between label and value";
+            continue;
+        }
 
-        $label = sanitize_text_field(trim($parts[0]));
-        $value = fi24h_sanitize_ecosystem_value(trim($parts[1]));
-        if ($label === '' || $value === '') continue;
+        $label_raw = trim($parts[0]);
+        $value_raw = trim($parts[1]);
+        $label = sanitize_text_field($label_raw);
 
-        $out[] = ['label' => mb_substr($label, 0, 120), 'value' => $value];
+        if ($label === '') {
+            $rejected[] = "\"$line\" — label is empty";
+            continue;
+        }
+
+        $value = fi24h_sanitize_ecosystem_value($value_raw);
+        if ($value === '') {
+            $rejected[] = "\"$line\" — \"$value_raw\" is not a valid http(s) URL or email address (needs a real domain with a dot, e.g. \"example.com\", not just a word)";
+            continue;
+        }
+
+        $entries[] = ['label' => mb_substr($label, 0, 120), 'value' => $value];
     }
-    return $out;
+
+    return ['entries' => $entries, 'rejected' => $rejected];
 }
 
 /**
@@ -535,20 +559,27 @@ function fi24h_render_ecosystem_links_page(): void {
     if (!current_user_can('manage_options')) return;
 
     $saved = false;
+    $rejected = [];
+    $posted_raw_text = null;
     if (
         isset($_POST['fi24h_ecosystem_nonce']) &&
         wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['fi24h_ecosystem_nonce'])), 'fi24h_save_ecosystem_links')
     ) {
-        $raw_text = wp_unslash($_POST['fi24h_ecosystem_text'] ?? '');
-        update_option(FI24H_ECOSYSTEM_OPTION, fi24h_parse_ecosystem_links((string) $raw_text), false);
+        $posted_raw_text = (string) wp_unslash($_POST['fi24h_ecosystem_text'] ?? '');
+        $parsed = fi24h_parse_ecosystem_links($posted_raw_text);
+        update_option(FI24H_ECOSYSTEM_OPTION, $parsed['entries'], false);
+        $rejected = $parsed['rejected'];
         $saved = true;
     }
 
     $links = fi24h_get_ecosystem_links();
-    $textarea_value = implode("\n", array_map(
-        static fn($l) => $l['label'] . ' | ' . $l['value'],
-        $links
-    ));
+    // Show exactly what was just submitted (including any rejected lines,
+    // left in place so they're easy to fix) rather than silently dropping
+    // them from view the moment the page reloads — only fall back to the
+    // saved/valid list on a plain GET load.
+    $textarea_value = $posted_raw_text !== null
+        ? $posted_raw_text
+        : implode("\n", array_map(static fn($l) => $l['label'] . ' | ' . $l['value'], $links));
     ?>
     <div class="wrap">
         <h1>Ecosystem Links</h1>
@@ -558,8 +589,18 @@ function fi24h_render_ecosystem_links_page(): void {
             as a catch-all for anything that isn't a specific person's LinkedIn/Telegram/Instagram/email — a company
             Facebook page, a shared inbox like <code>support@fintech24h.com</code>, Coinstori, CMO Intern, etc.
         </p>
-        <?php if ($saved): ?>
+        <?php if ($saved && empty($rejected)): ?>
             <div class="notice notice-success"><p>Saved <?php echo (int) count($links); ?> ecosystem link(s).</p></div>
+        <?php elseif ($saved): ?>
+            <div class="notice notice-warning">
+                <p>Saved <?php echo (int) count($links); ?> ecosystem link(s) — but <?php echo (int) count($rejected); ?> line(s) below were NOT saved:</p>
+                <ul style="list-style: disc; margin-left: 1.5em;">
+                    <?php foreach ($rejected as $reason): ?>
+                        <li><?php echo esc_html($reason); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <p>Fix those lines below and Save again — everything else was saved fine.</p>
+            </div>
         <?php endif; ?>
         <form method="post">
             <?php wp_nonce_field('fi24h_save_ecosystem_links', 'fi24h_ecosystem_nonce'); ?>
