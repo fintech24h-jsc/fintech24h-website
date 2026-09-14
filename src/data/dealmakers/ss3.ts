@@ -155,8 +155,8 @@ export const lastSeasonPartners: PartnerLogo[] = [
 // ─── Media Partners (free, editorial support in exchange for logo placement) ─
 
 export const mediaPartners: PartnerLogo[] = [
-  { name: 'CMO Intern', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/CMO-Intern-F-matching-club-ss3-1.png', confirmed: true },
-  { name: 'Coinstori', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Coinstori-F-matching-club-ss3-1.png', confirmed: true },
+  { name: 'CMO Intern', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/CMO-Intern-F-matching-club-ss3-1.png', websiteUrl: 'https://cmointern.com', confirmed: true },
+  { name: 'Coinstori', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Coinstori-F-matching-club-ss3-1.png', websiteUrl: 'https://coinstori.com', confirmed: true },
   ...Array.from({ length: 4 }, () => ({
     name: null,
     logoUrl: null,
