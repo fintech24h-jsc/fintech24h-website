@@ -15,6 +15,9 @@
 import { decodeHtmlEntities } from './utils';
 
 const WP_API_BASE = (import.meta.env?.WP_API_URL || 'https://origin.fintech24h.com/wp-json/wp/v2').replace(/\/$/, '');
+// Same origin, different REST namespace — the fintech24h-team-directory
+// plugin's Ecosystem Links live outside wp/v2 (they're not a post type).
+const WP_JSON_ROOT = WP_API_BASE.replace(/\/wp\/v2$/, '');
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -117,8 +120,8 @@ let cachedCaseStudies: CaseStudy[] | null = null;
 const FRESH_TTL_SECONDS = 180;          // normal cache window
 const STALE_TTL_SECONDS = 7 * 86400;    // last-known-good fallback window (7 days)
 
-async function fetchWP<T>(endpoint: string, params: Record<string, string> = {}): Promise<T> {
-  const url = new URL(`${WP_API_BASE}${endpoint}`);
+async function fetchWP<T>(endpoint: string, params: Record<string, string> = {}, base: string = WP_API_BASE): Promise<T> {
+  const url = new URL(`${base}${endpoint}`);
   url.searchParams.set('_embed', '1');
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
@@ -412,6 +415,99 @@ export async function getPostsByAuthor(authorId: number, page = 1, perPage = 24)
     return posts.map(decodeTitle);
   } catch (err) {
     console.warn(`WP API fail: getPostsByAuthor ${authorId}`, err);
+    return [];
+  }
+}
+
+// ─── Team Directory (Custom Post Type, see wp-plugin/fintech24h-team-directory) ─
+// Read-only source for /verify-members — the fintech24h-team-directory plugin
+// exposes published "team_member" entries at /wp-json/wp/v2/team-members.
+// Publishing or drafting a member in wp-admin takes effect here within
+// FRESH_TTL_SECONDS (~3 min) with no redeploy: this goes through the same
+// live-fetch + edge cache as every other WP-backed page on the site, not a
+// build-time list.
+
+export interface WPTeamMember {
+  id: number;
+  status: string;
+  title: { rendered: string };
+  meta?: {
+    role?: string;
+    linkedin?: string;
+    telegram?: string;
+    instagram?: string;
+    email?: string;
+    left_company?: boolean;
+    departure_date?: string;
+  };
+  _embedded?: WPPost['_embedded'];
+}
+
+export interface TeamDirectoryEntry {
+  name: string;
+  role: string;
+  image?: string;
+  linkedin?: string;
+  telegram?: string;
+  instagram?: string;
+  email?: string;
+  leftCompany?: boolean;
+  departureDate?: string;
+}
+
+export async function getTeamDirectory(): Promise<TeamDirectoryEntry[]> {
+  try {
+    const members = await fetchWP<WPTeamMember[]>('/team-members', {
+      per_page: '100',
+      status: 'publish',
+      orderby: 'date',
+      order: 'asc',
+    });
+    return members.map((m) => {
+      const media = m._embedded?.['wp:featuredmedia']?.[0];
+      return {
+        name: decodeHtmlEntities(m.title.rendered),
+        role: m.meta?.role || '',
+        image: media?.source_url,
+        linkedin: m.meta?.linkedin || undefined,
+        telegram: m.meta?.telegram || undefined,
+        instagram: m.meta?.instagram || undefined,
+        email: m.meta?.email || undefined,
+        leftCompany: Boolean(m.meta?.left_company),
+        departureDate: m.meta?.departure_date || undefined,
+      };
+    });
+  } catch (err) {
+    // Fail closed and silent: the caller (src/pages/verify-members.astro)
+    // already falls back to the hardcoded founders in src/data/team.ts, so
+    // an unreachable/not-yet-installed plugin degrades gracefully instead of
+    // breaking the verify tool.
+    console.warn('WP API fail: getTeamDirectory', err);
+    return [];
+  }
+}
+
+// ─── Ecosystem Links (see wp-plugin/fintech24h-team-directory, section 4) ───
+// A free-form "belongs to Fintech24h" registry — a company Facebook page, a
+// shared inbox, a sister project's site — anything that isn't one specific
+// person's structured LinkedIn/Telegram/Instagram/email. Same live-fetch +
+// cache + fail-closed pattern as getTeamDirectory().
+
+export interface EcosystemLinkEntry {
+  label: string;
+  value: string;
+}
+
+export async function getEcosystemLinks(): Promise<EcosystemLinkEntry[]> {
+  try {
+    const links = await fetchWP<EcosystemLinkEntry[]>(
+      '/ecosystem-links',
+      {},
+      `${WP_JSON_ROOT}/fintech24h/v1`
+    );
+    return Array.isArray(links) ? links : [];
+  } catch (err) {
+    console.warn('WP API fail: getEcosystemLinks', err);
     return [];
   }
 }

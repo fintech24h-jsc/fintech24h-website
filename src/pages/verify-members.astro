@@ -1,0 +1,384 @@
+---
+// src/pages/verify-members.astro
+// Public anti-impersonation lookup: paste a LinkedIn, Telegram, Instagram
+// link or email address and confirm whether it belongs to an actual
+// Fintech24h team member or official channel.
+//
+// The MATCHING is 100% client-side (see src/lib/verify-team.ts) — nothing
+// pasted into the input is ever sent anywhere.
+//
+// The ROSTER is fetched live, server-side, on every request, from two
+// sources merged together:
+//   1. wp-plugin/fintech24h-team-directory — a "team_member" custom post
+//      type. Publishing/drafting a member — or ticking "has left Fintech24h"
+//      — in wp-admin takes effect on this page within ~3 minutes (the
+//      existing WP fetch cache TTL) with no redeploy — same mechanism as
+//      every other WP-backed page on the site.
+//   2. src/data/team.ts — the 4 founders, kept as a hardcoded fallback so
+//      they stay verifiable even before the plugin is installed or if a WP
+//      fetch ever fails. Merged in by matching LinkedIn/Telegram/Instagram
+//      handle so a founder edited in WP is never shown twice or out of date.
+// Plus a free-form "Ecosystem Links" registry (same plugin) for anything
+// that isn't one specific person's structured fields — a company Facebook
+// page, a shared inbox, a sister project's site.
+//
+// Several outcomes, not just yes/no: a link can be an active member
+// (verified), a FORMER member who legitimately worked here but no longer
+// does (former — still shown as a real identity, but with a hard warning
+// not to trust current claims from them), part of the ecosystem without
+// being a specific person (verified_ecosystem), an email that looks official
+// but isn't registered (email_not_activated), an email on some other domain
+// entirely (email_outside_ecosystem), or unrecognized entirely (not_found).
+//
+// prerender = false is required for step 1 to be live rather than frozen at
+// build time — see astro.config.mjs (`output: 'hybrid'`, prerender by
+// default).
+export const prerender = false;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+import Card from '../components/ui/Card.astro';
+import { team, advisors } from '../data/team';
+import { getTeamDirectory, getEcosystemLinks } from '../lib/wordpress';
+import { extractHandle, type VerifiableMember, type EcosystemLink } from '../lib/verify-team';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Verify a Team Member', item: 'https://fintech24h.com/verify-members/' }
+];
+
+// Only the fields the client actually needs to ship in the page — no bio,
+// no signature gradient. Founders have no instagram/email/leftCompany/
+// departureDate fields in team.ts (all 4 are current), which is fine — every
+// one of those is optional; add them via the WP plugin if ever needed.
+const founders: VerifiableMember[] = [...team, ...advisors].map((m) => ({
+  name: m.name,
+  role: m.role,
+  image: m.image,
+  telegram: m.telegram,
+  linkedin: m.linkedin
+}));
+
+const [wpMembers, ecosystemLinks]: [VerifiableMember[], EcosystemLink[]] = await Promise.all([
+  getTeamDirectory(),
+  getEcosystemLinks(),
+]);
+
+function handleKeys(member: VerifiableMember): string[] {
+  return [member.linkedin, member.telegram, member.instagram]
+    .filter((url): url is string => Boolean(url))
+    .map((url) => extractHandle(url))
+    .filter((h): h is NonNullable<typeof h> => h !== null)
+    .map((h) => `${h.platform}:${h.handle}`);
+}
+
+// WP-sourced entries come first and win on conflict; founders fill in only
+// when WP has no matching LinkedIn/Telegram handle for them yet.
+const seenKeys = new Set<string>();
+const directory: VerifiableMember[] = [];
+for (const member of [...wpMembers, ...founders]) {
+  const keys = handleKeys(member);
+  const dedupeKeys = keys.length > 0 ? keys : [`name:${member.name.toLowerCase()}`];
+  if (dedupeKeys.some((k) => seenKeys.has(k))) continue;
+  dedupeKeys.forEach((k) => seenKeys.add(k));
+  directory.push(member);
+}
+---
+
+<BaseLayout
+  title="Verify a Fintech24h Team Member — Anti-Impersonation Check"
+  description="Paste a LinkedIn, Telegram, Instagram link or email address to confirm whether it belongs to a real, currently active Fintech24h team member or official channel. Instant, on-device check — nothing you paste is ever sent or stored."
+  canonical="https://fintech24h.com/verify-members/"
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="Verify a Fintech24h team member">
+    <!-- Ambient background -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-cyan w-[600px] h-[600px] absolute -top-40 right-0 opacity-15"></div>
+      <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute bottom-0 -left-32 opacity-10"></div>
+      <div class="grid-pattern absolute inset-0 opacity-15"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center space-y-4 mb-14" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/20 bg-[var(--accent-cyan)]/5 text-[var(--accent-cyan)] text-xs font-mono font-medium tracking-widest uppercase">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
+          Identity Check
+        </div>
+        <h1 class="font-display text-[clamp(2.2rem,4.5vw,3.75rem)] font-bold text-[var(--text-primary)] leading-tight max-w-2xl mx-auto">
+          Verify a Fintech24h
+          <span class="bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] bg-clip-text text-transparent">Team Member</span>
+        </h1>
+        <p class="font-body text-[var(--text-secondary)] text-lg max-w-xl mx-auto leading-relaxed">
+          Scammers impersonate Web3 team members to run fake DMs, fake OTC deals, and phishing links.
+          Paste the LinkedIn, Telegram, Instagram, or email someone gave you — we'll check it against our real roster.
+        </p>
+      </div>
+
+      <!-- Lookup Card -->
+      <Card class="relative overflow-hidden" data-animate="fade-up">
+        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--accent-cyan)]/5 to-[var(--accent-purple)]/5 pointer-events-none"></div>
+
+        <form id="verify-form" class="relative z-10" autocomplete="off">
+          <label for="verify-input" class="block text-[10px] font-semibold text-[var(--text-secondary)] opacity-70 mb-1.5 font-body uppercase tracking-wider">
+            LinkedIn, Telegram, Instagram, or email
+          </label>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input
+              id="verify-input"
+              type="text"
+              inputmode="url"
+              placeholder="https://www.linkedin.com/in/… , https://t.me/… , or name@…"
+              class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] rounded-lg px-4 py-3 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--border-accent)] focus:bg-[var(--surface-hover)] transition-all duration-300 font-body placeholder:text-[var(--text-muted)] shadow-inner backdrop-blur-md"
+            />
+            <button
+              type="submit"
+              class="btn-primary shrink-0 whitespace-nowrap"
+            >
+              Verify
+            </button>
+          </div>
+          <p class="mt-3 font-mono text-[10px] text-[var(--text-muted)] tracking-wide">
+            Runs entirely in your browser — nothing you paste here is sent or stored anywhere.
+          </p>
+        </form>
+
+        <!-- Result region -->
+        <div id="verify-result" class="relative z-10 mt-6" aria-live="polite"></div>
+      </Card>
+
+      <p class="mt-8 text-center font-body text-sm text-[var(--text-secondary)]" data-animate="fade-up">
+        Prefer to browse instead? Every current team member is listed on
+        <a href="/about/" class="text-[var(--accent-cyan)] hover:underline">our About page</a>.
+        Still unsure — email <a href="mailto:info@fintech24h.com" class="text-[var(--accent-cyan)] hover:underline">info@fintech24h.com</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Server-rendered data islands — read by the module script below.
+       Keeping data out of define:vars means the script stays a real ES
+       module that Vite bundles/typechecks, instead of an inline, unbundled
+       blob. -->
+  <script type="application/json" id="verify-directory" set:html={JSON.stringify(directory)} />
+  <script type="application/json" id="verify-ecosystem-links" set:html={JSON.stringify(ecosystemLinks)} />
+
+  <script>
+    import { verifyMember, type Platform, type VerifiableMember, type EcosystemLink } from '../lib/verify-team';
+
+    const directoryEl = document.getElementById('verify-directory');
+    const directory: VerifiableMember[] = directoryEl ? JSON.parse(directoryEl.textContent || '[]') : [];
+
+    const ecosystemLinksEl = document.getElementById('verify-ecosystem-links');
+    const ecosystemLinks: EcosystemLink[] = ecosystemLinksEl ? JSON.parse(ecosystemLinksEl.textContent || '[]') : [];
+
+    function formatDeparture(dateStr: string | undefined): string | null {
+      if (!dateStr) return null;
+      const d = new Date(dateStr + 'T00:00:00Z');
+      if (Number.isNaN(d.getTime())) return null;
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+    }
+
+    const PLATFORM_LABELS: Record<Platform, string> = {
+      linkedin: 'LinkedIn',
+      telegram: 'Telegram',
+      instagram: 'Instagram',
+      email: 'email address',
+    };
+
+    {
+      const form = document.getElementById('verify-form');
+      const input = document.getElementById('verify-input');
+      const resultEl = document.getElementById('verify-result');
+      if (!(form instanceof HTMLFormElement) || !(input instanceof HTMLInputElement) || !resultEl) {
+        throw new Error('verify-members.astro: expected form elements not found');
+      }
+
+      function clearResult() {
+        resultEl.replaceChildren();
+      }
+
+      function memberHeader(member: VerifiableMember, accentVar: string): HTMLDivElement {
+        const wrap = document.createElement('div');
+        wrap.className = 'flex items-center gap-4';
+
+        if (member.image) {
+          const img = document.createElement('img');
+          img.src = member.image;
+          img.alt = member.name;
+          img.width = 56;
+          img.height = 56;
+          img.className = `w-14 h-14 rounded-full object-cover border border-[color-mix(in_srgb,${accentVar}_40%,transparent)] shrink-0`;
+          wrap.appendChild(img);
+        }
+
+        const info = document.createElement('div');
+        info.className = 'flex-1 min-w-0';
+
+        const name = document.createElement('div');
+        name.className = 'font-display text-lg font-bold text-[var(--text-primary)]';
+        name.textContent = member.name;
+        info.appendChild(name);
+
+        const role = document.createElement('div');
+        role.className = 'font-body text-sm text-[var(--text-secondary)]';
+        role.textContent = member.role ? `${member.role} at Fintech24h` : 'Fintech24h';
+        info.appendChild(role);
+
+        wrap.appendChild(info);
+        return wrap;
+      }
+
+      function renderVerified(member: VerifiableMember, platform: Platform) {
+        clearResult();
+        const wrap = document.createElement('div');
+        wrap.className = 'p-4 rounded-xl border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[var(--color-success-bg)]';
+
+        const badge = document.createElement('div');
+        badge.className = 'inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--color-success)] mb-3';
+        badge.textContent = `✓ Verified — official ${PLATFORM_LABELS[platform]}`;
+        wrap.appendChild(badge);
+
+        wrap.appendChild(memberHeader(member, 'var(--color-success)'));
+        resultEl.appendChild(wrap);
+      }
+
+      function renderFormer(member: VerifiableMember, platform: Platform, departureDate: string | undefined) {
+        clearResult();
+        const wrap = document.createElement('div');
+        wrap.className = 'p-4 rounded-xl border border-[color-mix(in_srgb,var(--color-warning)_35%,transparent)] bg-[color-mix(in_srgb,var(--color-warning)_8%,transparent)]';
+
+        const badge = document.createElement('div');
+        badge.className = 'inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--color-warning)] mb-3';
+        badge.textContent = `⚠ Former team member`;
+        wrap.appendChild(badge);
+
+        wrap.appendChild(memberHeader(member, 'var(--color-warning)'));
+
+        const formattedDate = formatDeparture(departureDate);
+        const msg = document.createElement('p');
+        msg.className = 'font-body text-sm text-[var(--text-secondary)] leading-relaxed mt-3 pt-3 border-t border-[color-mix(in_srgb,var(--color-warning)_20%,transparent)]';
+        msg.textContent = formattedDate
+          ? `This ${PLATFORM_LABELS[platform]} did belong to a verified Fintech24h team member, who left the company on ${formattedDate}. It no longer represents Fintech24h — do not trust any current business, investment, or OTC claims from this account.`
+          : `This ${PLATFORM_LABELS[platform]} did belong to a verified Fintech24h team member, who is no longer with the company. It no longer represents Fintech24h — do not trust any current business, investment, or OTC claims from this account.`;
+        wrap.appendChild(msg);
+
+        resultEl.appendChild(wrap);
+      }
+
+      function renderEcosystem(label: string) {
+        clearResult();
+        const wrap = document.createElement('div');
+        wrap.className = 'p-4 rounded-xl border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[var(--color-success-bg)]';
+
+        const badge = document.createElement('div');
+        badge.className = 'inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--color-success)] mb-1.5';
+        badge.textContent = '✓ Part of the Fintech24h ecosystem';
+        wrap.appendChild(badge);
+
+        const name = document.createElement('div');
+        name.className = 'font-display text-base font-bold text-[var(--text-primary)]';
+        name.textContent = label;
+        wrap.appendChild(name);
+
+        resultEl.appendChild(wrap);
+      }
+
+      function renderNotFound(platform: Platform) {
+        clearResult();
+        const wrap = document.createElement('div');
+        wrap.className = 'p-4 rounded-xl border border-[color-mix(in_srgb,var(--color-danger)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-danger)_8%,transparent)]';
+
+        const badge = document.createElement('div');
+        badge.className = 'inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--color-danger)] mb-1.5';
+        badge.textContent = '⚠ Not a verified team member';
+        wrap.appendChild(badge);
+
+        const msg = document.createElement('p');
+        msg.className = 'font-body text-sm text-[var(--text-secondary)] leading-relaxed';
+        msg.textContent = `This ${PLATFORM_LABELS[platform]} does not match anyone or anything in the current or former Fintech24h ecosystem. Do not send funds, send seed phrases, or trust "deals" from this account — please report it and confirm with us directly at info@fintech24h.com.`;
+        wrap.appendChild(msg);
+
+        resultEl.appendChild(wrap);
+      }
+
+      function renderEmailNotActivated() {
+        clearResult();
+        const wrap = document.createElement('div');
+        wrap.className = 'p-4 rounded-xl border border-[color-mix(in_srgb,var(--color-danger)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-danger)_8%,transparent)]';
+
+        const badge = document.createElement('div');
+        badge.className = 'inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--color-danger)] mb-1.5';
+        badge.textContent = '⚠ Not an activated Fintech24h address';
+        wrap.appendChild(badge);
+
+        const msg = document.createElement('p');
+        msg.className = 'font-body text-sm text-[var(--text-secondary)] leading-relaxed';
+        msg.textContent = 'This address uses the @fintech24h.com domain but is not an address we have on record for any current or former team member or official channel. Treat it as unverified and confirm with us directly at info@fintech24h.com before trusting anything sent from it.';
+        wrap.appendChild(msg);
+
+        resultEl.appendChild(wrap);
+      }
+
+      function renderEmailOutsideEcosystem() {
+        clearResult();
+        const wrap = document.createElement('div');
+        wrap.className = 'p-4 rounded-xl border border-[var(--border-default)] bg-[var(--surface-soft)]';
+
+        const badge = document.createElement('div');
+        badge.className = 'inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--text-secondary)] mb-1.5';
+        badge.textContent = 'Outside the Fintech24h ecosystem';
+        wrap.appendChild(badge);
+
+        const msg = document.createElement('p');
+        msg.className = 'font-body text-sm text-[var(--text-secondary)] leading-relaxed';
+        msg.textContent = 'This address is not on the @fintech24h.com domain and isn\'t registered as one of our official channels. It may still be a legitimate personal email for someone who works here — if unsure, confirm through their verified LinkedIn/Telegram instead, or email info@fintech24h.com.';
+        wrap.appendChild(msg);
+
+        resultEl.appendChild(wrap);
+      }
+
+      function renderInvalid() {
+        clearResult();
+        const wrap = document.createElement('div');
+        wrap.className = 'p-4 rounded-xl border border-[var(--border-default)] bg-[var(--surface-soft)]';
+        const msg = document.createElement('p');
+        msg.className = 'font-body text-sm text-[var(--text-secondary)] leading-relaxed';
+        msg.textContent = 'That doesn\'t look like a LinkedIn, Telegram, or Instagram link, or an email address — paste the full profile URL (or email) you were given.';
+        wrap.appendChild(msg);
+        resultEl.appendChild(wrap);
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const value = input.value;
+        const result = verifyMember(value, directory, ecosystemLinks);
+
+        switch (result.status) {
+          case 'empty':
+          case 'invalid':
+            renderInvalid();
+            break;
+          case 'verified':
+            renderVerified(result.member, result.platform);
+            break;
+          case 'former':
+            renderFormer(result.member, result.platform, result.departureDate);
+            break;
+          case 'verified_ecosystem':
+            renderEcosystem(result.label);
+            break;
+          case 'email_not_activated':
+            renderEmailNotActivated();
+            break;
+          case 'email_outside_ecosystem':
+            renderEmailOutsideEcosystem();
+            break;
+          default:
+            renderNotFound(result.platform);
+        }
+      });
+    }
+  </script>
+</BaseLayout>
