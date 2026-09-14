@@ -140,7 +140,7 @@ export default function MembersDirectory() {
                 type="button"
                 onClick={(e) => openMember(m.slug, e)}
                 style={{ animationDelay: `${Math.min(i, 10) * 40}ms` }}
-                className="dm-card group text-left overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--dm-gold)] focus-visible:outline-offset-2"
+                className="dm-card group text-left overflow-hidden flex flex-col focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--dm-gold)] focus-visible:outline-offset-2"
                 aria-haspopup="dialog"
                 aria-label={`View ${m.name}'s DealMakers card`}
               >
@@ -151,6 +151,29 @@ export default function MembersDirectory() {
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                   />
+                </span>
+
+                <span className="flex-1 flex flex-col p-4 sm:p-5 border-t border-[var(--dm-border)]">
+                  <span className="font-display font-semibold text-base text-[var(--dm-text-primary)] leading-snug">
+                    {m.name}
+                  </span>
+                  {(m.role || m.company) && (
+                    <span className="text-xs text-[var(--dm-text-secondary)] mt-1 leading-snug line-clamp-2">
+                      {m.role}
+                      {m.role && m.company && ' · '}
+                      {m.company}
+                    </span>
+                  )}
+
+                  <span className="flex items-center justify-between mt-4">
+                    <span className="text-[10px] font-mono text-[var(--dm-text-muted)] truncate max-w-[65%]">
+                      {m.website ? m.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '') : ''}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-[var(--dm-gold)] text-[10px] font-display font-semibold shrink-0 group-hover:gap-1.5 transition-all">
+                      View card
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </span>
+                  </span>
                 </span>
               </button>
             ))}
