@@ -225,7 +225,7 @@ export default function ServiceInquiryForm({ defaultService = '' }: ServiceInqui
             className="mt-0.5 w-4 h-4 rounded border-[var(--border-default)] bg-[var(--surface-soft)] accent-[var(--accent-cyan)] shrink-0"
           />
           <span className="text-[11px] text-[var(--text-secondary)] opacity-70 font-body leading-relaxed">
-            Send me occasional updates about Fintech24h's services (optional — you can unsubscribe anytime).
+            Send me occasional updates about Fintech24h's services (optional, you can unsubscribe anytime).
           </span>
         </label>
 

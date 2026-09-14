@@ -14,7 +14,7 @@ export default function CalendlyEmbed() {
       <div className="w-full min-h-[320px] rounded-xl border border-white/5 bg-[#0a0f1e]/50 flex flex-col items-center justify-center text-center px-6 py-12">
         <p className="text-sm text-[#94a3b8] font-body max-w-md mb-5">
           This loads Calendly's booking calendar in an embedded frame. Calendly will set its own cookies
-          once loaded — see their <a href="https://calendly.com/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">privacy policy</a>.
+          once loaded, see their <a href="https://calendly.com/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">privacy policy</a>.
         </p>
         <button
           type="button"

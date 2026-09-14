@@ -1,6 +1,7 @@
 export interface Job {
   id: string;
   slug: string;
+  status: 'open' | 'closed';
   title: string;
   location: string;
   type: string;
@@ -16,6 +17,7 @@ export const jobs: Job[] = [
   {
     id: "FI24H-JOB-001",
     slug: "content-social-media-specialist",
+    status: "closed",
     title: "Content & Social Media Specialist",
     location: "Remote / Hybrid",
     type: "Full-time / Part-time",
@@ -47,6 +49,7 @@ export const jobs: Job[] = [
   {
     id: "FI24H-JOB-002",
     slug: "community-partnership-specialist",
+    status: "open",
     title: "Community & Partnership Specialist",
     location: "Remote / Hybrid",
     type: "Full-time / Part-time",

@@ -82,6 +82,14 @@
 .dm-root .font-body    { font-family: var(--dm-font-body) !important; }
 .dm-root .font-mono    { font-family: var(--dm-font-mono) !important; }
 
+/* DealMakersLayout renders its own standalone <html> (not shared with the
+   main site), so bumping the root size here only affects this microsite —
+   every rem-based Tailwind utility across every dm-* component scales up
+   with it, no per-component changes needed. ~6% up from the 16px default. */
+html {
+  font-size: 17px;
+}
+
 .dm-root ::selection {
   background: rgba(217, 178, 106, 0.28);
   color: var(--dm-text-primary);
@@ -130,7 +138,7 @@
 #dm-stars-small::after, #dm-stars-medium::after, #dm-stars-large::after {
   content: '';
   position: absolute;
-  top: 2000px;
+  top: 100vh;
   border-radius: 50%;
   background: transparent;
 }
@@ -140,10 +148,36 @@
 
 @keyframes dm-star-drift {
   from { transform: translateY(0); }
-  to   { transform: translateY(-2000px); }
+  to   { transform: translateY(-100vh); }
 }
 @media (prefers-reduced-motion: reduce) {
   #dm-stars-small, #dm-stars-medium, #dm-stars-large { animation: none !important; }
+}
+
+/* The star count is fixed (generated once server-side, same 355 dots for
+   every viewport) but it's positioned by vw/vh percentage of the screen, so
+   the same dot count lands in a much smaller physical area on a phone than
+   on desktop — the field reads roughly 4x denser on a 375px-wide screen and
+   starts competing with headings/badges sitting directly on top of it
+   instead of reading as a faint backdrop. Dial the layers down (not off) at
+   the same breakpoint the rest of the microsite treats as "mobile". */
+@media (max-width: 640px) {
+  #dm-stars-small  { opacity: 0.32; }
+  #dm-stars-medium { opacity: 0.4; }
+  #dm-stars-large  { opacity: 0.48; }
+}
+
+.dm-live-dot {
+  animation: dm-live-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes dm-live-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(52, 168, 120, 0.45); }
+  50% { box-shadow: 0 0 0 5px rgba(52, 168, 120, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-live-dot { animation: none !important; }
 }
 
 /* ─── Cursor spotlight — a faint gold/emerald glow that follows the

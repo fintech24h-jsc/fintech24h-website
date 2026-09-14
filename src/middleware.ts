@@ -45,8 +45,19 @@ function canonicalPathname(pathname: string): string {
   return pathname;
 }
 
+const isLocalDevHost = (hostname: string) =>
+  hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.local');
+
 export const onRequest = defineMiddleware((context, next) => {
   const target = new URL(context.url);
+
+  // `npm run dev` always serves plain http:// on localhost, which would
+  // otherwise trip the protocol/host canonicalization below and 301 every
+  // local request straight to production — making it impossible to preview
+  // changes before deploying. Skip canonicalization entirely for local dev
+  // hosts; it never applies in production since the live site is never
+  // reached at "localhost".
+  if (isLocalDevHost(target.hostname)) return next();
   const normalizedPathname = canonicalPathname(target.pathname);
   const isLegacyCategory = /^\/category\/([^/]+)\/?$/i.exec(target.pathname);
   const isLegacyPagedCategory = /^\/category\/([^/]+)\/page\/\d+\/?$/i.exec(target.pathname);

@@ -59,6 +59,22 @@ export interface TocItem {
 }
 
 /**
+ * Some WordPress posts (from an AI content pipeline that embeds an FAQ block
+ * with its own <script type="application/ld+json"> directly in the post
+ * body) ship malformed JSON-LD: raw `<a href="...">` links inside a JSON
+ * string value, whose quotes aren't escaped, so the script tag isn't valid
+ * JSON. Google Search Console flags this as "Missing ',' or '}'" on the
+ * affected post. We already emit our own correct BlogPosting/Breadcrumb
+ * schema for every post (see BlogLayout.astro / SchemaOrg.astro), so any
+ * schema script embedded raw in the WP content is both redundant and, on
+ * affected posts, actively broken — strip it rather than trying to repair
+ * arbitrary malformed JSON.
+ */
+export function stripEmbeddedJsonLd(html: string): string {
+  return html.replace(/<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi, '');
+}
+
+/**
  * Injects an `id` into every <h2> in a WordPress content HTML string (WP does
  * not add these) and returns the matching table-of-contents entries. Respects
  * any id WordPress already set instead of overwriting it.

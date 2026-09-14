@@ -60,7 +60,7 @@ const combinedSchema = [serviceSchema, faqSchema];
 
 <BaseLayout
   title="KOL & Influencer Marketing for Blockchain & Web3 | Fintech24h"
-  description="Connect your project with vetted crypto KOLs across Twitter/X, YouTube, and Telegram. Fintech24h manages the full KOL lifecycle — selection, briefing, activation, and reporting."
+  description="Connect your project with vetted crypto KOLs across Twitter/X, YouTube, and Telegram. Fintech24h manages the full KOL lifecycle: selection, briefing, activation, and reporting."
   schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
@@ -86,7 +86,7 @@ const combinedSchema = [serviceSchema, faqSchema];
             <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
           </div>
           <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-2">Fake Followers, Real Budget Lost</h3>
-          <p class="text-[var(--text-secondary)]">You pay for reach that doesn't exist. Inflated follower counts and bot-heavy audiences mean your message goes nowhere — and your budget evaporates with nothing to show.</p>
+          <p class="text-[var(--text-secondary)]">You pay for reach that doesn't exist. Inflated follower counts and bot-heavy audiences mean your message goes nowhere, and your budget evaporates with nothing to show.</p>
         </div>
 
         <!-- Bento 2 -->
@@ -128,10 +128,10 @@ const combinedSchema = [serviceSchema, faqSchema];
 
         <div class="space-y-24">
           {[
-            { step: '01', title: 'Audience-First Selection', desc: 'Before selecting any KOL, we audit their audience demographics, engagement quality, historical campaign performance, and topic alignment with your project. You get a shortlist with reasoning — not just names.', align: 'left' },
+            { step: '01', title: 'Audience-First Selection', desc: 'Before selecting any KOL, we audit their audience demographics, engagement quality, historical campaign performance, and topic alignment with your project. You get a shortlist with reasoning, not just names.', align: 'left' },
             { step: '02', title: 'Brief & Content Alignment', desc: 'We write structured campaign briefs for every KOL, covering project narrative, key messages, tone guidelines, and content formats. Every piece of content is reviewed and approved before going live.', align: 'right' },
             { step: '03', title: 'Phased Activation', desc: 'We don\'t release everything at once. KOL campaigns are deployed in phases: awareness seeding, followed by education and trust-building content, followed by conversion-focused calls to action.', align: 'left' },
-            { step: '04', title: 'Live Tracking & Optimization', desc: 'During every campaign, we monitor performance in real time — impressions, engagement rate, click-through. Underperforming placements are paused and replaced. You see what\'s happening.', align: 'right' },
+            { step: '04', title: 'Live Tracking & Optimization', desc: 'During every campaign, we monitor performance in real time: impressions, engagement rate, click-through. Underperforming placements are paused and replaced. You see what\'s happening.', align: 'right' },
             { step: '05', title: 'Post-Campaign Reporting', desc: 'After every campaign, you receive a full performance breakdown: what worked, what didn\'t, audience quality analysis, and recommendations for the next cycle. Every campaign makes the next smarter.', align: 'left' }
           ].map((item, i) => (
             <div class={`flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16 reveal ${item.align === 'right' ? 'md:flex-row-reverse' : ''}`}>
@@ -160,10 +160,10 @@ const combinedSchema = [serviceSchema, faqSchema];
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { title: 'Influencer Campaign', desc: 'End-to-end management of multi-KOL campaigns — from selection to activation.' },
+          { title: 'Influencer Campaign', desc: 'End-to-end management of multi-KOL campaigns, from selection to activation.' },
           { title: 'KOL Management', desc: 'Ongoing relationship management with a curated group of KOLs who become long-term advocates.' },
           { title: 'Ambassador Program', desc: 'Recruit, onboard, and activate community ambassadors who create organic content.' },
-          { title: 'X Growth Campaign', desc: 'Coordinated Twitter/X amplification — threads, quote posts, Space promotions.' }
+          { title: 'X Growth Campaign', desc: 'Coordinated Twitter/X amplification: threads, quote posts, Space promotions.' }
         ].map((s, i) => (
           <div class="card-default p-8 hover:-translate-y-2 transition-transform duration-300 reveal" style={`transition-delay: ${i * 0.1}s`}>
             <div class="w-10 h-10 rounded-full bg-[var(--surface-soft)] mb-6 flex items-center justify-center text-[var(--text-primary)] font-mono text-sm">{i+1}</div>

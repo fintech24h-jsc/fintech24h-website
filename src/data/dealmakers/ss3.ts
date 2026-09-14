@@ -14,6 +14,7 @@ export const seasonMeta = {
     'Curated, moderated intros between verified Web3/fintech Founders, Investors & Exchanges. Real deal flow, no cold outreach. Apply to join Season 3 now.',
   canonical: 'https://fintech24h.com/dealmakers/ss3/',
   keywords: 'Fintech24h DealMakers Club, F-Matching, Web3 deal flow network, fintech investor introductions, Web3 investor network Vietnam, Southeast Asia deal flow, DealMakers Club Season 3',
+  ogImage: 'https://fintech24h.com/dealmakers/og-ss3.png',
 };
 
 // ─── Hero partners ────────────────────────────────────────────────────────
@@ -152,13 +153,16 @@ export const lastSeasonPartners: PartnerLogo[] = [
 ];
 
 // ─── Media Partners (free, editorial support in exchange for logo placement) ─
-// None confirmed yet — all placeholder slots.
 
-export const mediaPartners: PartnerLogo[] = Array.from({ length: 6 }, () => ({
-  name: null,
-  logoUrl: null,
-  confirmed: false,
-}));
+export const mediaPartners: PartnerLogo[] = [
+  { name: 'CMO Intern', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/CMO-Intern-F-matching-club-ss3-1.png', websiteUrl: 'https://cmointern.com', confirmed: true },
+  { name: 'Coinstori', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Coinstori-F-matching-club-ss3-1.png', websiteUrl: 'https://coinstori.com', confirmed: true },
+  ...Array.from({ length: 4 }, () => ({
+    name: null,
+    logoUrl: null,
+    confirmed: false,
+  })),
+];
 
 // ─── Qualified Listing Directory ──────────────────────────────────────────
 

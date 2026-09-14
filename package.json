@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "postbuild": "node scripts/indexnow-submit.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -29,6 +30,7 @@
     "@astrojs/check": "^0.9.9",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.126.0"
   }
 }

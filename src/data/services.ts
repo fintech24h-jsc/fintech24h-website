@@ -88,7 +88,7 @@ export const services: Service[] = [
     title: 'Event Marketing',
     slug: 'event-marketing',
     icon: 'Ticket',
-    shortDescription: 'Conferences don\'t create opportunities — preparation and follow-through do. We handle every layer of event marketing.',
+    shortDescription: 'Conferences don\'t create opportunities. Preparation and follow-through do. We handle every layer of event marketing.',
     longDescription: 'Transform digital presence into real-world authority. From Token2049 side-events to private VC dinners in Tier-1 cities, we design, manage, and execute offline experiences that connect you directly with strategic partners and high-net-worth individuals.',
     features: [
       'End-to-end event conceptualization and logistical execution',
@@ -113,7 +113,7 @@ export const services: Service[] = [
     slug: 'ai-marketing',
     icon: 'Cpu',
     shortDescription: 'Every startup claims AI. Projects that win trust communicate what their AI actually does, clearly and without hype.',
-    longDescription: 'Deploy intelligence at scale. We integrate custom AI solutions to supercharge your marketing operations—from sentiment analysis bots that track community health to automated content distribution pipelines that operate with machine precision.',
+    longDescription: 'Deploy intelligence at scale. We integrate custom AI solutions to supercharge your marketing operations, from sentiment analysis bots that track community health to automated content distribution pipelines that operate with machine precision.',
     features: [
       'Custom AI bots for automated, context-aware community moderation',
       'Deep data scraping and real-time sentiment analysis on social platforms',

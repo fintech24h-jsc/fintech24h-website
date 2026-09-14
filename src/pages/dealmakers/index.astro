@@ -8,6 +8,7 @@
 import DealMakersLayout from '../../layouts/DealMakersLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { seasons } from '../../data/dealmakers/seasons';
+import { seasonMeta as ss3Meta } from '../../data/dealmakers/ss3';
 
 // Cloudflare's static-assets binding serves an exact-path static file
 // directly and never invokes the Worker (so never runs astro:middleware)
@@ -28,9 +29,19 @@ const breadcrumbs = [
 
 const activeSeason = seasons.find((s) => s.status === 'active') ?? seasons[0];
 const showPicker = seasons.length > 1;
+
+// This stub 301-redirects real visitors to the active season, but link
+// previews (Zalo, Messenger, Telegram, etc.) don't all follow redirects
+// before scraping Open Graph tags — some read whatever this exact /dealmakers/
+// URL serves. So when there's only one season, this page must carry that
+// season's own title/description/image, not a generic fallback, or shared
+// links show the wrong (or a random default) preview card.
+const ogTitle = showPicker ? title : ss3Meta.title;
+const ogDescription = showPicker ? description : ss3Meta.description;
+const ogImage = showPicker ? undefined : ss3Meta.ogImage;
 ---
 
-<DealMakersLayout title={title} description={description} canonical={showPicker ? canonical : activeSeason.href}>
+<DealMakersLayout title={ogTitle} description={ogDescription} canonical={showPicker ? canonical : activeSeason.href} ogImage={ogImage}>
   <BreadcrumbSchema items={breadcrumbs} />
   {!showPicker && <meta http-equiv="refresh" content={`1;url=${activeSeason.href}`} />}
 

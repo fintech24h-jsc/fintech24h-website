@@ -10,6 +10,7 @@ import TelegramJoinBanner from '../../../components/sections/dealmakers/Telegram
 import FeaturedDealMakers from '../../../components/sections/dealmakers/FeaturedDealMakers.astro';
 import USPSection from '../../../components/sections/dealmakers/USPSection.astro';
 import LastSeasonPartners from '../../../components/sections/dealmakers/LastSeasonPartners.astro';
+import CommunityActivity from '../../../components/sections/dealmakers/CommunityActivity.tsx';
 import QualifiedDirectory from '../../../components/sections/dealmakers/QualifiedDirectory.tsx';
 import HowItWorks from '../../../components/sections/dealmakers/HowItWorks.astro';
 import PricingPackages from '../../../components/sections/dealmakers/PricingPackages.astro';
@@ -51,7 +52,7 @@ const faqSchema = {
 const packagesSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: `${seasonMeta.name} — Packages`,
+  name: `${seasonMeta.name} Packages`,
   itemListElement: pricingPackages.map((pkg, i) => {
     const numericPrice = Number(pkg.price.replace(/[^0-9.]/g, ''));
     const isFromPrice = /from/i.test(pkg.price);
@@ -78,7 +79,7 @@ const packagesSchema = {
 };
 ---
 
-<DealMakersLayout title={seasonMeta.title} description={seasonMeta.description} canonical={seasonMeta.canonical} keywords={seasonMeta.keywords} schema={webPageSchema} ogImage="https://fintech24h.com/dealmakers/og-ss3.png">
+<DealMakersLayout title={seasonMeta.title} description={seasonMeta.description} canonical={seasonMeta.canonical} keywords={seasonMeta.keywords} schema={webPageSchema} ogImage={seasonMeta.ogImage}>
   <BreadcrumbSchema items={breadcrumbs} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema).replace(/</g, '\\u003c')} />
   <script type="application/ld+json" set:html={JSON.stringify(packagesSchema).replace(/</g, '\\u003c')} />
@@ -88,6 +89,7 @@ const packagesSchema = {
   <FeaturedDealMakers />
   <USPSection />
   <LastSeasonPartners />
+  <CommunityActivity client:load />
 
   <section id="directory" class="relative py-20 lg:py-28" aria-label="Qualified Listing Directory">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

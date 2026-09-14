@@ -1,23 +1,24 @@
 ---
 // src/pages/careers/[slug].astro
+export const prerender = false;
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import Badge from '../../components/ui/Badge.astro';
 import JobApplicationForm from '../../components/ui/JobApplicationForm';
-import { jobs, type Job } from '../../data/jobs';
+import { jobs } from '../../data/jobs';
 
-export async function getStaticPaths() {
-  return jobs.map((job) => ({
-    params: { slug: job.slug },
-    props: { job }
-  }));
+// This is intentionally rendered by the Worker rather than pre-rendered.
+// Cloudflare's assets manifest does not include getStaticPaths outputs for
+// this dynamic route, which previously left live job-detail links at 404.
+const { slug } = Astro.params;
+const job = jobs.find((item) => item.slug === slug);
+
+if (!job) {
+  return Astro.rewrite('/404');
 }
 
-interface Props {
-  job: Job;
-}
-
-const { job } = Astro.props;
+const isOpen = job.status === 'open';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -105,7 +106,7 @@ const pageSchema = [
     "description": job.about,
     "mainEntity": { "@type": "Organization", "@id": "https://fintech24h.com/#organization" }
   },
-  jobSchema
+  ...(isOpen ? [jobSchema] : [])
 ];
 ---
 
@@ -181,7 +182,7 @@ const pageSchema = [
             <circle cx="12" cy="12" r="10" />
             <polyline points="12 6 12 12 16 14" />
           </svg>
-          Status: ACTIVE_SELECTION
+          Status: {isOpen ? 'ACTIVE_SELECTION' : 'POSITION_CLOSED'}
         </span>
       </div>
     </div>
@@ -274,9 +275,29 @@ const pageSchema = [
           
         </div>
 
-        <!-- Right Column: Sticky Application Form -->
+        <!-- Right Column: Sticky Application Panel -->
         <div class="lg:col-span-5 lg:sticky lg:top-28" data-animate="fade-up">
-          <JobApplicationForm client:load jobTitle={job.title} jobId={job.id} />
+          {isOpen ? (
+            <JobApplicationForm client:load jobTitle={job.title} />
+          ) : (
+            <aside class="liquid-glass-premium p-6 sm:p-8 border border-[var(--border-subtle)]">
+              <span class="font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                // POSITION_CLOSED
+              </span>
+              <h2 class="mt-4 font-display text-2xl font-bold uppercase tracking-wide text-[var(--text-primary)]">
+                This position is closed.
+              </h2>
+              <p class="mt-3 font-body text-sm leading-relaxed text-[var(--text-secondary)]">
+                Applications for this role are no longer being accepted. Please review our current openings or submit a general application.
+              </p>
+              <a
+                href="/careers/#general-application"
+                class="mt-6 inline-flex items-center rounded-lg border border-[var(--border-default)] px-4 py-2.5 font-mono text-[10px] uppercase tracking-wider text-[var(--text-primary)] transition-colors hover:border-[var(--accent-cyan)] hover:text-[var(--accent-cyan)]"
+              >
+                Submit General Application
+              </a>
+            </aside>
+          )}
         </div>
         
       </div>

@@ -39,13 +39,24 @@ export default {
       },
       fontSize: {
         // Theo design-system.md
+        // 2026-09-06: bumped 'body'/'small' (and Tailwind's own default
+        // 'sm'/'base', which a lot of components use directly instead of
+        // these custom tokens) up one notch for readability — user reported
+        // normal info text reading too small. 'xs' stays untouched: per the
+        // design system it's reserved for uppercase eyebrow labels/tags, not
+        // body copy, so enlarging it would blow out those tiny badges.
         'hero': ['clamp(3rem, 7vw, 5.5rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
         'h1':   ['clamp(2.2rem, 4.5vw, 3.75rem)', { lineHeight: '1.1',  letterSpacing: '-0.025em' }],
         'h2':   ['clamp(1.6rem, 3vw, 2.5rem)',    { lineHeight: '1.2',  letterSpacing: '-0.02em' }],
         'h3':   ['clamp(1.2rem, 2vw, 1.5rem)',    { lineHeight: '1.3',  letterSpacing: '-0.01em' }],
-        'body': ['1rem',       { lineHeight: '1.75' }],
-        'small':['0.875rem',   { lineHeight: '1.6' }],
+        'body': ['1.0625rem', { lineHeight: '1.75' }],
+        'small':['0.9375rem', { lineHeight: '1.6' }],
         'xs':   ['0.75rem',    { lineHeight: '1.5', letterSpacing: '0.05em' }],
+        // Override Tailwind's own default scale too, since most sections use
+        // the plain `text-sm`/`text-base` utilities rather than the custom
+        // tokens above.
+        'sm':   ['0.9375rem', { lineHeight: '1.5rem' }],
+        'base': ['1.0625rem', { lineHeight: '1.75rem' }],
       },
       animation: {
         'orb-pulse':  'orb-pulse 8s ease-in-out infinite',
