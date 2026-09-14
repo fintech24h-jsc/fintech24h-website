@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Fintech24h Team Directory
  * Description:       Minimal, dependency-free custom post type ("Team Member": LinkedIn/Telegram/Instagram/email, "has left Fintech24h" flag) plus a free-form Ecosystem Links registry, powering the public anti-impersonation lookup at fintech24h.com/verify-members/. No third-party libraries, no external network calls, no update mechanism.
- * Version:           1.1.2
+ * Version:           1.2.0
  * Requires at least: 6.4
  * Requires PHP:      8.0
  * Author:            Fintech24h
@@ -479,17 +479,24 @@ function fi24h_get_ecosystem_links(): array {
 }
 
 /**
- * Parses the admin textarea (one `Label | url-or-email` per line) into a
- * clean array, silently dropping malformed lines rather than rejecting the
- * whole save — a stray blank line or missing `|` shouldn't lose everything
- * else that was fine.
- */
-/**
  * Returns ['entries' => [...valid rows], 'rejected' => ['line text — reason', ...]].
  * Every line is accounted for one way or the other — nothing is dropped
- * silently, unlike the previous version of this function, so a line that
- * doesn't survive (bad separator, unparseable value) shows up explicitly in
- * the admin notice instead of just quietly not being there after Save.
+ * silently, so a line that doesn't survive (bad separator, unparseable
+ * value) shows up explicitly in the admin notice instead of just quietly
+ * not being there after Save.
+ *
+ * Two line formats, both `|`-separated:
+ *   Label | url-or-email             — value must already be a full,
+ *                                       well-formed http(s) URL or email.
+ *   Label | platform | username      — for when a visitor would only ever
+ *                                       have a bare handle to check, not a
+ *                                       full link (e.g. just "phatvt", not
+ *                                       "https://t.me/phatvt"). `platform`
+ *                                       is one of the FI24H_ECOSYSTEM_PLATFORM_HOSTS
+ *                                       keys below; the canonical URL is
+ *                                       built from it the same way the
+ *                                       per-member LinkedIn/Telegram/
+ *                                       Instagram fields already do.
  */
 function fi24h_parse_ecosystem_links(string $raw_text): array {
     $lines = preg_split('/\r\n|\r|\n/', $raw_text) ?: [];
@@ -500,25 +507,36 @@ function fi24h_parse_ecosystem_links(string $raw_text): array {
         $line = trim($line);
         if ($line === '') continue;
 
-        $parts = explode('|', $line, 2);
-        if (count($parts) !== 2) {
+        $parts = array_map('trim', explode('|', $line));
+        if (count($parts) < 2) {
             $rejected[] = "\"$line\" — missing the \"|\" separator between label and value";
             continue;
         }
 
-        $label_raw = trim($parts[0]);
-        $value_raw = trim($parts[1]);
-        $label = sanitize_text_field($label_raw);
-
+        $label = sanitize_text_field($parts[0]);
         if ($label === '') {
             $rejected[] = "\"$line\" — label is empty";
             continue;
         }
 
-        $value = fi24h_sanitize_ecosystem_value($value_raw);
-        if ($value === '') {
-            $rejected[] = "\"$line\" — \"$value_raw\" is not a valid http(s) URL or email address (needs a real domain with a dot, e.g. \"example.com\", not just a word)";
-            continue;
+        if (count($parts) >= 3) {
+            // Label | platform | username
+            $platform_input = $parts[1];
+            $handle_input = $parts[2];
+            $value = fi24h_resolve_ecosystem_platform_value($platform_input, $handle_input);
+            if ($value === '') {
+                $known = implode(', ', array_keys(FI24H_ECOSYSTEM_PLATFORM_HOSTS));
+                $rejected[] = "\"$line\" — \"$handle_input\" isn't a valid handle/URL for platform \"$platform_input\" (known platforms: $known)";
+                continue;
+            }
+        } else {
+            // Label | url-or-email
+            $value_raw = $parts[1];
+            $value = fi24h_sanitize_ecosystem_value($value_raw);
+            if ($value === '') {
+                $rejected[] = "\"$line\" — \"$value_raw\" is not a valid http(s) URL or email address. Only have a username? Use: Label | platform | username (e.g. \"$label | telegram | $value_raw\")";
+                continue;
+            }
         }
 
         $entries[] = ['label' => mb_substr($label, 0, 120), 'value' => $value];
@@ -555,6 +573,40 @@ function fi24h_sanitize_ecosystem_value(string $value): string {
     return $clean;
 }
 
+/** platform keyword => [allowed hosts for an already-full URL, canonical URL template with %s for the handle] */
+const FI24H_ECOSYSTEM_PLATFORM_HOSTS = [
+    'telegram'  => [['t.me', 'telegram.me'], 'https://t.me/%s'],
+    'tg'        => [['t.me', 'telegram.me'], 'https://t.me/%s'],
+    'instagram' => [['instagram.com', 'www.instagram.com'], 'https://www.instagram.com/%s/'],
+    'ig'        => [['instagram.com', 'www.instagram.com'], 'https://www.instagram.com/%s/'],
+    'linkedin'  => [['linkedin.com', 'www.linkedin.com'], 'https://www.linkedin.com/in/%s/'],
+    'li'        => [['linkedin.com', 'www.linkedin.com'], 'https://www.linkedin.com/in/%s/'],
+    'x'         => [['x.com', 'www.x.com', 'twitter.com', 'www.twitter.com'], 'https://x.com/%s'],
+    'twitter'   => [['x.com', 'www.x.com', 'twitter.com', 'www.twitter.com'], 'https://x.com/%s'],
+    'facebook'  => [['facebook.com', 'www.facebook.com'], 'https://www.facebook.com/%s'],
+    'fb'        => [['facebook.com', 'www.facebook.com'], 'https://www.facebook.com/%s'],
+];
+
+/**
+ * Resolves a `platform | value` pair (see fi24h_parse_ecosystem_links() doc
+ * above) into one canonical URL. `$value` may be a bare handle/@handle, OR
+ * already be a full URL on that platform (validated against its allowlist,
+ * same as everywhere else) — either way the stored result is one consistent
+ * form, which is what lets /verify-members match a visitor-pasted full URL
+ * even when this table only ever had the bare handle typed in.
+ */
+function fi24h_resolve_ecosystem_platform_value(string $platform_input, string $value): string {
+    $platform = strtolower(trim($platform_input));
+    $value = trim($value);
+    if ($value === '' || !isset(FI24H_ECOSYSTEM_PLATFORM_HOSTS[$platform])) return '';
+
+    [$allowed_hosts, $url_template] = FI24H_ECOSYSTEM_PLATFORM_HOSTS[$platform];
+    $handle = fi24h_extract_handle($value, $allowed_hosts, strpos($url_template, '/in/%s') !== false ? '/^in\//i' : null);
+    if ($handle === null) return '';
+
+    return sprintf($url_template, $handle);
+}
+
 function fi24h_render_ecosystem_links_page(): void {
     if (!current_user_can('manage_options')) return;
 
@@ -584,11 +636,15 @@ function fi24h_render_ecosystem_links_page(): void {
     <div class="wrap">
         <h1>Ecosystem Links</h1>
         <p>
-            One entry per line: <code>Label | URL or email</code>. Checked by
+            One entry per line, two formats — checked by
             <a href="https://fintech24h.com/verify-members/" target="_blank" rel="noopener">fintech24h.com/verify-members/</a>
             as a catch-all for anything that isn't a specific person's LinkedIn/Telegram/Instagram/email — a company
             Facebook page, a shared inbox like <code>support@fintech24h.com</code>, Coinstori, CMO Intern, etc.
         </p>
+        <ul style="list-style: disc; margin-left: 1.5em;">
+            <li><code>Label | full URL or email</code> — when you already have the complete link, e.g. <code>Coinstori | https://coinstori.com</code></li>
+            <li><code>Label | platform | username</code> — when you only have a bare handle, not a link, e.g. <code>Phat Vo Telegram | telegram | phatvt</code>. Platforms: <code>telegram</code>, <code>instagram</code>, <code>linkedin</code>, <code>x</code> (or <code>twitter</code>), <code>facebook</code>.</li>
+        </ul>
         <?php if ($saved && empty($rejected)): ?>
             <div class="notice notice-success"><p>Saved <?php echo (int) count($links); ?> ecosystem link(s).</p></div>
         <?php elseif ($saved): ?>
@@ -605,7 +661,7 @@ function fi24h_render_ecosystem_links_page(): void {
         <form method="post">
             <?php wp_nonce_field('fi24h_save_ecosystem_links', 'fi24h_ecosystem_nonce'); ?>
             <textarea name="fi24h_ecosystem_text" rows="14" style="width:100%; max-width:800px; font-family:monospace;"
-                      placeholder="Fintech24h Official Support Email | support@fintech24h.com&#10;Fintech24h Company Facebook | https://www.facebook.com/fintech24hnews&#10;Coinstori | https://coinstori.com"><?php echo esc_textarea($textarea_value); ?></textarea>
+                      placeholder="Fintech24h Official Support Email | support@fintech24h.com&#10;Fintech24h Company Facebook | https://www.facebook.com/fintech24hnews&#10;Coinstori | https://coinstori.com&#10;Phat Vo Telegram | telegram | phatvt"><?php echo esc_textarea($textarea_value); ?></textarea>
             <p><?php submit_button('Save Ecosystem Links', 'primary', 'submit', false); ?></p>
         </form>
     </div>
