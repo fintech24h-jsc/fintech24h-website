@@ -18,6 +18,9 @@ import MediaPartners from '../../../components/sections/dealmakers/MediaPartners
 import ApplyForm from '../../../components/sections/dealmakers/ApplyForm.tsx';
 import FaqAccordion from '../../../components/sections/dealmakers/FaqAccordion.astro';
 import { seasonMeta, faq, pricingPackages } from '../../../data/dealmakers/ss3';
+import { dealMakersMembers } from '../../../data/dealmakers/members';
+
+const dealMakersMembersCount = dealMakersMembers.length;
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -90,6 +93,22 @@ const packagesSchema = {
   <USPSection />
   <LastSeasonPartners />
   <CommunityActivity client:load />
+
+  <section class="relative py-12" aria-label="Members directory link">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <a href="/dealmakers/members/" class="dm-card group flex flex-col sm:flex-row items-center justify-between gap-5 p-6 sm:p-7 text-center sm:text-left" data-dm-reveal>
+        <div>
+          <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-2">Members directory</p>
+          <h2 class="font-display font-semibold text-lg text-[var(--dm-text-primary)]">
+            Meet {dealMakersMembersCount}+ verified DealMakers across every season.
+          </h2>
+        </div>
+        <span class="dm-btn-primary py-2.5 px-6 text-[10px] shrink-0 group-hover:translate-x-0.5 transition-transform">
+          View Members →
+        </span>
+      </a>
+    </div>
+  </section>
 
   <section id="directory" class="relative py-20 lg:py-28" aria-label="Qualified Listing Directory">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,0 +1,68 @@
+---
+// src/pages/dealmakers/members/index.astro
+// Cross-season member directory for the Fi24h DealMakers' Club — lives at
+// the /dealmakers/ level (not under /ss3/) because it outlives any single
+// season. Sourced from the public Season 2 archive
+// (https://fi24h-dealmakersclub.super.site/); see
+// scripts/dealmakers-members-scraper/run.mjs to refresh the snapshot.
+import DealMakersLayout from '../../../layouts/DealMakersLayout.astro';
+import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
+import MembersDirectory from '../../../components/sections/dealmakers/MembersDirectory.tsx';
+import { dealMakersMembers } from '../../../data/dealmakers/members';
+import { seasons } from '../../../data/dealmakers/seasons';
+
+const activeSeason = seasons.find((s) => s.status === 'active') ?? seasons[0];
+
+const title = 'Members Directory | Fi24h DealMakers’ Club';
+const description = `Browse ${dealMakersMembers.length}+ verified Web3 and fintech Founders, Investors, and operators in the Fi24h DealMakers’ Club.`;
+const canonical = 'https://fintech24h.com/dealmakers/members/';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'DealMakers’ Club', item: 'https://fintech24h.com/dealmakers/' },
+  { name: 'Members', item: canonical },
+];
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description,
+  url: canonical,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'Fi24h DealMakers’ Club',
+    url: 'https://fintech24h.com/dealmakers/',
+  },
+};
+---
+
+<DealMakersLayout title={title} description={description} canonical={canonical} schema={webPageSchema} ogImage="https://fintech24h.com/dealmakers/og-ss3.png">
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="relative py-24 lg:py-28 overflow-hidden" aria-label="Members directory">
+    <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[420px] h-[420px] rounded-full opacity-25 mix-blend-screen dm-orb-gold"
+        style="top: -8%; right: -6%; filter: blur(100px); animation: orb-pulse 10s ease-in-out infinite;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-14">
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">Fi24h DealMakers’ Club</p>
+      <h1 class="font-display font-semibold text-h1 text-[var(--dm-text-primary)] mb-5">
+        {dealMakersMembers.length}+ verified members, across every season.
+      </h1>
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-xl mx-auto">
+        Founders, investors, and operators who have been reviewed and welcomed into the club. This directory carries over season to season — it isn't reset when a season ends.
+      </p>
+      <a href={activeSeason.href} class="dm-btn-ghost py-2.5 px-6 text-[10px] inline-flex items-center gap-1.5 mt-7">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+        Back to {activeSeason.name}
+      </a>
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <MembersDirectory client:load />
+    </div>
+  </section>
+</DealMakersLayout>
