@@ -51,13 +51,22 @@ const breadcrumbs = [
 // no signature gradient. Founders have no instagram/email/leftCompany/
 // departureDate fields in team.ts (all 4 are current), which is fine — every
 // one of those is optional; add them via the WP plugin if ever needed.
-const founders: VerifiableMember[] = [...team, ...advisors].map((m) => ({
-  name: m.name,
-  role: m.role,
-  image: m.image,
-  telegram: m.telegram,
-  linkedin: m.linkedin
-}));
+//
+// team.ts also carries office mascots (mascot: true) — they're real About-page
+// entries but not people who can be impersonated on LinkedIn/Telegram, so they
+// don't belong in an identity-verification roster. Their telegram/linkedin
+// fields just point at the general company channels anyway, which would
+// otherwise make "Mr Cá, Chief Happiness Officer" pop up for a link that's
+// really just @fintech24h's own account.
+const founders: VerifiableMember[] = [...team, ...advisors]
+  .filter((m) => !m.mascot)
+  .map((m) => ({
+    name: m.name,
+    role: m.role,
+    image: m.image,
+    telegram: m.telegram,
+    linkedin: m.linkedin
+  }));
 
 const [wpMembers, ecosystemLinks]: [VerifiableMember[], EcosystemLink[]] = await Promise.all([
   getTeamDirectory(),
