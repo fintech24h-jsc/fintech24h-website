@@ -239,21 +239,31 @@ for (const member of [...wpMembers, ...founders]) {
         return wrap;
       }
 
-      function renderVerified(member: VerifiableMember, platform: Platform) {
+      /** "LinkedIn", "LinkedIn & Telegram", or "LinkedIn, Telegram & Instagram" —
+       *  every platform a bare handle matched on for the same person, not just
+       *  the first one found. */
+      function joinPlatformLabels(platforms: Platform[]): string {
+        const labels = platforms.map((p) => PLATFORM_LABELS[p]);
+        if (labels.length <= 1) return labels[0] ?? '';
+        if (labels.length === 2) return `${labels[0]} & ${labels[1]}`;
+        return `${labels.slice(0, -1).join(', ')} & ${labels[labels.length - 1]}`;
+      }
+
+      function renderVerified(member: VerifiableMember, platforms: Platform[]) {
         clearResult();
         const wrap = document.createElement('div');
         wrap.className = 'p-4 rounded-xl border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[var(--color-success-bg)]';
 
         const badge = document.createElement('div');
         badge.className = 'inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--color-success)] mb-3';
-        badge.textContent = `✓ Verified — official ${PLATFORM_LABELS[platform]}`;
+        badge.textContent = `✓ Verified — official ${joinPlatformLabels(platforms)}`;
         wrap.appendChild(badge);
 
         wrap.appendChild(memberHeader(member, 'var(--color-success)'));
         resultEl.appendChild(wrap);
       }
 
-      function renderFormer(member: VerifiableMember, platform: Platform, departureDate: string | undefined) {
+      function renderFormer(member: VerifiableMember, platforms: Platform[], departureDate: string | undefined) {
         clearResult();
         const wrap = document.createElement('div');
         wrap.className = 'p-4 rounded-xl border border-[color-mix(in_srgb,var(--color-warning)_35%,transparent)] bg-[color-mix(in_srgb,var(--color-warning)_8%,transparent)]';
@@ -265,12 +275,13 @@ for (const member of [...wpMembers, ...founders]) {
 
         wrap.appendChild(memberHeader(member, 'var(--color-warning)'));
 
+        const subject = `This ${joinPlatformLabels(platforms)}`;
         const formattedDate = formatDeparture(departureDate);
         const msg = document.createElement('p');
         msg.className = 'font-body text-sm text-[var(--text-secondary)] leading-relaxed mt-3 pt-3 border-t border-[color-mix(in_srgb,var(--color-warning)_20%,transparent)]';
         msg.textContent = formattedDate
-          ? `This ${PLATFORM_LABELS[platform]} did belong to a verified Fintech24h team member, who left the company on ${formattedDate}. It no longer represents Fintech24h — do not trust any current business, investment, or OTC claims from this account.`
-          : `This ${PLATFORM_LABELS[platform]} did belong to a verified Fintech24h team member, who is no longer with the company. It no longer represents Fintech24h — do not trust any current business, investment, or OTC claims from this account.`;
+          ? `${subject} did belong to a verified Fintech24h team member, who left the company on ${formattedDate}. It no longer represents Fintech24h — do not trust any current business, investment, or OTC claims from this account.`
+          : `${subject} did belong to a verified Fintech24h team member, who is no longer with the company. It no longer represents Fintech24h — do not trust any current business, investment, or OTC claims from this account.`;
         wrap.appendChild(msg);
 
         resultEl.appendChild(wrap);
@@ -371,10 +382,10 @@ for (const member of [...wpMembers, ...founders]) {
             renderInvalid();
             break;
           case 'verified':
-            renderVerified(result.member, result.platform);
+            renderVerified(result.member, result.platforms);
             break;
           case 'former':
-            renderFormer(result.member, result.platform, result.departureDate);
+            renderFormer(result.member, result.platforms, result.departureDate);
             break;
           case 'verified_ecosystem':
             renderEcosystem(result.label);
