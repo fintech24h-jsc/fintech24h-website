@@ -153,13 +153,16 @@ export const lastSeasonPartners: PartnerLogo[] = [
 ];
 
 // ─── Media Partners (free, editorial support in exchange for logo placement) ─
-// None confirmed yet — all placeholder slots.
 
-export const mediaPartners: PartnerLogo[] = Array.from({ length: 6 }, () => ({
-  name: null,
-  logoUrl: null,
-  confirmed: false,
-}));
+export const mediaPartners: PartnerLogo[] = [
+  { name: 'CMO Intern', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/CMO-Intern-F-matching-club-ss3-1.png', confirmed: true },
+  { name: 'Coinstori', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Coinstori-F-matching-club-ss3-1.png', confirmed: true },
+  ...Array.from({ length: 4 }, () => ({
+    name: null,
+    logoUrl: null,
+    confirmed: false,
+  })),
+];
 
 // ─── Qualified Listing Directory ──────────────────────────────────────────
 

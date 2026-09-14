@@ -8,6 +8,7 @@ const MEMBER_ROLE_NOTES: Record<string, string> = {
   phatvt: 'Co-Founder & CPO, Fintech24h',
   vincentnguyen0501: 'Co-Founder & CEO, Fintech24h',
   fintech24hijayc: 'Head of CM, Fintech24h',
+  tracyho12: 'Content & Social Media Specialist, Fintech24h',
 };
 
 type CommunityMember = {
