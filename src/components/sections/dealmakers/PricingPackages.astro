@@ -63,6 +63,12 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
           >
             {pkg.ctaLabel} <span aria-hidden="true">→</span>
           </a>
+
+          {pkg.id === 'category-partner' && (
+            <a href="/dealmakers/ss3/partner-benefits/" class="text-xs text-center text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)] mt-3">
+              See Capital / Solution / Media benefits →
+            </a>
+          )}
         </div>
       ))}
     </div>

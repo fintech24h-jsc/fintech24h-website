@@ -1,6 +1,8 @@
 ---
 // src/components/sections/dealmakers/MediaPartners.astro
-import { mediaPartners } from '../../../data/dealmakers/ss3';
+import { mediaPartners, partnerTracks } from '../../../data/dealmakers/ss3';
+
+const mediaTrack = partnerTracks.find((t) => t.id === 'media')!;
 ---
 
 <section class="relative py-20 lg:py-24 bg-[var(--dm-bg-secondary)]" aria-label="Media Partners">
@@ -10,9 +12,15 @@ import { mediaPartners } from '../../../data/dealmakers/ss3';
       <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-4">
         Amplified by media partners across the ecosystem.
       </h2>
-      <p class="text-sm text-[var(--dm-text-secondary)] max-w-xl mx-auto mb-10">
+      <p class="text-sm text-[var(--dm-text-secondary)] max-w-xl mx-auto mb-6">
         We're proud to work alongside respected voices in Web3 and fintech media, whose coverage helps bring F-Matching Season 3 to a wider audience.
       </p>
+
+      <ul class="flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto mb-10">
+        {mediaTrack.benefits.map((b) => (
+          <li class="dm-tag dm-tag-gray text-[10px] py-1 px-2.5">{b}</li>
+        ))}
+      </ul>
     </div>
 
     <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 max-w-3xl mx-auto mb-10">
@@ -48,5 +56,10 @@ import { mediaPartners } from '../../../data/dealmakers/ss3';
     <a href="#apply" data-dm-prefill-interest="Media Partner" data-dm-track="media_partner_cta" class="dm-btn-ghost py-2.5 px-6 text-[10px]">
       Become a Media Partner
     </a>
+    <p class="mt-4">
+      <a href="/dealmakers/ss3/partner-benefits/" class="text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)]">
+        See the full Media Partner benefit list →
+      </a>
+    </p>
   </div>
 </section>

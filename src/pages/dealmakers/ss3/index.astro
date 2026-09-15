@@ -14,6 +14,7 @@ import CommunityActivity from '../../../components/sections/dealmakers/Community
 import QualifiedDirectory from '../../../components/sections/dealmakers/QualifiedDirectory.tsx';
 import HowItWorks from '../../../components/sections/dealmakers/HowItWorks.astro';
 import PricingPackages from '../../../components/sections/dealmakers/PricingPackages.astro';
+import PartnerTracks from '../../../components/sections/dealmakers/PartnerTracks.astro';
 import MediaPartners from '../../../components/sections/dealmakers/MediaPartners.astro';
 import ApplyForm from '../../../components/sections/dealmakers/ApplyForm.tsx';
 import FaqAccordion from '../../../components/sections/dealmakers/FaqAccordion.astro';
@@ -127,6 +128,7 @@ const packagesSchema = {
 
   <HowItWorks />
   <PricingPackages />
+  <PartnerTracks />
   <MediaPartners />
 
   <section id="apply" class="relative py-20 lg:py-28" aria-label="Apply to Join">
@@ -187,4 +189,21 @@ const packagesSchema = {
       });
     }
   });
+
+  // Cross-page prefill: /dealmakers/ss3/partner-benefits/ links to
+  // /dealmakers/ss3/?interest=<value>#apply so "Apply as Capital Partner"
+  // etc. arrives here with the right option pre-selected. The ApplyForm
+  // island (client:load) can finish hydrating well after this script runs
+  // or even after window `load`, so retry a few times instead of firing
+  // once — each dispatch is idempotent (just re-sets the same value).
+  const prefillInterest = new URLSearchParams(window.location.search).get('interest');
+  if (prefillInterest) {
+    let attempts = 0;
+    const tryPrefill = () => {
+      attempts += 1;
+      window.dispatchEvent(new CustomEvent('dm:prefill', { detail: { interest: prefillInterest } }));
+      if (attempts < 15) setTimeout(tryPrefill, 200);
+    };
+    tryPrefill();
+  }
 </script>
