@@ -44,7 +44,7 @@ const webPageSchema = {
 // comparison since the Partner Benefits Matrix covers all four.
 const projectCard = {
   id: 'project' as const,
-  icon: '🚀',
+  icon: 'PRJ',
   title: 'Project Onboard',
   description: 'For Web3, DeFi, AI × Web3, fintech, infrastructure, and other projects joining F-Matching.',
   fullBenefits: projectOnboardBenefits,
@@ -91,10 +91,12 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
 
   <section class="relative pb-20 lg:pb-28" aria-label="Full benefit lists by partner type">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid md:grid-cols-2 gap-5">
+      <div class="grid sm:grid-cols-2 gap-5">
         {allTracks.map((track, i) => (
           <div class="dm-card p-7 rounded-[20px]" data-dm-reveal style={`--dm-reveal-delay: ${i * 70}`}>
-            <span class="text-2xl mb-3 block" aria-hidden="true">{track.icon}</span>
+            <span class="w-11 h-11 rounded-xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-[11px] font-bold text-[var(--dm-gold)] mb-4" aria-hidden="true">
+              {track.icon}
+            </span>
             <h2 class="font-display font-semibold text-lg text-[var(--dm-text-primary)] mb-2">{track.title}</h2>
             <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed mb-5">{track.description}</p>
 

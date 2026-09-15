@@ -433,7 +433,7 @@ export const pricingPackages: PricingPackage[] = [
 
 export interface PartnerTrack {
   id: 'capital' | 'solution' | 'media';
-  icon: string;
+  icon: string; // short 3-letter code rendered in a monogram badge, not an emoji
   title: string;
   description: string;
   benefits: string[];
@@ -444,7 +444,7 @@ export interface PartnerTrack {
 export const partnerTracks: PartnerTrack[] = [
   {
     id: 'capital',
-    icon: '💰',
+    icon: 'CAP',
     title: 'Capital Partner',
     description: 'For VCs, funds, family offices, angels, and investment platforms.',
     benefits: [
@@ -470,7 +470,7 @@ export const partnerTracks: PartnerTrack[] = [
   },
   {
     id: 'solution',
-    icon: '🧩',
+    icon: 'SOL',
     title: 'Solution Partner',
     description: 'For exchanges, listing platforms, market makers, legal, tech, and service providers.',
     benefits: [
@@ -496,7 +496,7 @@ export const partnerTracks: PartnerTrack[] = [
   },
   {
     id: 'media',
-    icon: '📣',
+    icon: 'MED',
     title: 'Media Partner',
     description: 'For crypto, fintech, business media, newsletters, podcasts, and community media.',
     benefits: [

@@ -172,9 +172,9 @@ const currentYear = new Date().getFullYear();
         )}
       </a>
 
-      <nav class="hidden md:flex items-center gap-7 font-mono text-[11px] uppercase tracking-widest text-[var(--dm-text-secondary)]" aria-label="Section navigation">
+      <nav class="hidden lg:flex items-center gap-6 font-mono text-[11px] uppercase tracking-widest text-[var(--dm-text-secondary)]" aria-label="Section navigation">
         {navLinks.map((l) => (
-          <a href={l.href} class="hover:text-[var(--dm-gold)] transition-colors">{l.label}</a>
+          <a href={l.href} class="hover:text-[var(--dm-gold)] transition-colors whitespace-nowrap">{l.label}</a>
         ))}
       </nav>
 
@@ -185,7 +185,7 @@ const currentYear = new Date().getFullYear();
         <button
           id="dm-nav-toggle"
           type="button"
-          class="dm-btn-icon md:hidden"
+          class="dm-btn-icon lg:hidden"
           aria-label="Toggle navigation menu"
           aria-expanded="false"
           aria-controls="dm-mobile-nav"
@@ -196,7 +196,7 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
 
-    <nav id="dm-mobile-nav" class="dm-mobile-nav md:hidden" aria-label="Mobile section navigation" hidden>
+    <nav id="dm-mobile-nav" class="dm-mobile-nav lg:hidden" aria-label="Mobile section navigation" hidden>
       <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col">
         {navLinks.map((l) => (
           <a href={l.href} class="dm-mobile-nav-link" data-dm-close-menu>{l.label}</a>
@@ -423,8 +423,9 @@ const currentYear = new Date().getFullYear();
 
   <script is:inline>
     // Mobile nav toggle for the header hamburger — desktop already shows the
-    // section nav inline, this only covers the sub-md breakpoint where it's
-    // hidden. Vanilla JS, no framework: this is a single show/hide toggle.
+    // section nav inline, this only covers the sub-lg breakpoint where it's
+    // hidden (below lg, not md, so tablets get the clean dropdown instead of
+    // a cramped inline nav). Vanilla JS, no framework: a single show/hide toggle.
     (function () {
       const toggle = document.getElementById('dm-nav-toggle');
       const menu = document.getElementById('dm-mobile-nav');
@@ -446,7 +447,7 @@ const currentYear = new Date().getFullYear();
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') setOpen(false);
       });
-      window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+      window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
         if (e.matches) setOpen(false);
       });
     })();
