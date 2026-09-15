@@ -64,15 +64,16 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
             {pkg.ctaLabel} <span aria-hidden="true">→</span>
           </a>
 
-          {pkg.id === 'category-partner' && (
-            <a href="/dealmakers/ss3/partner-benefits/" class="text-xs text-center text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)] mt-3">
-              See Capital / Solution / Media benefits →
+          {/* Always reserve this line's height (even when empty) so all 4
+              CTAs land on the same baseline regardless of which cards carry
+              a detail link — an invisible placeholder keeps the layout
+              consistent instead of the button height diverging per card. */}
+          {pkg.detailLink ? (
+            <a href={pkg.detailLink.href} class="text-xs text-center text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)] mt-3">
+              {pkg.detailLink.label} →
             </a>
-          )}
-          {pkg.id === 'solution-partner' && (
-            <a href="/dealmakers/ss3/partner-benefits/" class="text-xs text-center text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)] mt-3">
-              See full Solution Partner benefits →
-            </a>
+          ) : (
+            <span class="text-xs text-center mt-3 invisible" aria-hidden="true">placeholder →</span>
           )}
         </div>
       ))}

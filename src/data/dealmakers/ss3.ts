@@ -361,6 +361,7 @@ export interface PricingPackage {
   ribbon?: string;
   benefits: string[];
   addOn?: { label: string; description: string };
+  detailLink?: { href: string; label: string };
   ctaLabel: string;
   ctaInterest: string;
 }
@@ -380,6 +381,7 @@ export const pricingPackages: PricingPackage[] = [
       'Co-host Deal Room / strategic content',
       'Lead and introduction reporting',
     ],
+    detailLink: { href: '/dealmakers/ss3/partner-benefits/', label: 'See Capital / Solution / Media benefits' },
     ctaLabel: 'Get Partner Deck',
     ctaInterest: 'Category Partner / Sponsorship',
   },
@@ -398,6 +400,7 @@ export const pricingPackages: PricingPackage[] = [
       'Co-host / webinar opportunities',
       'Lead-generation & BD introductions',
     ],
+    detailLink: { href: '/dealmakers/ss3/partner-benefits/', label: 'See full Solution Partner benefits' },
     ctaLabel: 'Apply as Solution Partner',
     ctaInterest: 'Solution Partner ($3,000/season · 3 slots)',
   },
