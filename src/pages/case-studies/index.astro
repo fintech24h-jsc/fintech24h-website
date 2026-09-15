@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { getAllCaseStudies } from '../../lib/wordpress';
 import { decodeHtmlEntities } from '../../lib/utils';
+import TrustBar from '../../components/sections/TrustBar.astro';
 
 const caseStudies = await getAllCaseStudies();
 const hasVerifiedCaseStudies = caseStudies.length > 0;
@@ -137,4 +138,6 @@ const collectionSchema = {
 
     </div>
   </section>
+
+  {!hasVerifiedCaseStudies && <TrustBar />}
 </BaseLayout>
