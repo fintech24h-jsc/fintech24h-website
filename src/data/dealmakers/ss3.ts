@@ -351,7 +351,7 @@ export const directoryProfiles: DirectoryProfile[] = [
 // ─── Pricing packages ──────────────────────────────────────────────────────
 
 export interface PricingPackage {
-  id: 'category-partner' | 'featured-dealmaker' | 'qualified-listing';
+  id: 'category-partner' | 'solution-partner' | 'featured-dealmaker' | 'qualified-listing';
   kicker: string;
   title: string;
   description: string;
@@ -382,6 +382,24 @@ export const pricingPackages: PricingPackage[] = [
     ],
     ctaLabel: 'Get Partner Deck',
     ctaInterest: 'Category Partner / Sponsorship',
+  },
+  {
+    id: 'solution-partner',
+    kicker: 'For solution providers',
+    title: 'Solution Partner',
+    description: 'A dedicated track for teams offering listing, liquidity, legal, tech, or growth solutions to Season 3 projects.',
+    price: '$3,000',
+    priceQualifier: '/ season · 3 slots',
+    highlight: false,
+    benefits: [
+      'Only 3 Solution Partner slots this season',
+      'Logo on the Season 3 Media Kit',
+      'Direct introduction to qualified projects',
+      'Co-host / webinar opportunities',
+      'Lead-generation & BD introductions',
+    ],
+    ctaLabel: 'Apply as Solution Partner',
+    ctaInterest: 'Solution Partner ($3,000/season · 3 slots)',
   },
   {
     id: 'featured-dealmaker',
@@ -472,7 +490,7 @@ export const partnerTracks: PartnerTrack[] = [
     id: 'solution',
     icon: 'SOL',
     title: 'Solution Partner',
-    description: 'For exchanges, listing platforms, market makers, legal, tech, and service providers.',
+    description: 'For exchanges, listing platforms, market makers, legal, tech, and service providers. Limited to 3 slots per season.',
     benefits: [
       'Logo on the Season 3 Media Kit',
       'Direct introduction to qualified projects',
@@ -480,6 +498,7 @@ export const partnerTracks: PartnerTrack[] = [
       'Lead-generation & BD introductions',
     ],
     fullBenefits: [
+      'Only 3 Solution Partner slots this season',
       'Official Solution Partner positioning',
       'Logo on the Season 3 Media Kit',
       'Company profile on DealMakers’ Club',
@@ -492,30 +511,20 @@ export const partnerTracks: PartnerTrack[] = [
       'Cross-promotion across the ecosystem',
       'Lead-generation & business development introductions',
     ],
-    interest: 'Solution Partner (from $5,000/season)',
+    interest: 'Solution Partner ($3,000/season · 3 slots)',
   },
   {
     id: 'media',
     icon: 'MED',
     title: 'Media Partner',
-    description: 'For crypto, fintech, business media, newsletters, podcasts, and community media.',
+    description: 'Editorial exchange for crypto, fintech, business media, newsletters, podcasts, and community media — no listing fee, so benefits are intentionally limited to the essentials.',
     benefits: [
-      'Logo across all media assets',
-      'PR exchange & cross-posting',
-      'Opportunity to interview founders & investors',
-      'Joint content & community amplification',
+      'Logo on the website',
+      'Shared across social media announcements',
     ],
     fullBenefits: [
-      'Official Media Partner status',
-      'Logo across all media assets',
-      'Media Partner announcement',
-      'PR exchange',
-      'Cross-posting',
-      'Article syndication',
-      'Co-branded campaigns',
-      'Access to selected partner / project stories',
-      'Opportunity to interview founders & investors',
-      'Joint content campaigns & community amplification',
+      'Logo on the website',
+      'Shared across social media announcements',
     ],
     interest: 'Media Partner',
   },
@@ -542,20 +551,23 @@ export const projectOnboardBenefits: string[] = [
 
 export type MatrixValue = 'yes' | 'star' | 'optional' | 'no';
 
+// Media is an unpaid editorial exchange (no listing fee), so its column is
+// deliberately minimal — logo + social share only, unlike the paid Capital
+// and Solution tracks.
 export const partnerBenefitsMatrix: { label: string; capital: MatrixValue; solution: MatrixValue; media: MatrixValue; project: MatrixValue }[] = [
-  { label: 'Official Partner Status', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
+  { label: 'Official Partner Status', capital: 'yes', solution: 'yes', media: 'no', project: 'yes' },
   { label: 'Logo on Media Kit', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
-  { label: 'DealMakers Listing', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
-  { label: 'Partner Announcement', capital: 'yes', solution: 'yes', media: 'yes', project: 'no' },
-  { label: 'Dedicated PR', capital: 'yes', solution: 'yes', media: 'yes', project: 'optional' },
+  { label: 'DealMakers Listing', capital: 'yes', solution: 'yes', media: 'no', project: 'yes' },
+  { label: 'Partner Announcement', capital: 'yes', solution: 'yes', media: 'no', project: 'no' },
+  { label: 'Dedicated PR', capital: 'yes', solution: 'yes', media: 'no', project: 'optional' },
   { label: 'Social Media Exposure', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
-  { label: 'Cross-posting', capital: 'yes', solution: 'yes', media: 'yes', project: 'optional' },
+  { label: 'Cross-posting', capital: 'yes', solution: 'yes', media: 'no', project: 'optional' },
   { label: 'Business Matching', capital: 'star', solution: 'star', media: 'no', project: 'star' },
   { label: 'Capital Matching', capital: 'star', solution: 'no', media: 'no', project: 'star' },
   { label: 'Solution Matching', capital: 'no', solution: 'star', media: 'no', project: 'star' },
-  { label: 'Media Exposure', capital: 'star', solution: 'star', media: 'star', project: 'star' },
-  { label: 'Founder / Executive Networking', capital: 'star', solution: 'star', media: 'star', project: 'star' },
-  { label: 'Co-host Opportunity', capital: 'star', solution: 'star', media: 'star', project: 'no' },
+  { label: 'Media Exposure', capital: 'star', solution: 'star', media: 'no', project: 'star' },
+  { label: 'Founder / Executive Networking', capital: 'star', solution: 'star', media: 'no', project: 'star' },
+  { label: 'Co-host Opportunity', capital: 'star', solution: 'star', media: 'no', project: 'no' },
 ];
 
 // ─── FAQ ───────────────────────────────────────────────────────────────────
@@ -648,7 +660,7 @@ export const interestOptions: string[] = [
   'Sponsored Listing (add $150)',
   'Category Partner / Sponsorship',
   'Capital Partner (from $5,000/season)',
-  'Solution Partner (from $5,000/season)',
+  'Solution Partner ($3,000/season · 3 slots)',
   'Media Partner',
 ];
 
