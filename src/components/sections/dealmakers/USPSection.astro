@@ -3,27 +3,61 @@
 // Asymmetric bento layout instead of four identical icon+title+text cards
 // (the classic template pattern) — one wide anchor tile carries the core
 // claim, three narrower tiles carry the supporting points.
+import type { DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'لماذا DealMakers’ Club',
+  eyebrow: 'ليس مجرد قائمة اتصال أخرى',
+  h2a: 'نحن نصنع',
+  h2b: 'اللقاء المناسب.',
+  t1h: 'إشارة واضحة، لا تواصل عشوائي',
+  t1b: 'ينشر الأعضاء بيانات "نحن نقدّم" و"نحن نبحث عن" مباشرةً على ملفهم التعريفي، ليعرف الزوار بالضبط ما لديك وما تحتاجه قبل إرسال أي رسالة.',
+  t2h: 'أصحاب قرار موثّقون',
+  t2b: 'الأولوية لأصحاب القرار المباشرين أو الممثلين المفوّضين بوضوح.',
+  t3h: 'تعارفات منسّقة',
+  t3b: 'تراجع Fintech24h مدى الملاءمة وتطلب الموافقة قبل ربط أي طرفين.',
+  t4h: 'تدفق صفقات إقليمي، بامتداد عالمي',
+  t4b: 'يركّز على Web3 والتكنولوجيا المالية في فيتنام وجنوب شرق آسيا، مع امتداد دولي عند توفّر ملاءمة عالية.',
+} : {
+  ariaLabel: 'Why DealMakers’ Club',
+  eyebrow: 'Not another contact list',
+  h2a: 'We create',
+  h2b: 'the right meeting.',
+  t1h: 'Clear signal, not cold outreach',
+  t1b: 'Members publish We Offer / We Are Looking For directly on their profile, so visitors know exactly what you have and need before a single message is sent.',
+  t2h: 'Verified decision-makers',
+  t2b: 'Priority for direct decision-makers or clearly authorized representatives.',
+  t3h: 'Curated introductions',
+  t3b: 'Fintech24h reviews fit and asks for consent before connecting anyone.',
+  t4h: 'Regional deal flow, global reach',
+  t4b: 'Focused on Web3 / fintech in Vietnam and Southeast Asia, extending internationally when fit is high enough.',
+};
 ---
 
-<section class="relative py-20 lg:py-28" aria-label="Why DealMakers' Club">
+<section class="relative py-20 lg:py-28" aria-label={copy.ariaLabel}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mb-12" data-dm-reveal>
-      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Not another contact list</p>
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
       <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)]">
-        We create <span class="dm-text-gradient">the right meeting.</span>
+        {copy.h2a} <span class="dm-text-gradient">{copy.h2b}</span>
       </h2>
     </div>
 
     <div class="grid lg:grid-cols-3 gap-5 lg:auto-rows-[220px]">
       <!-- Anchor tile: wide, carries the core claim -->
       <div class="dm-card-featured lg:col-span-2 lg:row-span-1 p-8 flex flex-col justify-between relative overflow-hidden" data-dm-reveal>
-        <svg class="absolute -right-6 -bottom-8 w-40 h-40 opacity-[0.06]" viewBox="0 0 24 24" fill="none" stroke="var(--dm-gold)" stroke-width="1" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        <svg class="absolute -end-6 -bottom-8 w-40 h-40 opacity-[0.06]" viewBox="0 0 24 24" fill="none" stroke="var(--dm-gold)" stroke-width="1" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
         <div class="w-11 h-11 rounded-xl bg-[rgba(217,178,106,0.1)] border border-[var(--dm-border-accent)] flex items-center justify-center text-[var(--dm-gold)]">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
         </div>
         <div>
-          <h3 class="font-display font-semibold text-xl text-[var(--dm-text-primary)] mb-2">Clear signal, not cold outreach</h3>
-          <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed max-w-md">Members publish We Offer / We Are Looking For directly on their profile, so visitors know exactly what you have and need before a single message is sent.</p>
+          <h3 class="font-display font-semibold text-xl text-[var(--dm-text-primary)] mb-2">{copy.t1h}</h3>
+          <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed max-w-md">{copy.t1b}</p>
         </div>
       </div>
 
@@ -33,8 +67,8 @@
           <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
         </div>
         <div>
-          <h3 class="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-1.5">Verified decision-makers</h3>
-          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed">Priority for direct decision-makers or clearly authorized representatives.</p>
+          <h3 class="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-1.5">{copy.t2h}</h3>
+          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed">{copy.t2b}</p>
         </div>
       </div>
 
@@ -44,8 +78,8 @@
           <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4m-8-10h4m12 0h4M5.6 5.6l2.8 2.8m7.2 7.2 2.8 2.8m0-12.8-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>
         </div>
         <div>
-          <h3 class="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-1.5">Curated introductions</h3>
-          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed">Fintech24h reviews fit and asks for consent before connecting anyone.</p>
+          <h3 class="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-1.5">{copy.t3h}</h3>
+          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed">{copy.t3b}</p>
         </div>
       </div>
 
@@ -55,8 +89,8 @@
           <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21zM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg>
         </div>
         <div>
-          <h3 class="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-1">Regional deal flow, global reach</h3>
-          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed">Focused on Web3 / fintech in Vietnam and Southeast Asia, extending internationally when fit is high enough.</p>
+          <h3 class="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-1">{copy.t4h}</h3>
+          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed">{copy.t4b}</p>
         </div>
       </div>
     </div>

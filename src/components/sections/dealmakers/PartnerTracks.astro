@@ -6,18 +6,44 @@
 // one generic bullet list. Full detail lives on
 // /dealmakers/ss3/partner-benefits/ — this is the condensed, landing-page
 // version.
-import { partnerTracks } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+const { partnerTracks } = getSS3Content(locale);
+const localePrefix = (path: string) => (locale === 'ar' ? path.replace(/^\/dealmakers\//, '/dealmakers/ar/') : path);
+const benefitsHref = localePrefix('/dealmakers/ss3/partner-benefits/');
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'مسارات الشراكة',
+  eyebrow: 'شريك فئة · اختر مسارك',
+  h2a: 'شراكة واحدة.',
+  h2b: 'ثلاث طرق للحضور.',
+  lede: 'كل مقعد شريك فئة مبني حول ما تفعله مؤسستك فعليًا — رأس المال، أو الحلول، أو الإعلام.',
+  seeFullPrefix: 'عرض كامل مزايا',
+  compareAll: 'قارن جميع أنواع الشركاء والمزايا',
+} : {
+  ariaLabel: 'Partner Tracks',
+  eyebrow: 'Category Partner · Choose your track',
+  h2a: 'One partnership.',
+  h2b: 'Three ways to show up.',
+  lede: 'Every Category Partner slot is built around what your organization actually does — capital, solutions, or media.',
+  seeFullPrefix: 'See full',
+  compareAll: 'Compare all partner types & benefits',
+};
 ---
 
-<section id="partner-tracks" class="relative py-20 lg:py-28" aria-label="Partner Tracks">
+<section id="partner-tracks" class="relative py-20 lg:py-28" aria-label={copy.ariaLabel}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mb-14" data-dm-reveal>
-      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Category Partner · Choose your track</p>
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
       <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
-        One partnership. <span class="dm-text-gradient">Three ways to show up.</span>
+        {copy.h2a} <span class="dm-text-gradient">{copy.h2b}</span>
       </h2>
       <p class="text-sm text-[var(--dm-text-secondary)]">
-        Every Category Partner slot is built around what your organization actually does — capital, solutions, or media.
+        {copy.lede}
       </p>
     </div>
 
@@ -42,20 +68,20 @@ import { partnerTracks } from '../../../data/dealmakers/ss3';
           </ul>
 
           <a
-            href="/dealmakers/ss3/partner-benefits/"
+            href={benefitsHref}
             data-dm-track="partner_track_cta"
             data-dm-track-label={track.id}
             class="dm-btn-ghost justify-center text-xs"
           >
-            See full {track.title} benefits <span aria-hidden="true">→</span>
+            {copy.seeFullPrefix} {track.title} {locale === 'ar' ? '' : 'benefits'} <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
           </a>
         </div>
       ))}
     </div>
 
     <p class="text-center mt-10" data-dm-reveal>
-      <a href="/dealmakers/ss3/partner-benefits/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)]">
-        Compare all partner types &amp; benefits →
+      <a href={benefitsHref} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)]">
+        {copy.compareAll} <span class="rtl:inline-block rtl:rotate-180">→</span>
       </a>
     </p>
   </div>

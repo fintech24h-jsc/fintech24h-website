@@ -6,13 +6,55 @@
 // three partners sit in a secondary row beneath, visibly smaller. Any
 // partner without `confirmed: true` renders as a neutral "Confirming
 // soon" slot — never a fake logo.
-import { heroPartners } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+const { heroPartners } = getSS3Content(locale);
 
 const capital = heroPartners.find((p) => p.category === 'capital')!;
 const others = heroPartners.filter((p) => p.category !== 'capital');
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'قسم الاستهلال لـ DealMakers',
+  eyebrow: 'تقدّم Fintech24h · Season 3',
+  h1a: 'حيث يلتقي أصحاب القرار',
+  h1b: 'لإبرام الصفقات.',
+  lede: 'DealMakers’ Club: F-Matching هي شبكة منسّقة للمؤسسين والمستثمرين ومنصات التداول وبنّائي Web3. أكثر من مجرد تواصل: إنها المكان الذي يُرى فيه أصحاب القرار الموثّقون، وتدفق الصفقات المؤهّل، والتعارفات الاستراتيجية، ويتم التحقق منها وربطها بالأشخاص المناسبين.',
+  ledeStrong1: 'أصحاب القرار الموثّقون',
+  ledeStrong2: 'تدفق الصفقات المؤهّل',
+  ledeStrong3: 'التعارفات الاستراتيجية',
+  becomeDealMaker: 'كن صانع صفقات',
+  exploreFeatured: 'استكشف صانعي الصفقات المميّزين',
+  verifiedMembers: 'أعضاء موثّقون',
+  moderatedIntros: 'تعارفات تحت إشراف',
+  realOpportunities: 'فرص حقيقية، بأولوية',
+  officialCapitalPartner: 'الشريك الرأسمالي الرسمي · Season 3',
+  leadSponsor: 'الراعي الرئيسي',
+  confirmingSoon: 'التأكيد قريبًا',
+} : {
+  ariaLabel: 'DealMakers Hero',
+  eyebrow: 'Fintech24h presents · Season 3',
+  h1a: 'Where decision-makers',
+  h1b: 'meet to make deals.',
+  lede: 'DealMakers’ Club: F-Matching is a curated network for Founders, Investors, Exchanges, and Web3 builders. More than networking: it’s where {s1}, {s2}, and {s3} are seen, verified, and connected to the right people.',
+  ledeStrong1: 'verified decision-makers',
+  ledeStrong2: 'qualified deal flow',
+  ledeStrong3: 'strategic introductions',
+  becomeDealMaker: 'Become a DealMaker',
+  exploreFeatured: 'Explore Featured DealMakers',
+  verifiedMembers: 'Verified members',
+  moderatedIntros: 'Moderated introductions',
+  realOpportunities: 'Real opportunities, prioritized',
+  officialCapitalPartner: 'Official Capital Partner · Season 3',
+  leadSponsor: 'Lead Sponsor',
+  confirmingSoon: 'Confirming soon',
+};
 ---
 
-<section class="relative overflow-hidden pt-24 pb-16 lg:pt-12 lg:pb-14" aria-label="DealMakers Hero">
+<section class="relative overflow-hidden pt-24 pb-16 lg:pt-12 lg:pb-14" aria-label={copy.ariaLabel}>
   <!-- Ambient background: mesh gradient + 2 drifting orbs (gold + emerald) -->
   <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -27,32 +69,38 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
     <div class="flex flex-col items-center text-center gap-3 lg:gap-4 max-w-3xl mx-auto">
       <p class="font-mono text-[10px] lg:text-xs text-[var(--dm-gold)] uppercase tracking-[0.18em] flex items-center gap-2" data-dm-reveal>
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)] animate-pulse"></span>
-        Fintech24h presents · Season 3
+        {copy.eyebrow}
       </p>
 
       <h1 class="font-display font-semibold leading-[1.1] text-[clamp(2.4rem,6vw,4.2rem)] tracking-[-0.01em]" data-dm-reveal>
-        Where decision-makers
-        <span class="block dm-text-gradient">meet to make deals.</span>
+        {copy.h1a}
+        <span class="block dm-text-gradient">{copy.h1b}</span>
       </h1>
 
-      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] font-body leading-relaxed max-w-2xl" data-dm-reveal>
-        DealMakers’ Club: F-Matching is a curated network for Founders, Investors, Exchanges, and Web3 builders. More than networking: it’s where <strong class="text-[var(--dm-text-primary)] font-semibold">verified decision-makers</strong>, <strong class="text-[var(--dm-text-primary)] font-semibold">qualified deal flow</strong>, and <strong class="text-[var(--dm-text-primary)] font-semibold">strategic introductions</strong> are seen, verified, and connected to the right people.
-      </p>
+      {locale === 'ar' ? (
+        <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] font-body leading-relaxed max-w-2xl" data-dm-reveal>
+          DealMakers&rsquo; Club: F-Matching هي شبكة منسّقة للمؤسسين والمستثمرين ومنصات التداول وبنّائي Web3. أكثر من مجرد تواصل: إنها المكان الذي يُرى فيه <strong class="text-[var(--dm-text-primary)] font-semibold">أصحاب القرار الموثّقون</strong>، و<strong class="text-[var(--dm-text-primary)] font-semibold">تدفق الصفقات المؤهّل</strong>، و<strong class="text-[var(--dm-text-primary)] font-semibold">التعارفات الاستراتيجية</strong>، ويتم التحقق منها وربطها بالأشخاص المناسبين.
+        </p>
+      ) : (
+        <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] font-body leading-relaxed max-w-2xl" data-dm-reveal>
+          DealMakers&rsquo; Club: F-Matching is a curated network for Founders, Investors, Exchanges, and Web3 builders. More than networking: it&rsquo;s where <strong class="text-[var(--dm-text-primary)] font-semibold">verified decision-makers</strong>, <strong class="text-[var(--dm-text-primary)] font-semibold">qualified deal flow</strong>, and <strong class="text-[var(--dm-text-primary)] font-semibold">strategic introductions</strong> are seen, verified, and connected to the right people.
+        </p>
+      )}
 
       <div class="flex flex-wrap gap-4 justify-center mt-4" data-dm-reveal>
-        <a href="#apply" class="dm-btn-primary py-3 px-6 text-xs" aria-label="Become a DealMaker">
-          <span>Become a DealMaker</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline ml-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <a href="#apply" class="dm-btn-primary py-3 px-6 text-xs" aria-label={copy.becomeDealMaker}>
+          <span>{copy.becomeDealMaker}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline ms-1 rtl:rotate-180"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#featured" class="dm-btn-ghost py-3 px-6 text-xs" aria-label="Explore Featured DealMakers">
-          <span>Explore Featured DealMakers</span>
+        <a href="#featured" class="dm-btn-ghost py-3 px-6 text-xs" aria-label={copy.exploreFeatured}>
+          <span>{copy.exploreFeatured}</span>
         </a>
       </div>
 
       <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center mt-2 text-[var(--dm-text-muted)] text-xs font-body" data-dm-reveal>
-        <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)]"></i>Verified members</span>
-        <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)]"></i>Moderated introductions</span>
-        <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)]"></i>Real opportunities, prioritized</span>
+        <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)]"></i>{copy.verifiedMembers}</span>
+        <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)]"></i>{copy.moderatedIntros}</span>
+        <span class="flex items-center gap-2"><i class="w-1.5 h-1.5 rounded-full bg-[var(--dm-gold)]"></i>{copy.realOpportunities}</span>
       </div>
     </div>
 
@@ -61,16 +109,16 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
     brand already appears in the header and footer and does not belong here. -->
     <div class="mt-10 lg:mt-4 max-w-3xl mx-auto" data-dm-reveal>
       <p class="text-center font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-3 lg:mb-2">
-        Official Capital Partner · Season 3
+        {copy.officialCapitalPartner}
       </p>
       <div class="dm-spotlight">
         <div class="dm-spotlight-inner px-8 py-6 lg:py-4 flex flex-col items-center justify-center gap-3 lg:gap-2 min-h-[130px] lg:min-h-[100px]">
-          <span class="dm-badge-sponsored">Lead Sponsor</span>
+          <span class="dm-badge-sponsored">{copy.leadSponsor}</span>
           <div class="flex items-center justify-center w-full">
             {capital.confirmed && capital.logoUrl ? (
               <img src={capital.logoUrl} alt={`${capital.name} logo, Official Capital Partner of F-Matching Season 3`} class="h-14 sm:h-16 w-auto object-contain" loading="eager" />
             ) : (
-              <span class="font-display font-semibold text-lg sm:text-xl text-[var(--dm-text-secondary)]">Confirming soon</span>
+              <span class="font-display font-semibold text-lg sm:text-xl text-[var(--dm-text-secondary)]">{copy.confirmingSoon}</span>
             )}
           </div>
         </div>
@@ -86,7 +134,7 @@ const others = heroPartners.filter((p) => p.category !== 'capital');
             {p.confirmed && p.logoUrl ? (
               <img src={p.logoUrl} alt={`${p.name} logo, ${p.label} of F-Matching Season 3`} class="h-5 w-auto object-contain" loading="lazy" />
             ) : (
-              <span class="font-body text-[11px] text-[var(--dm-text-muted)]">Confirming soon</span>
+              <span class="font-body text-[11px] text-[var(--dm-text-muted)]">{copy.confirmingSoon}</span>
             )}
           </div>
         ))}

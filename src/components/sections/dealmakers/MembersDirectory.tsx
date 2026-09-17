@@ -1,9 +1,43 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { dealMakersMembers, type DealMakerMember } from '../../../data/dealmakers/members';
+import type { DealmakersLocale } from '../../../data/dealmakers/content';
 
 const PAGE_SIZE = 24;
 
-export default function MembersDirectory() {
+interface Props {
+  locale?: DealmakersLocale;
+}
+
+export default function MembersDirectory({ locale = 'en' }: Props) {
+  const copy = locale === 'ar' ? {
+    searchPlaceholder: 'ابحث بالاسم أو الشركة أو المسمّى الوظيفي…',
+    searchAriaLabel: 'البحث في أعضاء DealMakers',
+    ofMembers: (shown: number, total: number) => `${shown} من ${total} عضوًا`,
+    noMatch: (q: string) => `لا يوجد أعضاء مطابقون لـ "${q}".`,
+    viewCard: 'عرض البطاقة',
+    viewCardAria: (name: string) => `عرض بطاقة ${name} في DealMakers`,
+    loadMore: (n: number) => `تحميل المزيد (${n} متبقٍّ)`,
+    close: 'إغلاق',
+    website: 'الموقع الإلكتروني',
+    linkedin: 'لينكدإن',
+    telegram: 'تيليجرام',
+    copyLink: 'نسخ رابط هذه البطاقة',
+    linkCopied: 'تم نسخ الرابط!',
+  } : {
+    searchPlaceholder: 'Search by name, company, or role…',
+    searchAriaLabel: 'Search DealMakers members',
+    ofMembers: (shown: number, total: number) => `${shown} of ${total} members`,
+    noMatch: (q: string) => `No members match “${q}”.`,
+    viewCard: 'View card',
+    viewCardAria: (name: string) => `View ${name}'s DealMakers card`,
+    loadMore: (n: number) => `Load more (${n} remaining)`,
+    close: 'Close',
+    website: 'Website',
+    linkedin: 'LinkedIn',
+    telegram: 'Telegram',
+    copyLink: 'Copy link to this card',
+    linkCopied: 'Link copied!',
+  };
   const [query, setQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
@@ -109,7 +143,7 @@ export default function MembersDirectory() {
     <div>
       <div className="max-w-md mx-auto mb-10">
         <div className="relative">
-          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--dm-text-muted)]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <svg className="absolute start-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--dm-text-muted)]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="7" />
             <path strokeLinecap="round" d="M21 21l-3.8-3.8" />
           </svg>
@@ -117,19 +151,19 @@ export default function MembersDirectory() {
             type="text"
             value={query}
             onChange={(e) => { setQuery(e.target.value); setVisibleCount(PAGE_SIZE); }}
-            placeholder="Search by name, company, or role…"
-            aria-label="Search DealMakers members"
-            className="w-full pl-11 pr-4 py-3 rounded-full border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] text-sm text-[var(--dm-text-primary)] placeholder:text-[var(--dm-text-muted)] focus:outline-none focus:border-[var(--dm-border-accent)] transition-colors"
+            placeholder={copy.searchPlaceholder}
+            aria-label={copy.searchAriaLabel}
+            className="w-full ps-11 pe-4 py-3 rounded-full border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] text-sm text-[var(--dm-text-primary)] placeholder:text-[var(--dm-text-muted)] focus:outline-none focus:border-[var(--dm-border-accent)] transition-colors"
           />
         </div>
         <p className="text-center text-xs text-[var(--dm-text-muted)] mt-3 font-mono">
-          {filtered.length} of {dealMakersMembers.length} members
+          {copy.ofMembers(filtered.length, dealMakersMembers.length)}
         </p>
       </div>
 
       {filtered.length === 0 ? (
         <p className="text-center text-sm text-[var(--dm-text-secondary)] py-16">
-          No members match “{query}”.
+          {copy.noMatch(query)}
         </p>
       ) : (
         <>
@@ -142,7 +176,7 @@ export default function MembersDirectory() {
                 style={{ animationDelay: `${Math.min(i, 10) * 40}ms` }}
                 className="dm-card group text-left overflow-hidden flex flex-col focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--dm-gold)] focus-visible:outline-offset-2"
                 aria-haspopup="dialog"
-                aria-label={`View ${m.name}'s DealMakers card`}
+                aria-label={copy.viewCardAria(m.name)}
               >
                 <span className="block aspect-[916/768] overflow-hidden">
                   <img
@@ -170,8 +204,8 @@ export default function MembersDirectory() {
                       {m.website ? m.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '') : ''}
                     </span>
                     <span className="inline-flex items-center gap-1 text-[var(--dm-gold)] text-[10px] font-display font-semibold shrink-0 group-hover:gap-1.5 transition-all">
-                      View card
-                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                      {copy.viewCard}
+                      <svg className="w-3 h-3 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </span>
                   </span>
                 </span>
@@ -186,7 +220,7 @@ export default function MembersDirectory() {
                 onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
                 className="dm-btn-ghost py-2.5 px-6 text-[10px]"
               >
-                Load more ({filtered.length - visibleCount} remaining)
+                {copy.loadMore(filtered.length - visibleCount)}
               </button>
             </div>
           )}
@@ -207,8 +241,8 @@ export default function MembersDirectory() {
           >
             <button
               onClick={closeMember}
-              aria-label="Close"
-              className="absolute right-4 top-4 z-10 w-8 h-8 rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] text-[var(--dm-text-secondary)] hover:text-[var(--dm-text-primary)] hover:border-[var(--dm-border-hover)] flex items-center justify-center transition-colors"
+              aria-label={copy.close}
+              className="absolute end-4 top-4 z-10 w-8 h-8 rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] text-[var(--dm-text-secondary)] hover:text-[var(--dm-text-primary)] hover:border-[var(--dm-border-hover)] flex items-center justify-center transition-colors"
             >
               ×
             </button>
@@ -232,17 +266,17 @@ export default function MembersDirectory() {
               <div className="flex flex-wrap items-center gap-2.5 mt-5">
                 {activeMember.website && (
                   <a href={activeMember.website} target="_blank" rel="noopener noreferrer" className="dm-btn-ghost py-2 px-4 text-[10px]">
-                    Website ↗
+                    {copy.website} ↗
                   </a>
                 )}
                 {activeMember.linkedin && (
                   <a href={activeMember.linkedin} target="_blank" rel="noopener noreferrer" className="dm-btn-ghost py-2 px-4 text-[10px]">
-                    LinkedIn ↗
+                    {copy.linkedin} ↗
                   </a>
                 )}
                 {activeMember.telegramLink && (
                   <a href={activeMember.telegramLink} target="_blank" rel="noopener noreferrer" className="dm-btn-primary py-2 px-4 text-[10px]">
-                    Telegram ↗
+                    {copy.telegram} ↗
                   </a>
                 )}
               </div>
@@ -256,7 +290,7 @@ export default function MembersDirectory() {
                   <rect x="9" y="9" width="11" height="11" rx="2" />
                   <path d="M5 15V5a2 2 0 012-2h10" />
                 </svg>
-                {copied ? 'Link copied!' : 'Copy link to this card'}
+                {copied ? copy.linkCopied : copy.copyLink}
               </button>
             </div>
           </div>

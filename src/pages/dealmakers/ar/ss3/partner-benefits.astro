@@ -1,0 +1,181 @@
+---
+// src/pages/dealmakers/ar/ss3/partner-benefits.astro
+// Arabic mirror of /dealmakers/ss3/partner-benefits/.
+import DealMakersLayout from '../../../../layouts/DealMakersLayout.astro';
+import BreadcrumbSchema from '../../../../components/seo/BreadcrumbSchema.astro';
+import { getSS3Content } from '../../../../data/dealmakers/content';
+import type { MatrixValue } from '../../../../data/dealmakers/ss3';
+
+const { seasonMeta, partnerTracks, projectOnboardBenefits, partnerBenefitsMatrix } = getSS3Content('ar');
+
+const title = 'مزايا الشركاء | F-Matching Season 3 — DealMakers’ Club';
+const description = 'قارن مزايا الشريك الرأسمالي والحلول والإعلام والمشاريع لـ F-Matching Season 3 — القائمة الكاملة للمزايا ومصفوفة مقارنة الشركاء.';
+const canonical = 'https://fintech24h.com/dealmakers/ar/ss3/partner-benefits/';
+
+const breadcrumbs = [
+  { name: 'الرئيسية', item: 'https://fintech24h.com' },
+  { name: 'DealMakers’ Club', item: 'https://fintech24h.com/dealmakers/ar/' },
+  { name: 'Season 3', item: 'https://fintech24h.com/dealmakers/ar/ss3/' },
+  { name: 'مزايا الشركاء', item: canonical },
+];
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: canonical,
+  isPartOf: {
+    '@type': 'WebPage',
+    name: 'Fintech24h DealMakers’ Club: F-Matching Season 3',
+    url: 'https://fintech24h.com/dealmakers/ar/ss3/',
+  },
+};
+
+const projectCard = {
+  id: 'project' as const,
+  icon: 'PRJ',
+  title: 'انضمام المشاريع',
+  description: 'لمشاريع Web3، وDeFi، وAI × Web3، والتكنولوجيا المالية، والبنية التحتية، وغيرها من المشاريع المنضمّة إلى F-Matching.',
+  fullBenefits: projectOnboardBenefits,
+};
+
+const [capitalTrack, solutionTrack, mediaTrack] = partnerTracks;
+const allTracks = [capitalTrack, solutionTrack, projectCard, mediaTrack];
+
+function applyHref(interest: string) {
+  return `/dealmakers/ar/ss3/?interest=${encodeURIComponent(interest)}#apply`;
+}
+
+const matrixCell: Record<MatrixValue, { icon: string; label: string; class: string }> = {
+  yes: { icon: '✓', label: 'مُدرَج', class: 'text-[var(--dm-gold)]' },
+  star: { icon: '★', label: 'حسب الملاءمة', class: 'text-[var(--dm-emerald)]' },
+  optional: { icon: '+', label: 'اختياري', class: 'text-[var(--dm-text-muted)]' },
+  no: { icon: '—', label: 'غير مُدرَج', class: 'text-[var(--dm-text-muted)]' },
+};
+---
+
+<DealMakersLayout locale="ar" title={title} description={description} canonical={canonical} schema={webPageSchema} ogImage="https://fintech24h.com/dealmakers/og-ss3.png">
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="relative py-24 lg:py-28 overflow-hidden" aria-label="نظرة عامة على مزايا الشركاء">
+    <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[420px] h-[420px] rounded-full opacity-25 mix-blend-screen dm-orb-gold"
+        style="top: -8%; left: -6%; filter: blur(100px); animation: orb-pulse 10s ease-in-out infinite;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8">
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">{seasonMeta.name} · مزايا الشركاء</p>
+      <h1 class="font-display font-semibold text-h1 text-[var(--dm-text-primary)] mb-5">
+        علامتك التجارية، داخل منظومة B2B نشطة.
+      </h1>
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-2xl mx-auto leading-relaxed">
+        نحن لا نقدّم مجرد ظهور برعاية. نضع علامتك التجارية حيث يلتقي رأس المال والمشاريع والحلول وأصحاب القرار فعليًا — رأس المال × المشاريع × الحلول × الإعلام × القادة العالميون.
+      </p>
+      <a href="/dealmakers/ar/ss3/" class="dm-btn-ghost py-2.5 px-6 text-[10px] inline-flex items-center gap-1.5 mt-7">
+        <svg class="w-3 h-3 rtl:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+        العودة إلى {seasonMeta.name}
+      </a>
+    </div>
+  </section>
+
+  <section class="relative pb-20 lg:pb-28" aria-label="القوائم الكاملة للمزايا حسب نوع الشريك">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid sm:grid-cols-2 gap-5">
+        {allTracks.map((track, i) => (
+          <div class="dm-card flex flex-col p-7 rounded-[20px]" data-dm-reveal style={`--dm-reveal-delay: ${i * 70}`}>
+            <span class="w-11 h-11 rounded-xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-[11px] font-bold text-[var(--dm-gold)] mb-4" aria-hidden="true">
+              {track.icon}
+            </span>
+            <h2 class="font-display font-semibold text-lg text-[var(--dm-text-primary)] mb-2">{track.title}</h2>
+            <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed mb-5">{track.description}</p>
+
+            <ul class="grid sm:grid-cols-2 gap-x-4 gap-y-2.5 flex-1">
+              {track.fullBenefits.map((b) => (
+                <li class="flex items-start gap-2 text-xs text-[var(--dm-text-secondary)]">
+                  <svg class="w-3 h-3 mt-0.5 shrink-0 text-[var(--dm-gold)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 13 4 4L19 7"/></svg>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            {'interest' in track && (
+              <a
+                href={applyHref((track as typeof partnerTracks[number]).interest)}
+                class="dm-btn-primary justify-center text-xs w-full mt-6"
+              >
+                التقديم كـ {track.title} <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
+              </a>
+            )}
+            {!('interest' in track) && (
+              <a href="/dealmakers/ar/ss3/#directory" class="dm-btn-ghost justify-center text-xs w-full mt-6">
+                إرسال إدراج مشروع <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="relative pb-24 lg:pb-28" aria-label="مصفوفة مقارنة مزايا الشركاء">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mb-10" data-dm-reveal>
+        <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">جنبًا إلى جنب</p>
+        <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
+          مزايا الشركاء <span class="dm-text-gradient">بنظرة واحدة.</span>
+        </h2>
+      </div>
+
+      <div class="dm-card rounded-[20px] overflow-x-auto" data-dm-reveal>
+        <table class="w-full min-w-[640px] text-start border-collapse">
+          <thead>
+            <tr class="border-b border-[var(--dm-border)]">
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)]">الميزة</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">رأس المال</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">الحلول</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">الإعلام</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">المشروع</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partnerBenefitsMatrix.map((row) => (
+              <tr class="border-b border-[var(--dm-border)] last:border-0">
+                <th scope="row" class="p-4 sm:p-5 text-xs font-normal text-[var(--dm-text-secondary)] text-start">{row.label}</th>
+                {(['capital', 'solution', 'media', 'project'] as const).map((col) => (
+                  <td class="p-4 sm:p-5 text-center">
+                    <span class={`text-sm font-semibold ${matrixCell[row[col]].class}`} title={matrixCell[row[col]].label} aria-label={matrixCell[row[col]].label}>
+                      {matrixCell[row[col]].icon}
+                    </span>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-xs text-[var(--dm-text-muted)] mt-4">
+        <span class="text-[var(--dm-gold)] font-semibold">✓</span> مُدرَج &nbsp;·&nbsp;
+        <span class="text-[var(--dm-emerald)] font-semibold">★</span> حسب أهدافك &nbsp;·&nbsp;
+        <span class="font-semibold">+</span> إضافة اختيارية &nbsp;·&nbsp;
+        <span class="font-semibold">—</span> غير مُدرَج
+      </p>
+    </div>
+  </section>
+
+  <section class="relative pb-24 lg:pb-32" aria-label="تحدّث مع الفريق">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-dm-reveal>
+      <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-4">
+        غير متأكد من المسار المناسب؟
+      </h2>
+      <p class="text-sm text-[var(--dm-text-secondary)] mb-7">
+        أخبرنا بما تبنيه أو تقدّمه، وسيوصي فريق Fintech24h بالمسار المناسب — رأس المال، أو الحلول، أو الإعلام، أو المشروع.
+      </p>
+      <a href="/dealmakers/ar/ss3/#apply" class="dm-btn-primary justify-center text-xs px-7 py-3 inline-flex">
+        تحدّث مع الفريق <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
+      </a>
+    </div>
+  </section>
+</DealMakersLayout>

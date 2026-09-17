@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { submitLead } from '../../../lib/leadSubmit';
-import { interestOptions, weOfferOptions, weAreLookingForOptions } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
 
 interface FormState {
   name: string;
@@ -15,9 +15,9 @@ interface FormState {
   marketingOptIn: boolean;
 }
 
-const emptyForm: FormState = {
+const emptyFormBase = {
   name: '', company: '', role: '', email: '', telegram: '', linkedin: '',
-  interest: interestOptions[0], note: '', companyWebsite: '', marketingOptIn: false,
+  note: '', companyWebsite: '', marketingOptIn: false,
 };
 
 function track(event: string, label?: string) {
@@ -29,7 +29,80 @@ function toggle(list: string[], value: string): string[] {
   return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
 }
 
-export default function ApplyForm() {
+interface Props {
+  locale?: DealmakersLocale;
+}
+
+export default function ApplyForm({ locale = 'en' }: Props) {
+  const { interestOptions, weOfferOptions, weAreLookingForOptions } = getSS3Content(locale);
+  const emptyForm: FormState = { ...emptyFormBase, interest: interestOptions[0] };
+  const copy = locale === 'ar' ? {
+    title: 'قدّم طلبك لـ F-Matching Season 3',
+    subtitle: 'أدخل البيانات الأساسية. سنتواصل معك للتحقق من ملفك واقتراح الباقة المناسبة.',
+    companyWebsiteLabel: 'موقع الشركة الإلكتروني',
+    requiredError: 'يرجى تعبئة جميع الحقول المطلوبة (*).',
+    fullName: 'الاسم الكامل *',
+    fullNamePlaceholder: 'أحمد الفارس',
+    company: 'الشركة *',
+    companyPlaceholder: 'اسم الشركة',
+    role: 'المسمّى الوظيفي *',
+    rolePlaceholder: 'مؤسس، مستثمر...',
+    email: 'البريد الإلكتروني للعمل *',
+    emailPlaceholder: 'you@company.com',
+    telegram: 'تيليجرام *',
+    telegramPlaceholder: '@yourhandle',
+    linkedin: 'لينكدإن',
+    linkedinPlaceholder: 'linkedin.com/in/...',
+    interestedIn: 'أنا مهتم بـ *',
+    dealSignal: 'إشارة الصفقة: نحن نقدّم / نحن نبحث عن',
+    weOffer: 'نحن نقدّم',
+    weAreLookingFor: 'نحن نبحث عن',
+    additionalNotes: 'ملاحظات إضافية',
+    additionalNotesPlaceholder: 'شارك مزيدًا من السياق، أهداف الصفقة...',
+    privacyNote: 'تُستخدم بياناتك فقط لمراجعة طلبك أو التواصل معك بشأن F-Matching Season 3، ولن تُنشر علنًا دون موافقتك. راجع',
+    privacyPolicy: 'سياسة الخصوصية',
+    marketingOptIn: 'أرسلوا لي تحديثات حول مواسم DealMakers’ Club القادمة (اختياري، يمكنك إلغاء الاشتراك في أي وقت).',
+    sending: 'جارٍ الإرسال...',
+    submit: 'إرسال الطلب',
+    genericError: 'حدث خطأ ما. يرجى مراسلتنا عبر info@fintech24h.com',
+    successTitle: 'تم إرسال الطلب!',
+    successBody: 'سيتواصل معك فريق Fintech24h لتأكيد الخطوات التالية.',
+    close: 'إغلاق',
+    contextNote: 'مهتم بالتواصل مع',
+  } : {
+    title: 'Apply for F-Matching Season 3',
+    subtitle: 'Fill in the basics. We’ll follow up to verify your profile and recommend the right package.',
+    companyWebsiteLabel: 'Company website',
+    requiredError: 'Please fill in all required fields (*).',
+    fullName: 'Full name *',
+    fullNamePlaceholder: 'Alex Nguyen',
+    company: 'Company *',
+    companyPlaceholder: 'Company name',
+    role: 'Title / role *',
+    rolePlaceholder: 'Founder, Investor...',
+    email: 'Work email *',
+    emailPlaceholder: 'you@company.com',
+    telegram: 'Telegram *',
+    telegramPlaceholder: '@yourhandle',
+    linkedin: 'LinkedIn',
+    linkedinPlaceholder: 'linkedin.com/in/...',
+    interestedIn: 'I’m interested in *',
+    dealSignal: 'Deal signal: We Offer / We Are Looking For',
+    weOffer: 'We Offer',
+    weAreLookingFor: 'We Are Looking For',
+    additionalNotes: 'Additional notes',
+    additionalNotesPlaceholder: 'Share more context, deal goals...',
+    privacyNote: 'Your information is used only to review / contact you about F-Matching Season 3 and will not be made public without consent. See our',
+    privacyPolicy: 'Privacy Policy',
+    marketingOptIn: 'Send me updates about future DealMakers\' Club seasons (optional, you can unsubscribe anytime).',
+    sending: 'Sending...',
+    submit: 'Submit Application',
+    genericError: 'Something went wrong. Please email info@fintech24h.com',
+    successTitle: 'Application submitted!',
+    successBody: 'The Fintech24h team will follow up to confirm next steps.',
+    close: 'Close',
+    contextNote: 'Interested in connecting with',
+  };
   const [form, setForm] = useState<FormState>(emptyForm);
   const [offers, setOffers] = useState<string[]>([]);
   const [lookingFor, setLookingFor] = useState<string[]>([]);
@@ -54,7 +127,7 @@ export default function ApplyForm() {
         ...prev,
         interest: detail?.interest && interestOptions.includes(detail.interest) ? detail.interest : prev.interest,
         note: detail?.context
-          ? `${prev.note ? prev.note + '\n' : ''}Interested in connecting with: ${detail.context}`.trim()
+          ? `${prev.note ? prev.note + '\n' : ''}${copy.contextNote}: ${detail.context}`.trim()
           : prev.note,
       }));
     };
@@ -67,15 +140,15 @@ export default function ApplyForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.company || !form.role || !form.email || !form.telegram) {
-      setError('Please fill in all required fields (*).');
+      setError(copy.requiredError);
       return;
     }
 
     setIsSubmitting(true);
     setError('');
 
-    const weOfferLine = offers.length ? `We Offer: ${offers.join(', ')}` : '';
-    const lookingForLine = lookingFor.length ? `We Are Looking For: ${lookingFor.join(', ')}` : '';
+    const weOfferLine = offers.length ? `${copy.weOffer}: ${offers.join(', ')}` : '';
+    const lookingForLine = lookingFor.length ? `${copy.weAreLookingFor}: ${lookingFor.join(', ')}` : '';
     const fullNote = [weOfferLine, lookingForLine, form.note].filter(Boolean).join('\n');
 
     const result = await submitLead(
@@ -102,19 +175,19 @@ export default function ApplyForm() {
       track('form_submit', form.interest);
       setIsSuccess(true);
     } else {
-      setError(result.error || 'Something went wrong. Please email info@fintech24h.com');
+      setError(result.error || copy.genericError);
     }
   };
 
   return (
     <div className="dm-card p-6 sm:p-7 max-w-xl mx-auto">
-      <h3 className="font-display font-semibold text-lg text-[var(--dm-text-primary)] mb-1">Apply for F-Matching Season 3</h3>
-      <p className="text-xs text-[var(--dm-text-secondary)] mb-6">Fill in the basics. We’ll follow up to verify your profile and recommend the right package.</p>
+      <h3 className="font-display font-semibold text-lg text-[var(--dm-text-primary)] mb-1">{copy.title}</h3>
+      <p className="text-xs text-[var(--dm-text-secondary)] mb-6">{copy.subtitle}</p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Honeypot */}
         <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-          <label htmlFor="dm-company-website">Company website</label>
+          <label htmlFor="dm-company-website">{copy.companyWebsiteLabel}</label>
           <input id="dm-company-website" name="companyWebsite" type="text" tabIndex={-1} autoComplete="off"
             value={form.companyWebsite} onChange={(e) => setForm((p) => ({ ...p, companyWebsite: e.target.value }))} />
         </div>
@@ -125,39 +198,39 @@ export default function ApplyForm() {
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="dm-name" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Full name *</label>
-            <input id="dm-name" required className="dm-input" placeholder="Alex Nguyen" value={form.name} onChange={(e) => update('name', e.target.value)} />
+            <label htmlFor="dm-name" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">{copy.fullName}</label>
+            <input id="dm-name" required className="dm-input" placeholder={copy.fullNamePlaceholder} value={form.name} onChange={(e) => update('name', e.target.value)} />
           </div>
           <div>
-            <label htmlFor="dm-company" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Company *</label>
-            <input id="dm-company" required className="dm-input" placeholder="Company name" value={form.company} onChange={(e) => update('company', e.target.value)} />
-          </div>
-        </div>
-
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="dm-role" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Title / role *</label>
-            <input id="dm-role" required className="dm-input" placeholder="Founder, Investor..." value={form.role} onChange={(e) => update('role', e.target.value)} />
-          </div>
-          <div>
-            <label htmlFor="dm-email" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Work email *</label>
-            <input id="dm-email" type="email" required className="dm-input" placeholder="you@company.com" value={form.email} onChange={(e) => update('email', e.target.value)} />
+            <label htmlFor="dm-company" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">{copy.company}</label>
+            <input id="dm-company" required className="dm-input" placeholder={copy.companyPlaceholder} value={form.company} onChange={(e) => update('company', e.target.value)} />
           </div>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="dm-telegram" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Telegram *</label>
-            <input id="dm-telegram" required className="dm-input" placeholder="@yourhandle" value={form.telegram} onChange={(e) => update('telegram', e.target.value)} />
+            <label htmlFor="dm-role" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">{copy.role}</label>
+            <input id="dm-role" required className="dm-input" placeholder={copy.rolePlaceholder} value={form.role} onChange={(e) => update('role', e.target.value)} />
           </div>
           <div>
-            <label htmlFor="dm-linkedin" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">LinkedIn</label>
-            <input id="dm-linkedin" className="dm-input" placeholder="linkedin.com/in/..." value={form.linkedin} onChange={(e) => update('linkedin', e.target.value)} />
+            <label htmlFor="dm-email" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">{copy.email}</label>
+            <input id="dm-email" type="email" required className="dm-input" placeholder={copy.emailPlaceholder} value={form.email} onChange={(e) => update('email', e.target.value)} />
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="dm-telegram" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">{copy.telegram}</label>
+            <input id="dm-telegram" required className="dm-input" placeholder={copy.telegramPlaceholder} value={form.telegram} onChange={(e) => update('telegram', e.target.value)} />
+          </div>
+          <div>
+            <label htmlFor="dm-linkedin" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">{copy.linkedin}</label>
+            <input id="dm-linkedin" className="dm-input" placeholder={copy.linkedinPlaceholder} value={form.linkedin} onChange={(e) => update('linkedin', e.target.value)} />
           </div>
         </div>
 
         <div>
-          <label htmlFor="dm-interest" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">I&rsquo;m interested in *</label>
+          <label htmlFor="dm-interest" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">{copy.interestedIn}</label>
           <select id="dm-interest" className="dm-input" value={form.interest} onChange={(e) => update('interest', e.target.value)}>
             {interestOptions.map((opt) => <option key={opt} value={opt} className="bg-[#0a0908]">{opt}</option>)}
           </select>
@@ -167,13 +240,13 @@ export default function ApplyForm() {
         <details className="dm-disclosure">
           <summary>
             <span className="dm-disclosure-trigger">
-              <span>Deal signal: We Offer / We Are Looking For {dealSignalCount > 0 && <b className="text-[var(--dm-gold)]">({dealSignalCount})</b>}</span>
+              <span>{copy.dealSignal} {dealSignalCount > 0 && <b className="text-[var(--dm-gold)]">({dealSignalCount})</b>}</span>
               <svg className="dm-disclosure-chevron w-4 h-4 text-[var(--dm-text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </span>
           </summary>
           <div className="dm-disclosure-panel space-y-4">
             <fieldset>
-              <legend className="block text-[10px] font-semibold text-white/50 mb-2 uppercase tracking-wider">We Offer</legend>
+              <legend className="block text-[10px] font-semibold text-white/50 mb-2 uppercase tracking-wider">{copy.weOffer}</legend>
               <div className="flex flex-wrap gap-2">
                 {weOfferOptions.map((opt) => (
                   <button
@@ -190,7 +263,7 @@ export default function ApplyForm() {
             </fieldset>
 
             <fieldset>
-              <legend className="block text-[10px] font-semibold text-white/50 mb-2 uppercase tracking-wider">We Are Looking For</legend>
+              <legend className="block text-[10px] font-semibold text-white/50 mb-2 uppercase tracking-wider">{copy.weAreLookingFor}</legend>
               <div className="flex flex-wrap gap-2">
                 {weAreLookingForOptions.map((opt) => (
                   <button
@@ -207,14 +280,14 @@ export default function ApplyForm() {
             </fieldset>
 
             <div>
-              <label htmlFor="dm-note" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">Additional notes</label>
-              <textarea id="dm-note" rows={2} className="dm-input resize-none" placeholder="Share more context, deal goals..." value={form.note} onChange={(e) => update('note', e.target.value)} />
+              <label htmlFor="dm-note" className="block text-[10px] font-semibold text-white/50 mb-1.5 uppercase tracking-wider">{copy.additionalNotes}</label>
+              <textarea id="dm-note" rows={2} className="dm-input resize-none" placeholder={copy.additionalNotesPlaceholder} value={form.note} onChange={(e) => update('note', e.target.value)} />
             </div>
           </div>
         </details>
 
         <p className="text-[10px] text-[var(--dm-text-muted)] leading-relaxed">
-          Your information is used only to review / contact you about F-Matching Season 3 and will not be made public without consent. See our <a href="/privacy/" className="underline hover:text-[var(--dm-gold)]">Privacy Policy</a>.
+          {copy.privacyNote} <a href="/privacy/" className="underline hover:text-[var(--dm-gold)]">{copy.privacyPolicy}</a>.
         </p>
 
         <label className="flex items-start gap-2.5 cursor-pointer select-none">
@@ -225,12 +298,12 @@ export default function ApplyForm() {
             className="mt-0.5 w-4 h-4 rounded border-[var(--dm-border)] bg-white/5 accent-[var(--dm-gold)] shrink-0"
           />
           <span className="text-[10px] text-[var(--dm-text-muted)] leading-relaxed">
-            Send me updates about future DealMakers' Club seasons (optional, you can unsubscribe anytime).
+            {copy.marketingOptIn}
           </span>
         </label>
 
         <button type="submit" disabled={isSubmitting} className="dm-btn-primary w-full justify-center text-xs">
-          {isSubmitting ? 'Sending...' : 'Submit Application'} <span aria-hidden="true">→</span>
+          {isSubmitting ? copy.sending : copy.submit} <span aria-hidden="true" className="rtl:inline-block rtl:rotate-180">→</span>
         </button>
       </form>
 
@@ -240,10 +313,10 @@ export default function ApplyForm() {
             <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: 'var(--dm-gradient-primary)' }}>
               <svg className="w-7 h-7 text-[#0a0908]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
             </div>
-            <h3 className="text-xl font-display font-semibold text-[var(--dm-text-primary)] mb-3">Application submitted!</h3>
-            <p className="text-sm text-[var(--dm-text-secondary)] mb-7">The Fintech24h team will follow up to confirm next steps.</p>
+            <h3 className="text-xl font-display font-semibold text-[var(--dm-text-primary)] mb-3">{copy.successTitle}</h3>
+            <p className="text-sm text-[var(--dm-text-secondary)] mb-7">{copy.successBody}</p>
             <button onClick={() => { setIsSuccess(false); setForm(emptyForm); setOffers([]); setLookingFor([]); startedRef.current = false; }} className="dm-btn-ghost w-full justify-center text-xs">
-              Close
+              {copy.close}
             </button>
           </div>
         </div>

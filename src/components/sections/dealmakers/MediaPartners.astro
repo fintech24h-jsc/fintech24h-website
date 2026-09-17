@@ -1,19 +1,49 @@
 ---
 // src/components/sections/dealmakers/MediaPartners.astro
-import { mediaPartners, partnerTracks } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+const { mediaPartners, partnerTracks } = getSS3Content(locale);
+const localePrefix = (path: string) => (locale === 'ar' ? path.replace(/^\/dealmakers\//, '/dealmakers/ar/') : path);
+const benefitsHref = localePrefix('/dealmakers/ss3/partner-benefits/');
 
 const mediaTrack = partnerTracks.find((t) => t.id === 'media')!;
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'الشركاء الإعلاميون',
+  eyebrow: 'الشركاء الإعلاميون · دعم المجتمع',
+  h2: 'تضخيم الصدى عبر شركاء إعلاميين في المنظومة بأكملها.',
+  lede: 'نفخر بالعمل إلى جانب أصوات موثوقة في إعلام Web3 والتكنولوجيا المالية، تساعد تغطيتها في إيصال F-Matching Season 3 إلى جمهور أوسع.',
+  mediaPartnerFallback: 'شريك إعلامي',
+  yourLogo: 'شعارك هنا',
+  becomeMediaPartner: 'كن شريكًا إعلاميًا',
+  seeFullList: 'عرض القائمة الكاملة لمزايا الشريك الإعلامي',
+  interest: 'الشريك الإعلامي',
+} : {
+  ariaLabel: 'Media Partners',
+  eyebrow: 'Media Partners · Community support',
+  h2: 'Amplified by media partners across the ecosystem.',
+  lede: 'We’re proud to work alongside respected voices in Web3 and fintech media, whose coverage helps bring F-Matching Season 3 to a wider audience.',
+  mediaPartnerFallback: 'Media partner',
+  yourLogo: 'Your logo',
+  becomeMediaPartner: 'Become a Media Partner',
+  seeFullList: 'See the full Media Partner benefit list',
+  interest: 'Media Partner',
+};
 ---
 
-<section class="relative py-20 lg:py-24 bg-[var(--dm-bg-secondary)]" aria-label="Media Partners">
+<section class="relative py-20 lg:py-24 bg-[var(--dm-bg-secondary)]" aria-label={copy.ariaLabel}>
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <div data-dm-reveal>
-      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Media Partners · Community support</p>
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
       <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-4">
-        Amplified by media partners across the ecosystem.
+        {copy.h2}
       </h2>
       <p class="text-sm text-[var(--dm-text-secondary)] max-w-xl mx-auto mb-6">
-        We're proud to work alongside respected voices in Web3 and fintech media, whose coverage helps bring F-Matching Season 3 to a wider audience.
+        {copy.lede}
       </p>
 
       <ul class="flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto mb-10">
@@ -27,7 +57,7 @@ const mediaTrack = partnerTracks.find((t) => t.id === 'media')!;
       {mediaPartners.map((p, i) => {
         const Tag = p.confirmed && p.websiteUrl ? 'a' : 'div';
         const linkProps = p.confirmed && p.websiteUrl
-          ? { href: p.websiteUrl, target: '_blank', rel: 'noopener noreferrer', 'aria-label': p.name ?? 'Media partner' }
+          ? { href: p.websiteUrl, target: '_blank', rel: 'noopener noreferrer', 'aria-label': p.name ?? copy.mediaPartnerFallback }
           : {};
         return (
           <Tag
@@ -39,13 +69,13 @@ const mediaTrack = partnerTracks.find((t) => t.id === 'media')!;
             {p.confirmed && p.logoUrl ? (
               <img
                 src={p.logoUrl}
-                alt={p.name ?? 'Media partner'}
+                alt={p.name ?? copy.mediaPartnerFallback}
                 class="h-12 sm:h-14 w-auto max-w-[92%] object-contain opacity-90 hover:opacity-100 transition-all duration-300"
                 loading="lazy"
               />
             ) : (
               <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--dm-text-muted)]">
-                {p.name ?? 'Your logo'}
+                {p.name ?? copy.yourLogo}
               </span>
             )}
           </Tag>
@@ -53,12 +83,12 @@ const mediaTrack = partnerTracks.find((t) => t.id === 'media')!;
       })}
     </div>
 
-    <a href="#apply" data-dm-prefill-interest="Media Partner" data-dm-track="media_partner_cta" class="dm-btn-ghost py-2.5 px-6 text-[10px]">
-      Become a Media Partner
+    <a href="#apply" data-dm-prefill-interest={copy.interest} data-dm-track="media_partner_cta" class="dm-btn-ghost py-2.5 px-6 text-[10px]">
+      {copy.becomeMediaPartner}
     </a>
     <p class="mt-4">
-      <a href="/dealmakers/ss3/partner-benefits/" class="text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)]">
-        See the full Media Partner benefit list →
+      <a href={benefitsHref} class="text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)]">
+        {copy.seeFullList} <span class="rtl:inline-block rtl:rotate-180">→</span>
       </a>
     </p>
   </div>

@@ -1,9 +1,33 @@
 ---
 // src/components/sections/dealmakers/PricingPackages.astro
-import { pricingPackages } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+const { pricingPackages } = getSS3Content(locale);
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'الباقات',
+  eyebrow: 'باقات الإيرادات الأساسية',
+  h2a: 'باقات أقل.',
+  h2b: 'قيمة أوضح.',
+  lede: 'يركّز Season 3 على أربعة منتجات نوعية: شراكة حصرية، مقاعد Solution مخصّصة، DealMaker مميّز، وتعارفات مدقّقة.',
+  footnote: 'تبقى Fintech24h نقطة الفرز وتنسّق كل طلب تعارف. الأسعار المرجعية تخص Season 3.',
+  notPurchased: 'القائمة المؤهّلة ليست قائمة اتصال مُشتراة.',
+} : {
+  ariaLabel: 'Packages',
+  eyebrow: 'Core revenue packages',
+  h2a: 'Fewer packages.',
+  h2b: 'Clearer value.',
+  lede: 'Season 3 focuses on four quality products: exclusive partnership, dedicated Solution slots, Featured DealMaker, and vetted connections.',
+  footnote: 'Fintech24h remains the screening point and coordinates every Request Introduction. Reference pricing applies to Season 3.',
+  notPurchased: 'A Qualified Listing is not a purchased contact list.',
+};
 ---
 
-<section id="packages" class="relative py-20 lg:py-28" aria-label="Packages">
+<section id="packages" class="relative py-20 lg:py-28" aria-label={copy.ariaLabel}>
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
     <div class="absolute w-[500px] h-[500px] rounded-full opacity-30 mix-blend-screen dm-orb-emerald"
       style="top: 5%; right: -10%; filter: blur(90px); animation: orb-pulse 10s ease-in-out infinite 2s;"></div>
@@ -11,12 +35,12 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
 
   <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mb-14" data-dm-reveal>
-      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Core revenue packages</p>
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
       <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
-        Fewer packages. <span class="dm-text-gradient">Clearer value.</span>
+        {copy.h2a} <span class="dm-text-gradient">{copy.h2b}</span>
       </h2>
       <p class="text-sm text-[var(--dm-text-secondary)]">
-        Season 3 focuses on four quality products: exclusive partnership, dedicated Solution slots, Featured DealMaker, and vetted connections.
+        {copy.lede}
       </p>
     </div>
 
@@ -61,7 +85,7 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
             data-dm-track-label={pkg.id}
             class={pkg.highlight ? 'dm-btn-primary justify-center text-xs' : 'dm-btn-ghost justify-center text-xs'}
           >
-            {pkg.ctaLabel} <span aria-hidden="true">→</span>
+            {pkg.ctaLabel} <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
           </a>
 
           {/* Always reserve this line's height (even when empty) so all 4
@@ -70,7 +94,7 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
               consistent instead of the button height diverging per card. */}
           {pkg.detailLink ? (
             <a href={pkg.detailLink.href} class="text-xs text-center text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)] mt-3">
-              {pkg.detailLink.label} →
+              {pkg.detailLink.label} <span class="rtl:inline-block rtl:rotate-180">→</span>
             </a>
           ) : (
             <span class="text-xs text-center mt-3 invisible" aria-hidden="true">placeholder →</span>
@@ -80,7 +104,7 @@ import { pricingPackages } from '../../../data/dealmakers/ss3';
     </div>
 
     <p class="text-xs text-[var(--dm-text-muted)] max-w-3xl mx-auto text-center mt-10">
-      <strong class="text-[var(--dm-text-secondary)]">A Qualified Listing is not a purchased contact list.</strong> Fintech24h remains the screening point and coordinates every Request Introduction. Reference pricing applies to Season 3.
+      <strong class="text-[var(--dm-text-secondary)]">{copy.notPurchased}</strong> {copy.footnote}
     </p>
   </div>
 </section>

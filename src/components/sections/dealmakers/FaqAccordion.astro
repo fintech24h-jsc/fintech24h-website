@@ -3,7 +3,15 @@
 // Native <details>/<summary> accordion — keyboard accessible by default,
 // no JS needed. FAQPage JSON-LD is emitted by the parent page from the same
 // data source so copy and schema never drift apart.
-import { faq } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+const { faq } = getSS3Content(locale);
+// Per explicit approval: "FAQ" stays in English everywhere (nav, footer,
+// and this component's own heading/eyebrow), even on the Arabic page.
 ---
 
 <section id="faq" class="relative py-20 lg:py-28 bg-[var(--dm-bg-secondary)]" aria-label="Frequently asked questions">
