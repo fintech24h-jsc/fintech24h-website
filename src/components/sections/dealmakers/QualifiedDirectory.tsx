@@ -28,10 +28,13 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
     submitProfile: 'أرسل ملفك التعريفي',
     ariaLabel: 'دليل الإدراج المؤهّل',
     sponsoredBadge: '✦ مدعوم',
+    exampleBadge: 'مثال توضيحي',
     viewProfile: 'عرض الملف التعريفي',
     closeProfile: 'إغلاق الملف التعريفي',
     qualifiedProfile: 'ملف تعريفي مؤهّل',
+    exampleProfile: 'ملف تعريفي توضيحي (مثال)',
     sponsoredProfile: '✦ ملف تعريفي مدعوم',
+    exampleNote: 'الملفات أدناه أمثلة توضيحية لشكل الإدراج المؤهّل، إلى أن ينضم أول الأعضاء الحقيقيين في Season 3.',
     weOffer: 'نحن نقدّم',
     weAreLookingFor: 'نحن نبحث عن',
     focusMarkets: 'التركيز والأسواق',
@@ -54,10 +57,13 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
     submitProfile: 'Submit your profile',
     ariaLabel: 'Qualified Listing Directory',
     sponsoredBadge: '✦ Sponsored',
+    exampleBadge: 'Example',
     viewProfile: 'View profile',
     closeProfile: 'Close profile',
     qualifiedProfile: 'Qualified profile',
+    exampleProfile: 'Example profile',
     sponsoredProfile: '✦ Sponsored profile',
+    exampleNote: 'The profiles below are illustrative examples of the qualified listing format, until the first real members join in Season 3.',
     weOffer: 'We Offer',
     weAreLookingFor: 'We Are Looking For',
     focusMarkets: 'Focus & markets',
@@ -164,6 +170,7 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
           <strong className="text-[var(--dm-text-primary)]">{copy.qualifiedListingLead}</strong><br />
           {copy.addSponsored} <strong className="text-[var(--dm-gold)]">$150</strong> {copy.sponsoredSuffix}
         </p>
+        <p className="text-xs text-[var(--dm-text-muted)] mt-3 leading-relaxed">{copy.exampleNote}</p>
         <a
           href="#apply"
           data-dm-prefill-interest="Qualified Listing ($200/season)"
@@ -204,6 +211,9 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
                 {p.sponsored && (
                   <span className="dm-badge-sponsored">{copy.sponsoredBadge}</span>
                 )}
+                {p.illustrative && (
+                  <span className="dm-tag dm-tag-gray text-[9px] py-0.5 px-1.5">{copy.exampleBadge}</span>
+                )}
               </h4>
               <p className="text-xs text-[var(--dm-text-muted)] truncate">{p.contactName} · {p.role} · {p.dealGoal}</p>
               <div className="flex flex-wrap gap-1.5 mt-2">
@@ -239,7 +249,7 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
               ×
             </button>
 
-            <p className="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-widest mb-3">{copy.qualifiedProfile}</p>
+            <p className="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-widest mb-3">{activeProfile.illustrative ? copy.exampleProfile : copy.qualifiedProfile}</p>
             <div className="flex items-start gap-4 mb-5">
               <span className="w-14 h-14 rounded-2xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-sm font-bold text-[var(--dm-gold)] shrink-0">
                 {activeProfile.companyInitials}

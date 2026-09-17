@@ -18,12 +18,13 @@ const copy = locale === 'ar' ? {
   h2a: 'أوضح من أنت.',
   h2b: 'ليجدك الأشخاص المناسبون.',
   viewPackage: 'اطّلع على باقة المميّز بـ1,000 دولار',
-  intro: 'خضعت كل شركة معروضة هنا للمراجعة والتحقق، وتمثّل بعضًا من أكثر الأسماء مصداقية العاملة اليوم في مجالي Web3 والتكنولوجيا المالية.',
-  preview: 'معاينة',
+  intro: 'هذه ملفات تعريفية توضيحية لإظهار شكل إدراج صانع الصفقات المميّز. ستظهر هنا ملفات صانعي الصفقات المميّزين الحقيقيين فور انضمام أول الأعضاء في Season 3.',
+  preview: 'مثال توضيحي',
   videoMax: 'الحد الأقصى 02:00',
   offer: 'نقدّم',
   need: 'نحتاج',
   verifiedProfile: 'ملف تعريفي موثّق',
+  exampleProfile: 'ملف تعريفي توضيحي',
   requestIntro: 'طلب تعارف',
   wantToAppear: 'تريد الظهور هنا؟ قدّم طلبًا كصانع صفقات مميّز',
 } : {
@@ -32,12 +33,13 @@ const copy = locale === 'ar' ? {
   h2a: 'State who you are.',
   h2b: 'So the right people find you.',
   viewPackage: 'View the $1,000 Featured Package',
-  intro: 'Every company featured here has been reviewed and verified, representing some of the most credible names building in Web3 and fintech today.',
-  preview: 'Preview',
+  intro: 'These are example profiles showing what a Featured DealMaker listing looks like. Real Featured DealMakers will appear here as Season 3 onboards its first members.',
+  preview: 'Example',
   videoMax: '02:00 max',
   offer: 'Offer',
   need: 'Need',
   verifiedProfile: 'Verified profile',
+  exampleProfile: 'Example profile',
   requestIntro: 'Request Introduction',
   wantToAppear: 'Want to appear here? Apply as a Featured DealMaker',
 };
@@ -100,7 +102,7 @@ const copy = locale === 'ar' ? {
             </div>
 
             <div class="flex items-center justify-between pt-4 border-t border-[var(--dm-border)] text-[11px]">
-              <span class="text-[var(--dm-text-muted)] font-body">{copy.verifiedProfile}</span>
+              <span class="text-[var(--dm-text-muted)] font-body">{dm.illustrative ? copy.exampleProfile : copy.verifiedProfile}</span>
               <a href="#apply" data-dm-intro={`${dm.name} at ${dm.company}`} class="font-display font-semibold text-[var(--dm-gold)] hover:text-[var(--dm-text-primary)] transition-colors flex items-center gap-1">
                 {copy.requestIntro}
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
