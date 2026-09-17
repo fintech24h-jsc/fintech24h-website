@@ -167,14 +167,14 @@ const copy = locale === 'ar' ? {
           <PartnerTag
             {...(href ? { href } : {})}
             {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            class="dm-card group block rounded-xl p-3.5 flex flex-col items-center justify-center gap-1.5 min-h-[84px]"
+            class="dm-card dm-partner-slot group block rounded-xl p-3.5 flex flex-col items-center justify-center gap-1.5 min-h-[84px]"
             data-dm-reveal
           >
-            <span class="font-mono text-[7px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em] text-center leading-tight">{p.label}</span>
+            <span class="font-mono text-[7px] text-[var(--dm-text-secondary)] uppercase tracking-[0.1em] text-center leading-tight">{p.label}</span>
             {p.confirmed && p.logoUrl ? (
               <img src={p.logoUrl} alt={`${p.name} logo, ${p.label} of F-Matching Season 3`} class="h-5 w-auto object-contain" loading="lazy" />
             ) : (
-              <span class="font-body text-[11px] text-[var(--dm-text-muted)] group-hover:text-[var(--dm-gold)] transition-colors">{copy.confirmingSoon}</span>
+              <span class="font-body text-[11px] text-[var(--dm-text-primary)] group-hover:text-[var(--dm-gold)] transition-colors">{copy.confirmingSoon}</span>
             )}
           </PartnerTag>
         ); })}
@@ -182,3 +182,16 @@ const copy = locale === 'ar' ? {
     </div>
   </div>
 </section>
+
+<style>
+  /* Scoped to the 3 secondary partner slots only — brighter than the
+     default .dm-card so they read clearly instead of blending into the
+     dark background, without changing .dm-card anywhere else on the site. */
+  .dm-partner-slot {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 45%, rgba(255, 255, 255, 0.03) 100%);
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+  .dm-partner-slot:hover {
+    border-color: var(--dm-border-accent);
+  }
+</style>
