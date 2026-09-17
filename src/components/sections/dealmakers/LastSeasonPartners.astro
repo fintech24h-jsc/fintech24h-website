@@ -4,14 +4,34 @@
 // confirmed:true + an actual logoUrl render a real logo; everything else
 // (including confirmed-name-but-no-asset rows) renders a neutral wordmark
 // placeholder so we never fabricate a logo file we don't have.
-import { lastSeasonPartners } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+const { lastSeasonPartners } = getSS3Content(locale);
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'شركاء بارزون من الموسم الماضي',
+  eyebrow: 'منظومة متنامية',
+  heading: 'شركاء بارزون من الموسم الماضي',
+  yourLogo: 'شعارك هنا',
+  thanks: 'بخالص الشكر للشركاء الذين وقفوا إلى جانبنا في الموسم الماضي، فكل شراكة هنا نعتز بها بصدق.',
+} : {
+  ariaLabel: 'Featured partners from last season',
+  eyebrow: 'A growing ecosystem',
+  heading: 'Featured Partners from Last Season',
+  yourLogo: 'Your logo',
+  thanks: 'With heartfelt thanks to the partners who stood beside us last season, every partnership here is one we deeply value.',
+};
 ---
 
-<section class="relative py-20 lg:py-24 border-y border-[var(--dm-border)]" aria-label="Featured partners from last season">
+<section class="relative py-20 lg:py-24 border-y border-[var(--dm-border)]" aria-label={copy.ariaLabel}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <div data-dm-reveal>
-      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">A growing ecosystem</p>
-      <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-10">Featured Partners from Last Season</h2>
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
+      <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-10">{copy.heading}</h2>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto">
@@ -29,13 +49,13 @@ import { lastSeasonPartners } from '../../../data/dealmakers/ss3';
               {p.name}
             </span>
           ) : (
-            <span class="font-mono text-[10px] uppercase tracking-widest text-[var(--dm-text-muted)]">Your logo</span>
+            <span class="font-mono text-[10px] uppercase tracking-widest text-[var(--dm-text-muted)]">{copy.yourLogo}</span>
           )}
         </div>
       ))}
     </div>
     <p class="text-xs text-[var(--dm-text-muted)] max-w-lg mx-auto mt-6">
-      With heartfelt thanks to the partners who stood beside us last season, every partnership here is one we deeply value.
+      {copy.thanks}
     </p>
   </div>
 </section>

@@ -7,8 +7,9 @@
 import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
 import '../styles/dealmakers.css';
-import { heroPartners } from '../data/dealmakers/ss3';
 import { seasons } from '../data/dealmakers/seasons';
+import { getSS3Content, type DealmakersLocale } from '../data/dealmakers/content';
+import { getChrome } from '../data/dealmakers/chrome';
 
 // Same box-shadow star-dot technique as the main site's Hero
 // (src/components/sections/HeroSection.astro) — generated per-render,
@@ -33,16 +34,6 @@ const dmStarsSmall = generateStars(250);
 const dmStarsMedium = generateStars(80);
 const dmStarsLarge = generateStars(25);
 
-// The Fintech24h × Capital Partner co-brand lockup lives in the header and
-// footer (site-wide identity), never inside the hero — the hero's spotlight
-// is reserved for the Capital Partner's own logo alone.
-const capitalPartner = heroPartners.find((p) => p.category === 'capital')!;
-
-// The header logo links straight to the active season, not to /dealmakers/
-// (which only exists to 301 there) — clicking it from ss3 would otherwise
-// round-trip through that redirect instead of just staying put.
-const activeSeasonHref = (seasons.find((s) => s.status === 'active') ?? seasons[0]).href;
-
 interface Props {
   title: string;
   description: string;
@@ -50,6 +41,7 @@ interface Props {
   ogImage?: string;
   keywords?: string;
   schema?: object;
+  locale?: DealmakersLocale;
 }
 
 const {
@@ -59,7 +51,37 @@ const {
   ogImage = 'https://fintech24h.com/wp-content/uploads/2026/07/OG-FI24H.png',
   keywords,
   schema,
+  locale = 'en',
 } = Astro.props;
+
+// Deliberately always "ltr": the structural layout (header, nav order,
+// card grids, arrow icons) stays identical to the English page — only the
+// text itself is Arabic. Per-locale text direction for reading is handled
+// by the [lang="ar"] CSS rule below, scoped to text elements only, so it
+// never reorders flex/grid siblings.
+const dir = 'ltr';
+const t = getChrome(locale);
+const { heroPartners } = getSS3Content(locale);
+
+// The Fintech24h × Capital Partner co-brand lockup lives in the header and
+// footer (site-wide identity), never inside the hero — the hero's spotlight
+// is reserved for the Capital Partner's own logo alone.
+const capitalPartner = heroPartners.find((p) => p.category === 'capital')!;
+
+// The header logo links straight to the active season, not to /dealmakers/
+// (which only exists to 301 there) — clicking it from ss3 would otherwise
+// round-trip through that redirect instead of just staying put. Arabic
+// routes live under /dealmakers/ar/... — same tree, one prefix segment.
+const baseSeasonHref = (seasons.find((s) => s.status === 'active') ?? seasons[0]).href;
+const localePrefix = (path: string) => (locale === 'ar' ? path.replace(/^\/dealmakers\//, '/dealmakers/ar/') : path);
+const activeSeasonHref = localePrefix(baseSeasonHref);
+
+// Language switcher: same page, other locale. Arabic routes always mirror
+// the English tree one-for-one under /dealmakers/ar/..., so toggling is a
+// straight prefix add/remove on the current path.
+const currentPath = Astro.url.pathname;
+const enPath = currentPath.replace(/^\/dealmakers\/ar\//, '/dealmakers/');
+const arPath = locale === 'ar' ? currentPath : currentPath.replace(/^\/dealmakers\//, '/dealmakers/ar/');
 
 // Same Organization schema BaseLayout injects site-wide. This microsite
 // doesn't use BaseLayout, so it needs its own copy to carry brand identity
@@ -84,10 +106,12 @@ const organizationSchema = {
 // itself AND from any subpage (e.g. /join/) that doesn't have these
 // sections — bare hashes on a subpage just no-op instead of navigating.
 const navLinks = [
-  { label: 'Featured', href: `${activeSeasonHref}#featured` },
-  { label: 'Directory', href: `${activeSeasonHref}#directory` },
-  { label: 'Packages', href: `${activeSeasonHref}#packages` },
-  { label: 'FAQ', href: `${activeSeasonHref}#faq` },
+  { label: t.nav.featured, href: `${activeSeasonHref}#featured` },
+  { label: t.nav.directory, href: `${activeSeasonHref}#directory` },
+  { label: t.nav.members, href: localePrefix('/dealmakers/members/') },
+  { label: t.nav.packages, href: `${activeSeasonHref}#packages` },
+  { label: t.nav.benefits, href: localePrefix('/dealmakers/ss3/partner-benefits/') },
+  { label: t.nav.faq, href: `${activeSeasonHref}#faq` },
 ];
 const applyHref = `${activeSeasonHref}#apply`;
 
@@ -102,7 +126,7 @@ const currentYear = new Date().getFullYear();
 ---
 
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang={locale} dir={dir} data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -114,6 +138,14 @@ const currentYear = new Date().getFullYear();
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="author" content="Fintech24h" />
 
+  <!-- hreflang: this page's English/Arabic counterpart always exists at the
+       same path with/without the /ar/ segment (see localePrefix above), so
+       we can always advertise both — Google needs this on every language
+       version, not just one, for it to be respected as a genuine cluster. -->
+  <link rel="alternate" hreflang="en" href={`https://fintech24h.com${enPath}`} />
+  <link rel="alternate" hreflang="ar" href={`https://fintech24h.com${arPath}`} />
+  <link rel="alternate" hreflang="x-default" href={`https://fintech24h.com${enPath}`} />
+
   <OpenGraph title={title} description={description} url={canonical} image={ogImage} />
   <SchemaOrg schema={organizationSchema} />
   {schema && <SchemaOrg schema={schema} />}
@@ -122,6 +154,17 @@ const currentYear = new Date().getFullYear();
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
+
+  <!-- Arabic pages keep the exact same structural layout as English (header,
+       nav order, card grids, arrow directions) — only the words are Arabic.
+       This rule makes just the text content itself read naturally
+       right-to-left, without touching `dir` on any flex/grid container
+       (which would reorder siblings and mirror icons/arrows). -->
+  <style>
+    :root[lang="ar"] :is(p, h1, h2, h3, h4, li, label, blockquote, dt, dd, th, td, input, textarea, select, option) {
+      direction: rtl;
+    }
+  </style>
 
   <!-- Fonts: Fraunces (display) + Inter (body) + JetBrains Mono (labels) — a
        distinct pairing from the main site's Space Grotesk/Inter, 2 weights
@@ -160,31 +203,38 @@ const currentYear = new Date().getFullYear();
   <div class="dm-cursor-glow" id="dm-cursor-glow" aria-hidden="true"></div>
   <header class="dm-glass-panel sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-      <a href={activeSeasonHref} class="flex items-center gap-3 shrink-0" aria-label="DealMakers' Club home, presented by Fintech24h, Official Capital Partner Season 3">
+      <a href={activeSeasonHref} class="flex items-center gap-3 shrink-0" aria-label={t.footer.presentedByAria}>
         <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-8 sm:h-9 w-auto object-contain" loading="eager" />
         <span class="font-display font-light text-xl text-[var(--dm-border-accent)]" aria-hidden="true">|</span>
         {capitalPartner.confirmed && capitalPartner.logoUrl ? (
           <img src={capitalPartner.logoUrl} alt={`${capitalPartner.name}, Official Capital Partner`} class="h-8 sm:h-9 w-auto object-contain" loading="eager" />
         ) : (
-          <span class="font-mono text-[9px] sm:text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em] leading-tight whitespace-nowrap">Capital<br class="max-[374px]:inline hidden" /> Partner</span>
+          <span class="font-mono text-[9px] sm:text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em] leading-tight whitespace-nowrap">{t.capitalPartnerFallback}</span>
         )}
       </a>
 
-      <nav class="hidden md:flex items-center gap-7 font-mono text-[11px] uppercase tracking-widest text-[var(--dm-text-secondary)]" aria-label="Section navigation">
+      <nav class="hidden lg:flex items-center gap-6 font-mono text-[11px] uppercase tracking-widest text-[var(--dm-text-secondary)]" aria-label={t.nav.sectionNavAria}>
         {navLinks.map((l) => (
-          <a href={l.href} class="hover:text-[var(--dm-gold)] transition-colors">{l.label}</a>
+          <a href={l.href} class="hover:text-[var(--dm-gold)] transition-colors whitespace-nowrap">{l.label}</a>
         ))}
       </nav>
 
       <div class="flex items-center gap-2 shrink-0">
+        <a
+          href={locale === 'ar' ? enPath : arPath}
+          class="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-lg border border-[var(--dm-border)] font-mono text-[10px] uppercase tracking-wider text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] hover:border-[var(--dm-border-hover)] transition-colors shrink-0"
+          aria-label={locale === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
+        >
+          {locale === 'ar' ? 'EN' : 'ع'}
+        </a>
         <span class="hidden sm:inline-flex">
-          <a href={applyHref} class="dm-btn-primary py-2 px-4 text-[10px]" data-dm-track="header_cta">Apply to Join</a>
+          <a href={applyHref} class="dm-btn-primary py-2 px-4 text-[10px]" data-dm-track="header_cta">{t.nav.applyToJoin}</a>
         </span>
         <button
           id="dm-nav-toggle"
           type="button"
-          class="dm-btn-icon md:hidden"
-          aria-label="Toggle navigation menu"
+          class="dm-btn-icon lg:hidden"
+          aria-label={t.nav.toggleAria}
           aria-expanded="false"
           aria-controls="dm-mobile-nav"
         >
@@ -194,13 +244,16 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
 
-    <nav id="dm-mobile-nav" class="dm-mobile-nav md:hidden" aria-label="Mobile section navigation" hidden>
+    <nav id="dm-mobile-nav" class="dm-mobile-nav lg:hidden" aria-label="Mobile section navigation" hidden>
       <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col">
         {navLinks.map((l) => (
           <a href={l.href} class="dm-mobile-nav-link" data-dm-close-menu>{l.label}</a>
         ))}
+        <a href={locale === 'ar' ? enPath : arPath} class="dm-mobile-nav-link" data-dm-close-menu>
+          {locale === 'ar' ? 'English' : 'العربية'}
+        </a>
         <span class="sm:hidden flex my-3">
-          <a href={applyHref} class="dm-btn-primary w-full justify-center py-3 text-xs" data-dm-track="header_cta" data-dm-close-menu>Apply to Join</a>
+          <a href={applyHref} class="dm-btn-primary w-full justify-center py-3 text-xs" data-dm-track="header_cta" data-dm-close-menu>{t.nav.applyToJoin}</a>
         </span>
       </div>
     </nav>
@@ -214,21 +267,21 @@ const currentYear = new Date().getFullYear();
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
         <div class="lg:col-span-2">
-          <div class="flex items-center gap-3 mb-5" aria-label="Presented by Fintech24h, Official Capital Partner Season 3">
+          <div class="flex items-center gap-3 mb-5" aria-label={t.footer.presentedByAria}>
             <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-9 w-auto object-contain" loading="lazy" />
             <span class="font-display font-light text-xl text-[var(--dm-border-accent)]" aria-hidden="true">|</span>
             {capitalPartner.confirmed && capitalPartner.logoUrl ? (
               <img src={capitalPartner.logoUrl} alt={`${capitalPartner.name}, Official Capital Partner`} class="h-9 w-auto object-contain" loading="lazy" />
             ) : (
-              <span class="font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em]">Capital Partner</span>
+              <span class="font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em]">{t.capitalPartnerFallback}</span>
             )}
           </div>
           <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed max-w-sm mb-5">
-            A curated matching program for verified Web3 and fintech decision-makers, connecting qualified deal flow through moderated introductions.
+            {t.footer.description}
           </p>
           <div class="flex gap-3">
             {socialLinks.map((s) => (
-              <a href={s.href} target="_blank" rel="noopener noreferrer" class="dm-btn-icon" aria-label={`DealMakers' Club on ${s.label}`}>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" class="dm-btn-icon" aria-label={t.footer.socialAria(s.label)}>
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d={s.path}/></svg>
               </a>
             ))}
@@ -236,24 +289,26 @@ const currentYear = new Date().getFullYear();
         </div>
 
         <div>
-          <h2 class="font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-5">Program</h2>
+          <h2 class="font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-5">{t.footer.programHeading}</h2>
           <ul class="space-y-3">
-            <li><a href={`${activeSeasonHref}#featured`} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Featured DealMakers</a></li>
-            <li><a href={`${activeSeasonHref}#directory`} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Qualified Directory</a></li>
-            <li><a href={`${activeSeasonHref}#packages`} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Packages</a></li>
-            <li><a href="/dealmakers/ss3/join/" class="text-xs text-[var(--dm-gold)] hover:text-[var(--dm-gold-bright)] transition-colors font-semibold">Join Fi24h DealMakers&rsquo; Club</a></li>
-            <li><a href={`${activeSeasonHref}#faq`} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">FAQ</a></li>
+            <li><a href={`${activeSeasonHref}#featured`} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.featuredDealMakers}</a></li>
+            <li><a href={`${activeSeasonHref}#directory`} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.qualifiedDirectory}</a></li>
+            <li><a href={localePrefix('/dealmakers/members/')} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.membersDirectory}</a></li>
+            <li><a href={`${activeSeasonHref}#packages`} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.packages}</a></li>
+            <li><a href={localePrefix('/dealmakers/ss3/partner-benefits/')} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.partnerBenefits}</a></li>
+            <li><a href={localePrefix('/dealmakers/ss3/join/')} class="text-xs text-[var(--dm-gold)] hover:text-[var(--dm-gold-bright)] transition-colors font-semibold">{t.footer.joinClub}</a></li>
+            <li><a href={`${activeSeasonHref}#faq`} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.faq}</a></li>
           </ul>
         </div>
 
         <div>
-          <h2 class="font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-5">Legal &amp; Contact</h2>
+          <h2 class="font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-5">{t.footer.legalHeading}</h2>
           <ul class="space-y-3">
-            <li><a href="/privacy/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Privacy Policy</a></li>
-            <li><a href="/terms/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Terms of Service</a></li>
-            <li><a href="/verify-members/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Verify a Team Member</a></li>
-            <li><button type="button" id="dm-cookie-preferences-link" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Cookie Preferences</button></li>
-            <li><a href="mailto:info@fintech24h.com" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">info@fintech24h.com</a></li>
+            <li><a href="/privacy/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.privacyPolicy}</a></li>
+            <li><a href="/terms/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.termsOfService}</a></li>
+            <li><a href="/verify-members/" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.verifyMember}</a></li>
+            <li><button type="button" id="dm-cookie-preferences-link" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.footer.cookiePreferences}</button></li>
+            <li><a href="mailto:info@fintech24h.com" class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors" dir="ltr">info@fintech24h.com</a></li>
           </ul>
         </div>
       </div>
@@ -261,7 +316,7 @@ const currentYear = new Date().getFullYear();
       <div class="dm-divider mb-6"></div>
 
       <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
-        <p class="text-xs text-[var(--dm-text-muted)]">&copy; {currentYear} DealMakers&rsquo; Club. All rights reserved.</p>
+        <p class="text-xs text-[var(--dm-text-muted)]">{t.footer.copyright(currentYear)}</p>
 
         <a
           href="https://fi24h-dealmakersclub.super.site/"
@@ -270,16 +325,16 @@ const currentYear = new Date().getFullYear();
           class="group dm-btn-ghost py-2 px-4 text-[10px] font-mono uppercase tracking-[0.1em] inline-flex items-center gap-1.5 shrink-0"
         >
           <svg class="w-3 h-3 transition-transform duration-300 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-          Back to Season 2
+          {t.footer.backToSeason2}
         </a>
 
-        <a href="https://fintech24h.com" class="flex items-center gap-2 text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors" aria-label="Fintech24h, Official Capital Partner Season 3">
+        <a href="https://fintech24h.com" class="flex items-center gap-2 text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors" aria-label={t.footer.presentedByAria}>
           <img src="https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp" alt="Fintech24h" width="300" height="210" class="h-5 w-auto object-contain opacity-80" loading="lazy" />
           <span class="font-display font-light text-[var(--dm-border-accent)]" aria-hidden="true">|</span>
           {capitalPartner.confirmed && capitalPartner.logoUrl ? (
             <img src={capitalPartner.logoUrl} alt={`${capitalPartner.name}, Official Capital Partner`} class="h-5 w-auto object-contain opacity-80" loading="lazy" />
           ) : (
-            <span class="font-mono text-[10px] uppercase tracking-[0.1em]">Capital Partner</span>
+            <span class="font-mono text-[10px] uppercase tracking-[0.1em]">{t.capitalPartnerFallback}</span>
           )}
         </a>
       </div>
@@ -294,39 +349,40 @@ const currentYear = new Date().getFullYear();
     class="fixed inset-x-0 bottom-0 z-[100] px-4 pb-4 sm:px-6 sm:pb-6 translate-y-full opacity-0 transition-all duration-500 ease-out motion-reduce:transition-none"
     role="dialog"
     aria-live="polite"
-    aria-label="Cookie consent"
+    aria-label={t.cookie.consentAria}
     hidden
   >
     <div class="mx-auto max-w-3xl dm-glass-panel rounded-2xl p-5 sm:p-6">
       <div id="dm-cookie-banner-summary">
         <p class="font-body text-sm text-[var(--dm-text-secondary)] leading-relaxed mb-4">
-          We use cookies to understand site traffic (Google Analytics). Nothing runs until you choose,
-          see our <a href="/privacy/#cookies" class="text-[var(--dm-gold)] hover:underline">Privacy Policy</a> for details.
+          {t.cookie.text}
+          {' '}<a href="/privacy/#cookies" class="text-[var(--dm-gold)] hover:underline">{t.cookie.privacyLink}</a>{' '}
+          {t.cookie.textSuffix}
         </p>
         <div class="flex flex-wrap gap-3">
-          <button type="button" id="dm-cookie-accept" class="dm-btn-primary py-2.5 px-5 text-xs">Accept</button>
-          <button type="button" id="dm-cookie-reject" class="dm-btn-ghost py-2.5 px-5 text-xs">Reject non-essential</button>
-          <button type="button" id="dm-cookie-customize" class="font-mono text-[10px] uppercase tracking-widest px-3 py-2.5 text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-2">Customize</button>
+          <button type="button" id="dm-cookie-accept" class="dm-btn-primary py-2.5 px-5 text-xs">{t.cookie.accept}</button>
+          <button type="button" id="dm-cookie-reject" class="dm-btn-ghost py-2.5 px-5 text-xs">{t.cookie.reject}</button>
+          <button type="button" id="dm-cookie-customize" class="font-mono text-[10px] uppercase tracking-widest px-3 py-2.5 text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-2">{t.cookie.customize}</button>
         </div>
       </div>
 
       <div id="dm-cookie-banner-detail" class="hidden">
         <div class="flex items-center gap-3 py-1 mb-4">
-          <span class="font-body text-sm text-[var(--dm-text-primary)] font-medium">Necessary</span>
-          <span class="text-xs text-[var(--dm-text-muted)] font-body">Always on: required for the site to function</span>
+          <span class="font-body text-sm text-[var(--dm-text-primary)] font-medium">{t.cookie.necessary}</span>
+          <span class="text-xs text-[var(--dm-text-muted)] font-body">{t.cookie.necessaryNote}</span>
         </div>
         <div class="flex items-center justify-between gap-4 mb-5">
           <div class="flex flex-col">
-            <span class="font-body text-sm text-[var(--dm-text-primary)] font-medium">Analytics</span>
-            <span class="text-xs text-[var(--dm-text-muted)] font-body">Google Analytics: aggregate traffic only, no ad tracking</span>
+            <span class="font-body text-sm text-[var(--dm-text-primary)] font-medium">{t.cookie.analytics}</span>
+            <span class="text-xs text-[var(--dm-text-muted)] font-body">{t.cookie.analyticsNote}</span>
           </div>
-          <button type="button" id="dm-cookie-analytics-toggle" role="switch" aria-checked="false" aria-label="Toggle Analytics cookies" class="relative w-11 h-6 rounded-full bg-white/10 transition-colors duration-200 shrink-0">
-            <span class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200"></span>
+          <button type="button" id="dm-cookie-analytics-toggle" role="switch" aria-checked="false" aria-label={t.cookie.toggleAnalyticsAria} class="relative w-11 h-6 rounded-full bg-white/10 transition-colors duration-200 shrink-0">
+            <span class="absolute top-0.5 start-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200"></span>
           </button>
         </div>
         <div class="flex flex-wrap gap-3">
-          <button type="button" id="dm-cookie-save" class="dm-btn-primary py-2.5 px-5 text-xs">Save preferences</button>
-          <button type="button" id="dm-cookie-back" class="font-mono text-[10px] uppercase tracking-widest px-3 py-2.5 text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">Back</button>
+          <button type="button" id="dm-cookie-save" class="dm-btn-primary py-2.5 px-5 text-xs">{t.cookie.savePreferences}</button>
+          <button type="button" id="dm-cookie-back" class="font-mono text-[10px] uppercase tracking-widest px-3 py-2.5 text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors">{t.cookie.back}</button>
         </div>
       </div>
     </div>
@@ -419,8 +475,9 @@ const currentYear = new Date().getFullYear();
 
   <script is:inline>
     // Mobile nav toggle for the header hamburger — desktop already shows the
-    // section nav inline, this only covers the sub-md breakpoint where it's
-    // hidden. Vanilla JS, no framework: this is a single show/hide toggle.
+    // section nav inline, this only covers the sub-lg breakpoint where it's
+    // hidden (below lg, not md, so tablets get the clean dropdown instead of
+    // a cramped inline nav). Vanilla JS, no framework: a single show/hide toggle.
     (function () {
       const toggle = document.getElementById('dm-nav-toggle');
       const menu = document.getElementById('dm-mobile-nav');
@@ -442,7 +499,7 @@ const currentYear = new Date().getFullYear();
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') setOpen(false);
       });
-      window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+      window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
         if (e.matches) setOpen(false);
       });
     })();

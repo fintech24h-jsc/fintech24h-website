@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { telegramGroupUrl } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
 
 // One-off role notes for specific real members, keyed by Telegram username
 // (lowercase). Not a general feature — just how this specific person's
@@ -45,22 +45,30 @@ function initials(name: string) {
     .toUpperCase() || 'DM';
 }
 
-function relativeTime(iso: string) {
+function relativeTime(iso: string, locale: DealmakersLocale) {
   const seconds = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 1000));
-  if (seconds < 60) return 'Active just now';
   const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `Active ${minutes}m ago`;
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `Active ${hours}h ago`;
   const days = Math.floor(hours / 24);
+  if (locale === 'ar') {
+    if (seconds < 60) return 'نشط الآن';
+    if (minutes < 60) return `نشط منذ ${minutes} د`;
+    if (hours < 24) return `نشط منذ ${hours} س`;
+    return `نشط منذ ${days} يوم`;
+  }
+  if (seconds < 60) return 'Active just now';
+  if (minutes < 60) return `Active ${minutes}m ago`;
+  if (hours < 24) return `Active ${hours}h ago`;
   return `Active ${days}d ago`;
 }
 
-function updatedTime(iso: string) {
+function updatedTime(iso: string, locale: DealmakersLocale) {
   const seconds = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 1000));
-  if (seconds < 60) return 'Updated just now';
   const minutes = Math.floor(seconds / 60);
-  return `Updated ${minutes} min ago`;
+  if (locale === 'ar') {
+    return seconds < 60 ? 'تم التحديث الآن' : `تم التحديث منذ ${minutes} د`;
+  }
+  return seconds < 60 ? 'Updated just now' : `Updated ${minutes} min ago`;
 }
 
 // Real Telegram profile photo when available, proxied through the Worker
@@ -89,7 +97,35 @@ function MemberAvatar({ member }: { member: CommunityMember }) {
   );
 }
 
-export default function CommunityActivity() {
+interface Props {
+  locale?: DealmakersLocale;
+}
+
+export default function CommunityActivity({ locale = 'en' }: Props) {
+  const { telegramGroupUrl } = getSS3Content(locale);
+  const copy = locale === 'ar' ? {
+    eyebrow: 'نشاط المجتمع',
+    h2a: 'أشخاص حقيقيون،',
+    h2b: 'ونقاشات نشطة.',
+    intro: 'عرض مباشر للأعضاء النشطين مؤخرًا في Fi24h DealMakers’ Club. لا نعرض أو نخزّن محتوى الرسائل هنا إطلاقًا.',
+    recentlyActive: 'الأعضاء النشطون مؤخرًا',
+    fallbackMember: 'عضو في Fi24h DealMakers',
+    team: 'الفريق',
+    warmingUpH: 'نشاط المجتمع في طور التهيئة',
+    warmingUpB: 'سيظهر بث الأعضاء المباشر هنا فور ربط خدمة نشاط تيليجرام الخاصة بـ DealMakers.',
+    reconnecting: ' نحن بصدد إعادة الاتصال بأحدث بيانات النشاط.',
+  } : {
+    eyebrow: 'Community activity',
+    h2a: 'Real people,',
+    h2b: 'active conversations.',
+    intro: 'A live view of members recently active in Fi24h DealMakers’ Club. We never show or store message content here.',
+    recentlyActive: 'Recently active members',
+    fallbackMember: 'Fi24h DealMakers member',
+    team: 'Team',
+    warmingUpH: 'Community activity is warming up',
+    warmingUpB: 'The live member feed will appear here as soon as the DealMakers Telegram activity service is connected.',
+    reconnecting: ' We’re reconnecting to the latest activity data.',
+  };
   const [pulse, setPulse] = useState<CommunityPulse | null>(null);
   const [hasError, setHasError] = useState(false);
   // Ticks every second purely to re-render — relativeTime()/updatedTime()
@@ -143,23 +179,23 @@ export default function CommunityActivity() {
         <div className="max-w-2xl mb-10" data-dm-reveal>
           <div className="inline-flex items-center gap-2 font-mono text-[10px] text-[var(--dm-emerald-bright)] uppercase tracking-[0.18em] mb-3">
             <span className={`w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald)] ${hasActivity ? 'dm-live-dot' : ''}`} aria-hidden="true" />
-            Community activity
+            {copy.eyebrow}
           </div>
           <h2 id="community-activity-heading" className="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
-            Real people, <span className="dm-text-gradient">active conversations.</span>
+            {copy.h2a} <span className="dm-text-gradient">{copy.h2b}</span>
           </h2>
           <p className="text-sm text-[var(--dm-text-secondary)] leading-relaxed">
-            A live view of members recently active in Fi24h DealMakers&rsquo; Club. We never show or store message content here.
+            {copy.intro}
           </p>
         </div>
 
         {hasActivity && pulse ? (
           <div className="dm-card max-w-5xl mx-auto overflow-hidden" aria-live="polite">
             <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-[var(--dm-border)]">
-              <h3 className="font-display font-semibold text-base text-[var(--dm-text-primary)]">Recently active members</h3>
+              <h3 className="font-display font-semibold text-base text-[var(--dm-text-primary)]">{copy.recentlyActive}</h3>
               <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-[var(--dm-emerald-bright)] whitespace-nowrap">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald-bright)] dm-live-dot" aria-hidden="true" />
-                {updatedTime(pulse.updatedAt)}
+                {updatedTime(pulse.updatedAt, locale)}
               </span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[var(--dm-border)]">
@@ -177,16 +213,16 @@ export default function CommunityActivity() {
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-[var(--dm-text-primary)] truncate">{member.displayName}</p>
                       <p className="text-[11px] text-[var(--dm-text-muted)] truncate">
-                        {member.username ? `@${member.username}` : 'Fi24h DealMakers member'}
+                        {member.username ? `@${member.username}` : copy.fallbackMember}
                         {roleNote ? <span className="text-[var(--dm-gold-bright)]"> · {roleNote}</span> : null}
                       </p>
                     </div>
                     {member.source === 'admin_seed' ? (
-                      <span className="dm-tag dm-tag-gold shrink-0">Team</span>
+                      <span className="dm-tag dm-tag-gold shrink-0">{copy.team}</span>
                     ) : (
                       <span className="dm-tag dm-tag-emerald shrink-0 whitespace-nowrap">
                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald-bright)] dm-live-dot" aria-hidden="true" />
-                        {relativeTime(member.lastActiveAt)}
+                        {relativeTime(member.lastActiveAt, locale)}
                       </span>
                     )}
                   </a>
@@ -199,10 +235,10 @@ export default function CommunityActivity() {
             <div className="flex items-start gap-4">
               <span className="w-10 h-10 shrink-0 rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] flex items-center justify-center text-[var(--dm-gold)]" aria-hidden="true">✦</span>
               <div>
-                <h3 className="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-2">Community activity is warming up</h3>
+                <h3 className="font-display font-semibold text-base text-[var(--dm-text-primary)] mb-2">{copy.warmingUpH}</h3>
                 <p className="text-sm text-[var(--dm-text-secondary)] leading-relaxed">
-                  The live member feed will appear here as soon as the DealMakers Telegram activity service is connected.
-                  {hasError ? ' We’re reconnecting to the latest activity data.' : ''}
+                  {copy.warmingUpB}
+                  {hasError ? copy.reconnecting : ''}
                 </p>
               </div>
             </div>

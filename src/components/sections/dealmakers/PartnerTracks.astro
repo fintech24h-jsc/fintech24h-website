@@ -1,0 +1,88 @@
+---
+// src/components/sections/dealmakers/PartnerTracks.astro
+// The $5,000/season "Category Partner" package (PricingPackages.astro) is
+// one price, three tracks. This section breaks that tier apart so each type
+// of partner sees benefits that actually describe what they do, instead of
+// one generic bullet list. Full detail lives on
+// /dealmakers/ss3/partner-benefits/ — this is the condensed, landing-page
+// version.
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+const { partnerTracks } = getSS3Content(locale);
+const localePrefix = (path: string) => (locale === 'ar' ? path.replace(/^\/dealmakers\//, '/dealmakers/ar/') : path);
+const benefitsHref = localePrefix('/dealmakers/ss3/partner-benefits/');
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'مسارات الشراكة',
+  eyebrow: 'شريك فئة · اختر مسارك',
+  h2a: 'شراكة واحدة.',
+  h2b: 'ثلاث طرق للحضور.',
+  lede: 'كل مقعد شريك فئة مبني حول ما تفعله مؤسستك فعليًا — رأس المال، أو الحلول، أو الإعلام.',
+  seeFullPrefix: 'عرض كامل مزايا',
+  compareAll: 'قارن جميع أنواع الشركاء والمزايا',
+} : {
+  ariaLabel: 'Partner Tracks',
+  eyebrow: 'Category Partner · Choose your track',
+  h2a: 'One partnership.',
+  h2b: 'Three ways to show up.',
+  lede: 'Every Category Partner slot is built around what your organization actually does — capital, solutions, or media.',
+  seeFullPrefix: 'See full',
+  compareAll: 'Compare all partner types & benefits',
+};
+---
+
+<section id="partner-tracks" class="relative py-20 lg:py-28" aria-label={copy.ariaLabel}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mb-14" data-dm-reveal>
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
+      <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
+        {copy.h2a} <span class="dm-text-gradient">{copy.h2b}</span>
+      </h2>
+      <p class="text-sm text-[var(--dm-text-secondary)]">
+        {copy.lede}
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+      {partnerTracks.map((track, i) => (
+        <div class={`dm-card flex flex-col p-7 rounded-[20px] ${i === partnerTracks.length - 1 ? 'sm:col-span-2 sm:max-w-[calc(50%-0.625rem)] sm:mx-auto lg:col-span-1 lg:max-w-none lg:mx-0' : ''}`} data-dm-reveal style={`--dm-reveal-delay: ${i * 90}`}>
+          <span class="w-11 h-11 rounded-xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-[11px] font-bold text-[var(--dm-gold)] mb-4" aria-hidden="true">
+            {track.icon}
+          </span>
+          <h3 class="font-display font-semibold text-lg text-[var(--dm-text-primary)] mb-2">{track.title}</h3>
+          <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed min-h-[46px]">{track.description}</p>
+
+          <div class="dm-divider my-5"></div>
+
+          <ul class="space-y-3 mb-6 flex-1">
+            {track.benefits.map((b) => (
+              <li class="flex items-start gap-2.5 text-xs text-[var(--dm-text-secondary)]">
+                <svg class="w-3.5 h-3.5 mt-0.5 shrink-0 text-[var(--dm-gold)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 13 4 4L19 7"/></svg>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={benefitsHref}
+            data-dm-track="partner_track_cta"
+            data-dm-track-label={track.id}
+            class="dm-btn-ghost justify-center text-xs"
+          >
+            {copy.seeFullPrefix} {track.title} {locale === 'ar' ? '' : 'benefits'} <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <p class="text-center mt-10" data-dm-reveal>
+      <a href={benefitsHref} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)]">
+        {copy.compareAll} <span>→</span>
+      </a>
+    </p>
+  </div>
+</section>

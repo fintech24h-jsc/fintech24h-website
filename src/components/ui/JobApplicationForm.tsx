@@ -246,7 +246,7 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
           <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.03] transition-colors duration-500 backdrop-blur-[2px]" />
 
           {isSubmitting ? (
-            <span className="relative z-10 font-display text-xs font-semibold tracking-widest text-[color-mix(in_srgb,var(--text-inverted)_70%,transparent)] uppercase flex items-center gap-2">
+            <span className="relative z-10 font-display text-xs font-semibold tracking-widest text-[color-mix(in_srgb,var(--text-primary)_70%,transparent)] uppercase flex items-center gap-2">
               <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -254,9 +254,9 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
               Submitting Application...
             </span>
           ) : (
-            <span className="relative z-10 font-display text-xs font-semibold tracking-[0.2em] text-[var(--text-inverted)] uppercase flex items-center gap-2">
+            <span className="relative z-10 font-display text-xs font-semibold tracking-[0.2em] text-[var(--text-primary)] uppercase flex items-center gap-2">
               Submit Application
-              <svg className="w-4 h-4 text-[var(--text-inverted)] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-[var(--text-primary)] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
               </svg>
             </span>

@@ -186,27 +186,28 @@ Astro.response.status = 404;
       text-shadow: 0 0 10px rgba(0,200,240,0.5);
     }
 
-    /* Terminal typing */
+    /* Terminal typing — a fade/slide reveal rather than a nowrap width-clip
+       typewriter: the old width:0→100% animation required `white-space:
+       nowrap`, which permanently clipped any line longer than the terminal
+       box (several lines here are, especially on mobile). Wrapping text
+       normally and revealing it with opacity avoids that entirely while
+       keeping the same sequential "booting up" feel. */
     .typing-line {
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 2px solid transparent;
-      width: 0;
-      animation: typing 1s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+      opacity: 0;
+      transform: translateY(4px);
+      animation: line-reveal 0.5s ease-out forwards;
+      /* animation-delay is set per-line via inline style="" in the markup */
     }
-    /* Subsequent lines clear their border and maintain width after animation */
-    .typing-line:nth-child(2) { animation: type-line2 1.2s steps(40, end) 1.5s forwards; border-right: none; }
-    .typing-line:nth-child(3) { animation: type-line3 1s steps(40, end) 2.8s forwards; border-right: none; }
-    .typing-line:nth-child(4) { animation: type-line4 1.5s steps(40, end) 4.0s forwards; border-right: none; }
-    /* The final line keeps the blinking cursor */
-    .typing-line:nth-child(5) { animation: type-line5 1s steps(40, end) 5.5s forwards, blink-caret 0.75s step-end infinite 5.5s; border-right: 2px solid var(--accent-cyan); }
+    .typing-line:last-child::after {
+      content: '▋';
+      display: inline-block;
+      margin-left: 2px;
+      color: var(--accent-cyan);
+      animation: blink-caret 0.9s step-end infinite 5.5s;
+    }
 
-    @keyframes typing { from { width: 0; opacity: 1; } to { width: 100%; opacity: 1; border-color: transparent; } }
-    @keyframes type-line2 { from { width: 0; opacity: 1; border-right: 2px solid var(--accent-cyan); } to { width: 100%; opacity: 1; border-right: 2px solid transparent; } }
-    @keyframes type-line3 { from { width: 0; opacity: 1; border-right: 2px solid var(--accent-cyan); } to { width: 100%; opacity: 1; border-right: 2px solid transparent; } }
-    @keyframes type-line4 { from { width: 0; opacity: 1; border-right: 2px solid var(--accent-cyan); } to { width: 100%; opacity: 1; border-right: 2px solid transparent; } }
-    @keyframes type-line5 { from { width: 0; opacity: 1; } to { width: 100%; opacity: 1; } }
-    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-cyan) } }
+    @keyframes line-reveal { to { opacity: 1; transform: translateY(0); } }
+    @keyframes blink-caret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
     /* Cyber Button */
     .cyber-btn {
@@ -267,9 +268,11 @@ Astro.response.status = 404;
       }
 
       .typing-line {
-        width: 100%;
         opacity: 1;
-        border-right: 0;
+        transform: none;
+      }
+      .typing-line:last-child::after {
+        animation: none !important;
       }
     }
 

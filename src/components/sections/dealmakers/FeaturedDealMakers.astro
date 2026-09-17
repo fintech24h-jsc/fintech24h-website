@@ -4,33 +4,71 @@
 // placeholders (Season 3 has not onboarded real Featured DealMakers yet) —
 // each card carries a small "Preview" tag so nobody mistakes them for real
 // applicants. Hover reveals a specular sweep + subtle pointer-tilt.
-import { featuredDealMakers } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+const { featuredDealMakers } = getSS3Content(locale);
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'صانعو الصفقات المميّزون',
+  eyebrow: 'صانعو الصفقات المميّزون',
+  h2a: 'أوضح من أنت.',
+  h2b: 'ليجدك الأشخاص المناسبون.',
+  viewPackage: 'اطّلع على باقة المميّز بـ1,000 دولار',
+  intro: 'هذه ملفات تعريفية توضيحية لإظهار شكل إدراج صانع الصفقات المميّز. ستظهر هنا ملفات صانعي الصفقات المميّزين الحقيقيين فور انضمام أول الأعضاء في Season 3.',
+  preview: 'مثال توضيحي',
+  videoMax: 'الحد الأقصى 02:00',
+  offer: 'نقدّم',
+  need: 'نحتاج',
+  verifiedProfile: 'ملف تعريفي موثّق',
+  exampleProfile: 'ملف تعريفي توضيحي',
+  requestIntro: 'طلب تعارف',
+  wantToAppear: 'تريد الظهور هنا؟ قدّم طلبًا كصانع صفقات مميّز',
+} : {
+  ariaLabel: 'Featured DealMakers',
+  eyebrow: 'Featured DealMakers',
+  h2a: 'State who you are.',
+  h2b: 'So the right people find you.',
+  viewPackage: 'View the $1,000 Featured Package',
+  intro: 'These are example profiles showing what a Featured DealMaker listing looks like. Real Featured DealMakers will appear here as Season 3 onboards its first members.',
+  preview: 'Example',
+  videoMax: '02:00 max',
+  offer: 'Offer',
+  need: 'Need',
+  verifiedProfile: 'Verified profile',
+  exampleProfile: 'Example profile',
+  requestIntro: 'Request Introduction',
+  wantToAppear: 'Want to appear here? Apply as a Featured DealMaker',
+};
 ---
 
-<section id="featured" class="relative py-20 lg:py-28" aria-label="Featured DealMakers">
+<section id="featured" class="relative py-20 lg:py-28" aria-label={copy.ariaLabel}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12" data-dm-reveal>
       <div>
-        <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">Featured DealMakers</p>
+        <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
         <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] max-w-xl">
-          State who you are. <span class="dm-text-gradient">So the right people find you.</span>
+          {copy.h2a} <span class="dm-text-gradient">{copy.h2b}</span>
         </h2>
       </div>
       <a href="#packages" class="dm-btn-ghost py-2.5 px-5 text-[10px] self-start shrink-0">
-        View the $1,000 Featured Package →
+        {copy.viewPackage} →
       </a>
     </div>
 
     <p class="text-sm text-[var(--dm-text-secondary)] max-w-2xl mb-10">
-      Every company featured here has been reviewed and verified, representing some of the most credible names building in Web3 and fintech today.
+      {copy.intro}
     </p>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
       {featuredDealMakers.map((dm, i) => (
         <article class="dm-card dm-sweep-trigger group relative rounded-[20px] overflow-hidden" data-dm-tilt data-dm-reveal style={`--dm-reveal-delay: ${i * 80}`}>
           {dm.illustrative && (
-            <span class="absolute top-3 left-3 z-20 px-2 py-1 rounded-full bg-[rgba(9,8,10,0.8)] border border-[var(--dm-border)] text-[9px] font-mono uppercase tracking-wider text-[var(--dm-text-muted)]">
-              Preview
+            <span class="absolute top-3 start-3 z-20 px-2 py-1 rounded-full bg-[rgba(9,8,10,0.8)] border border-[var(--dm-border)] text-[9px] font-mono uppercase tracking-wider text-[var(--dm-text-muted)]">
+              {copy.preview}
             </span>
           )}
 
@@ -42,8 +80,8 @@ import { featuredDealMakers } from '../../../data/dealmakers/ss3';
                 {dm.companyInitials}
               </div>
             </div>
-            <span class="absolute right-3 bottom-3 px-2 py-1 rounded-md bg-[rgba(10,9,8,0.75)] text-[10px] font-mono font-semibold text-white/80">
-              02:00 max
+            <span class="absolute end-3 bottom-3 px-2 py-1 rounded-md bg-[rgba(10,9,8,0.75)] text-[10px] font-mono font-semibold text-white/80">
+              {copy.videoMax}
             </span>
           </div>
 
@@ -59,14 +97,14 @@ import { featuredDealMakers } from '../../../data/dealmakers/ss3';
             </div>
 
             <div class="flex flex-wrap gap-1.5 mb-5">
-              {dm.offerTags.map((t) => <span class="dm-tag dm-tag-gold text-[10px] py-0.5 px-2">Offer: {t}</span>)}
-              {dm.needTags.map((t) => <span class="dm-tag dm-tag-emerald text-[10px] py-0.5 px-2">Need: {t}</span>)}
+              {dm.offerTags.map((t) => <span class="dm-tag dm-tag-gold text-[10px] py-0.5 px-2">{copy.offer}: {t}</span>)}
+              {dm.needTags.map((t) => <span class="dm-tag dm-tag-emerald text-[10px] py-0.5 px-2">{copy.need}: {t}</span>)}
             </div>
 
             <div class="flex items-center justify-between pt-4 border-t border-[var(--dm-border)] text-[11px]">
-              <span class="text-[var(--dm-text-muted)] font-body">Verified profile</span>
+              <span class="text-[var(--dm-text-muted)] font-body">{dm.illustrative ? copy.exampleProfile : copy.verifiedProfile}</span>
               <a href="#apply" data-dm-intro={`${dm.name} at ${dm.company}`} class="font-display font-semibold text-[var(--dm-gold)] hover:text-[var(--dm-text-primary)] transition-colors flex items-center gap-1">
-                Request Introduction
+                {copy.requestIntro}
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
@@ -80,7 +118,7 @@ import { featuredDealMakers } from '../../../data/dealmakers/ss3';
 
     <p class="text-center mt-10">
       <a href="#apply" class="inline-flex items-center gap-2 text-[var(--dm-gold)] hover:text-[var(--dm-text-primary)] font-display font-semibold text-sm transition-colors">
-        Want to appear here? Apply as a Featured DealMaker →
+        {copy.wantToAppear} →
       </a>
     </p>
   </div>

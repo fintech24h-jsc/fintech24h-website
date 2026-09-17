@@ -1,31 +1,89 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { directoryProfiles, type DirectoryCategory, type DirectoryProfile } from '../../../data/dealmakers/ss3';
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+import type { DirectoryCategory, DirectoryProfile } from '../../../data/dealmakers/ss3';
 
 type FilterKey = 'all' | 'sponsored' | DirectoryCategory;
 
-const filters: { key: FilterKey; label: string }[] = [
-  { key: 'all', label: 'All profiles' },
-  { key: 'sponsored', label: 'Sponsored' },
-  { key: 'capital', label: 'Raising capital' },
-  { key: 'listing', label: 'Listing & liquidity' },
-  { key: 'partner', label: 'Strategic partner' },
-  { key: 'service', label: 'Growth & services' },
-];
-
-function countFor(key: FilterKey): number {
-  if (key === 'all') return directoryProfiles.length;
-  if (key === 'sponsored') return directoryProfiles.filter((p) => p.sponsored).length;
-  return directoryProfiles.filter((p) => p.category === key).length;
+interface Props {
+  locale?: DealmakersLocale;
 }
 
-function dispatchPrefill(interest: string, context: string) {
-  window.dispatchEvent(new CustomEvent('dm:prefill', { detail: { interest, context } }));
-  if ((window as any).dataLayer) {
-    (window as any).dataLayer.push({ event: 'dealmakers_ss3_request_introduction', label: context });
+export default function QualifiedDirectory({ locale = 'en' }: Props) {
+  const { directoryProfiles } = getSS3Content(locale);
+
+  const copy = locale === 'ar' ? {
+    filters: [
+      { key: 'all' as FilterKey, label: 'جميع الملفات' },
+      { key: 'sponsored' as FilterKey, label: 'مدعوم' },
+      { key: 'capital' as FilterKey, label: 'يجمع تمويلًا' },
+      { key: 'listing' as FilterKey, label: 'الإدراج والسيولة' },
+      { key: 'partner' as FilterKey, label: 'شريك استراتيجي' },
+      { key: 'service' as FilterKey, label: 'النمو والخدمات' },
+    ],
+    filterProfiles: 'تصفية الملفات',
+    browseBy: 'تصفّح حسب هدف الصفقة أو الملفات ذات أولوية الظهور.',
+    qualifiedListingLead: 'الإدراج المؤهّل: 200 دولار / الموسم.',
+    addSponsored: 'أضف',
+    sponsoredSuffix: 'للحصول على وسم "مدعوم" وأولوية في الظهور.',
+    submitProfile: 'أرسل ملفك التعريفي',
+    ariaLabel: 'دليل الإدراج المؤهّل',
+    sponsoredBadge: '✦ مدعوم',
+    exampleBadge: 'مثال توضيحي',
+    viewProfile: 'عرض الملف التعريفي',
+    closeProfile: 'إغلاق الملف التعريفي',
+    qualifiedProfile: 'ملف تعريفي مؤهّل',
+    exampleProfile: 'ملف تعريفي توضيحي (مثال)',
+    sponsoredProfile: '✦ ملف تعريفي مدعوم',
+    exampleNote: 'الملفات أدناه أمثلة توضيحية لشكل الإدراج المؤهّل، إلى أن ينضم أول الأعضاء الحقيقيين في Season 3.',
+    weOffer: 'نحن نقدّم',
+    weAreLookingFor: 'نحن نبحث عن',
+    focusMarkets: 'التركيز والأسواق',
+    requestIntro: 'طلب تعارف',
+    joinClub: 'الانضمام إلى DealMakers’ Club',
+  } : {
+    filters: [
+      { key: 'all' as FilterKey, label: 'All profiles' },
+      { key: 'sponsored' as FilterKey, label: 'Sponsored' },
+      { key: 'capital' as FilterKey, label: 'Raising capital' },
+      { key: 'listing' as FilterKey, label: 'Listing & liquidity' },
+      { key: 'partner' as FilterKey, label: 'Strategic partner' },
+      { key: 'service' as FilterKey, label: 'Growth & services' },
+    ],
+    filterProfiles: 'Filter profiles',
+    browseBy: 'Browse by deal goal or profiles prioritized for visibility.',
+    qualifiedListingLead: 'Qualified Listing: $200 / season.',
+    addSponsored: 'Add',
+    sponsoredSuffix: 'for a Sponsored label and priority placement.',
+    submitProfile: 'Submit your profile',
+    ariaLabel: 'Qualified Listing Directory',
+    sponsoredBadge: '✦ Sponsored',
+    exampleBadge: 'Example',
+    viewProfile: 'View profile',
+    closeProfile: 'Close profile',
+    qualifiedProfile: 'Qualified profile',
+    exampleProfile: 'Example profile',
+    sponsoredProfile: '✦ Sponsored profile',
+    exampleNote: 'The profiles below are illustrative examples of the qualified listing format, until the first real members join in Season 3.',
+    weOffer: 'We Offer',
+    weAreLookingFor: 'We Are Looking For',
+    focusMarkets: 'Focus & markets',
+    requestIntro: 'Request Introduction',
+    joinClub: 'Join DealMakers’ Club',
+  };
+
+  function countFor(key: FilterKey): number {
+    if (key === 'all') return directoryProfiles.length;
+    if (key === 'sponsored') return directoryProfiles.filter((p) => p.sponsored).length;
+    return directoryProfiles.filter((p) => p.category === key).length;
   }
-}
 
-export default function QualifiedDirectory() {
+  function dispatchPrefill(interest: string, context: string) {
+    window.dispatchEvent(new CustomEvent('dm:prefill', { detail: { interest, context } }));
+    if ((window as any).dataLayer) {
+      (window as any).dataLayer.push({ event: 'dealmakers_ss3_request_introduction', label: context });
+    }
+  }
+
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
@@ -35,7 +93,7 @@ export default function QualifiedDirectory() {
     if (activeFilter === 'all') return directoryProfiles;
     if (activeFilter === 'sponsored') return directoryProfiles.filter((p) => p.sponsored);
     return directoryProfiles.filter((p) => p.category === activeFilter);
-  }, [activeFilter]);
+  }, [activeFilter, directoryProfiles]);
 
   const activeProfile: DirectoryProfile | undefined = directoryProfiles.find((p) => p.slug === activeSlug);
 
@@ -91,10 +149,10 @@ export default function QualifiedDirectory() {
     <div className="grid lg:grid-cols-[300px_1fr] gap-6">
       {/* Filters */}
       <aside className="dm-card p-5 h-fit">
-        <h3 className="font-display font-semibold text-sm text-[var(--dm-text-primary)] mb-1">Filter profiles</h3>
-        <p className="text-xs text-[var(--dm-text-secondary)] mb-4">Browse by deal goal or profiles prioritized for visibility.</p>
+        <h3 className="font-display font-semibold text-sm text-[var(--dm-text-primary)] mb-1">{copy.filterProfiles}</h3>
+        <p className="text-xs text-[var(--dm-text-secondary)] mb-4">{copy.browseBy}</p>
         <div className="grid gap-2">
-          {filters.map((f) => (
+          {copy.filters.map((f) => (
             <button
               key={f.key}
               onClick={() => setActiveFilter(f.key)}
@@ -109,21 +167,22 @@ export default function QualifiedDirectory() {
           ))}
         </div>
         <p className="text-xs text-[var(--dm-text-secondary)] mt-5 leading-relaxed">
-          <strong className="text-[var(--dm-text-primary)]">Qualified Listing: $200 / season.</strong><br />
-          Add <strong className="text-[var(--dm-gold)]">$150</strong> for a Sponsored label and priority placement.
+          <strong className="text-[var(--dm-text-primary)]">{copy.qualifiedListingLead}</strong><br />
+          {copy.addSponsored} <strong className="text-[var(--dm-gold)]">$150</strong> {copy.sponsoredSuffix}
         </p>
+        <p className="text-xs text-[var(--dm-text-muted)] mt-3 leading-relaxed">{copy.exampleNote}</p>
         <a
           href="#apply"
           data-dm-prefill-interest="Qualified Listing ($200/season)"
           data-dm-track="directory_post_listing"
           className="dm-btn-ghost w-full justify-center text-xs mt-4"
         >
-          Submit your profile
+          {copy.submitProfile}
         </a>
       </aside>
 
       {/* Deal list */}
-      <div className="grid gap-3" role="list" aria-label="Qualified Listing Directory">
+      <div className="grid gap-3" role="list" aria-label={copy.ariaLabel}>
         {visibleProfiles.map((p, i) => (
           <article
             key={p.slug}
@@ -150,7 +209,10 @@ export default function QualifiedDirectory() {
               <h4 className="font-display font-semibold text-sm text-[var(--dm-text-primary)] flex items-center gap-2 flex-wrap">
                 {p.companyName}
                 {p.sponsored && (
-                  <span className="dm-badge-sponsored">✦ Sponsored</span>
+                  <span className="dm-badge-sponsored">{copy.sponsoredBadge}</span>
+                )}
+                {p.illustrative && (
+                  <span className="dm-tag dm-tag-gray text-[9px] py-0.5 px-1.5">{copy.exampleBadge}</span>
                 )}
               </h4>
               <p className="text-xs text-[var(--dm-text-muted)] truncate">{p.contactName} · {p.role} · {p.dealGoal}</p>
@@ -159,7 +221,7 @@ export default function QualifiedDirectory() {
               </div>
             </div>
             <span className="hidden sm:inline-flex items-center gap-1 text-[var(--dm-gold)] text-xs font-display font-semibold group-hover:gap-2 transition-all">
-              View profile
+              {copy.viewProfile}
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>
           </article>
@@ -181,13 +243,13 @@ export default function QualifiedDirectory() {
           >
             <button
               onClick={closeProfile}
-              aria-label="Close profile"
-              className="absolute right-4 top-4 w-8 h-8 rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] text-[var(--dm-text-secondary)] hover:text-[var(--dm-text-primary)] hover:border-[var(--dm-border-hover)] flex items-center justify-center transition-colors"
+              aria-label={copy.closeProfile}
+              className="absolute end-4 top-4 w-8 h-8 rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] text-[var(--dm-text-secondary)] hover:text-[var(--dm-text-primary)] hover:border-[var(--dm-border-hover)] flex items-center justify-center transition-colors"
             >
               ×
             </button>
 
-            <p className="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-widest mb-3">Qualified profile</p>
+            <p className="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-widest mb-3">{activeProfile.illustrative ? copy.exampleProfile : copy.qualifiedProfile}</p>
             <div className="flex items-start gap-4 mb-5">
               <span className="w-14 h-14 rounded-2xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-sm font-bold text-[var(--dm-gold)] shrink-0">
                 {activeProfile.companyInitials}
@@ -195,7 +257,7 @@ export default function QualifiedDirectory() {
               <div className="min-w-0">
                 <h3 id="dm-profile-title" className="font-display font-semibold text-xl text-[var(--dm-text-primary)]">{activeProfile.companyName}</h3>
                 <p className="text-xs text-[var(--dm-text-muted)]">{activeProfile.contactName} · {activeProfile.role}</p>
-                {activeProfile.sponsored && <span className="dm-badge-sponsored mt-2">✦ Sponsored profile</span>}
+                {activeProfile.sponsored && <span className="dm-badge-sponsored mt-2">{copy.sponsoredProfile}</span>}
               </div>
             </div>
 
@@ -203,28 +265,28 @@ export default function QualifiedDirectory() {
 
             <div className="grid sm:grid-cols-2 gap-3 mb-4">
               <div className="p-3.5 rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)]">
-                <strong className="block text-[10px] uppercase tracking-widest text-[var(--dm-gold)] mb-1.5">We Offer</strong>
+                <strong className="block text-[10px] uppercase tracking-widest text-[var(--dm-gold)] mb-1.5">{copy.weOffer}</strong>
                 <p className="text-xs text-[var(--dm-text-secondary)] leading-relaxed">{activeProfile.weOffer}</p>
               </div>
               <div className="p-3.5 rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)]">
-                <strong className="block text-[10px] uppercase tracking-widest text-[var(--dm-emerald)] mb-1.5">We Are Looking For</strong>
+                <strong className="block text-[10px] uppercase tracking-widest text-[var(--dm-emerald)] mb-1.5">{copy.weAreLookingFor}</strong>
                 <p className="text-xs text-[var(--dm-text-secondary)] leading-relaxed">{activeProfile.weAreLookingFor}</p>
               </div>
             </div>
             <div className="p-3.5 rounded-xl border border-[var(--dm-border)] bg-[var(--dm-bg-tertiary)] mb-6">
-              <strong className="block text-[10px] uppercase tracking-widest text-[var(--dm-text-muted)] mb-1.5">Focus &amp; markets</strong>
+              <strong className="block text-[10px] uppercase tracking-widest text-[var(--dm-text-muted)] mb-1.5">{copy.focusMarkets}</strong>
               <p className="text-xs text-[var(--dm-text-secondary)]">{activeProfile.focusMarket}</p>
             </div>
 
             <a
               href="#apply"
               onClick={() => {
-                dispatchPrefill('Join DealMakers’ Club', `${activeProfile.companyName} (${activeProfile.contactName})`);
+                dispatchPrefill(copy.joinClub, `${activeProfile.companyName} (${activeProfile.contactName})`);
                 closeProfile();
               }}
               className="dm-btn-primary w-full justify-center text-xs"
             >
-              Request Introduction →
+              {copy.requestIntro} <span>→</span>
             </a>
           </div>
         </div>
