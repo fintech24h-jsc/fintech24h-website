@@ -73,7 +73,7 @@ const copy = locale === 'ar' ? {
             data-dm-track-label={track.id}
             class="dm-btn-ghost justify-center text-xs"
           >
-            {copy.seeFullPrefix} {track.title} {locale === 'ar' ? '' : 'benefits'} <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
+            {copy.seeFullPrefix} {track.title} {locale === 'ar' ? '' : 'benefits'} <span aria-hidden="true">→</span>
           </a>
         </div>
       ))}
@@ -81,7 +81,7 @@ const copy = locale === 'ar' ? {
 
     <p class="text-center mt-10" data-dm-reveal>
       <a href={benefitsHref} class="text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)]">
-        {copy.compareAll} <span class="rtl:inline-block rtl:rotate-180">→</span>
+        {copy.compareAll} <span>→</span>
       </a>
     </p>
   </div>

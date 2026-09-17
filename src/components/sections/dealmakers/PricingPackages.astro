@@ -85,7 +85,7 @@ const copy = locale === 'ar' ? {
             data-dm-track-label={pkg.id}
             class={pkg.highlight ? 'dm-btn-primary justify-center text-xs' : 'dm-btn-ghost justify-center text-xs'}
           >
-            {pkg.ctaLabel} <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
+            {pkg.ctaLabel} <span aria-hidden="true">→</span>
           </a>
 
           {/* Always reserve this line's height (even when empty) so all 4
@@ -94,7 +94,7 @@ const copy = locale === 'ar' ? {
               consistent instead of the button height diverging per card. */}
           {pkg.detailLink ? (
             <a href={pkg.detailLink.href} class="text-xs text-center text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)] mt-3">
-              {pkg.detailLink.label} <span class="rtl:inline-block rtl:rotate-180">→</span>
+              {pkg.detailLink.label} <span>→</span>
             </a>
           ) : (
             <span class="text-xs text-center mt-3 invisible" aria-hidden="true">placeholder →</span>

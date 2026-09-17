@@ -212,7 +212,7 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
             </div>
             <span className="hidden sm:inline-flex items-center gap-1 text-[var(--dm-gold)] text-xs font-display font-semibold group-hover:gap-2 transition-all">
               {copy.viewProfile}
-              <svg className="w-3.5 h-3.5 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>
           </article>
         ))}
@@ -276,7 +276,7 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
               }}
               className="dm-btn-primary w-full justify-center text-xs"
             >
-              {copy.requestIntro} <span className="rtl:inline-block rtl:rotate-180">→</span>
+              {copy.requestIntro} <span>→</span>
             </a>
           </div>
         </div>

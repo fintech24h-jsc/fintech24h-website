@@ -74,7 +74,7 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
         نحن لا نقدّم مجرد ظهور برعاية. نضع علامتك التجارية حيث يلتقي رأس المال والمشاريع والحلول وأصحاب القرار فعليًا — رأس المال × المشاريع × الحلول × الإعلام × القادة العالميون.
       </p>
       <a href="/dealmakers/ar/ss3/" class="dm-btn-ghost py-2.5 px-6 text-[10px] inline-flex items-center gap-1.5 mt-7">
-        <svg class="w-3 h-3 rtl:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
         العودة إلى {seasonMeta.name}
       </a>
     </div>
@@ -105,12 +105,12 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
                 href={applyHref((track as typeof partnerTracks[number]).interest)}
                 class="dm-btn-primary justify-center text-xs w-full mt-6"
               >
-                التقديم كـ {track.title} <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
+                التقديم كـ {track.title} <span aria-hidden="true">→</span>
               </a>
             )}
             {!('interest' in track) && (
               <a href="/dealmakers/ar/ss3/#directory" class="dm-btn-ghost justify-center text-xs w-full mt-6">
-                إرسال إدراج مشروع <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
+                إرسال إدراج مشروع <span aria-hidden="true">→</span>
               </a>
             )}
           </div>
@@ -174,7 +174,7 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
         أخبرنا بما تبنيه أو تقدّمه، وسيوصي فريق Fintech24h بالمسار المناسب — رأس المال، أو الحلول، أو الإعلام، أو المشروع.
       </p>
       <a href="/dealmakers/ar/ss3/#apply" class="dm-btn-primary justify-center text-xs px-7 py-3 inline-flex">
-        تحدّث مع الفريق <span aria-hidden="true" class="rtl:inline-block rtl:rotate-180">→</span>
+        تحدّث مع الفريق <span aria-hidden="true">→</span>
       </a>
     </div>
   </section>

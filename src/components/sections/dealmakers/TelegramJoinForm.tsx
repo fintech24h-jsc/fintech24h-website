@@ -238,7 +238,7 @@ export default function TelegramJoinForm({ locale = 'en' }: Props) {
         </label>
 
         <button type="submit" disabled={isSubmitting} className="dm-btn-primary w-full justify-center text-xs">
-          {isSubmitting ? copy.sending : copy.submit} <span aria-hidden="true" className="rtl:inline-block rtl:rotate-180">→</span>
+          {isSubmitting ? copy.sending : copy.submit} <span aria-hidden="true">→</span>
         </button>
       </form>
     </div>

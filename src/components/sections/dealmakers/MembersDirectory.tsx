@@ -205,7 +205,7 @@ export default function MembersDirectory({ locale = 'en' }: Props) {
                     </span>
                     <span className="inline-flex items-center gap-1 text-[var(--dm-gold)] text-[10px] font-display font-semibold shrink-0 group-hover:gap-1.5 transition-all">
                       {copy.viewCard}
-                      <svg className="w-3 h-3 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </span>
                   </span>
                 </span>
