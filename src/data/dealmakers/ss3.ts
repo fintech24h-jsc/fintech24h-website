@@ -158,7 +158,8 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'CMO Intern', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/CMO-Intern-F-matching-club-ss3-1.png', websiteUrl: 'https://cmointern.com', confirmed: true },
   { name: 'Coinstori', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Coinstori-F-matching-club-ss3-1.png', websiteUrl: 'https://coinstori.com', confirmed: true },
   { name: 'BD Ventures', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/BD-Venture.png', websiteUrl: 'https://www.bdventures.vn/', confirmed: true },
-  ...Array.from({ length: 3 }, () => ({
+  { name: 'Unity Hub', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Unity-Hub.png', websiteUrl: 'https://unityhub-inc.ai/', confirmed: true },
+  ...Array.from({ length: 2 }, () => ({
     name: null,
     logoUrl: null,
     confirmed: false,
