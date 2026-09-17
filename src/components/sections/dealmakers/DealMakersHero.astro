@@ -17,6 +17,35 @@ const { heroPartners } = getSS3Content(locale);
 const capital = heroPartners.find((p) => p.category === 'capital')!;
 const others = heroPartners.filter((p) => p.category !== 'capital');
 
+// Every hero slot is clickable: a confirmed logo links out to the partner's
+// own site; an unconfirmed "Confirming soon" slot instead jumps to the
+// matching benefit card on /partner-benefits/ so a visitor can see what that
+// tier gets. Exchange/Infrastructure/Growth are all sub-cases of the
+// Solution Partner track (its own copy explicitly covers exchanges, tech /
+// service providers, and growth solutions) — there's no separate card for
+// them, so they all point at #solution.
+const categoryAnchor: Record<typeof heroPartners[number]['category'], string> = {
+  capital: 'capital',
+  exchange: 'solution',
+  infrastructure: 'solution',
+  growth: 'solution',
+};
+const localePrefix = (path: string) => (locale === 'ar' ? path.replace(/^\/dealmakers\//, '/dealmakers/ar/') : path);
+const benefitsBase = localePrefix('/dealmakers/ss3/partner-benefits/');
+function partnerHref(p: typeof heroPartners[number]) {
+  if (p.confirmed && p.logoUrl && p.websiteUrl) return p.websiteUrl;
+  if (p.confirmed && p.logoUrl) return null; // confirmed but no site on file — not linkable
+  return `${benefitsBase}#${categoryAnchor[p.category]}`;
+}
+
+const capitalHref = partnerHref(capital);
+const capitalIsExternal = Boolean(capital.confirmed && capital.logoUrl && capital.websiteUrl);
+const othersWithHref = others.map((p) => ({
+  partner: p,
+  href: partnerHref(p),
+  isExternal: Boolean(p.confirmed && p.logoUrl && p.websiteUrl),
+}));
+
 const copy = locale === 'ar' ? {
   ariaLabel: 'قسم الاستهلال لـ DealMakers',
   eyebrow: 'تقدّم Fintech24h · Season 3',
@@ -111,33 +140,44 @@ const copy = locale === 'ar' ? {
       <p class="text-center font-mono text-[10px] text-[var(--dm-text-muted)] uppercase tracking-[0.15em] mb-3 lg:mb-2">
         {copy.officialCapitalPartner}
       </p>
-      <div class="dm-spotlight">
-        <div class="dm-spotlight-inner px-8 py-6 lg:py-4 flex flex-col items-center justify-center gap-3 lg:gap-2 min-h-[130px] lg:min-h-[100px]">
-          <span class="dm-badge-sponsored">{copy.leadSponsor}</span>
-          <div class="flex items-center justify-center w-full">
-            {capital.confirmed && capital.logoUrl ? (
-              <img src={capital.logoUrl} alt={`${capital.name} logo, Official Capital Partner of F-Matching Season 3`} class="h-14 sm:h-16 w-auto object-contain" loading="eager" />
-            ) : (
-              <span class="font-display font-semibold text-lg sm:text-xl text-[var(--dm-text-secondary)]">{copy.confirmingSoon}</span>
-            )}
+      {(() => { const CapitalTag = capitalHref ? 'a' : 'div'; return (
+        <CapitalTag
+          {...(capitalHref ? { href: capitalHref } : {})}
+          {...(capitalIsExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          class="dm-spotlight block group"
+        >
+          <div class="dm-spotlight-inner px-8 py-6 lg:py-4 flex flex-col items-center justify-center gap-3 lg:gap-2 min-h-[130px] lg:min-h-[100px]">
+            <span class="dm-badge-sponsored">{copy.leadSponsor}</span>
+            <div class="flex items-center justify-center w-full">
+              {capital.confirmed && capital.logoUrl ? (
+                <img src={capital.logoUrl} alt={`${capital.name} logo, Official Capital Partner of F-Matching Season 3`} class="h-14 sm:h-16 w-auto object-contain" loading="eager" />
+              ) : (
+                <span class="font-display font-semibold text-lg sm:text-xl text-[var(--dm-text-secondary)] group-hover:text-[var(--dm-gold)] transition-colors">{copy.confirmingSoon}</span>
+              )}
+            </div>
           </div>
-        </div>
-      </div>
+        </CapitalTag>
+      ); })()}
     </div>
 
     <!-- Secondary partners — smaller, clearly a lower tier -->
     <div class="mt-6 max-w-3xl mx-auto">
       <div class="grid grid-cols-3 gap-3">
-        {others.map((p) => (
-          <div class="dm-card rounded-xl p-3.5 flex flex-col items-center justify-center gap-1.5 min-h-[84px]" data-dm-reveal>
+        {othersWithHref.map(({ partner: p, href, isExternal }) => { const PartnerTag = href ? 'a' : 'div'; return (
+          <PartnerTag
+            {...(href ? { href } : {})}
+            {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            class="dm-card group block rounded-xl p-3.5 flex flex-col items-center justify-center gap-1.5 min-h-[84px]"
+            data-dm-reveal
+          >
             <span class="font-mono text-[7px] text-[var(--dm-text-muted)] uppercase tracking-[0.1em] text-center leading-tight">{p.label}</span>
             {p.confirmed && p.logoUrl ? (
               <img src={p.logoUrl} alt={`${p.name} logo, ${p.label} of F-Matching Season 3`} class="h-5 w-auto object-contain" loading="lazy" />
             ) : (
-              <span class="font-body text-[11px] text-[var(--dm-text-muted)]">{copy.confirmingSoon}</span>
+              <span class="font-body text-[11px] text-[var(--dm-text-muted)] group-hover:text-[var(--dm-gold)] transition-colors">{copy.confirmingSoon}</span>
             )}
-          </div>
-        ))}
+          </PartnerTag>
+        ); })}
       </div>
     </div>
   </div>

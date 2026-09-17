@@ -84,7 +84,7 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid sm:grid-cols-2 gap-5">
         {allTracks.map((track, i) => (
-          <div class="dm-card flex flex-col p-7 rounded-[20px]" data-dm-reveal style={`--dm-reveal-delay: ${i * 70}`}>
+          <div id={track.id} class="dm-card flex flex-col p-7 rounded-[20px] scroll-mt-24" data-dm-reveal style={`--dm-reveal-delay: ${i * 70}`}>
             <span class="w-11 h-11 rounded-xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-[11px] font-bold text-[var(--dm-gold)] mb-4" aria-hidden="true">
               {track.icon}
             </span>
