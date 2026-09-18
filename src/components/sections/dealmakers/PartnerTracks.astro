@@ -13,7 +13,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { partnerTracks } = getSS3Content(locale);
-const localePrefix = (path: string) => (locale === 'ar' ? path.replace(/^\/dealmakers\//, '/dealmakers/ar/') : path);
+const localePrefix = (path: string) => (locale === 'en' ? path : path.replace(/^\/dealmakers\//, `/dealmakers/${locale}/`));
 const benefitsHref = localePrefix('/dealmakers/ss3/partner-benefits/');
 
 const copy = locale === 'ar' ? {
@@ -24,6 +24,14 @@ const copy = locale === 'ar' ? {
   lede: 'كل مقعد شريك فئة مبني حول ما تفعله مؤسستك فعليًا — رأس المال، أو الحلول، أو الإعلام.',
   seeFullPrefix: 'عرض كامل مزايا',
   compareAll: 'قارن جميع أنواع الشركاء والمزايا',
+} : locale === 'zh' ? {
+  ariaLabel: '合作伙伴通道',
+  eyebrow: '类别合作伙伴 · 选择你的通道',
+  h2a: '一种合作关系，',
+  h2b: '三种呈现方式。',
+  lede: '每个类别合作伙伴名额都围绕你的组织实际所做的事情来构建——资本、解决方案，或媒体。',
+  seeFullPrefix: '查看',
+  compareAll: '比较所有合作伙伴类型与权益',
 } : {
   ariaLabel: 'Partner Tracks',
   eyebrow: 'Category Partner · Choose your track',
@@ -73,7 +81,7 @@ const copy = locale === 'ar' ? {
             data-dm-track-label={track.id}
             class="dm-btn-ghost justify-center text-xs"
           >
-            {copy.seeFullPrefix} {track.title} {locale === 'ar' ? '' : 'benefits'} <span aria-hidden="true">→</span>
+            {copy.seeFullPrefix} {track.title} {locale === 'ar' ? '' : locale === 'zh' ? '权益' : 'benefits'} <span aria-hidden="true">→</span>
           </a>
         </div>
       ))}

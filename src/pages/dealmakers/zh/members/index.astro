@@ -1,0 +1,65 @@
+---
+// src/pages/dealmakers/zh/members/index.astro
+// Simplified Chinese mirror of /dealmakers/members/.
+import DealMakersLayout from '../../../../layouts/DealMakersLayout.astro';
+import BreadcrumbSchema from '../../../../components/seo/BreadcrumbSchema.astro';
+import MembersDirectory from '../../../../components/sections/dealmakers/MembersDirectory.tsx';
+import { dealMakersMembers } from '../../../../data/dealmakers/members';
+import { seasons } from '../../../../data/dealmakers/seasons';
+
+const activeSeason = seasons.find((s) => s.status === 'active') ?? seasons[0];
+const activeSeasonHref = activeSeason.href.replace(/^\/dealmakers\//, '/dealmakers/zh/');
+
+const title = '成员目录 | Fi24h DealMakers’ Club';
+const description = `浏览 Fi24h DealMakers’ Club 中超过 ${dealMakersMembers.length} 位经验证的 Web3 与金融科技创始人、投资人及从业者。`;
+const canonical = 'https://fintech24h.com/dealmakers/zh/members/';
+
+const breadcrumbs = [
+  { name: '首页', item: 'https://fintech24h.com' },
+  { name: 'DealMakers’ Club', item: 'https://fintech24h.com/dealmakers/zh/' },
+  { name: '成员', item: canonical },
+];
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description,
+  url: canonical,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'Fi24h DealMakers’ Club',
+    url: 'https://fintech24h.com/dealmakers/zh/',
+  },
+};
+---
+
+<DealMakersLayout locale="zh" title={title} description={description} canonical={canonical} schema={webPageSchema} ogImage="https://fintech24h.com/dealmakers/og-ss3.png">
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="relative py-24 lg:py-28 overflow-hidden" aria-label="成员目录">
+    <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[420px] h-[420px] rounded-full opacity-25 mix-blend-screen dm-orb-gold"
+        style="top: -8%; right: -6%; filter: blur(100px); animation: orb-pulse 10s ease-in-out infinite;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-14">
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">Fi24h DealMakers’ Club</p>
+      <h1 class="font-display font-semibold text-h1 text-[var(--dm-text-primary)] mb-5">
+        跨越所有赛季，超过 {dealMakersMembers.length} 位经验证成员。
+      </h1>
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-xl mx-auto">
+        经过审核并被俱乐部接纳的创始人、投资人与从业者。本目录跨赛季持续累积——不会在赛季结束时重置。
+      </p>
+      <a href={activeSeasonHref} class="dm-btn-ghost py-2.5 px-6 text-[10px] inline-flex items-center gap-1.5 mt-7">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+        返回 {activeSeason.name}
+      </a>
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <MembersDirectory locale="zh" client:load />
+    </div>
+  </section>
+</DealMakersLayout>

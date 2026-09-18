@@ -117,6 +117,64 @@ export const ar: ChromeDict = {
   },
 };
 
-export function getChrome(locale: 'en' | 'ar'): ChromeDict {
-  return locale === 'ar' ? ar : en;
+export const zh: ChromeDict = {
+  nav: {
+    featured: '精选',
+    directory: '目录',
+    members: '成员',
+    packages: '套餐',
+    benefits: '权益',
+    faq: 'FAQ',
+    applyToJoin: '申请加入',
+    toggleAria: '切换导航菜单',
+    mobileNavAria: '移动端分区导航',
+    sectionNavAria: '分区导航',
+  },
+  capitalPartnerFallback: '资本合作伙伴',
+  footer: {
+    presentedByAria: '由 Fintech24h 呈现，Season 3 官方资本合作伙伴',
+    description: '面向经验证的 Web3 与金融科技决策者的精选匹配项目，通过受监督的引荐对接优质交易流。',
+    socialAria: (label: string) => `DealMakers' Club 在 ${label}`,
+    programHeading: '项目',
+    featuredDealMakers: '精选 DealMakers',
+    qualifiedDirectory: '资质目录',
+    membersDirectory: '成员目录',
+    packages: '套餐',
+    partnerBenefits: '合作伙伴权益',
+    joinClub: '加入 Fi24h DealMakers’ Club',
+    faq: 'FAQ',
+    legalHeading: '法律与联系方式',
+    privacyPolicy: '隐私政策',
+    termsOfService: '服务条款',
+    verifyMember: '验证团队成员',
+    cookiePreferences: 'Cookie 偏好设置',
+    copyright: (year: number) => `© ${year} DealMakers’ Club. 保留所有权利。`,
+    backToSeason2: '返回 Season 2',
+  },
+  cookie: {
+    text: '我们使用 Cookie 来了解网站流量（Google Analytics）。在你做出选择之前不会启用任何追踪，详见我们的',
+    privacyLink: '隐私政策',
+    textSuffix: '。',
+    accept: '接受',
+    reject: '拒绝非必要项',
+    customize: '自定义',
+    necessary: '必要',
+    necessaryNote: '始终开启：网站运行所必需',
+    analytics: '分析',
+    analyticsNote: 'Google Analytics：仅统计整体流量，不进行广告追踪',
+    toggleAnalyticsAria: '切换分析类 Cookie',
+    savePreferences: '保存偏好设置',
+    back: '返回',
+    consentAria: 'Cookie 同意设置',
+  },
+  breadcrumbs: {
+    home: '首页',
+    dealmakersClub: 'DealMakers’ Club',
+  },
+};
+
+export function getChrome(locale: 'en' | 'ar' | 'zh'): ChromeDict {
+  if (locale === 'ar') return ar;
+  if (locale === 'zh') return zh;
+  return en;
 }

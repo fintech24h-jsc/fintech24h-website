@@ -1,0 +1,181 @@
+---
+// src/pages/dealmakers/zh/ss3/partner-benefits.astro
+// Simplified Chinese mirror of /dealmakers/ss3/partner-benefits/.
+import DealMakersLayout from '../../../../layouts/DealMakersLayout.astro';
+import BreadcrumbSchema from '../../../../components/seo/BreadcrumbSchema.astro';
+import { getSS3Content } from '../../../../data/dealmakers/content';
+import type { MatrixValue } from '../../../../data/dealmakers/ss3';
+
+const { seasonMeta, partnerTracks, projectOnboardBenefits, partnerBenefitsMatrix } = getSS3Content('zh');
+
+const title = '合作伙伴权益 | F-Matching Season 3 — DealMakers’ Club';
+const description = '比较 F-Matching Season 3 资本、解决方案、媒体及项目合作伙伴的权益——完整权益列表与合作伙伴对比矩阵。';
+const canonical = 'https://fintech24h.com/dealmakers/zh/ss3/partner-benefits/';
+
+const breadcrumbs = [
+  { name: '首页', item: 'https://fintech24h.com' },
+  { name: 'DealMakers’ Club', item: 'https://fintech24h.com/dealmakers/zh/' },
+  { name: 'Season 3', item: 'https://fintech24h.com/dealmakers/zh/ss3/' },
+  { name: '合作伙伴权益', item: canonical },
+];
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: canonical,
+  isPartOf: {
+    '@type': 'WebPage',
+    name: 'Fintech24h DealMakers’ Club: F-Matching Season 3',
+    url: 'https://fintech24h.com/dealmakers/zh/ss3/',
+  },
+};
+
+const projectCard = {
+  id: 'project' as const,
+  icon: 'PRJ',
+  title: '项目入驻',
+  description: '面向 Web3、DeFi、AI × Web3、金融科技、基础设施及其他加入 F-Matching 的项目。',
+  fullBenefits: projectOnboardBenefits,
+};
+
+const [capitalTrack, solutionTrack, mediaTrack] = partnerTracks;
+const allTracks = [capitalTrack, solutionTrack, projectCard, mediaTrack];
+
+function applyHref(interest: string) {
+  return `/dealmakers/zh/ss3/?interest=${encodeURIComponent(interest)}#apply`;
+}
+
+const matrixCell: Record<MatrixValue, { icon: string; label: string; class: string }> = {
+  yes: { icon: '✓', label: '包含', class: 'text-[var(--dm-gold)]' },
+  star: { icon: '★', label: '视匹配度而定', class: 'text-[var(--dm-emerald)]' },
+  optional: { icon: '+', label: '可选', class: 'text-[var(--dm-text-muted)]' },
+  no: { icon: '—', label: '不包含', class: 'text-[var(--dm-text-muted)]' },
+};
+---
+
+<DealMakersLayout locale="zh" title={title} description={description} canonical={canonical} schema={webPageSchema} ogImage="https://fintech24h.com/dealmakers/og-ss3.png">
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="relative py-24 lg:py-28 overflow-hidden" aria-label="合作伙伴权益总览">
+    <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[420px] h-[420px] rounded-full opacity-25 mix-blend-screen dm-orb-gold"
+        style="top: -8%; left: -6%; filter: blur(100px); animation: orb-pulse 10s ease-in-out infinite;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8">
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">{seasonMeta.name} · 合作伙伴权益</p>
+      <h1 class="font-display font-semibold text-h1 text-[var(--dm-text-primary)] mb-5">
+        让你的品牌，融入一个活跃的 B2B 生态系统。
+      </h1>
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-2xl mx-auto leading-relaxed">
+        我们提供的不只是赞助曝光。我们把你的品牌放在资本、项目、解决方案与决策者真正相遇的地方——资本 × 项目 × 解决方案 × 媒体 × 全球领袖。
+      </p>
+      <a href="/dealmakers/zh/ss3/" class="dm-btn-ghost py-2.5 px-6 text-[10px] inline-flex items-center gap-1.5 mt-7">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+        返回 {seasonMeta.name}
+      </a>
+    </div>
+  </section>
+
+  <section class="relative pb-20 lg:pb-28" aria-label="按合作伙伴类型划分的完整权益列表">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid sm:grid-cols-2 gap-5">
+        {allTracks.map((track, i) => (
+          <div id={track.id} class="dm-card flex flex-col p-7 rounded-[20px] scroll-mt-24" data-dm-reveal style={`--dm-reveal-delay: ${i * 70}`}>
+            <span class="w-11 h-11 rounded-xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-[11px] font-bold text-[var(--dm-gold)] mb-4" aria-hidden="true">
+              {track.icon}
+            </span>
+            <h2 class="font-display font-semibold text-lg text-[var(--dm-text-primary)] mb-2">{track.title}</h2>
+            <p class="text-xs text-[var(--dm-text-secondary)] leading-relaxed mb-5">{track.description}</p>
+
+            <ul class="grid sm:grid-cols-2 gap-x-4 gap-y-2.5 flex-1">
+              {track.fullBenefits.map((b) => (
+                <li class="flex items-start gap-2 text-xs text-[var(--dm-text-secondary)]">
+                  <svg class="w-3 h-3 mt-0.5 shrink-0 text-[var(--dm-gold)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 13 4 4L19 7"/></svg>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            {'interest' in track && (
+              <a
+                href={applyHref((track as typeof partnerTracks[number]).interest)}
+                class="dm-btn-primary justify-center text-xs w-full mt-6"
+              >
+                申请成为 {track.title} <span aria-hidden="true">→</span>
+              </a>
+            )}
+            {!('interest' in track) && (
+              <a href="/dealmakers/zh/ss3/#directory" class="dm-btn-ghost justify-center text-xs w-full mt-6">
+                提交项目入驻 <span aria-hidden="true">→</span>
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="relative pb-24 lg:pb-28" aria-label="合作伙伴权益对比矩阵">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mb-10" data-dm-reveal>
+        <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">并排比较</p>
+        <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
+          合作伙伴权益 <span class="dm-text-gradient">一目了然。</span>
+        </h2>
+      </div>
+
+      <div class="dm-card rounded-[20px] overflow-x-auto" data-dm-reveal>
+        <table class="w-full min-w-[640px] text-start border-collapse">
+          <thead>
+            <tr class="border-b border-[var(--dm-border)]">
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)]">权益</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">资本</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">解决方案</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">媒体</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">项目</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partnerBenefitsMatrix.map((row) => (
+              <tr class="border-b border-[var(--dm-border)] last:border-0">
+                <th scope="row" class="p-4 sm:p-5 text-xs font-normal text-[var(--dm-text-secondary)] text-start">{row.label}</th>
+                {(['capital', 'solution', 'media', 'project'] as const).map((col) => (
+                  <td class="p-4 sm:p-5 text-center">
+                    <span class={`text-sm font-semibold ${matrixCell[row[col]].class}`} title={matrixCell[row[col]].label} aria-label={matrixCell[row[col]].label}>
+                      {matrixCell[row[col]].icon}
+                    </span>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-xs text-[var(--dm-text-muted)] mt-4">
+        <span class="text-[var(--dm-gold)] font-semibold">✓</span> 包含 &nbsp;·&nbsp;
+        <span class="text-[var(--dm-emerald)] font-semibold">★</span> 视你的目标而定 &nbsp;·&nbsp;
+        <span class="font-semibold">+</span> 可选附加 &nbsp;·&nbsp;
+        <span class="font-semibold">—</span> 不包含
+      </p>
+    </div>
+  </section>
+
+  <section class="relative pb-24 lg:pb-32" aria-label="与团队沟通">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-dm-reveal>
+      <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-4">
+        不确定该选哪条通道？
+      </h2>
+      <p class="text-sm text-[var(--dm-text-secondary)] mb-7">
+        告诉我们你正在构建或提供什么，Fintech24h 团队会为你推荐合适的通道——资本、解决方案、媒体，或项目。
+      </p>
+      <a href="/dealmakers/zh/ss3/#apply" class="dm-btn-primary justify-center text-xs px-7 py-3 inline-flex">
+        与团队沟通 <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</DealMakersLayout>

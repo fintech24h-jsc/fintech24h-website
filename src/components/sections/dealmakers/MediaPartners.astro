@@ -7,7 +7,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { mediaPartners, partnerTracks } = getSS3Content(locale);
-const localePrefix = (path: string) => (locale === 'ar' ? path.replace(/^\/dealmakers\//, '/dealmakers/ar/') : path);
+const localePrefix = (path: string) => (locale === 'en' ? path : path.replace(/^\/dealmakers\//, `/dealmakers/${locale}/`));
 const benefitsHref = localePrefix('/dealmakers/ss3/partner-benefits/');
 
 const mediaTrack = partnerTracks.find((t) => t.id === 'media')!;
@@ -22,6 +22,16 @@ const copy = locale === 'ar' ? {
   becomeMediaPartner: 'كن شريكًا إعلاميًا',
   seeFullList: 'عرض القائمة الكاملة لمزايا الشريك الإعلامي',
   interest: 'الشريك الإعلامي',
+} : locale === 'zh' ? {
+  ariaLabel: '媒体合作伙伴',
+  eyebrow: '媒体合作伙伴 · 社区支持',
+  h2: '来自整个生态系统媒体合作伙伴的放大传播。',
+  lede: '我们很荣幸能与 Web3 与金融科技媒体领域备受信赖的声音合作，他们的报道帮助 F-Matching Season 3 触达更广泛的受众。',
+  mediaPartnerFallback: '媒体合作伙伴',
+  yourLogo: '你的品牌标识',
+  becomeMediaPartner: '成为媒体合作伙伴',
+  seeFullList: '查看媒体合作伙伴完整权益列表',
+  interest: '媒体合作伙伴',
 } : {
   ariaLabel: 'Media Partners',
   eyebrow: 'Media Partners · Community support',

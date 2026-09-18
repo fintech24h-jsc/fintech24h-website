@@ -30,7 +30,7 @@ const categoryAnchor: Record<typeof heroPartners[number]['category'], string> = 
   infrastructure: 'solution',
   growth: 'solution',
 };
-const localePrefix = (path: string) => (locale === 'ar' ? path.replace(/^\/dealmakers\//, '/dealmakers/ar/') : path);
+const localePrefix = (path: string) => (locale === 'en' ? path : path.replace(/^\/dealmakers\//, `/dealmakers/${locale}/`));
 const benefitsBase = localePrefix('/dealmakers/ss3/partner-benefits/');
 function partnerHref(p: typeof heroPartners[number]) {
   if (p.confirmed && p.logoUrl && p.websiteUrl) return p.websiteUrl;
@@ -63,6 +63,23 @@ const copy = locale === 'ar' ? {
   officialCapitalPartner: 'الشريك الرأسمالي الرسمي · Season 3',
   leadSponsor: 'الراعي الرئيسي',
   confirmingSoon: 'التأكيد قريبًا',
+} : locale === 'zh' ? {
+  ariaLabel: 'DealMakers 主视觉区',
+  eyebrow: 'Fintech24h 呈现 · Season 3',
+  h1a: '决策者相聚之地，',
+  h1b: '促成真正的交易。',
+  lede: 'DealMakers’ Club: F-Matching 是面向创始人、投资人、交易所与 Web3 建设者的精选网络。不止于社交——它是{s1}、{s2}与{s3}被看见、被验证、并与合适的人建立联系的地方。',
+  ledeStrong1: '经验证的决策者',
+  ledeStrong2: '优质交易流',
+  ledeStrong3: '战略引荐',
+  becomeDealMaker: '成为 DealMaker',
+  exploreFeatured: '探索精选 DealMakers',
+  verifiedMembers: '经验证的成员',
+  moderatedIntros: '受监督的引荐',
+  realOpportunities: '真实机会，优先呈现',
+  officialCapitalPartner: '官方资本合作伙伴 · Season 3',
+  leadSponsor: '首席赞助商',
+  confirmingSoon: '即将确认',
 } : {
   ariaLabel: 'DealMakers Hero',
   eyebrow: 'Fintech24h presents · Season 3',
@@ -109,6 +126,10 @@ const copy = locale === 'ar' ? {
       {locale === 'ar' ? (
         <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] font-body leading-relaxed max-w-2xl" data-dm-reveal>
           DealMakers&rsquo; Club: F-Matching هي شبكة منسّقة للمؤسسين والمستثمرين ومنصات التداول وبنّائي Web3. أكثر من مجرد تواصل: إنها المكان الذي يُرى فيه <strong class="text-[var(--dm-text-primary)] font-semibold">أصحاب القرار الموثّقون</strong>، و<strong class="text-[var(--dm-text-primary)] font-semibold">تدفق الصفقات المؤهّل</strong>، و<strong class="text-[var(--dm-text-primary)] font-semibold">التعارفات الاستراتيجية</strong>، ويتم التحقق منها وربطها بالأشخاص المناسبين.
+        </p>
+      ) : locale === 'zh' ? (
+        <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] font-body leading-relaxed max-w-2xl" data-dm-reveal>
+          DealMakers&rsquo; Club: F-Matching 是面向创始人、投资人、交易所与 Web3 建设者的精选网络。不止于社交：这里是<strong class="text-[var(--dm-text-primary)] font-semibold">经验证的决策者</strong>、<strong class="text-[var(--dm-text-primary)] font-semibold">优质交易流</strong>与<strong class="text-[var(--dm-text-primary)] font-semibold">战略引荐</strong>被看见、被验证、并与合适的人建立联系的地方。
         </p>
       ) : (
         <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] font-body leading-relaxed max-w-2xl" data-dm-reveal>

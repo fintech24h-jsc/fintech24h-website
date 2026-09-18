@@ -73,15 +73,26 @@ const capitalPartner = heroPartners.find((p) => p.category === 'capital')!;
 // round-trip through that redirect instead of just staying put. Arabic
 // routes live under /dealmakers/ar/... — same tree, one prefix segment.
 const baseSeasonHref = (seasons.find((s) => s.status === 'active') ?? seasons[0]).href;
-const localePrefix = (path: string) => (locale === 'ar' ? path.replace(/^\/dealmakers\//, '/dealmakers/ar/') : path);
+const localePrefix = (path: string) => (locale === 'en' ? path : path.replace(/^\/dealmakers\//, `/dealmakers/${locale}/`));
 const activeSeasonHref = localePrefix(baseSeasonHref);
 
-// Language switcher: same page, other locale. Arabic routes always mirror
-// the English tree one-for-one under /dealmakers/ar/..., so toggling is a
-// straight prefix add/remove on the current path.
+// Language switcher: same page, other locale(s). Non-English routes always
+// mirror the English tree one-for-one under /dealmakers/<locale>/..., so
+// computing any target locale's equivalent path is a straight prefix
+// swap on the current path's English-rooted form.
 const currentPath = Astro.url.pathname;
-const enPath = currentPath.replace(/^\/dealmakers\/ar\//, '/dealmakers/');
-const arPath = locale === 'ar' ? currentPath : currentPath.replace(/^\/dealmakers\//, '/dealmakers/ar/');
+const bareEnPath = currentPath.replace(/^\/dealmakers\/(ar|zh)\//, '/dealmakers/');
+const pathForLocale = (target: DealmakersLocale) => (target === 'en' ? bareEnPath : bareEnPath.replace(/^\/dealmakers\//, `/dealmakers/${target}/`));
+const enPath = pathForLocale('en');
+const arPath = pathForLocale('ar');
+const zhPath = pathForLocale('zh');
+const otherLocales: { code: DealmakersLocale; label: string; ariaLabel: string; path: string }[] = (
+  [
+    { code: 'en' as const, label: 'EN', ariaLabel: 'Switch to English', path: enPath },
+    { code: 'ar' as const, label: 'ع', ariaLabel: 'التبديل إلى العربية', path: arPath },
+    { code: 'zh' as const, label: '中文', ariaLabel: '切换到中文', path: zhPath },
+  ]
+).filter((l) => l.code !== locale);
 
 // Same Organization schema BaseLayout injects site-wide. This microsite
 // doesn't use BaseLayout, so it needs its own copy to carry brand identity
@@ -138,12 +149,14 @@ const currentYear = new Date().getFullYear();
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="author" content="Fintech24h" />
 
-  <!-- hreflang: this page's English/Arabic counterpart always exists at the
-       same path with/without the /ar/ segment (see localePrefix above), so
-       we can always advertise both — Google needs this on every language
-       version, not just one, for it to be respected as a genuine cluster. -->
+  <!-- hreflang: this page's English/Arabic/Chinese counterpart always exists
+       at the same path with/without the /ar/ or /zh/ segment (see
+       localePrefix above), so we can always advertise all three — Google
+       needs this on every language version, not just one, for it to be
+       respected as a genuine cluster. -->
   <link rel="alternate" hreflang="en" href={`https://fintech24h.com${enPath}`} />
   <link rel="alternate" hreflang="ar" href={`https://fintech24h.com${arPath}`} />
+  <link rel="alternate" hreflang="zh" href={`https://fintech24h.com${zhPath}`} />
   <link rel="alternate" hreflang="x-default" href={`https://fintech24h.com${enPath}`} />
 
   <OpenGraph title={title} description={description} url={canonical} image={ogImage} />
@@ -220,13 +233,17 @@ const currentYear = new Date().getFullYear();
       </nav>
 
       <div class="flex items-center gap-2 shrink-0">
-        <a
-          href={locale === 'ar' ? enPath : arPath}
-          class="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-lg border border-[var(--dm-border)] font-mono text-[10px] uppercase tracking-wider text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] hover:border-[var(--dm-border-hover)] transition-colors shrink-0"
-          aria-label={locale === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
-        >
-          {locale === 'ar' ? 'EN' : 'ع'}
-        </a>
+        <span class="hidden sm:inline-flex items-center gap-1.5">
+          {otherLocales.map((l) => (
+            <a
+              href={l.path}
+              class="inline-flex items-center justify-center h-9 px-2.5 rounded-lg border border-[var(--dm-border)] font-mono text-[10px] uppercase tracking-wider text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] hover:border-[var(--dm-border-hover)] transition-colors shrink-0"
+              aria-label={l.ariaLabel}
+            >
+              {l.label}
+            </a>
+          ))}
+        </span>
         <span class="hidden sm:inline-flex">
           <a href={applyHref} class="dm-btn-primary py-2 px-4 text-[10px]" data-dm-track="header_cta">{t.nav.applyToJoin}</a>
         </span>
@@ -249,9 +266,11 @@ const currentYear = new Date().getFullYear();
         {navLinks.map((l) => (
           <a href={l.href} class="dm-mobile-nav-link" data-dm-close-menu>{l.label}</a>
         ))}
-        <a href={locale === 'ar' ? enPath : arPath} class="dm-mobile-nav-link" data-dm-close-menu>
-          {locale === 'ar' ? 'English' : 'العربية'}
-        </a>
+        {otherLocales.map((l) => (
+          <a href={l.path} class="dm-mobile-nav-link" data-dm-close-menu>
+            {l.code === 'en' ? 'English' : l.code === 'ar' ? 'العربية' : '中文'}
+          </a>
+        ))}
         <span class="sm:hidden flex my-3">
           <a href={applyHref} class="dm-btn-primary w-full justify-center py-3 text-xs" data-dm-track="header_cta" data-dm-close-menu>{t.nav.applyToJoin}</a>
         </span>

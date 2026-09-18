@@ -1,0 +1,58 @@
+---
+// src/pages/dealmakers/zh/ss3/join.astro
+// Simplified Chinese mirror of /dealmakers/ss3/join/.
+import DealMakersLayout from '../../../../layouts/DealMakersLayout.astro';
+import BreadcrumbSchema from '../../../../components/seo/BreadcrumbSchema.astro';
+import TelegramJoinForm from '../../../../components/sections/dealmakers/TelegramJoinForm.tsx';
+import { getSS3Content } from '../../../../data/dealmakers/content';
+
+const { telegramGroupName } = getSS3Content('zh');
+
+const title = '加入 Fi24h DealMakers’ Club | Fintech24h';
+const description = '申请加入 Fi24h DealMakers’ Club 的 Telegram 社区——一个经验证的 Web3 与金融科技创始人、投资人及合作伙伴网络。';
+const canonical = 'https://fintech24h.com/dealmakers/zh/ss3/join/';
+
+const breadcrumbs = [
+  { name: '首页', item: 'https://fintech24h.com' },
+  { name: 'DealMakers’ Club', item: 'https://fintech24h.com/dealmakers/zh/' },
+  { name: 'Season 3', item: 'https://fintech24h.com/dealmakers/zh/ss3/' },
+  { name: '加入', item: canonical },
+];
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: canonical,
+  isPartOf: {
+    '@type': 'WebPage',
+    name: 'Fintech24h DealMakers’ Club: F-Matching Season 3',
+    url: 'https://fintech24h.com/dealmakers/zh/ss3/',
+  },
+};
+---
+
+<DealMakersLayout locale="zh" title={title} description={description} canonical={canonical} schema={webPageSchema} ogImage="https://fintech24h.com/dealmakers/og-ss3.png">
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="加入 Telegram 社区">
+    <div class="absolute inset-0" style="background: var(--dm-gradient-hero-bg);" aria-hidden="true"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[420px] h-[420px] rounded-full opacity-30 mix-blend-screen dm-orb-gold"
+        style="top: -8%; left: -6%; filter: blur(100px); animation: orb-pulse 10s ease-in-out infinite;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-10">
+      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">由 Fintech24h 呈现</p>
+      <h1 class="font-display font-semibold text-h1 text-[var(--dm-text-primary)] mb-5">{telegramGroupName}</h1>
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-xl mx-auto">
+        面向 Web3 与金融科技领域创始人、投资人及战略合作伙伴的经验证 Telegram 社区。每位成员在加入前都会经过审核，以保持讨论的高质量信号。
+      </p>
+    </div>
+
+    <div class="relative z-10 px-4">
+      <TelegramJoinForm locale="zh" client:load />
+    </div>
+  </section>
+</DealMakersLayout>

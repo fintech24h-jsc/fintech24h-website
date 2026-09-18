@@ -56,6 +56,12 @@ function relativeTime(iso: string, locale: DealmakersLocale) {
     if (hours < 24) return `نشط منذ ${hours} س`;
     return `نشط منذ ${days} يوم`;
   }
+  if (locale === 'zh') {
+    if (seconds < 60) return '刚刚活跃';
+    if (minutes < 60) return `${minutes} 分钟前活跃`;
+    if (hours < 24) return `${hours} 小时前活跃`;
+    return `${days} 天前活跃`;
+  }
   if (seconds < 60) return 'Active just now';
   if (minutes < 60) return `Active ${minutes}m ago`;
   if (hours < 24) return `Active ${hours}h ago`;
@@ -67,6 +73,9 @@ function updatedTime(iso: string, locale: DealmakersLocale) {
   const minutes = Math.floor(seconds / 60);
   if (locale === 'ar') {
     return seconds < 60 ? 'تم التحديث الآن' : `تم التحديث منذ ${minutes} د`;
+  }
+  if (locale === 'zh') {
+    return seconds < 60 ? '刚刚更新' : `${minutes} 分钟前更新`;
   }
   return seconds < 60 ? 'Updated just now' : `Updated ${minutes} min ago`;
 }
@@ -114,6 +123,17 @@ export default function CommunityActivity({ locale = 'en' }: Props) {
     warmingUpH: 'نشاط المجتمع في طور التهيئة',
     warmingUpB: 'سيظهر بث الأعضاء المباشر هنا فور ربط خدمة نشاط تيليجرام الخاصة بـ DealMakers.',
     reconnecting: ' نحن بصدد إعادة الاتصال بأحدث بيانات النشاط.',
+  } : locale === 'zh' ? {
+    eyebrow: '社区动态',
+    h2a: '真实的人，',
+    h2b: '活跃的对话。',
+    intro: '实时展示 Fi24h DealMakers’ Club 中近期活跃的成员。此处从不展示或存储消息内容。',
+    recentlyActive: '近期活跃成员',
+    fallbackMember: 'Fi24h DealMakers 成员',
+    team: '团队',
+    warmingUpH: '社区动态正在准备中',
+    warmingUpB: '一旦 DealMakers Telegram 动态服务连接完成，实时成员动态将在此展示。',
+    reconnecting: '我们正在重新连接以获取最新的动态数据。',
   } : {
     eyebrow: 'Community activity',
     h2a: 'Real people,',

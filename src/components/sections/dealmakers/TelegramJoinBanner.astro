@@ -10,13 +10,18 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { telegramGroupName } = getSS3Content(locale);
-const joinHref = locale === 'ar' ? '/dealmakers/ar/ss3/join/' : '/dealmakers/ss3/join/';
+const joinHref = locale === 'en' ? '/dealmakers/ss3/join/' : `/dealmakers/${locale}/ss3/join/`;
 
 const copy = locale === 'ar' ? {
   ariaLabel: 'الانضمام إلى مجتمع تيليجرام',
   join: `انضم إلى ${telegramGroupName} على تيليجرام`,
   vetted: 'مجتمع مُدقَّق للأعضاء الموثّقين فقط. تتم مراجعة الطلبات قبل الموافقة عليها.',
   requestToJoin: 'طلب الانضمام',
+} : locale === 'zh' ? {
+  ariaLabel: '加入 Telegram 社区',
+  join: `在 Telegram 上加入 ${telegramGroupName}`,
+  vetted: '仅面向经验证成员的审核制社区。所有申请在批准前均会经过审核。',
+  requestToJoin: '申请加入',
 } : {
   ariaLabel: 'Join the Telegram community',
   join: `Join ${telegramGroupName} on Telegram`,
