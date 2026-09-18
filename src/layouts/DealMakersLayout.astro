@@ -86,13 +86,13 @@ const pathForLocale = (target: DealmakersLocale) => (target === 'en' ? bareEnPat
 const enPath = pathForLocale('en');
 const arPath = pathForLocale('ar');
 const zhPath = pathForLocale('zh');
-const otherLocales: { code: DealmakersLocale; label: string; ariaLabel: string; path: string }[] = (
-  [
-    { code: 'en' as const, label: 'EN', ariaLabel: 'Switch to English', path: enPath },
-    { code: 'ar' as const, label: 'ع', ariaLabel: 'التبديل إلى العربية', path: arPath },
-    { code: 'zh' as const, label: '中文', ariaLabel: '切换到中文', path: zhPath },
-  ]
-).filter((l) => l.code !== locale);
+const allLocales: { code: DealmakersLocale; shortLabel: string; fullLabel: string; ariaLabel: string; path: string }[] = [
+  { code: 'en', shortLabel: 'EN', fullLabel: 'English', ariaLabel: 'Switch to English', path: enPath },
+  { code: 'ar', shortLabel: 'ع', fullLabel: 'العربية', ariaLabel: 'التبديل إلى العربية', path: arPath },
+  { code: 'zh', shortLabel: '中文', fullLabel: '中文', ariaLabel: '切换到中文', path: zhPath },
+];
+const currentLocaleMeta = allLocales.find((l) => l.code === locale)!;
+const otherLocales = allLocales.filter((l) => l.code !== locale);
 
 // Same Organization schema BaseLayout injects site-wide. This microsite
 // doesn't use BaseLayout, so it needs its own copy to carry brand identity
@@ -233,17 +233,37 @@ const currentYear = new Date().getFullYear();
       </nav>
 
       <div class="flex items-center gap-2 shrink-0">
-        <span class="hidden sm:inline-flex items-center gap-1.5">
-          {otherLocales.map((l) => (
-            <a
-              href={l.path}
-              class="inline-flex items-center justify-center h-9 px-2.5 rounded-lg border border-[var(--dm-border)] font-mono text-[10px] uppercase tracking-wider text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] hover:border-[var(--dm-border-hover)] transition-colors shrink-0"
-              aria-label={l.ariaLabel}
-            >
-              {l.label}
-            </a>
-          ))}
-        </span>
+        <div class="hidden sm:block relative shrink-0" id="dm-lang-switcher">
+          <button
+            type="button"
+            id="dm-lang-toggle"
+            class="inline-flex items-center gap-1.5 h-9 px-2.5 rounded-lg border border-[var(--dm-border)] font-mono text-[10px] uppercase tracking-wider text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] hover:border-[var(--dm-border-hover)] transition-colors"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="dm-lang-menu"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+            {currentLocaleMeta.shortLabel}
+            <svg id="dm-lang-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div
+            id="dm-lang-menu"
+            role="menu"
+            class="absolute end-0 top-full mt-2 min-w-[130px] rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg-secondary)] shadow-[0_12px_32px_rgba(0,0,0,0.5)] overflow-hidden z-50"
+            hidden
+          >
+            {otherLocales.map((l) => (
+              <a
+                href={l.path}
+                role="menuitem"
+                aria-label={l.ariaLabel}
+                class="flex items-center px-3.5 py-2.5 text-xs text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] hover:bg-white/[0.04] transition-colors whitespace-nowrap"
+              >
+                {l.fullLabel}
+              </a>
+            ))}
+          </div>
+        </div>
         <span class="hidden sm:inline-flex">
           <a href={applyHref} class="dm-btn-primary py-2 px-4 text-[10px]" data-dm-track="header_cta">{t.nav.applyToJoin}</a>
         </span>
@@ -268,7 +288,7 @@ const currentYear = new Date().getFullYear();
         ))}
         {otherLocales.map((l) => (
           <a href={l.path} class="dm-mobile-nav-link" data-dm-close-menu>
-            {l.code === 'en' ? 'English' : l.code === 'ar' ? 'العربية' : '中文'}
+            {l.fullLabel}
           </a>
         ))}
         <span class="sm:hidden flex my-3">
@@ -520,6 +540,36 @@ const currentYear = new Date().getFullYear();
       });
       window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
         if (e.matches) setOpen(false);
+      });
+    })();
+  </script>
+
+  <script is:inline>
+    // Language dropdown — click the current-locale button to reveal the
+    // other locale links, instead of showing them all side by side in the
+    // header. Closes on outside click, Escape, or picking a language.
+    (function () {
+      const wrap = document.getElementById('dm-lang-switcher');
+      const toggle = document.getElementById('dm-lang-toggle');
+      const menu = document.getElementById('dm-lang-menu');
+      const chevron = document.getElementById('dm-lang-chevron');
+      if (!wrap || !toggle || !menu) return;
+
+      function setOpen(open) {
+        menu.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+        if (chevron) chevron.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setOpen(menu.hidden);
+      });
+      document.addEventListener('click', (e) => {
+        if (!wrap.contains(e.target)) setOpen(false);
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
       });
     })();
   </script>
