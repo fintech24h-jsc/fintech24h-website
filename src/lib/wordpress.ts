@@ -172,6 +172,21 @@ async function fetchWP<T>(endpoint: string, params: Record<string, string> = {},
   }
 }
 
+// ─── Spam guard ──────────────────────────────────────────────────────────────
+// Incident 2026-09: ~100 casino/betting guest-post spam posts were injected into
+// WordPress (author 1, all in the default "Chưa phân loại" category id 1, dates
+// backdated to 2025-09). Every legitimate post has a real category, so anything
+// left in the default category is never rendered, listed, or put in a sitemap.
+// A casino keyword net catches spam that was moved into another category.
+// This is a safety net only — the posts must still be deleted in WordPress.
+const BLOCKED_CATEGORY_IDS = new Set([1]);
+const SPAM_PATTERN = /casino|kasyn|kasino|kaszin|cazinou|betting|gambl|1win|jackpot|slots?\b|apuestas|tragamonedas|glücksspiel|glucksspiel|kansspel/i;
+
+export function isSpamPost(post: WPPost): boolean {
+  if (post.categories?.some((id) => BLOCKED_CATEGORY_IDS.has(id))) return true;
+  return SPAM_PATTERN.test(`${post.slug} ${post.title.rendered}`);
+}
+
 // ─── Blog Posts ───────────────────────────────────────────────────────────────
 
 // WP's REST API returns `title.rendered` already HTML-entity-encoded (e.g. a
@@ -200,8 +215,9 @@ export async function getAllPosts(page = 1, perPage = 24): Promise<WPPost[]> {
       status: 'publish',
       orderby: 'date',
       order: 'desc',
+      categories_exclude: [...BLOCKED_CATEGORY_IDS].join(','),
     });
-    return posts.map(decodeTitle);
+    return posts.filter((p) => !isSpamPost(p)).map(decodeTitle);
   } catch (err) {
     console.warn('WP API fail: getAllPosts', err);
     return [];
@@ -211,7 +227,7 @@ export async function getAllPosts(page = 1, perPage = 24): Promise<WPPost[]> {
 export async function getPostBySlug(slug: string): Promise<WPPost | null> {
   try {
     const posts = await fetchWP<WPPost[]>('/posts', { slug, status: 'publish' });
-    return posts[0] ? decodeTitle(posts[0]) : null;
+    return posts[0] && !isSpamPost(posts[0]) ? decodeTitle(posts[0]) : null;
   } catch (err) {
     console.warn(`WP API fail: getPostBySlug ${slug}`, err);
     return null;
@@ -229,7 +245,7 @@ export async function getPostsByCategory(categorySlug: string, perPage = 24): Pr
       orderby: 'date',
       order: 'desc',
     });
-    return posts.map(decodeTitle);
+    return posts.filter((p) => !isSpamPost(p)).map(decodeTitle);
   } catch (err) {
     console.warn(`WP API fail: getPostsByCategory ${categorySlug}`, err);
     return [];
@@ -417,7 +433,7 @@ export async function getPostsByAuthor(authorId: number, page = 1, perPage = 24)
       orderby: 'date',
       order: 'desc',
     });
-    return posts.map(decodeTitle);
+    return posts.filter((p) => !isSpamPost(p)).map(decodeTitle);
   } catch (err) {
     console.warn(`WP API fail: getPostsByAuthor ${authorId}`, err);
     return [];
