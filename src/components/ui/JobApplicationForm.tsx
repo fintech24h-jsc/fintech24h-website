@@ -82,7 +82,7 @@ export default function JobApplicationForm({ jobTitle = 'General Application' }:
       content: resumeBase64,
     };
 
-    const result = await submitLead(formData, `Job Application: ${jobTitle}`, fields, attachment);
+    const result = await submitLead({ ...formData, keepOnFile: String(formData.keepOnFile) }, `Job Application: ${jobTitle}`, fields, attachment);
 
     setIsSubmitting(false);
 

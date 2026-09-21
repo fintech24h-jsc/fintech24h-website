@@ -165,10 +165,42 @@ function sendTelegram(data) {
   });
 }
 
+// Optional résumé sent by the careers form: { name, content } where content is a data URL
+// ("data:<mime>;base64,<payload>"). Accepts PDF / DOC / DOCX up to 5 MB. Anything else is dropped
+// (never fails the lead): the email still goes out and says why the file was not attached.
+var ATTACHMENT_TYPES = {
+  pdf: 'application/pdf',
+  doc: 'application/msword',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+};
+var ATTACHMENT_MAX_BYTES = 5 * 1024 * 1024;
+
+function buildAttachment(data) {
+  var att = data && data.attachment;
+  if (!att || typeof att !== 'object') return { blob: null, note: '—' };
+  try {
+    var name = String(att.name || 'resume').replace(/[^A-Za-z0-9._ -]/g, '_').slice(0, 100);
+    var ext = (name.split('.').pop() || '').toLowerCase();
+    if (!ATTACHMENT_TYPES[ext]) return { blob: null, note: 'not attached (only PDF/DOC/DOCX are accepted): ' + name };
+
+    var content = String(att.content || '');
+    var comma = content.indexOf(',');
+    if (content.indexOf('data:') !== 0 || comma < 0 || content.substring(0, comma).indexOf(';base64') < 0) {
+      return { blob: null, note: 'not attached (unreadable file data): ' + name };
+    }
+    var bytes = Utilities.base64Decode(content.substring(comma + 1));
+    if (bytes.length > ATTACHMENT_MAX_BYTES) return { blob: null, note: 'not attached (over 5 MB): ' + name };
+    return { blob: Utilities.newBlob(bytes, ATTACHMENT_TYPES[ext], name), note: name };
+  } catch (err) {
+    return { blob: null, note: 'not attached (error reading file)' };
+  }
+}
+
 function sendEmail(data) {
   var emailTo = getRequiredProperty('EMAIL_TO');
   var name = val(data, ['name', 'contactName']) || 'Unknown';
   var subject = '🚀 New Lead: ' + name + ' — ' + (val(data, ['formType']) || 'Inquiry');
+  var attachment = buildAttachment(data);
 
   var body =
     'New lead captured from fintech24h.com\n' +
@@ -185,14 +217,17 @@ function sendEmail(data) {
     'Timeline:    ' + (val(data, ['timeline']) || '—') + '\n' +
     'LinkedIn:    ' + (val(data, ['linkedin']) || '—') + '\n' +
     'Message:     ' + (val(data, ['message']) || '—') + '\n' +
+    'Attachment:  ' + attachment.note + '\n' +
     '----------------------------------------\n' +
     'Submitted:   ' + (val(data, ['submittedAt']) || new Date().toISOString());
 
   var email = val(data, ['email']);
-  MailApp.sendEmail({
+  var options = {
     to: emailTo,
     subject: subject,
     body: body,
     replyTo: email || emailTo,
-  });
+  };
+  if (attachment.blob) options.attachments = [attachment.blob];
+  MailApp.sendEmail(options);
 }

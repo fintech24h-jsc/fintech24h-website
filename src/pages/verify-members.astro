@@ -199,10 +199,13 @@ for (const member of [...wpMembers, ...founders]) {
     {
       const form = document.getElementById('verify-form');
       const input = document.getElementById('verify-input');
-      const resultEl = document.getElementById('verify-result');
-      if (!(form instanceof HTMLFormElement) || !(input instanceof HTMLInputElement) || !resultEl) {
+      const resultElement = document.getElementById('verify-result');
+      if (!(form instanceof HTMLFormElement) || !(input instanceof HTMLInputElement) || !resultElement) {
         throw new Error('verify-members.astro: expected form elements not found');
       }
+      // Re-bind as a non-nullable const: TypeScript drops the narrowing above inside the
+      // nested functions below, which reported 'resultEl' as possibly null.
+      const resultEl: HTMLElement = resultElement;
 
       function clearResult() {
         resultEl.replaceChildren();

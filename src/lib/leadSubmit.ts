@@ -23,10 +23,17 @@ export interface SubmitResult {
   error?: string;
 }
 
+/** A file sent with the lead. `content` is a data URL (`data:<mime>;base64,<payload>`). */
+export interface LeadAttachment {
+  name: string;
+  content: string;
+}
+
 export async function submitLead(
   data: Record<string, string>,
   formType: string,
-  hubspotFields?: HubSpotField[]
+  hubspotFields?: HubSpotField[],
+  attachment?: LeadAttachment
 ): Promise<SubmitResult> {
   // 1. HubSpot — fire-and-forget, never blocks or fails the main flow.
   const portalId = import.meta.env.PUBLIC_HUBSPOT_PORTAL_ID;
@@ -62,6 +69,9 @@ export async function submitLead(
         ...data,
         formType,
         submittedAt: new Date().toISOString(),
+        // Only present for forms that upload a file (job applications). The Apps Script
+        // validates and mails it; endpoints that ignore the field are unaffected.
+        ...(attachment?.content ? { attachment: { name: attachment.name, content: attachment.content } } : {}),
       }),
     });
     return { ok: true };
