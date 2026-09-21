@@ -5,6 +5,8 @@ $GLOBALS['H']=[]; $GLOBALS['T']=[]; $GLOBALS['META']=[]; $GLOBALS['MAILS']=[]; $
 function add_filter($h,$cb,$p=10,$n=1){$GLOBALS['H'][$h][]=[$p,$cb,$n];} function add_action($h,$cb,$p=10,$n=1){add_filter($h,$cb,$p,$n);}
 function apply_filters_t($h,$val,...$args){ $l=$GLOBALS['H'][$h]??[]; usort($l,fn($a,$b)=>$a[0]<=>$b[0]); foreach($l as [$p,$cb,$n]) $val=$cb($val,...array_slice($args,0,$n-1)); return $val;}
 function do_action_t($h,...$args){ $l=$GLOBALS['H'][$h]??[]; usort($l,fn($a,$b)=>$a[0]<=>$b[0]); foreach($l as [$p,$cb,$n]) $cb(...array_slice($args,0,$n)); }
+function wp_unslash($v){return is_array($v)?array_map('wp_unslash',$v):stripslashes($v);}
+function wp_slash_t($v){return is_array($v)?array_map('wp_slash_t',$v):addslashes($v);}
 function wp_parse_url($u,$c=-1){return parse_url($u,$c);} function home_url(){return 'https://fintech24h.com';}
 function wp_strip_all_tags($s){return trim(preg_replace('/\s+/',' ',strip_tags(preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si','',$s))));}
 function get_transient($k){return $GLOBALS['T'][$k]??false;} function set_transient($k,$v,$e=0){$GLOBALS['T'][$k]=$v;return true;}
@@ -22,7 +24,7 @@ function sim_save(array $post,array $cats,bool $rest,int $id=0){
   static $next=1000; $isNew=($id===0); if($isNew){$id=++$next; $old='new'; $GLOBALS['POSTS'][$id]=['ID'=>$id,'post_type'=>'post','post_status'=>'auto-draft'];} else {$old=$GLOBALS['POSTS'][$id]['post_status'];}
   $GLOBALS['IN_REST']=$rest; $postarr=['ID'=>$isNew?0:$id]+$post; if(!$rest) $postarr['post_category']=$cats;   // classic: categories are in the array; REST: they are NOT
   $data=array_merge(['post_type'=>'post','post_author'=>1,'post_name'=>'','post_date_gmt'=>gmdate('Y-m-d H:i:s')],$post);
-  $data=apply_filters_t('wp_insert_post_data',$data,$postarr,$postarr);
+  $data=wp_unslash(apply_filters_t('wp_insert_post_data',wp_slash_t($data),$postarr,$postarr));
   $data['ID']=$id; $GLOBALS['POSTS'][$id]=array_merge($GLOBALS['POSTS'][$id],$data);
   if(!$rest) $GLOBALS['CATS'][$id]=$cats ?: [1];    // WordPress assigns default category when none given
   elseif($isNew) $GLOBALS['CATS'][$id]=[1];         // REST create: default cat until handle_terms runs

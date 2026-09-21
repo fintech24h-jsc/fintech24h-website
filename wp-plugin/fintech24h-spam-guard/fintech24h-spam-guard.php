@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Fintech24h Spam Guard (mu-plugin)
  * Description: Quarantines injected casino/betting posts. A post that trips a rule is forced back to DRAFT (never left published) and the admin is emailed. Install as wp-content/mu-plugins/fintech24h-spam-guard.php.
- * Version: 1.1.0
+ * Version: 1.1.1
  *
  * Built from the 2026-09 incident (145 posts, see docs/security/). Rules only screen a post at the moment it is
  * being PUBLISHED (new post, or draft/pending/future -> publish). Posts that are already published are never touched,
@@ -57,8 +57,9 @@ function f24h_guard_looks_non_english(string $text): bool {
 
 /** Rules A-C: decided from the content itself, at insert time. Returns a reason or ''. */
 function f24h_guard_content_reason(array $data, bool $is_new): string {
-    $title   = (string) ($data['post_title'] ?? '');
-    $content = (string) ($data['post_content'] ?? '');
+    // wp_insert_post_data hands us SLASHED data (href=\"https://..\"), so unslash before matching.
+    $title   = wp_unslash((string) ($data['post_title'] ?? ''));
+    $content = wp_unslash((string) ($data['post_content'] ?? ''));
     $links   = f24h_guard_external_links($content);
 
     if ($links && preg_match(f24h_guard_gambling_regex(), $title . ' ' . ($data['post_name'] ?? '') . ' ' . wp_strip_all_tags($content))) {

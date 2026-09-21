@@ -49,11 +49,11 @@ Rồi vào Security → Events xem rule đang chặn bao nhiêu request.
 - Nếu sau này bạn (hoặc thành viên) dùng Chrome 124 thật: rule sẽ chặn, gỡ rule là xong.
 - Rule 2 làm bạn thấy một trang xác minh khi đăng nhập.
 
-## 2. Cài mu-plugin `fintech24h-spam-guard` v1.1 (cPanel File Manager)
+## 2. Cài mu-plugin `fintech24h-spam-guard` v1.1.1 (cPanel File Manager)
 Thư mục `wp-content/mu-plugins/` hiện **chưa tồn tại** (đã kiểm tra), cần tạo.
 1. cPanel → **File Manager** → `public_html/wp-content` → **+ Folder** → tên `mu-plugins`.
 2. Vào `mu-plugins` → **Upload** → chọn file `wp-plugin/fintech24h-spam-guard/fintech24h-spam-guard.php` (trong repo, máy bạn). Hoặc **+ File** đặt tên `fintech24h-spam-guard.php` rồi **Edit** và dán nội dung.
-3. Kiểm tra: wp-admin → **Plugins** → xuất hiện tab **Must-Use** liệt kê "Fintech24h Spam Guard 1.1.0".
+3. Kiểm tra: wp-admin → **Plugins** → xuất hiện tab **Must-Use** liệt kê "Fintech24h Spam Guard 1.1.1" (tab **Phải dùng / Must-Use**).
 4. Nếu có sự cố: đổi tên file thành `fintech24h-spam-guard.php.off` là vô hiệu hoá ngay (không cần đụng code khác).
 
 ### Kiểm thử sau khi cài (tôi có thể chạy giúp và xoá bài thử ngay)
@@ -84,3 +84,8 @@ Lỗi tôi đã phát hiện và sửa trong quá trình kiểm thử: bản v1.
 - Muốn đăng bài tiếng Việt/ngôn ngữ khác có link ngoài: đặt `F24H_GUARD_FOREIGN_RULE = false`.
 - Studio khi bị quarantine sẽ nhận phản hồi 200 (thấy như đã đăng) nhưng bài là Draft; kiểm tra email/Drafts.
 - Plugin chỉ ghi log lỗi PHP (`error_log`) và gửi mail qua `wp_mail`; hãy kiểm tra `admin_email` (Settings → General) đúng hộp thư bạn đọc. Mail của host có thể vào spam.
+
+## Nhật ký lỗi đã phát hiện khi chạy thật (21/09/2026)
+- Thư mục phải tên `mu-plugins` (có s). mu-plugin không có nút Activate; xem ở tab **Phải dùng (Must-Use)**.
+- v1.1.0 trên site thật: bài thử category mặc định bị đưa về Draft (đúng), nhưng bài thử "casino + link ngoài" với category thật **vẫn đăng**. Nguyên nhân: `wp_insert_post_data` truyền dữ liệu đã **slashed** (`href=\"…\"`), regex link không khớp. Sửa ở v1.1.1 bằng `wp_unslash()`. Bộ giả lập kiểm thử đã được sửa để mô phỏng dữ liệu slashed (v1.1.0 fail 2/13 kịch bản, v1.1.1 đạt 13/13).
+- Các bài thử (ID 3229, 3230) đã xoá vĩnh viễn.
