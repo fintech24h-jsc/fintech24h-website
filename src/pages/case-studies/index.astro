@@ -1,10 +1,15 @@
 ---
 // src/pages/case-studies/index.astro
+// Rendered per request so it can answer 404 while the section is switched off (src/data/features.ts).
+export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { getAllCaseStudies } from '../../lib/wordpress';
+import { CASE_STUDIES_ENABLED } from '../../data/features';
 import { decodeHtmlEntities } from '../../lib/utils';
 import TrustBar from '../../components/sections/TrustBar.astro';
+
+if (!CASE_STUDIES_ENABLED) return Astro.rewrite('/404');
 
 const caseStudies = await getAllCaseStudies();
 const hasVerifiedCaseStudies = caseStudies.length > 0;

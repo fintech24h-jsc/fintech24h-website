@@ -13,6 +13,7 @@
 // so it doesn't matter which URL we fetch through — see fetchWP().
 
 import { decodeHtmlEntities } from './utils';
+import { CASE_STUDIES_ENABLED } from '../data/features';
 
 const WP_API_BASE = (import.meta.env?.WP_API_URL || 'https://origin.fintech24h.com/wp-json/wp/v2').replace(/\/$/, '');
 // Same origin, different REST namespace — the fintech24h-team-directory
@@ -349,6 +350,9 @@ export function isBlogAvailable(): Promise<boolean> {
 // ─── Case Studies (Custom Post Type) ─────────────────────────────────────────
 
 export async function getAllCaseStudies(): Promise<CaseStudy[]> {
+  // Section is switched off (see src/data/features.ts): do not call WordPress at all.
+  if (!CASE_STUDIES_ENABLED) return [];
+
   if (cachedCaseStudies && cachedCaseStudies.length > 0) {
     return cachedCaseStudies;
   }

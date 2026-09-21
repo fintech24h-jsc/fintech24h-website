@@ -5,6 +5,7 @@
 export const prerender = false;
 
 import { getPostBySlug } from '../lib/wordpress';
+import { CASE_STUDIES_ENABLED } from '../data/features';
 
 const { path } = Astro.params;
 const key = path?.replace(/\/$/, '').toLowerCase();
@@ -15,7 +16,7 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   'service-post/promotion-growth-hacking': '/services/',
   'service-post/social-media-management-service': '/services/community-growth/',
   'service-post/b2b-pitching-partnership': '/services/business-development/',
-  'case-studies/avalanche-growth-campaign': '/case-studies/',
+  'case-studies/avalanche-growth-campaign': CASE_STUDIES_ENABLED ? '/case-studies/' : '/services/',
 };
 
 if (key && LEGACY_REDIRECTS[key]) {

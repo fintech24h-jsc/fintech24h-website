@@ -1,3 +1,4 @@
+import { CASE_STUDIES_ENABLED } from './features';
 export interface NavLink {
   label: string;
   href: string;
@@ -38,7 +39,7 @@ export const footerLinks = {
   company: [
     { label: 'About Us', href: '/about/' },
     { label: 'Our Process', href: '/#process' },
-    { label: 'Case Studies', href: '/case-studies/' },
+    ...(CASE_STUDIES_ENABLED ? [{ label: 'Case Studies', href: '/case-studies/' }] : []),
     { label: 'Contact Sales', href: '/contact/' }
   ],
   resources: [

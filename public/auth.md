@@ -16,7 +16,6 @@ All content is freely accessible without credentials:
 | Homepage | https://fintech24h.com | text/html |
 | Services | https://fintech24h.com/services | text/html |
 | Blog | https://fintech24h.com/blog | text/html |
-| Case Studies | https://fintech24h.com/case-studies | text/html |
 | Blog RSS Feed | https://fintech24h.com/rss.xml | application/rss+xml |
 | XML Sitemap | https://fintech24h.com/sitemap-index.xml | application/xml |
 | API Catalog | https://fintech24h.com/.well-known/api-catalog | application/linkset+json |

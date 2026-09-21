@@ -14,7 +14,7 @@ const LEGACY_PAGED_CATEGORY_SLUGS = new Set(['knowledge', 'news', 'partner-relat
 // here too means both fixes land in the same 301.
 const TRAILING_SLASH_PATHS = new Set([
   '/about', '/careers', '/careers/content-social-media-specialist', '/careers/community-partnership-specialist',
-  '/case-studies', '/contact', '/privacy', '/services', '/services/ai-marketing', '/services/business-development',
+  '/contact', '/privacy', '/services', '/services/ai-marketing', '/services/business-development',
   '/services/community-growth', '/services/custom-solutions', '/services/event-marketing', '/services/kol-marketing',
   '/services/pr-media', '/terms',
 ]);
