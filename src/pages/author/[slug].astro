@@ -11,6 +11,13 @@ import { team } from '../../data/team';
 Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
 
 const { slug } = Astro.params;
+
+// getPostAuthor() (lib/wordpress.ts) shows every post by the WP "admin" or "phat" account
+// as "Phat Vo" linking to /author/phat-vo, so those slugs share one canonical profile.
+if (slug === 'admin' || slug === 'phat') {
+  return Astro.redirect('/author/phat-vo', 301);
+}
+
 const wpSlug = slug === 'phat-vo' ? 'phat' : slug;
 const user = wpSlug ? await getUserBySlug(wpSlug) : null;
 
@@ -45,7 +52,10 @@ const phatBio = "Co-Founder & Chief Product Officer of Fintech24h.com. Phat Vo d
 const authorBio = isPhatVo ? phatBio : (member?.bio || user.description || "Fintech24h team member and contributor.");
 
 // Fetch publications by the author
-const posts = await getPostsByAuthor(user.id);
+// Phat Vo's byline also covers posts saved under the legacy "admin" account.
+const adminUser = isPhatVo ? await getUserBySlug('admin') : null;
+const authorIds = [user.id, adminUser?.id].filter((id): id is number => typeof id === 'number');
+const posts = await getPostsByAuthor(authorIds);
 
 // Don't render empty author archives (e.g. legacy WP accounts like /author/admin
 // with zero published posts) — serve a real 404 so they're not shown or indexed.

@@ -412,10 +412,43 @@ export function getPostAuthor(post: WPPost) {
   };
 }
 
+// The fintech24h-headless theme deliberately requires authentication for the REST users
+// COLLECTION (GET /wp/v2/users?slug=…) to stop bulk username harvesting, so that call
+// answers 401 to us. A single user (GET /wp/v2/users/{id}) is still public, so: collect the
+// distinct author ids of published posts (tiny `_fields=author` responses), then read each
+// user by id and match the slug. A user with no published posts has no archive to show anyway.
+async function findAuthorBySlug(slug: string): Promise<WPUser | null> {
+  const PER_PAGE = 100;
+  const ids = new Set<number>();
+  for (let page = 1; page <= 6; page++) {
+    let posts: Array<{ author: number }>;
+    try {
+      posts = await fetchWP('/posts', {
+        _fields: 'author',
+        per_page: String(PER_PAGE),
+        page: String(page),
+        status: 'publish',
+      });
+    } catch {
+      break; // out-of-range page (400) or WP unavailable
+    }
+    posts.forEach((p) => ids.add(p.author));
+    if (posts.length < PER_PAGE) break;
+  }
+  for (const id of ids) {
+    try {
+      const user = await fetchWP<WPUser>(`/users/${id}`);
+      if (user?.slug === slug) return user;
+    } catch {
+      /* skip users WordPress will not show */
+    }
+  }
+  return null;
+}
+
 export async function getUserBySlug(slug: string): Promise<WPUser | null> {
   try {
-    const users = await fetchWP<WPUser[]>('/users', { slug });
-    const user = users[0];
+    const user = await findAuthorBySlug(slug);
     return user ? { ...user, name: decodeHtmlEntities(user.name), description: decodeHtmlEntities(user.description) } : null;
   } catch (err) {
     console.warn(`WP API fail: getUserBySlug ${slug}`, err);
@@ -423,19 +456,43 @@ export async function getUserBySlug(slug: string): Promise<WPUser | null> {
   }
 }
 
-export async function getPostsByAuthor(authorId: number, page = 1, perPage = 24): Promise<WPPost[]> {
+// The theme also blocks the `?author=` query (author-enumeration hardening) and answers a
+// 301 HTML page even on REST, so `posts?author=ID` cannot be used. Instead: list every
+// published post as a tiny {id, author} pair (newest first, the REST default), keep the ids
+// written by the wanted authors, then load just the requested page of them with `include=`.
+export async function getPostsByAuthor(authorId: number | number[], page = 1, perPage = 24): Promise<WPPost[]> {
+  const wanted = new Set(Array.isArray(authorId) ? authorId : [authorId]);
+  const PER_PAGE = 100;
   try {
+    const ids: number[] = [];
+    for (let p = 1; p <= 10; p++) {
+      let rows: Array<{ id: number; author: number }>;
+      try {
+        rows = await fetchWP('/posts', {
+          _fields: 'id,author',
+          per_page: String(PER_PAGE),
+          page: String(p),
+          status: 'publish',
+          orderby: 'date',
+          order: 'desc',
+        });
+      } catch {
+        break; // out-of-range page (400)
+      }
+      rows.forEach((r) => { if (wanted.has(r.author)) ids.push(r.id); });
+      if (rows.length < PER_PAGE) break;
+    }
+    const pageIds = ids.slice((page - 1) * perPage, page * perPage);
+    if (pageIds.length === 0) return [];
     const posts = await fetchWP<WPPost[]>('/posts', {
-      author: String(authorId),
-      page: String(page),
+      include: pageIds.join(','),
+      orderby: 'include',
       per_page: String(perPage),
       status: 'publish',
-      orderby: 'date',
-      order: 'desc',
     });
     return posts.filter((p) => !isSpamPost(p)).map(decodeTitle);
   } catch (err) {
-    console.warn(`WP API fail: getPostsByAuthor ${authorId}`, err);
+    console.warn(`WP API fail: getPostsByAuthor ${[...wanted].join(',')}`, err);
     return [];
   }
 }
