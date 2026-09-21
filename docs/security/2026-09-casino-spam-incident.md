@@ -68,3 +68,30 @@ Xoá xong → cache Worker tự hết trong ≤ 3 phút. Sitemap `/sitemap-blog.
 
 ## Đã làm phía Astro (chưa commit/push, đang ở working tree)
 `src/lib/wordpress.ts`: hàm `isSpamPost()` loại mọi bài thuộc category id 1 hoặc slug/tiêu đề có từ khoá casino khỏi trang bài (404), `/blog`, category, author, RSS và `sitemap-blog.xml`; list request thêm `categories_exclude=1`. Đối chiếu 447 bài: chặn đủ 102/102 spam, 0 bài thật bị chặn nhầm. Lưới an toàn tạm thời, KHÔNG thay thế việc xoá trong WP. (`astro check`: 11 lỗi đã có từ trước, không có lỗi mới.)
+
+## Cập nhật 2026-09-21 — kiểm tra trực tiếp wp-admin và cPanel (chỉ đọc)
+**Đã xoá xong 102 bài spam** (xác minh: publish 345, category spam 0 bài đã xuất bản; 100 bản nháp và 19 bài thùng rác cũ giữ nguyên).
+
+Kết quả kiểm tra:
+| Hạng mục | Kết quả |
+|---|---|
+| Tài khoản WP | Chỉ 2 quản trị: `admin` (id 1, thanhphattdc@gmail.com) và `phat` (id 2). **Không có user lạ.** Toàn bộ spam đăng dưới `admin` |
+| Application Passwords của `admin` | 3 cái: **`Autocontent11092026`** (tạo 11/09/2026, dùng gần nhất 20/09/2026, IP thấy được là IPv6 của Cloudflare `2a06:98c0:3600::103` nên không lộ IP thật), `phatvt!!` và `phatvt` (cùng tạo 01/07/2026, **chưa từng dùng**) |
+| Plugin | Chỉ `Fintech24h Team Directory 1.2.0`, **trùng từng byte với bản trong repo** (không có AIOSEO/Rank Math đang chạy, không có mu-plugins/drop-ins) |
+| Theme `fintech24h-headless` | Sạch: không eval, không gọi từ xa. Ghi chú trong code: XML-RPC và Application Passwords **cố ý để bật cho "Content Studio"** |
+| `wp-content/uploads` | 4.420 file, **0 file PHP**, không file ẩn lạ |
+| Core (`wp-admin`, `wp-includes`) | Không file ẩn, `cgi-bin` trống. Hàng loạt file được thay đồng thời lúc **17/09 20:02** (gồm `version.php`, `update-core.php`) → giống một lần auto-update core (`WP_AUTO_UPDATE_CORE=minor`), không phải sửa lẻ. Chưa chạy checksum chính thức |
+| `wp-config.php` | Không có mã độc. Sửa lần cuối 14/09 03:44. Có hằng `CF_DEPLOY_HOOK` (URL deploy hook Cloudflare; **đã bị in ra trong phiên làm việc này**, nên coi là cần xoay vòng) |
+| `php.error.log` | 727 lỗi fatal ngày 04–10/09: kiểu quét trực tiếp file trong `wp-includes/*.php` (bot dò quét). Dừng từ 12/09. Không thấy webshell |
+| Access log | Có file `fintech24h.com-ssl_log-Sep-2026.gz` (2,5 MB) trong `/home/fintechh/logs` nhưng không đọc được qua API; cần tải từ cPanel → Raw Access để tìm POST lúc 18/09 16:28 UTC |
+
+**Kết luận tạm (chưa chắc chắn):** không tìm thấy backdoor PHP hay file bị chèn trên máy chủ. Bài spam được tạo qua REST API bằng danh tính `admin`. Ứng viên số 1 là **hệ thống đăng bài tự động (Content Studio / Application Password `Autocontent…`)**, hoặc credential của nó bị lộ, hoặc chính pipeline đó đăng nhầm nội dung của dự án khác (đa ngôn ngữ, dạng SEO casino) vào site này. Cần kiểm tra ở phía Content Studio: xem [prompt-content-studio.md](prompt-content-studio.md).
+Dòng thời gian: spam ID 2774–2985 nằm sau bài 2707 (14/09 01:58) và trước 2808 (15/09), tức bắt đầu khoảng 14/09; đợt 1win 18/09 16:28:11–14 UTC.
+
+## Cập nhật 2026-09-21 (chiều) — kiểm tra trực tiếp VPS Content Studio
+- **Spam vẫn còn 43 bài** (ID 3160–3224, tạo 19/09 10:45–19:39 UTC, không có đợt mới hơn). Astro đang ẩn chúng (404, không vào sitemap) nhưng chúng **chưa bị xoá** trong WP.
+- WP: `Autocontent11092026` tạo **11/09 08:16 UTC**, dùng gần nhất **20/09 05:08 UTC** (khớp lúc Studio đăng bài KYC 3163 lúc 05:09), IP thấy được là IP Cloudflare. Đã thu hồi 2 mật khẩu `phatvt`, `phatvt!!` (chưa từng dùng) lúc 21/09.
+- VPS `seo-studio-vps` (chỉ đọc): SSH chỉ có 1 key được dùng (key của bạn) từ 2 IP Việt Nam quen thuộc, 15 lần đoán mật khẩu thất bại; không process/cron/kết nối lạ; source app không có chuỗi casino/eval; log Studio từ 10/09 có **0** từ khoá casino; Studio **không có lệnh publish nào** trùng 18/09 16:28 UTC hay các đợt 14–17/09; mọi lệnh `publish` đến từ 4 IP Việt Nam của đội ngũ (75 lần, 07–20/09). Một IP ngoài VN (`202.60.111.166`) đăng nhập 16/09 chỉ đọc hộp thư/thông báo, không ghi.
+- Cần xác nhận: `authorized_keys` của cả `ubuntu` và `studio` chứa 4 key không khớp máy Mac này: `ssh` (RSA), `vps2-render-tunnel`, `vpsweb2-revtunnel`, `no comment` (RSA). Chưa thấy key nào dùng trong log còn lưu.
+- Rủi ro cấu hình: `studio.db` quyền 644 và backup `.tar.gz` (644) chứa `studio.db` + `.studio-key` + `.session-secret` cùng nhau (thư mục cha `/home/studio` 750 nên người dùng khác trên VPS chưa đọc được).
+- `origin.fintech24h.com` trả REST trực tiếp (né Cloudflare/WAF); `workers/wp-proxy/worker.js` xoá IP thật của người gọi nên log WP không truy được kẻ tấn công.

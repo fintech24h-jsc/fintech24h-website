@@ -13,6 +13,9 @@
 // WordPress caps a REST response at 100 posts per page, so we page through the
 // full corpus (currently ~236 posts) instead of listing only the first page.
 // Registered in public/robots.txt and submitted in Google Search Console.
+// Rendered per request (cached 180s by fetchWP), not baked at build time: a build
+// that ran while WordPress was slow/rate-limited used to ship an EMPTY feed.
+export const prerender = false;
 import type { APIRoute } from 'astro';
 import { getAllPosts } from '../lib/wordpress';
 import type { WPPost } from '../lib/wordpress';
@@ -40,19 +43,33 @@ async function getEveryPost(): Promise<WPPost[]> {
     Array.from({ length: MAX_PAGES }, (_, i) => getAllPosts(i + 1, PER_PAGE))
   );
 
+  // Do not stop at the first short page: the spam filter in getAllPosts can
+  // shrink a full WP page below PER_PAGE, which would silently truncate the
+  // sitemap. Pages past the real end resolve to [], so concatenating is safe.
   const all: WPPost[] = [];
+  const seen = new Set<number>();
   for (const batch of pages) {
-    all.push(...batch);
-    // A short (or empty) page means that was the last real page — any pages
-    // requested past it are out-of-range and were already resolved (as []),
-    // so this just stops us from trusting anything beyond the true end.
-    if (batch.length < PER_PAGE) break;
+    for (const post of batch) {
+      if (!seen.has(post.id)) {
+        seen.add(post.id);
+        all.push(post);
+      }
+    }
   }
   return all;
 }
 
 export const GET: APIRoute = async () => {
   const posts = await getEveryPost();
+
+  // An empty sitemap is worse than none: crawlers cache it and drop URLs.
+  // WordPress being slow or rate-limited must surface as a retryable 503.
+  if (posts.length === 0) {
+    return new Response('Sitemap temporarily unavailable', {
+      status: 503,
+      headers: { 'Retry-After': '300', 'Cache-Control': 'no-store' },
+    });
+  }
 
   const urls = posts
     .map((post) => {

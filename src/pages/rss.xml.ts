@@ -1,6 +1,9 @@
 // src/pages/rss.xml.ts
 // RSS 2.0 feed — auto-discovered by browsers and feed readers.
 // Pulls latest 20 posts from WordPress at build time.
+// Rendered per request (cached 180s by fetchWP), not baked at build time: a build
+// that ran while WordPress was slow/rate-limited used to ship an EMPTY feed.
+export const prerender = false;
 import type { APIRoute } from 'astro';
 import { getAllPosts, getExcerpt, getFeaturedImage } from '../lib/wordpress';
 
@@ -19,6 +22,12 @@ function toRfc822(dateStr: string): string {
 
 export const GET: APIRoute = async () => {
   const posts = await getAllPosts();
+  if (posts.length === 0) {
+    return new Response('Feed temporarily unavailable', {
+      status: 503,
+      headers: { 'Retry-After': '300', 'Cache-Control': 'no-store' },
+    });
+  }
   const latest = posts.slice(0, 20);
 
   const items = latest.map(post => {
