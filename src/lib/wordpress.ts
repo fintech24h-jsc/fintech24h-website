@@ -120,7 +120,17 @@ let cachedCaseStudies: CaseStudy[] | null = null;
 const FRESH_TTL_SECONDS = 180;          // normal cache window
 const STALE_TTL_SECONDS = 7 * 86400;    // last-known-good fallback window (7 days)
 
-async function fetchWP<T>(endpoint: string, params: Record<string, string> = {}, base: string = WP_API_BASE): Promise<T> {
+export interface WPMeta { total: number | null; totalPages: number | null }
+
+const metaOf = (h: Headers): WPMeta => {
+  const n = (v: string | null) => (v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : null);
+  return { total: n(h.get('X-WP-Total')), totalPages: n(h.get('X-WP-TotalPages')) };
+};
+
+// Same live-fetch + Workers-cache behaviour as before, but also returns WordPress's
+// X-WP-Total / X-WP-TotalPages so list pages can paginate. The two headers are stored on the
+// cached responses; entries written by older code lack them and simply report null totals.
+async function fetchWPMeta<T>(endpoint: string, params: Record<string, string> = {}, base: string = WP_API_BASE): Promise<{ data: T } & WPMeta> {
   const url = new URL(`${base}${endpoint}`);
   url.searchParams.set('_embed', '1');
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
@@ -134,7 +144,7 @@ async function fetchWP<T>(endpoint: string, params: Record<string, string> = {},
 
   if (cache) {
     const hit = await cache.match(freshKey);
-    if (hit) return hit.json() as Promise<T>;
+    if (hit) return { data: (await hit.json()) as T, ...metaOf(hit.headers) };
   }
 
   try {
@@ -148,28 +158,36 @@ async function fetchWP<T>(endpoint: string, params: Record<string, string> = {},
 
     if (!res.ok) throw new Error(`WP API Error ${res.status}: ${endpoint}`);
     const data = await res.json();
+    const meta = metaOf(res.headers);
 
     if (cache) {
       const body = JSON.stringify(data);
+      const wpHeaders: Record<string, string> = {};
+      if (meta.total !== null) wpHeaders['X-WP-Total'] = String(meta.total);
+      if (meta.totalPages !== null) wpHeaders['X-WP-TotalPages'] = String(meta.totalPages);
       await cache.put(freshKey, new Response(body, {
-        headers: { 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${FRESH_TTL_SECONDS}` },
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${FRESH_TTL_SECONDS}`, ...wpHeaders },
       }));
       await cache.put(staleKey, new Response(body, {
-        headers: { 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${STALE_TTL_SECONDS}` },
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${STALE_TTL_SECONDS}`, ...wpHeaders },
       }));
     }
 
-    return data as T;
+    return { data: data as T, ...meta };
   } catch (err) {
     if (cache) {
       const stale = await cache.match(staleKey);
       if (stale) {
         console.warn(`WP API fail, serving stale cache for ${endpoint}:`, err);
-        return stale.json() as Promise<T>;
+        return { data: (await stale.json()) as T, ...metaOf(stale.headers) };
       }
     }
     throw err;
   }
+}
+
+async function fetchWP<T>(endpoint: string, params: Record<string, string> = {}, base: string = WP_API_BASE): Promise<T> {
+  return (await fetchWPMeta<T>(endpoint, params, base)).data;
 }
 
 // ─── Spam guard ──────────────────────────────────────────────────────────────
@@ -221,6 +239,64 @@ export async function getAllPosts(page = 1, perPage = 24): Promise<WPPost[]> {
   } catch (err) {
     console.warn('WP API fail: getAllPosts', err);
     return [];
+  }
+}
+
+// ─── Paginated listings ──────────────────────────────────────────────────────
+
+export const POSTS_PER_PAGE = 24;
+
+export interface PagedPosts {
+  posts: WPPost[];
+  total: number;
+  totalPages: number;
+}
+
+const EMPTY_PAGE: PagedPosts = { posts: [], total: 0, totalPages: 0 };
+
+// Cache entries written before pagination existed have no X-WP-Total headers; in that case
+// infer "there is a next page" from a full page so the Next link still works.
+function toPaged(posts: WPPost[], meta: WPMeta, page: number, perPage: number): PagedPosts {
+  const totalPages = meta.totalPages ?? (posts.length === perPage ? page + 1 : page);
+  const total = meta.total ?? (page - 1) * perPage + posts.length;
+  return { posts, total, totalPages };
+}
+
+/** One page of the whole blog, newest first. Out-of-range pages (WP answers 400) come back empty. */
+export async function getPostsPage(page = 1, perPage = POSTS_PER_PAGE): Promise<PagedPosts> {
+  try {
+    const r = await fetchWPMeta<WPPost[]>('/posts', {
+      page: String(page),
+      per_page: String(perPage),
+      status: 'publish',
+      orderby: 'date',
+      order: 'desc',
+      categories_exclude: [...BLOCKED_CATEGORY_IDS].join(','),
+    });
+    return toPaged(r.data.filter((p) => !isSpamPost(p)).map(decodeTitle), r, page, perPage);
+  } catch (err) {
+    console.warn(`WP API fail: getPostsPage ${page}`, err);
+    return EMPTY_PAGE;
+  }
+}
+
+/** One page of a category archive. */
+export async function getCategoryPostsPage(categorySlug: string, page = 1, perPage = POSTS_PER_PAGE): Promise<PagedPosts> {
+  try {
+    const categories = await fetchWP<WPCategory[]>('/categories', { slug: categorySlug });
+    if (!categories[0]) return EMPTY_PAGE;
+    const r = await fetchWPMeta<WPPost[]>('/posts', {
+      categories: String(categories[0].id),
+      page: String(page),
+      per_page: String(perPage),
+      status: 'publish',
+      orderby: 'date',
+      order: 'desc',
+    });
+    return toPaged(r.data.filter((p) => !isSpamPost(p)).map(decodeTitle), r, page, perPage);
+  } catch (err) {
+    console.warn(`WP API fail: getCategoryPostsPage ${categorySlug} ${page}`, err);
+    return EMPTY_PAGE;
   }
 }
 
@@ -460,7 +536,7 @@ export async function getUserBySlug(slug: string): Promise<WPUser | null> {
 // 301 HTML page even on REST, so `posts?author=ID` cannot be used. Instead: list every
 // published post as a tiny {id, author} pair (newest first, the REST default), keep the ids
 // written by the wanted authors, then load just the requested page of them with `include=`.
-export async function getPostsByAuthor(authorId: number | number[], page = 1, perPage = 24): Promise<WPPost[]> {
+export async function getPostsByAuthor(authorId: number | number[], page = 1, perPage = 24): Promise<PagedPosts> {
   const wanted = new Set(Array.isArray(authorId) ? authorId : [authorId]);
   const PER_PAGE = 100;
   try {
@@ -483,17 +559,19 @@ export async function getPostsByAuthor(authorId: number | number[], page = 1, pe
       if (rows.length < PER_PAGE) break;
     }
     const pageIds = ids.slice((page - 1) * perPage, page * perPage);
-    if (pageIds.length === 0) return [];
+    const total = ids.length;
+    const totalPages = Math.max(1, Math.ceil(total / perPage));
+    if (pageIds.length === 0) return { posts: [], total, totalPages };
     const posts = await fetchWP<WPPost[]>('/posts', {
       include: pageIds.join(','),
       orderby: 'include',
       per_page: String(perPage),
       status: 'publish',
     });
-    return posts.filter((p) => !isSpamPost(p)).map(decodeTitle);
+    return { posts: posts.filter((p) => !isSpamPost(p)).map(decodeTitle), total, totalPages };
   } catch (err) {
     console.warn(`WP API fail: getPostsByAuthor ${[...wanted].join(',')}`, err);
-    return [];
+    return EMPTY_PAGE;
   }
 }
 

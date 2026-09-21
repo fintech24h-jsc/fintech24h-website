@@ -1,0 +1,82 @@
+---
+// src/components/ui/Pagination.astro
+// Numbered pagination for server-rendered listings. Page 1 lives at the base path
+// (/blog); page N>=2 at `${basePath}/page/N` — real, crawlable links, no JS.
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  basePath: string;   // e.g. "/blog" or "/author/phat-vo" (no trailing slash)
+  label?: string;     // aria-label for the nav landmark
+}
+
+const { currentPage, totalPages, basePath, label = 'Pagination' } = Astro.props;
+
+const hrefFor = (n: number) => (n <= 1 ? basePath : `${basePath}/page/${n}`);
+
+// 1 … (cur-1) cur (cur+1) … last  — collapses gaps with an ellipsis marker.
+const items: Array<number | 'gap'> = [];
+if (totalPages <= 7) {
+  for (let i = 1; i <= totalPages; i++) items.push(i);
+} else {
+  const near = new Set([1, totalPages, currentPage - 1, currentPage, currentPage + 1]);
+  let prev = 0;
+  for (let i = 1; i <= totalPages; i++) {
+    if (!near.has(i)) continue;
+    if (i - prev > 1) items.push('gap');
+    items.push(i);
+    prev = i;
+  }
+}
+
+const base = 'inline-flex items-center justify-center min-w-[2.5rem] h-10 px-4 rounded-full border text-xs font-semibold font-body transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]';
+const idle = 'border-[var(--border-default)] bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:border-[var(--border-hover)] hover:text-[var(--text-primary)]';
+const active = 'border-[var(--accent-cyan)] bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] text-[var(--accent-cyan)]';
+const disabled = 'border-[var(--border-subtle)] text-[var(--text-muted)] opacity-50 cursor-not-allowed';
+---
+
+{totalPages > 1 && (
+  <nav class="mt-16 flex flex-col items-center gap-4" aria-label={label}>
+    <ul class="flex flex-wrap items-center justify-center gap-2">
+      <li>
+        {currentPage > 1 ? (
+          <a href={hrefFor(currentPage - 1)} rel="prev" class:list={[base, idle, 'gap-2']} aria-label={`Previous page, page ${currentPage - 1}`}>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <span>Previous</span>
+          </a>
+        ) : (
+          <span class:list={[base, disabled, 'gap-2']} aria-disabled="true">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <span>Previous</span>
+          </span>
+        )}
+      </li>
+
+      {items.map((it) => (
+        <li class:list={[it === 'gap' || it !== currentPage ? 'hidden sm:block' : '']}>
+          {it === 'gap' ? (
+            <span class="px-1 text-[var(--text-muted)] select-none" aria-hidden="true">…</span>
+          ) : it === currentPage ? (
+            <span class:list={[base, active]} aria-current="page" aria-label={`Page ${it}, current page`}>{it}</span>
+          ) : (
+            <a href={hrefFor(it)} class:list={[base, idle]} aria-label={`Page ${it}`}>{it}</a>
+          )}
+        </li>
+      ))}
+
+      <li>
+        {currentPage < totalPages ? (
+          <a href={hrefFor(currentPage + 1)} rel="next" class:list={[base, idle, 'gap-2']} aria-label={`Next page, page ${currentPage + 1}`}>
+            <span>Next</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        ) : (
+          <span class:list={[base, disabled, 'gap-2']} aria-disabled="true">
+            <span>Next</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        )}
+      </li>
+    </ul>
+    <p class="text-xs text-[var(--text-muted)] font-mono tracking-wider" aria-live="polite">Page {currentPage} of {totalPages}</p>
+  </nav>
+)}

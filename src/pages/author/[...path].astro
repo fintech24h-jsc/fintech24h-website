@@ -4,19 +4,31 @@ export const prerender = false;
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
-import { getUserBySlug, getPostsByAuthor, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
+import Pagination from '../../components/ui/Pagination.astro';
+import { getUserBySlug, getPostsByAuthor, POSTS_PER_PAGE, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
 import { getReadingTime } from '../../lib/utils';
 import { team } from '../../data/team';
 
 Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
 
-const { slug } = Astro.params;
+// Routes: /author/{slug}  and  /author/{slug}/page/{n}  (n >= 2)
+const segments = (Astro.params.path ?? '').split('/').filter(Boolean);
+const slug = segments[0];
+let pageNumber = 1;
+if (segments.length === 3 && segments[1] === 'page' && /^\d+$/.test(segments[2])) {
+  pageNumber = Number(segments[2]);
+} else if (segments.length !== 1) {
+  return Astro.rewrite('/404');
+}
+const suffix = (n: number) => (n > 1 ? `/page/${n}` : '');
 
 // getPostAuthor() (lib/wordpress.ts) shows every post by the WP "admin" or "phat" account
 // as "Phat Vo" linking to /author/phat-vo, so those slugs share one canonical profile.
 if (slug === 'admin' || slug === 'phat') {
-  return Astro.redirect('/author/phat-vo', 301);
+  return Astro.redirect(`/author/phat-vo${suffix(pageNumber)}`, 301);
 }
+// Page 1 is the profile itself; queries never create variants.
+if (segments.length === 3 && pageNumber <= 1) return Astro.redirect(`/author/${slug}`, 301);
 
 const wpSlug = slug === 'phat-vo' ? 'phat' : slug;
 const user = wpSlug ? await getUserBySlug(wpSlug) : null;
@@ -55,15 +67,17 @@ const authorBio = isPhatVo ? phatBio : (member?.bio || user.description || "Fint
 // Phat Vo's byline also covers posts saved under the legacy "admin" account.
 const adminUser = isPhatVo ? await getUserBySlug('admin') : null;
 const authorIds = [user.id, adminUser?.id].filter((id): id is number => typeof id === 'number');
-const posts = await getPostsByAuthor(authorIds);
+const { posts, total: totalPosts, totalPages } = await getPostsByAuthor(authorIds, pageNumber, POSTS_PER_PAGE);
 
-// Don't render empty author archives (e.g. legacy WP accounts like /author/admin
-// with zero published posts) — serve a real 404 so they're not shown or indexed.
-if (posts.length === 0) {
+// Don't render empty author archives (e.g. legacy WP accounts with zero published posts) or
+// pages past the last one — serve a real 404 so they're not shown or indexed.
+if (posts.length === 0 || pageNumber > totalPages) {
   return Astro.rewrite('/404');
 }
 
+// Profile URL (schema / breadcrumb). The paginated URL is the page's own canonical, set by BaseLayout.
 const currentUrl = `https://fintech24h.com/author/${slug}`;
+const pageLabel = pageNumber > 1 ? `, Page ${pageNumber}` : '';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
@@ -137,8 +151,8 @@ const phatProducts = [
 ---
 
 <BaseLayout
-  title={`${authorName} — ${authorRole} | Fintech24h CPO Profile`}
-  description={authorBio}
+  title={`${authorName} — ${authorRole}${pageLabel} | Fintech24h CPO Profile`}
+  description={pageNumber > 1 ? `Publications by ${authorName}, page ${pageNumber} of ${totalPages}. ${authorBio}`.slice(0, 300) : authorBio}
   schema={personSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
@@ -426,6 +440,8 @@ const phatProducts = [
           </p>
         </div>
       )}
+
+      <Pagination currentPage={pageNumber} totalPages={totalPages} basePath={`/author/${slug}`} label="Publications pagination" />
 
     </div>
   </section>

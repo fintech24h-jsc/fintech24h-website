@@ -1,0 +1,39 @@
+---
+// src/pages/blog/category/[category]/page/[page].astro — /blog/category/knowledge/page/2, …
+export const prerender = false;
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../../../../components/seo/BreadcrumbSchema.astro';
+import CategoryListing from '../../../../../components/sections/CategoryListing.astro';
+import { getAllCategories, getCategoryPostsPage } from '../../../../../lib/wordpress';
+
+const { category: categorySlug, page: rawPage = '' } = Astro.params;
+if (!categorySlug || !/^\d+$/.test(rawPage)) return Astro.rewrite('/404');
+const pageNumber = Number(rawPage);
+if (pageNumber <= 1) return Astro.redirect(`/blog/category/${categorySlug}`, 301);
+if (Astro.url.search) return Astro.redirect(`/blog/category/${categorySlug}/page/${pageNumber}`, 301);
+
+Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+const allCategories = await getAllCategories();
+const category = allCategories.find((c) => c.slug === categorySlug);
+if (!category) return Astro.rewrite('/404');
+
+const { posts, totalPages } = await getCategoryPostsPage(categorySlug, pageNumber);
+if (posts.length === 0 || pageNumber > totalPages) return Astro.rewrite('/404');
+
+const base = `https://fintech24h.com/blog/category/${category.slug}`;
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Blog', item: 'https://fintech24h.com/blog' },
+  { name: category.name, item: base },
+  { name: `Page ${pageNumber}`, item: `${base}/page/${pageNumber}` }
+];
+---
+
+<BaseLayout
+  title={`${category.name} Archives, Page ${pageNumber} — Insights Blog`}
+  description={`Page ${pageNumber} of ${totalPages}: research and growth playbooks in ${category.name} from the Fintech24h strategy team.`}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+  <CategoryListing category={category} allCategories={allCategories} posts={posts} currentPage={pageNumber} totalPages={totalPages} />
+</BaseLayout>

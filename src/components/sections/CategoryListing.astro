@@ -1,0 +1,139 @@
+---
+// src/components/sections/CategoryListing.astro
+// Header, category chips, article grid and pagination shared by /blog/category/{slug} and its /page/N.
+import Pagination from '../ui/Pagination.astro';
+import { formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
+import type { WPPost, WPCategory } from '../../lib/wordpress';
+import { getReadingTime } from '../../lib/utils';
+
+interface Props {
+  category: Pick<WPCategory, 'name' | 'slug' | 'description'>;
+  allCategories: WPCategory[];
+  posts: WPPost[];
+  currentPage: number;
+  totalPages: number;
+}
+const { category, allCategories, posts, currentPage, totalPages } = Astro.props;
+---
+
+  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="Blog Category Catalog">
+    <!-- Ambient background glows -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-purple w-[600px] h-[600px] absolute -top-40 -left-32 opacity-15"></div>
+      <div class="bg-orb bg-orb-cyan w-[500px] h-[500px] absolute bottom-10 -right-32 opacity-10"></div>
+      <div class="grid-pattern absolute inset-0 opacity-20"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+          <span class="text-xs font-semibold text-[var(--accent-cyan)] font-body uppercase tracking-wider">Category Archives</span>
+        </div>
+        <h1 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-6">
+          Category: {category.name}
+        </h1>
+        <p class="text-lg text-[var(--text-secondary)] font-body leading-relaxed">
+          {category.description || `Browse marketing playbooks and research related to ${category.name}.`}
+        </p>
+      </div>
+
+      <!-- Categories Filter bar -->
+      <div class="flex flex-wrap justify-center gap-3 mb-16" data-animate="fade-up">
+        <a
+          href="/blog"
+          class="px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] hover:border-[var(--border-hover)] text-xs font-semibold font-body text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all"
+        >
+          All Articles
+        </a>
+        {allCategories.map((c) => (
+          <a
+            href={`/blog/category/${c.slug}`}
+            class:list={[
+              "px-4 py-2 rounded-full border text-xs font-semibold font-body transition-all",
+              c.slug === category.slug
+                ? "border-[var(--accent-cyan)] bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] text-[var(--accent-cyan)]"
+                : "border-[var(--border-default)] bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)]"
+            ]}
+          >
+            {c.name} ({c.count || 0})
+          </a>
+        ))}
+      </div>
+
+      <!-- Articles list grid -->
+      {posts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-animate="stagger">
+          {posts.map((post) => {
+            const rTime = getReadingTime(post.content.rendered);
+            const excerptText = getExcerpt(post, 140);
+            const featuredImage = getFeaturedImage(post);
+            return (
+              <article class="card-default p-6 flex flex-col justify-between group" data-animate-child>
+                <div>
+                  {/* Image (clickable → article; hidden from tab order since the
+                      title below is the primary accessible link to the same post) */}
+                  {featuredImage.url && (
+                    <a
+                      href={`/blog/${post.slug}`}
+                      tabindex="-1"
+                      aria-hidden="true"
+                      class="block relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-[var(--border-subtle)] shadow-inner"
+                    >
+                      <img
+                        src={featuredImage.url}
+                        alt={featuredImage.alt}
+                        width="800"
+                        height="500"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </a>
+                  )}
+
+                  <!-- Info row -->
+                  <div class="flex items-center gap-3 text-xs text-[var(--text-muted)] font-body mb-4">
+                    <span>{formatDate(post.date)}</span>
+                    <span class="w-1 h-1 rounded-full bg-[var(--text-muted)]"></span>
+                    <span>{rTime} min read</span>
+                  </div>
+
+                  <!-- Title & Summary -->
+                  <h2 class="font-display text-lg font-bold text-[var(--text-primary)] mb-3 line-clamp-2">
+                    <a href={`/blog/${post.slug}`} class="group-hover:text-[var(--accent-cyan)] hover:text-[var(--accent-cyan)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
+                      {post.title.rendered}
+                    </a>
+                  </h2>
+                  <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6 line-clamp-3">
+                    {excerptText}
+                  </p>
+                </div>
+
+                <!-- Redirect link -->
+                <div class="flex justify-end pt-4 border-t border-[var(--border-subtle)] mt-6">
+                  <a
+                    href={`/blog/${post.slug}`}
+                    class="text-[10px] font-semibold text-[var(--accent-cyan)] hover:text-[var(--accent-cyan-dim)] font-display uppercase tracking-wider flex items-center gap-1.5 transition-colors"
+                    aria-label={`Read ${post.title.rendered}`}
+                  >
+                    Read Article
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-[var(--text-secondary)] font-body">No articles found in this category yet. Check back soon!</p>
+        </div>
+      )}
+
+      <Pagination currentPage={currentPage} totalPages={totalPages} basePath={`/blog/category/${category.slug}`} label={`${category.name} pagination`} />
+
+    </div>
+  </section>

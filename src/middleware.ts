@@ -61,9 +61,12 @@ export const onRequest = defineMiddleware((context, next) => {
   const normalizedPathname = canonicalPathname(target.pathname);
   const isLegacyCategory = /^\/category\/([^/]+)\/?$/i.exec(target.pathname);
   const isLegacyPagedCategory = /^\/category\/([^/]+)\/page\/\d+\/?$/i.exec(target.pathname);
-  const isLegacyBlogPage = /^\/blog\/page\/\d+\/?$/i.test(normalizedPathname);
+  // /blog/page/N (N >= 2) is a real paginated page; only the meaningless page 0/1 collapses to /blog.
+  const isLegacyBlogPage = /^\/blog\/page\/(?:0|1)\/?$/i.test(normalizedPathname);
   const isLegacyBlogFeed = /^\/blog\/feed\/?$/i.test(normalizedPathname);
-  const isLegacyAdminArchive = /^\/author\/admin(?:\/page\/\d+)?\/?$/i.test(normalizedPathname);
+  // Only the bare /author/admin archive (and its query variants) collapses here; /author/admin/page/N
+  // is left to the author route, which 301s it to the matching /author/phat-vo/page/N.
+  const isLegacyAdminArchive = /^\/author\/admin\/?$/i.test(normalizedPathname);
   const isBlogIndex = normalizedPathname === '/blog';
   // With only one season, /dealmakers/ is a stub that just points at it —
   // a real 301 here beats the page's client-side meta-refresh (no flash,
@@ -92,8 +95,7 @@ export const onRequest = defineMiddleware((context, next) => {
       target.pathname = '/rss.xml';
       target.search = '';
     } else if (isLegacyBlogPage) {
-      // Historic WordPress pagination has no one-to-one page in the current
-      // blog, so consolidate it with the canonical blog index.
+      // Page 0/1 is the blog index itself, so consolidate it with /blog.
       target.pathname = '/blog';
       target.search = '';
     } else if (isLegacyAdminArchive) {
@@ -105,6 +107,9 @@ export const onRequest = defineMiddleware((context, next) => {
       // The blog index intentionally has no query-string variants. Preserve the
       // existing behaviour, but collapse the URL in the same permanent redirect.
     } else if (isBlogIndex && target.search) {
+      // Legacy ?paged=N / ?page=N goes to the real paginated URL; any other query is dropped.
+      const legacyPage = Number(target.searchParams.get('paged') ?? target.searchParams.get('page'));
+      if (Number.isInteger(legacyPage) && legacyPage >= 2) target.pathname = `/blog/page/${legacyPage}`;
       target.search = '';
     }
   }

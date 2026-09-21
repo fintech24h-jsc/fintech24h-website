@@ -1,0 +1,37 @@
+---
+// src/pages/blog/page/[page].astro — /blog/page/2, /blog/page/3, …
+export const prerender = false;
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
+import BlogIndexSection from '../../../components/sections/BlogIndexSection.astro';
+import { getPostsPage, getAllCategories } from '../../../lib/wordpress';
+
+const raw = Astro.params.page ?? '';
+if (!/^\d+$/.test(raw)) return Astro.rewrite('/404');
+const pageNumber = Number(raw);
+// Page 1 is the blog index itself — one canonical URL, no duplicate.
+if (pageNumber <= 1) return Astro.redirect('/blog', 301);
+if (Astro.url.search) return Astro.redirect(`/blog/page/${pageNumber}`, 301);
+
+Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+const { posts, totalPages } = await getPostsPage(pageNumber);
+// Past the last page (WordPress answers 400) or WordPress unreachable: real 404, never a blank 200.
+if (posts.length === 0 || pageNumber > totalPages) return Astro.rewrite('/404');
+
+const categories = await getAllCategories();
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Blog', item: 'https://fintech24h.com/blog' },
+  { name: `Page ${pageNumber}`, item: `https://fintech24h.com/blog/page/${pageNumber}` }
+];
+---
+
+<BaseLayout
+  title={`Insights — Blockchain & Web3 Marketing Blog, Page ${pageNumber} | Fintech24h`}
+  description={`Page ${pageNumber} of ${totalPages}: strategy, trends, and insights on Blockchain, Fintech & AI marketing from the Fintech24h team.`}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+  <BlogIndexSection posts={posts} categories={categories} currentPage={pageNumber} totalPages={totalPages} />
+</BaseLayout>
