@@ -92,3 +92,9 @@ ${urls}
     },
   });
 };
+
+// Validators and some crawlers probe with HEAD; the old static file answered it.
+export const HEAD: APIRoute = async (context) => {
+  const res = await GET(context);
+  return new Response(null, { status: res.status, headers: res.headers });
+};
