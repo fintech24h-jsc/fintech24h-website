@@ -58,6 +58,7 @@ const authorImage = member?.image || user.avatar_urls?.['96'] || 'https://fintec
 const signatureColor = member?.signatureColor || 'linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%)';
 const telegram = member?.telegram || 'https://telegram.me/fintech24h';
 const linkedin = member?.linkedin || 'https://www.linkedin.com/company/fintech24h/';
+const email = member?.email; // Optional — only shown when the team member has one set
 
 // Authentic CPO and Co-founder biography details for Phat Vo (No fabricated statistics)
 const phatBio = "Co-Founder & Chief Product Officer of Fintech24h.com. Phat Vo directs the technical product roadmap, engineering nodes, and design systems for the entire Fintech24h ecosystem. He oversees the development of core platforms, manages cross-functional product teams, and spearheads business operations, ensuring seamless Web3 integration and client growth.";
@@ -109,6 +110,7 @@ const personSchema = {
     "caption": authorName
   },
   "url": currentUrl,
+  ...(email ? { "email": email } : {}),
   "sameAs": [
     telegram,
     linkedin
@@ -235,6 +237,12 @@ const phatProducts = [
               <span class="font-mono text-[10px] uppercase text-[var(--text-secondary)] opacity-70 group-hover/btn:text-[var(--text-primary)] transition-colors">LinkedIn Hub</span>
               <span class="text-[var(--accent-purple)] group-hover/btn:translate-x-0.5 transition-transform" style={{ color: isPhatVo ? '#7c5cfc' : '#00c8f0' }}>→</span>
             </a>
+            {email && (
+              <a href={`mailto:${email}`} class="flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-faint)] hover:border-cyan-400/30 hover:bg-cyan-400/5 hover:shadow-[0_0_15px_rgba(0,200,240,0.1)] transition-all duration-300 group/btn">
+                <span class="font-mono text-[10px] uppercase text-[var(--text-secondary)] opacity-70 group-hover/btn:text-[var(--text-primary)] transition-colors truncate mr-2">{email}</span>
+                <span class="shrink-0 text-[var(--accent-cyan)] group-hover/btn:translate-x-0.5 transition-transform" style={{ color: isPhatVo ? '#00c8f0' : '#7c5cfc' }}>→</span>
+              </a>
+            )}
           </div>
         </div>
 

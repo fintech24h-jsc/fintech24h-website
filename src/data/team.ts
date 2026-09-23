@@ -4,6 +4,7 @@ export interface TeamMember {
   bio: string;
   telegram: string;
   linkedin: string;
+  email?: string; // Optional public contact email, shown on the author profile page when present
   signatureColor: string; // Gradient color for the abstract interactive orb
   image?: string; // Avatar URL
   specs?: string[]; // Operational node registry lines shown on the operator card
@@ -49,6 +50,7 @@ export const team: TeamMember[] = [
     bio: 'Leading product research and development, running product and service operations, and growing strategic partner and client relationships across the Web3 ecosystem.',
     telegram: 'https://telegram.me/phatvt',
     linkedin: 'https://www.linkedin.com/in/phatvt/',
+    email: 'phat@fintech24h.com',
     signatureColor: 'linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%)', // Cyber Glow
     image: 'https://fintech24h.com/wp-content/uploads/2026/07/Phat-vo-300x300.png',
     specs: ['Product Research & Development', 'Product & Service Operations', 'Partner & Client Development']
