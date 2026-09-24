@@ -5,31 +5,63 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
 import CategoryListing from '../../../components/sections/CategoryListing.astro';
 import { getAllCategories, getCategoryPostsPage } from '../../../lib/wordpress';
+import { getCategorySeo } from '../../../data/categorySeo';
+
+const { category: categorySlug } = Astro.params;
+if (!categorySlug) return Astro.rewrite('/404');
+if (Astro.url.search) return Astro.redirect(`/blog/category/${categorySlug}`, 301);
 
 Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
 
-const { category: categorySlug } = Astro.params;
 const allCategories = await getAllCategories();
-const category = allCategories.find(c => c.slug === categorySlug) || {
-  id: 0,
-  name: categorySlug || 'Category',
-  slug: categorySlug || 'category',
-  count: 0,
-  description: ''
+const sourceCategory = allCategories.find(c => c.slug === categorySlug);
+if (!sourceCategory) return Astro.rewrite('/404');
+
+const categoryCopy = getCategorySeo(sourceCategory.slug, sourceCategory.name);
+const category = {
+  ...sourceCategory,
+  description: sourceCategory.description || categoryCopy.intro,
 };
-const { posts, totalPages } = categorySlug ? await getCategoryPostsPage(categorySlug, 1) : { posts: [], totalPages: 0 };
+const { posts, totalPages } = await getCategoryPostsPage(categorySlug, 1);
+const canonical = `https://fintech24h.com/blog/category/${category.slug}`;
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Blog', item: 'https://fintech24h.com/blog' },
-  { name: category.name, item: `https://fintech24h.com/blog/category/${category.slug}` }
+  { name: categoryCopy.title, item: canonical }
 ];
+
+const categorySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: categoryCopy.title,
+  description: category.description,
+  url: canonical,
+  isPartOf: {
+    '@type': 'Blog',
+    name: 'Fintech24h Insights',
+    url: 'https://fintech24h.com/blog',
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: posts.length,
+    itemListElement: posts.map((post, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: `https://fintech24h.com/blog/${post.slug}`,
+      name: post.title.rendered,
+    })),
+  },
+};
 ---
 
 <BaseLayout
-  title={`${category.name} Archives — Insights Blog`}
-  description={`Read our latest research and growth playbooks in ${category.name} from the Fintech24h strategy team.`}
+  title={`${categoryCopy.title} | Fintech24h`}
+  description={categoryCopy.metaDescription}
+  canonical={canonical}
+  schema={categorySchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
-  <CategoryListing category={category} allCategories={allCategories} posts={posts} currentPage={1} totalPages={totalPages} />
+  <CategoryListing category={category} allCategories={allCategories} posts={posts} currentPage={1} totalPages={totalPages} heading={categoryCopy.title} />
 </BaseLayout>

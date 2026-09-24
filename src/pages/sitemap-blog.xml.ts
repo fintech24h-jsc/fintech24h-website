@@ -17,8 +17,8 @@
 // that ran while WordPress was slow/rate-limited used to ship an EMPTY feed.
 export const prerender = false;
 import type { APIRoute } from 'astro';
-import { getAllPosts } from '../lib/wordpress';
-import type { WPPost } from '../lib/wordpress';
+import { getAllCategories, getAllPosts } from '../lib/wordpress';
+import type { WPCategory, WPPost } from '../lib/wordpress';
 
 const PER_PAGE = 100;
 // Safety cap on how many pages we're willing to request (600 posts of
@@ -60,7 +60,7 @@ async function getEveryPost(): Promise<WPPost[]> {
 }
 
 export const GET: APIRoute = async () => {
-  const posts = await getEveryPost();
+  const [posts, categories] = await Promise.all([getEveryPost(), getAllCategories()]);
 
   // An empty sitemap is worse than none: crawlers cache it and drop URLs.
   // WordPress being slow or rate-limited must surface as a retryable 503.
@@ -71,13 +71,26 @@ export const GET: APIRoute = async () => {
     });
   }
 
-  const urls = posts
+  const postUrls = posts
     .map((post) => {
       const loc = escapeXml(`https://fintech24h.com/blog/${post.slug}`);
       const lastmod = new Date(post.modified || post.date).toISOString();
       return `  <url><loc>${loc}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`;
     })
     .join('\n');
+
+  // Archive pages are server-rendered, so Astro's static sitemap cannot see
+  // them. Including each public category here gives crawlers a direct,
+  // canonical discovery path to the editorial hubs and their linked articles.
+  const categoryUrls = categories
+    .map((category: WPCategory) => `  <url><loc>${escapeXml(`https://fintech24h.com/blog/category/${category.slug}`)}</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>`)
+    .join('\n');
+
+  const urls = [
+    '  <url><loc>https://fintech24h.com/blog</loc><changefreq>daily</changefreq><priority>0.8</priority></url>',
+    categoryUrls,
+    postUrls,
+  ].filter(Boolean).join('\n');
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

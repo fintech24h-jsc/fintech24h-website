@@ -68,7 +68,7 @@ const canonicalHref = canonicalUrl.href;
   <title>{siteTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalHref} />
-  {noIndex && <meta name="robots" content="noindex, nofollow" />}
+  {noIndex && <meta name="robots" content="noindex, follow" />}
   {!noIndex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
 
   <!-- Open Graph -->

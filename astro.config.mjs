@@ -24,8 +24,19 @@ export default defineConfig({
       },
     }),
     sitemap({
+      // `/blog` and `/dealmakers` are dynamic routes whose public canonical
+      // URL does not end in a slash. Exclude Astro's static directory forms
+      // (which redirect) and add only the canonical blog hub below.
+      customPages: ['https://fintech24h.com/blog'],
+      // The post/category sitemap is generated at runtime from WordPress, so
+      // register it in the sitemap index as well as robots.txt.
+      customSitemaps: ['https://fintech24h.com/sitemap-blog.xml'],
       // Case studies are excluded until the CMS exposes verified records.
-      filter: (page) => !page.includes('/wp-admin') && !page.includes('/wp-json') && !page.includes('/case-studies'),
+      filter: (page) => !page.includes('/wp-admin')
+        && !page.includes('/wp-json')
+        && !page.includes('/case-studies')
+        && page !== 'https://fintech24h.com/blog/'
+        && page !== 'https://fintech24h.com/dealmakers/',
       // Priority & changefreq per URL type — helps Google prioritize crawl budget
       serialize(item) {
         const url = item.url;

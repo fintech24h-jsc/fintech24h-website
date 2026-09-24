@@ -2,8 +2,8 @@
 // src/layouts/BlogLayout.astro
 import BaseLayout from './BaseLayout.astro';
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
-import { formatDate, getFeaturedImage, getPostAuthor, getSeoTitle } from '../lib/wordpress';
-import { getReadingTime, getTableOfContents, decodeHtmlEntities, stripEmbeddedJsonLd } from '../lib/utils';
+import { formatDate, getExcerpt, getFeaturedImage, getPostAuthor, getSeoTitle, stripHtml } from '../lib/wordpress';
+import { getReadingTime, getTableOfContents, stripEmbeddedJsonLd } from '../lib/utils';
 import type { WPPost } from '../lib/wordpress';
 
 interface Props {
@@ -26,13 +26,30 @@ const postAuthor = getPostAuthor(post);
 const sanitizedContent = stripEmbeddedJsonLd(post.content.rendered);
 const { html: contentHtml, items: tocItems } = getTableOfContents(sanitizedContent);
 const hasToc = tocItems.length >= 3;
+// Some legacy WordPress posts have no manual excerpt. Use their visible body
+// copy for a useful metadata fallback instead of emitting an empty
+// description. A post with no body at all remains accessible for legacy
+// readers, but is not an indexable article until its publisher adds content.
+const rawExcerpt = stripHtml(post.excerpt.rendered);
+const articleTitle = stripHtml(post.title.rendered);
+// Exclude Easy Table of Contents markup from fallback snippets. It is page
+// navigation, not the article's answer or introduction.
+const contentForDescription = sanitizedContent.replace(/<div\b[^>]*\bid=["']ez-toc-container["'][\s\S]*?<\/nav>\s*<\/div>/i, '');
+const contentWithoutHeadings = stripHtml(contentForDescription.replace(/<h[1-6]\b[^>]*>[\s\S]*?<\/h[1-6]>/gi, ''));
+const contentWithoutRepeatedTitle = contentWithoutHeadings.replace(new RegExp(`^${articleTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*`, 'i'), '').trim();
+// WordPress sometimes auto-populates an empty excerpt with only the title.
+// Prefer a genuine excerpt, otherwise use the first visible body copy after
+// headings/title so the search snippet helps a reader decide to click.
+const usableExcerpt = rawExcerpt.toLowerCase() === articleTitle.toLowerCase() ? '' : rawExcerpt;
+const postDescription = (usableExcerpt || contentWithoutRepeatedTitle || contentWithoutHeadings || getExcerpt(post, 160) || articleTitle).slice(0, 160).trim();
+const hasIndexableBody = stripHtml(sanitizedContent).length > 0;
 
 // Article schema representation
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": post.title.rendered,
-  "description": decodeHtmlEntities(post.excerpt.rendered.replace(/<[^>]*>/g, '')).trim(),
+  "description": postDescription || post.title.rendered,
   "image": featuredImage.url,
   "datePublished": post.date,
   "dateModified": post.modified,
@@ -73,10 +90,11 @@ const breadcrumbs = [
 
 <BaseLayout
   title={seoTitle}
-  description={decodeHtmlEntities(post.excerpt.rendered.replace(/<[^>]*>/g, '')).slice(0, 160).trim()}
+  description={postDescription || post.title.rendered}
   ogImage={featuredImage.url}
   ogType="article"
   schema={articleSchema}
+  noIndex={!hasIndexableBody}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
@@ -388,7 +406,7 @@ const breadcrumbs = [
         progressBar.style.width = pct + '%';
       }
 
-      function setActiveLink(id) {
+      function setActiveLink(id: string) {
         for (var i = 0; i < tocLinks.length; i++) {
           var link = tocLinks[i];
           link.classList.toggle('is-active', link.dataset.tocLink === id);
@@ -410,7 +428,7 @@ const breadcrumbs = [
 
       var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       tocLinks.forEach(function (link) {
-        link.addEventListener('click', function (e) {
+        link.addEventListener('click', function (e: MouseEvent) {
           var id = link.dataset.tocLink;
           var target = id ? document.getElementById(id) : null;
           if (!target) return;
