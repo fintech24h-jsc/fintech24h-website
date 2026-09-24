@@ -48,6 +48,10 @@ export default defineConfig({
         if (/\/services\/[^/]+\/?$/.test(url)) {
           return { ...item, changefreq: 'monthly', priority: 0.9 };
         }
+        // Vietnam SEO pillar page — same crawl priority as a core service page
+        if (url.includes('/blockchain-marketing-agency-vietnam')) {
+          return { ...item, changefreq: 'monthly', priority: 0.9 };
+        }
         // DealMakers' Club — active revenue-driving campaign, not a static page
         if (/\/dealmakers\//.test(url)) {
           return { ...item, changefreq: 'weekly', priority: 0.9 };

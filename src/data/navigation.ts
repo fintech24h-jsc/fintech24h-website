@@ -40,6 +40,7 @@ export const footerLinks = {
     { label: 'About Us', href: '/about/' },
     { label: 'Our Process', href: '/#process' },
     ...(CASE_STUDIES_ENABLED ? [{ label: 'Case Studies', href: '/case-studies/' }] : []),
+    { label: 'Blockchain Marketing Agency Vietnam', href: '/blockchain-marketing-agency-vietnam/' },
     { label: 'Contact Sales', href: '/contact/' }
   ],
   resources: [
