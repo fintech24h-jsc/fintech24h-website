@@ -41,7 +41,7 @@ export const team: TeamMember[] = [
     telegram: 'https://telegram.me/vincentnguyen0501',
     linkedin: 'https://www.linkedin.com/in/vincentnguyen0501/',
     signatureColor: 'linear-gradient(135deg, #ff6b83 0%, #f0a278 100%)', // Solar Flare
-    image: 'https://fintech24h.com/wp-content/uploads/2026/09/Vincent.jpeg',
+    image: 'https://fintech24h.com/wp-content/uploads/2026/09/Vincent-Nguyen.jpeg',
     specs: ['Web3 Growth Architecture', 'Global Ecosystem Seeding', 'Launchpad Advisory Node']
   },
   {
@@ -52,7 +52,7 @@ export const team: TeamMember[] = [
     linkedin: 'https://www.linkedin.com/in/phatvt/',
     email: 'phat@fintech24h.com',
     signatureColor: 'linear-gradient(135deg, #00c8f0 0%, #7c5cfc 100%)', // Cyber Glow
-    image: 'https://fintech24h.com/wp-content/uploads/2026/07/Phat-vo-300x300.png',
+    image: 'https://fintech24h.com/wp-content/uploads/2026/09/Phat-Vo-Co-Founder-Fintech24h-scaled.jpg',
     specs: ['Product Research & Development', 'Product & Service Operations', 'Partner & Client Development']
   },
   {
