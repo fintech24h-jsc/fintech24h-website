@@ -123,7 +123,7 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'BD Ventures', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/BD-Venture.png', websiteUrl: 'https://www.bdventures.vn/', confirmed: true },
   { name: 'Unity Hub', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Unity-Hub.png', websiteUrl: 'https://unityhub-inc.ai/', confirmed: true },
   { name: 'BD GemX', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/BD-GemX-dealmakers-fintech24h.png', websiteUrl: 'https://x.com/bd_gemx', confirmed: true },
-  { name: 'Captain Capital', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Captain-Capital-logo-is-horizontal-and-cut-out-ver-2.png', confirmed: true },
+  { name: 'Captain Capital', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Captain-Capital-logo-is-horizontal-and-cut-out-ver-2.png', websiteUrl: 'https://x.com/CapCapital68', confirmed: true },
   { name: 'Atok', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Atok-dealmakers-club-ss3.png', websiteUrl: 'https://atok.ai/', confirmed: true },
 ];
 
