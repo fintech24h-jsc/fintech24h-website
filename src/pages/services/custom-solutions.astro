@@ -2,7 +2,28 @@
 // src/pages/services/custom-solutions.astro
 // Build Trigger: 2026-07-11T12:05:00
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import Badge from '../../components/ui/Badge.astro';
+
+const canonical = 'https://fintech24h.com/services/custom-solutions/';
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com/' },
+  { name: 'Services', item: 'https://fintech24h.com/services/' },
+  { name: 'Custom Solutions', item: canonical },
+];
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${canonical}#service`,
+  name: 'Custom AI, Blockchain & Web3 Solutions',
+  serviceType: 'Custom AI, blockchain, Web3 and growth solutions',
+  description: 'Tailored AI, blockchain, Web3 and growth engagements for teams that need a scoped strategy, execution plan and measurable delivery milestones.',
+  url: canonical,
+  provider: {
+    '@id': 'https://fintech24h.com/#organization',
+  },
+  areaServed: ['VN', 'SG', 'AE', 'ID', 'TH', 'IN'],
+};
 
 const categories = [
   {
@@ -162,9 +183,12 @@ const steps = [
 ---
 
 <BaseLayout
-  title="Custom Solutions — Fintech24h"
-  description="Tailored AI, Blockchain & Fintech Solutions for Every Business. Our Custom Solutions service creates personalized strategies that align with your business objectives."
+  title="Custom AI, Blockchain & Web3 Solutions | Fintech24h"
+  description="Tailored AI, blockchain, Web3 and growth solutions for teams that need a focused strategy, delivery roadmap and measurable milestones."
+  canonical={canonical}
+  schema={serviceSchema}
 >
+  <BreadcrumbSchema items={breadcrumbs} />
   <div class="relative overflow-hidden pt-32 pb-24 min-h-screen text-[var(--text-primary)] bg-[var(--bg-primary)]">
     
     <!-- Deep Space Background glow -->

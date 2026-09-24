@@ -17,7 +17,7 @@
 // that ran while WordPress was slow/rate-limited used to ship an EMPTY feed.
 export const prerender = false;
 import type { APIRoute } from 'astro';
-import { getAllCategories, getAllPosts } from '../lib/wordpress';
+import { getAllCategories, getAllPosts, stripHtml } from '../lib/wordpress';
 import type { WPCategory, WPPost } from '../lib/wordpress';
 
 const PER_PAGE = 100;
@@ -62,16 +62,21 @@ async function getEveryPost(): Promise<WPPost[]> {
 export const GET: APIRoute = async () => {
   const [posts, categories] = await Promise.all([getEveryPost(), getAllCategories()]);
 
+  // Match the page-level robots decision in BlogLayout: an empty historic
+  // WordPress body is intentionally noindex, so it must not also be submitted
+  // in the XML sitemap as an index candidate.
+  const indexablePosts = posts.filter((post) => stripHtml(post.content.rendered).length > 0);
+
   // An empty sitemap is worse than none: crawlers cache it and drop URLs.
   // WordPress being slow or rate-limited must surface as a retryable 503.
-  if (posts.length === 0) {
+  if (indexablePosts.length === 0) {
     return new Response('Sitemap temporarily unavailable', {
       status: 503,
       headers: { 'Retry-After': '300', 'Cache-Control': 'no-store' },
     });
   }
 
-  const postUrls = posts
+  const postUrls = indexablePosts
     .map((post) => {
       const loc = escapeXml(`https://fintech24h.com/blog/${post.slug}`);
       const lastmod = new Date(post.modified || post.date).toISOString();

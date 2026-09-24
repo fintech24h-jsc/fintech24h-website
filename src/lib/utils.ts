@@ -75,6 +75,19 @@ export function stripEmbeddedJsonLd(html: string): string {
 }
 
 /**
+ * A rendered blog page already supplies its single document H1 from the
+ * WordPress post title. Older WordPress bodies sometimes contain one or more
+ * additional H1 elements, which leaves the public document with an invalid
+ * heading outline. Preserve the editors' wording and attributes, but demote
+ * those body headings to H2 so the article begins with one clear H1.
+ */
+export function normalizeArticleHeadingHierarchy(html: string): string {
+  return html
+    .replace(/<h1(\b[^>]*)>/gi, '<h2$1>')
+    .replace(/<\/h1\s*>/gi, '</h2>');
+}
+
+/**
  * Injects an `id` into every <h2> in a WordPress content HTML string (WP does
  * not add these) and returns the matching table-of-contents entries. Respects
  * any id WordPress already set instead of overwriting it.

@@ -19,6 +19,7 @@ const WP_API_BASE = (import.meta.env?.WP_API_URL || 'https://origin.fintech24h.c
 // Same origin, different REST namespace — the fintech24h-team-directory
 // plugin's Ecosystem Links live outside wp/v2 (they're not a post type).
 const WP_JSON_ROOT = WP_API_BASE.replace(/\/wp\/v2$/, '');
+export const DEFAULT_OG_IMAGE = 'https://fintech24h.com/wp-content/uploads/2026/07/OG-FI24H.png';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -428,7 +429,11 @@ export function getExcerpt(post: WPPost, maxLength = 160): string {
 export function getFeaturedImage(post: WPPost): { url: string; alt: string } {
   const media = post._embedded?.['wp:featuredmedia']?.[0];
   return {
-    url: media?.source_url || '/images/default-og.jpg',
+    // Some historic WordPress posts have no featured image. The previous
+    // relative fallback pointed at a non-existent asset, producing a 404 in
+    // og:image and BlogPosting.image. Use the verified site-wide OG image,
+    // whose absolute URL is valid for crawlers and social scrapers.
+    url: media?.source_url || DEFAULT_OG_IMAGE,
     alt: media?.alt_text || stripHtml(post.title.rendered),
   };
 }

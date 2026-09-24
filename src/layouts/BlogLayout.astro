@@ -3,7 +3,7 @@
 import BaseLayout from './BaseLayout.astro';
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 import { formatDate, getExcerpt, getFeaturedImage, getPostAuthor, getSeoTitle, stripHtml } from '../lib/wordpress';
-import { getReadingTime, getTableOfContents, stripEmbeddedJsonLd } from '../lib/utils';
+import { getReadingTime, getTableOfContents, normalizeArticleHeadingHierarchy, stripEmbeddedJsonLd } from '../lib/utils';
 import type { WPPost } from '../lib/wordpress';
 
 interface Props {
@@ -23,7 +23,7 @@ const postAuthor = getPostAuthor(post);
 
 // Table of contents: WordPress doesn't add ids to headings, so inject them
 // and only show the sidebar nav when there's enough structure to be useful.
-const sanitizedContent = stripEmbeddedJsonLd(post.content.rendered);
+const sanitizedContent = normalizeArticleHeadingHierarchy(stripEmbeddedJsonLd(post.content.rendered));
 const { html: contentHtml, items: tocItems } = getTableOfContents(sanitizedContent);
 const hasToc = tocItems.length >= 3;
 // Some legacy WordPress posts have no manual excerpt. Use their visible body
