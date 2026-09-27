@@ -41,6 +41,8 @@ export const footerLinks = {
     { label: 'Our Process', href: '/#process' },
     ...(CASE_STUDIES_ENABLED ? [{ label: 'Case Studies', href: '/case-studies/' }] : []),
     { label: 'Blockchain Marketing Agency Vietnam', href: '/blockchain-marketing-agency-vietnam/' },
+    { label: 'Blockchain Marketing Agency Singapore', href: '/blockchain-marketing-agency-singapore/' },
+    { label: 'Blockchain Marketing Agency Dubai', href: '/blockchain-marketing-agency-dubai/' },
     { label: 'Contact Sales', href: '/contact/' }
   ],
   resources: [

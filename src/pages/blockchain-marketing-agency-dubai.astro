@@ -1,0 +1,308 @@
+---
+// src/pages/blockchain-marketing-agency-dubai.astro
+// SEO pillar page targeting "Blockchain/Crypto/Web3 Marketing Agency Dubai" and UAE variants.
+// Structurally distinct from both the Vietnam page (centered hero, 4-pillar grid, card FAQ) and
+// the Singapore page (split hero, numbered list, all-visible FAQ): this page uses an asymmetric
+// editorial hero with a single long headline, a vertical narrative "Why Dubai" timeline, a
+// definition-list services table, and an accordion FAQ with border-left chrome instead of full
+// cards. Accent is solid purple (no cyan mixed in). No LocalBusiness schema — the company has no
+// physical office in the UAE, only Service + areaServed, consistent with the existing
+// "no physical branch entities, on-the-ground partners" claim already on the homepage FAQ.
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import ProcessSection from '../components/sections/ProcessSection.astro';
+import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
+
+const PAGE_URL = 'https://fintech24h.com/blockchain-marketing-agency-dubai/';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Blockchain Marketing Agency Dubai', item: PAGE_URL }
+];
+
+const services = [
+  { title: 'KOL & Influencer Marketing', slug: 'kol-marketing', desc: 'X-native KOLs with real reach among Dubai and Gulf crypto audiences.' },
+  { title: 'PR & Media', slug: 'pr-media', desc: 'Placements in Gulf News, Zawya and Al Bawaba, alongside Tier-1 crypto press.' },
+  { title: 'Community Growth & Management', slug: 'community-growth', desc: 'Communities built for a market where X and Telegram both matter.' },
+  { title: 'Event Marketing', slug: 'event-marketing', desc: "Activations timed to Dubai's major Web3 and fintech conference calendar." },
+  { title: 'AI Marketing', slug: 'ai-marketing', desc: 'Content tuned for a fast-moving, high-spend audience.' },
+  { title: 'Business Development', slug: 'business-development', desc: 'Introductions to exchanges, VCs and free-zone partners active in the UAE.' }
+];
+
+const whyPoints = [
+  {
+    title: 'A market built on scale',
+    desc: "Dubai's crypto spend and investor appetite run larger per project than most regions. Campaigns here need to match that scale, not scale down a template built for smaller markets."
+  },
+  {
+    title: 'Free zone credibility matters',
+    desc: 'Projects registered in VARA-regulated free zones carry more weight with local investors. Positioning should reflect that from the first press release.'
+  },
+  {
+    title: 'Regional press with real reach',
+    desc: 'Outlets like Gulf News, Zawya and Al Bawaba matter to a Dubai audience the way Bloomberg matters globally. We place in both.'
+  },
+  {
+    title: 'X is the primary channel',
+    desc: "Dubai's crypto community lives on X more than Telegram. KOL and content strategy here is built around that, not adapted from a Telegram-first market."
+  }
+];
+
+const faqs = [
+  {
+    q: 'Which is the best blockchain marketing agency in Dubai?',
+    a: 'Fintech24h runs KOL, PR, community and business development campaigns for blockchain, crypto, Web3 and NFT projects targeting Dubai and the wider UAE, built around X-native KOL relationships and press placements in outlets like Gulf News and Zawya.'
+  },
+  {
+    q: 'Does Fintech24h have an office in Dubai?',
+    a: 'No. We are legally based in Vietnam and work through on-the-ground partners in the UAE, the same model we use across our other regional markets.'
+  },
+  {
+    q: 'Can you help with NFT marketing in Dubai?',
+    a: 'Yes. NFT and GameFi campaigns in this market lean heavily on X-native KOL and community management, both of which are core services.'
+  },
+  {
+    q: 'How much does crypto marketing cost in Dubai?',
+    a: "Budgets scale with scope. A focused campaign starts around $5,000 a month; full-funnel coverage matching Dubai's scale typically runs $15,000 a month and up."
+  },
+  {
+    q: 'What makes Dubai different from Singapore for crypto marketing?',
+    a: "Dubai's audience is more X-native and scale-driven; Singapore's is more institutional and compliance-aware. The channels and tone that work in one rarely transfer directly to the other."
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Blockchain, Crypto & Web3 Marketing Agency in Dubai',
+  description: 'Blockchain and crypto marketing for projects entering Dubai and the wider UAE market: KOL marketing, PR, community growth, and business development for Web3 and NFT projects.',
+  url: PAGE_URL,
+  serviceType: 'Blockchain & Web3 Marketing',
+  provider: {
+    '@type': 'Organization',
+    name: 'Fintech24h',
+    url: 'https://fintech24h.com',
+    logo: 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp'
+  },
+  areaServed: { '@type': 'Country', name: 'United Arab Emirates' },
+  offers: {
+    '@type': 'Offer',
+    url: 'https://fintech24h.com/contact/',
+    availability: 'https://schema.org/InStock',
+    priceCurrency: 'USD'
+  }
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
+---
+
+<BaseLayout
+  title="Blockchain, Crypto & Web3 Marketing Agency in Dubai"
+  description="Fintech24h is a blockchain and crypto marketing agency for projects entering Dubai and the wider UAE market. KOL, PR, community and business development for Web3 and NFT projects."
+  canonical={PAGE_URL}
+  ogImage="https://fintech24h.com/og-dubai.png"
+  schema={combinedSchema}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- ═══════════════════════════ HERO (editorial, asymmetric, single long headline) ═══════════════════════════ -->
+  <section class="relative overflow-hidden pt-28 pb-20 lg:pt-40 lg:pb-28" aria-label="Hero">
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 15% 0%, rgba(124,92,252,0.16) 0%, transparent 60%);" aria-hidden="true"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-purple w-[600px] h-[600px] absolute -top-40 -left-32 opacity-25"></div>
+      <div class="absolute inset-0 grid-pattern" style="opacity: 0.2;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="font-mono text-[10px] lg:text-xs text-[var(--accent-purple)] uppercase tracking-[0.18em] flex items-center gap-2 mb-6" data-animate="fade-up">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] animate-pulse"></span>
+        Dubai &middot; United Arab Emirates
+      </p>
+
+      <h1 class="font-display font-bold leading-[1.15] text-[clamp(1.9rem,4.4vw,3.25rem)] tracking-[-0.02em] mb-8" data-animate="fade-up">
+        <span class="text-[var(--text-primary)]">Blockchain, crypto and Web3 marketing built for </span><span class="text-[var(--accent-purple)]">Dubai's fastest-moving market</span>
+      </h1>
+
+      <p class="text-sm sm:text-base lg:text-lg text-[var(--text-secondary)] font-body leading-relaxed max-w-2xl mb-10" data-animate="fade-up">
+        Dubai moves faster than almost any other crypto market. Fintech24h places projects in front of the region's investors, media and exchanges, with campaigns built for a market that expects scale.
+      </p>
+
+      <div class="flex flex-wrap gap-4" data-animate="fade-up">
+        <a href="#dubai-strategy" class="btn-dxb-primary py-2.5 px-6 lg:py-3 lg:px-7 text-[10px] lg:text-xs">
+          <span>Get a Dubai Market-Entry Plan</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="inline ml-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-dxb-ghost py-2.5 px-6 lg:py-3 lg:px-7 text-[10px] lg:text-xs">
+          <svg class="w-3.5 h-3.5 inline mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          <span>Chat on Telegram</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ TRUST (reused global proof) ═══════════════════ -->
+  <TrustBar />
+
+  <!-- ═══════════════════════ WHY DUBAI (vertical editorial timeline, no cards/tabs) ═══════════════════════ -->
+  <section class="py-14 md:py-28 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Why Dubai">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute -bottom-32 -right-24 opacity-15"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
+          Why Dubai
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
+          A market that expects scale
+        </h2>
+      </div>
+
+      <div class="relative pl-8 border-l-2 border-[var(--border-subtle)] space-y-12" data-animate="stagger">
+        {whyPoints.map((p, i) => (
+          <div class="relative" data-animate-child>
+            <span class="absolute -left-[38px] top-0 w-4 h-4 rounded-full bg-[var(--accent-purple)]"></span>
+            <span class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest">Point 0{i + 1}</span>
+            <h3 class="font-display font-bold text-xl text-[var(--text-primary)] mt-2 mb-3">{p.title}</h3>
+            <p class="text-sm sm:text-base text-[var(--text-secondary)] font-body leading-relaxed">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SERVICES (definition list, 2 columns, no cards/list-icons) ═══════════════════════ -->
+  <section class="py-14 md:py-28 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Services for Dubai">
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
+          Services in Dubai
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
+          Six services, built for scale
+        </h2>
+      </div>
+
+      <dl class="divide-y divide-[var(--border-subtle)]" data-animate="stagger">
+        {services.map((s) => (
+          <div class="grid sm:grid-cols-12 gap-2 sm:gap-6 py-6" data-animate-child>
+            <dt class="sm:col-span-4">
+              <a href={`/services/${s.slug}/`} class="font-display font-bold text-base text-[var(--text-primary)] hover:text-[var(--accent-purple)] transition-colors">
+                {s.title}
+              </a>
+            </dt>
+            <dd class="sm:col-span-8 text-sm text-[var(--text-secondary)] font-body leading-relaxed">{s.desc}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PROCESS (reused global execution blueprint) ═══════════════ -->
+  <ProcessSection />
+
+  <!-- ═══════════════════════════ FAQ (accordion, border-left chrome, not full card) ═══════════════════════════ -->
+  <section class="py-14 md:py-32 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Dubai Frequently Asked Questions">
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
+          Dubai FAQ
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
+          Common questions from founders targeting Dubai
+        </h2>
+      </div>
+
+      <div class="space-y-3" data-animate="stagger">
+        {faqs.map((faq, i) => (
+          <details class="border-l-2 border-[var(--border-subtle)] hover:border-[var(--accent-purple)] transition-colors duration-300 group" data-animate-child>
+            <summary class="flex items-start gap-3 py-4 pl-5 cursor-pointer list-none">
+              <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest mt-1 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-display font-bold text-sm sm:text-base text-[var(--text-primary)] group-hover:text-[var(--accent-purple)] transition-colors flex-1">{faq.q}</span>
+              <svg class="w-4 h-4 text-[var(--text-muted)] group-open:rotate-180 transition-transform duration-300 shrink-0 mt-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="pl-5 pb-5 text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed">
+              <p>{faq.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ FINAL CTA (reused global lead form) ═════════════════ -->
+  <div id="dubai-strategy">
+    <FooterLeadForm defaultService="PR Campaigns" />
+  </div>
+</BaseLayout>
+
+<style>
+  summary::-webkit-details-marker { display: none; }
+
+  .btn-dxb-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(124, 92, 252, 0.12);
+    border: 1px solid rgba(124, 92, 252, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px 0 rgba(124, 92, 252, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+  .btn-dxb-primary:hover {
+    background: rgba(124, 92, 252, 0.2);
+    border-color: rgba(124, 92, 252, 0.65);
+    box-shadow: 0 4px 12px rgba(124, 92, 252, 0.18), inset 0 1px 3px rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .btn-dxb-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+  .btn-dxb-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+</style>

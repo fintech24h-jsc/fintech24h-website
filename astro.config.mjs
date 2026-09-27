@@ -48,8 +48,12 @@ export default defineConfig({
         if (/\/services\/[^/]+\/?$/.test(url)) {
           return { ...item, changefreq: 'monthly', priority: 0.9 };
         }
-        // Vietnam SEO pillar page — same crawl priority as a core service page
-        if (url.includes('/blockchain-marketing-agency-vietnam')) {
+        // Country/region SEO pillar pages — same crawl priority as a core service page
+        if (
+          url.includes('/blockchain-marketing-agency-vietnam') ||
+          url.includes('/blockchain-marketing-agency-singapore') ||
+          url.includes('/blockchain-marketing-agency-dubai')
+        ) {
           return { ...item, changefreq: 'monthly', priority: 0.9 };
         }
         // DealMakers' Club — active revenue-driving campaign, not a static page

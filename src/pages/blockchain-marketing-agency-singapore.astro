@@ -1,0 +1,370 @@
+---
+// src/pages/blockchain-marketing-agency-singapore.astro
+// SEO pillar page targeting "Blockchain/Crypto/Web3 Marketing Agency Singapore" and related
+// variants. Structurally distinct from the Vietnam pillar page on purpose (split-screen hero,
+// numbered-list services instead of a card grid, all-visible FAQ instead of an accordion) so the
+// two pages do not read as templated "doorway" duplicates of each other. Singapore is the sole
+// focus; Indonesia and Thailand get one short supplementary block plus one FAQ entry, not equal
+// billing. Accent is solid cyan (no purple mixed in), distinct from both the homepage's
+// cyan+purple mix and the Vietnam page's warm/rose gradient.
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import ProcessSection from '../components/sections/ProcessSection.astro';
+import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
+
+const PAGE_URL = 'https://fintech24h.com/blockchain-marketing-agency-singapore/';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Blockchain Marketing Agency Singapore', item: PAGE_URL }
+];
+
+const services = [
+  {
+    title: 'KOL & Influencer Marketing',
+    slug: 'kol-marketing',
+    desc: 'KOLs vetted for real audiences in Singapore’s crypto and Web3 scene, not follower count.'
+  },
+  {
+    title: 'PR & Media',
+    slug: 'pr-media',
+    desc: 'Placements in Singapore outlets like Tech in Asia and The Business Times, alongside Tier-1 crypto press.'
+  },
+  {
+    title: 'Community Growth & Management',
+    slug: 'community-growth',
+    desc: 'Telegram and Discord communities built for Singapore, extending into Indonesia and Thailand when a campaign calls for it.'
+  },
+  {
+    title: 'Event Marketing',
+    slug: 'event-marketing',
+    desc: "Activations at Singapore's major Web3 events, including Token2049 season."
+  },
+  {
+    title: 'AI Marketing',
+    slug: 'ai-marketing',
+    desc: "Content and targeting tuned for Singapore's institutional crypto and Web3 audience."
+  },
+  {
+    title: 'Business Development',
+    slug: 'business-development',
+    desc: 'Introductions to exchanges and VCs based in Singapore, extending to partners in Indonesia and Thailand.'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Which is the best blockchain marketing agency in Singapore?',
+    a: 'Fintech24h runs KOL, PR, community and business development campaigns for blockchain, crypto and Web3 projects targeting Singapore. We pair institutional-grade PR and MAS-aware positioning with a regional KOL network, so projects get both local credibility and access to exchanges and VCs based in Singapore.'
+  },
+  {
+    q: 'Do you cover Indonesia and Thailand too?',
+    a: 'Yes. Singapore is our base for regional coverage, and campaigns commonly extend into Indonesia and Thailand, adapted for local language and messaging apps like WhatsApp and LINE.'
+  },
+  {
+    q: 'Can you help market an NFT or GameFi project in Singapore?',
+    a: 'Yes. We work across DeFi, NFT, GameFi and Layer 1/2 projects. NFT and GameFi campaigns typically lean on KOL and community management more than press.'
+  },
+  {
+    q: 'How much does crypto marketing cost in Singapore?',
+    a: 'Budgets scale with scope. A focused campaign starts around $5,000 a month; full regional coverage across Singapore, Indonesia and Thailand runs $15,000 a month and up.'
+  },
+  {
+    q: 'What makes Singapore different from Vietnam for crypto marketing?',
+    a: "Singapore's audience is more institutional and compliance-aware; Vietnam's is more retail and community-driven. The same campaign format rarely works for both without real adaptation."
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Blockchain, Crypto & Web3 Marketing Agency in Singapore',
+  description: 'Blockchain, crypto and Web3 marketing for projects targeting Singapore, with regional reach into Indonesia and Thailand: KOL marketing, PR, community growth, and business development.',
+  url: PAGE_URL,
+  serviceType: 'Blockchain & Web3 Marketing',
+  provider: {
+    '@type': 'Organization',
+    name: 'Fintech24h',
+    url: 'https://fintech24h.com',
+    logo: 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp'
+  },
+  areaServed: [
+    { '@type': 'Country', name: 'Singapore' },
+    { '@type': 'Country', name: 'Indonesia' },
+    { '@type': 'Country', name: 'Thailand' }
+  ],
+  offers: {
+    '@type': 'Offer',
+    url: 'https://fintech24h.com/contact/',
+    availability: 'https://schema.org/InStock',
+    priceCurrency: 'USD'
+  }
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
+
+const heroPanel = [
+  { label: 'Institutional-grade PR', desc: 'Positioning built for credibility with funds and exchanges' },
+  { label: 'MAS-aware positioning', desc: 'Messaging that reads right for a compliance-first audience' },
+  { label: 'Regional exchange & VC network', desc: 'Direct introductions, not cold outreach' }
+];
+
+const whyPoints = [
+  {
+    title: 'Singapore: the compliance-first hub',
+    desc: 'Singapore is where regional exchanges, VCs and MAS-aware projects set up their base. Campaigns here need to read as credible to an institutional audience, not just retail traders. We write and place content that works for both.'
+  },
+  {
+    title: 'A market that rewards data-backed campaigns',
+    desc: 'Singapore audiences expect transparent, verifiable reporting over hype. We lead campaigns with real metrics dashboards, not vanity numbers.'
+  },
+  {
+    title: 'English-first content, zero translation lag',
+    desc: 'Every asset ships in English natively. No translation cycle slows down a Singapore launch.'
+  }
+];
+---
+
+<BaseLayout
+  title="Blockchain, Crypto & Web3 Marketing Agency in Singapore"
+  description="Fintech24h is a blockchain, crypto and Web3 marketing agency for Singapore. KOL, PR, community and business development for Web3 and NFT projects, with reach into Indonesia and Thailand."
+  canonical={PAGE_URL}
+  ogImage="https://fintech24h.com/og-singapore.png"
+  schema={combinedSchema}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- ═══════════════════════════ HERO (split-screen, not centered) ═══════════════════════════ -->
+  <section class="relative overflow-hidden pt-28 pb-16 lg:pt-36 lg:pb-24" aria-label="Hero">
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 60% at 80% -10%, rgba(0,200,240,0.14) 0%, transparent 60%);" aria-hidden="true"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-cyan w-[550px] h-[550px] absolute -top-32 -right-24 opacity-25"></div>
+      <div class="absolute inset-0 grid-pattern" style="opacity: 0.2;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 items-center">
+      <!-- Left: copy -->
+      <div class="lg:col-span-7" data-animate="fade-up">
+        <p class="font-mono text-[10px] lg:text-xs text-[var(--accent-cyan)] uppercase tracking-[0.18em] flex items-center gap-2 mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
+          Singapore &middot; Southeast Asia Coverage
+        </p>
+
+        <h1 class="font-display font-bold leading-[1.1] mb-6">
+          <span class="block text-[clamp(1.6rem,3.6vw,2.5rem)] text-[var(--text-primary)] mb-1">The Blockchain, Crypto &amp; Web3</span>
+          <span class="block text-[clamp(2.2rem,5.2vw,3.75rem)] tracking-[-0.02em] text-[var(--accent-cyan)]">Marketing Agency for Singapore</span>
+        </h1>
+
+        <p class="text-sm sm:text-base lg:text-lg text-[var(--text-secondary)] font-body leading-relaxed max-w-xl mb-8">
+          Fintech24h runs blockchain, crypto and Web3 marketing campaigns for projects targeting Singapore, with regional reach into Indonesia and Thailand.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#singapore-strategy" class="btn-sg-primary py-2.5 px-6 lg:py-3 lg:px-7 text-[10px] lg:text-xs">
+            <span>Get a Singapore Market-Entry Plan</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="inline ml-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-sg-ghost py-2.5 px-6 lg:py-3 lg:px-7 text-[10px] lg:text-xs">
+            <svg class="w-3.5 h-3.5 inline mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            <span>Chat on Telegram</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Regional Coverage panel (distinct widget, not a stat row) -->
+      <div class="lg:col-span-5" data-animate="fade-up">
+        <div class="rounded-2xl border border-[var(--accent-cyan)]/20 bg-[var(--bg-glass)] backdrop-blur-md p-6 sm:p-7">
+          <p class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest mb-5">Regional Coverage</p>
+          <div class="space-y-5">
+            {heroPanel.map((item, i) => (
+              <div class="flex items-start gap-3">
+                <span class="font-mono text-xs text-[var(--accent-cyan)] mt-0.5">0{i + 1}</span>
+                <div>
+                  <div class="text-sm font-display font-bold text-[var(--text-primary)]">{item.label}</div>
+                  <div class="text-xs text-[var(--text-secondary)] font-body mt-0.5">{item.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div class="mt-5 pt-4 border-t border-[var(--border-subtle)]">
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
+              <span class="w-1 h-1 rounded-full bg-[var(--text-muted)]"></span>
+              + reach into Indonesia &amp; Thailand
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ TRUST (reused global proof) ═══════════════════ -->
+  <TrustBar />
+
+  <!-- ═══════════════════════ WHY SINGAPORE (3 points + 1 short regional block, no tabs) ═══════════════════════ -->
+  <section class="py-14 md:py-28 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Why Singapore">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-cyan w-[500px] h-[500px] absolute -bottom-32 -left-24 opacity-15"></div>
+      <div class="absolute inset-0 grid-pattern" style="opacity: 0.12;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/20 bg-[var(--accent-cyan)]/5 text-[var(--accent-cyan)] text-xs font-mono font-medium tracking-widest uppercase mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
+          Why Singapore
+        </div>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
+          Built for the region's <span class="text-[var(--accent-cyan)]">compliance-first hub</span>
+        </h2>
+      </div>
+
+      <div class="space-y-8" data-animate="stagger">
+        {whyPoints.map((p, i) => (
+          <div class="flex gap-5" data-animate-child>
+            <span class="font-display text-2xl font-bold text-[var(--accent-cyan)] shrink-0 w-10">0{i + 1}</span>
+            <div class="border-l border-[var(--border-subtle)] pl-5">
+              <h3 class="font-display font-bold text-lg text-[var(--text-primary)] mb-2">{p.title}</h3>
+              <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed">{p.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Secondary, visibly smaller block: Indonesia & Thailand -->
+      <div class="mt-10 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-faint)] p-5" data-animate="fade-up">
+        <p class="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest mb-2">Regional reach: Indonesia &amp; Thailand</p>
+        <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed">
+          Campaigns based in Singapore often extend into Indonesia and Thailand, Southeast Asia's two other major crypto markets. We adapt community channels (WhatsApp, LINE) and bring in local-language KOLs for each, as an extension of the same campaign rather than a separate engagement.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SERVICES (numbered list, no cards) ═══════════════════════ -->
+  <section class="py-14 md:py-28 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Services for Singapore">
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-cyan)]/20 bg-[var(--accent-cyan)]/5 text-[var(--accent-cyan)] text-xs font-mono font-medium tracking-widest uppercase mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
+          Services in Singapore
+        </div>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
+          Six services, built for Singapore
+        </h2>
+      </div>
+
+      <div class="divide-y divide-[var(--border-subtle)]" data-animate="stagger">
+        {services.map((s, i) => (
+          <a href={`/services/${s.slug}/`} class="group flex items-center gap-6 py-5 hover:bg-[var(--surface-faint)] transition-colors -mx-4 px-4 rounded-lg" data-animate-child>
+            <span class="font-mono text-sm text-[var(--text-muted)] w-8 shrink-0">0{i + 1}</span>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-display font-bold text-base text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors">{s.title}</h3>
+              <p class="text-sm text-[var(--text-secondary)] font-body mt-1">{s.desc}</p>
+            </div>
+            <svg class="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-cyan)] group-hover:translate-x-1 transition-all shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PROCESS (reused global execution blueprint) ═══════════════ -->
+  <ProcessSection />
+
+  <!-- ═══════════════════════════ FAQ (all visible, no accordion) ═══════════════════════════ -->
+  <section class="py-14 md:py-32 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Singapore Frequently Asked Questions">
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+          Singapore FAQ
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
+          Common questions from founders targeting Singapore
+        </h2>
+      </div>
+
+      <div class="space-y-8" data-animate="stagger">
+        {faqs.map((faq, i) => (
+          <div data-animate-child>
+            <h3 class="font-display font-bold text-sm sm:text-base text-[var(--text-primary)] mb-2 flex items-start gap-3">
+              <span class="font-mono text-[10px] text-[var(--accent-cyan)] tracking-widest mt-1 shrink-0">Q{i + 1}</span>
+              {faq.q}
+            </h3>
+            <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed pl-9">{faq.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ FINAL CTA (reused global lead form) ═════════════════ -->
+  <div id="singapore-strategy">
+    <FooterLeadForm defaultService="Business Development" />
+  </div>
+</BaseLayout>
+
+<style>
+  .btn-sg-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 200, 240, 0.1);
+    border: 1px solid rgba(0, 200, 240, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px 0 rgba(0, 200, 240, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+  .btn-sg-primary:hover {
+    background: rgba(0, 200, 240, 0.18);
+    border-color: rgba(0, 200, 240, 0.65);
+    box-shadow: 0 4px 12px rgba(0, 200, 240, 0.18), inset 0 1px 3px rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .btn-sg-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+  .btn-sg-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+</style>
