@@ -50,6 +50,11 @@ const services = [
     title: 'Business Development',
     slug: 'business-development',
     desc: 'Direct introductions to exchanges, VCs and partners active in the Vietnamese Web3 market.'
+  },
+  {
+    title: 'Custom Solutions',
+    slug: 'custom-solutions',
+    desc: 'Tailored AI, blockchain and growth engagements for projects entering Vietnam with needs outside the six services above.'
   }
 ];
 
@@ -77,6 +82,18 @@ const faqs = [
   {
     q: 'Is Fintech24h a Web3 marketing company in Vietnam?',
     a: 'Yes. Fintech24h is a Web3 and crypto marketing company based in Ho Chi Minh City, working with blockchain projects across Vietnam and the wider Southeast Asian market.'
+  },
+  {
+    q: 'Is crypto marketing regulated in Vietnam?',
+    a: "Vietnam does not yet have a dedicated law for crypto marketing, so we build campaigns around general advertising and securities rules while local regulation develops. Projects making specific token or investment claims should get sign-off from local legal counsel."
+  },
+  {
+    q: 'Can you help with NFT or GameFi marketing in Vietnam?',
+    a: 'Yes. GameFi is especially strong here, Vietnam is home to Axie Infinity, and we work across NFT, GameFi and DeFi projects using the same KOL and community network.'
+  },
+  {
+    q: 'Do you also work in Singapore or Dubai?',
+    a: 'Yes. We run the same KOL, PR, community and business development model in Singapore and Dubai. See our <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-warm)] underline hover:text-[var(--accent-rose)] transition-colors">blockchain marketing agency in Singapore</a> and <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-warm)] underline hover:text-[var(--accent-rose)] transition-colors">blockchain marketing agency in Dubai</a> for details.'
   }
 ];
 
@@ -339,7 +356,7 @@ const stats = [
               </div>
             </summary>
             <div class="px-6 pb-6 text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed border-t border-[var(--border-subtle)] pt-4 pl-14 sm:pl-18">
-              <p class="whitespace-pre-line">{faq.a}</p>
+              <p class="whitespace-pre-line" set:html={faq.a} />
             </div>
           </details>
         ))}

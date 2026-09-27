@@ -51,6 +51,11 @@ const services = [
     title: 'Business Development',
     slug: 'business-development',
     desc: 'Introductions to exchanges and VCs based in Singapore, extending to partners in Indonesia and Thailand.'
+  },
+  {
+    title: 'Custom Solutions',
+    slug: 'custom-solutions',
+    desc: 'Tailored AI, blockchain and growth engagements for projects with needs outside the six services above.'
   }
 ];
 
@@ -74,6 +79,26 @@ const faqs = [
   {
     q: 'What makes Singapore different from Vietnam for crypto marketing?',
     a: "Singapore's audience is more institutional and compliance-aware; Vietnam's is more retail and community-driven. The same campaign format rarely works for both without real adaptation."
+  },
+  {
+    q: 'Is crypto marketing regulated in Singapore?',
+    a: "MAS restricts advertising of digital payment token services to the general public in Singapore. We don't provide legal advice, but we structure campaigns to stay within those advertising guidelines, and we recommend local legal counsel for anything touching token sales or investment claims."
+  },
+  {
+    q: 'Can you help launch a token in Singapore?',
+    a: "We handle marketing, not token structuring or legal counsel. We work alongside your legal team so campaign messaging matches your regulatory positioning before launch."
+  },
+  {
+    q: "What crypto events in Singapore can you support?",
+    a: 'Token2049 Singapore is the anchor event on the calendar. We also run founder dinners, meetups and side-events during that week, plus smaller activations year-round.'
+  },
+  {
+    q: 'Do you work with Singapore-based DeFi and RWA projects?',
+    a: 'Yes. DeFi and real-world-asset (RWA) tokenization projects are a growing share of our Singapore client base, given the market’s institutional appetite for RWA.'
+  },
+  {
+    q: 'Do you also work in Vietnam or Dubai?',
+    a: 'Yes. We run the same KOL, PR, community and business development model in Vietnam and Dubai. See our <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">blockchain marketing agency in Vietnam</a> and <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">blockchain marketing agency in Dubai</a> for details.'
   }
 ];
 
@@ -261,7 +286,7 @@ const whyPoints = [
           Services in Singapore
         </div>
         <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
-          Six services, built for Singapore
+          Seven services, built for Singapore
         </h2>
       </div>
 
@@ -303,7 +328,7 @@ const whyPoints = [
               <span class="font-mono text-[10px] text-[var(--accent-cyan)] tracking-widest mt-1 shrink-0">Q{i + 1}</span>
               {faq.q}
             </h3>
-            <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed pl-9">{faq.a}</p>
+            <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed pl-9" set:html={faq.a} />
           </div>
         ))}
       </div>

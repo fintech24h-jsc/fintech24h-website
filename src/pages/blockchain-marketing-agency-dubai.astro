@@ -28,7 +28,8 @@ const services = [
   { title: 'Community Growth & Management', slug: 'community-growth', desc: 'Communities built for a market where X and Telegram both matter.' },
   { title: 'Event Marketing', slug: 'event-marketing', desc: "Activations timed to Dubai's major Web3 and fintech conference calendar." },
   { title: 'AI Marketing', slug: 'ai-marketing', desc: 'Content tuned for a fast-moving, high-spend audience.' },
-  { title: 'Business Development', slug: 'business-development', desc: 'Introductions to exchanges, VCs and free-zone partners active in the UAE.' }
+  { title: 'Business Development', slug: 'business-development', desc: 'Introductions to exchanges, VCs and free-zone partners active in the UAE.' },
+  { title: 'Custom Solutions', slug: 'custom-solutions', desc: "Tailored engagements for projects with scope beyond the six services above, sized to Dubai's pace and budget expectations." }
 ];
 
 const whyPoints = [
@@ -70,6 +71,30 @@ const faqs = [
   {
     q: 'What makes Dubai different from Singapore for crypto marketing?',
     a: "Dubai's audience is more X-native and scale-driven; Singapore's is more institutional and compliance-aware. The channels and tone that work in one rarely transfer directly to the other."
+  },
+  {
+    q: 'Is crypto advertising regulated in Dubai?',
+    a: "Yes. VARA regulates the marketing and promotion of virtual assets in Dubai. We structure campaigns to align with VARA's marketing rules, though projects should confirm compliance with their own legal counsel before launch."
+  },
+  {
+    q: "What's the difference between VARA, DIFC and ADGM for crypto projects?",
+    a: 'VARA covers Dubai outside the DIFC free zone. DIFC and ADGM (in Abu Dhabi) are separate free zones with their own regulators. We tailor positioning to whichever jurisdiction your project is registered in.'
+  },
+  {
+    q: 'Do you help with token launches in Dubai?',
+    a: 'We handle marketing, not legal structuring. We coordinate closely with your legal team so campaign messaging matches your VARA or DIFC positioning.'
+  },
+  {
+    q: 'What crypto conferences happen in Dubai?',
+    a: "Dubai's calendar includes major fintech and blockchain weeks throughout the year. We time PR placements and KOL activity around these dates for maximum visibility."
+  },
+  {
+    q: 'Do you work with Dubai-based RWA and DeFi projects?',
+    a: "Yes. Real-world-asset (RWA) tokenization and DeFi projects are a growing share of our Dubai client base, given the UAE's push toward institutional crypto adoption."
+  },
+  {
+    q: 'Do you also work in Vietnam or Singapore?',
+    a: 'Yes. We run the same KOL, PR, community and business development model in Vietnam and Singapore. See our <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-purple)] underline hover:text-white transition-colors">blockchain marketing agency in Vietnam</a> and <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-purple)] underline hover:text-white transition-colors">blockchain marketing agency in Singapore</a> for details.'
   }
 ];
 
@@ -194,7 +219,7 @@ const combinedSchema = [serviceSchema, faqSchema];
           Services in Dubai
         </p>
         <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">
-          Six services, built for scale
+          Seven services, built for scale
         </h2>
       </div>
 
@@ -238,7 +263,7 @@ const combinedSchema = [serviceSchema, faqSchema];
               <svg class="w-4 h-4 text-[var(--text-muted)] group-open:rotate-180 transition-transform duration-300 shrink-0 mt-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
             <div class="pl-5 pb-5 text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed">
-              <p>{faq.a}</p>
+              <p set:html={faq.a} />
             </div>
           </details>
         ))}
