@@ -10,7 +10,8 @@ import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
 import {
   seasonMeta,
   partnerTracks,
-  projectOnboardBenefits,
+  featuredDealMakerFullBenefits,
+  qualifiedListingFullBenefits,
   partnerBenefitsMatrix,
   type MatrixValue,
 } from '../../../data/dealmakers/ss3';
@@ -39,21 +40,31 @@ const webPageSchema = {
   },
 };
 
-// Project Onboard isn't a paid Category Partner track (see PricingPackages'
-// Featured DealMaker / Qualified Listing), but it belongs in the same
-// comparison since the Partner Benefits Matrix covers all four.
-const projectCard = {
-  id: 'project' as const,
-  icon: 'PRJ',
-  title: 'Project Onboard',
-  description: 'For Web3, DeFi, AI × Web3, fintech, infrastructure, and other projects joining F-Matching.',
-  fullBenefits: projectOnboardBenefits,
+// These two mirror the homepage PricingPackages cards of the same name (see
+// ss3.ts) — the `id` here is the anchor those cards' detailLink jumps to, so
+// keep it in sync with the pricingPackages `detailLink.href` fragment.
+const featuredDealMakerCard = {
+  id: 'featured-dealmaker' as const,
+  icon: 'FDM',
+  title: 'Featured DealMakers',
+  description: 'A standout profile so the right people quickly understand what you do and need.',
+  fullBenefits: featuredDealMakerFullBenefits,
+  interest: 'Featured DealMaker ($1,000/season)',
 };
 
-// Media comes last: it's an unpaid editorial exchange with the fewest
-// benefits, deliberately ordered after the paid tracks and Project Onboard.
+const qualifiedListingCard = {
+  id: 'qualified-listing' as const,
+  icon: 'QLD',
+  title: 'Qualified Listing Directory',
+  description: 'A vetted profile in the Deal Board that receives moderated introduction requests.',
+  fullBenefits: qualifiedListingFullBenefits,
+  interest: 'Qualified Listing ($200/season)',
+  ctaLabel: 'Apply as Qualified Listing',
+};
+
+// Media comes last: it's an unpaid editorial exchange with the fewest benefits.
 const [capitalTrack, solutionTrack, mediaTrack] = partnerTracks;
-const allTracks = [capitalTrack, solutionTrack, projectCard, mediaTrack];
+const allTracks = [capitalTrack, solutionTrack, featuredDealMakerCard, qualifiedListingCard, mediaTrack];
 
 function applyHref(interest: string) {
   return `/dealmakers/ss3/?interest=${encodeURIComponent(interest)}#apply`;
@@ -114,10 +125,10 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
 
             {'interest' in track && (
               <a
-                href={applyHref((track as typeof partnerTracks[number]).interest)}
+                href={applyHref((track as { interest: string }).interest)}
                 class="dm-btn-primary justify-center text-xs w-full mt-6"
               >
-                Apply as {track.title} <span aria-hidden="true">→</span>
+                {(track as { ctaLabel?: string }).ctaLabel ?? `Apply as ${track.title}`} <span aria-hidden="true">→</span>
               </a>
             )}
             {!('interest' in track) && (
@@ -148,7 +159,7 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
               <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">Capital</th>
               <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">Solution</th>
               <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">Media</th>
-              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">Project</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">Featured DealMaker</th>
             </tr>
           </thead>
           <tbody>

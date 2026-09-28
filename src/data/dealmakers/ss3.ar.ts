@@ -107,10 +107,10 @@ export const featuredDealMakers: DealMakerProfile[] = [
 ];
 
 export const lastSeasonPartners: PartnerLogo[] = [
-  { name: 'Cointelegraph', logoUrl: '/dealmakers/partners/cointelegraph.png', confirmed: true },
-  { name: 'BeInCrypto', logoUrl: '/dealmakers/partners/beincrypto.png', confirmed: true },
-  { name: 'CoinGape', logoUrl: '/dealmakers/partners/coingape.png', confirmed: true },
-  { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', confirmed: true },
+  { name: null, logoUrl: null, confirmed: false },
+  { name: null, logoUrl: null, confirmed: false },
+  { name: null, logoUrl: null, confirmed: false },
+  { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
@@ -125,6 +125,10 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'BD GemX', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/BD-GemX-dealmakers-fintech24h.png', websiteUrl: 'https://x.com/bd_gemx', confirmed: true },
   { name: 'Captain Capital', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Captain-Capital-logo-is-horizontal-and-cut-out-ver-2.png', websiteUrl: 'https://x.com/CapCapital68', confirmed: true },
   { name: 'Atok', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Atok-dealmakers-club-ss3.png', websiteUrl: 'https://atok.ai/', confirmed: true },
+  { name: 'Cointelegraph', logoUrl: '/dealmakers/partners/cointelegraph.png', websiteUrl: 'https://cointelegraph.com', confirmed: true },
+  { name: 'BeInCrypto', logoUrl: '/dealmakers/partners/beincrypto.png', websiteUrl: 'https://beincrypto.com', confirmed: true },
+  { name: 'CoinGape', logoUrl: '/dealmakers/partners/coingape.png', websiteUrl: 'https://coingape.com', confirmed: true },
+  { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', websiteUrl: 'https://mpost.io', confirmed: true },
 ];
 
 export const directoryProfiles: DirectoryProfile[] = [
@@ -344,6 +348,7 @@ export const pricingPackages: PricingPackage[] = [
       'زر "طلب تعارف" مُشرَف عليه',
       'إبراز واحد عبر القنوات الاجتماعية أو المجتمعية',
     ],
+    detailLink: { href: '/dealmakers/ar/ss3/partner-benefits/#featured-dealmaker', label: 'اطّلع على كامل مزايا صانع الصفقات المميّز' },
     ctaLabel: 'قدّم طلبًا كصانع صفقات مميّز',
     ctaInterest: 'صانع الصفقات المميّز (1,000 دولار / الموسم)',
   },
@@ -364,6 +369,7 @@ export const pricingPackages: PricingPackage[] = [
       label: '+150 دولار للإدراج المدعوم',
       description: 'أولوية في الظهور مع وسم "مدعوم".',
     },
+    detailLink: { href: '/dealmakers/ar/ss3/partner-benefits/#qualified-listing', label: 'اطّلع على كامل مزايا الإدراج المؤهّل' },
     ctaLabel: 'أرسل طلب الإدراج المؤهّل',
     ctaInterest: 'الإدراج المؤهّل (200 دولار / الموسم)',
   },
@@ -440,18 +446,27 @@ export const partnerTracks: PartnerTrack[] = [
   },
 ];
 
-export const projectOnboardBenefits: string[] = [
+export const featuredDealMakerFullBenefits: string[] = [
+  'فيديو تعريفي لا يتجاوز دقيقتين',
+  'ملف تعريفي مميّز للشركة أو المؤسس',
+  'نحن نقدّم & نحن نبحث عن',
+  'زر "طلب تعارف" مُشرَف عليه',
+  'إبراز واحد عبر القنوات الاجتماعية أو المجتمعية',
   'إدراج في DealMakers\' Club',
-  'ملف تعريفي مخصص للمشروع',
-  'معلومات الشركة / المشروع',
-  'مطابقة الفرص',
   'مطابقة رأس المال',
   'مطابقة مع شركاء الحلول',
   'ظهور إعلامي',
-  'إعلان اجتماعي',
   'فرص علاقات عامة',
   'تواصل في مجالي الأعمال والمؤسسين',
   'الوصول إلى نخبة مختارة من القادة العالميين',
+];
+
+export const qualifiedListingFullBenefits: string[] = [
+  'ملف تعريفي واحد للشركة أو الممثل',
+  'بيانات واضحة لـ"نحن نقدّم" و"نحن نبحث عن"',
+  'مُدرَج في دليل الإدراج المؤهّل',
+  'مؤهّل لاستقبال طلبات تعارف مُشرَف عليها',
+  'خيار +150 دولار للإدراج المدعوم مع أولوية الظهور',
 ];
 
 export const partnerBenefitsMatrix: { label: string; capital: MatrixValue; solution: MatrixValue; media: MatrixValue; project: MatrixValue }[] = [

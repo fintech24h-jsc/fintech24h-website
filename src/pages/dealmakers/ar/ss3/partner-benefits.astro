@@ -6,7 +6,7 @@ import BreadcrumbSchema from '../../../../components/seo/BreadcrumbSchema.astro'
 import { getSS3Content } from '../../../../data/dealmakers/content';
 import type { MatrixValue } from '../../../../data/dealmakers/ss3';
 
-const { seasonMeta, partnerTracks, projectOnboardBenefits, partnerBenefitsMatrix } = getSS3Content('ar');
+const { seasonMeta, partnerTracks, featuredDealMakerFullBenefits, qualifiedListingFullBenefits, partnerBenefitsMatrix } = getSS3Content('ar');
 
 const title = 'مزايا الشركاء | F-Matching Season 3 — DealMakers’ Club';
 const description = 'قارن مزايا الشريك الرأسمالي والحلول والإعلام والمشاريع لـ F-Matching Season 3 — القائمة الكاملة للمزايا ومصفوفة مقارنة الشركاء.';
@@ -32,16 +32,27 @@ const webPageSchema = {
   },
 };
 
-const projectCard = {
-  id: 'project' as const,
-  icon: 'PRJ',
-  title: 'انضمام المشاريع',
-  description: 'لمشاريع Web3، وDeFi، وAI × Web3، والتكنولوجيا المالية، والبنية التحتية، وغيرها من المشاريع المنضمّة إلى F-Matching.',
-  fullBenefits: projectOnboardBenefits,
+const featuredDealMakerCard = {
+  id: 'featured-dealmaker' as const,
+  icon: 'FDM',
+  title: 'صانع الصفقات المميّز',
+  description: 'ملف تعريفي بارز يتيح للأشخاص المناسبين فهم ما تقدّمه وما تحتاجه بسرعة.',
+  fullBenefits: featuredDealMakerFullBenefits,
+  interest: 'صانع الصفقات المميّز (1,000 دولار / الموسم)',
+};
+
+const qualifiedListingCard = {
+  id: 'qualified-listing' as const,
+  icon: 'QLD',
+  title: 'دليل الإدراج المؤهّل',
+  description: 'ملف تعريفي مُدقَّق ضمن لوحة الصفقات يستقبل طلبات تعارف مُشرَفًا عليها.',
+  fullBenefits: qualifiedListingFullBenefits,
+  interest: 'الإدراج المؤهّل (200 دولار / الموسم)',
+  ctaLabel: 'التقديم للإدراج المؤهّل',
 };
 
 const [capitalTrack, solutionTrack, mediaTrack] = partnerTracks;
-const allTracks = [capitalTrack, solutionTrack, projectCard, mediaTrack];
+const allTracks = [capitalTrack, solutionTrack, featuredDealMakerCard, qualifiedListingCard, mediaTrack];
 
 function applyHref(interest: string) {
   return `/dealmakers/ar/ss3/?interest=${encodeURIComponent(interest)}#apply`;
@@ -102,10 +113,10 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
 
             {'interest' in track && (
               <a
-                href={applyHref((track as typeof partnerTracks[number]).interest)}
+                href={applyHref((track as { interest: string }).interest)}
                 class="dm-btn-primary justify-center text-xs w-full mt-6"
               >
-                التقديم كـ {track.title} <span aria-hidden="true">→</span>
+                {(track as { ctaLabel?: string }).ctaLabel ?? `التقديم كـ ${track.title}`} <span aria-hidden="true">→</span>
               </a>
             )}
             {!('interest' in track) && (
@@ -136,7 +147,7 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
               <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">رأس المال</th>
               <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">الحلول</th>
               <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">الإعلام</th>
-              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">المشروع</th>
+              <th class="p-4 sm:p-5 text-xs font-display font-semibold text-[var(--dm-text-primary)] text-center">صانع الصفقات المميّز</th>
             </tr>
           </thead>
           <tbody>

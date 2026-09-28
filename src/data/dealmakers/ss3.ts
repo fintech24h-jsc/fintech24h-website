@@ -142,10 +142,10 @@ export interface PartnerLogo {
 }
 
 export const lastSeasonPartners: PartnerLogo[] = [
-  { name: 'Cointelegraph', logoUrl: '/dealmakers/partners/cointelegraph.png', confirmed: true },
-  { name: 'BeInCrypto', logoUrl: '/dealmakers/partners/beincrypto.png', confirmed: true },
-  { name: 'CoinGape', logoUrl: '/dealmakers/partners/coingape.png', confirmed: true },
-  { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', confirmed: true },
+  { name: null, logoUrl: null, confirmed: false },
+  { name: null, logoUrl: null, confirmed: false },
+  { name: null, logoUrl: null, confirmed: false },
+  { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
@@ -162,6 +162,10 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'BD GemX', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/BD-GemX-dealmakers-fintech24h.png', websiteUrl: 'https://x.com/bd_gemx', confirmed: true },
   { name: 'Captain Capital', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Captain-Capital-logo-is-horizontal-and-cut-out-ver-2.png', websiteUrl: 'https://x.com/CapCapital68', confirmed: true },
   { name: 'Atok', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Atok-dealmakers-club-ss3.png', websiteUrl: 'https://atok.ai/', confirmed: true },
+  { name: 'Cointelegraph', logoUrl: '/dealmakers/partners/cointelegraph.png', websiteUrl: 'https://cointelegraph.com', confirmed: true },
+  { name: 'BeInCrypto', logoUrl: '/dealmakers/partners/beincrypto.png', websiteUrl: 'https://beincrypto.com', confirmed: true },
+  { name: 'CoinGape', logoUrl: '/dealmakers/partners/coingape.png', websiteUrl: 'https://coingape.com', confirmed: true },
+  { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', websiteUrl: 'https://mpost.io', confirmed: true },
 ];
 
 // ─── Qualified Listing Directory ──────────────────────────────────────────
@@ -420,6 +424,7 @@ export const pricingPackages: PricingPackage[] = [
       'Moderated Request Introduction button',
       'One social / community feature',
     ],
+    detailLink: { href: '/dealmakers/ss3/partner-benefits/#featured-dealmaker', label: 'See full Featured DealMaker benefits' },
     ctaLabel: 'Apply as Featured',
     ctaInterest: 'Featured DealMaker ($1,000/season)',
   },
@@ -440,7 +445,8 @@ export const pricingPackages: PricingPackage[] = [
       label: '+$150 Sponsored',
       description: 'Priority placement with a Sponsored label.',
     },
-    ctaLabel: 'Submit Qualified Listing',
+    detailLink: { href: '/dealmakers/ss3/partner-benefits/#qualified-listing', label: 'See full Qualified Listing benefits' },
+    ctaLabel: 'Submit Listing',
     ctaInterest: 'Qualified Listing ($200/season)',
   },
 ];
@@ -536,18 +542,33 @@ export const partnerTracks: PartnerTrack[] = [
 // Project Onboard isn't a paid sponsorship tier (see Featured DealMaker /
 // Qualified Listing above) — this is the same benefit shape used only on
 // the detail page, for the Partner Benefits Matrix + its own benefit card.
-export const projectOnboardBenefits: string[] = [
+// Kept identical to the Featured DealMaker package's homepage benefits (see
+// pricingPackages above) for the first five items — the intro video and core
+// perks must read the same on both pages — then extended with the fuller
+// matching/networking benefits shown only on the partner-benefits detail page.
+export const featuredDealMakerFullBenefits: string[] = [
+  'Up to 2-minute intro video',
+  'Featured company / founder profile',
+  'We Offer & We Are Looking For',
+  'Moderated Request Introduction button',
+  'One social / community feature',
   'DealMakers’ Club listing',
-  'Dedicated project profile',
-  'Company / project information',
-  'Opportunity matching',
   'Capital matching',
   'Solution Partner matching',
   'Media exposure',
-  'Social announcement',
   'PR opportunities',
   'Business & founder networking',
   'Access to selected global leaders',
+];
+
+// Mirrors the Qualified Listing package's homepage benefits (see
+// pricingPackages above), extended with the Sponsored add-on as its own line.
+export const qualifiedListingFullBenefits: string[] = [
+  'One company / representative profile',
+  'Clear We Offer & We Are Looking For',
+  'Listed in the Qualified Listing Directory',
+  'Eligible for moderated Request Introductions',
+  'Optional +$150 Sponsored Listing for priority placement',
 ];
 
 // ─── Partner Benefits Matrix (detail page only) ────────────────────────────

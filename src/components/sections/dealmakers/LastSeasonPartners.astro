@@ -13,23 +13,23 @@ const { locale = 'en' } = Astro.props;
 const { lastSeasonPartners } = getSS3Content(locale);
 
 const copy = locale === 'ar' ? {
-  ariaLabel: 'شركاء بارزون من الموسم الماضي',
-  eyebrow: 'منظومة متنامية',
-  heading: 'شركاء بارزون من الموسم الماضي',
+  ariaLabel: 'شركاء رأس المال والاستثمار البارزون - الموسم الثاني',
+  eyebrow: 'شبكة رأس المال',
+  heading: 'شركاء رأس المال والاستثمار البارزون - الموسم الثاني',
   yourLogo: 'شعارك هنا',
-  thanks: 'بخالص الشكر للشركاء الذين وقفوا إلى جانبنا في الموسم الماضي، فكل شراكة هنا نعتز بها بصدق.',
+  thanks: 'بخالص الشكر لشركاء رأس المال الذين وقفوا إلى جانبنا في الموسم الثاني، فكل شراكة هنا نعتز بها بصدق.',
 } : locale === 'zh' ? {
-  ariaLabel: '上赛季的重点合作伙伴',
-  eyebrow: '持续壮大的生态系统',
-  heading: '上赛季的重点合作伙伴',
+  ariaLabel: '第二季精选资本合作伙伴',
+  eyebrow: '资本网络',
+  heading: '第二季精选资本合作伙伴',
   yourLogo: '你的品牌标识',
-  thanks: '衷心感谢上赛季与我们并肩同行的合作伙伴，这里的每一段合作我们都珍视。',
+  thanks: '衷心感谢第二季与我们并肩同行的资本合作伙伴，这里的每一段合作我们都珍视。',
 } : {
-  ariaLabel: 'Featured partners from last season',
-  eyebrow: 'A growing ecosystem',
-  heading: 'Featured Partners from Last Season',
+  ariaLabel: 'Featured Capital & Ventures Partners — SS2',
+  eyebrow: 'Capital network',
+  heading: 'Featured Capital & Ventures Partners — SS2',
   yourLogo: 'Your logo',
-  thanks: 'With heartfelt thanks to the partners who stood beside us last season, every partnership here is one we deeply value.',
+  thanks: 'With heartfelt thanks to the capital partners who stood beside us in Season 2, every partnership here is one we deeply value.',
 };
 ---
 

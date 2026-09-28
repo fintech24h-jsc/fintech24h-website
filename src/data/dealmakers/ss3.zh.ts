@@ -107,10 +107,10 @@ export const featuredDealMakers: DealMakerProfile[] = [
 ];
 
 export const lastSeasonPartners: PartnerLogo[] = [
-  { name: 'Cointelegraph', logoUrl: '/dealmakers/partners/cointelegraph.png', confirmed: true },
-  { name: 'BeInCrypto', logoUrl: '/dealmakers/partners/beincrypto.png', confirmed: true },
-  { name: 'CoinGape', logoUrl: '/dealmakers/partners/coingape.png', confirmed: true },
-  { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', confirmed: true },
+  { name: null, logoUrl: null, confirmed: false },
+  { name: null, logoUrl: null, confirmed: false },
+  { name: null, logoUrl: null, confirmed: false },
+  { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
@@ -125,6 +125,10 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'BD GemX', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/BD-GemX-dealmakers-fintech24h.png', websiteUrl: 'https://x.com/bd_gemx', confirmed: true },
   { name: 'Captain Capital', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Captain-Capital-logo-is-horizontal-and-cut-out-ver-2.png', websiteUrl: 'https://x.com/CapCapital68', confirmed: true },
   { name: 'Atok', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/09/Atok-dealmakers-club-ss3.png', websiteUrl: 'https://atok.ai/', confirmed: true },
+  { name: 'Cointelegraph', logoUrl: '/dealmakers/partners/cointelegraph.png', websiteUrl: 'https://cointelegraph.com', confirmed: true },
+  { name: 'BeInCrypto', logoUrl: '/dealmakers/partners/beincrypto.png', websiteUrl: 'https://beincrypto.com', confirmed: true },
+  { name: 'CoinGape', logoUrl: '/dealmakers/partners/coingape.png', websiteUrl: 'https://coingape.com', confirmed: true },
+  { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', websiteUrl: 'https://mpost.io', confirmed: true },
 ];
 
 export const directoryProfiles: DirectoryProfile[] = [
@@ -344,6 +348,7 @@ export const pricingPackages: PricingPackage[] = [
       '受监督的「请求引荐」按钮',
       '一次社交 / 社区专题曝光',
     ],
+    detailLink: { href: '/dealmakers/zh/ss3/partner-benefits/#featured-dealmaker', label: '查看精选 DealMaker 完整权益' },
     ctaLabel: '申请成为精选 DealMaker',
     ctaInterest: '精选 DealMaker（每赛季 1,000 美元）',
   },
@@ -364,6 +369,7 @@ export const pricingPackages: PricingPackage[] = [
       label: '+150 美元加价推广',
       description: '带有"推广"标签的优先展示位置。',
     },
+    detailLink: { href: '/dealmakers/zh/ss3/partner-benefits/#qualified-listing', label: '查看资质入驻完整权益' },
     ctaLabel: '提交资质入驻申请',
     ctaInterest: '资质入驻（每赛季 200 美元）',
   },
@@ -440,18 +446,27 @@ export const partnerTracks: PartnerTrack[] = [
   },
 ];
 
-export const projectOnboardBenefits: string[] = [
+export const featuredDealMakerFullBenefits: string[] = [
+  '最长 2 分钟的介绍视频',
+  '精选公司 / 创始人档案',
+  '展示"我们提供"与"我们寻求"信息',
+  '受监督的「请求引荐」按钮',
+  '一次社交 / 社区专题曝光',
   '收录于 DealMakers’ Club',
-  '专属项目档案',
-  '公司 / 项目信息',
-  '机会匹配',
   '资本匹配',
   '解决方案合作伙伴匹配',
   '媒体曝光',
-  '社交公告',
   '公关宣传机会',
   '商务与创始人社交',
   '对接精选全球领袖资源',
+];
+
+export const qualifiedListingFullBenefits: string[] = [
+  '一份公司 / 代表人档案',
+  '清晰展示"我们提供"与"我们寻求"信息',
+  '收录于资质入驻目录',
+  '有资格接收受监督的引荐请求',
+  '可选 +150 美元推广入驻，享优先展示',
 ];
 
 export const partnerBenefitsMatrix: { label: string; capital: MatrixValue; solution: MatrixValue; media: MatrixValue; project: MatrixValue }[] = [
