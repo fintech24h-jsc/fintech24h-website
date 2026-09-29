@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "Do you work with KOLs in Singapore, Indonesia and Thailand?",
-    a: "Yes, our regional KOL network covers Singapore, Indonesia and Thailand alongside Vietnam, vetted the same way across every market."
+    a: 'Yes, our regional KOL network covers <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Singapore</a>, Indonesia and Thailand alongside <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Vietnam</a>, vetted the same way across every market.'
   },
   {
     q: "Can you guarantee ROI or token price impact?",
@@ -30,7 +30,7 @@ const faqs = [
   },
   {
     q: "Do you have KOL relationships in Dubai and the wider UAE?",
-    a: "Yes, we work with X-native KOLs with real audiences in the UAE crypto community."
+    a: 'Yes, we work with X-native KOLs with real audiences in the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a> and wider UAE crypto community.'
   },
   {
     q: "Do KOLs disclose that the posts are sponsored?",
@@ -198,7 +198,7 @@ const combinedSchema = [serviceSchema, faqSchema];
             </div>
           </summary>
           <div class="px-6 pb-6 text-[var(--text-secondary)] border-t border-[var(--border-subtle)] pt-4">
-            <p>{faq.a}</p>
+            <p set:html={faq.a} />
           </div>
         </details>
       ))}

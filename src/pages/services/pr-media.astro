@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "Can you get press coverage in Singapore?",
-    a: "Yes, we place stories in regional outlets like Tech in Asia and The Business Times alongside Tier-1 crypto press."
+    a: 'Yes, we place stories in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Singapore</a> outlets like Tech in Asia and The Business Times, alongside Tier-1 crypto press.'
   },
   {
     q: "Do you write the press releases?",
@@ -30,7 +30,7 @@ const faqs = [
   },
   {
     q: "Can you get press coverage in Dubai and the UAE?",
-    a: "Yes, we place stories in Gulf News, Zawya and Al Bawaba alongside Tier-1 crypto press."
+    a: 'Yes, we place stories in <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a> and UAE outlets like Gulf News, Zawya and Al Bawaba, alongside Tier-1 crypto press.'
   },
   {
     q: "How do you measure PR success?",
@@ -162,7 +162,7 @@ const combinedSchema = [serviceSchema, faqSchema];
               <span class="text-[var(--text-muted)] group-open:rotate-45 transition-transform duration-300 font-mono text-2xl">+</span>
             </summary>
             <div class="text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] font-body text-sm leading-relaxed pb-4 pr-12">
-              <p>{faq.a}</p>
+              <p set:html={faq.a} />
             </div>
           </details>
         ))}

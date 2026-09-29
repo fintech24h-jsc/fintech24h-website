@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "Is your AI marketing approach different for Singapore vs Indonesia?",
-    a: "Yes, content and targeting are tuned separately for Singapore's institutional audience and Indonesia/Thailand's retail audiences."
+    a: 'Yes, content and targeting are tuned separately for <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Singapore</a>’s institutional audience and Indonesia/Thailand’s retail audiences.'
   },
   {
     q: "How does AI handle sentiment analysis?",
@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     q: "Does AI marketing work for a fast-moving market like Dubai?",
-    a: "Yes, we tune content velocity and targeting for a market that expects scale and speed."
+    a: 'Yes, we tune content velocity and targeting for <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a>, a market that expects scale and speed.'
   },
   {
     q: "Can AI completely replace human moderators?",
@@ -223,7 +223,7 @@ const combinedSchema = [serviceSchema, faqSchema];
               <span class="text-[var(--accent-cyan)] group-open:rotate-90 transition-transform ml-4 shrink-0">]</span>
             </summary>
             <div class="p-6 pt-0 text-[var(--text-secondary)] font-mono text-sm leading-relaxed border-t border-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] mt-2 bg-black/40">
-              <span class="text-green-400 mr-2">RESPONSE:</span> {faq.a}
+              <span class="text-green-400 mr-2">RESPONSE:</span> <span set:html={faq.a} />
             </div>
           </details>
         ))}
