@@ -166,6 +166,7 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'BeInCrypto', logoUrl: '/dealmakers/partners/beincrypto.png', websiteUrl: 'https://beincrypto.com', confirmed: true },
   { name: 'CoinGape', logoUrl: '/dealmakers/partners/coingape.png', websiteUrl: 'https://coingape.com', confirmed: true },
   { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', websiteUrl: 'https://mpost.io', confirmed: true },
+  { name: 'The Crypto Hype', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/Coloured-without-background.png', websiteUrl: 'https://thecryptohype.com/', confirmed: true },
 ];
 
 // ─── Qualified Listing Directory ──────────────────────────────────────────
@@ -404,8 +405,8 @@ export const pricingPackages: PricingPackage[] = [
       'Co-host / webinar opportunities',
       'Lead-generation & BD introductions',
     ],
-    detailLink: { href: '/dealmakers/ss3/partner-benefits/', label: 'See full Solution Partner benefits' },
-    ctaLabel: 'Apply as Solution Partner',
+    detailLink: { href: '/dealmakers/ss3/partner-benefits/#solution', label: 'See full benefits' },
+    ctaLabel: 'Apply as Partner',
     ctaInterest: 'Solution Partner ($3,000/season · 3 slots)',
   },
   {
