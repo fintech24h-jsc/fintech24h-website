@@ -142,9 +142,9 @@ export interface PartnerLogo {
 }
 
 export const lastSeasonPartners: PartnerLogo[] = [
-  { name: null, logoUrl: null, confirmed: false },
-  { name: null, logoUrl: null, confirmed: false },
-  { name: null, logoUrl: null, confirmed: false },
+  { name: 'Giakaa Capital', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/Giakaa-Capital-Dealmakers-Club-partner.png', websiteUrl: 'https://www.giakaacapital.com/', confirmed: true },
+  { name: 'Jet Capital', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/Jet-capital-partner-dealmakers-club.png', websiteUrl: 'https://jets.capital/', confirmed: true },
+  { name: 'Victus Global', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/VICTUS-GLOBAL-partner-dealmakers-club.png', websiteUrl: 'https://victusglobal.com/', confirmed: true },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
   { name: null, logoUrl: null, confirmed: false },
