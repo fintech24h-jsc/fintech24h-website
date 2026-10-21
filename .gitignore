@@ -27,3 +27,9 @@ yarn-error.log*
 # wrangler local dev cache/state
 .wrangler/
 wp-plugin/*.zip
+
+# Private R&D workspace (context docs for claude.ai project). Never commit/deploy.
+R&D services/
+
+# Private DealMakers content workspace (context docs for claude.ai project). Never commit/deploy.
+DealMakers content/

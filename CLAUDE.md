@@ -2,6 +2,12 @@
 
 > **Đây là file bắt buộc đọc đầu tiên.** Claude Code PHẢI đọc file này trước khi chạm vào bất kỳ file nào trong dự án. Mọi quyết định kỹ thuật và thiết kế phải tuân theo tài liệu này.
 
+> ## 📌 BẮT BUỘC: `PROJECT_CONTEXT.md` (hồ sơ tổng thể + nhật ký thay đổi)
+>
+> 1. **ĐỌC `PROJECT_CONTEXT.md` (thư mục gốc) NGAY SAU file này, trước khi làm bất cứ việc gì.** Nó mô tả kiến trúc thật hiện tại, hạ tầng, luật của chủ dự án, các điều cấm, việc còn dở, và lịch sử những gì đã làm. Mục 2 của file CLAUDE.md này (kiến trúc "static + Cloudflare Pages + GitHub Actions") **đã lỗi thời**; `PROJECT_CONTEXT.md` Mục 2 và `DEPLOYMENT.md` mới là nguồn đúng.
+> 2. **MỖI NGÀY làm việc, trước khi kết thúc phiên (hoặc ngay sau mỗi thay đổi đáng kể), PHẢI thêm 1 mục vào `PROJECT_CONTEXT.md` → Mục 16 "Nhật ký thay đổi"** theo mẫu trong Mục 0.1 của file đó: *Đã làm / Vì sao / Trạng thái (đã deploy & verify live hay chưa) / Việc còn lại*. Thêm gì, sửa gì, xoá gì, phát hiện lỗi gì, đều ghi. Mục đích: khi chủ dự án đổi tài khoản/AI, AI mới đọc file đó là biết ngay vừa làm gì.
+> 3. Nếu thay đổi làm sai lệch phần khác của `PROJECT_CONTEXT.md` (thêm Worker/route/hạ tầng, đổi luật, xử lý xong 1 mục ở Mục 13 "Việc còn dở"), **sửa luôn phần đó**, không để file mâu thuẫn với thực tế. Tuyệt đối không ghi secret (token/mật khẩu/API key) vào file.
+
 ---
 
 ## 1. DỰ ÁN LÀ GÌ
