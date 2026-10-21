@@ -1,0 +1,199 @@
+---
+// src/components/sections/dealmakers/KolPartners.astro
+// KOL Partners: individual creators, so a face-first roster instead of a
+// second logo grid (Media Partners sits right above). One lead card
+// (2×2 on desktop) plus compact core cards. Unconfirmed entries render as
+// "Your spot" placeholders. Free editorial exchange, same as Media Partners.
+import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+import type { KolPlatform } from '../../../data/dealmakers/ss3';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+
+const { locale = 'en' } = Astro.props;
+const { kolPartners, kolPartnerBenefits } = getSS3Content(locale);
+
+// Short mono labels, same monogram language as the Partner Tracks badges.
+const platformLabel: Record<KolPlatform, string> = {
+  x: 'X',
+  telegram: 'TG',
+  youtube: 'YT',
+  tiktok: 'TT',
+  linkedin: 'IN',
+  facebook: 'FB',
+  instagram: 'IG',
+};
+const platformName: Record<KolPlatform, string> = {
+  x: 'X',
+  telegram: 'Telegram',
+  youtube: 'YouTube',
+  tiktok: 'TikTok',
+  linkedin: 'LinkedIn',
+  facebook: 'Facebook',
+  instagram: 'Instagram',
+};
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'شركاء KOL',
+  eyebrow: 'شركاء KOL · أصوات Season 3',
+  h2: 'الأصوات التي تحمل Season 3 إلى الدوائر الصحيحة.',
+  lede: 'صنّاع محتوى مستقلون في Web3 والتكنولوجيا المالية يشاركون F-Matching Season 3 مع مجتمعات تُبرم الصفقات فعلًا. تظهر ملفاتهم هنا فور تأكيد كل شراكة.',
+  lead: 'KOL رئيسي',
+  leadHint: 'صوت رئيسي واحد يقود تغطية Season 3. محجوز لشريك مؤكَّد.',
+  yourSpot: 'مكانك هنا',
+  openSlot: 'متاح لـ Season 3',
+  on: 'على',
+  becomeKol: 'كن شريك KOL',
+  interest: 'شريك KOL',
+} : locale === 'zh' ? {
+  ariaLabel: 'KOL 合作伙伴',
+  eyebrow: 'KOL 合作伙伴 · Season 3 之声',
+  h2: '把 Season 3 带进对的圈子的声音。',
+  lede: '来自 Web3 与金融科技领域的独立 KOL，将 F-Matching Season 3 分享给真正促成交易的社区。每位合作伙伴确认后，其资料即在此展示。',
+  lead: '主 KOL',
+  leadHint: '一位主 KOL 引领 Season 3 的传播，名额留给确认的合作伙伴。',
+  yourSpot: '你的位置',
+  openSlot: 'Season 3 开放中',
+  on: '在',
+  becomeKol: '成为 KOL 合作伙伴',
+  interest: 'KOL 合作伙伴',
+} : {
+  ariaLabel: 'KOL Partners',
+  eyebrow: 'KOL Partners · Season 3 voices',
+  h2: 'The voices taking Season 3 to the right rooms.',
+  lede: 'Independent Web3 and fintech KOLs who share F-Matching Season 3 with communities that actually close deals. Profiles appear here as each partnership is confirmed.',
+  lead: 'Lead KOL',
+  leadHint: 'One lead voice anchors Season 3 coverage. Reserved for a confirmed partner.',
+  yourSpot: 'Your spot',
+  openSlot: 'Open for Season 3',
+  on: 'on',
+  becomeKol: 'Become a KOL Partner',
+  interest: 'KOL Partner',
+};
+
+const initials = (name: string) =>
+  name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]!.toUpperCase()).join('');
+---
+
+<section class="relative py-20 lg:py-28" aria-label={copy.ariaLabel}>
+  <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--dm-border-accent)] to-transparent" aria-hidden="true"></div>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center" data-dm-reveal>
+      <p class="font-mono text-[11px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
+      <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-4">
+        {copy.h2}
+      </h2>
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-xl mx-auto mb-7">
+        {copy.lede}
+      </p>
+      <ul class="flex flex-wrap items-center justify-center gap-2.5 max-w-2xl mx-auto mb-12">
+        {kolPartnerBenefits.map((b) => (
+          <li class="dm-tag dm-tag-gray text-[11px] py-1 px-3">{b}</li>
+        ))}
+      </ul>
+    </div>
+
+    <ul class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto mb-10">
+      {kolPartners.map((k, i) => {
+        const isLead = k.tier === 'lead';
+        const live = k.confirmed && k.name;
+        return (
+          <li
+            class:list={[
+              'flex flex-col p-5 sm:p-6',
+              isLead
+                ? 'dm-card-featured col-span-2 lg:row-span-2 items-start justify-between gap-6 min-h-[260px] lg:min-h-0'
+                : 'items-center text-center justify-center gap-3 min-h-[188px] rounded-xl border transition-all duration-300 hover:-translate-y-1',
+              !isLead && (live
+                ? 'border-[var(--dm-border)] bg-white/[0.015] hover:border-[var(--dm-border-accent)] hover:bg-white/[0.03]'
+                : 'border-dashed border-[var(--dm-border-hover)] bg-transparent hover:border-[var(--dm-border-accent)]'),
+            ]}
+            data-dm-reveal
+            style={`--dm-reveal-delay: ${i * 60}`}
+          >
+            {isLead && (
+              <span class="dm-tag dm-tag-gold font-mono uppercase tracking-widest text-[10px]">{copy.lead}</span>
+            )}
+
+            <div class:list={['flex gap-4', isLead ? 'flex-col sm:flex-row sm:items-center items-start text-start' : 'flex-col items-center']}>
+              {live && k.avatarUrl ? (
+                <img
+                  src={k.avatarUrl}
+                  alt={k.name!}
+                  width={isLead ? 112 : 72}
+                  height={isLead ? 112 : 72}
+                  class:list={['rounded-full object-cover ring-1 ring-[var(--dm-border-accent)] shrink-0', isLead ? 'w-24 h-24 sm:w-28 sm:h-28' : 'w-[72px] h-[72px]']}
+                  loading="lazy"
+                />
+              ) : (
+                <span
+                  class:list={[
+                    'rounded-full flex items-center justify-center shrink-0 font-mono',
+                    isLead ? 'w-24 h-24 sm:w-28 sm:h-28 text-xl' : 'w-[72px] h-[72px] text-base',
+                    live
+                      ? 'bg-[var(--dm-bg-tertiary)] text-[var(--dm-gold)] ring-1 ring-[var(--dm-border-accent)]'
+                      : 'border border-dashed border-[var(--dm-border-hover)] text-[var(--dm-text-muted)]',
+                  ]}
+                  aria-hidden="true"
+                >
+                  {live ? initials(k.name!) : '+'}
+                </span>
+              )}
+
+              <div class="min-w-0">
+                <p class:list={['font-display font-semibold text-[var(--dm-text-primary)]', isLead ? 'text-xl sm:text-2xl' : 'text-base']}>
+                  {live ? k.name : copy.yourSpot}
+                </p>
+                <p class="font-mono text-[11px] text-[var(--dm-text-muted)] mt-1" dir={live && k.handle ? "ltr" : undefined}>
+                  {live && k.handle ? `@${k.handle}` : copy.openSlot}
+                </p>
+              </div>
+            </div>
+
+            {!live && isLead && (
+              <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed max-w-sm">{copy.leadHint}</p>
+            )}
+
+            {live && isLead && k.quote && (
+              <p class="text-sm text-[var(--dm-text-secondary)] leading-relaxed max-w-md">“{k.quote}”</p>
+            )}
+
+            {live && (k.topics.length > 0 || k.markets.length > 0) && (
+              <div class:list={['flex flex-wrap gap-1.5', !isLead && 'justify-center']}>
+                {k.topics.slice(0, isLead ? 3 : 2).map((t) => (
+                  <span class="dm-tag dm-tag-gray text-[10px] py-0.5 px-2">{t}</span>
+                ))}
+                {isLead && k.markets.map((m) => (
+                  <span class="dm-tag dm-tag-emerald text-[10px] py-0.5 px-2">{m}</span>
+                ))}
+              </div>
+            )}
+
+            {live && k.platforms.length > 0 && (
+              <div class:list={['flex flex-wrap gap-1.5', !isLead && 'justify-center']}>
+                {k.platforms.map((p) => (
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${k.name} ${copy.on} ${platformName[p.type]}`}
+                    class="inline-flex items-center justify-center min-w-[32px] h-8 px-2 rounded-full border border-[var(--dm-border)] font-mono text-[10px] text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] hover:border-[var(--dm-border-accent)] transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dm-gold)]"
+                  >
+                    {platformLabel[p.type]}
+                  </a>
+                ))}
+              </div>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+
+    <div class="text-center">
+      <a href="#apply" data-dm-prefill-interest={copy.interest} data-dm-track="kol_partner_cta" class="dm-btn-ghost py-2.5 px-6 text-[11px]">
+        {copy.becomeKol}
+      </a>
+    </div>
+  </div>
+</section>

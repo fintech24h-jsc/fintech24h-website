@@ -170,6 +170,41 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'Vooc Zone', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/Vooc-Zone.png', websiteUrl: 'https://www.vooczone.com/', confirmed: true },
 ];
 
+// ─── KOL Partners (free, editorial exchange like Media Partners) ─────────────
+// Individual creators, not brands, so each entry carries a face, a handle,
+// and the platforms they publish on. `confirmed: false` renders a neutral
+// "Your spot" placeholder. Avatars live in public/dealmakers/kol/ (square,
+// 400×400). Follower counts are intentionally not modelled: only add them
+// later if verified and dated.
+
+export type KolPlatform = 'x' | 'telegram' | 'youtube' | 'tiktok' | 'linkedin' | 'facebook' | 'instagram';
+
+export interface KolPartner {
+  name: string | null;
+  handle: string | null; // shown as @handle
+  avatarUrl: string | null;
+  platforms: { type: KolPlatform; url: string }[];
+  topics: string[]; // 1–3 short tags, e.g. 'DeFi', 'VC / Fundraising'
+  markets: string[]; // e.g. 'Vietnam', 'SEA', 'MENA'
+  quote?: string; // lead card only, and only with the KOL's approval
+  tier: 'lead' | 'core';
+  confirmed: boolean;
+}
+
+export const kolPartners: KolPartner[] = [
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'lead', confirmed: false },
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
+];
+
+// Same unpaid exchange as the Media Partner track, so the same two benefits.
+export const kolPartnerBenefits: string[] = [
+  'Profile on the website',
+  'Shared across social media announcements',
+];
+
 // ─── Qualified Listing Directory ──────────────────────────────────────────
 
 export type DirectoryCategory = 'capital' | 'listing' | 'partner' | 'service';
@@ -688,6 +723,7 @@ export const interestOptions: string[] = [
   'Capital Partner (from $5,000/season)',
   'Solution Partner ($3,000/season · 3 slots)',
   'Media Partner',
+  'KOL Partner',
 ];
 
 // ─── Telegram community join form ──────────────────────────────────────────

@@ -13,6 +13,7 @@ import type {
   PricingPackage,
   PartnerTrack,
   MatrixValue,
+  KolPartner,
 } from './ss3';
 
 export const seasonMeta = {
@@ -131,6 +132,21 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', websiteUrl: 'https://mpost.io', confirmed: true },
   { name: 'The Crypto Hype', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/Coloured-without-background.png', websiteUrl: 'https://thecryptohype.com/', confirmed: true },
   { name: 'Vooc Zone', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/Vooc-Zone.png', websiteUrl: 'https://www.vooczone.com/', confirmed: true },
+];
+
+// ─── KOL Partners ── same shape as ss3.ts; names/handles stay untranslated.
+
+export const kolPartners: KolPartner[] = [
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'lead', confirmed: false },
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
+  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
+];
+
+export const kolPartnerBenefits: string[] = [
+  '网站个人资料展示',
+  '在社交媒体公告中分享',
 ];
 
 export const directoryProfiles: DirectoryProfile[] = [
@@ -575,6 +591,7 @@ export const interestOptions: string[] = [
   '资本合作伙伴（5,000 美元起 / 赛季）',
   '解决方案合作伙伴（3,000 美元 / 赛季 · 3 个名额）',
   '媒体合作伙伴',
+  'KOL 合作伙伴',
 ];
 
 export const telegramGroupUrl = 'https://t.me/Fi24h_DealMakers_Club';
