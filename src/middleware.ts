@@ -1,5 +1,7 @@
+import type { APIContext, MiddlewareNext } from 'astro';
 import { defineMiddleware } from 'astro:middleware';
 import { seasons } from './data/dealmakers/seasons';
+import { withSecurityHeaders } from './lib/securityHeaders';
 
 const CANONICAL_HOST = 'fintech24h.com';
 const WWW_HOST = `www.${CANONICAL_HOST}`;
@@ -48,7 +50,7 @@ function canonicalPathname(pathname: string): string {
 const isLocalDevHost = (hostname: string) =>
   hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.local');
 
-export const onRequest = defineMiddleware((context, next) => {
+function canonicalize(context: APIContext, next: MiddlewareNext): Response | Promise<Response> {
   const target = new URL(context.url);
 
   // `npm run dev` always serves plain http:// on localhost, which would
@@ -129,4 +131,10 @@ export const onRequest = defineMiddleware((context, next) => {
   }
 
   return next();
-});
+}
+
+// public/_headers never reaches Worker-rendered responses, so security
+// headers for SSR pages (and the redirects above) are added here.
+export const onRequest = defineMiddleware(async (context, next) =>
+  withSecurityHeaders(await canonicalize(context, next)),
+);
