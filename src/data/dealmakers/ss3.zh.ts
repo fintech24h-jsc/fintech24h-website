@@ -31,7 +31,7 @@ export const seasonMeta = {
 
 export const heroPartners: HeroPartner[] = [
   { category: 'capital', label: '资本合作伙伴', name: null, logoUrl: null, confirmed: false },
-  { category: 'exchange', label: '交易所合作伙伴', name: null, logoUrl: null, confirmed: false },
+  { category: 'exchange', label: '解决方案合作伙伴', name: 'Web3Job', logoUrl: '/dealmakers/partners/web3job.svg', websiteUrl: 'https://web3job.work/', confirmed: true },
   { category: 'infrastructure', label: '基础设施合作伙伴', name: null, logoUrl: null, confirmed: false },
   { category: 'growth', label: '增长合作伙伴', name: null, logoUrl: null, confirmed: false },
 ];

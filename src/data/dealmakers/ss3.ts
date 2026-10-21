@@ -32,7 +32,7 @@ export interface HeroPartner {
 
 export const heroPartners: HeroPartner[] = [
   { category: 'capital', label: 'Capital Partner', name: null, logoUrl: null, confirmed: false },
-  { category: 'exchange', label: 'Exchange Partner', name: null, logoUrl: null, confirmed: false },
+  { category: 'exchange', label: 'Solution Partner', name: 'Web3Job', logoUrl: '/dealmakers/partners/web3job.svg', websiteUrl: 'https://web3job.work/', confirmed: true },
   { category: 'infrastructure', label: 'Infrastructure Partner', name: null, logoUrl: null, confirmed: false },
   { category: 'growth', label: 'Growth Partner', name: null, logoUrl: null, confirmed: false },
 ];
