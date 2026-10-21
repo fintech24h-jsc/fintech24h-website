@@ -112,18 +112,18 @@ export const services: Service[] = [
     title: 'AI Marketing',
     slug: 'ai-marketing',
     icon: 'Cpu',
-    shortDescription: 'Every startup claims AI. Projects that win trust communicate what their AI actually does, clearly and without hype.',
-    longDescription: 'Deploy intelligence at scale. We integrate custom AI solutions to supercharge your marketing operations, from sentiment analysis bots that track community health to automated content distribution pipelines that operate with machine precision.',
+    shortDescription: 'Crypto AI marketing with a person in the loop. AI handles routine community, monitoring and content work, and our team reviews what matters before it goes out.',
+    longDescription: 'Blockchain AI marketing for crypto, Web3, fintech and AI startups. We set up AI workflows for community support, sentiment monitoring and multilingual content, agree the scope and approved data sources with you first, and keep a person reviewing anything that speaks for your brand. You get a regular report on what the AI did and what our team changed.',
     features: [
-      'Custom AI bots for automated, context-aware community moderation',
-      'Deep data scraping and real-time sentiment analysis on social platforms',
-      'Programmatic content generation and localized distribution',
-      'Predictive analytics for campaign performance and churn reduction'
+      'AI community support on Telegram and Discord, with human escalation',
+      'Sentiment monitoring across X, Telegram, Reddit and Discord',
+      'Multilingual posts reviewed by an editor before publishing',
+      'Regular reports on what the AI handled and what we adjusted'
     ],
     benefits: [
-      '24/7 operational efficiency without scaling human headcount',
-      'Data-driven insights that eliminate guesswork from marketing',
-      'Hyper-personalized engagement at a massive scale'
+      'Routine questions answered from your approved docs, while people handle the sensitive ones',
+      'Early warning on FUD and recurring issues, checked against the facts by our team',
+      'Content in the languages your markets need, without skipping human review'
     ],
     metrics: [
       { label: 'Workflow Automation', value: 'Scoped' },
