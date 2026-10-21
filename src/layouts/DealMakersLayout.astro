@@ -7,6 +7,10 @@
 import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
 import '../styles/dealmakers.css';
+// Inlined below rather than loaded as <script src="/consent.js">: a
+// synchronous external script in <head> is render-blocking and cost a full
+// round trip before first paint on mobile.
+import consentScript from '../../public/consent.js?raw';
 import { seasons } from '../data/dealmakers/seasons';
 import { getSS3Content, type DealmakersLocale } from '../data/dealmakers/content';
 import { getChrome } from '../data/dealmakers/chrome';
@@ -192,9 +196,9 @@ const currentYear = new Date().getFullYear();
 
   <!-- Consent Mode v2 default — must run on the real main thread, before
        gtag.js loads, so GA4 starts in denied/cookieless mode until the
-       cookie banner grants it. Same /consent.js and same first-party
-       cookie as the main site — a choice made there carries over here. -->
-  <script is:inline src="/consent.js"></script>
+       cookie banner grants it. Same /consent.js code (inlined) and same
+       first-party cookie as the main site — a choice made there carries over here. -->
+  <script is:inline set:html={consentScript}></script>
 
   <!-- Google Analytics 4 via Partytown — same property as the main site -->
   <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-4TDZQMBWLR"></script>

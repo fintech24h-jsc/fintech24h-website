@@ -16,6 +16,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Metric-matched fallback fonts ───
+   The web fonts load non-blocking (display=swap), so on a slow mobile
+   connection the page first paints in a system font and swaps later. Without
+   these, the swap re-wrapped the hero and shifted everything below it
+   (CLS ~0.13 on mobile). Each fallback is a local system font scaled to the
+   web font's average glyph width and vertical metrics, so the swap no longer
+   moves layout. The final rendering (after the web fonts arrive) is unchanged.
+   Values computed with fontTools against the Google Fonts files (Fraunces at
+   wght 600 / opsz 72, Inter 400, JetBrains Mono 400). */
+@font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Georgia Bold'), local('Georgia-Bold'), local('Georgia');
+  size-adjust: 85.21%; ascent-override: 114.78%; descent-override: 29.93%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Fraunces Fallback Android';
+  src: local('Noto Serif'), local('NotoSerif');
+  size-adjust: 87.75%; ascent-override: 111.46%; descent-override: 29.06%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 107.29%; ascent-override: 90.29%; descent-override: 22.48%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Fallback Android';
+  src: local('Roboto'), local('Roboto-Regular');
+  size-adjust: 107.00%; ascent-override: 90.54%; descent-override: 22.54%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'JetBrains Mono Fallback';
+  src: local('Courier New'), local('CourierNewPSMT');
+  size-adjust: 99.98%; ascent-override: 102.02%; descent-override: 30.00%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'JetBrains Mono Fallback Android';
+  src: local('Roboto Mono'), local('RobotoMono-Regular');
+  size-adjust: 99.98%; ascent-override: 102.02%; descent-override: 30.00%; line-gap-override: 0%;
+}
+
 :root {
   /* Backgrounds — warm near-black, not the site's cool blue-black */
   --dm-bg:            #09080a;
@@ -55,9 +95,9 @@
 
   /* Typography — Fraunces (serif, optical-size display) sets this apart
      from the main site's geometric Space Grotesk */
-  --dm-font-display: 'Fraunces', serif;
-  --dm-font-body:    'Inter', sans-serif;
-  --dm-font-mono:    'JetBrains Mono', monospace;
+  --dm-font-display: 'Fraunces', 'Fraunces Fallback', 'Fraunces Fallback Android', serif;
+  --dm-font-body:    'Inter', 'Inter Fallback', 'Inter Fallback Android', sans-serif;
+  --dm-font-mono:    'JetBrains Mono', 'JetBrains Mono Fallback', 'JetBrains Mono Fallback Android', monospace;
 
   --dm-radius-sm:  6px;
   --dm-radius-md:  10px;
@@ -571,7 +611,10 @@ html {
 
 /* ─── Scroll-reveal entrance (IntersectionObserver toggles .dm-in) ─── */
 [data-dm-reveal] {
-  opacity: 0;
+  /* 0.01, not 0: visually identical, but Chrome skips fully transparent
+     elements when picking the LCP element. At 0 the hero H1 was never an LCP
+     candidate on mobile, so LCP fell through to the late cookie banner. */
+  opacity: 0.01;
   transform: translateY(28px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: calc(var(--dm-reveal-delay, 0) * 1ms);
