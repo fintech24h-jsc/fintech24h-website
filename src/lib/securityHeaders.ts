@@ -25,7 +25,9 @@ const SHARED_DIRECTIVES = [
   "object-src 'none'",
   "frame-ancestors 'self'",
   "form-action 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://platform.twitter.com",
+  // static.cloudflareinsights.com: Cloudflare Web Analytics beacon, injected by
+  // Cloudflare at the edge (was silently blocked by the old static CSP).
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.cloudflareinsights.com https://platform.twitter.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' data: https://fonts.gstatic.com",
   [
@@ -37,6 +39,7 @@ const SHARED_DIRECTIVES = [
     'https://*.google-analytics.com',
     'https://*.analytics.google.com',
     'https://fintech24h-dealmakers-community.fintech24hvn.workers.dev',
+    'https://cloudflareinsights.com',
   ].join(' '),
   [
     "frame-src 'self'",
@@ -67,9 +70,10 @@ const SECURITY_HEADERS: Record<string, string> = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy':
     'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()',
-  // Report-only while it is verified against every page type in production.
-  // Switch the key to 'Content-Security-Policy' once no violations remain.
-  'Content-Security-Policy-Report-Only': SSR_CSP,
+  // Enforced since 2026-10-21 after a report-only pass showed no violations
+  // across every page type (home, services, blog posts with YouTube/Vimeo/
+  // LinkedIn/X embeds, author, country pages, DealMakers, 404).
+  'Content-Security-Policy': SSR_CSP,
 };
 
 /** Adds the security headers to a Worker response without overriding values a route set itself. */
