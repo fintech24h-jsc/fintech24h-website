@@ -33,6 +33,10 @@ function buildCsp(inlineScriptSource: string): string {
     `script-src 'self' ${inlineScriptSource} https://www.googletagmanager.com https://static.cloudflareinsights.com https://platform.twitter.com`,
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' data: https://fonts.gstatic.com",
+    // WordPress media (e.g. an intro video in a blog post) is referenced with
+    // the absolute https://fintech24h.com URL; listed so it also plays on
+    // *.workers.dev preview URLs, where 'self' is the preview host.
+    "media-src 'self' https://fintech24h.com",
     [
       "connect-src 'self'",
       'https://script.google.com',
