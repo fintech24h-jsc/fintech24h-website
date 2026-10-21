@@ -326,7 +326,11 @@ const breadcrumbs = [
     // block) + scroll-spy highlight for the "On This Page" sidebar nav.
     // Guarded to only run when the TOC/CTA sidebar is actually rendered.
     //
-    // Plain JS on purpose, no TypeScript type annotations. NOTE: never spell
+    // Plain JS on purpose, NO TypeScript syntax: this script sits inside
+    // {hasToc && (...)}, so Astro ships it as-is without stripping types.
+    // `x: T` annotations here broke the sidebar twice (4264a96, c6215c0).
+    // To keep `astro check` happy, write code TS can infer instead (typed
+    // querySelectorAll selectors, default parameter values). NOTE: never spell
     // out an HTML tag delimiter around the word "script" inside this block,
     // not even in a comment — the HTML parser scans raw tag content for that
     // exact sequence and will end the element early, truncating everything
@@ -335,7 +339,7 @@ const breadcrumbs = [
     (function () {
       var content = document.getElementById('article-content');
       var progressBar = document.getElementById('reading-progress-bar');
-      var tocLinks = Array.prototype.slice.call(document.querySelectorAll('[data-toc-link]'));
+      var tocLinks = Array.from(document.querySelectorAll('a[data-toc-link]'));
       var headings = content ? Array.prototype.slice.call(content.querySelectorAll('h2[id]')) : [];
 
       // Manual "sticky" for the sidebar via position:fixed, driven by scroll
@@ -406,10 +410,10 @@ const breadcrumbs = [
         progressBar.style.width = pct + '%';
       }
 
-      function setActiveLink(id) {
+      function setActiveLink(id = '') {
         for (var i = 0; i < tocLinks.length; i++) {
           var link = tocLinks[i];
-          link.classList.toggle('is-active', link.dataset.tocLink === id);
+          link.classList.toggle('is-active', link.getAttribute('data-toc-link') === id);
         }
       }
 
@@ -429,7 +433,7 @@ const breadcrumbs = [
       var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       tocLinks.forEach(function (link) {
         link.addEventListener('click', function (e) {
-          var id = link.dataset.tocLink;
+          var id = link.getAttribute('data-toc-link');
           var target = id ? document.getElementById(id) : null;
           if (!target) return;
           e.preventDefault();

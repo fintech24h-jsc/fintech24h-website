@@ -5,7 +5,7 @@ export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import Pagination from '../../components/ui/Pagination.astro';
-import { getUserBySlug, getPostsByAuthor, POSTS_PER_PAGE, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
+import { getUserBySlug, getPostsByAuthor, getPhatVoAuthorIds, isPhatVoWpAuthor, PHAT_VO_SLUG, POSTS_PER_PAGE, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
 import { getReadingTime } from '../../lib/utils';
 import { team } from '../../data/team';
 
@@ -22,10 +22,11 @@ if (segments.length === 3 && segments[1] === 'page' && /^\d+$/.test(segments[2])
 }
 const suffix = (n: number) => (n > 1 ? `/page/${n}` : '');
 
-// getPostAuthor() (lib/wordpress.ts) shows every post by the WP "admin" or "phat" account
-// as "Phat Vo" linking to /author/phat-vo, so those slugs share one canonical profile.
+// getPostAuthor() (lib/wordpress.ts) shows every post from the WP "admin"/"phat" accounts,
+// and from any other account that isn't a team member (e.g. "editorfi24h"), as "Phat Vo"
+// linking to /author/phat-vo, so those slugs all share one canonical profile.
 if (slug === 'admin' || slug === 'phat') {
-  return Astro.redirect(`/author/phat-vo${suffix(pageNumber)}`, 301);
+  return Astro.redirect(`/author/${PHAT_VO_SLUG}${suffix(pageNumber)}`, 301);
 }
 // Page 1 is the profile itself; queries never create variants.
 if (segments.length === 3 && pageNumber <= 1) return Astro.redirect(`/author/${slug}`, 301);
@@ -36,6 +37,9 @@ const user = wpSlug ? await getUserBySlug(wpSlug) : null;
 if (!user) {
   // Render the 404 page here with a real 404 status (no soft-404 redirect).
   return Astro.rewrite('/404');
+}
+if (slug !== PHAT_VO_SLUG && isPhatVoWpAuthor(user)) {
+  return Astro.redirect(`/author/${PHAT_VO_SLUG}${suffix(pageNumber)}`, 301);
 }
 
 const isPhatVo = slug === 'phat' || slug === 'phat-vo';
@@ -65,9 +69,8 @@ const phatBio = "Co-Founder & Chief Product Officer of Fintech24h.com. Phat Vo d
 const authorBio = isPhatVo ? phatBio : (member?.bio || user.description || "Fintech24h team member and contributor.");
 
 // Fetch publications by the author
-// Phat Vo's byline also covers posts saved under the legacy "admin" account.
-const adminUser = isPhatVo ? await getUserBySlug('admin') : null;
-const authorIds = [user.id, adminUser?.id].filter((id): id is number => typeof id === 'number');
+// Phat Vo's byline also covers every non-team WP account (legacy "admin", "editorfi24h", ...).
+const authorIds = isPhatVo ? await getPhatVoAuthorIds() : [user.id];
 const { posts, total: totalPosts, totalPages } = await getPostsByAuthor(authorIds, pageNumber, POSTS_PER_PAGE);
 
 // Don't render empty author archives (e.g. legacy WP accounts with zero published posts) or

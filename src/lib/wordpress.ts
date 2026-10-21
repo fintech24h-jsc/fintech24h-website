@@ -456,44 +456,55 @@ export interface WPUser {
   avatar_urls?: Record<string, string>;
 }
 
+// Byline rule. Posts are published from several WordPress accounts (legacy "admin",
+// "phat", and since 2026-09-22 the editor account "editorfi24h"). Only an account whose
+// name/slug matches a real team member gets that member's byline; EVERY other account
+// falls back to Phat Vo. That way a new editor/automation account created in wp-admin
+// never leaks its raw username ("Editorfi24h", role "Contributor") onto articles — it
+// shows Phat Vo and links to /author/phat-vo until someone adds a team.ts entry for it.
+const PHAT_VO_NAME = 'Phat Vo';
+export const PHAT_VO_SLUG = 'phat-vo';
+
+function findTeamMemberForWpAuthor(wpAuthor?: { name?: string; slug?: string } | null) {
+  if (!wpAuthor) return undefined;
+  const name = decodeHtmlEntities(wpAuthor.name || '').trim().toLowerCase();
+  const slug = (wpAuthor.slug || '').toLowerCase();
+  if (!name && !slug) return undefined;
+  return team.find((m) => {
+    const memberName = m.name.toLowerCase();
+    const memberSlug = memberName.replace(/\s+/g, '-');
+    const firstName = memberName.split(/\s+/)[0];
+    return (
+      (name && (memberName.includes(name) || name.includes(memberName))) ||
+      slug === memberSlug ||
+      slug === firstName // e.g. WP slug "phat" for Phat Vo
+    );
+  });
+}
+
+/** True when this WordPress account's posts are shown under Phat Vo's byline. */
+export function isPhatVoWpAuthor(wpAuthor?: { name?: string; slug?: string } | null): boolean {
+  const member = findTeamMemberForWpAuthor(wpAuthor);
+  return !member || member.name === PHAT_VO_NAME;
+}
+
 export function getPostAuthor(post: WPPost) {
   const wpAuthor = post._embedded?.['author']?.[0];
-  
-  // If no author is embedded, or the author is admin, default to Phat Vo
-  const isDefaultOrAdmin = !wpAuthor || wpAuthor.name === 'admin' || wpAuthor.slug === 'admin';
-  const authorName = isDefaultOrAdmin ? 'Phat Vo' : decodeHtmlEntities(wpAuthor.name);
-  
-  // Convert Phat Vo's slug from WordPress ('phat') to the public URL slug ('phat-vo')
-  const originalSlug = isDefaultOrAdmin ? 'phat' : wpAuthor.slug;
-  const authorSlug = originalSlug === 'phat' ? 'phat-vo' : originalSlug;
-
-  // Find matching team member by slug or name
-  const teamMember = team.find(m => {
-    const nameMatch = m.name.toLowerCase().includes(authorName.toLowerCase()) || authorName.toLowerCase().includes(m.name.toLowerCase());
-    const slugMatch = m.name.toLowerCase().replace(/\s+/g, '-') === authorSlug || (authorSlug === 'phat-vo' && m.name === 'Phat Vo');
-    return nameMatch || slugMatch;
-  });
-
-  if (teamMember) {
-    return {
-      name: teamMember.name,
-      role: teamMember.role,
-      image: teamMember.image || 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp',
-      slug: authorSlug,
-      telegram: teamMember.telegram,
-      linkedin: teamMember.linkedin,
-      bio: teamMember.bio
-    };
-  }
+  const member = isPhatVoWpAuthor(wpAuthor)
+    ? team.find((m) => m.name === PHAT_VO_NAME)
+    : findTeamMemberForWpAuthor(wpAuthor);
+  const slug = !member || member.name === PHAT_VO_NAME
+    ? PHAT_VO_SLUG
+    : member.name.toLowerCase().replace(/\s+/g, '-');
 
   return {
-    name: authorName,
-    role: 'Contributor',
-    image: wpAuthor?.avatar_urls?.['96'] || 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp',
-    slug: authorSlug,
-    telegram: 'https://telegram.me/fintech24h',
-    linkedin: 'https://www.linkedin.com/company/fintech24h/',
-    bio: (wpAuthor?.description && decodeHtmlEntities(wpAuthor.description)) || 'Fintech24h team member and contributor.'
+    name: member?.name || PHAT_VO_NAME,
+    role: member?.role || 'Co-Founder & CPO',
+    image: member?.image || 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp',
+    slug,
+    telegram: member?.telegram || 'https://telegram.me/fintech24h',
+    linkedin: member?.linkedin || 'https://www.linkedin.com/company/fintech24h/',
+    bio: member?.bio || 'Fintech24h team member and contributor.',
   };
 }
 
@@ -502,7 +513,7 @@ export function getPostAuthor(post: WPPost) {
 // answers 401 to us. A single user (GET /wp/v2/users/{id}) is still public, so: collect the
 // distinct author ids of published posts (tiny `_fields=author` responses), then read each
 // user by id and match the slug. A user with no published posts has no archive to show anyway.
-async function findAuthorBySlug(slug: string): Promise<WPUser | null> {
+async function listPublishedAuthors(): Promise<WPUser[]> {
   const PER_PAGE = 100;
   const ids = new Set<number>();
   for (let page = 1; page <= 6; page++) {
@@ -520,24 +531,34 @@ async function findAuthorBySlug(slug: string): Promise<WPUser | null> {
     posts.forEach((p) => ids.add(p.author));
     if (posts.length < PER_PAGE) break;
   }
+  const users: WPUser[] = [];
   for (const id of ids) {
     try {
       const user = await fetchWP<WPUser>(`/users/${id}`);
-      if (user?.slug === slug) return user;
+      if (user) users.push({ ...user, name: decodeHtmlEntities(user.name), description: decodeHtmlEntities(user.description) });
     } catch {
       /* skip users WordPress will not show */
     }
   }
-  return null;
+  return users;
 }
 
 export async function getUserBySlug(slug: string): Promise<WPUser | null> {
   try {
-    const user = await findAuthorBySlug(slug);
-    return user ? { ...user, name: decodeHtmlEntities(user.name), description: decodeHtmlEntities(user.description) } : null;
+    return (await listPublishedAuthors()).find((u) => u.slug === slug) ?? null;
   } catch (err) {
     console.warn(`WP API fail: getUserBySlug ${slug}`, err);
     return null;
+  }
+}
+
+/** Ids of every WordPress account whose posts carry Phat Vo's byline (see isPhatVoWpAuthor). */
+export async function getPhatVoAuthorIds(): Promise<number[]> {
+  try {
+    return (await listPublishedAuthors()).filter((u) => isPhatVoWpAuthor(u)).map((u) => u.id);
+  } catch (err) {
+    console.warn('WP API fail: getPhatVoAuthorIds', err);
+    return [];
   }
 }
 
