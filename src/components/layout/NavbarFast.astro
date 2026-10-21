@@ -282,7 +282,9 @@ const showBlog = await isBlogAvailable();
   :global(html[data-theme='light']) .theme-icon-moon { display: block; }
 </style>
 
-<script is:inline>
+<script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
   const nb      = document.getElementById('nb');
   const svcWrap = document.getElementById('svc-wrap');
   const svcDD   = document.getElementById('svc-dropdown');

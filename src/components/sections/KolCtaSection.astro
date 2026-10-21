@@ -89,7 +89,9 @@ const TitleTag = isHero ? 'h1' : 'h2';
     }
   </style>
 
-  <script is:inline>
+  <script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
     document.addEventListener('DOMContentLoaded', () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       const observer = new IntersectionObserver((entries) => {

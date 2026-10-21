@@ -408,7 +408,7 @@ const phatProducts = [
 
                       <!-- Title -->
                       <h3 class="font-display text-xl md:text-2xl font-bold text-[var(--text-primary)] leading-tight group-hover:text-[var(--accent-cyan)] transition-colors">
-                        <a href={`/blog/${post.slug}`} set:html={post.title.rendered} />
+                        <a href={`/blog/${post.slug}`} data-cms-content set:html={post.title.rendered} />
                       </h3>
 
                       <!-- Excerpt -->

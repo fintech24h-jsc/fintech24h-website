@@ -151,7 +151,9 @@ const packagesSchema = {
   <FaqAccordion locale="ar" />
 </DealMakersLayout>
 
-<script is:inline>
+<script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
   document.addEventListener('click', (e) => {
     const target = e.target instanceof Element ? e.target : null;
     if (!target) return;

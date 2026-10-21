@@ -152,7 +152,9 @@ const copy = locale === 'ar' ? {
   }
 </style>
 
-<script is:inline>
+<script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
   // Subtle pointer-tilt on Featured DealMaker cards — desktop hover only, no dependency.
   (function () {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

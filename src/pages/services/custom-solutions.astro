@@ -608,11 +608,9 @@ const steps = [
 
 </BaseLayout>
 
-<script is:inline define:vars={{ categories, segments }}>
-  // Pass template data to client side JS
-  window.CUSTOM_CATEGORIES = categories;
-  window.CUSTOM_SEGMENTS = segments;
-</script>
+<!-- Template data for the client script below. A JSON data block instead of
+     define:vars: data blocks never execute, so the CSP needs no hash for it. -->
+<script type="application/json" id="custom-solutions-data" set:html={JSON.stringify({ categories, segments }).replace(/</g, '\\u003c')} />
 
 <script>
   import { submitLead } from '../../lib/leadSubmit';
@@ -642,6 +640,10 @@ const steps = [
       CUSTOM_SEGMENTS: Segment[];
     }
   }
+
+  const customSolutionsData = JSON.parse(document.getElementById('custom-solutions-data')?.textContent || '{}');
+  window.CUSTOM_CATEGORIES = customSolutionsData.categories ?? [];
+  window.CUSTOM_SEGMENTS = customSolutionsData.segments ?? [];
 
   document.addEventListener('DOMContentLoaded', () => {
     // ══════════════════════════════════════════════════════════

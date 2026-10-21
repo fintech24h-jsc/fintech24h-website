@@ -5,6 +5,7 @@
 // has its own header, footer, and color system, and only shares hosting +
 // analytics + legal pages with fintech24h.com.
 import SchemaOrg from '../components/seo/SchemaOrg.astro';
+import AsyncStylesheet from '../components/ui/AsyncStylesheet.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
 import '../styles/dealmakers.css';
 // Inlined below rather than loaded as <script src="/consent.js">: a
@@ -188,11 +189,7 @@ const currentYear = new Date().getFullYear();
        each per the project's performance rule -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
-  <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
-  </noscript>
+  <AsyncStylesheet href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
 
   <!-- Consent Mode v2 default — must run on the real main thread, before
        gtag.js loads, so GA4 starts in denied/cookieless mode until the
@@ -431,7 +428,9 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 
-  <script is:inline>
+  <script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
     (function () {
       const banner = document.getElementById('dm-cookie-banner');
       const summary = document.getElementById('dm-cookie-banner-summary');
@@ -488,7 +487,9 @@ const currentYear = new Date().getFullYear();
     })();
   </script>
 
-  <script is:inline>
+  <script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
     // Shared scroll-reveal entrance for every [data-dm-reveal] element across
     // the microsite — one observer, staggered by sibling position, so each
     // component doesn't need to reimplement it. Skips entirely under
@@ -516,7 +517,9 @@ const currentYear = new Date().getFullYear();
     })();
   </script>
 
-  <script is:inline>
+  <script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
     // Mobile nav toggle for the header hamburger — desktop already shows the
     // section nav inline, this only covers the sub-lg breakpoint where it's
     // hidden (below lg, not md, so tablets get the clean dropdown instead of
@@ -548,7 +551,9 @@ const currentYear = new Date().getFullYear();
     })();
   </script>
 
-  <script is:inline>
+  <script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
     // Language dropdown — click the current-locale button to reveal the
     // other locale links, instead of showing them all side by side in the
     // header. Closes on outside click, Escape, or picking a language.
@@ -578,7 +583,9 @@ const currentYear = new Date().getFullYear();
     })();
   </script>
 
-  <script is:inline>
+  <script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
     // Cursor spotlight — only on devices with a real pointer, and only
     // without prefers-reduced-motion (this tracks continuous pointer
     // motion, which is exactly what that preference asks sites to avoid).

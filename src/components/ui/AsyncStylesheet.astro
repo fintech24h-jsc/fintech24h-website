@@ -1,0 +1,19 @@
+---
+// Non-render-blocking stylesheet (Google Fonts) without an inline event
+// handler. The classic `media="print" onload="this.media='all'"` trick needs
+// 'unsafe-inline' (or 'unsafe-hashes') in the CSP script-src, so the flip is
+// done by a capturing `load` listener instead. The listener script is a fixed
+// string, so its sha256 is stable and covered by the generated CSP hashes
+// (scripts/csp-hashes.mjs). It must stay BEFORE the <link> so the load event
+// can never fire before the listener exists.
+interface Props {
+  href: string;
+}
+const { href } = Astro.props;
+---
+<script is:inline>document.addEventListener('load',function(e){var t=e.target;if(t&&t.hasAttribute&&t.hasAttribute('data-async-css'))t.media='all'},true)</script>
+<link rel="preload" as="style" href={href} />
+<link rel="stylesheet" media="print" data-async-css href={href} />
+<noscript>
+  <link rel="stylesheet" href={href} />
+</noscript>

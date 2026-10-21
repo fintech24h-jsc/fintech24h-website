@@ -12,6 +12,8 @@
  * used in the dealmakers/* components would compile to nothing.
  */
 
+@config "../../tailwind.dealmakers.config.mjs";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

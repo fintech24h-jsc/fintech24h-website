@@ -171,7 +171,17 @@ const colors = [
   </div>
 </section>
 
-<script define:vars={{ services, tags, colors }}>
+<!-- Data for the client script below. A JSON data block instead of
+     define:vars: define:vars forces an inline script, which the CSP would
+     have to allow by hash; data blocks never execute. -->
+<script type="application/json" id="services-grid-data" set:html={JSON.stringify({ services, tags, colors }).replace(/</g, '\\u003c')} />
+
+<script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
+  const { services, tags, colors }: { services: any[]; tags: string[]; colors: string[] } =
+    JSON.parse(document.getElementById('services-grid-data')?.textContent || '{"services":[],"tags":[],"colors":[]}');
+
   document.addEventListener('DOMContentLoaded', () => {
     const dockItems = document.querySelectorAll('.service-dock-item');
     const bentoBoard = document.getElementById('bento-board');

@@ -158,7 +158,9 @@ const packagesSchema = {
   <FaqAccordion />
 </DealMakersLayout>
 
-<script is:inline>
+<script>
+  // @ts-nocheck — plain JS moved out of is:inline/define:vars so the CSP needs no
+  // 'unsafe-inline'; it was never type-checked as an inline script.
   // Delegated click handling for the whole Season 3 page:
   // 1) [data-dm-intro] (Featured DealMaker cards) and [data-dm-prefill-interest]
   //    (package/media/request-intro CTAs) prefill the Apply form via a window event.

@@ -4,6 +4,8 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import partytown from '@astrojs/partytown';
 import cloudflare from '@astrojs/cloudflare';
+import { fileURLToPath } from 'node:url';
+import { injectCspHashes } from './scripts/csp-hashes.mjs';
 
 export default defineConfig({
   site: 'https://fintech24h.com',
@@ -83,6 +85,16 @@ export default defineConfig({
         return { ...item, changefreq: 'monthly', priority: 0.5 };
       },
     }),
+    // Must stay last: hashes the inline <script>s in the final static HTML
+    // into dist/_headers (see scripts/csp-hashes.mjs).
+    {
+      name: 'csp-script-hashes',
+      hooks: {
+        'astro:build:done': ({ dir }) => {
+          injectCspHashes(fileURLToPath(dir));
+        },
+      },
+    },
   ],
   build: {
     assets: '_assets',
@@ -91,6 +103,13 @@ export default defineConfig({
     service: { entrypoint: 'astro/assets/services/sharp' },
   },
   vite: {
+    build: {
+      // Never inline Astro-processed <script>s into the HTML: external
+      // /_assets/*.js files are allowed by the CSP's 'self', inline ones would
+      // each need a hash (and _headers lines are capped at 2,000 chars).
+      // Nothing in src/ imports images/fonts, so this only affects scripts.
+      assetsInlineLimit: 0,
+    },
     ssr: {
       noExternal: ['gsap'],
     },
