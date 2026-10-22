@@ -2,6 +2,7 @@
 // src/pages/services/community-growth.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
 const breadcrumbs = [
@@ -29,7 +30,7 @@ const faqs = [
   },
   {
     q: "What channels do you moderate for a Dubai community?",
-    a: 'Primarily X and Telegram, since that is where the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a> and wider UAE crypto community is most active.'
+    a: 'Primarily X and Telegram, since that is where the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a> and wider UAE crypto community is most active.'
   },
   {
     q: "What platforms do you manage?",
@@ -37,37 +38,25 @@ const faqs = [
   }
 ];
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Community Growth",
-  "provider": {
-    "@type": "Organization",
-    "name": "Fintech24h"
-  },
-  "url": "https://fintech24h.com/services/community-growth/",
-  "description": "Build active, loyal communities that drive organic growth. Fintech24h manages Telegram and Discord communities."
-};
+const META_DESCRIPTION =
+  'Crypto and Web3 community management agency. Fintech24h runs Telegram and Discord moderation, engagement and ambassador programs that keep members active.';
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(faq => ({
-    "@type": "Question",
-    "name": faq.q,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": faq.a
-    }
-  }))
-};
+const serviceSchema = buildServiceSchema({
+  name: 'Crypto & Web3 Community Management',
+  alternateName: ['Telegram Community Management', 'Discord Community Management', 'Web3 Community Growth'],
+  serviceType: 'Community management',
+  url: 'https://fintech24h.com/services/community-growth/',
+  description: META_DESCRIPTION
+});
+
+const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="Web3 Community Growth & Management | Telegram, Discord | Fintech24h"
-  description="Build active, loyal communities that drive organic growth. Fintech24h manages Telegram and Discord communities, runs ambassador programs, and creates engagement loops that work."
+  title="Crypto & Web3 Community Management Agency | Fintech24h"
+  description={META_DESCRIPTION}
   schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
@@ -386,10 +375,13 @@ const combinedSchema = [serviceSchema, faqSchema];
   }
 
   /* ── Scroll reveal ── */
-  .reveal {
-    opacity: 0;
+  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
+  @media (scripting: enabled) {
+    .reveal {
+    opacity: 0.01;
     transform: translateY(20px);
     transition: opacity 0.55s ease, transform 0.55s ease;
+  }
   }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.10s; }

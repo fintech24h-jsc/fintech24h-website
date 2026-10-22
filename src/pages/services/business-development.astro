@@ -2,6 +2,7 @@
 // src/pages/services/business-development.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
 const breadcrumbs = [
@@ -13,7 +14,7 @@ const breadcrumbs = [
 const faqs = [
   {
     q: "How are you different from an in-house BD hire?",
-    a: 'An in-house BD hire spends their first 6 months building a network from scratch. We come with an existing network of exchanges, investors, and protocols across Southeast Asia, the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">UAE</a>, and Europe. We plug you into that network immediately, reducing time-to-market.'
+    a: 'An in-house BD hire spends their first 6 months building a network from scratch. We come with an existing network of exchanges, investors, and protocols across Southeast Asia, the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">UAE</a>, and Europe. We plug you into that network immediately, reducing time-to-market.'
   },
   {
     q: "Can you guarantee an exchange listing?",
@@ -21,7 +22,7 @@ const faqs = [
   },
   {
     q: "Can you introduce projects to exchanges and VCs in Singapore?",
-    a: 'Yes, business development coverage in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Singapore</a> extends into partner introductions in Indonesia and Thailand as well.'
+    a: 'Yes, business development coverage in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a> extends into partner introductions in Indonesia and Thailand as well.'
   },
   {
     q: "Do you take equity or tokens as payment for BD services?",
@@ -29,11 +30,11 @@ const faqs = [
   },
   {
     q: "What regions do you cover?",
-    a: 'Our core strength is in Southeast Asia (<a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Vietnam</a>, Thailand, <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Singapore</a>, Indonesia), the UAE (<a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a>/Abu Dhabi), and key European Web3 hubs. If you are a Western project looking to enter Asia, this is our exact specialty.'
+    a: 'Our core strength is in Southeast Asia (<a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Vietnam</a>, Thailand, <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a>, Indonesia), the UAE (<a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a>/Abu Dhabi), and key European Web3 hubs. If you are a Western project looking to enter Asia, this is our exact specialty.'
   },
   {
     q: "Can you help with exchange and VC introductions in Dubai?",
-    a: 'Yes, including free-zone partners active in <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a> and the wider UAE market.'
+    a: 'Yes, including free-zone partners active in <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a> and the wider UAE market.'
   },
   {
     q: "What size projects do you work with?",
@@ -41,37 +42,25 @@ const faqs = [
   }
 ];
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Business Development",
-  "provider": {
-    "@type": "Organization",
-    "name": "Fintech24h"
-  },
-  "url": "https://fintech24h.com/services/business-development/",
-  "description": "Open the doors that matter for your Web3 project. Fintech24h connects blockchain projects with strategic partners, investors, exchanges, and ecosystem players."
-};
+const META_DESCRIPTION =
+  'Web3 and crypto business development agency. Fintech24h connects blockchain projects with exchanges, investors and ecosystem partners via warm introductions.';
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(faq => ({
-    "@type": "Question",
-    "name": faq.q,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": faq.a
-    }
-  }))
-};
+const serviceSchema = buildServiceSchema({
+  name: 'Web3 & Crypto Business Development',
+  alternateName: ['Blockchain Business Development', 'Web3 Partnerships', 'Crypto Investor Introductions'],
+  serviceType: 'Business development',
+  url: 'https://fintech24h.com/services/business-development/',
+  description: META_DESCRIPTION
+});
+
+const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="Web3 Business Development — Partnerships & Investor Intros | Fintech24h"
-  description="Open the doors that matter for your Web3 project. Fintech24h connects blockchain projects with strategic partners, investors, exchanges, and ecosystem players."
+  title="Web3 & Crypto Business Development Agency | Fintech24h"
+  description={META_DESCRIPTION}
   schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
@@ -303,7 +292,10 @@ const combinedSchema = [serviceSchema, faqSchema];
 
 <style>
   summary::-webkit-details-marker { display: none; }
-  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
+  @media (scripting: enabled) {
+    .reveal { opacity: 0.01; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
   
   @keyframes scan {

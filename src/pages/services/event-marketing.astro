@@ -2,6 +2,7 @@
 // src/pages/services/event-marketing.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
 const breadcrumbs = [
@@ -21,15 +22,15 @@ const faqs = [
   },
   {
     q: "Do you run activations at Singapore's Web3 events?",
-    a: 'Yes, including conference season activations in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Singapore</a> like Token2049.'
+    a: 'Yes, including conference season activations in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a> like Token2049.'
   },
   {
     q: "Which regions do you cover for events?",
-    a: 'Our strongest physical presence is in Southeast Asia (<a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Vietnam</a>, <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Singapore</a>, Thailand) and the UAE (<a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a>). We have local vendors, venue partners, and VIP networks ready to activate in these hubs.'
+    a: 'Our strongest physical presence is in Southeast Asia (<a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Vietnam</a>, <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a>, Thailand) and the UAE (<a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a>). We have local vendors, venue partners, and VIP networks ready to activate in these hubs.'
   },
   {
     q: "Do you run activations at Dubai's Web3 events?",
-    a: 'Yes, timed to <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a>’s major fintech and Web3 conference calendar.'
+    a: 'Yes, timed to <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a>’s major fintech and Web3 conference calendar.'
   },
   {
     q: "Do you provide on-site staff?",
@@ -37,37 +38,25 @@ const faqs = [
   }
 ];
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Event Marketing",
-  "provider": {
-    "@type": "Organization",
-    "name": "Fintech24h"
-  },
-  "url": "https://fintech24h.com/services/event-marketing/",
-  "description": "Maximize your presence at Web3 conferences. Fintech24h secures speaking slots, manages media partnerships, activates sponsors, and amplifies event coverage."
-};
+const META_DESCRIPTION =
+  'Crypto and Web3 event marketing agency. Fintech24h plans side events, booths and pre-event to post-event campaigns so your conference budget turns into deals.';
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(faq => ({
-    "@type": "Question",
-    "name": faq.q,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": faq.a
-    }
-  }))
-};
+const serviceSchema = buildServiceSchema({
+  name: 'Crypto & Web3 Event Marketing',
+  alternateName: ['Blockchain Event Marketing', 'Web3 Conference Marketing'],
+  serviceType: 'Event marketing',
+  url: 'https://fintech24h.com/services/event-marketing/',
+  description: META_DESCRIPTION
+});
+
+const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="Web3 & Blockchain Event Marketing — Speaker & Sponsor | Fintech24h"
-  description="Maximize your presence at Web3 conferences. Fintech24h secures speaking slots, manages media partnerships, activates sponsors, and amplifies event coverage."
+  title="Crypto & Web3 Event Marketing Agency | Fintech24h"
+  description={META_DESCRIPTION}
   schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
@@ -203,7 +192,10 @@ const combinedSchema = [serviceSchema, faqSchema];
 
 <style>
   summary::-webkit-details-marker { display: none; }
-  .reveal { opacity: 0; filter: blur(10px); transform: translateY(30px); transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease; }
+  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
+  @media (scripting: enabled) {
+    .reveal { opacity: 0.01; filter: blur(10px); transform: translateY(30px); transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease; }
+  }
   .reveal.revealed { opacity: 1; filter: blur(0); transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }

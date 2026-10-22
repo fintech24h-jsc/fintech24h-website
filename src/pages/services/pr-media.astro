@@ -2,13 +2,14 @@
 // src/pages/services/pr-media.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 import PrCtaSection from '../../components/sections/PrCtaSection.astro';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services/' },
-  { name: 'PR Campaigns', item: 'https://fintech24h.com/services/pr-media/' }
+  { name: 'PR & Media', item: 'https://fintech24h.com/services/pr-media/' }
 ];
 
 const faqs = [
@@ -22,7 +23,7 @@ const faqs = [
   },
   {
     q: "Can you get press coverage in Singapore?",
-    a: 'Yes, we place stories in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Singapore</a> outlets like Tech in Asia and The Business Times, alongside Tier-1 crypto press.'
+    a: 'Yes, we place stories in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a> outlets like Tech in Asia and The Business Times, alongside Tier-1 crypto press.'
   },
   {
     q: "Do you write the press releases?",
@@ -30,7 +31,7 @@ const faqs = [
   },
   {
     q: "Can you get press coverage in Dubai and the UAE?",
-    a: 'Yes, we place stories in <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a> and UAE outlets like Gulf News, Zawya and Al Bawaba, alongside Tier-1 crypto press.'
+    a: 'Yes, we place stories in <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a> and UAE outlets like Gulf News, Zawya and Al Bawaba, alongside Tier-1 crypto press.'
   },
   {
     q: "How do you measure PR success?",
@@ -42,37 +43,25 @@ const logos = [
   "CoinTelegraph", "Yahoo Finance", "Bloomberg", "Decrypt", "The Block", "CoinDesk", "TechCrunch", "Forbes"
 ];
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "PR Campaigns",
-  "provider": {
-    "@type": "Organization",
-    "name": "Fintech24h"
-  },
-  "url": "https://fintech24h.com/services/pr-media/",
-  "description": "Editorial placements in top-tier crypto and fintech media. Fintech24h writes, pitches, and places press coverage for Blockchain, DeFi, and Web3 projects."
-};
+const META_DESCRIPTION =
+  'Blockchain and crypto PR agency for Web3, DeFi and fintech projects. Fintech24h writes, pitches and places your story in crypto and business media outlets.';
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(faq => ({
-    "@type": "Question",
-    "name": faq.q,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": faq.a
-    }
-  }))
-};
+const serviceSchema = buildServiceSchema({
+  name: 'Blockchain & Crypto PR',
+  alternateName: ['Web3 PR', 'Crypto Public Relations', 'Blockchain Public Relations'],
+  serviceType: 'Public relations',
+  url: 'https://fintech24h.com/services/pr-media/',
+  description: META_DESCRIPTION
+});
+
+const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="Blockchain & Web3 PR Campaigns — Press Coverage | Fintech24h"
-  description="Editorial placements in top-tier crypto and fintech media. Fintech24h writes, pitches, and places press coverage for Blockchain, DeFi, and Web3 projects across global media outlets."
+  title="Blockchain & Crypto PR Agency for Web3 | Fintech24h"
+  description={META_DESCRIPTION}
   schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
@@ -184,7 +173,10 @@ const combinedSchema = [serviceSchema, faqSchema];
   .text-stroke-white { -webkit-text-stroke: 1px rgba(255,255,255,0.2); }
   .text-stroke-1 { -webkit-text-stroke-width: 1px; }
   
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
+  @media (scripting: enabled) {
+    .reveal { opacity: 0.01; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
   .reveal-delay-2 { transition-delay: 0.2s; }
   

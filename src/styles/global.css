@@ -727,6 +727,13 @@ a, button, [role="button"], summary, label {
   touch-action: manipulation;
 }
 
+/* Keyboard focus baseline. :where() keeps specificity at 0 so any component
+   focus-visible utility still wins; mouse clicks never show this ring. */
+:where(a, button, summary, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
+
 .brand-logo {
   transition: filter 0.2s ease-out, opacity 0.2s ease-out;
 }

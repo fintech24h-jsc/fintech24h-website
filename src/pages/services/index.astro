@@ -23,7 +23,7 @@ const itemListSchema = {
 
 <BaseLayout
   title="Our Services — Blockchain Marketing Solutions | Fintech24h"
-  description="Explore Fintech24h's full-spectrum Blockchain & Web3 marketing services: KOL marketing, PR campaigns, community growth, event marketing, AI marketing, and business development."
+  description="Blockchain and crypto marketing services for Web3, DeFi, NFT and fintech projects: KOL marketing, PR, community, events, AI marketing and business development."
   schema={itemListSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
@@ -95,7 +95,7 @@ const itemListSchema = {
 
               <!-- Title & Copy -->
               <h2 class="font-display text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-4 group-hover:text-[var(--accent-cyan)] transition-colors">
-                {s.title}
+                <a href={`/services/${s.slug}/`} class="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent-cyan)]">{s.title}</a>
               </h2>
               <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed mb-6">
                 {s.shortDescription}
@@ -116,8 +116,8 @@ const itemListSchema = {
             <div class="flex items-center justify-between border-t border-[var(--border-subtle)] pt-6 mt-6">
               <span class="text-xs text-[var(--text-muted)] font-body"> plug & play ready </span>
               <a
-                href={`/services/${s.slug}`}
-                class="text-xs font-semibold text-[var(--accent-cyan)] hover:text-[var(--accent-cyan-dim)] font-display uppercase tracking-wider flex items-center gap-2 transition-colors"
+                href={`/services/${s.slug}/`}
+                class="text-xs font-semibold text-[var(--accent-cyan)] hover:text-[var(--accent-cyan-dim)] font-display uppercase tracking-wider flex items-center gap-2 transition-colors rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent-cyan)]"
                 aria-label={`Explore ${s.title}`}
               >
                 Explore Service

@@ -2,6 +2,7 @@
 // src/pages/services/kol-marketing.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 import KolCtaSection from '../../components/sections/KolCtaSection.astro';
 
@@ -22,7 +23,7 @@ const faqs = [
   },
   {
     q: "Do you work with KOLs in Singapore, Indonesia and Thailand?",
-    a: 'Yes, our regional KOL network covers <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Singapore</a>, Indonesia and Thailand alongside <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Vietnam</a>, vetted the same way across every market.'
+    a: 'Yes, our regional KOL network covers <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a>, Indonesia and Thailand alongside <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Vietnam</a>, vetted the same way across every market.'
   },
   {
     q: "Can you guarantee ROI or token price impact?",
@@ -30,7 +31,7 @@ const faqs = [
   },
   {
     q: "Do you have KOL relationships in Dubai and the wider UAE?",
-    a: 'Yes, we work with X-native KOLs with real audiences in the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Dubai</a> and wider UAE crypto community.'
+    a: 'Yes, we work with X-native KOLs with real audiences in the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a> and wider UAE crypto community.'
   },
   {
     q: "Do KOLs disclose that the posts are sponsored?",
@@ -38,37 +39,25 @@ const faqs = [
   }
 ];
 
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "KOL & Influencer Marketing",
-  "provider": {
-    "@type": "Organization",
-    "name": "Fintech24h"
-  },
-  "url": "https://fintech24h.com/services/kol-marketing/",
-  "description": "Connect your project with vetted crypto KOLs across Twitter/X, YouTube, and Telegram. Fintech24h manages the full KOL lifecycle."
-};
+const META_DESCRIPTION =
+  'Crypto KOL and Web3 influencer marketing agency. Fintech24h vets KOLs on X, YouTube and Telegram, then runs briefing, activation and reporting for your launch.';
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(faq => ({
-    "@type": "Question",
-    "name": faq.q,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": faq.a
-    }
-  }))
-};
+const serviceSchema = buildServiceSchema({
+  name: 'Crypto KOL & Influencer Marketing',
+  alternateName: ['Web3 Influencer Marketing', 'Crypto Influencer Marketing', 'Blockchain KOL Marketing'],
+  serviceType: 'Influencer marketing',
+  url: 'https://fintech24h.com/services/kol-marketing/',
+  description: META_DESCRIPTION
+});
+
+const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
 ---
 
 <BaseLayout
-  title="KOL & Influencer Marketing for Blockchain & Web3 | Fintech24h"
-  description="Connect your project with vetted crypto KOLs across Twitter/X, YouTube, and Telegram. Fintech24h manages the full KOL lifecycle: selection, briefing, activation, and reporting."
+  title="Crypto KOL & Influencer Marketing Agency | Fintech24h"
+  description={META_DESCRIPTION}
   schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
@@ -216,7 +205,10 @@ const combinedSchema = [serviceSchema, faqSchema];
 
 <style>
   summary::-webkit-details-marker { display: none; }
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
+  @media (scripting: enabled) {
+    .reveal { opacity: 0.01; transform: translateY(28px); transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
