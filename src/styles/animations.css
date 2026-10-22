@@ -159,19 +159,20 @@
 }
 
 /* ─── SCROLL REVEAL STATES (IntersectionObserver — replaces GSAP ScrollTrigger) ─── */
-/* cubic-bezier(0.16, 1, 0.3, 1) ≈ iOS spring / Radix UI feel — snaps into place */
+/* Motion v2: longer travel + slight scale on a quint ease-out, so blocks
+   glide in and settle instead of popping. Stagger lives in BaseLayout. */
 [data-animate="fade-up"] {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(22px) scale(0.985);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 [data-animate="scale-in"] {
   opacity: 0;
-  transform: translateY(8px) scale(0.97);
-  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(10px) scale(0.96);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 [data-animate="fade-up"].is-visible,

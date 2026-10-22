@@ -155,13 +155,19 @@ const posts = allPosts.slice(0, 6);
     border-radius: 24px;
     padding: 24px;
     box-shadow: var(--shadow-card);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.32s var(--ease-ui), border-color 0.32s var(--ease-ui), box-shadow 0.32s var(--ease-ui);
   }
 
+  /* Motion v2: short lift + a light that follows the cursor (--mx/--my from
+     BaseLayout), on the same 0.32s curve as the rest of the site. */
   .btn-liquid-glass-card:hover {
-    background: var(--surface-hover);
-    border-color: var(--accent-cyan-glow);
-    transform: translateY(-8px);
-    box-shadow: 0 20px 48px 0 var(--accent-cyan-glow), var(--shadow-card);
+    background-image: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent-cyan) 9%, transparent), transparent 65%);
+    border-color: color-mix(in srgb, var(--accent-cyan) 35%, transparent);
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -12px var(--accent-cyan-glow), var(--shadow-card);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-liquid-glass-card { transition: none; }
+    .btn-liquid-glass-card:hover { transform: none; }
   }
 </style>

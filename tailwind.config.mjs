@@ -3,6 +3,15 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+      // Motion v2 (2026-10-22): one easing language site-wide. `ease-out` was
+      // Tailwind's generic cubic-bezier(0, 0, 0.2, 1); this is a quick-start,
+      // soft-landing curve (fast response, no bounce). DEFAULT applies to every
+      // `transition*` utility that does not name an easing.
+      transitionTimingFunction: {
+        DEFAULT: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+        out: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+        'out-quint': 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
       fontFamily: {
         // Theo design-system.md section 3.2
         display: ['"Space Grotesk"', 'sans-serif'],  // H1-H3, buttons, CTA, stat numbers

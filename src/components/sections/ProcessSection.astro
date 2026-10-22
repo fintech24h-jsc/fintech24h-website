@@ -34,10 +34,12 @@
     </div>
 
     <!-- Timeline Container -->
-    <div class="relative max-w-5xl mx-auto">
+    <div class="relative max-w-5xl mx-auto" data-timeline>
       
       <!-- Central vertical timeline line -->
       <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--accent-cyan)] via-[var(--accent-purple)] to-[var(--accent-warm)] -translate-x-1/2 z-0 opacity-20" aria-hidden="true"></div>
+      <!-- Progress line: draws down with scroll (BaseLayout script sets --tl-progress) -->
+      <div class="timeline-progress absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--accent-cyan)] via-[var(--accent-purple)] to-[var(--accent-warm)] -translate-x-1/2 z-0" aria-hidden="true"></div>
       
       <!-- Moving light dot down the timeline -->
       <div class="absolute left-4 md:left-1/2 top-0 w-1 h-32 bg-gradient-to-b from-transparent via-[var(--accent-warm)] to-transparent -translate-x-1/2 z-0 blur-[1px] animate-flow-timeline" aria-hidden="true"></div>
@@ -46,9 +48,9 @@
       <div class="space-y-16 relative z-10">
 
         <!-- Step 1 (Left on Desktop, Right on Mobile) -->
-        <div class="flex flex-col md:flex-row md:justify-start items-start group relative animate-trigger" data-animate="fade-up">
+        <div class="flex flex-col md:flex-row md:justify-start items-start group relative animate-trigger" data-animate="fade-up" data-timeline-step>
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-cyan)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[var(--accent-warm)] group-hover:shadow-[0_0_15px_var(--accent-warm)]">
+          <div data-timeline-node class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-cyan)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[var(--accent-warm)] group-hover:shadow-[0_0_15px_var(--accent-warm)]">
             <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] group-hover:bg-[var(--accent-warm)] transition-all"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-cyan)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
@@ -87,9 +89,9 @@
         </div>
  
         <!-- Step 2 (Right on Desktop, Right on Mobile) -->
-        <div class="flex flex-col md:flex-row md:justify-end items-start group relative animate-trigger" data-animate="fade-up">
+        <div class="flex flex-col md:flex-row md:justify-end items-start group relative animate-trigger" data-animate="fade-up" data-timeline-step>
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[var(--accent-warm)] group-hover:shadow-[0_0_15px_var(--accent-warm)]">
+          <div data-timeline-node class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[var(--accent-warm)] group-hover:shadow-[0_0_15px_var(--accent-warm)]">
             <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] group-hover:bg-[var(--accent-warm)] transition-all"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-purple)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
@@ -128,9 +130,9 @@
         </div>
  
         <!-- Step 3 (Left on Desktop, Right on Mobile) - SOFTER WARM ACCENT -->
-        <div class="flex flex-col md:flex-row md:justify-start items-start group relative animate-trigger" data-animate="fade-up">
+        <div class="flex flex-col md:flex-row md:justify-start items-start group relative animate-trigger" data-animate="fade-up" data-timeline-step>
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-5 h-5 rounded-full border-2 border-[var(--accent-rose)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:shadow-[0_0_20px_var(--accent-rose)] animate-pulse">
+          <div data-timeline-node class="absolute left-4 md:left-1/2 top-8 w-5 h-5 rounded-full border-2 border-[var(--accent-rose)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:shadow-[0_0_20px_var(--accent-rose)] animate-pulse">
             <span class="w-2 h-2 rounded-full bg-[var(--accent-warm)]"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-rose)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
@@ -185,9 +187,9 @@
         </div>
  
         <!-- Step 4 (Right on Desktop, Right on Mobile) -->
-        <div class="flex flex-col md:flex-row md:justify-end items-start group relative animate-trigger" data-animate="fade-up">
+        <div class="flex flex-col md:flex-row md:justify-end items-start group relative animate-trigger" data-animate="fade-up" data-timeline-step>
           {/* Timeline Node Dot */}
-          <div class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[var(--accent-warm)] group-hover:shadow-[0_0_15px_var(--accent-warm)]">
+          <div data-timeline-node class="absolute left-4 md:left-1/2 top-8 w-4 h-4 rounded-full border-2 border-[var(--accent-purple)] bg-[var(--bg-primary)] -translate-x-1/2 z-20 flex items-center justify-center transition-all duration-300 group-hover:scale-125 group-hover:border-[var(--accent-warm)] group-hover:shadow-[0_0_15px_var(--accent-warm)]">
             <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] group-hover:bg-[var(--accent-warm)] transition-all"></span>
             <span class="absolute inset-0 rounded-full bg-[var(--accent-purple)] opacity-0 group-hover:opacity-30 group-hover:animate-ping"></span>
           </div>
