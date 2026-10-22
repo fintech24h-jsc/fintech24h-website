@@ -5,7 +5,7 @@ export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import Pagination from '../../components/ui/Pagination.astro';
-import { getUserBySlug, getPostsByAuthor, getPhatVoAuthorIds, isPhatVoWpAuthor, PHAT_VO_SLUG, POSTS_PER_PAGE, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
+import { getUserBySlug, getPostsByAuthor, getPhatVoAuthorIds, isPhatVoWpAuthor, PHAT_VO_SLUG, PHAT_VO_WP_FALLBACK, POSTS_PER_PAGE, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
 import { getReadingTime } from '../../lib/utils';
 import { team } from '../../data/team';
 
@@ -32,7 +32,9 @@ if (slug === 'admin' || slug === 'phat') {
 if (segments.length === 3 && pageNumber <= 1) return Astro.redirect(`/author/${slug}`, 301);
 
 const wpSlug = slug === 'phat-vo' ? 'phat' : slug;
-const user = wpSlug ? await getUserBySlug(wpSlug) : null;
+// Phat Vo's profile must never 404 because a WordPress call failed (the users endpoint
+// sometimes errors when the Workers cache is cold), so it falls back to the known account.
+const user = (wpSlug ? await getUserBySlug(wpSlug) : null) ?? (slug === PHAT_VO_SLUG ? PHAT_VO_WP_FALLBACK : null);
 
 if (!user) {
   // Render the 404 page here with a real 404 status (no soft-404 redirect).

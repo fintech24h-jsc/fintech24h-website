@@ -929,9 +929,9 @@ const steps = [
           // Toggle tab button styling classes
           segTabs.forEach(t => {
             t.classList.remove('border-[var(--accent-cyan)]', 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)]', 'text-[var(--accent-cyan)]');
-            t.classList.add('border-[var(--border-subtle)]', 'bg-white/[0.005]', 'text-[var(--text-secondary)] opacity-70');
+            t.classList.add('border-[var(--border-subtle)]', 'bg-white/[0.005]', 'text-[var(--text-secondary)]', 'opacity-70');
           });
-          tab.classList.remove('border-[var(--border-subtle)]', 'bg-white/[0.005]', 'text-[var(--text-secondary)] opacity-70');
+          tab.classList.remove('border-[var(--border-subtle)]', 'bg-white/[0.005]', 'text-[var(--text-secondary)]', 'opacity-70');
           tab.classList.add('border-[var(--accent-cyan)]', 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)]', 'text-[var(--accent-cyan)]');
 
           segBox.style.opacity = '1';

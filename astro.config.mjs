@@ -6,6 +6,7 @@ import partytown from '@astrojs/partytown';
 import cloudflare from '@astrojs/cloudflare';
 import { fileURLToPath } from 'node:url';
 import { injectCspHashes } from './scripts/csp-hashes.mjs';
+import { patchPartytown } from './scripts/partytown-patch.mjs';
 
 export default defineConfig({
   site: 'https://fintech24h.com',
@@ -91,6 +92,7 @@ export default defineConfig({
       name: 'csp-script-hashes',
       hooks: {
         'astro:build:done': ({ dir }) => {
+          patchPartytown(fileURLToPath(dir));
           injectCspHashes(fileURLToPath(dir));
         },
       },

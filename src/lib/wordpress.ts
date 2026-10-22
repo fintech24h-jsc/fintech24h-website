@@ -513,7 +513,22 @@ export function getPostAuthor(post: WPPost) {
 // answers 401 to us. A single user (GET /wp/v2/users/{id}) is still public, so: collect the
 // distinct author ids of published posts (tiny `_fields=author` responses), then read each
 // user by id and match the slug. A user with no published posts has no archive to show anyway.
+// The author archive needs this list twice per request (getUserBySlug + getPhatVoAuthorIds)
+// and it costs ~7 WordPress calls when the Workers cache is cold. Keep the last good result in
+// isolate memory for a few minutes so one page view never pays for it twice; that also keeps
+// the page well under the per-request subrequest limit. Only resolved, non-empty results are
+// kept (never a pending promise, which Workers cannot share across requests).
+const AUTHORS_MEMO_MS = 5 * 60 * 1000;
+let authorsMemo: { at: number; users: WPUser[] } | null = null;
+
 async function listPublishedAuthors(): Promise<WPUser[]> {
+  if (authorsMemo && Date.now() - authorsMemo.at < AUTHORS_MEMO_MS) return authorsMemo.users;
+  const users = await loadPublishedAuthors();
+  if (users.length) authorsMemo = { at: Date.now(), users };
+  return users;
+}
+
+async function loadPublishedAuthors(): Promise<WPUser[]> {
   const PER_PAGE = 100;
   const ids = new Set<number>();
   for (let page = 1; page <= 6; page++) {
@@ -555,12 +570,21 @@ export async function getUserBySlug(slug: string): Promise<WPUser | null> {
 /** Ids of every WordPress account whose posts carry Phat Vo's byline (see isPhatVoWpAuthor). */
 export async function getPhatVoAuthorIds(): Promise<number[]> {
   try {
-    return (await listPublishedAuthors()).filter((u) => isPhatVoWpAuthor(u)).map((u) => u.id);
+    const ids = (await listPublishedAuthors()).filter((u) => isPhatVoWpAuthor(u)).map((u) => u.id);
+    if (ids.length) return ids;
   } catch (err) {
     console.warn('WP API fail: getPhatVoAuthorIds', err);
-    return [];
   }
+  // WordPress briefly unavailable: fall back to the known accounts (admin, phat, editorfi24h)
+  // instead of rendering an empty archive, which the page turns into a 404.
+  return KNOWN_PHAT_VO_AUTHOR_IDS;
 }
+
+/** WordPress accounts whose posts carry Phat Vo's byline, as of 2026-10 (fallback only). */
+const KNOWN_PHAT_VO_AUTHOR_IDS = [1, 2, 3];
+
+/** Phat Vo's WordPress account (id 2, slug "phat"), used when the users endpoint fails. */
+export const PHAT_VO_WP_FALLBACK: WPUser = { id: 2, name: 'Phat Vo', slug: 'phat', description: '' };
 
 // The theme also blocks the `?author=` query (author-enumeration hardening) and answers a
 // 301 HTML page even on REST, so `posts?author=ID` cannot be used. Instead: list every

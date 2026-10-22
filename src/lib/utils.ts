@@ -75,6 +75,36 @@ export function stripEmbeddedJsonLd(html: string): string {
 }
 
 /**
+ * Older WordPress posts carry the "Easy Table of Contents" plugin widget
+ * (`<div id="ez-toc-container">…</div>`). The site renders its own TOC and the
+ * widget is hidden with CSS (BlogLayout.astro), but its arrow SVG has a path
+ * Chrome cannot parse, so every such post logged a console error. Removing the
+ * whole hidden block changes nothing visible. The ez-toc anchor spans inside
+ * the headings are kept, so old #fragment links still work.
+ */
+export function stripWpTocWidget(html: string): string {
+  const open = /<div\b[^>]*\bid=["']ez-toc-container["'][^>]*>/i.exec(html);
+  if (!open) return html;
+  const tagRe = /<\/?div\b[^>]*>/gi;
+  tagRe.lastIndex = open.index + open[0].length;
+  let depth = 1;
+  for (let m = tagRe.exec(html); m; m = tagRe.exec(html)) {
+    depth += m[0][1] === '/' ? -1 : 1;
+    if (depth === 0) return html.slice(0, open.index) + html.slice(tagRe.lastIndex);
+  }
+  return html; // unbalanced markup: leave it alone rather than cut the article
+}
+
+/**
+ * Images hotlinked from other sites are requested without a Referer header.
+ * Some hosts block hotlinking by referrer (the image loads with no-referrer);
+ * it also stops leaking our article URLs to third parties.
+ */
+export function noReferrerForExternalImages(html: string): string {
+  return html.replace(/<img\b(?![^>]*\breferrerpolicy=)([^>]*\bsrc=["']https?:\/\/(?!(?:www\.)?fintech24h\.com\/)[^"']+["'][^>]*)>/gi, '<img referrerpolicy="no-referrer"$1>');
+}
+
+/**
  * A rendered blog page already supplies its single document H1 from the
  * WordPress post title. Older WordPress bodies sometimes contain one or more
  * additional H1 elements, which leaves the public document with an invalid
