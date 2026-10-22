@@ -99,42 +99,43 @@
   }
 
   :root[data-theme='light'] {
-    /* "Paper & Ink" light theme (2026-10-22): neutral paper page, solid white
-       cards with hairline borders, ink text, deep teal + indigo accents. */
-    --bg-primary:        #f6f7f9; /* "Paper": neutral off-white page (was blue-gray #e6ecf5 that tinted everything) */
-    --bg-secondary:      #ffffff; /* Alternate sections and solid cards */
-    --bg-tertiary:       #eceff3;
-    --bg-glass:          rgba(255, 255, 255, 0.92); /* Near-solid white cards: crisp edges instead of frosted haze */
-    --bg-glass-light:    rgba(255, 255, 255, 0.70);
+    /* "Glacier Glass" light theme (2026-10-22, option A of the palette demo,
+       applied at the owner's request to fix the light colours): cool ice page with a soft teal/indigo aurora, frosted
+       white glass cards with a bright top edge, deep teal + indigo accents. */
+    --bg-primary:        #e9f1f7 /* Glacier: cool ice page tone the glass can catch light against */;
+    --bg-secondary:      rgba(255, 255, 255, 0.5) /* alternate sections: frosted white over the page aurora */;
+    --bg-tertiary:       #dde8f1;
+    --bg-glass:          rgba(255, 255, 255, 0.62) /* glass cards */;
+    --bg-glass-light:    rgba(255, 255, 255, 0.4);
     --surface-faint:     rgba(15, 23, 42, 0.02);
     --surface-soft:      rgba(15, 23, 42, 0.035);
     --surface-hover:     rgba(15, 23, 42, 0.06);
     --surface-strong:    rgba(15, 23, 42, 0.09);
-    --overlay-backdrop:  rgba(246, 247, 249, 0.88);
-    --nav-surface:       rgba(255, 255, 255, 0.60);
-    --nav-glass:         rgba(255, 255, 255, 0.55);
+    --overlay-backdrop:  rgba(233, 241, 247, 0.85);
+    --nav-surface:       rgba(255, 255, 255, 0.55);
+    --nav-glass:         rgba(255, 255, 255, 0.5);
     --nav-border:        rgba(15, 23, 42, 0.09);
-    --nav-text:          #0b1220;
-    --nav-link:          #3a4556;
-    --nav-cta-text:      #0b1220;
-    --nav-drawer:        rgba(255, 255, 255, 0.82);
+    --nav-text:          #0a1626;
+    --nav-link:          #33445a;
+    --nav-cta-text:      #0a1626;
+    --nav-drawer:        rgba(240, 246, 251, 0.82);
     --nav-drawer-shadow: -20px 0 50px rgba(11, 18, 32, 0.08);
-    --dropdown-surface:  rgba(255, 255, 255, 0.78);
+    --dropdown-surface:  rgba(255, 255, 255, 0.72);
  
     /* Brand Accents - Rich and high contrast for light mode */
-    --accent-cyan:       #0b6f8c; /* Deep teal ink: 5.7:1 on white, 5.3:1 on paper */
-    --accent-cyan-dim:   #085a72;
-    --accent-cyan-glow:  rgba(11, 111, 140, 0.12);
-    --accent-purple:     #4b36d1; /* Indigo ink: 7.6:1 on white */
-    --accent-purple-dim: #3a27b0;
-    --accent-purple-glow: rgba(75, 54, 209, 0.10);
+    --accent-cyan:       #08708f /* deep glacier teal: 5.0:1 on the page, 5.6:1 on white */;
+    --accent-cyan-dim:   #065b74;
+    --accent-cyan-glow:  rgba(8, 112, 143, 0.16);
+    --accent-purple:     #5b47e0 /* glacier indigo: 5.5:1 on the page */;
+    --accent-purple-dim: #4634c4;
+    --accent-purple-glow: rgba(91, 71, 224, 0.14);
     --accent-warm:       #a4461a; /* Burnt orange, kept for small labels only; headings no longer blend it with teal */
     --accent-rose:       #c73c5e;
  
     /* Text */
-    --text-primary:      #0b1220; /* Ink */
-    --text-secondary:    #3a4556; /* 9.7:1 on white */
-    --text-muted:        #5b6677; /* 5.8:1 on white, 5.4:1 on paper */
+    --text-primary:      #0a1626;
+    --text-secondary:    #33445a;
+    --text-muted:        #55667c /* 5.25:1 on the page */;
     --text-inverted:     #ffffff;
  
     --color-success:     #047a57; /* darkened from #059669 (3.17:1) to hit 4.5:1 on this bg for small text */
@@ -143,26 +144,26 @@
     --color-danger:      #dc2626;
  
     /* Borders */
-    --border-default:    rgba(15, 23, 42, 0.09); /* Neutral hairlines (were cyan-tinted) */
-    --border-hover:      rgba(15, 23, 42, 0.18);
-    --border-accent:     rgba(11, 111, 140, 0.35);
-    --border-subtle:     rgba(15, 23, 42, 0.06);
+    --border-default:    rgba(10, 22, 38, 0.08);
+    --border-hover:      rgba(10, 22, 38, 0.16);
+    --border-accent:     rgba(8, 112, 143, 0.35);
+    --border-subtle:     rgba(10, 22, 38, 0.05);
     --grid-line:         rgba(15, 23, 42, 0.035);
  
     /* Shadows & Selection */
-    --shadow-card:       0 1px 2px rgba(11, 18, 32, 0.04), 0 8px 24px rgba(11, 18, 32, 0.05);
-    --shadow-nav:        0 1px 2px rgba(11, 18, 32, 0.04), 0 8px 28px rgba(11, 18, 32, 0.06);
+    --shadow-card:       inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 0 0 1px rgba(10, 22, 38, 0.05), 0 12px 32px rgba(10, 22, 38, 0.08);
+    --shadow-nav:        inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 0 0 1px rgba(10, 22, 38, 0.06), 0 10px 30px rgba(10, 22, 38, 0.08);
     --shadow-nav-scroll: 0 1px 2px rgba(11, 18, 32, 0.05), 0 6px 20px rgba(11, 18, 32, 0.06);
     --selection-bg:      rgba(11, 111, 140, 0.16);
  
     /* Gradients */
-    --gradient-primary:  linear-gradient(135deg, #0b6f8c 0%, #4b36d1 100%);
-    --gradient-primary-hover: linear-gradient(135deg, #085a72 0%, #3a27b0 100%);
-    --gradient-hero-bg:  radial-gradient(ellipse 75% 60% at 50% -20%, rgba(11, 111, 140, 0.15) 0%, rgba(75, 54, 209, 0.10) 45%, transparent 72%);
+    --gradient-primary:  linear-gradient(135deg, #08708f 0%, #5b47e0 100%);
+    --gradient-primary-hover: linear-gradient(135deg, #065b74 0%, #4634c4 100%);
+    --gradient-hero-bg:  radial-gradient(ellipse 55% 50% at 18% 5%, rgba(8, 112, 143, 0.22), transparent 70%), radial-gradient(ellipse 50% 45% at 85% 15%, rgba(91, 71, 224, 0.18), transparent 70%);
     --gradient-card:     linear-gradient(135deg, rgba(11, 111, 140, 0.03) 0%, rgba(75, 54, 209, 0.025) 100%);
-    --gradient-glow-cyan: radial-gradient(ellipse at center, rgba(11, 111, 140, 0.07) 0%, transparent 70%);
-    --gradient-glow-purple: radial-gradient(ellipse at center, rgba(75, 54, 209, 0.06) 0%, transparent 70%);
-    --gradient-text:     linear-gradient(135deg, #0b6f8c 0%, #4b36d1 100%);
+    --gradient-glow-cyan: radial-gradient(ellipse at center, rgba(8, 112, 143, 0.18) 0%, transparent 70%);
+    --gradient-glow-purple: radial-gradient(ellipse at center, rgba(91, 71, 224, 0.16) 0%, transparent 70%);
+    --gradient-text:     linear-gradient(135deg, #08708f 0%, #5b47e0 100%);
     --gradient-mesh:
       radial-gradient(ellipse 70% 60% at 15% 30%, rgba(11, 111, 140, 0.06) 0%, transparent 70%),
       radial-gradient(ellipse 60% 70% at 85% 70%, rgba(75, 54, 209, 0.05) 0%, transparent 70%);
@@ -909,19 +910,30 @@ html[data-theme='light'] .prose .ez-toc-link {
    ═══════════════════════════════════════════════════════════ */
 /* Highlighted words inside section headings: one solid accent instead of
    teal→orange / teal→purple gradient text, which read as muddy on paper. */
-html[data-theme='light'] :is(h2, h3) .bg-clip-text.text-transparent {
+html[data-theme='light'] :is(h2, h3):not([data-theme-surface='midnight'] *) .bg-clip-text.text-transparent {
   background: none !important;
-  color: var(--accent-cyan) !important;
-  -webkit-text-fill-color: var(--accent-cyan) !important;
+  color: var(--accent-purple) !important;
+  -webkit-text-fill-color: var(--accent-purple) !important;
+}
+/* Glacier aurora across the whole page (not just the hero), so the frosted
+   sections and glass cards have colour behind them to refract. */
+html[data-theme='light'] body {
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(60% 1400px at 0% 900px, rgba(8, 112, 143, 0.14), transparent 70%),
+    radial-gradient(50% 1400px at 100% 2600px, rgba(91, 71, 224, 0.12), transparent 70%),
+    radial-gradient(60% 1400px at 6% 4600px, rgba(91, 71, 224, 0.10), transparent 70%),
+    radial-gradient(55% 1400px at 96% 6800px, rgba(8, 112, 143, 0.12), transparent 70%);
+  background-repeat: no-repeat;
 }
 /* Hero "Marketing Authority" sheen: the dark-mode white band made half the
    word disappear on a light page. Sweep a light teal instead. */
 html[data-theme='light'] .sheen-text {
-  background-image: linear-gradient(120deg, #0b6f8c 0%, #0b6f8c 25%, #3d9bb8 45%, #6a5be0 55%, #4b36d1 75%, #4b36d1 100%) !important;
+  background-image: linear-gradient(120deg, #08708f 0%, #08708f 25%, #3a9cbb 45%, #7a68ec 55%, #5b47e0 75%, #5b47e0 100%) !important;
 }
 /* Decorative glow orbs are what fogged the light page; keep a hint only. */
 html[data-theme='light'] .bg-orb {
-  opacity: 0.35 !important;
+  opacity: 0.8 !important;
 }
 html[data-theme='light'] .liquid-glass-premium:hover {
   box-shadow: 0 1px 2px rgba(11, 18, 32, 0.05), 0 14px 32px rgba(11, 18, 32, 0.09);
