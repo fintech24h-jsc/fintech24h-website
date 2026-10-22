@@ -132,6 +132,7 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'Mpost', logoUrl: '/dealmakers/partners/mpost.png', websiteUrl: 'https://mpost.io', confirmed: true },
   { name: 'The Crypto Hype', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/Coloured-without-background.png', websiteUrl: 'https://thecryptohype.com/', confirmed: true },
   { name: 'Vooc Zone', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/Vooc-Zone.png', websiteUrl: 'https://www.vooczone.com/', confirmed: true },
+  { name: 'The Cryptonomist', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/CRYPTONOMIST-LORO-WHITE.png', websiteUrl: 'https://cryptonomist.ch/', confirmed: true },
 ];
 
 // ─── KOL Partners ── same shape as ss3.ts; names/handles stay untranslated.
