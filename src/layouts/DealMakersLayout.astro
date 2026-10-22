@@ -6,6 +6,7 @@
 // analytics + legal pages with fintech24h.com.
 import SchemaOrg from '../components/seo/SchemaOrg.astro';
 import AsyncStylesheet from '../components/ui/AsyncStylesheet.astro';
+import PartytownNonce from '../components/seo/PartytownNonce.astro';
 import OpenGraph from '../components/seo/OpenGraph.astro';
 import '../styles/dealmakers.css';
 // Inlined below rather than loaded as <script src="/consent.js">: a
@@ -198,6 +199,7 @@ const currentYear = new Date().getFullYear();
   <script is:inline set:html={consentScript}></script>
 
   <!-- Google Analytics 4 via Partytown — same property as the main site -->
+  <PartytownNonce />
   <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-4TDZQMBWLR"></script>
   <script type="text/partytown">
     window.dataLayer = window.dataLayer || [];

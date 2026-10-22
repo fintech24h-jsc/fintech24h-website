@@ -1,0 +1,12 @@
+---
+// Partytown's fallback (used when its service worker is not ready within 10s)
+// re-creates every `text/partytown` script as a normal inline <script> and
+// sets its `nonce` from `window.partytown.nonce`. Without this, the fallback
+// scripts carry no nonce and the CSP blocks the GA config on SSR pages. This
+// copies the page's own CSP nonce (added by src/lib/securityHeaders.ts) into
+// the Partytown config before Partytown's snippet reads it. On static pages
+// there is no nonce; the fallback copies are allowed by their sha256 instead
+// (scripts/csp-hashes.mjs hashes text/partytown bodies too). Must be placed
+// before the text/partytown scripts.
+---
+<script is:inline>window.partytown=Object.assign(window.partytown||{},{nonce:(document.currentScript&&document.currentScript.nonce)||void 0})</script>

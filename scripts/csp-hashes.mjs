@@ -19,9 +19,11 @@ import path from 'node:path';
 
 const PLACEHOLDER = '__CSP_SCRIPT_HASHES__';
 const MAX_HEADERS_LINE = 2000;
-// Script types the browser does not execute (data blocks, Partytown's
-// worker-side scripts) — CSP script-src does not apply to them.
-const NON_EXECUTABLE_TYPES = new Set(['application/ld+json', 'application/json', 'text/partytown']);
+// Script types the browser does not execute (data blocks) — CSP script-src
+// does not apply to them. `text/partytown` bodies ARE hashed: if Partytown's
+// service worker is not ready in time, its fallback re-runs them as normal
+// inline scripts on the main thread.
+const NON_EXECUTABLE_TYPES = new Set(['application/ld+json', 'application/json']);
 
 function htmlFiles(dir) {
   const out = [];
@@ -39,11 +41,13 @@ export function collectInlineScriptHashes(distDir) {
   const scriptRe = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
   for (const file of htmlFiles(distDir)) {
     const html = readFileSync(file, 'utf8');
-    for (const [, attrs, body] of html.matchAll(scriptRe)) {
-      if (/\bsrc\s*=/i.test(attrs)) continue;
+    for (let [, attrs, body] of html.matchAll(scriptRe)) {
       const type = /\btype\s*=\s*["']?([^"'\s>]+)/i.exec(attrs)?.[1]?.toLowerCase();
       if (type && NON_EXECUTABLE_TYPES.has(type)) continue;
-      if (body.length === 0) continue;
+      // Partytown's fallback copies only innerHTML, so a `text/partytown` script
+      // with a src becomes an EMPTY inline script; allow that (it runs nothing).
+      if (/\bsrc\s*=/i.test(attrs) && type !== 'text/partytown') continue;
+      if (/\bsrc\s*=/i.test(attrs)) body = '';
       const hash = `'sha256-${createHash('sha256').update(body, 'utf8').digest('base64')}'`;
       if (!hashes.has(hash)) hashes.set(hash, path.relative(distDir, file));
     }
