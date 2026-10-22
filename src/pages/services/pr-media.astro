@@ -1,46 +1,258 @@
 ---
 // src/pages/services/pr-media.astro
+// Focus keyword: "blockchain PR agency". Variants covered in H2/H3/FAQ:
+// crypto PR agency, Web3 PR agency/services, DeFi & NFT PR, crypto press
+// release, fintech PR. No case-study numbers and no outlet logos by owner rule.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 import PrCtaSection from '../../components/sections/PrCtaSection.astro';
 
+const PAGE_URL = 'https://fintech24h.com/services/pr-media/';
+
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services/' },
-  { name: 'PR & Media', item: 'https://fintech24h.com/services/pr-media/' }
+  { name: 'PR & Media', item: PAGE_URL }
+];
+
+const linkClass =
+  'text-[var(--accent-cyan)] underline decoration-[color-mix(in_srgb,var(--accent-cyan)_40%,transparent)] underline-offset-4 hover:decoration-[var(--accent-cyan)] transition-colors duration-200 rounded-sm';
+
+// Static strip that replaced the old outlet-logo marquee: categories only.
+const desks = [
+  'Crypto-native newsrooms',
+  'Business & finance press',
+  'Regional tech media',
+  'Founder op-eds',
+  'Podcasts & X Spaces',
+  'Search & AI answers'
+];
+
+const problems = [
+  {
+    title: 'The Syndication Trap',
+    desc: 'Many crypto PR packages are a long list of publications that turn out to be automated syndication feeds. The report looks impressive, but no editor chose the story and no reader goes looking for it. Credibility comes from coverage a journalist decided to write.'
+  },
+  {
+    title: 'Boring Narratives',
+    desc: 'Crypto journalists see a constant stream of pitches. "We launched a token" or "we closed a partnership" goes straight to the archive. A story needs a reason to exist today: a market shift, a regulatory change, a technical first, or a sharp founder opinion.'
+  },
+  {
+    title: 'No Search Strategy',
+    desc: 'Coverage keeps working long after launch day when it ranks in search, links back to your site and gets cited by AI assistants. Most Web3 PR stops at the screenshot and leaves that long-term visibility on the table.'
+  }
+];
+
+const services = [
+  {
+    title: 'Narrative & positioning',
+    desc: 'We define the one idea your project should own in the market, the proof behind it and the angles each type of journalist will care about. Every press release, op-ed and interview starts from this.'
+  },
+  {
+    title: 'Crypto press releases',
+    desc: 'Announcement copy in news style for launches, listings, funding rounds and partnerships, written by crypto-fluent native English writers. We are clear about when a wire distribution helps and when it is only noise.'
+  },
+  {
+    title: 'Earned editorial placement',
+    desc: 'Targeted pitching to editors and reporters who already cover your niche, whether that is DeFi, infrastructure, NFTs, gaming, AI or payments. Earned stories are never guaranteed, so we pitch angles that give a reporter a real reason to write.'
+  },
+  {
+    title: 'Founder thought leadership',
+    desc: 'Op-eds, contributed articles, interview prep and commentary on market news, so your founder becomes a source journalists call back. This is how blockchain PR builds authority between announcements.'
+  },
+  {
+    title: 'Sponsored articles, clearly labeled',
+    desc: 'When a launch date cannot wait for an editor, sponsored placements guarantee timing. We always tell you which coverage is earned and which is paid, and the paid pieces carry the outlet\'s disclosure.'
+  },
+  {
+    title: 'Crisis & FUD response',
+    desc: 'Exploits, delistings, team changes and community rumors need a fast, factual response. We prepare holding statements, Q&A documents and spokesperson lines, then coordinate them with your community team.'
+  },
+  {
+    title: 'Media training',
+    desc: 'Practice sessions before interviews, podcasts and X Spaces. We cover how to explain tokenomics without sounding like an ad, which questions to expect, and what not to say about price.'
+  },
+  {
+    title: 'Search & AI answer visibility',
+    desc: 'We plan coverage so it supports the searches investors and users actually run, earns relevant backlinks and gives AI assistants accurate sources to quote when someone asks about your project.'
+  }
+];
+
+const tiers = [
+  {
+    name: 'Business & finance press',
+    use: 'Credibility with institutional investors, partners and regulators.',
+    expect: 'The hardest to earn. It needs a story that matters beyond crypto, such as a regulated product, a notable raise or a clear industry trend.'
+  },
+  {
+    name: 'Crypto-native newsrooms',
+    use: 'Reaching traders, builders, funds and the crypto Twitter audience that shares news fastest.',
+    expect: 'Strong fit for launches, listings, protocol upgrades and data-backed market commentary.'
+  },
+  {
+    name: 'Regional tech & finance media',
+    use: 'Local trust in Southeast Asia and the Middle East, where partners and regulators read local outlets first.',
+    expect: 'Works best with a local angle: a market entry, a local partnership or a spokesperson in the region.'
+  },
+  {
+    name: 'Niche & vertical outlets',
+    use: 'Depth with the exact audience, from DeFi power users to Web3 gamers, NFT collectors and fintech operators.',
+    expect: 'Smaller reach, high intent. Often the source that converts readers into users.'
+  },
+  {
+    name: 'Podcasts, newsletters & X Spaces',
+    use: 'Long-form conversations where a founder can explain the thinking behind the product.',
+    expect: 'Builds familiarity over time. Pairs well with thought leadership and KOL activity.'
+  }
+];
+
+const steps = [
+  {
+    step: '01',
+    title: 'Narrative Architecture',
+    desc: 'Before pitching anyone, we find the hook. We connect your product update to market trends, regulatory shifts or technical breakthroughs. We do not pitch a product; we pitch a story worth covering.'
+  },
+  {
+    step: '02',
+    title: 'Targeted Pitching',
+    desc: 'No mass emails. We match each angle with specific editors and writers who cover your niche, whether that is DeFi, AI, Layer 2, gaming or payments, and tailor every pitch to what they publish.'
+  },
+  {
+    step: '03',
+    title: 'Content Drafting',
+    desc: 'Native English, crypto-fluent writers draft the press release, op-ed or briefing note in news style, so an editor can work with it straight away. Nothing goes out without your sign-off.'
+  },
+  {
+    step: '04',
+    title: 'Amplification',
+    desc: 'Once a story is live, we share it across your channels and Web3 communities, and can brief KOLs to add context for their audiences so the coverage reaches people who act on it.'
+  },
+  {
+    step: '05',
+    title: 'Report & Reuse',
+    desc: 'You get a plain report of what ran, where, and whether it was earned or sponsored. We then turn the best pieces into sales material, investor updates and community content.'
+  }
+];
+
+const projectTypes = [
+  {
+    title: 'Token launch & TGE',
+    desc: 'A timeline that builds context before the launch, with announcement copy, founder interviews and a crisis plan ready for launch week.'
+  },
+  {
+    title: 'Exchange listing announcements',
+    desc: 'Coordinated announcements with the exchange, careful wording on dates and trading pairs, and follow-up stories after trading opens.'
+  },
+  {
+    title: 'Funding rounds',
+    desc: 'Fundraise news framed around what the capital unlocks, timed with your investors and supported by founder commentary.'
+  },
+  {
+    title: 'DeFi & infrastructure protocols',
+    desc: 'Technical stories that explain security, upgrades and integrations in language both developers and investors understand.'
+  },
+  {
+    title: 'NFT, gaming & consumer Web3',
+    desc: 'Culture and product stories for audiences who care about community, creators and gameplay more than token mechanics.'
+  },
+  {
+    title: 'Fintech & regulated companies',
+    desc: 'Fintech PR for exchanges, payment apps and wallets, with messaging checked against what your licence lets you say in each market.'
+  }
+];
+
+const measures = [
+  { title: 'Earned vs sponsored', desc: 'Every placement is labeled, so you always know what you paid for and what you won.' },
+  { title: 'Outlet relevance', desc: 'Whether the outlet reaches your buyers, investors or users, not just a large audience.' },
+  { title: 'Message pull-through', desc: 'Whether the story used your key message, quotes and facts correctly.' },
+  { title: 'Referral & search impact', desc: 'Visits from coverage, backlinks earned and branded search interest over time.' },
+  { title: 'AI answer presence', desc: 'Whether AI assistants describe your project accurately and cite the coverage.' },
+  { title: 'Share of voice', desc: 'How often your project appears in your category compared with competitors.' }
+];
+
+const groundRules = [
+  'Nothing is published without your sign-off.',
+  'Sponsored content is always labeled and disclosed.',
+  'We never promise placement in an independent newsroom.',
+  'If a story is not newsworthy yet, we say so and help you build one.'
+];
+
+const markets = [
+  {
+    name: 'Vietnam',
+    href: '/blockchain-marketing-agency-vietnam/',
+    anchor: 'blockchain marketing agency in Vietnam',
+    desc: 'Our home market. Vietnamese-language coverage, local crypto media and community channels, reviewed by native speakers.'
+  },
+  {
+    name: 'Singapore',
+    href: '/blockchain-marketing-agency-singapore/',
+    anchor: 'blockchain marketing agency in Singapore',
+    desc: 'Regional tech and finance press for teams building or raising in Southeast Asia, with regulatory-aware messaging.'
+  },
+  {
+    name: 'Dubai & UAE',
+    href: '/blockchain-marketing-agency-dubai/',
+    anchor: 'blockchain marketing agency in Dubai',
+    desc: 'Gulf business media and event-led PR for projects entering the Middle East market.'
+  }
+];
+
+const related = [
+  { href: '/services/kol-marketing/', title: 'Crypto KOL & Influencer Marketing', desc: 'Put trusted voices behind your coverage.' },
+  { href: '/services/community-growth/', title: 'Crypto Community Management', desc: 'Turn readers into active community members.' },
+  { href: '/services/event-marketing/', title: 'Crypto Event Marketing', desc: 'Build press moments around conferences and side events.' }
+];
+
+const guides = [
+  { href: '/blog/strategic-selection-of-a-crypto-pr-agency-vs-marketing-agency-for-project-growth', title: 'Crypto PR agency or marketing agency: which one do you need?' },
+  { href: '/blog/blockchain-pr-agency-drive-web3-growth-with-fintech24h', title: 'How a blockchain PR agency drives Web3 growth' },
+  { href: '/blog/top-crypto-pr-agencies-boost-your-blockchain-visibility', title: 'Top crypto PR agencies to compare' }
 ];
 
 const faqs = [
   {
-    q: "Can you guarantee coverage on Bloomberg or Forbes?",
-    a: "We guarantee submission and advocacy through our direct editorial contacts. However, top-tier publications maintain strict editorial independence. We craft the narrative to maximize acceptance, but guaranteed placement on these specific sites is usually through sponsored content (which we can also facilitate)."
+    q: 'What does a blockchain PR agency do?',
+    a: 'A blockchain PR agency shapes how a crypto, Web3 or fintech project is described in the media. That covers positioning, press releases, pitching journalists, founder thought leadership, crisis response and reporting. The goal is credible third-party coverage that investors, partners and users trust more than your own marketing.'
   },
   {
-    q: "What is the difference between PR distribution and Editorial Placement?",
-    a: "PR distribution (like PR Newswire) syndicates your exact text to hundreds of automated feeds. It's good for SEO, but bad for credibility. Editorial placement involves pitching a journalist to write an original article about your project. It's harder to get, but infinitely more valuable."
+    q: 'Can you guarantee coverage in top-tier outlets?',
+    a: 'No honest agency can guarantee earned coverage, because independent newsrooms decide what they publish. We improve the odds with a strong angle and targeted pitching. When a date cannot move, we can arrange sponsored placements, which are guaranteed and always labeled as sponsored.'
   },
   {
-    q: "Can you get press coverage in Singapore?",
-    a: 'Yes, we place stories in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a> outlets like Tech in Asia and The Business Times, alongside Tier-1 crypto press.'
+    q: 'What is the difference between press release distribution and editorial placement?',
+    a: 'Distribution through a newswire republishes your exact text on many automated pages. It helps with indexing but carries little credibility. Editorial placement means a journalist chooses to write about you in their own words. It is harder to get and far more valuable.'
   },
   {
-    q: "Do you write the press releases?",
-    a: "Yes. Our team of native English speakers and crypto-native writers handle the entire drafting process, ensuring the tone matches top-tier journalistic standards."
+    q: 'Do you write the press releases?',
+    a: 'Yes. Native English, crypto-fluent writers draft every release, op-ed and briefing note in news style, and you approve the final version before anything is sent.'
   },
   {
-    q: "Can you get press coverage in Dubai and the UAE?",
-    a: 'Yes, we place stories in <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a> and UAE outlets like Gulf News, Zawya and Al Bawaba, alongside Tier-1 crypto press.'
+    q: 'How long does it take to see coverage?',
+    a: 'It depends on the story and the outlet. Announcement news can run within days when the timing is right. Founder thought leadership and business press usually take a few weeks of relationship building. We share a realistic timeline before we start.'
   },
   {
-    q: "How do you measure PR success?",
-    a: "We track total readership reach, domain authority of the publishing sites (for SEO impact), referral traffic to your website, and share-of-voice compared to your competitors."
+    q: 'Do you handle crisis communications and FUD?',
+    a: 'Yes. We prepare holding statements, Q&A documents and spokesperson lines, monitor coverage and coordinate the response with your community team so the facts are consistent everywhere.'
+  },
+  {
+    q: 'Do you work with fintech and regulated companies?',
+    a: 'Yes. For exchanges, payment companies and wallets we check every claim against what your licence allows in each market and keep a clear line between education and promotion.'
+  },
+  {
+    q: 'Can you get press coverage in Singapore and Dubai?',
+    a: `Yes. We pitch regional tech, finance and business media in <a href="/blockchain-marketing-agency-singapore/" class="${linkClass}">Singapore</a> and the <a href="/blockchain-marketing-agency-dubai/" class="${linkClass}">UAE</a>, usually with a local angle such as a market entry, a partnership or a spokesperson in the region.`
+  },
+  {
+    q: 'How do you measure PR success?',
+    a: 'We report every placement as earned or sponsored, then look at outlet relevance, whether your key message came through, referral traffic, backlinks, branded search and how AI assistants describe your project. We do not sell vanity totals.'
+  },
+  {
+    q: 'Can PR work together with KOL and community campaigns?',
+    a: `Yes, and it works best that way. Coverage gives <a href="/services/kol-marketing/" class="${linkClass}">KOLs</a> something credible to talk about, and your <a href="/services/community-growth/" class="${linkClass}">community team</a> turns readers into members.`
   }
-];
-
-const logos = [
-  "CoinTelegraph", "Yahoo Finance", "Bloomberg", "Decrypt", "The Block", "CoinDesk", "TechCrunch", "Forbes"
 ];
 
 const META_DESCRIPTION =
@@ -48,15 +260,18 @@ const META_DESCRIPTION =
 
 const serviceSchema = buildServiceSchema({
   name: 'Blockchain & Crypto PR',
-  alternateName: ['Web3 PR', 'Crypto Public Relations', 'Blockchain Public Relations'],
+  alternateName: ['Web3 PR', 'Crypto Public Relations', 'Blockchain Public Relations', 'Fintech PR'],
   serviceType: 'Public relations',
-  url: 'https://fintech24h.com/services/pr-media/',
+  url: PAGE_URL,
   description: META_DESCRIPTION
 });
 
 const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
+
+const eyebrow = 'block font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent-cyan)] mb-4';
+const h2Class = 'font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-[var(--text-primary)] leading-tight uppercase';
 ---
 
 <BaseLayout
@@ -66,67 +281,131 @@ const combinedSchema = [serviceSchema, faqSchema];
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- SECTION 1 — HERO (Editorial Split Style) -->
+  <!-- SECTION 1: HERO (Editorial split, H1 = focus keyword) -->
   <PrCtaSection isHero={true} />
 
-  <!-- MARQUEE SECTION -->
-  <div class="border-b border-[var(--border-default)] bg-[var(--surface-soft)] overflow-hidden py-4 flex relative">
-    <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[var(--bg-primary)] to-transparent z-10"></div>
-    <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[var(--bg-primary)] to-transparent z-10"></div>
-    <div class="flex gap-16 whitespace-nowrap animate-[marquee-scroll_20s_linear_infinite]">
-      {[...logos, ...logos, ...logos].map(logo => (
-        <span class="font-display font-bold text-2xl text-[var(--text-muted)] uppercase tracking-wider">{logo}</span>
+  <!-- Desk strip: static categories (replaced the outlet-logo marquee) -->
+  <div class="border-b border-[var(--border-default)] bg-[var(--surface-soft)] py-4 px-6">
+    <ul class="max-w-7xl mx-auto flex flex-wrap justify-center gap-x-10 gap-y-2" aria-label="Media we work with">
+      {desks.map((desk) => (
+        <li class="font-display font-bold text-base md:text-lg text-[var(--text-muted)] uppercase tracking-wider">{desk}</li>
       ))}
-    </div>
+    </ul>
   </div>
 
-  <!-- SECTION 2 — THE PROBLEM (Editorial Columns) -->
+  <!-- SECTION 2: DEFINITION (featured-snippet block) -->
   <section class="py-24 bg-[var(--bg-primary)] relative z-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-5 reveal">
+        <span class={eyebrow}>The Brief</span>
+        <h2 class={`${h2Class} rule-draw`}>What a Blockchain PR Agency Does</h2>
+      </div>
+      <div class="lg:col-span-7 space-y-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+        <p class="text-[var(--text-primary)] text-xl leading-relaxed">
+          A blockchain PR agency decides how your project is described by people other than you. Fintech24h builds the narrative, writes the announcements, pitches the journalists who cover your niche and prepares your founders to speak, so crypto, Web3 and fintech audiences hear about you from sources they already trust.
+        </p>
+        <p>
+          Crypto PR is different from traditional PR. News moves on crypto Twitter before it reaches a newsroom, regulators read the same headlines as traders, and a single rumor can travel faster than your official statement. A Web3 PR agency has to work across all of it: media relations, community channels, KOLs and search.
+        </p>
+        <p>
+          We work with token projects, DeFi and infrastructure protocols, NFT and gaming teams, exchanges and fintech companies. Some need a launch campaign, others need steady thought leadership or a calm voice during a crisis. The method stays the same: a story worth covering, told to the right reporter, in words your audience believes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: THE PROBLEM (Editorial columns) -->
+  <section class="py-24 bg-[var(--bg-primary)] relative z-10 border-t border-[var(--border-default)]">
     <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-      <div class="mb-16 reveal border-b border-[var(--border-default)] pb-8 flex flex-col md:flex-row justify-between items-end gap-6">
-        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-[var(--text-primary)] leading-tight uppercase max-w-2xl">
-          The Illusion of Coverage
-        </h2>
-        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)] max-w-[200px] text-right">
-          Why most PR campaigns fail to deliver ROI.
+      <div class="mb-16 reveal border-b border-[var(--border-default)] pb-8 flex flex-col md:flex-row justify-between md:items-end gap-6">
+        <div>
+          <span class={eyebrow}>The Illusion of Coverage</span>
+          <h2 class={`${h2Class} max-w-3xl`}>Why Most Crypto PR Campaigns Fail</h2>
+        </div>
+        <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-secondary)] md:max-w-[220px] md:text-right">
+          Three patterns we see before projects come to us.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-[var(--border-default)]">
-        {[
-          { title: 'The Syndication Trap', desc: 'Agencies sell you "200+ publications" but fail to mention they are all automated syndication feeds. It looks good on a report, but no human being ever reads them. Real influence requires real editorial placement.' },
-          { title: 'Boring Narratives', desc: 'Crypto journalists receive hundreds of pitches daily. If your pitch is just "We launched a new token," it goes to the trash. If you don\'t have a narrative that connects to broader market trends, you are invisible.' },
-          { title: 'Lack of SEO Strategy', desc: 'A great article is useless if it doesn\'t include a high-authority backlink. Many PR efforts fail to capitalize on the SEO benefits of media coverage, leaving long-term domain authority on the table.' }
-        ].map((item, i) => (
-          <div class={`p-10 border-b md:border-b-0 ${i !== 2 ? 'md:border-r border-[var(--border-default)]' : ''} hover:bg-[var(--surface-soft)] transition-colors group reveal`} style={`transition-delay: ${i * 0.15}s`}>
-            <span class="block font-display text-[4rem] text-[color-mix(in_srgb,var(--text-primary)_5%,transparent)] font-bold leading-none mb-6 group-hover:text-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] transition-colors">0{i+1}</span>
+        {problems.map((item, i) => (
+          <div class={`p-8 md:p-10 border-b md:border-b-0 ${i !== problems.length - 1 ? 'md:border-r border-[var(--border-default)]' : ''} hover:bg-[var(--surface-soft)] transition-colors duration-300 group`}>
+            <span class="block font-display text-[4rem] text-[color-mix(in_srgb,var(--text-primary)_8%,transparent)] font-bold leading-none mb-6 group-hover:text-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] transition-colors duration-300" aria-hidden="true">0{i + 1}</span>
             <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-4 uppercase">{item.title}</h3>
-            <p class="font-body text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] leading-relaxed text-sm">{item.desc}</p>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3 — OUR APPROACH (Magazine Layout) -->
+  <!-- SECTION 4: SERVICES (classifieds grid) -->
+  <section class="py-24 bg-[var(--bg-secondary)] relative z-10 border-y border-[var(--border-default)]">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <div class="mb-16 reveal">
+        <span class={eyebrow}>The Desk</span>
+        <h2 class={`${h2Class} rule-draw max-w-3xl`}>Our Crypto PR Services</h2>
+        <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+          Everything a Web3 PR program needs, from the first positioning workshop to the report after the story runs. Use the full program or the pieces you are missing.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 border-t border-l border-[var(--border-default)]">
+        {services.map((item) => (
+          <div class="p-6 md:p-8 border-r border-b border-[var(--border-default)] hover:bg-[var(--surface-soft)] transition-colors duration-300">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase leading-snug mb-3">{item.title}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: MEDIA TIERS (typology, no outlet names) -->
+  <section class="py-24 bg-[var(--bg-primary)] relative z-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <div class="mb-16 reveal grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-6">
+          <span class={eyebrow}>The Media Map</span>
+          <h2 class={`${h2Class} rule-draw`}>Which Media Fits Your Story</h2>
+        </div>
+        <p class="lg:col-span-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed lg:pt-10">
+          Not every story belongs in every outlet. We plan Web3 PR by matching each announcement to the type of media whose readers will act on it, and we tell you upfront what each tier realistically takes.
+        </p>
+      </div>
+
+      <div class="border-t border-[var(--border-default)]">
+        {tiers.map((tier) => (
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-8 border-b border-[var(--border-default)]">
+            <h3 class="md:col-span-4 font-display text-xl font-bold text-[var(--text-primary)] uppercase">{tier.name}</h3>
+            <p class="md:col-span-4 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+              <span class="block font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent-cyan)] mb-2">Best for</span>
+              {tier.use}
+            </p>
+            <p class="md:col-span-4 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+              <span class="block font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-muted)] mb-2">What it takes</span>
+              {tier.expect}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: PROCESS (magazine rows) -->
   <section class="py-24 bg-[var(--bg-secondary)] relative z-10 border-y border-[var(--border-default)]">
     <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
       <div class="text-center mb-20 reveal">
-        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--accent-cyan)] mb-4">THE STRATEGY</span>
-        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-[var(--text-primary)] uppercase">How We Shape The Narrative</h2>
+        <span class={eyebrow}>The Strategy</span>
+        <h2 class={h2Class}>How We Shape the Narrative</h2>
       </div>
 
-      <div class="space-y-0 border-t border-[var(--border-default)]">
-        {[
-          { step: '01', title: 'Narrative Architecture', desc: 'Before pitching anyone, we find the "hook". We connect your product update to macroeconomic trends, regulatory shifts, or technological breakthroughs. We don\'t pitch a product; we pitch a story.' },
-          { step: '02', title: 'Targeted Pitching', desc: 'We don\'t mass-email journalists. We match your story with specific editors and writers at Tier-1 publications who have a track record of covering your specific niche (DeFi, AI, Layer 2, etc.).' },
-          { step: '03', title: 'Content Drafting', desc: 'Our team of native-English, crypto-fluent writers drafts the press releases and op-eds. We write in journalistic style (AP format), making it as easy as possible for an editor to hit publish.' },
-          { step: '04', title: 'Distribution & Amplification', desc: 'Once published, we don\'t stop. We syndicate the coverage across Web3 communities, leverage KOLs to amplify the article, and ensure maximum eyeballs on the piece.' }
-        ].map((item, i) => (
-          <div class="flex flex-col md:flex-row border-b border-[var(--border-default)] group reveal">
+      <div class="border-t border-[var(--border-default)]">
+        {steps.map((item) => (
+          <div class="flex flex-col md:flex-row border-b border-[var(--border-default)] group">
             <div class="w-full md:w-1/3 py-8 md:py-12 md:pr-12 border-b md:border-b-0 md:border-r border-[var(--border-default)] flex items-center">
-              <span class="font-mono text-sm text-[var(--accent-cyan)] mr-6">{item.step}</span>
-              <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] uppercase group-hover:pl-4 transition-all duration-300">{item.title}</h3>
+              <span class="font-mono text-sm text-[var(--accent-cyan)] mr-6" aria-hidden="true">{item.step}</span>
+              <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] uppercase group-hover:translate-x-2 transition-transform duration-300">{item.title}</h3>
             </div>
             <div class="w-full md:w-2/3 py-8 md:py-12 md:pl-12 flex items-center">
               <p class="font-body text-[var(--text-secondary)] leading-relaxed text-lg">{item.desc}</p>
@@ -137,20 +416,100 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <!-- FAQ SECTION (Minimal) -->
-  <section class="py-24 bg-[var(--bg-primary)]">
-    <div class="max-w-4xl mx-auto px-6">
+  <!-- SECTION 7: BY PROJECT TYPE -->
+  <section class="py-24 bg-[var(--bg-primary)] relative z-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
       <div class="mb-16 reveal">
-        <h2 class="font-display text-3xl font-bold text-[var(--text-primary)] uppercase border-b border-[var(--border-default)] pb-6">Editorial FAQ</h2>
+        <span class={eyebrow}>The Sections</span>
+        <h2 class={`${h2Class} rule-draw max-w-3xl`}>Web3 PR for Every Stage</h2>
+        <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+          The story, the outlets and the timing change with what you are announcing. These are the situations we plan for most often.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border-default)] border border-[var(--border-default)]">
+        {projectTypes.map((item) => (
+          <div class="bg-[var(--bg-primary)] p-8 hover:bg-[var(--surface-soft)] transition-colors duration-300">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase mb-3">{item.title}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: MEASUREMENT + GROUND RULES (no vanity numbers) -->
+  <section class="py-24 bg-[var(--bg-secondary)] relative z-10 border-y border-[var(--border-default)]">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <div class="lg:col-span-7">
+        <div class="mb-12 reveal">
+          <span class={eyebrow}>The Report</span>
+          <h2 class={`${h2Class} rule-draw`}>How We Measure PR</h2>
+          <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+            A big total of "potential reach" tells you nothing. Our reports answer whether the right people saw the right message.
+          </p>
+        </div>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8">
+          {measures.map((m) => (
+            <div class="border-t border-[var(--border-default)] pt-4">
+              <dt class="font-display text-base font-bold text-[var(--text-primary)] uppercase mb-2">{m.title}</dt>
+              <dd class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{m.desc}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <aside class="lg:col-span-5 self-start border border-[var(--border-default)] bg-[var(--bg-primary)] p-8 md:p-10">
+        <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] uppercase border-b border-[var(--border-default)] pb-4 mb-6">Our Ground Rules</h3>
+        <ul class="space-y-5">
+          {groundRules.map((rule) => (
+            <li class="flex gap-4 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+              <span class="mt-2.5 w-2 h-2 shrink-0 bg-[var(--accent-cyan)]" aria-hidden="true"></span>
+              <span>{rule}</span>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SECTION 9: MARKETS (pillar links) -->
+  <section class="py-24 bg-[var(--bg-primary)] relative z-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+      <div class="mb-12 reveal">
+        <span class={eyebrow}>The Regional Pages</span>
+        <h2 class={`${h2Class} rule-draw`}>Crypto PR in Asia &amp; the Middle East</h2>
+        <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+          We run global English-language PR from Ho Chi Minh City, with local knowledge in the markets where many of our clients build, raise and launch.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--border-default)] border border-[var(--border-default)]">
+        {markets.map((m) => (
+          <div class="bg-[var(--bg-primary)] p-8">
+            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] uppercase mb-3">{m.name}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed mb-4">{m.desc}</p>
+            <a href={m.href} class={`font-body text-base ${linkClass}`}>Our {m.anchor}</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 10: FAQ -->
+  <section class="py-24 bg-[var(--bg-secondary)] border-t border-[var(--border-default)]">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="mb-12 reveal">
+        <span class={eyebrow}>Editorial FAQ</span>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-[var(--text-primary)] uppercase border-b border-[var(--border-default)] pb-6">Blockchain PR Questions</h2>
       </div>
       <div class="space-y-2">
-        {faqs.map((faq, i) => (
-          <details class="group border-b border-[var(--border-default)] pb-4 reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex justify-between items-center font-display text-lg text-[var(--text-primary)] font-bold cursor-pointer list-none hover:text-[var(--accent-cyan)] transition-colors py-4">
-              {faq.q}
-              <span class="text-[var(--text-muted)] group-open:rotate-45 transition-transform duration-300 font-mono text-2xl">+</span>
+        {faqs.map((faq) => (
+          <details class="group border-b border-[var(--border-default)] pb-4">
+            <summary class="flex justify-between items-center gap-6 cursor-pointer list-none py-4 rounded-sm">
+              <h3 class="faq-q font-display text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{faq.q}</h3>
+              <span class="text-[var(--text-muted)] group-open:rotate-45 transition-transform duration-300 font-mono text-2xl shrink-0" aria-hidden="true">+</span>
             </summary>
-            <div class="text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] font-body text-sm leading-relaxed pb-4 pr-12">
+            <div class="text-[var(--text-secondary)] font-body text-base leading-relaxed pb-4 pr-6 md:pr-12">
               <p set:html={faq.a} />
             </div>
           </details>
@@ -159,9 +518,32 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <p class="text-center text-sm text-[var(--text-muted)] font-body max-w-xl mx-auto px-4 -mt-4 mb-16">
-    Need press coverage inside Vietnam too? See our <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--text-secondary)] underline decoration-[var(--border-default)] underline-offset-4 hover:text-[var(--accent-cyan)] hover:decoration-[var(--accent-cyan)] transition-colors">blockchain marketing agency in Vietnam</a>.
-  </p>
+  <!-- SECTION 11: RELATED SERVICES + GUIDES -->
+  <section class="py-20 bg-[var(--bg-primary)] border-t border-[var(--border-default)]">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-7">
+        <h2 class="font-display text-2xl font-bold text-[var(--text-primary)] uppercase mb-8">Pair PR With</h2>
+        <ul class="border-t border-[var(--border-default)]">
+          {related.map((r) => (
+            <li class="border-b border-[var(--border-default)]">
+              <a href={r.href} class="group flex flex-col gap-1 py-5 rounded-sm">
+                <span class="font-display text-lg font-bold text-[var(--text-primary)] uppercase group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{r.title}</span>
+                <span class="font-body text-base text-[var(--text-secondary)]">{r.desc}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-2xl font-bold text-[var(--text-primary)] uppercase mb-8">Further Reading</h2>
+        <ul class="space-y-4">
+          {guides.map((g) => (
+            <li><a href={g.href} class={`font-body text-base ${linkClass}`}>{g.title}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <!-- CTA SECTION (Unified FooterLeadForm) -->
   <FooterLeadForm defaultService="PR Campaigns" />
@@ -170,30 +552,48 @@ const combinedSchema = [serviceSchema, faqSchema];
 
 <style>
   summary::-webkit-details-marker { display: none; }
-  .text-stroke-white { -webkit-text-stroke: 1px rgba(255,255,255,0.2); }
-  .text-stroke-1 { -webkit-text-stroke-width: 1px; }
-  
-  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
-  @media (scripting: enabled) {
-    .reveal { opacity: 0.01; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .faq-q { margin: 0; }
+
+  /* Entrance: one per section, on the heading block only. Hidden only when JS
+     can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0.01; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
+
+    /* Editorial rule under the heading draws once as part of the same entrance. */
+    .reveal .rule-draw::after { transform: scaleX(0); transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s; }
+    .reveal.revealed .rule-draw::after { transform: scaleX(1); }
   }
-  .reveal.revealed { opacity: 1; transform: translateY(0); }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+  .rule-draw { position: relative; padding-bottom: 1rem; }
+  .rule-draw::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 4rem;
+    height: 2px;
+    background: var(--accent-cyan);
+    transform-origin: left;
+  }
+  .text-center .rule-draw::after, .text-center.rule-draw::after { left: 50%; margin-left: -2rem; }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach((el) => el.classList.add('revealed'));
+      return;
+    }
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    items.forEach((el) => observer.observe(el));
   });
 </script>
