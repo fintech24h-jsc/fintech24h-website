@@ -40,10 +40,14 @@ export const footerLinks = {
     { label: 'About Us', href: '/about/' },
     { label: 'Our Process', href: '/#process' },
     ...(CASE_STUDIES_ENABLED ? [{ label: 'Case Studies', href: '/case-studies/' }] : []),
-    { label: 'Blockchain Marketing Agency Vietnam', href: '/blockchain-marketing-agency-vietnam/' },
-    { label: 'Blockchain Marketing Agency Singapore', href: '/blockchain-marketing-agency-singapore/' },
-    { label: 'Blockchain Marketing Agency Dubai', href: '/blockchain-marketing-agency-dubai/' },
     { label: 'Contact Sales', href: '/contact/' }
+  ],
+  // Market pillar pages. The footer shows the country as the headline and keeps
+  // "blockchain marketing agency" in the visible link text (SEO anchor).
+  markets: [
+    { country: 'Vietnam', flag: 'vn', href: '/blockchain-marketing-agency-vietnam/' },
+    { country: 'Singapore', flag: 'sg', href: '/blockchain-marketing-agency-singapore/' },
+    { country: 'Dubai, UAE', flag: 'ae', href: '/blockchain-marketing-agency-dubai/' }
   ],
   resources: [
     { label: 'Insights Blog', href: '/blog' },
@@ -51,8 +55,7 @@ export const footerLinks = {
     { label: 'Careers', href: '/careers/' },
     { label: 'Media Kit', href: 'https://drive.google.com/drive/folders/1fPgwA514HzHmkBOkhh_P4QfV6lie9OUh' },
     { label: 'Partnership', href: 'https://docs.google.com/forms/d/e/1FAIpQLSeOhaoV-q4dyjEgVa5fVQToKPtHyqDmKBj9fHig9bNS3JrYqw/viewform' },
-    { label: 'Marketing Proposals', href: '/#get-proposal' },
-    { label: 'Book a discovery call', href: '/contact/#book-call' }
+    { label: 'Marketing Proposals', href: '/#get-proposal' }
   ],
   ecosystem: [
     { label: "DealMakers' Club", href: '/dealmakers/' },
