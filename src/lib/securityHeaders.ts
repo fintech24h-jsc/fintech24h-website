@@ -70,7 +70,9 @@ function buildCsp(inlineScriptSource: string): string {
 // 'report-only': the nonce policy is sent as Content-Security-Policy-Report-Only
 // next to the previous enforced policy (which still has 'unsafe-inline').
 // 'enforce': the nonce policy is the only, enforced policy.
-const NONCE_CSP_MODE: 'report-only' | 'enforce' = 'report-only';
+// Enforced since 2026-10-22 after a report-only pass on preview and production
+// showed zero violations across every page type.
+const NONCE_CSP_MODE: 'report-only' | 'enforce' = 'enforce';
 
 const LEGACY_CSP = buildCsp("'unsafe-inline'");
 
