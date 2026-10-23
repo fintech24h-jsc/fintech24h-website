@@ -1,44 +1,138 @@
 ---
 // src/pages/services/business-development.astro
+// Focus keyword: "Web3 business development agency". Variants covered in
+// H2/H3/FAQ: crypto business development, exchange listing support, VC and
+// investor introductions, launchpad & market maker intros, partnerships,
+// fintech BD. No case-study numbers and no listing/investment guarantees.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
+const PAGE_URL = 'https://fintech24h.com/services/business-development/';
+
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services/' },
-  { name: 'Business Development', item: `https://fintech24h.com/services/business-development/` }
+  { name: 'Business Development', item: PAGE_URL }
+];
+
+const linkClass =
+  'text-[var(--accent-cyan)] underline decoration-[color-mix(in_srgb,var(--accent-cyan)_40%,transparent)] underline-offset-4 hover:decoration-[var(--accent-cyan)] transition-colors duration-200 rounded-sm';
+
+const problems = [
+  { title: 'Cold Outreach Fails', desc: 'Web3 runs on trust and warm introductions. If nobody they trust introduces you, your email sits at the bottom of the pile.' },
+  { title: 'Paper Partnerships', desc: 'A partnership that is only a shared tweet does nothing. Real partnerships bring liquidity, users or a working integration.' },
+  { title: 'Premature Exchange Applications', desc: 'Applying before you are ready wastes your first impression. Exchanges look closely at compliance, liquidity and real activity.' },
+  { title: 'No Local Network', desc: 'Entering Asian or Gulf markets with a purely Western playbook rarely works. Local relationships decide who gets a meeting.' },
+  { title: 'Founders Stuck Doing BD', desc: 'When technical founders spend most of their week chasing partners, the product slows down. BD is a full-time job.' }
+];
+
+const steps = [
+  { step: '01', title: 'Readiness Review', desc: 'Before any introduction, we look at your project the way an exchange, investor or partner will: documentation, token structure, legal setup, traction and story. We fix the gaps before we go to market.' },
+  { step: '02', title: 'Target Mapping & Strategy', desc: 'We list the exchanges, investors, protocols and enterprise partners that fit your stage, map the decision-makers and define what each of them gains from working with you.' },
+  { step: '03', title: 'Warm Introductions & Representation', desc: 'We introduce you through people they already trust, represent the project in early conversations and bring you into meetings with partners who are genuinely interested.' },
+  { step: '04', title: 'Deal Structuring & Negotiation', desc: 'From listing terms to co-marketing agreements, we explain standard market terms, flag hidden costs and help you negotiate structures that fit your tokenomics and runway.' },
+  { step: '05', title: 'Post-Deal Activation', desc: 'Signing is the start. We follow through on integrations, co-marketing and announcements so the partnership delivers what both sides agreed.' }
+];
+
+const services = [
+  { title: 'Exchange listing readiness & introductions', desc: 'Readiness assessment, warm introductions to listing teams, application support and coordination with market makers and launch partners.' },
+  { title: 'VC & investor introductions', desc: 'Curated introductions to funds, angels and family offices that invest in your stage and sector, plus deck and data-room feedback.' },
+  { title: 'Launchpads & IDO partners', desc: 'Introductions to launchpads and launch platforms that fit your community and token design.' },
+  { title: 'Market maker introductions', desc: 'Meetings with market makers and help comparing their terms, so liquidity arrangements are clear before launch.' },
+  { title: 'Ecosystem partnerships & integrations', desc: 'Integrations with protocols, wallets, infrastructure providers and dApps that add real utility for your users.' },
+  { title: 'Grants & accelerator programs', desc: 'Finding the Layer 1, Layer 2 and ecosystem grant or accelerator programs that match your roadmap, and preparing strong applications.' },
+  { title: 'Regional market entry', desc: 'Acting as your local BD team in Southeast Asia and the UAE, with partners, media and communities in each market.' },
+  { title: 'B2B sales for Web3 & fintech', desc: 'Pipeline building and qualified meetings for infrastructure, payments and enterprise-facing Web3 products.' }
+];
+
+const partnerTypes = [
+  'Centralized exchanges', 'DEXs & launchpads', 'VCs, angels & family offices', 'Market makers',
+  'Wallets & infrastructure', 'Layer 1 & Layer 2 ecosystems', 'Fintech & payment companies', 'Media, KOLs & communities'
+];
+
+const canPromise = [
+  'Warm introductions to people who fit your goal',
+  'An honest readiness review before you apply',
+  'Representation in early conversations',
+  'Advice on standard terms and hidden costs',
+  'Follow-through after the deal is signed'
+];
+
+const cannotPromise = [
+  'A guaranteed listing on any exchange',
+  'A guaranteed investment or valuation',
+  'Fake volume, wash trading or paid "listings"',
+  'Partnerships that exist only on paper'
+];
+
+const readiness = [
+  { title: 'Legal & compliance', desc: 'A clear entity, legal opinion on the token where needed, and KYC/AML ready for exchange review.' },
+  { title: 'Token & smart contracts', desc: 'Audited contracts, a clear token distribution and vesting schedule that partners can understand.' },
+  { title: 'Liquidity plan', desc: 'A realistic plan for market making and liquidity on day one and after.' },
+  { title: 'Real users & community', desc: 'Activity that comes from real people, not bots or farmed wallets.' },
+  { title: 'Documentation & story', desc: 'Up-to-date docs, deck and one-page summary that explain why you matter now.' }
+];
+
+const markets = [
+  { name: 'Southeast Asia', href: '/blockchain-marketing-agency-singapore/', anchor: 'blockchain marketing agency in Singapore', desc: 'Partners, exchanges and investors across Singapore, Indonesia and Thailand.' },
+  { name: 'Vietnam', href: '/blockchain-marketing-agency-vietnam/', anchor: 'blockchain marketing agency in Vietnam', desc: 'Our home market and a large retail crypto audience, with local partners and communities.' },
+  { name: 'Dubai & UAE', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai', desc: 'Free-zone partners, regional funds and exchanges active in the Gulf.' }
+];
+
+const related = [
+  { href: '/services/event-marketing/', title: 'Crypto Event Marketing', desc: 'Meet partners and investors in person during conference weeks.' },
+  { href: '/services/pr-media/', title: 'Blockchain PR', desc: 'Announce listings and partnerships with credible coverage.' },
+  { href: '/services/custom-solutions/', title: 'Crypto Go-To-Market', desc: 'Combine BD with a full launch plan.' }
+];
+
+const guides = [
+  { href: '/blog/top-venture-capitalist-funds-for-web-3-0-startups-a-comprehensive-guide-for-entrepreneurs', title: 'Venture capital funds for Web3 startups' },
+  { href: '/blog/web3-b2b-partnerships-revolutionizing-collaboration-in-the-digital-era', title: 'How Web3 B2B partnerships work' },
+  { href: '/blog/fi24h-dealmakers-club-a-thriving-ecosystem-for-blockchain-collaboration-growth-and-innovation', title: 'Inside the Fi24h DealMakers Club' }
 ];
 
 const faqs = [
   {
-    q: "How are you different from an in-house BD hire?",
-    a: 'An in-house BD hire spends their first 6 months building a network from scratch. We come with an existing network of exchanges, investors, and protocols across Southeast Asia, the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">UAE</a>, and Europe. We plug you into that network immediately, reducing time-to-market.'
+    q: 'What does a Web3 business development agency do?',
+    a: 'It opens and manages the relationships that grow a crypto project: exchanges, investors, launchpads, market makers, ecosystem partners and enterprise customers. That covers readiness reviews, warm introductions, representation, negotiation support and making sure partnerships are actually activated.'
   },
   {
-    q: "Can you guarantee an exchange listing?",
-    a: "No agency can guarantee a legitimate listing on a Tier 1 exchange. If someone promises that, they are either lying or planning to list you on an exchange with faked volume. What we guarantee is direct access to the decision-makers at target exchanges, a professionally structured application that meets their requirements, and active advocacy on your behalf."
+    q: 'How are you different from an in-house BD hire?',
+    a: 'A new BD hire usually spends months building a network from scratch. We start with existing relationships across exchanges, investors and protocols in Southeast Asia, the UAE and Europe, so you reach the right people sooner. Many teams use us alongside an in-house lead.'
   },
   {
-    q: "Can you introduce projects to exchanges and VCs in Singapore?",
-    a: 'Yes, business development coverage in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a> extends into partner introductions in Indonesia and Thailand as well.'
+    q: 'Can you guarantee an exchange listing?',
+    a: 'No. No agency can guarantee a legitimate listing on a major exchange, and anyone who promises one is either misleading you or planning to use a venue with fake volume. We commit to warm introductions, a well-prepared application and active advocacy.'
   },
   {
-    q: "Do you take equity or tokens as payment for BD services?",
-    a: "We generally operate on a retainer + success fee model for BD engagements. In select cases where we see exceptional long-term alignment, we may consider a token/equity structure for a portion of the compensation. This is evaluated on a case-by-case basis."
+    q: 'What does a project need before applying for an exchange listing?',
+    a: 'Typically a clear legal entity and compliance setup, audited smart contracts, a transparent token distribution and vesting schedule, a liquidity and market-making plan, real user activity and up-to-date documentation. We review all of this before making introductions.'
   },
   {
-    q: "What regions do you cover?",
-    a: 'Our core strength is in Southeast Asia (<a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Vietnam</a>, Thailand, <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a>, Indonesia), the UAE (<a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a>/Abu Dhabi), and key European Web3 hubs. If you are a Western project looking to enter Asia, this is our exact specialty.'
+    q: 'Do you introduce projects to VCs and investors?',
+    a: `Yes. We introduce founders to funds, angels and family offices that invest in their stage and sector, and help prepare the deck and data room. Our <a href="/dealmakers/" class="${linkClass}">DealMakers' Club</a> also connects verified founders and investors.`
   },
   {
-    q: "Can you help with exchange and VC introductions in Dubai?",
-    a: 'Yes, including free-zone partners active in <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a> and the wider UAE market.'
+    q: 'How do you charge for BD services?',
+    a: 'Usually a monthly retainer plus a success fee tied to agreed outcomes. In selected cases with strong long-term alignment we may consider part of the fee in tokens or equity, evaluated case by case.'
   },
   {
-    q: "What size projects do you work with?",
-    a: "We work with projects across the lifecycle: from seed-stage startups needing initial ecosystem partnerships, to established protocols looking for Tier 1 exchange listings or regional expansion."
+    q: 'Can you help with exchange and VC introductions in Singapore?',
+    a: `Yes. Our <a href="/blockchain-marketing-agency-singapore/" class="${linkClass}">Singapore</a> coverage extends to partner introductions in Indonesia and Thailand as well.`
+  },
+  {
+    q: 'Can you help with exchange and VC introductions in Dubai?',
+    a: `Yes, including free-zone partners and regional funds active in <a href="/blockchain-marketing-agency-dubai/" class="${linkClass}">Dubai</a> and the wider UAE market.`
+  },
+  {
+    q: 'Do you work with fintech companies as well as crypto projects?',
+    a: 'Yes. We help fintech, payments and wallet companies find distribution partners, exchanges and enterprise customers, with messaging that respects what their licences allow.'
+  },
+  {
+    q: 'What size projects do you work with?',
+    a: 'From seed-stage teams that need their first ecosystem partners to established protocols looking for new exchanges, investors or regional expansion.'
   }
 ];
 
@@ -47,15 +141,18 @@ const META_DESCRIPTION =
 
 const serviceSchema = buildServiceSchema({
   name: 'Web3 & Crypto Business Development',
-  alternateName: ['Blockchain Business Development', 'Web3 Partnerships', 'Crypto Investor Introductions'],
+  alternateName: ['Blockchain Business Development', 'Web3 Partnerships', 'Crypto Investor Introductions', 'Exchange Listing Support'],
   serviceType: 'Business development',
-  url: 'https://fintech24h.com/services/business-development/',
+  url: PAGE_URL,
   description: META_DESCRIPTION
 });
 
 const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
+
+const eyebrow = 'font-mono text-xs text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-6';
+const h2Class = 'font-display text-[clamp(2rem,4vw,3rem)] font-light text-[var(--text-primary)] leading-[1.15]';
 ---
 
 <BaseLayout
@@ -65,105 +162,79 @@ const combinedSchema = [serviceSchema, faqSchema];
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- SECTION 1 — HERO (Corporate Glass Monolith) -->
+  <!-- SECTION 1: HERO (glass monolith, H1 = focus keyword; no entrance on the
+       H1 container so it renders immediately for LCP) -->
   <section class="min-h-screen flex items-center justify-center pt-24 pb-12 px-4 bg-[var(--bg-primary)] relative">
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--bg-secondary)] pointer-events-none"></div>
-    
-    <!-- Massive Glass Container -->
-    <div class="max-w-[1400px] w-full mx-auto bg-[var(--surface-faint)] border border-[var(--border-subtle)] backdrop-blur-3xl rounded-3xl p-8 md:p-16 lg:p-24 relative overflow-hidden shadow-2xl reveal">
-      
-      <!-- Subtle Purple Monolith Glow -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#a78bfa] opacity-[0.03] blur-[120px] rounded-full pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--bg-secondary)] pointer-events-none" aria-hidden="true"></div>
+
+    <div class="max-w-[1400px] w-full mx-auto bg-[var(--surface-faint)] border border-[var(--border-subtle)] backdrop-blur-3xl rounded-3xl p-8 md:p-16 lg:p-24 relative overflow-hidden shadow-2xl">
+      <div class="monolith-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[var(--accent-purple)] opacity-[0.04] blur-[120px] rounded-full pointer-events-none" aria-hidden="true"></div>
 
       <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-7">
-          <span class="inline-block px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] font-mono text-[10px] text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-8">
-            Strategic Advisory & Execution
+          <span class="inline-block px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] font-mono text-xs text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-8">
+            Strategic Advisory &amp; Execution
           </span>
-          <h1 class="font-display font-light text-[clamp(2.5rem,4vw,4.5rem)] text-[var(--text-primary)] leading-[1.1] tracking-tight mb-8">
-          The Relationships That Take Years to Build <br/>
-          <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[color-mix(in_srgb,var(--text-primary)_50%,transparent)]">We Already Have Them.</span>
-        </h1>
-          <p class="font-body text-lg text-[var(--text-secondary)] opacity-70 max-w-xl leading-relaxed mb-10 font-light">
-            In Web3, who you integrate with, where you're listed, and who backs you is as important as what you've built. We operate as an extension of your team to secure the partnerships that drive real adoption.
+          <h1 class="font-display font-light text-[clamp(2.5rem,4vw,4.5rem)] text-[var(--text-primary)] leading-[1.1] tracking-tight mb-6">
+            Web3 &amp; Crypto<br/>
+            <span class="font-bold">Business Development Agency</span>
+          </h1>
+          <p class="font-display text-[clamp(1.15rem,1.8vw,1.5rem)] text-[var(--text-primary)] mb-6">
+            The relationships that take years to build. <span class="text-[var(--text-secondary)]">We already have them.</span>
+          </p>
+          <p class="font-body text-lg text-[var(--text-secondary)] max-w-xl leading-relaxed mb-10">
+            In Web3, who you integrate with, where you list and who backs you matters as much as what you build. We work as an extension of your team to open doors to exchanges, investors and partners through warm introductions.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
-            <a href="/contact/" class="bg-[var(--text-primary)] text-[var(--bg-primary)] px-8 py-4 rounded-xl font-medium hover:opacity-90 transition-opacity text-center shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+            <a href="/contact/" class="bg-[var(--text-primary)] text-[var(--bg-primary)] px-8 py-4 rounded-xl font-medium hover:opacity-90 transition-opacity duration-200 text-center shadow-[0_0_20px_rgba(255,255,255,0.1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
               Discuss BD Strategy
             </a>
           </div>
         </div>
 
-        <div class="lg:col-span-5 hidden lg:flex justify-end relative">
-          <!-- Web3 Deal Flow / Network Mockup — a fixed dark "app dashboard" screenshot, like the site's other terminal/mockup widgets -->
-          <div class="w-full max-w-md bg-[#050508]/80 border border-[var(--border-default)] rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden group" data-theme-surface="midnight">
-            
-            <!-- Scanning Light Effect -->
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#a78bfa]/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan_3s_linear_infinite] pointer-events-none"></div>
-
-            <!-- Top Bar -->
+        <div class="lg:col-span-5 hidden lg:flex justify-end relative" aria-hidden="true">
+          <!-- Decorative deal-flow dashboard (fixed dark surface, like the site's other mockups) -->
+          <div class="pipeline w-full max-w-md bg-[#050508]/80 border border-[var(--border-default)] rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden" data-theme-surface="midnight">
             <div class="flex justify-between items-center mb-8 border-b border-[var(--border-subtle)] pb-4">
               <div class="flex items-center gap-3">
-                <div class="relative w-8 h-8 rounded-full bg-gradient-to-br from-[#a78bfa] to-purple-800 flex items-center justify-center">
-                  <div class="absolute inset-0 rounded-full bg-[#a78bfa] animate-ping opacity-20"></div>
-                  <svg class="w-4 h-4 text-[var(--text-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+                <div class="relative w-8 h-8 rounded-full bg-gradient-to-br from-[var(--accent-purple)] to-purple-800 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
                 </div>
                 <div>
-                  <div class="font-mono text-[10px] text-[var(--text-secondary)] opacity-70 tracking-widest">NETWORK_STATUS</div>
-                  <div class="font-display text-sm text-[var(--text-primary)] font-medium">Global Deal Pipeline</div>
+                  <div class="font-mono text-xs text-white/60 tracking-widest">NETWORK</div>
+                  <div class="font-display text-sm text-white font-medium">Deal Pipeline</div>
                 </div>
               </div>
-              <div class="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 font-mono text-[10px] animate-pulse">
-                CONNECTED
-              </div>
+              <div class="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 font-mono text-xs">CONNECTED</div>
             </div>
 
-            <!-- Network Nodes (Tier 1 Exchanges) -->
             <div class="mb-8 relative h-32 flex items-center justify-between px-2">
-              <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;">
-                <path d="M40 64 C 100 20, 200 100, 260 64" fill="none" stroke="rgba(167, 139, 250, 0.2)" stroke-width="2" stroke-dasharray="4 4" class="group-hover:animate-[dash_2s_linear_infinite]" />
-                <path d="M40 64 C 100 20, 200 100, 260 64" fill="none" stroke="#a78bfa" stroke-width="2" class="opacity-0 group-hover:opacity-100 group-hover:animate-[draw-line_1.5s_ease-out_forwards]" />
+              <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 300 128" preserveAspectRatio="none">
+                <path d="M40 64 C 100 20, 200 100, 260 64" fill="none" stroke="rgba(167, 139, 250, 0.2)" stroke-width="2" stroke-dasharray="4 4" />
+                <path class="pipeline-path" d="M40 64 C 100 20, 200 100, 260 64" fill="none" stroke="var(--accent-purple)" stroke-width="2" pathLength="1" />
               </svg>
-
-              <!-- Node 1 -->
               <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-12 h-12 rounded-xl bg-[var(--surface-soft)] border border-[var(--border-default)] flex items-center justify-center backdrop-blur-md group-hover:border-[#a78bfa]/50 group-hover:shadow-[0_0_15px_rgba(167,139,250,0.3)] transition-all duration-300">
-                  <span class="text-[var(--text-primary)] font-display font-bold">P</span>
-                </div>
-                <span class="font-mono text-[9px] text-[var(--text-muted)]">PROJECT</span>
+                <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/15 flex items-center justify-center"><span class="text-white font-display font-bold">P</span></div>
+                <span class="font-mono text-[11px] text-white/50">PROJECT</span>
               </div>
-              
-              <!-- Node 2 -->
               <div class="relative z-10 flex flex-col items-center gap-2 mt-12">
-                <div class="w-10 h-10 rounded-full bg-[var(--surface-soft)] border border-[var(--border-default)] flex items-center justify-center backdrop-blur-md group-hover:border-white/30 transition-all duration-300 delay-100">
-                  <svg class="w-4 h-4 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                <div class="w-10 h-10 rounded-full bg-white/5 border border-white/15 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                 </div>
-                <span class="font-mono text-[9px] text-[var(--text-muted)]">VC/KOLS</span>
+                <span class="font-mono text-[11px] text-white/50">INVESTORS</span>
               </div>
-
-              <!-- Node 3 -->
               <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#a78bfa]/20 to-transparent border border-[#a78bfa]/40 flex items-center justify-center backdrop-blur-md group-hover:shadow-[0_0_20px_rgba(167,139,250,0.5)] transition-all duration-300 delay-200">
-                  <span class="text-[#a78bfa] font-display font-bold text-lg">CEX</span>
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[color-mix(in_srgb,var(--accent-purple)_25%,transparent)] to-transparent border border-[color-mix(in_srgb,var(--accent-purple)_45%,transparent)] flex items-center justify-center">
+                  <span class="text-[#b9a6ff] font-display font-bold text-lg">CEX</span>
                 </div>
-                <span class="font-mono text-[9px] text-[#a78bfa]">TIER 1 EXCHANGE</span>
+                <span class="font-mono text-[11px] text-[#b9a6ff]">EXCHANGE</span>
               </div>
             </div>
 
-            <!-- Action Logs -->
-            <div class="space-y-3 font-mono text-[10px]">
-              <div class="flex items-center gap-3 text-[var(--text-muted)] bg-[var(--surface-soft)] rounded-lg p-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                <span>[09:41] Pitch Deck verified & sent to Partners.</span>
-              </div>
-              <div class="flex items-center gap-3 text-[var(--text-muted)] bg-[var(--surface-soft)] rounded-lg p-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
-                <span>[10:15] Meeting scheduled with Listing Committee.</span>
-              </div>
-              <div class="flex items-center gap-3 text-[color-mix(in_srgb,var(--text-primary)_90%,transparent)] bg-[#a78bfa]/10 border border-[#a78bfa]/30 rounded-lg p-2 transform group-hover:-translate-y-1 transition-transform">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#a78bfa] animate-pulse"></span>
-                <span>[11:00] Due Diligence Approved. Proceed to Listing.</span>
-              </div>
+            <div class="space-y-3 font-mono text-xs">
+              <div class="flex items-center gap-3 text-white/55 bg-white/5 rounded-lg p-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span><span>Readiness review shared with team</span></div>
+              <div class="flex items-center gap-3 text-white/55 bg-white/5 rounded-lg p-2"><span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span><span>Warm intro sent to partner</span></div>
+              <div class="flex items-center gap-3 text-white/85 bg-[color-mix(in_srgb,var(--accent-purple)_12%,transparent)] border border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] rounded-lg p-2"><span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span><span>Follow-up call booked</span></div>
             </div>
           </div>
         </div>
@@ -171,108 +242,200 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <!-- SECTION 2 — THE PROBLEM (Sleek Grid) -->
-  <section class="py-32 bg-[var(--bg-secondary)] relative">
-    <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 reveal">
-        <h2 class="font-display text-4xl md:text-5xl font-light text-[var(--text-primary)] max-w-2xl">
-          Why Most Web3 BD Efforts <span class="font-bold text-[var(--text-secondary)] opacity-70">Stall.</span>
-        </h2>
-        <p class="font-mono text-xs text-[var(--text-muted)] uppercase tracking-[0.2em] mt-6 md:mt-0">Market Realities</p>
+  <!-- SECTION 2: DEFINITION -->
+  <section class="py-24 md:py-32 bg-[var(--bg-secondary)] relative">
+    <div class="max-w-[1200px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-5 reveal">
+        <p class={eyebrow}>The Basics</p>
+        <h2 class={h2Class}>What Web3 Business Development <span class="font-bold">Covers</span></h2>
       </div>
+      <div class="lg:col-span-7 space-y-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+        <p class="text-[var(--text-primary)] text-xl leading-relaxed">
+          Web3 business development is the work of opening the right doors for a crypto project: exchanges, investors, launchpads, market makers, ecosystem partners and enterprise customers. As a crypto business development agency, Fintech24h prepares you for those conversations, introduces you through people they trust and follows each deal through to activation.
+        </p>
+        <p>
+          Crypto BD is relationship-driven. Listing teams, funds and protocols receive far more requests than they can read, and most decisions start with a trusted introduction. Being well prepared and introduced by the right person is often the difference between a meeting and silence.
+        </p>
+        <p>
+          We work with token projects, DeFi and infrastructure protocols, gaming and NFT teams, exchanges and fintech companies, from seed stage to established protocols expanding into new markets.
+        </p>
+      </div>
+    </div>
+  </section>
 
+  <!-- SECTION 3: THE PROBLEM -->
+  <section class="py-24 md:py-32 bg-[var(--bg-primary)] relative">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 reveal">
+        <h2 class={`${h2Class} max-w-2xl`}>Why Most Web3 BD Efforts <span class="font-bold">Stall</span></h2>
+        <p class="font-mono text-xs text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-6 md:mt-0">Market Realities</p>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
-        {[
-          { title: 'Cold Outreach Fails', desc: 'Web3 runs on trust and warm introductions. If you aren\'t introduced by someone they already trust, you\'re at the bottom of the pile.' },
-          { title: 'Paper Partnerships', desc: 'Announcing a partnership that consists only of a shared tweet is useless. It must drive liquidity, users, or tech integration.' },
-          { title: 'Premature Exchange Apps', desc: 'Applying for listings before you are ready wastes your one shot at a good first impression. Exchanges care about compliance and volume.' },
-          { title: 'Lack of Localization', desc: 'Entering Asian or UAE markets with a purely Western approach fails. Local networks control access.' },
-          { title: 'Founders as BD', desc: 'When technical founders spend 80% of their time chasing partnerships, the product suffers. BD is a full-time function.' }
-        ].map((item, i) => (
-          <div class={`bg-[var(--surface-soft)] p-10 hover:bg-[var(--surface-soft)] transition-colors duration-500 reveal ${i === 3 ? 'md:col-span-2' : ''} ${i === 4 ? 'md:col-span-1' : ''}`} style={`transition-delay: ${i * 0.1}s`}>
-            <div class="w-10 h-10 border border-[var(--border-default)] rounded-lg flex items-center justify-center mb-16">
-              <span class="font-mono text-xs text-[var(--text-muted)]">0{i+1}</span>
+        {problems.map((item, i) => (
+          <div class={`bg-[var(--surface-soft)] p-8 md:p-10 ${i === 3 ? 'md:col-span-2' : ''}`}>
+            <div class="w-10 h-10 border border-[var(--border-default)] rounded-lg flex items-center justify-center mb-10" aria-hidden="true">
+              <span class="font-mono text-xs text-[var(--text-secondary)]">0{i + 1}</span>
             </div>
             <h3 class="font-display text-2xl text-[var(--text-primary)] font-light mb-4">{item.title}</h3>
-            <p class="font-body text-[var(--text-secondary)] opacity-70 font-light leading-relaxed">{item.desc}</p>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3 — OUR APPROACH (Ultra-Clean Accordion List) -->
-  <section class="py-32 bg-[var(--bg-primary)]">
-    <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <div class="text-center mb-24 reveal">
-        <h2 class="font-display text-4xl text-[var(--text-primary)] font-light">The Execution Framework</h2>
-      </div>
-
-      <div class="space-y-0 border-t border-[var(--border-default)]">
-        {[
-          { step: '01', title: 'Asset Audit & Readiness Review', desc: 'Before making introductions, we audit your project through the lens of a potential partner or exchange. Are your metrics healthy? Is your documentation clear? Is your legal structure sound? We fix the gaps before we go to market.' },
-          { step: '02', title: 'Target Mapping & Strategy', desc: 'We identify the specific exchanges, protocols, or enterprise partners that will move the needle for your project. We map the decision-makers, determine the value proposition for them, and define the engagement strategy.' },
-          { step: '03', title: 'Warm Introductions & Representation', desc: 'We leverage our existing network to bypass the cold-email queue. We represent your project in initial conversations, filter out the noise, and only bring you into meetings with qualified, high-intent partners.' },
-          { step: '04', title: 'Deal Structuring & Negotiation', desc: 'From exchange listing agreements to co-marketing partnerships, we advise on standard market terms, identify hidden costs, and help negotiate structures that align with your long-term tokenomics and runway.' },
-          { step: '05', title: 'Post-Deal Activation', desc: 'Signing the partnership is the beginning, not the end. We oversee the activation phase, ensuring technical integrations happen, co-marketing is executed, and the partnership actually delivers the promised value.' }
-        ].map((item, i) => (
-          <div class="group border-b border-[var(--border-default)] py-12 flex flex-col md:flex-row gap-8 md:gap-16 hover:bg-[var(--surface-faint)] transition-colors px-6 reveal">
-            <div class="font-mono text-sm text-[var(--text-muted)] shrink-0 mt-1">{item.step}</div>
-            <div class="flex-1">
-              <h3 class="font-display text-3xl text-[var(--text-primary)] font-light mb-6">{item.title}</h3>
-              <p class="font-body text-[var(--text-secondary)] opacity-70 text-lg leading-relaxed font-light max-w-2xl">{item.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 4 — SERVICES (Monolith Cards) -->
-  <section class="py-32 bg-[var(--bg-secondary)]">
+  <!-- SECTION 4: SERVICES -->
+  <section class="py-24 md:py-32 bg-[var(--bg-secondary)]">
     <div class="max-w-[1400px] mx-auto px-4 md:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          { title: 'Exchange Listings', desc: 'End-to-end management of the listing process. Readiness assessment, warm intros, application management, and market-making negotiation.' },
-          { title: 'Ecosystem Partnerships', desc: 'Identifying and securing integrations with other protocols, wallets, infra providers, and dApps that increase utility.' },
-          { title: 'Regional Market Entry', desc: 'Acting as your localized BD team in SE Asia and UAE. We navigate local culture and connect you with regional partners.' },
-          { title: 'B2B Sales', desc: 'For enterprise-facing Web3 tools. We build the sales pipeline, manage outreach, and drive qualified leads to your tech team.' }
-        ].map((s, i) => (
-          <div class="bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-2xl p-8 hover:border-[var(--border-default)] transition-all duration-500 reveal" style={`transition-delay: ${i * 0.1}s`}>
+      <div class="text-center mb-16 reveal">
+        <p class={eyebrow}>What We Do</p>
+        <h2 class={h2Class}>Our Crypto Business Development <span class="font-bold">Services</span></h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        {services.map((s) => (
+          <div class="bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-2xl p-8 hover:border-[var(--border-default)] transition-colors duration-300">
             <h3 class="font-display text-xl text-[var(--text-primary)] font-medium mb-4">{s.title}</h3>
-            <p class="font-body text-[var(--text-muted)] leading-relaxed font-light text-sm">{s.desc}</p>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+      <ul class="mt-12 flex flex-wrap justify-center gap-3" aria-label="Partner types we connect you with">
+        {partnerTypes.map((p) => (
+          <li class="px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] font-mono text-sm text-[var(--text-secondary)]">{p}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECTION 5: EXECUTION FRAMEWORK -->
+  <section class="py-24 md:py-32 bg-[var(--bg-primary)]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-20 reveal">
+        <p class={eyebrow}>How We Work</p>
+        <h2 class={h2Class}>The BD Execution <span class="font-bold">Framework</span></h2>
+      </div>
+      <ol class="border-t border-[var(--border-default)]">
+        {steps.map((item) => (
+          <li class="group border-b border-[var(--border-default)] py-10 md:py-12 flex flex-col md:flex-row gap-6 md:gap-16 hover:bg-[var(--surface-faint)] transition-colors duration-300 px-6">
+            <div class="font-mono text-sm text-[var(--text-secondary)] shrink-0 mt-1" aria-hidden="true">{item.step}</div>
+            <div class="flex-1">
+              <h3 class="font-display text-2xl md:text-3xl text-[var(--text-primary)] font-light mb-5">{item.title}</h3>
+              <p class="font-body text-[var(--text-secondary)] text-lg leading-relaxed max-w-2xl">{item.desc}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- SECTION 6: WHAT WE CAN AND CANNOT PROMISE -->
+  <section class="py-24 md:py-32 bg-[var(--bg-secondary)]">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class={eyebrow}>Straight Talk</p>
+        <h2 class={h2Class}>What We Promise, and What <span class="font-bold">Nobody Should</span></h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-2xl p-8 md:p-10">
+          <h3 class="font-display text-xl text-[var(--text-primary)] font-medium mb-6">What we commit to</h3>
+          <ul class="space-y-4">
+            {canPromise.map((c) => (
+              <li class="flex gap-3 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+                <svg class="w-5 h-5 mt-0.5 shrink-0 text-[var(--color-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7"/></svg>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-2xl p-8 md:p-10">
+          <h3 class="font-display text-xl text-[var(--text-primary)] font-medium mb-6">What no honest agency can promise</h3>
+          <ul class="space-y-4">
+            {cannotPromise.map((c) => (
+              <li class="flex gap-3 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+                <svg class="w-5 h-5 mt-0.5 shrink-0 text-[var(--color-danger)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18"/></svg>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: LISTING READINESS CHECKLIST -->
+  <section class="py-24 md:py-32 bg-[var(--bg-primary)]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="mb-14 reveal">
+        <p class={eyebrow}>Before You Apply</p>
+        <h2 class={h2Class}>Crypto Exchange Listing <span class="font-bold">Readiness Checklist</span></h2>
+        <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+          Exchanges look at much more than a token. This is what we review with you before any listing introduction.
+        </p>
+      </div>
+      <ol class="readiness grid grid-cols-1 md:grid-cols-2 gap-x-12 reveal">
+        {readiness.map((r, i) => (
+          <li class="flex gap-5 py-6 border-t border-[var(--border-default)]">
+            <span class="font-mono text-sm text-[var(--text-secondary)] mt-1" aria-hidden="true">0{i + 1}</span>
+            <div>
+              <h3 class="font-display text-xl text-[var(--text-primary)] font-medium mb-2">{r.title}</h3>
+              <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{r.desc}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- SECTION 8: MARKETS + ENGAGEMENT MODEL -->
+  <section class="py-24 md:py-32 bg-[var(--bg-secondary)]">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8">
+      <div class="text-center mb-14 reveal">
+        <p class={eyebrow}>Where We Open Doors</p>
+        <h2 class={h2Class}>Web3 BD in Asia &amp; the <span class="font-bold">Middle East</span></h2>
+        <p class="mt-6 font-body text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
+          If you are a Western project entering Asia or the Gulf, this is our home ground. Engagements usually run on a monthly retainer plus a success fee.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {markets.map((m) => (
+          <div class="bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-2xl p-8">
+            <h3 class="font-display text-xl text-[var(--text-primary)] font-medium mb-3">{m.name}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed mb-5">{m.desc}</p>
+            <a href={m.href} class={`font-body text-base ${linkClass}`}>Our {m.anchor}</a>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Related program: DealMakers' Club — same warm-introduction model this
-  page describes, run as its own curated deal-flow network. -->
+  <!-- Related program: DealMakers' Club, the same warm-introduction model. -->
   <section class="pt-16 pb-4 bg-[var(--bg-primary)]">
     <div class="max-w-3xl mx-auto px-4">
-      <a href="/dealmakers/" class="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[var(--bg-glass)] border border-white/[0.06] rounded-2xl backdrop-blur-md px-6 py-5 hover:border-white/[0.12] transition-all duration-300 reveal">
-        <p class="font-body text-sm text-[var(--text-secondary)] leading-relaxed">
-          <span class="text-[var(--accent-cyan)] font-mono text-[10px] uppercase tracking-widest mr-2">Related program</span>
+      <a href="/dealmakers/" class="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[var(--bg-glass)] border border-[var(--border-default)] rounded-2xl backdrop-blur-md px-6 py-5 hover:border-[var(--border-hover)] transition-colors duration-300 reveal">
+        <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">
+          <span class="text-[var(--accent-cyan)] font-mono text-xs uppercase tracking-widest mr-2">Related program</span>
           Raising capital or need warm intros to exchanges and investors? Explore <span class="text-[var(--text-primary)] font-medium">Fintech24h DealMakers&rsquo; Club</span>, our curated deal-flow network for verified founders and investors.
         </p>
-        <span class="shrink-0 font-display text-xs font-bold text-[var(--accent-cyan)] group-hover:text-[var(--text-primary)] transition-colors">Explore &rarr;</span>
+        <span class="shrink-0 font-display text-sm font-bold text-[var(--accent-cyan)] group-hover:text-[var(--text-primary)] transition-colors">Explore &rarr;</span>
       </a>
     </div>
   </section>
 
-  <!-- FAQ SECTION -->
-  <section class="py-32 bg-[var(--bg-primary)]">
+  <!-- SECTION 9: FAQ -->
+  <section class="py-24 md:py-32 bg-[var(--bg-primary)]">
     <div class="max-w-3xl mx-auto px-4">
-      <h2 class="font-display text-3xl text-[var(--text-primary)] font-light text-center mb-16 reveal">Frequently Asked Questions</h2>
+      <div class="text-center mb-14 reveal">
+        <p class={eyebrow}>FAQ</p>
+        <h2 class={h2Class}>Web3 Business Development <span class="font-bold">Questions</span></h2>
+      </div>
       <div class="space-y-4">
-        {faqs.map((faq, i) => (
-          <details class="group bg-[var(--surface-soft)] border border-[var(--border-subtle)] rounded-xl reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-[color-mix(in_srgb,var(--text-primary)_80%,transparent)] font-medium hover:text-[var(--text-primary)] transition-colors">
-              {faq.q}
-              <span class="text-[var(--text-muted)] group-open:rotate-45 transition-transform duration-300">+</span>
+        {faqs.map((faq) => (
+          <details class="group bg-[var(--surface-soft)] border border-[var(--border-subtle)] rounded-xl">
+            <summary class="flex justify-between items-center gap-6 p-6 cursor-pointer list-none rounded-xl">
+              <h3 class="faq-q font-display text-lg text-[var(--text-primary)] font-medium group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{faq.q}</h3>
+              <span class="text-[var(--text-secondary)] group-open:rotate-45 transition-transform duration-300 text-xl shrink-0" aria-hidden="true">+</span>
             </summary>
-            <div class="p-6 pt-0 text-[var(--text-secondary)] opacity-70 font-light leading-relaxed">
+            <div class="px-6 pb-6 text-[var(--text-secondary)] text-base leading-relaxed">
               <p set:html={faq.a} />
             </div>
           </details>
@@ -281,9 +444,30 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <p class="text-center text-sm text-[var(--text-muted)] font-body max-w-xl mx-auto px-4 -mt-4 mb-16">
-    Looking for partners and listing introductions inside Vietnam? See our <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--text-secondary)] underline decoration-[var(--border-default)] underline-offset-4 hover:text-[var(--accent-cyan)] hover:decoration-[var(--accent-cyan)] transition-colors">blockchain marketing agency in Vietnam</a>.
-  </p>
+  <!-- SECTION 10: RELATED SERVICES + GUIDES -->
+  <section class="py-20 bg-[var(--bg-secondary)]">
+    <div class="max-w-[1200px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-7">
+        <h2 class="font-display text-2xl text-[var(--text-primary)] font-medium mb-6">Pair Business Development With</h2>
+        <div class="grid grid-cols-1 gap-3">
+          {related.map((r) => (
+            <a href={r.href} class="group block bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-2xl p-5 hover:border-[var(--border-default)] transition-colors duration-200">
+              <span class="block font-display text-lg text-[var(--text-primary)] font-medium group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{r.title}</span>
+              <span class="block font-body text-base text-[var(--text-secondary)]">{r.desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-2xl text-[var(--text-primary)] font-medium mb-6">Further Reading</h2>
+        <ul class="space-y-4">
+          {guides.map((g) => (
+            <li><a href={g.href} class={`font-body text-base ${linkClass}`}>{g.title}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <!-- CTA SECTION (Unified FooterLeadForm) -->
   <FooterLeadForm defaultService="Business Development" />
@@ -292,39 +476,51 @@ const combinedSchema = [serviceSchema, faqSchema];
 
 <style>
   summary::-webkit-details-marker { display: none; }
-  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
-  @media (scripting: enabled) {
-    .reveal { opacity: 0.01; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .faq-q { margin: 0; }
+
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    /* Section entrances: one per section. */
+    .reveal { opacity: 0.01; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
+
+    /* Hero mockup: the deal path draws once on load. */
+    .pipeline-path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw-path 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards; }
+
+    /* Ambient: the monolith glow breathes slowly. */
+    .monolith-glow { animation: glow-breathe 12s ease-in-out infinite; }
+
+    /* Readiness list: rows settle in order, max 0.4s delay. */
+    .readiness.reveal { transform: none; }
+    .readiness li { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+    .readiness.revealed li { opacity: 1; transform: translateY(0); }
+    .readiness.revealed li:nth-child(2) { transition-delay: 0.1s; }
+    .readiness.revealed li:nth-child(3) { transition-delay: 0.2s; }
+    .readiness.revealed li:nth-child(4) { transition-delay: 0.3s; }
+    .readiness.revealed li:nth-child(5) { transition-delay: 0.4s; }
   }
-  .reveal.revealed { opacity: 1; transform: translateY(0); }
-  
-  @keyframes scan {
-    0% { transform: translateY(-100%); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateY(100%); opacity: 0; }
+
+  @keyframes draw-path { to { stroke-dashoffset: 0; } }
+  @keyframes glow-breathe {
+    0%, 100% { opacity: 0.04; }
+    50% { opacity: 0.08; }
   }
-  @keyframes dash {
-    to { stroke-dashoffset: -8; }
-  }
-  @keyframes draw-line {
-    from { stroke-dasharray: 0, 300; }
-    to { stroke-dasharray: 300, 300; }
-  }
-  
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach((el) => el.classList.add('revealed'));
+      return;
+    }
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }, { threshold: 0.12 });
+    items.forEach((el) => observer.observe(el));
   });
 </script>
