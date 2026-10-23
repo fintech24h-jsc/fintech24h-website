@@ -14,6 +14,7 @@ import type {
   PartnerTrack,
   MatrixValue,
   KolPartner,
+  KolPartnerTrack,
 } from './ss3';
 
 export const seasonMeta = {
@@ -151,7 +152,35 @@ export const kolPartners: KolPartner[] = [
 export const kolPartnerBenefits: string[] = [
   'ملف تعريفي على الموقع',
   'مشاركة عبر إعلانات وسائل التواصل الاجتماعي',
+  'الوصول إلى المؤسسين وقادة الأعمال',
+  'تعارفات مع مشاريع Season 3',
 ];
+
+export const kolPartnerTrack: KolPartnerTrack = {
+  id: 'kol',
+  icon: 'KOL',
+  title: 'شريك KOL',
+  description: 'لصنّاع المحتوى وقادة الرأي المستقلين في Web3 والتكنولوجيا المالية. تبادل تحريري مجاني: تشارك Season 3 مع جمهورك، ونضعك أمام من يُبرمون الصفقات.',
+  fullBenefits: [
+    'ملف تعريفي مميّز لـ KOL على موقع DealMakers\' Club',
+    'مكانة رسمية كشريك KOL في Season 3',
+    'وصول إلى المؤسسين والمستثمرين وقادة الأعمال في الشبكة',
+    'تعارفات مع مشاريع Season 3 الباحثة عن تعاون مع KOL',
+    'إعلان الشراكة عبر قنوات DealMakers\' Club',
+    'مشاركة ضمن منشورات وسائل التواصل الاجتماعي',
+    'ترويج متبادل عبر منظومة Fintech24h',
+    'عضوية في مجتمع Fi24h DealMakers\' Club',
+    'دعوات ذات أولوية لفعاليات التواصل وجلسات المجتمع',
+    'وصول مبكر إلى أخبار وإعلانات Season 3',
+    'فرص استضافة مشتركة / جلسات AMA',
+  ],
+  commitmentsLabel: 'ما يشاركه شركاء KOL',
+  commitments: [
+    'منشورات عن DealMakers\' Club وSeason 3 على قنواتك الاجتماعية',
+    'إعلان الشراكة بصفتك شريك KOL رسميًا',
+  ],
+  interest: 'شريك KOL',
+};
 
 export const directoryProfiles: DirectoryProfile[] = [
   {
@@ -478,10 +507,23 @@ export const partnerTracks: PartnerTrack[] = [
     benefits: [
       'الشعار على الموقع الإلكتروني',
       'مشاركة ضمن منشورات وسائل التواصل الاجتماعي',
+      'مقال علاقات عامة للإعلان عن الشراكة',
+      'رابط خلفي من شعارك إلى موقعك',
     ],
     fullBenefits: [
       'الشعار على الموقع الإلكتروني',
       'مشاركة ضمن منشورات وسائل التواصل الاجتماعي',
+      'إعلان الشراكة عبر جميع منصات Fintech24h الاجتماعية',
+      'مقال علاقات عامة للإعلان عن الشراكة',
+      'روابط إلى موقعك الإلكتروني وقنواتك الاجتماعية',
+      'الشعار في قسم الشركاء الإعلاميين بصفحة DealMakers الرئيسية',
+      'رابط خلفي من شعارك إلى موقعك الإلكتروني',
+    ],
+    commitmentsLabel: 'ما يشاركه الشركاء الإعلاميون',
+    commitments: [
+      'الإعلان عن الشراكة ودعم DealMakers عبر جميع قنواتك',
+      'نشر مقال علاقات عامة على موقعك الإلكتروني',
+      'دعم إعلامي طوال Season 3',
     ],
     interest: 'الشريك الإعلامي',
   },
@@ -514,8 +556,8 @@ export const partnerBenefitsMatrix: { label: string; capital: MatrixValue; solut
   { label: 'صفة الشريك الرسمي', capital: 'yes', solution: 'yes', media: 'no', project: 'yes' },
   { label: 'الشعار ضمن الحقيبة الإعلامية', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
   { label: 'إدراج DealMakers', capital: 'yes', solution: 'yes', media: 'no', project: 'yes' },
-  { label: 'إعلان الشراكة', capital: 'yes', solution: 'yes', media: 'no', project: 'no' },
-  { label: 'علاقات عامة مخصصة', capital: 'yes', solution: 'yes', media: 'no', project: 'optional' },
+  { label: 'إعلان الشراكة', capital: 'yes', solution: 'yes', media: 'yes', project: 'no' },
+  { label: 'علاقات عامة مخصصة', capital: 'yes', solution: 'yes', media: 'yes', project: 'optional' },
   { label: 'ظهور على وسائل التواصل الاجتماعي', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
   { label: 'نشر متبادل', capital: 'yes', solution: 'yes', media: 'no', project: 'optional' },
   { label: 'مطابقة الأعمال', capital: 'star', solution: 'star', media: 'no', project: 'star' },

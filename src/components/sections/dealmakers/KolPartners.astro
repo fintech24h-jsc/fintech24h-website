@@ -51,6 +51,8 @@ const copy = locale === 'ar' ? {
   on: 'على',
   becomeKol: 'كن شريك KOL',
   interest: 'شريك KOL',
+  inReturn: 'في المقابل: شارك Season 3 وأعلن الشراكة على قنواتك الاجتماعية.',
+  seeFull: 'عرض جميع مزايا شريك KOL',
 } : locale === 'zh' ? {
   ariaLabel: 'KOL 合作伙伴',
   eyebrow: 'KOL 合作伙伴 · Season 3 之声',
@@ -61,6 +63,8 @@ const copy = locale === 'ar' ? {
   on: '在',
   becomeKol: '成为 KOL 合作伙伴',
   interest: 'KOL 合作伙伴',
+  inReturn: '作为回报：在你的社交渠道分享 Season 3 并发布合作公告。',
+  seeFull: '查看 KOL 合作伙伴完整权益',
 } : {
   ariaLabel: 'KOL Partners',
   eyebrow: 'KOL Partners · Season 3 voices',
@@ -71,10 +75,14 @@ const copy = locale === 'ar' ? {
   on: 'on',
   becomeKol: 'Become a KOL Partner',
   interest: 'KOL Partner',
+  inReturn: 'In return: share Season 3 and announce the partnership on your social channels.',
+  seeFull: 'See the full KOL Partner benefit list',
 };
 
 const initials = (name: string) =>
   name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]!.toUpperCase()).join('');
+
+const benefitsHref = (locale === 'en' ? '/dealmakers/ss3/partner-benefits/' : `/dealmakers/${locale}/ss3/partner-benefits/`) + '#kol';
 
 const cardBase = 'flex items-center gap-4 min-h-[112px] h-full p-4 sm:p-5 rounded-2xl border transition-all duration-300';
 ---
@@ -90,11 +98,12 @@ const cardBase = 'flex items-center gap-4 min-h-[112px] h-full p-4 sm:p-5 rounde
       <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-xl mx-auto mb-7">
         {copy.lede}
       </p>
-      <ul class="flex flex-wrap items-center justify-center gap-2.5 max-w-2xl mx-auto mb-12">
+      <ul class="flex flex-wrap items-center justify-center gap-2.5 max-w-2xl mx-auto mb-4">
         {kolPartnerBenefits.map((b) => (
           <li class="dm-tag dm-tag-gray text-[11px] py-1 px-3">{b}</li>
         ))}
       </ul>
+      <p class="text-xs text-[var(--dm-text-muted)] max-w-xl mx-auto mb-12">{copy.inReturn}</p>
     </div>
 
     <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
@@ -176,6 +185,11 @@ const cardBase = 'flex items-center gap-4 min-h-[112px] h-full p-4 sm:p-5 rounde
       <a href="#apply" data-dm-prefill-interest={copy.interest} data-dm-track="kol_partner_cta" class="dm-btn-ghost py-2.5 px-6 text-[11px]">
         {copy.becomeKol}
       </a>
+      <p class="mt-4">
+        <a href={benefitsHref} class="text-xs text-[var(--dm-text-muted)] hover:text-[var(--dm-gold)] transition-colors underline underline-offset-4 decoration-[var(--dm-border)]">
+          {copy.seeFull} <span aria-hidden="true">→</span>
+        </a>
+      </p>
     </div>
   </div>
 </section>

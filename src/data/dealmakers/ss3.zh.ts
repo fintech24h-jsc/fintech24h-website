@@ -14,6 +14,7 @@ import type {
   PartnerTrack,
   MatrixValue,
   KolPartner,
+  KolPartnerTrack,
 } from './ss3';
 
 export const seasonMeta = {
@@ -151,7 +152,35 @@ export const kolPartners: KolPartner[] = [
 export const kolPartnerBenefits: string[] = [
   '网站个人资料展示',
   '在社交媒体公告中分享',
+  '接触创始人与企业领袖',
+  '引荐给 Season 3 项目',
 ];
+
+export const kolPartnerTrack: KolPartnerTrack = {
+  id: 'kol',
+  icon: 'KOL',
+  title: 'KOL 合作伙伴',
+  description: '面向 Web3 与金融科技领域的独立 KOL、创作者与社区意见领袖。免费的编辑资源置换：你向受众分享 Season 3，我们让你接触真正促成交易的人。',
+  fullBenefits: [
+    '在 DealMakers’ Club 网站展示 KOL 个人资料',
+    'Season 3 官方 KOL 合作伙伴定位',
+    '接触网络中的创始人、投资人与企业领袖',
+    '引荐给寻求 KOL 合作的 Season 3 项目',
+    '通过 DealMakers’ Club 渠道发布合作公告',
+    '在社交媒体公告中分享',
+    '在 Fintech24h 生态系统中交叉推广',
+    '加入 Fi24h DealMakers’ Club 社区',
+    '优先受邀参加社交活动与社区交流',
+    '抢先获取 Season 3 新闻与公告',
+    '联合主持 / AMA 机会',
+  ],
+  commitmentsLabel: 'KOL 合作伙伴需分享的内容',
+  commitments: [
+    '在你的社交渠道发布关于 DealMakers’ Club 与 Season 3 的内容',
+    '以官方 KOL 合作伙伴身份发布合作公告',
+  ],
+  interest: 'KOL 合作伙伴',
+};
 
 export const directoryProfiles: DirectoryProfile[] = [
   {
@@ -478,10 +507,23 @@ export const partnerTracks: PartnerTrack[] = [
     benefits: [
       '网站展示品牌标识',
       '在社交媒体公告中获得曝光',
+      '宣布合作的公关文章',
+      '品牌标识反向链接至你的网站',
     ],
     fullBenefits: [
       '网站展示品牌标识',
       '在社交媒体公告中获得曝光',
+      '在 Fintech24h 所有社交平台发布合作公告',
+      '撰写宣布合作的公关文章',
+      '链接至你的网站与社交渠道',
+      '在 DealMakers 落地页媒体合作伙伴板块展示品牌标识',
+      '品牌标识反向链接至你的网站',
+    ],
+    commitmentsLabel: '媒体合作伙伴需分享的内容',
+    commitments: [
+      '在你的所有渠道宣布合作并支持 DealMakers',
+      '在你的网站发布公关文章',
+      '在 Season 3 期间提供传播支持',
     ],
     interest: '媒体合作伙伴',
   },
@@ -514,8 +556,8 @@ export const partnerBenefitsMatrix: { label: string; capital: MatrixValue; solut
   { label: '官方合作伙伴身份', capital: 'yes', solution: 'yes', media: 'no', project: 'yes' },
   { label: '媒体资料包品牌标识', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
   { label: 'DealMakers 收录', capital: 'yes', solution: 'yes', media: 'no', project: 'yes' },
-  { label: '合作伙伴公告', capital: 'yes', solution: 'yes', media: 'no', project: 'no' },
-  { label: '专属公关宣传', capital: 'yes', solution: 'yes', media: 'no', project: 'optional' },
+  { label: '合作伙伴公告', capital: 'yes', solution: 'yes', media: 'yes', project: 'no' },
+  { label: '专属公关宣传', capital: 'yes', solution: 'yes', media: 'yes', project: 'optional' },
   { label: '社交媒体曝光', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
   { label: '交叉传播', capital: 'yes', solution: 'yes', media: 'no', project: 'optional' },
   { label: '商务匹配', capital: 'star', solution: 'star', media: 'no', project: 'star' },

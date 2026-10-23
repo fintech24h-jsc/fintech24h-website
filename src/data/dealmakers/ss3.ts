@@ -199,11 +199,51 @@ export const kolPartners: KolPartner[] = [
   },
 ];
 
-// Same unpaid exchange as the Media Partner track, so the same two benefits.
+// Condensed list for the landing KOL section; full detail lives in
+// kolPartnerTrack below (partner-benefits page, #kol).
 export const kolPartnerBenefits: string[] = [
   'Profile on the website',
   'Shared across social media announcements',
+  'Access to founders & business leaders',
+  'Introductions to Season 3 projects',
 ];
+
+export interface KolPartnerTrack {
+  id: 'kol';
+  icon: string;
+  title: string;
+  description: string;
+  fullBenefits: string[];
+  commitmentsLabel: string;
+  commitments: string[]; // what the KOL gives back (unpaid exchange)
+  interest: string;
+}
+
+export const kolPartnerTrack: KolPartnerTrack = {
+  id: 'kol',
+  icon: 'KOL',
+  title: 'KOL Partner',
+  description: 'For independent Web3 and fintech KOLs, creators, and community voices. A free editorial exchange: you share Season 3 with your audience, we put you in front of the people who make deals.',
+  fullBenefits: [
+    'Featured KOL profile on the DealMakers’ Club website',
+    'Official KOL Partner positioning for Season 3',
+    'Access to founders, investors, and business leaders in the network',
+    'Introductions to Season 3 projects seeking KOL collaboration',
+    'Partner announcement across DealMakers’ Club channels',
+    'Shared across social media announcements',
+    'Cross-promotion across the Fintech24h ecosystem',
+    'Membership in the Fi24h DealMakers’ Club community',
+    'Priority invitations to networking activities and community sessions',
+    'Early access to Season 3 news and announcements',
+    'Co-host / AMA opportunities',
+  ],
+  commitmentsLabel: 'What KOL Partners share',
+  commitments: [
+    'Posts about DealMakers’ Club and Season 3 on your social channels',
+    'A partnership announcement as an official KOL Partner',
+  ],
+  interest: 'KOL Partner',
+};
 
 // ─── Qualified Listing Directory ──────────────────────────────────────────
 
@@ -502,6 +542,8 @@ export interface PartnerTrack {
   description: string;
   benefits: string[];
   fullBenefits: string[];
+  commitmentsLabel?: string; // what the partner gives back (unpaid exchanges)
+  commitments?: string[];
   interest: string;
 }
 
@@ -586,10 +628,23 @@ export const partnerTracks: PartnerTrack[] = [
     benefits: [
       'Logo on the website',
       'Shared across social media announcements',
+      'PR article announcing the partnership',
+      'Backlink from your logo to your website',
     ],
     fullBenefits: [
       'Logo on the website',
       'Shared across social media announcements',
+      'Partnership announcement across all Fintech24h social channels',
+      'PR article announcing the partnership',
+      'Links to your website and social channels',
+      'Logo in the Media Partners section of the DealMakers landing page',
+      'Backlink from your logo to your website',
+    ],
+    commitmentsLabel: 'What Media Partners share',
+    commitments: [
+      'Announce the partnership and your support for DealMakers across all your channels',
+      'Publish a PR article on your website',
+      'Communications support throughout Season 3',
     ],
     interest: 'Media Partner',
   },
@@ -631,15 +686,15 @@ export const qualifiedListingFullBenefits: string[] = [
 
 export type MatrixValue = 'yes' | 'star' | 'optional' | 'no';
 
-// Media is an unpaid editorial exchange (no listing fee), so its column is
-// deliberately minimal — logo + social share only, unlike the paid Capital
-// and Solution tracks.
+// Media is an unpaid editorial exchange (no listing fee): its column covers
+// what Fintech24h gives back (logo, social, announcement, PR article), not
+// the matching and networking benefits of the paid Capital / Solution tracks.
 export const partnerBenefitsMatrix: { label: string; capital: MatrixValue; solution: MatrixValue; media: MatrixValue; project: MatrixValue }[] = [
   { label: 'Official Partner Status', capital: 'yes', solution: 'yes', media: 'no', project: 'yes' },
   { label: 'Logo on Media Kit', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
   { label: 'DealMakers Listing', capital: 'yes', solution: 'yes', media: 'no', project: 'yes' },
-  { label: 'Partner Announcement', capital: 'yes', solution: 'yes', media: 'no', project: 'no' },
-  { label: 'Dedicated PR', capital: 'yes', solution: 'yes', media: 'no', project: 'optional' },
+  { label: 'Partner Announcement', capital: 'yes', solution: 'yes', media: 'yes', project: 'no' },
+  { label: 'Dedicated PR', capital: 'yes', solution: 'yes', media: 'yes', project: 'optional' },
   { label: 'Social Media Exposure', capital: 'yes', solution: 'yes', media: 'yes', project: 'yes' },
   { label: 'Cross-posting', capital: 'yes', solution: 'yes', media: 'no', project: 'optional' },
   { label: 'Business Matching', capital: 'star', solution: 'star', media: 'no', project: 'star' },

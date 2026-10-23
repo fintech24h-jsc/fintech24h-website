@@ -22,6 +22,7 @@ const copy = locale === 'ar' ? {
   becomeMediaPartner: 'كن شريكًا إعلاميًا',
   seeFullList: 'عرض القائمة الكاملة لمزايا الشريك الإعلامي',
   interest: 'الشريك الإعلامي',
+  inReturn: 'في المقابل: أعلن الشراكة، وانشر مقال علاقات عامة، وادعم التواصل الإعلامي لـ Season 3.',
 } : locale === 'zh' ? {
   ariaLabel: '媒体合作伙伴',
   eyebrow: '媒体合作伙伴 · 社区支持',
@@ -32,6 +33,7 @@ const copy = locale === 'ar' ? {
   becomeMediaPartner: '成为媒体合作伙伴',
   seeFullList: '查看媒体合作伙伴完整权益列表',
   interest: '媒体合作伙伴',
+  inReturn: '作为回报：宣布合作、发布公关文章，并在 Season 3 期间提供传播支持。',
 } : {
   ariaLabel: 'Media Partners',
   eyebrow: 'Media Partners · Community support',
@@ -42,6 +44,7 @@ const copy = locale === 'ar' ? {
   becomeMediaPartner: 'Become a Media Partner',
   seeFullList: 'See the full Media Partner benefit list',
   interest: 'Media Partner',
+  inReturn: 'In return: announce the partnership, publish a PR article, and support Season 3 communications.',
 };
 ---
 
@@ -56,11 +59,12 @@ const copy = locale === 'ar' ? {
         {copy.lede}
       </p>
 
-      <ul class="flex flex-wrap items-center justify-center gap-2.5 max-w-2xl mx-auto mb-12">
+      <ul class="flex flex-wrap items-center justify-center gap-2.5 max-w-2xl mx-auto mb-4">
         {mediaTrack.benefits.map((b) => (
           <li class="dm-tag dm-tag-gray text-[11px] py-1 px-3">{b}</li>
         ))}
       </ul>
+      <p class="text-xs text-[var(--dm-text-muted)] max-w-xl mx-auto mb-12">{copy.inReturn}</p>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto mb-10">

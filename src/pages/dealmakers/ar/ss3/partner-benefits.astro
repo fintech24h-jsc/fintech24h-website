@@ -6,7 +6,7 @@ import BreadcrumbSchema from '../../../../components/seo/BreadcrumbSchema.astro'
 import { getSS3Content } from '../../../../data/dealmakers/content';
 import type { MatrixValue } from '../../../../data/dealmakers/ss3';
 
-const { seasonMeta, partnerTracks, featuredDealMakerFullBenefits, qualifiedListingFullBenefits, partnerBenefitsMatrix } = getSS3Content('ar');
+const { seasonMeta, partnerTracks, featuredDealMakerFullBenefits, qualifiedListingFullBenefits, partnerBenefitsMatrix, kolPartnerTrack } = getSS3Content('ar');
 
 const title = 'مزايا الشركاء | F-Matching Season 3 — DealMakers’ Club';
 const description = 'قارن مزايا الشريك الرأسمالي والحلول والإعلام والمشاريع لـ F-Matching Season 3 — القائمة الكاملة للمزايا ومصفوفة مقارنة الشركاء.';
@@ -52,7 +52,7 @@ const qualifiedListingCard = {
 };
 
 const [capitalTrack, solutionTrack, mediaTrack] = partnerTracks;
-const allTracks = [capitalTrack, solutionTrack, featuredDealMakerCard, qualifiedListingCard, mediaTrack];
+const allTracks = [capitalTrack, solutionTrack, featuredDealMakerCard, qualifiedListingCard, mediaTrack, kolPartnerTrack];
 
 function applyHref(interest: string) {
   return `/dealmakers/ar/ss3/?interest=${encodeURIComponent(interest)}#apply`;
@@ -110,6 +110,20 @@ const matrixCell: Record<MatrixValue, { icon: string; label: string; class: stri
                 </li>
               ))}
             </ul>
+
+            {'commitments' in track && (
+              <div class="mt-5 pt-4 border-t border-[var(--dm-border)]">
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--dm-emerald-bright)] mb-2.5">{(track as { commitmentsLabel: string }).commitmentsLabel}</p>
+                <ul class="space-y-2">
+                  {(track as { commitments: string[] }).commitments.map((c) => (
+                    <li class="flex items-start gap-2 text-xs text-[var(--dm-text-secondary)]">
+                      <svg class="w-3 h-3 mt-0.5 shrink-0 text-[var(--dm-emerald-bright)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                      <span>{c}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {'interest' in track && (
               <a
