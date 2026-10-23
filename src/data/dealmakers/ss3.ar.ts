@@ -138,7 +138,6 @@ export const mediaPartners: PartnerLogo[] = [
 // ─── KOL Partners ── same shape as ss3.ts; names/handles stay untranslated.
 
 export const kolPartners: KolPartner[] = [
-  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'lead', confirmed: false },
   {
     name: 'Thien Thien',
     handle: 'Thienthien1305',
@@ -146,12 +145,7 @@ export const kolPartners: KolPartner[] = [
     platforms: [{ type: 'x', url: 'https://x.com/Thienthien1305' }],
     topics: ['BTC و ETH', 'الإيردروب'],
     markets: ['فيتنام'],
-    tier: 'core',
-    confirmed: true,
   },
-  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
-  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
-  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
 ];
 
 export const kolPartnerBenefits: string[] = [

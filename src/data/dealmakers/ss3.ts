@@ -172,28 +172,23 @@ export const mediaPartners: PartnerLogo[] = [
 ];
 
 // ─── KOL Partners (free, editorial exchange like Media Partners) ─────────────
-// Individual creators, not brands, so each entry carries a face, a handle,
-// and the platforms they publish on. `confirmed: false` renders a neutral
-// "Your spot" placeholder. Avatars live in public/dealmakers/kol/ (square,
-// 400×400). Follower counts are intentionally not modelled: only add them
-// later if verified and dated.
+// Individual creators, all shown as equals (no lead tier). List confirmed
+// KOLs only: the component pads the grid with "Your spot" cards itself.
+// Avatars live in public/dealmakers/kol/ (square, 400×400). Follower counts
+// are intentionally not modelled: only add them later if verified and dated.
 
 export type KolPlatform = 'x' | 'telegram' | 'youtube' | 'tiktok' | 'linkedin' | 'facebook' | 'instagram';
 
 export interface KolPartner {
-  name: string | null;
-  handle: string | null; // shown as @handle
+  name: string;
+  handle: string; // shown as @handle
   avatarUrl: string | null;
   platforms: { type: KolPlatform; url: string }[];
   topics: string[]; // 1–3 short tags, e.g. 'DeFi', 'VC / Fundraising'
   markets: string[]; // e.g. 'Vietnam', 'SEA', 'MENA'
-  quote?: string; // lead card only, and only with the KOL's approval
-  tier: 'lead' | 'core';
-  confirmed: boolean;
 }
 
 export const kolPartners: KolPartner[] = [
-  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'lead', confirmed: false },
   {
     name: 'Thien Thien',
     handle: 'Thienthien1305',
@@ -201,12 +196,7 @@ export const kolPartners: KolPartner[] = [
     platforms: [{ type: 'x', url: 'https://x.com/Thienthien1305' }],
     topics: ['BTC & ETH', 'Airdrops'],
     markets: ['Vietnam'],
-    tier: 'core',
-    confirmed: true,
   },
-  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
-  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
-  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
 ];
 
 // Same unpaid exchange as the Media Partner track, so the same two benefits.
