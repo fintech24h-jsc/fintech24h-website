@@ -1,40 +1,132 @@
 ---
 // src/pages/services/event-marketing.astro
+// Focus keyword: "crypto event marketing agency". Variants covered in H2/H3/FAQ:
+// Web3 & blockchain event marketing, conference marketing, side events,
+// sponsorship, crypto events in Asia and the Middle East. No case-study numbers.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
+const PAGE_URL = 'https://fintech24h.com/services/event-marketing/';
+
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services/' },
-  { name: 'Event Marketing', item: 'https://fintech24h.com/services/event-marketing/' }
+  { name: 'Event Marketing', item: PAGE_URL }
+];
+
+const linkClass =
+  'text-[var(--accent-cyan)] underline decoration-[color-mix(in_srgb,var(--accent-cyan)_40%,transparent)] underline-offset-4 hover:decoration-[var(--accent-cyan)] transition-colors duration-200 rounded-sm';
+
+const problems = [
+  { title: 'The Booth Trap', desc: 'A large share of the budget goes into a conference booth that mostly collects spam emails and casual visitors who will never use your product.' },
+  { title: 'Empty Side Events', desc: 'A great venue with an open RSVP link fills up with free-drink hunters while the investors and partners you wanted to meet go elsewhere.' },
+  { title: 'Post-Event Amnesia', desc: 'A stack of business cards, one generic follow-up email and no plan. Without personal follow-up, conversations never turn into deals.' }
+];
+
+const services = [
+  { title: 'Side events & private dinners', desc: 'Curated side events, roundtables and investor dinners during major conference weeks, where real conversations happen.' },
+  { title: 'Sponsorship strategy', desc: 'An honest view on which sponsorship tiers are worth it for your goal, and when a side event or speaking slot beats a booth.' },
+  { title: 'Speaker & panel placement', desc: 'Pitching your founders for keynotes, panels and fireside chats, with talk outlines and preparation. Organizers decide, so we never promise a slot.' },
+  { title: 'Booth design & build', desc: 'Concept, design, local fabrication, logistics and on-site setup for conference booths that people remember.' },
+  { title: 'Guest curation & RSVPs', desc: 'Target lists built with you, personal invitations and approved RSVPs, so the room matches who you came to meet.' },
+  { title: 'KOL meetups & content capture', desc: 'Meetups with KOLs and creators, plus photo, video and live posting so the event keeps working online.' },
+  { title: 'AMAs, X Spaces & hybrid sessions', desc: 'Online sessions around the event for the community members who cannot travel.' },
+  { title: 'Hackathons & builder events', desc: 'Workshops and hackathons with partners and ecosystems to reach developers, not just traders.' },
+  { title: 'On-site staffing', desc: 'Bilingual hosts, check-in staff and coordinators, so your team spends the day networking instead of fixing logistics.' },
+  { title: 'Post-event PR & follow-up', desc: 'Recap coverage, social content and a segmented follow-up plan that turns conversations into meetings.' }
+];
+
+const phases = [
+  { step: 'PHASE 01', title: 'Target Mapping & Strategy', desc: 'Weeks before the event, we define the goal (fundraising, partnerships, users or brand) and list exactly who you need to meet. The format follows from that list, not the other way round.', time: 'Early Planning' },
+  { step: 'PHASE 02', title: 'Logistics & Production', desc: 'Venue sourcing, booth build, permits, AV, catering and run-of-show. You arrive in the city and everything is already built and tested.', time: 'Build Weeks' },
+  { step: 'PHASE 03', title: 'Guest Curation & Promotion', desc: 'Personal invitations to investors, partners and KOLs, approved RSVPs and pre-event content that tells the right people why they should come.', time: 'Final Weeks' },
+  { step: 'PHASE 04', title: 'On-Site Execution & Follow-Up', desc: 'We run check-in, flow and VIP hosting on the day. Afterwards we send personal follow-ups, publish recap content and track every conversation to the next meeting.', time: 'Event Day & After' }
+];
+
+const formats = [
+  { goal: 'Fundraising', format: 'Private investor dinner or closed roundtable', why: 'Small rooms and a curated guest list give founders time for real conversations.' },
+  { goal: 'Partnerships & BD', format: 'Curated side event or co-hosted ecosystem night', why: 'Co-hosting with aligned projects shares cost and brings both guest lists into one room.' },
+  { goal: 'Brand awareness', format: 'Sponsorship, booth or speaking slot plus KOL content', why: 'Visibility on the main stage, multiplied by creators who post from the floor.' },
+  { goal: 'Community & users', format: 'Meetups, launch parties and AMAs', why: 'Members meet the team in person and become your most loyal advocates.' },
+  { goal: 'Developers', format: 'Hackathon, workshop or builder day', why: 'Builders come for hands-on time with your tech, not for a pitch.' }
+];
+
+const hubs = [
+  { name: 'Singapore', desc: 'Conference week side events, investor dinners and ecosystem nights during Singapore\'s busiest crypto season.', href: '/blockchain-marketing-agency-singapore/', anchor: 'blockchain marketing agency in Singapore' },
+  { name: 'Dubai & UAE', desc: 'Activations timed to the Gulf\'s Web3 and fintech conference calendar, with local vendors and venue partners.', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai' },
+  { name: 'Vietnam', desc: 'Our home market: community meetups, builder events and side events around Vietnam\'s growing Web3 gatherings.', href: '/blockchain-marketing-agency-vietnam/', anchor: 'blockchain marketing agency in Vietnam' }
+];
+
+const measures = [
+  { title: 'Meetings with target guests', desc: 'How many people on your target list you actually met, and who they were.' },
+  { title: 'Room quality', desc: 'Attendees compared against the guest list you approved.' },
+  { title: 'Follow-up conversations', desc: 'Calls and meetings booked in the weeks after the event.' },
+  { title: 'Deals & intros advanced', desc: 'Partnerships, investor talks and listings that moved forward.' },
+  { title: 'Content captured', desc: 'Photos, clips and posts you can reuse in social, PR and sales.' },
+  { title: 'Online reach of the event', desc: 'Coverage, KOL posts and community chatter around your presence.' }
+];
+
+const groundRules = [
+  'No paid crowds or fake attendance.',
+  'You see and approve the guest list.',
+  'A clear budget breakdown before anything is booked.',
+  'If a sponsorship is not worth it for your goal, we say so.'
+];
+
+const related = [
+  { href: '/services/business-development/', title: 'Web3 Business Development', desc: 'Turn event conversations into partnerships and investor talks.' },
+  { href: '/services/pr-media/', title: 'Blockchain PR', desc: 'Announce news on stage and get it covered.' },
+  { href: '/services/kol-marketing/', title: 'Crypto KOL Marketing', desc: 'Bring creators to the event and onto their feeds.' }
+];
+
+const guides = [
+  { href: '/blog/gm-vietnam-2025-where-culture-meets-builders-in-hanoi', title: 'GM Vietnam: where culture meets builders' },
+  { href: '/blog/vc-vault-showcases-web3-startups-and-investors-at-singapore-event', title: 'VC Vault: Web3 startups and investors in Singapore' },
+  { href: '/blog/fintech24h-official-media-partner-for-india-blockchain-month-2025', title: 'Fintech24h as media partner for India Blockchain Month' }
 ];
 
 const faqs = [
   {
-    q: "Do you handle booth design and fabrication?",
-    a: "Yes. For major conferences like Token2049 or Consensus, we manage the entire booth lifecycle: from 3D conceptual design to local fabrication, logistics, and on-site assembly."
+    q: 'What does a crypto event marketing agency do?',
+    a: 'It plans and runs your presence at conferences and your own events: strategy, side events, sponsorship decisions, booth production, guest curation, on-site staffing, content capture and follow-up. The goal is meetings and relationships that move your project forward, not just visibility.'
   },
   {
-    q: "How do you ensure the right people show up to our side-events?",
-    a: "We don't rely on open Eventbrite links. We use our proprietary CRM of VCs, founders, and KOLs to send targeted, personalized invitations. We manage the RSVP list rigorously to ensure a high-signal, low-noise environment."
+    q: 'Is a booth or a side event better for a Web3 project?',
+    a: 'It depends on the goal. Booths help brand awareness at large conferences. Side events, dinners and roundtables are usually better for fundraising and partnerships because you control who is in the room. We often recommend skipping the booth for early-stage teams.'
   },
   {
-    q: "Do you run activations at Singapore's Web3 events?",
-    a: 'Yes, including conference season activations in <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a> like Token2049.'
+    q: 'Can you get our founder a speaking slot?',
+    a: 'We pitch founders to organizers with a strong talk idea and prepare the session, but organizers decide the agenda, so we never guarantee a slot. Sponsored speaking packages are an option when timing matters.'
   },
   {
-    q: "Which regions do you cover for events?",
-    a: 'Our strongest physical presence is in Southeast Asia (<a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Vietnam</a>, <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a>, Thailand) and the UAE (<a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a>). We have local vendors, venue partners, and VIP networks ready to activate in these hubs.'
+    q: 'Do you handle booth design and fabrication?',
+    a: 'Yes. For major conferences we manage the booth from concept and design to local fabrication, logistics and on-site assembly.'
   },
   {
-    q: "Do you run activations at Dubai's Web3 events?",
-    a: 'Yes, timed to <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a>’s major fintech and Web3 conference calendar.'
+    q: 'How do you make sure the right people come to our side event?',
+    a: 'We build the target list with you, send personal invitations through our network of founders, investors and KOLs, and approve RSVPs instead of relying on open links. The guest list is shared with you before the event.'
   },
   {
-    q: "Do you provide on-site staff?",
-    a: "Yes, we provide bilingual brand ambassadors, check-in staff, and technical coordinators to ensure your team can focus on networking rather than logistics."
+    q: 'Which regions do you cover for events?',
+    a: `Our strongest presence is in Southeast Asia (<a href="/blockchain-marketing-agency-vietnam/" class="${linkClass}">Vietnam</a>, <a href="/blockchain-marketing-agency-singapore/" class="${linkClass}">Singapore</a>, Thailand) and the UAE (<a href="/blockchain-marketing-agency-dubai/" class="${linkClass}">Dubai</a>), with local vendors, venue partners and guest networks in each hub.`
+  },
+  {
+    q: 'Do you run activations during Singapore and Dubai conference weeks?',
+    a: 'Yes. Conference weeks are when the most investors and partners are in one city, so we plan side events, dinners and meetups around them and book venues early.'
+  },
+  {
+    q: 'Do you provide on-site staff?',
+    a: 'Yes. We provide bilingual hosts, check-in staff and technical coordinators so your team can focus on conversations.'
+  },
+  {
+    q: 'How do you measure event marketing results?',
+    a: 'We track meetings with people on your target list, attendee quality against the approved guest list, follow-up calls booked, partnerships and intros that moved forward, and the content and coverage the event produced.'
+  },
+  {
+    q: 'Can event marketing work with PR and business development?',
+    a: `Yes, and it should. <a href="/services/pr-media/" class="${linkClass}">PR</a> turns on-stage news into coverage, and our <a href="/services/business-development/" class="${linkClass}">business development</a> team follows up on the conversations that start at the event.`
   }
 ];
 
@@ -43,15 +135,18 @@ const META_DESCRIPTION =
 
 const serviceSchema = buildServiceSchema({
   name: 'Crypto & Web3 Event Marketing',
-  alternateName: ['Blockchain Event Marketing', 'Web3 Conference Marketing'],
+  alternateName: ['Blockchain Event Marketing', 'Web3 Conference Marketing', 'Crypto Side Event Management'],
   serviceType: 'Event marketing',
-  url: 'https://fintech24h.com/services/event-marketing/',
+  url: PAGE_URL,
   description: META_DESCRIPTION
 });
 
 const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
+
+const eyebrow = 'font-mono text-xs uppercase tracking-[0.3em] text-[var(--text-secondary)] mb-6';
+const h2Class = 'font-display text-[clamp(2rem,4vw,3.25rem)] text-[var(--text-primary)] uppercase tracking-wider font-bold leading-[1.1]';
 ---
 
 <BaseLayout
@@ -61,91 +156,119 @@ const combinedSchema = [serviceSchema, faqSchema];
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- SECTION 1 — HERO (Cinematic Spotlight) -->
+  <!-- SECTION 1: HERO (cinematic spotlight, H1 = focus keyword) -->
   <section class="relative min-h-screen flex flex-col justify-center items-center px-4 overflow-hidden bg-[var(--bg-primary)]">
-    <!-- Spotlight Effect -->
-    <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-[var(--gradient-glow-cyan)] opacity-70 pointer-events-none"></div>
-    <!-- Particles/Dust -->
-    <div class="absolute inset-0 bg-[url('/images/textures/stardust.png')] opacity-20 pointer-events-none mix-blend-luminosity"></div>
+    <div class="spotlight absolute top-[-10%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-[var(--gradient-glow-cyan)] opacity-70 pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-[url('/images/textures/stardust.png')] opacity-20 pointer-events-none mix-blend-luminosity" aria-hidden="true"></div>
 
     <div class="relative z-10 text-center max-w-5xl mx-auto mt-20">
-      <div class="reveal">
-        <p class="font-display text-[11px] uppercase tracking-[0.4em] text-[var(--text-secondary)] opacity-70 mb-8">Premium Offline Experiences</p>
-      </div>
+      <p class="hero-fade font-display text-xs uppercase tracking-[0.4em] text-[var(--text-secondary)] mb-8">Premium Offline Experiences</p>
 
-      <h1 class="font-display font-light max-w-5xl mx-auto reveal reveal-delay-1">
-        <span class="block text-[clamp(2.5rem,5vw,4.5rem)] tracking-widest text-[var(--text-muted)] uppercase mb-2">Be the Project Everyone's Talking About</span>
-        <span class="block text-[clamp(3rem,6vw,5.5rem)] font-bold tracking-tight text-[var(--text-primary)] uppercase drop-shadow-[0_0_30px_var(--accent-cyan-glow)]">Before, During, and After the Event.</span>
+      <h1 class="hero-title font-display max-w-5xl mx-auto">
+        <span class="block text-[clamp(2.25rem,5vw,4.5rem)] tracking-widest text-[var(--text-secondary)] uppercase mb-2">Crypto &amp; Web3</span>
+        <span class="block text-[clamp(2.75rem,6vw,5.5rem)] font-bold tracking-tight text-[var(--text-primary)] uppercase drop-shadow-[0_0_30px_var(--accent-cyan-glow)]">Event Marketing Agency</span>
       </h1>
 
-      <p class="font-body text-lg text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] max-w-2xl mx-auto mt-8 mb-12 leading-[1.8] reveal reveal-delay-2 font-light">
-        Conferences don't create opportunities. Preparation and follow-through do. We handle every layer of event marketing, from Token2049 side-events to private VC dinners.
+      <p class="hero-fade font-display text-[clamp(1.1rem,2vw,1.4rem)] text-[var(--text-primary)] max-w-2xl mx-auto mt-8 uppercase tracking-[0.12em]">
+        Be the project everyone is talking about, before, during and after the event.
       </p>
 
-      <div class="reveal reveal-delay-3">
-        <a href="/contact/" class="inline-flex items-center justify-center border border-[var(--border-hover)] px-10 py-4 text-[var(--text-primary)] font-mono text-xs uppercase tracking-[0.2em] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all duration-500 backdrop-blur-sm">
+      <p class="hero-fade font-body text-lg text-[var(--text-secondary)] max-w-2xl mx-auto mt-6 mb-12 leading-[1.8]">
+        Conferences do not create opportunities. Preparation and follow-through do. We plan side events, investor dinners, booths and speaking moments for crypto, Web3 and fintech teams, then make sure every conversation gets a follow-up.
+      </p>
+
+      <div class="hero-fade">
+        <a href="/contact/" class="inline-flex items-center justify-center border border-[var(--border-hover)] px-10 py-4 text-[var(--text-primary)] font-mono text-xs uppercase tracking-[0.2em] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors duration-300 backdrop-blur-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
           Plan Your Event
         </a>
       </div>
     </div>
 
-    <!-- Cinematic Bottom Fade -->
-    <div class="absolute bottom-0 w-full h-48 bg-gradient-to-t from-[var(--bg-primary)] to-transparent pointer-events-none"></div>
+    <div class="absolute bottom-0 w-full h-48 bg-gradient-to-t from-[var(--bg-primary)] to-transparent pointer-events-none" aria-hidden="true"></div>
   </section>
 
-  <!-- SECTION 2 — THE PROBLEM (Dark Minimal Text) -->
-  <section class="py-32 bg-[var(--bg-primary)] relative z-10">
+  <!-- SECTION 2: DEFINITION -->
+  <section class="py-24 md:py-32 bg-[var(--bg-primary)] relative z-10">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-5 reveal">
+        <p class={eyebrow}>The Basics</p>
+        <h2 class={h2Class}>What Crypto Event Marketing Covers</h2>
+      </div>
+      <div class="lg:col-span-7 space-y-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+        <p class="text-[var(--text-primary)] text-xl leading-relaxed">
+          Crypto event marketing is everything that turns a conference trip or your own event into relationships, users and deals. As a Web3 event marketing agency, Fintech24h decides where you should show up, designs the experience, fills the room with the right people and follows up after the lights go off.
+        </p>
+        <p>
+          Blockchain conferences are where investors, exchanges, builders and media gather in one city for a few days. That makes them expensive, crowded and easy to waste. A booth on its own rarely pays back. A well-timed side event, a strong panel and a disciplined follow-up plan usually do.
+        </p>
+        <p>
+          We work with token projects, DeFi and infrastructure protocols, NFT and gaming teams, exchanges and fintech companies, from a first conference appearance to a full calendar of activations across Asia and the Middle East.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: THE PROBLEM -->
+  <section class="py-24 md:py-32 bg-[var(--bg-primary)] relative z-10 border-t border-[var(--border-subtle)]">
     <div class="max-w-5xl mx-auto px-6 text-center">
-      <h2 class="font-display text-2xl text-[var(--text-secondary)] opacity-70 uppercase tracking-[0.2em] mb-16 reveal">Why Most Event Budgets Are Wasted</h2>
-      
+      <div class="reveal mb-16">
+        <p class={eyebrow}>The Problem</p>
+        <h2 class={h2Class}>Why Most Crypto Event Budgets Are Wasted</h2>
+      </div>
       <div class="space-y-16">
-        {[
-          { title: 'The Booth Trap', desc: 'Spending $50K on a conference booth just to collect spam emails and talk to retail investors who will never use your product.' },
-          { title: 'Empty Side-Events', desc: 'Booking a luxury venue but relying on open Twitter links for RSVPs. You end up with 300 free-drink hunters and zero decision-makers.' },
-          { title: 'Post-Event Amnesia', desc: 'Collecting 200 business cards and sending a generic follow-up email blast. No personalization means no closed deals.' }
-        ].map((item, i) => (
-          <div class="reveal" style={`transition-delay: ${i * 0.15}s`}>
-            <h3 class="font-display text-[clamp(1.5rem,3vw,2.5rem)] text-[var(--text-primary)] font-medium mb-4">{item.title}</h3>
-            <p class="font-body text-[var(--text-muted)] max-w-2xl mx-auto text-lg leading-relaxed font-light">{item.desc}</p>
+        {problems.map((item) => (
+          <div>
+            <h3 class="font-display text-[clamp(1.5rem,3vw,2.25rem)] text-[var(--text-primary)] font-medium mb-4">{item.title}</h3>
+            <p class="font-body text-[var(--text-secondary)] max-w-2xl mx-auto text-lg leading-relaxed">{item.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3 — OUR APPROACH (Event Ticket Layout) -->
-  <section class="py-32 bg-[var(--bg-secondary)] relative z-10 border-y border-[var(--border-subtle)]">
+  <!-- SECTION 4: SERVICES -->
+  <section class="py-24 md:py-32 bg-[var(--bg-secondary)] relative z-10 border-y border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-20 reveal">
+        <p class={eyebrow}>What We Run</p>
+        <h2 class={h2Class}>Our Web3 Event Marketing Services</h2>
+        <div class="w-24 h-px bg-[var(--border-hover)] mx-auto mt-6" aria-hidden="true"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--border-default)] border border-[var(--border-default)] rounded-lg overflow-hidden">
+        {services.map((s) => (
+          <div class="bg-[var(--bg-primary)] p-8 md:p-10 hover:bg-[var(--surface-soft)] transition-colors duration-300">
+            <h3 class="font-display text-xl text-[var(--text-primary)] font-medium mb-3 uppercase tracking-wide">{s.title}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE BLUEPRINT (event tickets) -->
+  <section class="py-24 md:py-32 bg-[var(--bg-primary)] relative z-10">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-24 reveal">
-        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] text-[var(--text-primary)] uppercase tracking-wider font-bold">The Blueprint</h2>
-        <div class="w-24 h-px bg-[var(--border-hover)] mx-auto mt-6"></div>
+        <p class={eyebrow}>The Blueprint</p>
+        <h2 class={h2Class}>How We Run a Crypto Event Campaign</h2>
+        <div class="w-24 h-px bg-[var(--border-hover)] mx-auto mt-6" aria-hidden="true"></div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8">
-        {[
-          { step: 'PHASE 01', title: 'Target Mapping & Strategy', desc: 'Months before the event, we identify exactly who you need to meet. We define the objective (fundraising, BD, or brand awareness) and design the physical experience backward from that goal.', time: 'T-Minus 60 Days' },
-          { step: 'PHASE 02', title: 'Logistics & Fabrication', desc: 'We handle venue sourcing, booth fabrication, permits, AV setup, and F&B. You arrive in the city; everything is already built and tested.', time: 'T-Minus 30 Days' },
-          { step: 'PHASE 03', title: 'Guest Curation', desc: 'We leverage our network to invite Tier-1 VCs, KOLs, and partners. We manually approve RSVPs to ensure the room is filled with high-intent individuals.', time: 'T-Minus 14 Days' },
-          { step: 'PHASE 04', title: 'On-Site Execution & Follow-Up', desc: 'Our team manages check-in, flow, and VIP handling on the day. Afterward, we execute a segmented follow-up strategy to turn conversations into closed deals.', time: 'Event Day & Beyond' }
-        ].map((item, i) => (
-          <div class="relative bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-lg flex flex-col md:flex-row overflow-hidden group hover:border-[var(--border-hover)] transition-colors reveal">
-            <!-- Ticket Left Tear -->
-            <div class="hidden md:flex flex-col justify-between items-center w-16 bg-[var(--surface-soft)] border-r border-[var(--border-default)] border-dashed py-6 relative">
-              <div class="w-6 h-6 rounded-full bg-[var(--bg-secondary)] absolute -left-3 top-6 border-r border-[var(--border-default)]"></div>
-              <div class="w-6 h-6 rounded-full bg-[var(--bg-secondary)] absolute -left-3 bottom-6 border-r border-[var(--border-default)]"></div>
-              <span class="transform -rotate-90 font-mono text-[10px] text-[var(--text-muted)] tracking-[0.3em] whitespace-nowrap">{item.time}</span>
+      <ol class="tickets grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 reveal">
+        {phases.map((item) => (
+          <li class="ticket relative bg-[var(--bg-secondary)] border border-[var(--border-default)] rounded-lg flex flex-col md:flex-row overflow-hidden group hover:border-[var(--border-hover)] transition-colors duration-300">
+            <div class="hidden md:flex flex-col justify-between items-center w-16 bg-[var(--surface-soft)] border-r border-[var(--border-default)] border-dashed py-6 relative" aria-hidden="true">
+              <div class="w-6 h-6 rounded-full bg-[var(--bg-primary)] absolute -left-3 top-6 border-r border-[var(--border-default)]"></div>
+              <div class="w-6 h-6 rounded-full bg-[var(--bg-primary)] absolute -left-3 bottom-6 border-r border-[var(--border-default)]"></div>
+              <span class="transform -rotate-90 font-mono text-xs text-[var(--text-secondary)] tracking-[0.3em] whitespace-nowrap my-auto">{item.time}</span>
             </div>
-
-            <!-- Ticket Content -->
             <div class="p-8 md:p-10 flex-1">
-              <span class="font-mono text-[10px] text-[var(--text-secondary)] opacity-70 tracking-[0.2em] uppercase block mb-4">{item.step}</span>
-              <h3 class="font-display text-2xl text-[var(--text-primary)] font-medium mb-4 group-hover:text-[var(--text-primary)] transition-colors">{item.title}</h3>
-              <p class="font-body text-[var(--text-secondary)] opacity-70 leading-relaxed font-light">{item.desc}</p>
+              <span class="font-mono text-xs text-[var(--text-secondary)] tracking-[0.2em] uppercase block mb-4">{item.step}<span class="md:hidden"> · {item.time}</span></span>
+              <h3 class="font-display text-2xl text-[var(--text-primary)] font-medium mb-4">{item.title}</h3>
+              <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
             </div>
-
-            <!-- Ticket Right Barcode -->
-            <div class="hidden md:flex flex-col justify-center items-center w-20 bg-[var(--surface-soft)] border-l border-[var(--border-default)]">
-              <div class="flex gap-1 h-24 opacity-20 group-hover:opacity-40 transition-opacity">
+            <div class="hidden md:flex flex-col justify-center items-center w-20 bg-[var(--surface-soft)] border-l border-[var(--border-default)]" aria-hidden="true">
+              <div class="flex gap-1 h-24 opacity-20 group-hover:opacity-40 transition-opacity duration-300">
                 <div class="w-1 h-full bg-[var(--text-primary)]"></div>
                 <div class="w-[2px] h-full bg-[var(--text-primary)]"></div>
                 <div class="w-2 h-full bg-[var(--text-primary)]"></div>
@@ -153,26 +276,114 @@ const combinedSchema = [serviceSchema, faqSchema];
                 <div class="w-[3px] h-full bg-[var(--text-primary)]"></div>
               </div>
             </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- SECTION 6: FORMAT BY GOAL (table) -->
+  <section class="py-24 md:py-32 bg-[var(--bg-secondary)] relative z-10 border-y border-[var(--border-subtle)]">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <p class={eyebrow}>Choosing a Format</p>
+        <h2 class={h2Class}>Which Blockchain Event Format Fits Your Goal</h2>
+      </div>
+      <div class="overflow-x-auto border border-[var(--border-default)] rounded-lg">
+        <table class="w-full min-w-[640px] text-left font-body text-base">
+          <caption class="sr-only">Crypto event formats matched to marketing goals</caption>
+          <thead>
+            <tr class="border-b border-[var(--border-default)] bg-[var(--surface-soft)]">
+              <th scope="col" class="p-5 font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-secondary)]">Your goal</th>
+              <th scope="col" class="p-5 font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-secondary)]">Best format</th>
+              <th scope="col" class="p-5 font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-secondary)]">Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            {formats.map((f) => (
+              <tr class="border-b border-[var(--border-subtle)] last:border-b-0 align-top">
+                <th scope="row" class="p-5 font-display text-lg text-[var(--text-primary)] font-medium">{f.goal}</th>
+                <td class="p-5 text-[var(--text-primary)]">{f.format}</td>
+                <td class="p-5 text-[var(--text-secondary)] leading-relaxed">{f.why}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: EVENT HUBS (pillar links) -->
+  <section class="py-24 md:py-32 bg-[var(--bg-primary)] relative z-10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <p class={eyebrow}>Where We Activate</p>
+        <h2 class={h2Class}>Crypto Events in Asia &amp; the Middle East</h2>
+        <p class="mt-6 font-body text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
+          We plan around the major crypto conference weeks in each hub and book venues and vendors early, when the city fills up.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--border-default)] border border-[var(--border-default)] rounded-lg overflow-hidden">
+        {hubs.map((h) => (
+          <div class="bg-[var(--bg-primary)] p-8">
+            <h3 class="font-display text-2xl text-[var(--text-primary)] font-medium uppercase tracking-wide mb-3">{h.name}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed mb-5">{h.desc}</p>
+            <a href={h.href} class={`font-body text-base ${linkClass}`}>Our {h.anchor}</a>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- FAQ SECTION (Cinematic Accordion) -->
-  <section class="py-32 bg-[var(--bg-primary)]">
-    <div class="max-w-4xl mx-auto px-6">
-      <div class="text-center mb-20 reveal">
-        <h2 class="font-display text-sm text-[var(--text-secondary)] opacity-70 uppercase tracking-[0.3em]">Logistics & Operations</h2>
+  <!-- SECTION 8: MEASUREMENT + GROUND RULES -->
+  <section class="py-24 md:py-32 bg-[var(--bg-secondary)] relative z-10 border-y border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-14">
+      <div class="lg:col-span-7">
+        <div class="mb-12 reveal">
+          <p class={eyebrow}>After the Lights Go Off</p>
+          <h2 class={h2Class}>How We Measure Event Marketing</h2>
+          <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+            Foot traffic and badge scans say little. We report on the conversations that matter.
+          </p>
+        </div>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8">
+          {measures.map((m) => (
+            <div class="border-t border-[var(--border-default)] pt-4">
+              <dt class="font-display text-lg text-[var(--text-primary)] font-medium mb-2">{m.title}</dt>
+              <dd class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{m.desc}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
-      <div class="space-y-0 border-t border-[var(--border-default)]">
-        {faqs.map((faq, i) => (
-          <details class="group border-b border-[var(--border-default)] reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <summary class="flex justify-between items-center py-8 cursor-pointer list-none">
-              <span class="font-display text-xl text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors pr-8 font-light">{faq.q}</span>
-              <span class="text-[var(--text-muted)] group-open:rotate-180 transition-transform duration-500 font-mono text-xl">↓</span>
+      <aside class="lg:col-span-5 self-start border border-[var(--border-hover)] rounded-lg bg-[var(--bg-primary)] p-8 md:p-10">
+        <h3 class="font-display text-2xl text-[var(--text-primary)] font-medium uppercase tracking-wide border-b border-[var(--border-default)] pb-4 mb-6">Our Ground Rules</h3>
+        <ul class="space-y-5">
+          {groundRules.map((rule) => (
+            <li class="flex gap-4 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+              <span class="mt-2.5 w-2 h-2 shrink-0 rounded-full bg-[var(--accent-cyan)]" aria-hidden="true"></span>
+              <span>{rule}</span>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SECTION 9: FAQ (cinematic accordion) -->
+  <section class="py-24 md:py-32 bg-[var(--bg-primary)]">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <p class={eyebrow}>Logistics &amp; Operations</p>
+        <h2 class={h2Class}>Crypto Event Marketing FAQ</h2>
+      </div>
+      <div class="border-t border-[var(--border-default)]">
+        {faqs.map((faq) => (
+          <details class="group border-b border-[var(--border-default)]">
+            <summary class="flex justify-between items-center gap-6 py-7 cursor-pointer list-none rounded-sm">
+              <h3 class="faq-q font-display text-lg md:text-xl text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{faq.q}</h3>
+              <span class="text-[var(--text-secondary)] group-open:rotate-180 transition-transform duration-300 font-mono text-xl shrink-0" aria-hidden="true">↓</span>
             </summary>
-            <div class="pb-8 pr-12 text-[var(--text-muted)] font-body text-base leading-relaxed font-light">
+            <div class="pb-8 pr-6 md:pr-12 text-[var(--text-secondary)] font-body text-base leading-relaxed">
               <p set:html={faq.a} />
             </div>
           </details>
@@ -181,9 +392,32 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <p class="text-center text-sm text-[var(--text-muted)] font-body max-w-xl mx-auto px-4 -mt-4 mb-16">
-    Planning an activation inside Vietnam? See our <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--text-secondary)] underline decoration-[var(--border-default)] underline-offset-4 hover:text-[var(--accent-cyan)] hover:decoration-[var(--accent-cyan)] transition-colors">blockchain marketing agency in Vietnam</a>.
-  </p>
+  <!-- SECTION 10: RELATED SERVICES + GUIDES -->
+  <section class="py-20 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-7">
+        <h2 class="font-display text-2xl text-[var(--text-primary)] font-bold uppercase tracking-wider mb-6">Pair Event Marketing With</h2>
+        <ul class="border-t border-[var(--border-default)]">
+          {related.map((r) => (
+            <li class="border-b border-[var(--border-default)]">
+              <a href={r.href} class="group flex flex-col gap-1 py-5 rounded-sm">
+                <span class="font-display text-lg text-[var(--text-primary)] font-medium uppercase tracking-wide group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{r.title}</span>
+                <span class="font-body text-base text-[var(--text-secondary)]">{r.desc}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-2xl text-[var(--text-primary)] font-bold uppercase tracking-wider mb-6">From Our Event Desk</h2>
+        <ul class="space-y-4">
+          {guides.map((g) => (
+            <li><a href={g.href} class={`font-body text-base ${linkClass}`}>{g.title}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <!-- CTA SECTION (Unified FooterLeadForm) -->
   <FooterLeadForm defaultService="Event Marketing" />
@@ -192,28 +426,59 @@ const combinedSchema = [serviceSchema, faqSchema];
 
 <style>
   summary::-webkit-details-marker { display: none; }
-  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
-  @media (scripting: enabled) {
-    .reveal { opacity: 0.01; filter: blur(10px); transform: translateY(30px); transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease; }
+  .faq-q { margin: 0; font-weight: 500; }
+
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    /* Hero: the H1 is the only element allowed a blur text reveal (runs once on
+       load). 0.01 opacity keeps it LCP-eligible. Supporting lines fade in after. */
+    .hero-title { animation: hero-blur-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .hero-fade { animation: hero-fade-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both; }
+
+    /* Ambient: the spotlight breathes slowly. */
+    .spotlight { animation: spotlight-breathe 10s ease-in-out infinite; }
+
+    /* Section entrances: one per section, no blur. */
+    .reveal { opacity: 0.01; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
+
+    /* Blueprint: tickets slide in from the left in order, max 0.36s delay. */
+    .tickets.reveal { transform: none; }
+    .tickets .ticket { opacity: 0; transform: translateX(-16px); transition: opacity 0.6s ease-out, transform 0.6s ease-out, border-color 0.3s ease-out; }
+    .tickets.revealed .ticket { opacity: 1; transform: translateX(0); }
+    .tickets.revealed .ticket:nth-child(2) { transition-delay: 0.12s, 0.12s, 0s; }
+    .tickets.revealed .ticket:nth-child(3) { transition-delay: 0.24s, 0.24s, 0s; }
+    .tickets.revealed .ticket:nth-child(4) { transition-delay: 0.36s, 0.36s, 0s; }
   }
-  .reveal.revealed { opacity: 1; filter: blur(0); transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; filter: none; transform: none; transition: none; } }
+
+  @keyframes hero-blur-in {
+    from { opacity: 0.01; filter: blur(8px); transform: translateY(24px); }
+    to { opacity: 1; filter: blur(0); transform: translateY(0); }
+  }
+  @keyframes hero-fade-in {
+    from { opacity: 0.01; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes spotlight-breathe {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0.45; }
+  }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach((el) => el.classList.add('revealed'));
+      return;
+    }
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }, { threshold: 0.12 });
+    items.forEach((el) => observer.observe(el));
   });
 </script>
