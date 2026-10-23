@@ -104,6 +104,35 @@ const safeguards = [
   }
 ];
 
+const splitRows = [
+  { task: 'Community questions', ai: 'Answers common questions from your approved docs, any time of day', human: 'Handles anything about funds, security, listings or complaints' },
+  { task: 'Sentiment monitoring', ai: 'Scans X, Telegram, Reddit and Discord for shifts in mood and recurring topics', human: 'Decides whether something is real FUD and how to respond' },
+  { task: 'Multilingual content', ai: 'Drafts posts, replies and translations in your tone of voice', human: 'Native speakers edit and approve before anything is published' },
+  { task: 'Retention signals', ai: 'Spots members going quiet and questions that keep coming back', human: 'Chooses the fix: an event, a doc update or a product change' },
+  { task: 'Reporting', ai: 'Collects activity and topics into a weekly summary', human: 'Explains what it means and what we change next' }
+];
+
+const useCases = [
+  { title: 'Token launches', desc: 'Launch week brings a flood of the same questions. AI handles the routine ones from approved answers while moderators focus on scams and edge cases.' },
+  { title: 'DeFi & infrastructure protocols', desc: 'Technical questions answered from your docs, with anything involving funds or security routed straight to your team.' },
+  { title: 'Exchanges & wallets', desc: 'Multilingual first-line support, consistent scam warnings and clear escalation to official support channels.' },
+  { title: 'NFT & GameFi communities', desc: 'Event reminders, lore and FAQ answers in several languages, with community managers keeping the culture human.' },
+  { title: 'Fintech & regulated products', desc: 'Answers limited to approved, compliance-checked wording, so the AI never makes claims your licence does not allow.' },
+  { title: 'AI startups', desc: 'Clear positioning and community support for AI products that need to show what they actually do.' }
+];
+
+const related = [
+  { href: '/services/community-growth/', title: 'Crypto Community Management', desc: 'The human team AI support plugs into.' },
+  { href: '/services/kol-marketing/', title: 'Crypto KOL & Influencer Marketing', desc: 'Use sentiment data to brief the right KOLs.' },
+  { href: '/services/custom-solutions/', title: 'Crypto Go-To-Market', desc: 'Combine AI marketing with a full launch plan.' }
+];
+
+const guides = [
+  { href: '/blog/interview-with-vincent-nguyen-founder-ceo-of-fintech24h-on-the-transformative-role-of-ai-in-digital-marketing', title: 'Our CEO on the role of AI in digital marketing' },
+  { href: '/blog/crypto-marketing-analytics', title: 'Crypto marketing analytics explained' },
+  { href: '/blog/web3-marketing-tool', title: 'Web3 marketing tools worth knowing' }
+];
+
 const steps = [
   { n: '01', title: 'Scope & data sources', body: 'We agree on goals, channels, languages and the sources the AI is allowed to use.' },
   { n: '02', title: 'Setup & training on your docs', body: 'We configure the tools on your approved docs, tone of voice and escalation rules.' },
@@ -228,9 +257,9 @@ const terminalLines = [
   <section class="relative min-h-[90vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden bg-[var(--bg-primary)]">
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
       <div class="absolute inset-0 bg-[linear-gradient(to_right,#00c8f01a_1px,transparent_1px),linear-gradient(to_bottom,#00c8f01a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_80%,transparent_100%)] opacity-20"></div>
-      <div class="matrix-line absolute top-0 left-[10%] w-[1px] h-full bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent opacity-30 animate-[matrix-fall_4s_linear_infinite]"></div>
-      <div class="matrix-line absolute top-0 left-[30%] w-[1px] h-full bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent opacity-10 animate-[matrix-fall_6s_linear_infinite_1s]"></div>
-      <div class="matrix-line absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent opacity-20 animate-[matrix-fall_5s_linear_infinite_2s]"></div>
+      <div class="matrix-line absolute top-0 left-[10%] w-[1px] h-full bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent opacity-30 animate-[matrix-fall_10s_linear_infinite]"></div>
+      <div class="matrix-line absolute top-0 left-[30%] w-[1px] h-full bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent opacity-10 animate-[matrix-fall_12s_linear_infinite_1s]"></div>
+      <div class="matrix-line absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent opacity-20 animate-[matrix-fall_11s_linear_infinite_2s]"></div>
     </div>
 
     <div class="absolute top-24 left-8 hidden xl:block font-mono text-[10px] text-[var(--accent-cyan)] opacity-60" aria-hidden="true">
@@ -278,7 +307,7 @@ const terminalLines = [
         </div>
         <div class="p-5 md:p-8 font-mono text-xs sm:text-sm leading-relaxed">
           {terminalLines.map((line, i) => (
-            <div class={`typing-line ${line.tone}`} style={`animation-delay: ${0.2 + i * 0.7}s, ${0.2 + i * 0.7}s`}>{line.text}</div>
+            <div class={`typing-line ${line.tone}`} style={`animation-delay: ${i * 0.09}s, ${i * 0.09}s`}>{line.text}</div>
           ))}
           <span class="cursor text-[var(--accent-cyan)] animate-pulse">_</span>
         </div>
@@ -378,10 +407,62 @@ const terminalLines = [
     </div>
   </section>
 
+  <!-- SECTION 4b: AI vs HUMAN SPLIT (table) -->
+  <section class="py-24 md:py-28 bg-[var(--bg-primary)] relative z-10 border-t border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)]">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="font-mono text-xs tracking-widest uppercase text-[var(--accent-cyan)]">Division of labor</p>
+        <h2 class="mt-4 font-display text-h2 font-bold text-[var(--text-primary)]">What AI does in Web3 marketing, and what people decide</h2>
+        <p class="mt-5 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+          AI is fast at repetitive work. Judgment, tone and anything that touches money or trust stays with people.
+        </p>
+      </div>
+      <div class="mt-12 overflow-x-auto bg-[#030508] border border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] rounded-md" data-theme-surface="midnight">
+        <table class="w-full min-w-[640px] text-left font-body text-base">
+          <caption class="sr-only">Tasks handled by AI and by people in crypto AI marketing</caption>
+          <thead>
+            <tr class="border-b border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)]">
+              <th scope="col" class="p-5 font-mono text-xs uppercase tracking-widest text-[var(--accent-cyan)]">Task</th>
+              <th scope="col" class="p-5 font-mono text-xs uppercase tracking-widest text-[var(--accent-cyan)]">AI does</th>
+              <th scope="col" class="p-5 font-mono text-xs uppercase tracking-widest text-[var(--accent-purple)]">People decide</th>
+            </tr>
+          </thead>
+          <tbody>
+            {splitRows.map((r) => (
+              <tr class="border-b border-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] last:border-b-0 align-top">
+                <th scope="row" class="p-5 font-display text-base font-bold text-[var(--text-primary)]">{r.task}</th>
+                <td class="p-5 text-[var(--text-secondary)] leading-relaxed">{r.ai}</td>
+                <td class="p-5 text-[var(--text-primary)] leading-relaxed">{r.human}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4c: USE CASES BY PROJECT TYPE -->
+  <section class="py-24 md:py-28 bg-[var(--bg-secondary)] relative z-10 border-t border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)]">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="font-mono text-xs tracking-widest uppercase text-[var(--accent-cyan)]">Use cases</p>
+        <h2 class="mt-4 font-display text-h2 font-bold text-[var(--text-primary)]">Blockchain AI marketing by project type</h2>
+      </div>
+      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[color-mix(in_srgb,var(--accent-cyan)_18%,transparent)] border border-[color-mix(in_srgb,var(--accent-cyan)_18%,transparent)]">
+        {useCases.map((u) => (
+          <div class="bg-[var(--bg-secondary)] p-6 md:p-7">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)]">{u.title}</h3>
+            <p class="mt-2 font-body text-base text-[var(--text-secondary)] leading-relaxed">{u.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- SECTION 5: PROCESS -->
   <section id="how-we-work" class="py-24 md:py-28 bg-[var(--bg-primary)] relative z-10 border-t border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] scroll-mt-24">
     <div class="max-w-6xl mx-auto px-4 lg:px-8">
-      <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">How we work</h2>
+      <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">How we run crypto AI marketing</h2>
       <ol class="mt-12 grid md:grid-cols-4 gap-8 md:gap-6 relative">
         {steps.map((s) => (
           <li class="relative pl-6 md:pl-0 md:pt-8 border-l md:border-l-0 md:border-t border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)]">
@@ -398,7 +479,7 @@ const terminalLines = [
   <!-- SECTION 6: MARKETS -->
   <section class="py-20 bg-[var(--bg-secondary)] relative z-10 border-t border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)]">
     <div class="max-w-4xl mx-auto px-4 lg:px-8 text-center">
-      <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">Where we work</h2>
+      <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">Crypto AI marketing across Asia &amp; the Middle East</h2>
       <p class="mt-5 font-body text-base text-[var(--text-secondary)] leading-relaxed">
         Our team is based in Ho Chi Minh City and works with projects across Southeast Asia, the Middle East and beyond. Each market gets its own language, tone and channels. For market-specific approaches, see our pages for <a href="/blockchain-marketing-agency-vietnam/" class={linkClass}>Vietnam</a>, <a href="/blockchain-marketing-agency-singapore/" class={linkClass}>Singapore</a> and <a href="/blockchain-marketing-agency-dubai/" class={linkClass}>Dubai</a>.
       </p>
@@ -410,7 +491,7 @@ const terminalLines = [
     <div class="max-w-4xl mx-auto px-4 lg:px-8">
       <div class="mb-10 border-b border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] pb-4">
         <p class="font-mono text-xs tracking-widest uppercase text-[var(--accent-cyan)]">FAQ</p>
-        <h2 class="mt-3 font-display text-h2 font-bold text-[var(--text-primary)]">Questions founders ask us</h2>
+        <h2 class="mt-3 font-display text-h2 font-bold text-[var(--text-primary)]">Crypto AI marketing FAQ</h2>
       </div>
 
       <div class="space-y-4">
@@ -437,6 +518,33 @@ const terminalLines = [
           </p>
         </aside>
       )}
+    </div>
+  </section>
+
+  <!-- SECTION 8: RELATED SERVICES + GUIDES -->
+  <section class="py-20 bg-[var(--bg-secondary)] border-t border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)]">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8 grid lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-7">
+        <h2 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-6">Pair AI marketing with</h2>
+        <ul class="border-t border-[var(--border-default)]">
+          {related.map((r) => (
+            <li class="border-b border-[var(--border-default)]">
+              <a href={r.href} class="group flex flex-col gap-1 py-5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
+                <span class="font-display text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{r.title}</span>
+                <span class="font-body text-base text-[var(--text-secondary)]">{r.desc}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-6">Further reading</h2>
+        <ul class="space-y-4">
+          {guides.map((g) => (
+            <li><a href={g.href} class={`font-body text-base ${linkClass}`}>{g.title}</a></li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
