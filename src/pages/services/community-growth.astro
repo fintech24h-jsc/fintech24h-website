@@ -1,40 +1,209 @@
 ---
 // src/pages/services/community-growth.astro
+// Focus keyword: "crypto community management agency". Variants covered in
+// H2/H3/FAQ: Web3 community management, Telegram & Discord community
+// management, ambassador program, NFT/DeFi community. No case-study numbers.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 
+const PAGE_URL = 'https://fintech24h.com/services/community-growth/';
+
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services/' },
-  { name: 'Community Growth', item: 'https://fintech24h.com/services/community-growth/' }
+  { name: 'Community Management', item: PAGE_URL }
+];
+
+const linkClass =
+  'text-[var(--accent-cyan)] underline decoration-[color-mix(in_srgb,var(--accent-cyan)_40%,transparent)] underline-offset-4 hover:decoration-[var(--accent-cyan)] transition-colors duration-200 rounded-sm';
+
+// Hero channel cards (replaced the old member-count stat cards).
+const channels = [
+  { label: 'Telegram', note: 'Groups, channels & bots', icon: 'send' },
+  { label: 'Discord', note: 'Servers, roles & governance', icon: 'chat' },
+  { label: 'Quests & X', note: 'Campaigns, AMAs & Spaces', icon: 'spark' }
+];
+
+const chat = [
+  { text: 'We have thousands of members but nobody talks except bots saying "GM".', isUser: false },
+  { text: 'That is the Bot & Bounty Trap. Airdrop hunters inflate the count and drown out real users. You need Sybil screening and rewards tied to real contribution.', isUser: true },
+  { text: 'Our moderators ban spam but never actually guide the conversation.', isUser: false },
+  { text: 'Moderators should not just be janitors. They should ask questions, host AMAs, answer technical doubts and spot the members worth turning into ambassadors.', isUser: true },
+  { text: 'Every time the market dips, the chat turns toxic.', isUser: false },
+  { text: 'Silence breeds FUD. You need a crisis playbook and clear communication ready before the dip, not after it.', isUser: true }
+];
+
+const services = [
+  {
+    title: 'Telegram community management',
+    desc: 'Group and announcement channel setup, anti-spam bots, pinned FAQs, welcome flows and daily moderation, with a tone that matches your brand.'
+  },
+  {
+    title: 'Discord server setup & management',
+    desc: 'Channel architecture, role and permission design, verification gates, ticket support, governance channels and bot integrations that scale with the project.'
+  },
+  {
+    title: 'Moderation & support playbooks',
+    desc: 'Written rules, escalation paths and answer libraries, with moderation shifts planned around the time zones your members actually live in.'
+  },
+  {
+    title: 'Ambassador programs',
+    desc: 'We find your most helpful members, give them clear roles and rewards, and run regular check-ins so advocates create content, translate and welcome newcomers.'
+  },
+  {
+    title: 'Quests & growth campaigns',
+    desc: 'Campaigns on Zealy, Galxe, QuestN or TaskOn that reward learning, product use and referrals, designed with Sybil filters so rewards reach real people.'
+  },
+  {
+    title: 'AMAs, X Spaces & community events',
+    desc: 'Founder AMAs, partner Spaces, trivia nights and launch-day watch parties that give members a reason to show up and stay.'
+  },
+  {
+    title: 'Scam, impersonation & FUD defense',
+    desc: 'Admin impersonation checks, fake-link filters, clear "we will never DM you" messaging and a prepared response for rumors, exploits and market drops.'
+  },
+  {
+    title: 'Multilingual communities',
+    desc: 'Local-language groups for Vietnam, Indonesia, Thailand and other markets, moderated by native speakers who understand local crypto culture.'
+  },
+  {
+    title: 'Community analytics & reporting',
+    desc: 'Regular reports on active participants, recurring questions, sentiment and ambassador output, so you see what the community is telling you.'
+  }
+];
+
+const funnel = [
+  {
+    level: 'LVL 1',
+    title: 'Viral Loop Design',
+    desc: 'Quests on Zealy or Galxe that ask members to invite friends, create content and use the product to earn roles, not just click buttons.',
+    bar: 'from-[var(--accent-cyan)] to-[var(--accent-cyan)]',
+    badge: 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] text-[var(--accent-cyan)]'
+  },
+  {
+    level: 'LVL 2',
+    title: 'Sybil Defense',
+    desc: 'We filter bots and low-quality airdrop hunters with on-chain reputation, account-age gates, verification flows and behavior checks.',
+    bar: 'from-[var(--accent-cyan)] to-[var(--accent-purple)]',
+    badge: 'bg-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] text-[var(--accent-purple)]'
+  },
+  {
+    level: 'LVL 3',
+    title: 'Proactive Moderation',
+    desc: 'Moderators who start conversations, answer technical questions and flag the members who keep helping others.',
+    bar: 'from-[var(--accent-purple)] to-[var(--accent-cyan)]',
+    badge: 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] text-[var(--accent-cyan)]'
+  },
+  {
+    level: 'LVL 4',
+    title: 'Advocate Activation',
+    desc: 'Your strongest members join a private ambassador program and carry the project into their own networks.',
+    bar: 'from-[var(--accent-purple)] to-[var(--accent-purple)]',
+    badge: 'bg-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] text-[var(--accent-purple)]'
+  }
+];
+
+const platformRows = [
+  { aspect: 'Best for', telegram: 'Fast announcements, price-sensitive communities and markets where Telegram is the default chat app', discord: 'Long-term builder and holder communities, support tickets and governance discussion' },
+  { aspect: 'Structure', telegram: 'One main group plus announcement channel and local-language groups', discord: 'Many topic channels, roles and gated areas inside one server' },
+  { aspect: 'Moderation', telegram: 'Bots for spam, captcha and link filters; heavy impersonation risk', discord: 'Fine-grained permissions, AutoMod and verification bots' },
+  { aspect: 'Engagement', telegram: 'Quick AMAs, polls, launch-day chat', discord: 'Events, Stage channels, quests and role progression' }
+];
+
+const projectTypes = [
+  { title: 'Token launch & airdrops', desc: 'Pre-launch waitlists, Sybil-filtered quests and a launch-day moderation plan, so the community survives the moment the token goes live.' },
+  { title: 'DeFi & infrastructure protocols', desc: 'Technical support, documentation answers and governance channels for users who move real value and ask hard questions.' },
+  { title: 'NFT & GameFi communities', desc: 'Lore, events, holder roles and creator programs for communities that come for culture and stay for each other.' },
+  { title: 'Exchanges & wallets', desc: 'High-volume support, strict scam defense and clear escalation to your official support team.' },
+  { title: 'Fintech apps moving into Web3', desc: 'Education-first onboarding that teaches existing users about wallets and on-chain rewards without drowning them in jargon.' }
+];
+
+const measures = [
+  { title: 'Active participants', desc: 'Members who post, react or join events, instead of total member count.' },
+  { title: 'Conversation quality', desc: 'Questions about the product and ecosystem, not only price and "wen" messages.' },
+  { title: 'Newcomer retention', desc: 'Whether new members are still around after their first weeks.' },
+  { title: 'Support response', desc: 'How quickly and how well questions are answered, and what keeps coming up.' },
+  { title: 'Sentiment', desc: 'The mood of the community over time, with early warning on emerging FUD.' },
+  { title: 'Ambassador output', desc: 'Content, translations and welcomes produced by your advocates.' }
+];
+
+const groundRules = [
+  'We never buy members, bots or fake engagement.',
+  'You keep full admin ownership of every channel.',
+  'Sensitive questions go to your team, never guessed by a moderator.',
+  'Campaign rules and rewards are published and fair.'
+];
+
+const markets = [
+  { name: 'Vietnam', href: '/blockchain-marketing-agency-vietnam/', anchor: 'blockchain marketing agency in Vietnam', desc: 'Vietnamese Telegram and Facebook communities run by our Ho Chi Minh City team.' },
+  { name: 'Singapore & Southeast Asia', href: '/blockchain-marketing-agency-singapore/', anchor: 'blockchain marketing agency in Singapore', desc: 'Regional communities, including Indonesian and Thai groups moderated in the local language.' },
+  { name: 'Dubai & UAE', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai', desc: 'X and Telegram communities for projects building in the Gulf crypto scene.' }
+];
+
+const related = [
+  { href: '/services/kol-marketing/', title: 'Crypto KOL & Influencer Marketing', desc: 'Bring new members in through trusted voices.' },
+  { href: '/services/ai-marketing/', title: 'Crypto AI Marketing', desc: 'AI-assisted community support with human review.' },
+  { href: '/services/pr-media/', title: 'Blockchain PR', desc: 'Give your community news worth talking about.' }
+];
+
+const guides = [
+  { href: '/blog/crypto-community-management-agency-top-tier-growth-strategies-fintech24h', title: 'Crypto community management: growth strategies that work' },
+  { href: '/blog/the-ultimate-guide-to-becoming-a-web3-community-manager', title: 'The guide to becoming a Web3 community manager' },
+  { href: '/blog/telegram-business-features-launched-enhance-your-business-communication', title: 'Telegram business features for project teams' }
 ];
 
 const faqs = [
   {
-    q: "How do you prevent airdrop farmers and Sybil attacks?",
-    a: "We implement multi-layered Sybil defense. This includes linking Web2 accounts (Discord, Twitter) with minimum age requirements, utilizing on-chain reputation scores (like Gitcoin Passport or Galxe credentials), and actively monitoring IP clustering and wallet behavioral patterns to filter out bots."
+    topic: 'Scope',
+    q: 'What does a crypto community management agency do?',
+    a: 'It runs the day-to-day life of your Telegram, Discord and social communities: moderation, support answers, engagement, events, quests and ambassador programs. The aim is a community of real users who help each other and carry your project further, not just a large member count.'
   },
   {
-    q: "Do you handle 24/7 moderation?",
-    a: "Yes. Crypto never sleeps. We deploy a global team of moderators across different time zones to ensure your Discord and Telegram groups are always monitored, minimizing spam and answering user queries instantly."
+    topic: 'Anti-Sybil',
+    q: 'How do you prevent airdrop farmers and Sybil attacks?',
+    a: 'We layer the defenses: account-age and verification gates, on-chain reputation signals such as Gitcoin Passport or Galxe credentials, behavior checks for clustered wallets and accounts, and rewards that require real contribution rather than simple clicks.'
   },
   {
-    q: "Do you manage communities across Southeast Asia?",
-    a: "Yes, including WhatsApp and Telegram communities in Indonesia and Thailand, moderated in the local language."
+    topic: 'Moderation',
+    q: 'Do you cover moderation outside office hours?',
+    a: 'Yes. We plan moderation shifts around the time zones where your members are active and agree the coverage level with you before launch, including extra cover for launches, listings and AMAs.'
   },
   {
-    q: "Can you help transition a Web2 community to Web3?",
-    a: "Absolutely. The key is education and frictionless onboarding. We design campaigns that teach your existing users how to set up wallets, interact with smart contracts, and earn their first on-chain rewards without overwhelming them with jargon."
+    topic: 'Platforms',
+    q: 'Should my project use Telegram or Discord?',
+    a: 'Often both. Telegram suits fast announcements and markets where it is the default chat app. Discord suits long-term builder and holder communities with support tickets, roles and governance. We recommend a setup based on your audience and stage.'
   },
   {
-    q: "What channels do you moderate for a Dubai community?",
-    a: 'Primarily X and Telegram, since that is where the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a> and wider UAE crypto community is most active.'
+    topic: 'Platforms',
+    q: 'Which platforms do you manage?',
+    a: 'Telegram and Discord as core channels, X for public conversation and Spaces, and quest platforms such as Zealy, Galxe, QuestN and TaskOn for task-based growth.'
   },
   {
-    q: "What platforms do you manage?",
-    a: "Our core focus is Discord (for core community and governance), Telegram (for rapid updates and local communities), and Zealy/Galxe/QuestN (for task-based growth and viral loops)."
+    topic: 'Ambassadors',
+    q: 'How does an ambassador program work?',
+    a: 'We pick members who already help others, give them defined roles such as moderator, content creator or translator, set clear rewards and run regular check-ins. Good ambassador programs are small, active and well supported.'
+  },
+  {
+    topic: 'Web2 to Web3',
+    q: 'Can you help transition a Web2 community to Web3?',
+    a: 'Yes. We design onboarding that teaches existing users how to set up a wallet, use smart contracts safely and earn their first on-chain rewards, step by step and without jargon.'
+  },
+  {
+    topic: 'Crisis',
+    q: 'How do you handle FUD, scams and impersonators?',
+    a: 'We prepare a crisis playbook in advance, keep scam warnings pinned, filter fake links, check for admin impersonators and coordinate public statements with your team so members hear one consistent message.'
+  },
+  {
+    topic: 'Regions',
+    q: 'Do you manage communities across Southeast Asia and the UAE?',
+    a: `Yes. We run Vietnamese, Indonesian and Thai groups with native-speaking moderators, and X and Telegram communities for projects in <a href="/blockchain-marketing-agency-dubai/" class="${linkClass}">Dubai and the wider UAE</a>.`
+  },
+  {
+    topic: 'Reporting',
+    q: 'How do you measure community growth?',
+    a: 'We report on active participants, conversation quality, newcomer retention, support response, sentiment and ambassador output. Member count alone is easy to fake, so we never use it as the headline.'
   }
 ];
 
@@ -43,15 +212,18 @@ const META_DESCRIPTION =
 
 const serviceSchema = buildServiceSchema({
   name: 'Crypto & Web3 Community Management',
-  alternateName: ['Telegram Community Management', 'Discord Community Management', 'Web3 Community Growth'],
+  alternateName: ['Telegram Community Management', 'Discord Community Management', 'Web3 Community Growth', 'Crypto Ambassador Programs'],
   serviceType: 'Community management',
-  url: 'https://fintech24h.com/services/community-growth/',
+  url: PAGE_URL,
   description: META_DESCRIPTION
 });
 
 const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
+
+const eyebrowCyan = 'inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] mb-4';
+const h2Class = 'font-display text-3xl md:text-5xl font-black text-[var(--text-primary)]';
 ---
 
 <BaseLayout
@@ -61,12 +233,8 @@ const combinedSchema = [serviceSchema, faqSchema];
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- ═══════════════════════════════════════════════════
-       SECTION 1 — HERO
-  ═══════════════════════════════════════════════════ -->
-  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-20 px-4 overflow-hidden bg-[var(--bg-primary)]">
-
-    <!-- Brand ambient glows — matches other service pages -->
+  <!-- SECTION 1: HERO (H1 = focus keyword) -->
+  <section class="relative min-h-[100vh] flex flex-col justify-center pt-32 pb-24 px-4 overflow-hidden bg-[var(--bg-primary)]">
     <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
       <div class="bg-orb bg-orb-cyan  w-[700px] h-[700px] absolute -top-40 -right-40 opacity-15"></div>
       <div class="bg-orb bg-orb-purple w-[600px] h-[600px] absolute bottom-0 -left-40 opacity-12"></div>
@@ -74,112 +242,115 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
 
     <div class="relative z-10 max-w-5xl mx-auto w-full text-center">
-
-      <!-- Status badge -->
       <div class="inline-flex items-center justify-center gap-2 mb-8 px-4 py-2 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] backdrop-blur-md reveal">
-        <span class="w-2.5 h-2.5 rounded-full bg-[#57F287] shadow-[0_0_8px_rgba(87,242,135,0.8)] animate-pulse"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-[#57F287] shadow-[0_0_8px_rgba(87,242,135,0.8)] animate-pulse" aria-hidden="true"></span>
         <span class="font-mono text-sm text-[var(--accent-cyan)] font-bold tracking-widest uppercase">LFG // Online</span>
       </div>
 
-      <h1 class="font-display font-black max-w-5xl mx-auto reveal reveal-delay-1">
-        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-[var(--text-primary)] mb-2">
-          A Community That Grows Your Project
+      <h1 class="font-display font-black max-w-5xl mx-auto reveal">
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] leading-[1.05] tracking-tight text-[var(--text-primary)] mb-2">
+          Crypto &amp; Web3
         </span>
-        <span class="block text-[clamp(2.5rem,6vw,5rem)] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)]" style="filter: drop-shadow(0 0 18px rgba(0,200,240,0.3));">
-          Not Just a Group That Gets Bigger.
+        <span class="block text-[clamp(2.5rem,6vw,5rem)] leading-[1.05] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)]" style="filter: drop-shadow(0 0 18px rgba(0,200,240,0.3));">
+          Community Management Agency
         </span>
       </h1>
 
-      <!-- Glass description card -->
-      <div class="max-w-2xl mx-auto mt-8 mb-12 p-6 bg-[var(--bg-glass)] backdrop-blur-md rounded-2xl border border-[var(--border-default)] shadow-2xl reveal reveal-delay-2 text-left relative overflow-hidden">
-        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--accent-cyan)] to-[var(--accent-purple)] rounded-l-full"></div>
-        <p class="font-body text-[16px] text-[var(--text-secondary)] leading-[1.75] pl-2">
-          <strong class="text-[var(--text-primary)]">Daily active engagement</strong>, organic sharing, and community-led growth is what moves the needle. From anti-sybil airdrops to deep engagement tracking, we handle the entire funnel.
+      <div class="max-w-2xl mx-auto mt-8 mb-12 p-6 bg-[var(--bg-glass)] backdrop-blur-md rounded-2xl border border-[var(--border-default)] shadow-2xl reveal text-left relative overflow-hidden">
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--accent-cyan)] to-[var(--accent-purple)] rounded-l-full" aria-hidden="true"></div>
+        <p class="font-display text-lg md:text-xl font-bold text-[var(--text-primary)] pl-2 mb-2">
+          A community that grows your project, not just a group that gets bigger.
+        </p>
+        <p class="font-body text-base text-[var(--text-secondary)] leading-[1.75] pl-2">
+          We run Telegram and Discord communities for crypto, DeFi, NFT and fintech projects: moderation, support, quests, AMAs and ambassador programs, with Sybil defense built in from day one.
         </p>
       </div>
 
-      <!-- CTA -->
-      <div class="flex justify-center reveal reveal-delay-3">
+      <div class="flex justify-center reveal">
         <a
           href="/contact/"
-          class="relative inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-base text-[var(--bg-primary)] bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] shadow-[0_8px_28px_rgba(0,200,240,0.35)] hover:shadow-[0_8px_36px_rgba(0,200,240,0.5)] hover:-translate-y-1 transition-all duration-300"
+          class="relative inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-base text-[var(--bg-primary)] bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-purple)] shadow-[0_8px_28px_rgba(0,200,240,0.35)] hover:shadow-[0_8px_36px_rgba(0,200,240,0.5)] hover:-translate-y-1 transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]"
         >
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
           Scale Your Community
         </a>
       </div>
 
-      <!-- 3 floating stat cards (replacing emoji) -->
-      <div class="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 reveal reveal-delay-3">
-        <div class="stat-card group">
-          <div class="stat-icon">
-            <!-- People / community icon -->
-            <svg class="w-5 h-5 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 0 0-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 0 1 5.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 0 1 9.288 0M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
-          </div>
-          <div class="stat-value">+500K</div>
-          <div class="stat-label">Community Members Built</div>
-        </div>
-        <div class="stat-card group">
-          <div class="stat-icon">
-            <!-- Clock / 24h icon -->
-            <svg class="w-5 h-5 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-          </div>
-          <div class="stat-value">24/7</div>
-          <div class="stat-label">Global Moderation Coverage</div>
-        </div>
-        <div class="stat-card group">
-          <div class="stat-icon">
-            <!-- Grid / platforms icon -->
-            <svg class="w-5 h-5 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-          </div>
-          <div class="stat-value">6</div>
-          <div class="stat-label">Platforms Managed</div>
-        </div>
-      </div>
-
+      <ul class="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 reveal" aria-label="Channels we manage">
+        {channels.map((c) => (
+          <li class="channel-card">
+            <span class="channel-icon" aria-hidden="true">
+              {c.icon === 'send' && (
+                <svg class="w-5 h-5 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+              )}
+              {c.icon === 'chat' && (
+                <svg class="w-5 h-5 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              )}
+              {c.icon === 'spark' && (
+                <svg class="w-5 h-5 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg>
+              )}
+            </span>
+            <span class="channel-label">{c.label}</span>
+            <span class="channel-note">{c.note}</span>
+          </li>
+        ))}
+      </ul>
     </div>
 
-    <!-- Wave transition into next section -->
-    <div class="absolute bottom-0 left-0 w-full pointer-events-none" aria-hidden="true">
-      <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="rgba(8,13,26,0.9)"/>
+    <div class="absolute bottom-0 left-0 w-full pointer-events-none text-[var(--bg-secondary)]" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full block" preserveAspectRatio="none">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="currentColor"/>
       </svg>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════
-       SECTION 2 — THE PROBLEM (Chat Bubbles)
-  ═══════════════════════════════════════════════════ -->
-  <section class="py-20 bg-[var(--bg-secondary)] relative z-10 border-t border-[var(--border-subtle)]">
-    <div class="max-w-4xl mx-auto px-4">
+  <!-- SECTION 2: DEFINITION -->
+  <section class="py-24 bg-[var(--bg-secondary)] relative z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div class="lg:col-span-5 reveal">
+        <div class={eyebrowCyan}>
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]" aria-hidden="true"></span>
+          <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-widest">The Basics</span>
+        </div>
+        <h2 class={h2Class}>What Crypto Community Management Covers</h2>
+      </div>
+      <div class="lg:col-span-7 space-y-5 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+        <p class="text-[var(--text-primary)] text-xl">
+          Crypto community management is the daily work of turning a Telegram group or Discord server into a place people want to return to. As a Web3 community management agency, Fintech24h moderates, answers questions, runs events and quests, and builds ambassador programs, so your members learn the product, trust the team and invite others.
+        </p>
+        <p>
+          A crypto community is not a fan page. It is your support desk, your feedback loop, your first line of defense against scams and FUD, and often the place where investors decide whether a project is alive. That is why the work needs real people who understand both the technology and the culture.
+        </p>
+        <p>
+          We work with token projects, DeFi protocols, NFT and GameFi teams, exchanges, wallets and fintech companies moving into Web3, from the first week of a new server to communities that need a reset after a hard market.
+        </p>
+      </div>
+    </div>
+  </section>
 
+  <!-- SECTION 3: THE PROBLEM (chat bubbles type in once, in order) -->
+  <section class="py-20 bg-[var(--bg-primary)] relative z-10 border-t border-[var(--border-subtle)]">
+    <div class="max-w-4xl mx-auto px-4">
       <div class="text-center mb-16 reveal">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+        <div class={eyebrowCyan}>
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]" aria-hidden="true"></span>
           <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-widest">Real Conversations</span>
         </div>
-        <h2 class="font-display text-3xl md:text-5xl font-black text-[var(--text-primary)]">Why Most Communities Die</h2>
+        <h2 class={h2Class}>Why Most Crypto Communities Die</h2>
       </div>
 
-      <div class="flex flex-col gap-5">
-        {[
-          { sender: 'Client', text: 'We have 50K members but no one is talking except bots saying "GM".', isUser: false },
-          { sender: 'Fintech24h', text: 'That\'s the Bot & Bounty Trap. Airdrop hunters inflate numbers but destroy real engagement. You need anti-Sybil screening and value-based incentives.', isUser: true },
-          { sender: 'Client', text: 'Our moderators just ban spam but don\'t actually guide the conversation.', isUser: false },
-          { sender: 'Fintech24h', text: 'Moderators shouldn\'t just be janitors. They need to be community architects who ask questions, host voice AMAs, and foster genuine connections.', isUser: true },
-          { sender: 'Client', text: 'Every time there is a dip, the community turns toxic.', isUser: false },
-          { sender: 'Fintech24h', text: 'A lack of crisis management and transparent communication breeds FUD. You need a proactive narrative defense strategy before the dip happens.', isUser: true }
-        ].map((msg, i) => (
-          <div class={`flex ${msg.isUser ? 'justify-end' : 'justify-start'} reveal`} style={`transition-delay: ${i * 0.08}s`}>
+      <div class="chat-thread flex flex-col gap-5 reveal">
+        {chat.map((msg) => (
+          <div class={`chat-msg flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}>
             {msg.isUser ? (
               <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tr-sm border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] bg-gradient-to-br from-[color-mix(in_srgb,var(--accent-cyan)_12%,transparent)] to-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] backdrop-blur-md shadow-[0_4px_20px_rgba(0,200,240,0.08)]">
-                <span class="block text-[10px] font-mono text-[var(--accent-cyan)] mb-1.5 tracking-wider">Fintech24h</span>
-                <p class="font-body text-[15px] leading-relaxed text-[var(--text-primary)]">{msg.text}</p>
+                <span class="block text-xs font-mono text-[var(--accent-cyan)] mb-1.5 tracking-wider">Fintech24h</span>
+                <p class="font-body text-base leading-relaxed text-[var(--text-primary)]">{msg.text}</p>
               </div>
             ) : (
-              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tl-sm border border-[var(--border-default)] bg-[var(--bg-primary)] shadow-inner">
-                <span class="block text-[10px] font-mono text-[var(--text-muted)] mb-1.5 tracking-wider">Client</span>
-                <p class="font-body text-[15px] leading-relaxed text-[var(--text-secondary)]">{msg.text}</p>
+              <div class="max-w-[85%] md:max-w-[70%] p-5 rounded-2xl rounded-tl-sm border border-[var(--border-default)] bg-[var(--bg-secondary)]">
+                <span class="block text-xs font-mono text-[var(--text-muted)] mb-1.5 tracking-wider">Client</span>
+                <p class="font-body text-base leading-relaxed text-[var(--text-secondary)]">{msg.text}</p>
               </div>
             )}
           </div>
@@ -188,126 +359,221 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════
-       SECTION 3 — OUR APPROACH (Gamified Levels)
-  ═══════════════════════════════════════════════════ -->
-  <section class="py-24 bg-[var(--bg-primary)] relative z-10">
-
-    <!-- Ambient glow -->
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute top-20 right-0 opacity-10"></div>
-      <div class="grid-pattern absolute inset-0 opacity-15"></div>
-    </div>
-
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-      <div class="text-center mb-20 reveal">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-purple)_20%,transparent)] bg-[color-mix(in_srgb,var(--accent-purple)_5%,transparent)] mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
-          <span class="text-xs font-mono font-medium text-[var(--accent-purple)] uppercase tracking-widest">Growth Framework</span>
+  <!-- SECTION 4: SERVICES -->
+  <section class="py-24 bg-[var(--bg-secondary)] relative z-10 border-t border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <div class={eyebrowCyan}>
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]" aria-hidden="true"></span>
+          <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-widest">What We Run</span>
         </div>
-        <h2 class="font-display text-3xl md:text-5xl font-black text-[var(--text-primary)]">The Community Growth Funnel</h2>
+        <h2 class={h2Class}>Our Community Management Services</h2>
+        <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl mx-auto">
+          Take the full program or only the parts your team cannot cover in-house.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          {
-            level: 'LVL 1',
-            title: 'Viral Loop Design',
-            desc: 'We design Zealy/Galxe campaigns that require users to invite friends, create content, and engage deeply to earn roles, not just click buttons.',
-            bar: 'from-[var(--accent-cyan)] to-[var(--accent-cyan)]',
-            badge: 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] text-[var(--accent-cyan)]'
-          },
-          {
-            level: 'LVL 2',
-            title: 'Sybil Defense',
-            desc: 'We filter out bots and low-quality airdrop hunters using on-chain reputation scores, Discord age requirements, and CAPTCHA workflows.',
-            bar: 'from-[var(--accent-cyan)] to-[var(--accent-purple)]',
-            badge: 'bg-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] text-[var(--accent-purple)]'
-          },
-          {
-            level: 'LVL 3',
-            title: 'Proactive Moderation',
-            desc: 'Our 24/7 global team doesn\'t just delete spam. We spark conversations, answer technical questions, and identify power users.',
-            bar: 'from-[var(--accent-purple)] to-[var(--accent-cyan)]',
-            badge: 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] text-[var(--accent-cyan)]'
-          },
-          {
-            level: 'LVL 4',
-            title: 'Advocate Activation',
-            desc: 'We identify the top 1% of your community and recruit them into private Ambassador programs to scale your reach organically.',
-            bar: 'from-[var(--accent-purple)] to-[var(--accent-purple)]',
-            badge: 'bg-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] text-[var(--accent-purple)]'
-          }
-        ].map((item, i) => (
-          <div
-            class="relative bg-[var(--bg-glass)] rounded-2xl p-6 border border-[var(--border-default)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] hover:-translate-y-2 transition-all duration-300 overflow-hidden group reveal"
-            style={`transition-delay: ${i * 0.12}s`}
-          >
-            <!-- Top gradient bar -->
-            <div class={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r ${item.bar}`}></div>
-            <!-- Hover glow -->
-            <div class="absolute inset-0 bg-gradient-to-br from-[color-mix(in_srgb,var(--accent-cyan)_3%,transparent)] to-[color-mix(in_srgb,var(--accent-purple)_3%,transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none"></div>
-
-            <div class={`w-12 h-12 rounded-xl flex items-center justify-center font-black text-[11px] mb-6 border ${item.badge}`}>
-              {item.level}
-            </div>
-            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">{item.title}</h3>
-            <p class="text-[var(--text-secondary)] font-body text-sm leading-relaxed">{item.desc}</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {services.map((item) => (
+          <div class="relative bg-[var(--bg-glass)] rounded-2xl p-6 md:p-7 border border-[var(--border-default)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] transition-colors duration-300">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-3">{item.title}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Related program: DealMakers' Club — a curated Web3/fintech community
-  built and moderated the same way this page's community-growth work is. -->
-  <section class="pt-16 pb-4 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
+  <!-- SECTION 5: GROWTH FUNNEL (gamified levels; bars fill once) -->
+  <section class="py-24 bg-[var(--bg-primary)] relative z-10">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-purple w-[500px] h-[500px] absolute top-20 right-0 opacity-10"></div>
+      <div class="grid-pattern absolute inset-0 opacity-15"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20 reveal">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-purple)_20%,transparent)] bg-[color-mix(in_srgb,var(--accent-purple)_5%,transparent)] mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]" aria-hidden="true"></span>
+          <span class="text-xs font-mono font-medium text-[var(--accent-purple)] uppercase tracking-widest">Growth Framework</span>
+        </div>
+        <h2 class={h2Class}>The Web3 Community Growth Funnel</h2>
+      </div>
+
+      <div class="funnel grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 reveal">
+        {funnel.map((item) => (
+          <div class="relative bg-[var(--bg-glass)] rounded-2xl p-6 border border-[var(--border-default)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] hover:-translate-y-1 transition-all duration-300 overflow-hidden group">
+            <div class={`funnel-bar absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r ${item.bar}`} aria-hidden="true"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-[color-mix(in_srgb,var(--accent-cyan)_3%,transparent)] to-[color-mix(in_srgb,var(--accent-purple)_3%,transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" aria-hidden="true"></div>
+            <div class={`w-12 h-12 rounded-xl flex items-center justify-center font-black text-xs mb-6 border ${item.badge}`} aria-hidden="true">
+              {item.level}
+            </div>
+            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">{item.title}</h3>
+            <p class="text-[var(--text-secondary)] font-body text-base leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: TELEGRAM VS DISCORD -->
+  <section class="py-24 bg-[var(--bg-secondary)] relative z-10 border-t border-[var(--border-subtle)]">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 reveal">
+        <div class={eyebrowCyan}>
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]" aria-hidden="true"></span>
+          <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-widest">Choosing Channels</span>
+        </div>
+        <h2 class={h2Class}>Telegram or Discord for Your Crypto Community?</h2>
+        <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl mx-auto">
+          Most projects need both, used for different jobs. This is how we usually split them.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-[var(--border-default)] bg-[var(--bg-glass)]">
+        <table class="w-full min-w-[560px] text-left font-body text-base">
+          <caption class="sr-only">Telegram compared with Discord for crypto community management</caption>
+          <thead>
+            <tr class="border-b border-[var(--border-default)]">
+              <th scope="col" class="p-5 font-mono text-xs uppercase tracking-widest text-[var(--text-muted)] w-1/5"><span class="sr-only">Aspect</span></th>
+              <th scope="col" class="p-5 font-display text-lg font-bold text-[var(--text-primary)]">Telegram</th>
+              <th scope="col" class="p-5 font-display text-lg font-bold text-[var(--text-primary)]">Discord</th>
+            </tr>
+          </thead>
+          <tbody>
+            {platformRows.map((row) => (
+              <tr class="border-b border-[var(--border-subtle)] last:border-b-0 align-top">
+                <th scope="row" class="p-5 font-mono text-xs uppercase tracking-widest text-[var(--accent-cyan)]">{row.aspect}</th>
+                <td class="p-5 text-[var(--text-secondary)] leading-relaxed">{row.telegram}</td>
+                <td class="p-5 text-[var(--text-secondary)] leading-relaxed">{row.discord}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: BY PROJECT TYPE -->
+  <section class="py-24 bg-[var(--bg-primary)] relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <div class={eyebrowCyan}>
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]" aria-hidden="true"></span>
+          <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-widest">Who It Is For</span>
+        </div>
+        <h2 class={h2Class}>Community Management by Project Type</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
+        {projectTypes.map((item) => (
+          <div class="bg-[var(--bg-glass)] rounded-2xl p-6 border border-[var(--border-default)]">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-3">{item.title}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: HEALTH METRICS + GROUND RULES -->
+  <section class="py-24 bg-[var(--bg-secondary)] relative z-10 border-t border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-7">
+        <div class="mb-10 reveal">
+          <div class={eyebrowCyan}>
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]" aria-hidden="true"></span>
+            <span class="text-xs font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-widest">Reporting</span>
+          </div>
+          <h2 class={h2Class}>How We Measure Community Health</h2>
+          <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+            Member count is the easiest number in crypto to fake. We report on the signals that show a community is alive.
+          </p>
+        </div>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {measures.map((m) => (
+            <div class="bg-[var(--bg-glass)] rounded-xl p-5 border border-[var(--border-default)]">
+              <dt class="font-display text-base font-bold text-[var(--text-primary)] mb-1">{m.title}</dt>
+              <dd class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{m.desc}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <aside class="lg:col-span-5 self-start relative bg-[var(--bg-glass)] backdrop-blur-md rounded-2xl border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] p-8 overflow-hidden">
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--accent-cyan)] to-[var(--accent-purple)]" aria-hidden="true"></div>
+        <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-6">Our Ground Rules</h3>
+        <ul class="space-y-4">
+          {groundRules.map((rule) => (
+            <li class="flex gap-3 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+              <svg class="w-5 h-5 mt-0.5 shrink-0 text-[var(--color-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7"/></svg>
+              <span>{rule}</span>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Related program: DealMakers' Club, a curated community run the same way. -->
+  <section class="pt-16 pb-4 bg-[var(--bg-primary)] border-t border-[var(--border-subtle)]">
     <div class="max-w-4xl mx-auto px-4">
-      <a href="/dealmakers/" class="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[var(--bg-glass)] border border-white/[0.06] rounded-2xl backdrop-blur-md px-6 py-5 hover:border-white/[0.12] transition-all duration-300 reveal">
-        <p class="font-body text-sm text-[var(--text-secondary)] leading-relaxed">
-          <span class="text-[var(--accent-cyan)] font-mono text-[10px] uppercase tracking-widest mr-2">Related program</span>
+      <a href="/dealmakers/" class="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[var(--bg-glass)] border border-[var(--border-default)] rounded-2xl backdrop-blur-md px-6 py-5 hover:border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] transition-colors duration-300 reveal">
+        <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">
+          <span class="text-[var(--accent-cyan)] font-mono text-xs uppercase tracking-widest mr-2">Related program</span>
           Want to see this playbook running live? Check out <span class="text-[var(--text-primary)] font-medium">Fintech24h DealMakers&rsquo; Club</span>, our own curated, moderated community for Web3 and fintech decision-makers.
         </p>
-        <span class="shrink-0 font-display text-xs font-bold text-[var(--accent-cyan)] group-hover:text-[var(--text-primary)] transition-colors">Explore &rarr;</span>
+        <span class="shrink-0 font-display text-sm font-bold text-[var(--accent-cyan)] group-hover:text-[var(--text-primary)] transition-colors">Explore &rarr;</span>
       </a>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════
-       SECTION 4 — FAQ (Discord Channel Style)
-  ═══════════════════════════════════════════════════ -->
-  <section class="py-20 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
-    <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row gap-10">
-
-      <!-- Left: channel list -->
-      <div class="w-full md:w-1/3 reveal">
-        <h2 class="font-mono text-xl font-black text-[var(--text-primary)] mb-6 tracking-tight">
-          <span class="text-[var(--accent-cyan)]">#</span> faq-channel
-        </h2>
-        <div class="space-y-1 border-l-2 border-[var(--border-default)] pl-3">
-          <div class="py-2 text-[var(--accent-cyan)] font-bold text-sm bg-[color-mix(in_srgb,var(--accent-cyan)_8%,transparent)] px-3 rounded-lg border border-[color-mix(in_srgb,var(--accent-cyan)_15%,transparent)]">
-            1. Anti-Sybil
+  <!-- SECTION 9: MARKETS -->
+  <section class="py-20 bg-[var(--bg-primary)] relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 reveal">
+        <h2 class={h2Class}>Community Management Across Asia &amp; the Middle East</h2>
+        <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl mx-auto">
+          Global English communities run from Ho Chi Minh City, with native-speaking moderators for the markets where local groups matter.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {markets.map((m) => (
+          <div class="bg-[var(--bg-glass)] rounded-2xl p-6 border border-[var(--border-default)]">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-2">{m.name}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed mb-4">{m.desc}</p>
+            <a href={m.href} class={`font-body text-base ${linkClass}`}>Our {m.anchor}</a>
           </div>
-          <div class="py-2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors text-sm px-3 cursor-default">2. Moderation</div>
-          <div class="py-2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors text-sm px-3 cursor-default">3. Web2 to Web3</div>
-          <div class="py-2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors text-sm px-3 cursor-default">4. Platforms</div>
-        </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 10: FAQ (Discord channel style; channel list jumps to answers) -->
+  <section class="py-20 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col md:flex-row gap-10">
+      <div class="w-full md:w-1/3 md:sticky md:top-28 self-start reveal">
+        <p class="font-mono text-base font-bold text-[var(--text-secondary)] mb-2"><span class="text-[var(--accent-cyan)]" aria-hidden="true">#</span> faq-channel</p>
+        <h2 class="font-display text-2xl md:text-3xl font-black text-[var(--text-primary)] mb-6">Crypto Community Management FAQ</h2>
+        <nav aria-label="FAQ topics" class="space-y-1 border-l-2 border-[var(--border-default)] pl-3">
+          {faqs.map((faq, i) => (
+            <a href={`#faq-${i + 1}`} class="block py-1.5 px-3 rounded-lg text-sm text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] hover:bg-[color-mix(in_srgb,var(--accent-cyan)_8%,transparent)] transition-colors duration-200">
+              <span class="font-mono text-[var(--text-muted)] mr-1" aria-hidden="true">#</span>{faq.topic.toLowerCase().replace(/\s+/g, '-')}
+            </a>
+          ))}
+        </nav>
       </div>
 
-      <!-- Right: FAQ items -->
       <div class="w-full md:w-2/3 space-y-3">
         {faqs.map((faq, i) => (
-          <details class="bg-[var(--bg-primary)] rounded-xl border border-[var(--border-default)] group reveal" style={`transition-delay: ${i * 0.08}s`}>
-            <summary class="flex justify-between items-center p-5 cursor-pointer list-none font-bold text-[var(--text-primary)] hover:text-[var(--accent-cyan)] transition-colors">
-              <span class="flex items-center gap-2 text-sm">
-                <span class="text-[var(--text-muted)] font-mono">Q:</span>
-                {faq.q}
-              </span>
-              <svg class="w-4 h-4 text-[var(--accent-cyan)] shrink-0 ml-3 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
+          <details id={`faq-${i + 1}`} class="bg-[var(--bg-primary)] rounded-xl border border-[var(--border-default)] group scroll-mt-28">
+            <summary class="flex justify-between items-center p-5 cursor-pointer list-none rounded-xl">
+              <h3 class="faq-q flex items-start gap-2 font-display text-base md:text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200">
+                <span class="text-[var(--text-muted)] font-mono" aria-hidden="true">Q:</span>
+                <span>{faq.q}</span>
+              </h3>
+              <svg class="w-4 h-4 text-[var(--accent-cyan)] shrink-0 ml-3 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
             </summary>
-            <div class="px-5 pb-5 text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--border-subtle)] pt-3">
-              <span class="text-[var(--color-success)] font-bold font-mono">A:</span> <span set:html={faq.a} />
+            <div class="px-5 pb-5 text-[var(--text-secondary)] text-base leading-relaxed border-t border-[var(--border-subtle)] pt-3">
+              <span class="text-[var(--color-success)] font-bold font-mono" aria-hidden="true">A:</span> <span set:html={faq.a} />
             </div>
           </details>
         ))}
@@ -315,95 +581,122 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <!-- CTA -->
-  <p class="text-center text-sm text-[var(--text-muted)] font-body max-w-xl mx-auto px-4 -mt-4 mb-16">
-    Growing a community inside Vietnam specifically? See our <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--text-secondary)] underline decoration-[var(--border-default)] underline-offset-4 hover:text-[var(--accent-cyan)] hover:decoration-[var(--accent-cyan)] transition-colors">blockchain marketing agency in Vietnam</a>.
-  </p>
+  <!-- SECTION 11: RELATED SERVICES + GUIDES -->
+  <section class="py-20 bg-[var(--bg-primary)] border-t border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-7">
+        <h2 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-6">Pair Community Management With</h2>
+        <div class="grid grid-cols-1 gap-3">
+          {related.map((r) => (
+            <a href={r.href} class="group block bg-[var(--bg-glass)] rounded-xl p-5 border border-[var(--border-default)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] transition-colors duration-200">
+              <span class="block font-display text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{r.title}</span>
+              <span class="block font-body text-base text-[var(--text-secondary)]">{r.desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-6">Further Reading</h2>
+        <ul class="space-y-4">
+          {guides.map((g) => (
+            <li><a href={g.href} class={`font-body text-base ${linkClass}`}>{g.title}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <FooterLeadForm defaultService="Community Growth" />
 
 </BaseLayout>
 
 <style>
-  /* ── FAQ details marker ── */
   summary::-webkit-details-marker { display: none; }
+  .faq-q { margin: 0; }
 
-  /* ── Stat cards (replacing floating emoji) ── */
-  .stat-card {
+  /* Hero channel cards: theme tokens only, so light mode works. */
+  .channel-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     padding: 1.25rem 1rem;
     border-radius: 1rem;
-    border: 1px solid rgba(255,255,255,0.06);
-    background: rgba(8,13,26,0.6);
+    border: 1px solid var(--border-default);
+    background: var(--bg-glass);
     backdrop-filter: blur(12px);
-    transition: border-color 0.3s, transform 0.3s;
+    transition: border-color 0.3s ease-out, transform 0.3s ease-out;
   }
-  .stat-card:hover {
-    border-color: rgba(0,200,240,0.25);
+  .channel-card:hover {
+    border-color: color-mix(in srgb, var(--accent-cyan) 25%, transparent);
     transform: translateY(-4px);
   }
-  .stat-icon {
+  .channel-icon {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 0.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,200,240,0.08);
-    border: 1px solid rgba(0,200,240,0.15);
+    background: color-mix(in srgb, var(--accent-cyan) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent-cyan) 15%, transparent);
   }
-  .stat-value {
+  .channel-label {
     font-family: var(--font-display);
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     font-weight: 800;
     background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    line-height: 1;
+    line-height: 1.2;
   }
-  .stat-label {
+  .channel-note {
     font-family: var(--font-body);
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
     text-align: center;
   }
 
-  /* ── Scroll reveal ── */
-  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
-  @media (scripting: enabled) {
-    .reveal {
-    opacity: 0.01;
-    transform: translateY(20px);
-    transition: opacity 0.55s ease, transform 0.55s ease;
-  }
-  }
-  .reveal.revealed { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.10s; }
-  .reveal-delay-2 { transition-delay: 0.20s; }
-  .reveal-delay-3 { transition-delay: 0.30s; }
+  /* Entrance: one per section. Hidden only when JS can reveal it; 0.01 (not 0)
+     keeps the hero H1 eligible as LCP. */
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0.01; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
 
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
+    /* The chat thread is the problem section's single entrance: bubbles
+       arrive in order like messages, last one at 0.45s. */
+    .chat-thread.reveal { transform: none; }
+    .chat-thread .chat-msg { opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+    .chat-thread.revealed .chat-msg { opacity: 1; transform: translateY(0); }
+    .chat-thread.revealed .chat-msg:nth-child(2) { transition-delay: 0.09s; }
+    .chat-thread.revealed .chat-msg:nth-child(3) { transition-delay: 0.18s; }
+    .chat-thread.revealed .chat-msg:nth-child(4) { transition-delay: 0.27s; }
+    .chat-thread.revealed .chat-msg:nth-child(5) { transition-delay: 0.36s; }
+    .chat-thread.revealed .chat-msg:nth-child(6) { transition-delay: 0.45s; }
+
+    /* Funnel: level bars fill left to right once, as part of the same entrance. */
+    .funnel.reveal { transform: none; }
+    .funnel .funnel-bar { transform: scaleX(0); transform-origin: left; transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s; }
+    .funnel.revealed .funnel-bar { transform: scaleX(1); }
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach((el) => el.classList.add('revealed'));
+      return;
+    }
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    items.forEach((el) => observer.observe(el));
   });
 </script>
