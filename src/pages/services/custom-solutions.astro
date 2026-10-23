@@ -1,1158 +1,838 @@
 ---
 // src/pages/services/custom-solutions.astro
-// Build Trigger: 2026-07-11T12:05:00
+// Repositioned (owner decision 2026-10-22) as the crypto & Web3 go-to-market /
+// dedicated growth team page. Focus keyword: "crypto go-to-market strategy".
+// Each module category links to its dedicated service page so this page does
+// not compete with them. No KPI numbers. All content is in the static HTML;
+// JS only toggles panels, the module cart and the canvas.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import Badge from '../../components/ui/Badge.astro';
+import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 
 const canonical = 'https://fintech24h.com/services/custom-solutions/';
 const breadcrumbs = [
-  { name: 'Home', item: 'https://fintech24h.com/' },
+  { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services/' },
-  { name: 'Custom Solutions', item: canonical },
+  { name: 'Go-To-Market & Custom Programs', item: canonical },
 ];
-const serviceSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Service',
-  '@id': `${canonical}#service`,
-  name: 'Custom AI, Blockchain & Web3 Solutions',
-  serviceType: 'Custom AI, blockchain, Web3 and growth solutions',
-  description: 'Tailored AI, blockchain, Web3 and growth engagements for teams that need a scoped strategy, execution plan and measurable delivery milestones.',
-  url: canonical,
-  provider: {
-    '@id': 'https://fintech24h.com/#organization',
-  },
-  areaServed: ['VN', 'SG', 'AE', 'ID', 'TH', 'IN'],
-};
 
+const linkClass =
+  'text-[var(--accent-cyan)] underline decoration-[color-mix(in_srgb,var(--accent-cyan)_40%,transparent)] underline-offset-4 hover:decoration-[var(--accent-cyan)] transition-colors duration-200 rounded-sm';
+
+const differentiators = [
+  { title: 'Built around your launch', desc: 'Every plan starts from your stage, chain, audience and budget, not from a package someone else bought.', tone: 'cyan', icon: 'check' },
+  { title: 'One dedicated team', desc: 'A single lead coordinates strategy, KOLs, PR, community, events and BD, so nothing falls between agencies.', tone: 'purple', icon: 'team' },
+  { title: 'Flexible engagement', desc: 'Monthly retainers, fixed-scope sprints or milestone-based programs, agreed before any work starts.', tone: 'green', icon: 'coin' },
+  { title: 'Asia & Middle East reach', desc: 'Local teams and partners across Vietnam, Singapore, the UAE, Indonesia, Thailand and India.', tone: 'green', icon: 'globe' },
+  { title: 'Plain reporting', desc: 'Weekly updates and a shared view of what ran, what worked and what changes next.', tone: 'cyan', icon: 'chat' },
+  { title: 'From startup to institution', desc: 'The same method for a first token launch and for an established exchange or fintech entering a new market.', tone: 'purple', icon: 'layers' }
+];
+
+const phases = [
+  {
+    name: 'Pre-launch',
+    goal: 'Build belief before there is anything to buy.',
+    items: ['Positioning, narrative and messaging', 'Tokenomics and launch timeline review', 'Community setup on Telegram and Discord', 'Waitlist, quests and early KOL seeding', 'Investor and partner introductions']
+  },
+  {
+    name: 'Launch',
+    goal: 'Make launch week count.',
+    items: ['Coordinated KOL and PR waves', 'Exchange and launchpad coordination', 'AMAs, X Spaces and launch events', 'Moderation and crisis plan for launch day', 'Tracked links and daily reporting']
+  },
+  {
+    name: 'Scale',
+    goal: 'Turn attention into a lasting user base.',
+    items: ['Always-on content and thought leadership', 'Ambassador and retention programs', 'New market entry in Asia and the Gulf', 'Conference season activations', 'Ecosystem partnerships and integrations']
+  }
+];
+
+// Module categories for the RFP builder. No KPI numbers; each links to the
+// dedicated page where one exists.
 const categories = [
   {
-    id: "ai",
-    title: "AI Solutions",
-    description: "Build intelligence into your automation, customer workflows, and analytics pipelines.",
-    color: "cyan",
+    id: 'marketing', title: 'Marketing & Growth', href: '/services/kol-marketing/', hrefLabel: 'Crypto KOL & influencer marketing',
+    description: 'Acquisition, brand and community growth for crypto, Web3 and fintech products.',
     services: [
-      { name: "AI Strategy Consulting", kpi: "99% Goal Alignment", timeline: "2-4 Weeks" },
-      { name: "AI Workflow Automation", kpi: "Up to 10x Team Efficiency", timeline: "4-8 Weeks" },
-      { name: "AI Customer Support", kpi: "85% Auto-Resolution Rate", timeline: "4-6 Weeks" },
-      { name: "AI Knowledge Base", kpi: "Instant Info Retrieval", timeline: "3-5 Weeks" },
-      { name: "AI Agent Development", kpi: "Autonomous Task Execution", timeline: "6-12 Weeks" },
-      { name: "AI Integration", kpi: "Seamless Legacy Merging", timeline: "2-4 Weeks" },
-      { name: "Enterprise AI Solutions", kpi: "Custom Foundation Models", timeline: "12-24 Weeks" }
+      { name: 'Go-to-market strategy', note: 'Launch plan, channels and budget split' },
+      { name: 'KOL campaigns', note: 'Vetted crypto KOLs on X, YouTube and Telegram' },
+      { name: 'Community building', note: 'Telegram and Discord setup and moderation' },
+      { name: 'Content marketing', note: 'Articles, threads and explainers' },
+      { name: 'Social media management', note: 'Always-on presence on X and other channels' },
+      { name: 'Performance marketing', note: 'Paid campaigns where crypto ads are allowed' },
+      { name: 'Brand positioning', note: 'Narrative, messaging and visual direction' }
     ]
   },
   {
-    id: "blockchain",
-    title: "Blockchain & Web3",
-    description: "Launch secure dApps, smart contracts, token economies, and scaling ecosystems.",
-    color: "purple",
+    id: 'pr', title: 'PR & Media', href: '/services/pr-media/', hrefLabel: 'Blockchain PR agency',
+    description: 'Earned and sponsored coverage that builds credibility with investors and users.',
     services: [
-      { name: "Blockchain Consulting", kpi: "Market-Fit Validation", timeline: "2-4 Weeks" },
-      { name: "Smart Contract Development", kpi: "CertiK Audit-Ready Code", timeline: "3-8 Weeks" },
-      { name: "Token Strategy & Tokenomics", kpi: "Sustainable Economy Design", timeline: "4-6 Weeks" },
-      { name: "Web3 Growth Strategy", kpi: "10x Ecosystem Velocity", timeline: "Ongoing" },
-      { name: "Exchange Listing Support", kpi: "Tier-1 Listings Access", timeline: "4-8 Weeks" },
-      { name: "DAO Consulting", kpi: "Decentralized Governance", timeline: "4-6 Weeks" },
-      { name: "NFT Strategy", kpi: "Interactive Community Assets", timeline: "3-6 Weeks" },
-      { name: "Blockchain Ecosystem Dev", kpi: "Custom L1/L2 Infrastructure", timeline: "12-36 Weeks" }
+      { name: 'Press releases', note: 'News-style announcements for launches and listings' },
+      { name: 'Media relations', note: 'Pitching reporters who cover your niche' },
+      { name: 'Sponsored articles', note: 'Guaranteed timing, always labeled' },
+      { name: 'Founder thought leadership', note: 'Op-eds, interviews and commentary' },
+      { name: 'Podcast placements', note: 'Long-form conversations with relevant hosts' },
+      { name: 'Crisis communications', note: 'Holding statements and FUD response' }
     ]
   },
   {
-    id: "marketing",
-    title: "Marketing & Growth",
-    description: "Drive continuous acquisition, brand presence, performance, and organic authority.",
-    color: "cyan",
+    id: 'bd', title: 'Business Development', href: '/services/business-development/', hrefLabel: 'Web3 business development',
+    description: 'Warm introductions to the exchanges, investors and partners that fit your stage.',
     services: [
-      { name: "Growth Marketing", kpi: "Up to 5x Conversion Increase", timeline: "Ongoing" },
-      { name: "SEO (Search Optimization)", kpi: "Page 1 Google Rankings", timeline: "3-6 Months" },
-      { name: "Content Marketing", kpi: "Thought Leadership Status", timeline: "Ongoing" },
-      { name: "Social Media Management", kpi: "Engaged Organic Communities", timeline: "Ongoing" },
-      { name: "Community Building", kpi: "10k+ Active Members", timeline: "1-3 Months" },
-      { name: "Performance Marketing", kpi: "Maximized Ad Spend ROI", timeline: "Ongoing" },
-      { name: "Influencer Marketing", kpi: "Targeted Crypto Reach", timeline: "Ongoing" },
-      { name: "KOL Campaigns", kpi: "Viral Web3 Awareness", timeline: "1-2 Weeks" },
-      { name: "Email Marketing", kpi: "40%+ Open Rates", timeline: "Ongoing" },
-      { name: "Brand Positioning", kpi: "Clear Market Differentiator", timeline: "3-4 Weeks" }
+      { name: 'Exchange listing readiness', note: 'Review and introductions, never guaranteed listings' },
+      { name: 'Investor introductions', note: 'Funds, angels and family offices' },
+      { name: 'Ecosystem partnerships', note: 'Integrations that add real utility' },
+      { name: 'Market entry', note: 'Local partners in Southeast Asia and the UAE' },
+      { name: 'B2B sales support', note: 'Pipeline for Web3 and fintech products' }
     ]
   },
   {
-    id: "pr",
-    title: "PR & Media",
-    description: "Broaden your brand visibility and credibility across global publications.",
-    color: "purple",
+    id: 'events', title: 'Events & Community', href: '/services/event-marketing/', hrefLabel: 'Crypto event marketing',
+    description: 'Conference presence, side events and online sessions that create real conversations.',
     services: [
-      { name: "Global Press Releases", kpi: "Published on 500+ Top Portals", timeline: "1-2 Weeks" },
-      { name: "Media Outreach & Relations", kpi: "Tier-1 Media Placements", timeline: "Ongoing" },
-      { name: "Sponsored Articles", kpi: "High-Traffic Content Placements", timeline: "1-2 Weeks" },
-      { name: "Founder Interviews", kpi: "Personal Brand Authority", timeline: "2-3 Weeks" },
-      { name: "Executive Branding", kpi: "Industry Voice Authority", timeline: "Ongoing" },
-      { name: "Podcast Promotion", kpi: "Featured on Top Audio Shows", timeline: "4-8 Weeks" },
-      { name: "Media Buying", kpi: "Optimized Ad Network ROI", timeline: "Ongoing" },
-      { name: "Thought Leadership Campaigns", kpi: "Recognized Expert Status", timeline: "Ongoing" }
+      { name: 'Conference marketing', note: 'Sponsorship, booth and speaking strategy' },
+      { name: 'Side events & dinners', note: 'Curated guest lists during conference weeks' },
+      { name: 'X Spaces & AMAs', note: 'Online sessions for the wider community' },
+      { name: 'Hackathons & workshops', note: 'Reach builders, not just traders' },
+      { name: 'Meetups', note: 'Local community gatherings' }
     ]
   },
   {
-    id: "bd",
-    title: "Business Development",
-    description: "Forge strategic alliances, secure lead pipelines, and expand globally.",
-    color: "cyan",
+    id: 'ai', title: 'AI Solutions', href: '/services/ai-marketing/', hrefLabel: 'Crypto AI marketing',
+    description: 'Supervised AI for community support, monitoring and content, plus custom AI workflows.',
     services: [
-      { name: "Partnership Development", kpi: "High-Value Industry Alliances", timeline: "Ongoing" },
-      { name: "Strategic Alliances", kpi: "Ecosystem Synergies Created", timeline: "Ongoing" },
-      { name: "Investor Relations", kpi: "Warm Introductions to VCs", timeline: "2-4 Months" },
-      { name: "Lead Generation", kpi: "Qualified B2B Sales Pipelines", timeline: "Ongoing" },
-      { name: "International Market Expansion", kpi: "Local Ecosystem Presence", timeline: "3-6 Months" },
-      { name: "B2B Sales Support", kpi: "Increased Deal Close Rates", timeline: "Ongoing" },
-      { name: "Go-to-Market (GTM) Strategy", kpi: "Successful Launch Campaign", timeline: "4-6 Weeks" }
+      { name: 'AI strategy consulting', note: 'Where AI helps your team and where it does not' },
+      { name: 'AI community support', note: 'Answers from approved sources, humans on escalation' },
+      { name: 'AI workflow automation', note: 'Internal tools that save repetitive work' },
+      { name: 'AI knowledge base', note: 'Searchable docs for users and staff' },
+      { name: 'AI agent development', note: 'Task-specific agents with human review' }
     ]
   },
   {
-    id: "events",
-    title: "Events & Community",
-    description: "Connect face-to-face or digitally via AMAs, spaces, hackathons, and conferences.",
-    color: "purple",
+    id: 'blockchain', title: 'Blockchain & Web3 Advisory', href: '', hrefLabel: '',
+    description: 'Advisory and coordination for the product and token side of a launch.',
     services: [
-      { name: "Conference Marketing", kpi: "Booth & Panel Visibility Boost", timeline: "2-4 Weeks" },
-      { name: "Event Promotion", kpi: "Sold-Out Ticket Sales", timeline: "4-8 Weeks" },
-      { name: "Webinars & Digital Events", kpi: "Highly Interactive Sessions", timeline: "1-2 Weeks" },
-      { name: "Twitter/X Spaces & AMAs", kpi: "5k+ Live Co-Listeners", timeline: "1-2 Weeks" },
-      { name: "Hackathons", kpi: "Dozens of dApps Built", timeline: "2-3 Months" },
-      { name: "Meetups & Side Events", kpi: "Strong Local Connections", timeline: "3-4 Weeks" },
-      { name: "Global Networking Campaigns", kpi: "Unified Brand Ambassadors", timeline: "Ongoing" }
+      { name: 'Blockchain consulting', note: 'Use-case and market-fit review' },
+      { name: 'Tokenomics review', note: 'Distribution, vesting and incentives' },
+      { name: 'Smart contract coordination', note: 'Development partners and audit preparation' },
+      { name: 'DAO & governance design', note: 'Proposals, voting and community roles' },
+      { name: 'NFT strategy', note: 'Collections and holder utility' }
     ]
   },
   {
-    id: "tech",
-    title: "Technology Development",
-    description: "Launch custom high-performance web/mobile portals, dashboards, and integrations.",
-    color: "cyan",
+    id: 'tech', title: 'Technology Development', href: '', hrefLabel: '',
+    description: 'Websites, apps and integrations that support your marketing and product.',
     services: [
-      { name: "Website Development", kpi: "Sub-1s Page Load Times", timeline: "3-6 Weeks" },
-      { name: "Landing Pages", kpi: "A/B Tested for Max Sign-Ups", timeline: "1-2 Weeks" },
-      { name: "Mobile Applications", kpi: "Smooth iOS & Android Apps", timeline: "8-16 Weeks" },
-      { name: "CRM Systems", kpi: "Fully Streamlined Pipelines", timeline: "4-8 Weeks" },
-      { name: "API Integration", kpi: "Secure High-Throughput Sync", timeline: "2-4 Weeks" },
-      { name: "Dashboard Development", kpi: "Real-Time Metrics Visualization", timeline: "4-8 Weeks" },
-      { name: "Enterprise Portals", kpi: "Role-Based Access Control", timeline: "8-16 Weeks" },
-      { name: "Custom Software Development", kpi: "Fully Tailored Architecture", timeline: "12-24 Weeks" }
+      { name: 'Website development', note: 'Fast, search-friendly project sites' },
+      { name: 'Landing pages', note: 'Campaign and waitlist pages' },
+      { name: 'Dashboards', note: 'Metrics views for teams and communities' },
+      { name: 'API & CRM integration', note: 'Connect forms, CRM and analytics' },
+      { name: 'Custom software', note: 'Scoped builds with a clear handover' }
     ]
   }
 ];
 
 const segments = [
-  { 
-    id: "ai", 
-    title: "AI Companies", 
-    pain: "Rapid market entry, user adoption, positioning against tech giants, and building organic developer trust.", 
-    strategy: "Full-funnel growth campaigns, AI workflow automation optimization, technical thought leadership PR, and direct marketing pipelines." 
-  },
-  { 
-    id: "blockchain", 
-    title: "Blockchain Projects", 
-    pain: "Ecosystem scaling, developer acquisition, community retention, and tier-1 exchange listing visibility.", 
-    strategy: "KOL marketing sprints, token economics consulting, global hackathons, and multi-channel PR campaigns." 
-  },
-  { 
-    id: "fintech", 
-    title: "Fintech Startups", 
-    pain: "Building user trust, high CAC (Customer Acquisition Cost), and regulatory messaging constraints.", 
-    strategy: "Targeted lead generation pipelines, PR placements in premium financial journals, and brand authority positioning." 
-  },
-  { 
-    id: "vc", 
-    title: "Venture Capitals", 
-    pain: "Deal flow generation, portfolio growth assistance, and fund positioning in the Web3/AI landscape.", 
-    strategy: "Co-marketing campaigns, strategic business development alliances, and global networking events." 
-  },
-  { 
-    id: "gov", 
-    title: "Government & Enterprise", 
-    pain: "Legacy tech modernisation, secure private blockchain integrations, and high-efficiency workflow scaling.", 
-    strategy: "AI Strategy Consulting, Custom Enterprise Portals development, and robust Smart Contract audits coordination." 
-  }
+  { id: 'blockchain', title: 'Blockchain Projects', single: 'blockchain project', pain: 'Ecosystem growth, developer adoption, community retention and exchange readiness, often all at the same time.', strategy: 'A phased go-to-market plan combining KOL waves, community programs, tokenomics review, hackathons and multi-channel PR.' },
+  { id: 'fintech', title: 'Fintech Companies', single: 'fintech company', pain: 'Building trust, high acquisition costs and strict rules on what marketing can claim.', strategy: 'Regulation-aware messaging, PR in business and finance media, partnership pipelines and education-first content.' },
+  { id: 'ai', title: 'AI Companies', single: 'AI company', pain: 'Standing out in a crowded market, earning developer trust and explaining what the product really does.', strategy: 'Clear positioning, technical thought leadership, community building and focused acquisition campaigns.' },
+  { id: 'vc', title: 'Venture Funds', single: 'venture fund', pain: 'Deal flow, portfolio support and a clear position in the Web3 and AI landscape.', strategy: 'Co-marketing for portfolio companies, curated founder events and business development introductions.' },
+  { id: 'enterprise', title: 'Enterprises & Institutions', single: 'enterprise', pain: 'Exploring blockchain or AI without the risk of hype-driven projects.', strategy: 'Advisory, pilot scoping, partner selection and communications for internal and external audiences.' }
 ];
 
 const steps = [
-  { step: "01", name: "Discovery", desc: "We begin by understanding your business, goals, target audience, challenges, and expected outcomes.", outcomes: ["Current Audit", "Competitor Matrix", "Brand Positioning Plan"] },
-  { step: "02", name: "Strategy", desc: "Our specialists design a customized roadmap that aligns with your objectives, budget, and timeline.", outcomes: ["Deliverables Outline", "Channel Recommendations", "Budget Allocation"] },
-  { step: "03", name: "Proposal", desc: "You'll receive a detailed proposal outlining deliverables, KPIs, milestones, pricing, and implementation plan.", outcomes: ["Draft Agreement", "Milestone Roadmap", "KPI Targets Agreed"] },
-  { step: "04", name: "Execution", desc: "Our dedicated project team executes the strategy with continuous communication and quality assurance.", outcomes: ["Weekly Updates", "Active Campaign Launch", "Quality Checks"] },
-  { step: "05", name: "Optimization", desc: "We monitor performance, identify opportunities, and optimize campaigns or solutions for maximum impact.", outcomes: ["A/B Test Results", "Targeting Tweaks", "ROI Optimisations"] },
-  { step: "06", name: "Reporting", desc: "Transparent reporting provides measurable insights, progress updates, and actionable recommendations.", outcomes: ["Real-Time Dashboard", "Monthly Executive Report", "Future Roadmaps"] }
+  { step: '01', name: 'Discovery', desc: 'We learn your product, goals, audience, competitors and constraints, and agree what success should look like.', outcomes: ['Current state review', 'Competitor map', 'Positioning notes'] },
+  { step: '02', name: 'Strategy', desc: 'We design the go-to-market roadmap: phases, channels, budget split and the team that will run it.', outcomes: ['Roadmap', 'Channel plan', 'Budget allocation'] },
+  { step: '03', name: 'Proposal', desc: 'You receive a written proposal with deliverables, milestones, pricing and how we will report.', outcomes: ['Scope of work', 'Milestones', 'Reporting plan'] },
+  { step: '04', name: 'Execution', desc: 'A dedicated team runs the plan with weekly check-ins, approvals and quality control.', outcomes: ['Weekly updates', 'Campaign launch', 'Approvals log'] },
+  { step: '05', name: 'Optimization', desc: 'We watch what works, move budget toward it and drop what does not.', outcomes: ['Test results', 'Targeting changes', 'Budget shifts'] },
+  { step: '06', name: 'Reporting', desc: 'Plain reports on progress and next steps, with a roadmap for the following phase.', outcomes: ['Shared dashboard', 'Monthly report', 'Next-phase plan'] }
 ];
+
+const faqs = [
+  {
+    q: 'What is a crypto go-to-market strategy?',
+    a: 'It is the plan for how a crypto, Web3 or fintech product reaches its first users, investors and partners: positioning, launch timeline, channels, budget and the team that runs it. A good plan covers pre-launch, launch week and the months after, not just the announcement.'
+  },
+  {
+    q: 'How is this different from your individual services?',
+    a: `Our individual services, such as <a href="/services/kol-marketing/" class="${linkClass}">KOL marketing</a>, <a href="/services/pr-media/" class="${linkClass}">PR</a> and <a href="/services/community-growth/" class="${linkClass}">community management</a>, cover one channel each. A go-to-market program combines them under one plan and one team lead, with a shared timeline and budget.`
+  },
+  {
+    q: 'What does a dedicated Web3 growth team include?',
+    a: 'Usually a strategy lead, a project manager and specialists for KOLs, PR, community and events, with business development and design support when needed. The mix depends on your phase and budget.'
+  },
+  {
+    q: 'How do engagements work and how are they priced?',
+    a: 'We offer monthly retainers, fixed-scope sprints and milestone-based programs. Pricing depends on scope, markets and channels, and is agreed in a written proposal before any work starts.'
+  },
+  {
+    q: 'Can you work alongside our in-house marketing team?',
+    a: 'Yes. Many clients keep an internal lead and use us for the channels, markets or launch moments they cannot cover alone. We share plans and reporting so both teams work from the same view.'
+  },
+  {
+    q: 'Do you build products or only market them?',
+    a: 'Our core is marketing, communications and business development. For websites, dashboards, AI workflows and similar builds we scope projects directly or coordinate trusted development partners.'
+  },
+  {
+    q: 'Which markets can a go-to-market program cover?',
+    a: `Global English-speaking audiences plus local execution in <a href="/blockchain-marketing-agency-vietnam/" class="${linkClass}">Vietnam</a>, <a href="/blockchain-marketing-agency-singapore/" class="${linkClass}">Singapore</a>, <a href="/blockchain-marketing-agency-dubai/" class="${linkClass}">Dubai and the UAE</a>, Indonesia, Thailand and India.`
+  },
+  {
+    q: 'How quickly can you start?',
+    a: 'After a discovery call we send a proposal, and work can start as soon as the scope is agreed. For launches we recommend starting well before the date so the community and narrative have time to build.'
+  }
+];
+
+const META_DESCRIPTION =
+  'Crypto and Web3 go-to-market strategy with a dedicated growth team. Fintech24h plans your launch and runs KOL, PR, community, events and BD as one program.';
+
+const serviceSchema = buildServiceSchema({
+  name: 'Crypto & Web3 Go-To-Market Strategy',
+  alternateName: ['Web3 GTM Strategy', 'Dedicated Web3 Growth Team', 'Custom Blockchain Marketing Programs', 'Crypto Launch Strategy'],
+  serviceType: 'Go-to-market strategy',
+  url: canonical,
+  description: META_DESCRIPTION
+});
+const faqSchema = buildFaqSchema(faqs);
+const combinedSchema = [serviceSchema, faqSchema];
+
+const toneClass: Record<string, { bg: string; text: string; glow: string }> = {
+  cyan: { bg: 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)]', text: 'text-[var(--accent-cyan)]', glow: '0, 200, 240' },
+  purple: { bg: 'bg-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)]', text: 'text-[var(--accent-purple)]', glow: '124, 92, 252' },
+  green: { bg: 'bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)]', text: 'text-[var(--color-success)]', glow: '16, 185, 129' }
+};
+
+const labelClass = 'font-mono text-xs text-[var(--text-secondary)] uppercase tracking-wider block';
+const inputClass = 'w-full bg-[var(--surface-soft)] border border-[var(--border-default)] focus:border-[var(--accent-cyan)] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--accent-cyan)] px-4 py-3 rounded-lg text-base text-[var(--text-primary)] transition-colors placeholder:text-[var(--text-muted)]';
 ---
 
 <BaseLayout
-  title="Custom AI, Blockchain & Web3 Solutions | Fintech24h"
-  description="Tailored AI, blockchain, Web3 and growth solutions for teams that need a focused strategy, delivery roadmap and measurable milestones."
+  title="Crypto & Web3 Go-To-Market Strategy Agency | Fintech24h"
+  description={META_DESCRIPTION}
   canonical={canonical}
-  schema={serviceSchema}
+  schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
   <div class="relative overflow-hidden pt-32 pb-24 min-h-screen text-[var(--text-primary)] bg-[var(--bg-primary)]">
-    
-    <!-- Deep Space Background glow -->
-    <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] blur-[150px] pointer-events-none"></div>
-    <div class="absolute bottom-20 right-1/4 w-[500px] h-[500px] bg-[color-mix(in_srgb,var(--accent-purple)_5%,transparent)] blur-[150px] pointer-events-none"></div>
 
-    <!-- ────────────────────────────────────────────────────────
-         HERO SECTION (3D Sphere Canvas + Sentence Builder)
-         ──────────────────────────────────────────────────────── -->
+    <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] blur-[150px] pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute bottom-20 right-1/4 w-[500px] h-[500px] bg-[color-mix(in_srgb,var(--accent-purple)_5%,transparent)] blur-[150px] pointer-events-none" aria-hidden="true"></div>
+
+    <!-- HERO: H1 = focus keyword, sentence builder, particle canvas -->
     <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-      
       <div class="lg:col-span-7 space-y-8">
-        <Badge variant="cyan">CUSTOM SOLUTIONS ENGINE</Badge>
+        <Badge variant="cyan">GO-TO-MARKET &amp; CUSTOM PROGRAMS</Badge>
         <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight uppercase leading-[1.1]">
-          Tailored <span class="text-[var(--accent-cyan)]">AI & Web3</span> Solutions for Every Business
+          Crypto &amp; Web3 <span class="text-[var(--accent-cyan)] whitespace-nowrap">Go-To-Market</span> Strategy
         </h1>
+        <p class="font-display text-lg sm:text-xl text-[var(--text-primary)]">
+          One plan, one dedicated team, every channel your launch needs.
+        </p>
         <p class="font-body text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl">
-          Every business has unique goals. At Fintech24h, we reject one-size-fits-all templates. We create custom architectural roadmaps that deliver scalable, measurable growth.
+          We design and run go-to-market programs for crypto, Web3, fintech and AI companies, combining KOLs, PR, community, events and business development under one roadmap instead of five separate agencies.
         </p>
 
-        <!-- Interactive Sentence Builder -->
-        <div class="relative bg-[var(--surface-soft)] border border-[var(--border-default)] p-6 sm:p-8 rounded-3xl backdrop-blur-xl shadow-2xl relative overflow-hidden">
-          <div class="absolute -top-10 -right-10 w-40 h-40 bg-[var(--accent-cyan)] opacity-5 blur-3xl pointer-events-none"></div>
-          
+        <div class="relative bg-[var(--surface-soft)] border border-[var(--border-default)] p-6 sm:p-8 rounded-3xl backdrop-blur-xl shadow-2xl overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-[var(--accent-cyan)] opacity-5 blur-3xl pointer-events-none" aria-hidden="true"></div>
           <p class="font-display text-base sm:text-xl leading-relaxed text-[var(--text-primary)]">
-            I am looking for a 
+            I am looking for a
             <span class="relative inline-block mx-1">
-              <select id="sb-service" class="appearance-none bg-[var(--bg-secondary)] border-b-2 border-[var(--accent-cyan)] text-[var(--accent-cyan)] font-bold px-3 py-1 pr-6 rounded cursor-pointer focus:outline-none focus:border-cyan-300">
-                <option value="marketing" selected>Marketing & Growth</option>
-                <option value="blockchain">Blockchain & Web3</option>
-                <option value="ai">AI Solutions</option>
-                <option value="pr">PR & Media Relations</option>
-                <option value="bd">Business Development</option>
-                <option value="events">Events & Community</option>
-                <option value="tech">Custom Tech Dev</option>
+              <label for="sb-service" class="sr-only">Solution type</label>
+              <select id="sb-service" class="appearance-none bg-[var(--bg-secondary)] border-b-2 border-[var(--accent-cyan)] text-[var(--accent-cyan)] font-bold px-3 py-1 pr-6 rounded cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
+                {categories.map((c, i) => <option value={c.id} selected={i === 0}>{c.title}</option>)}
               </select>
             </span>
-            solution, custom-tailored for my 
+            program, tailored for my
             <span class="relative inline-block mx-1">
-              <select id="sb-client" class="appearance-none bg-[var(--bg-secondary)] border-b-2 border-[var(--accent-purple)] text-[var(--accent-purple)] font-bold px-3 py-1 pr-6 rounded cursor-pointer focus:outline-none focus:border-purple-300">
-                <option value="ai" selected>AI Company</option>
-                <option value="blockchain">Blockchain Project</option>
-                <option value="fintech">Fintech Startup</option>
-                <option value="vc">Venture Capital</option>
-                <option value="gov">Government/Enterprise</option>
+              <label for="sb-client" class="sr-only">Organization type</label>
+              <select id="sb-client" class="appearance-none bg-[var(--bg-secondary)] border-b-2 border-[var(--accent-purple)] text-[var(--accent-purple)] font-bold px-3 py-1 pr-6 rounded cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
+                {segments.map((s, i) => <option value={s.id} selected={i === 0}>{s.single}</option>)}
               </select>
             </span>
-            project, to launch within a timeline of
+            , to launch within
             <span class="relative inline-block mx-1">
-              <select id="sb-timeline" class="appearance-none bg-[var(--bg-secondary)] border-b-2 border-[var(--color-success)] text-[var(--color-success)] font-bold px-3 py-1 pr-6 rounded cursor-pointer focus:outline-none focus:border-[var(--color-success)]">
-                <option value="immediate" selected>1 Month</option>
-                <option value="quarter">3 Months</option>
-                <option value="flexible">6+ Months</option>
+              <label for="sb-timeline" class="sr-only">Timeline</label>
+              <select id="sb-timeline" class="appearance-none bg-[var(--bg-secondary)] border-b-2 border-[var(--color-success)] text-[var(--color-success)] font-bold px-3 py-1 pr-6 rounded cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
+                <option value="immediate" selected>a month</option>
+                <option value="quarter">a quarter</option>
+                <option value="flexible">six months or more</option>
               </select>
             </span>.
           </p>
-
           <div class="mt-8 flex flex-wrap gap-4 items-center justify-between border-t border-[var(--border-subtle)] pt-6">
-            <div id="sb-recommendation" class="text-[10px] sm:text-xs font-mono text-[var(--text-secondary)] opacity-70 tracking-wider">
-              ⚡ SUGGESTED CATEGORY: <span class="text-[var(--text-primary)] font-semibold uppercase">MARKETING & GROWTH</span>
-            </div>
-            <button id="sb-action" class="btn-liquid-glass-primary px-5 py-3 text-[10px] font-bold tracking-widest">
-              CONFIGURE STRATEGY
+            <p id="sb-recommendation" class="text-xs font-mono text-[var(--text-secondary)] tracking-wider" aria-live="polite">
+              SUGGESTED MODULES: <span class="text-[var(--text-primary)] font-semibold uppercase">{categories[0].title}</span>
+            </p>
+            <button id="sb-action" type="button" class="btn-liquid-glass-primary px-5 py-3 text-xs font-bold tracking-widest">
+              BUILD MY PLAN
             </button>
           </div>
         </div>
       </div>
 
-      <!-- 3D Particle Constellation Canvas -->
-      <div class="lg:col-span-5 flex justify-center items-center relative min-h-[350px] sm:min-h-[400px]">
+      <div class="lg:col-span-5 flex justify-center items-center relative min-h-[350px] sm:min-h-[400px]" aria-hidden="true">
         <div class="absolute inset-0 bg-gradient-to-tr from-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] to-[color-mix(in_srgb,var(--accent-purple)_5%,transparent)] rounded-full filter blur-2xl opacity-50"></div>
-        <canvas id="particle-canvas" class="w-full max-w-[420px] aspect-square relative z-10 cursor-pointer"></canvas>
+        <canvas id="particle-canvas" class="w-full max-w-[420px] aspect-square relative z-10"></canvas>
       </div>
-
     </section>
 
-    <!-- ────────────────────────────────────────────────────────
-         WHY CHOOSE US (Spotlight Bento Grid)
-         ──────────────────────────────────────────────────────── -->
+    <!-- DEFINITION -->
+    <section class="mt-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5 space-y-4">
+        <Badge variant="purple">THE BASICS</Badge>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">What a Crypto Go-To-Market Plan Includes</h2>
+      </div>
+      <div class="lg:col-span-7 space-y-5 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+        <p class="text-[var(--text-primary)] text-xl">
+          A crypto go-to-market strategy decides who you launch to, what you say, which channels carry the message, in what order, and with what budget. Fintech24h turns that plan into a program run by one dedicated team, from the first community post to the months after launch.
+        </p>
+        <p>
+          Most Web3 launches fail on coordination, not ideas. KOLs post before the community is ready, PR lands after the listing, and nobody owns the follow-up. A single roadmap with one lead keeps every channel pointed at the same goal at the same time.
+        </p>
+        <p>
+          We build go-to-market programs for token launches, DeFi and infrastructure protocols, exchanges, fintech companies, AI products and funds supporting their portfolios.
+        </p>
+      </div>
+    </section>
+
+    <!-- LAUNCH PHASES -->
+    <section class="mt-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="text-center space-y-4">
+        <Badge variant="cyan">THE ROADMAP</Badge>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">Web3 Launch Phases We Plan For</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {phases.map((p, i) => (
+          <div class="bento-card group relative p-8 rounded-3xl bg-[var(--surface-faint)] border border-[var(--border-subtle)] overflow-hidden transition-colors duration-300 hover:border-[var(--border-default)]">
+            <div class="spotlight-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(300px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 200, 240, 0.06), transparent 80%);" aria-hidden="true"></div>
+            <div class="relative z-10 space-y-4">
+              <span class="font-mono text-xs text-[var(--accent-cyan)] tracking-widest" aria-hidden="true">PHASE 0{i + 1}</span>
+              <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] uppercase tracking-wide">{p.name}</h3>
+              <p class="font-body text-base text-[var(--text-primary)]">{p.goal}</p>
+              <ul class="space-y-2 pt-2 border-t border-[var(--border-subtle)]">
+                {p.items.map((it) => (
+                  <li class="flex gap-2 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+                    <span class="mt-2.5 w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] shrink-0" aria-hidden="true"></span>
+                    <span>{it}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- WHY US (spotlight bento) -->
     <section class="mt-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       <div class="text-center space-y-4">
         <Badge variant="purple">WHAT MAKES US DIFFERENT</Badge>
-        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">
-          Engineered for Refined Impact
-        </h2>
-        <p class="font-body text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] max-w-xl mx-auto text-sm sm:text-base">
-          We bring high-end execution, global reach, and dynamic adaptability to startups and enterprise players.
-        </p>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">Why a Dedicated Web3 Growth Team</h2>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Card 1 -->
-        <div class="bento-card group relative p-8 rounded-3xl bg-[var(--surface-faint)] border border-[var(--border-subtle)] overflow-hidden transition-all duration-500 hover:-translate-y-1">
-          <div class="spotlight-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(300px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 200, 240, 0.06), transparent 80%);"></div>
-          <div class="spotlight-border absolute inset-0 rounded-3xl pointer-events-none" style="background: radial-gradient(150px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 200, 240, 0.25), transparent 80%); padding: 1px; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-          <div class="relative z-10 space-y-4">
-            <div class="w-10 h-10 rounded-full bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] flex items-center justify-center text-[var(--accent-cyan)]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        {differentiators.map((d) => (
+          <div class="bento-card group relative p-8 rounded-3xl bg-[var(--surface-faint)] border border-[var(--border-subtle)] overflow-hidden transition-all duration-300 hover:-translate-y-1">
+            <div class="spotlight-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={`background: radial-gradient(300px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(${toneClass[d.tone].glow}, 0.06), transparent 80%);`} aria-hidden="true"></div>
+            <div class="spotlight-border absolute inset-0 rounded-3xl pointer-events-none" style={`background: radial-gradient(150px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(${toneClass[d.tone].glow}, 0.25), transparent 80%); padding: 1px; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;`} aria-hidden="true"></div>
+            <div class="relative z-10 space-y-4">
+              <div class={`w-10 h-10 rounded-full ${toneClass[d.tone].bg} flex items-center justify-center ${toneClass[d.tone].text}`} aria-hidden="true">
+                {d.icon === 'check' && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>}
+                {d.icon === 'team' && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>}
+                {d.icon === 'coin' && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>}
+                {d.icon === 'globe' && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>}
+                {d.icon === 'chat' && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>}
+                {d.icon === 'layers' && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>}
+              </div>
+              <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">{d.title}</h3>
+              <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{d.desc}</p>
             </div>
-            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">Fully Customized</h3>
-            <p class="font-body text-xs text-[var(--text-secondary)] opacity-70 leading-relaxed font-light">
-              Strategies tailored to your specific ecosystem, metrics, and parameters, rejecting general presets.
-            </p>
           </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="bento-card group relative p-8 rounded-3xl bg-[var(--surface-faint)] border border-[var(--border-subtle)] overflow-hidden transition-all duration-500 hover:-translate-y-1">
-          <div class="spotlight-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(300px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(139, 92, 246, 0.06), transparent 80%);"></div>
-          <div class="spotlight-border absolute inset-0 rounded-3xl pointer-events-none" style="background: radial-gradient(150px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(139, 92, 246, 0.25), transparent 80%); padding: 1px; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-          <div class="relative z-10 space-y-4">
-            <div class="w-10 h-10 rounded-full bg-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] flex items-center justify-center text-[var(--accent-purple)]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">Dedicated Teams</h3>
-            <p class="font-body text-xs text-[var(--text-secondary)] opacity-70 leading-relaxed font-light">
-              Highly specialized node leaders and developers assigned to coordinate, audit, and push your strategy.
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="bento-card group relative p-8 rounded-3xl bg-[var(--surface-faint)] border border-[var(--border-subtle)] overflow-hidden transition-all duration-500 hover:-translate-y-1">
-          <div class="spotlight-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(300px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(16, 185, 129, 0.06), transparent 80%);"></div>
-          <div class="spotlight-border absolute inset-0 rounded-3xl pointer-events-none" style="background: radial-gradient(150px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(16, 185, 129, 0.25), transparent 80%); padding: 1px; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-          <div class="relative z-10 space-y-4">
-            <div class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-[var(--color-success)]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </div>
-            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">Flexible Engagement</h3>
-            <p class="font-body text-xs text-[var(--text-secondary)] opacity-70 leading-relaxed font-light">
-              Consulting retainer plans, project sprints, or custom milestones aligned with your financial guidelines.
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="bento-card group relative p-8 rounded-3xl bg-[var(--surface-faint)] border border-[var(--border-subtle)] overflow-hidden transition-all duration-500 hover:-translate-y-1">
-          <div class="spotlight-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(300px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(16, 185, 129, 0.06), transparent 80%);"></div>
-          <div class="spotlight-border absolute inset-0 rounded-3xl pointer-events-none" style="background: radial-gradient(150px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(16, 185, 129, 0.25), transparent 80%); padding: 1px; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-          <div class="relative z-10 space-y-4">
-            <div class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-[var(--color-success)]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-            </div>
-            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">Global Execution</h3>
-            <p class="font-body text-xs text-[var(--text-secondary)] opacity-70 leading-relaxed font-light">
-              Multi-geography coverage (VN, SG, AE, ID, TH, IN) to coordinate events, localization, and BD outreach.
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="bento-card group relative p-8 rounded-3xl bg-[var(--surface-faint)] border border-[var(--border-subtle)] overflow-hidden transition-all duration-500 hover:-translate-y-1">
-          <div class="spotlight-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(300px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 200, 240, 0.06), transparent 80%);"></div>
-          <div class="spotlight-border absolute inset-0 rounded-3xl pointer-events-none" style="background: radial-gradient(150px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 200, 240, 0.25), transparent 80%); padding: 1px; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-          <div class="relative z-10 space-y-4">
-            <div class="w-10 h-10 rounded-full bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] flex items-center justify-center text-[var(--accent-cyan)]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">Clear Reporting</h3>
-            <p class="font-body text-xs text-[var(--text-secondary)] opacity-70 leading-relaxed font-light">
-              Real-time dashboards, metrics coordination, and detailed weekly updates on all milestones.
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="bento-card group relative p-8 rounded-3xl bg-[var(--surface-faint)] border border-[var(--border-subtle)] overflow-hidden transition-all duration-500 hover:-translate-y-1">
-          <div class="spotlight-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(300px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(139, 92, 246, 0.06), transparent 80%);"></div>
-          <div class="spotlight-border absolute inset-0 rounded-3xl pointer-events-none" style="background: radial-gradient(150px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(139, 92, 246, 0.25), transparent 80%); padding: 1px; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-          <div class="relative z-10 space-y-4">
-            <div class="w-10 h-10 rounded-full bg-[color-mix(in_srgb,var(--accent-purple)_10%,transparent)] flex items-center justify-center text-[var(--accent-purple)]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-            </div>
-            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">Enterprise Scaling</h3>
-            <p class="font-body text-xs text-[var(--text-secondary)] opacity-70 leading-relaxed font-light">
-              Built to support institutional integrations, government systems, and tier-1 scale Web3 rollouts.
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
 
-    <!-- ────────────────────────────────────────────────────────
-         WHO WE WORK WITH (Interactive Segment Explorer)
-         ──────────────────────────────────────────────────────── -->
+    <!-- WHO WE WORK WITH (all panels in HTML; JS shows one) -->
     <section class="mt-32 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       <div class="text-center space-y-4">
-        <Badge variant="cyan">COORDINATED ECOSYSTEMS</Badge>
-        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">
-          Who We Core Partner With
-        </h2>
+        <Badge variant="cyan">WHO IT IS FOR</Badge>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">Go-To-Market Programs by Client Type</h2>
       </div>
-
-      <!-- Segment selector tabs -->
-      <div class="flex flex-wrap justify-center gap-3">
+      <div class="flex flex-wrap justify-center gap-3" role="group" aria-label="Client types">
         {segments.map((seg, idx) => (
-          <button
-            class={`seg-tab px-5 py-2.5 rounded-full border text-xs font-mono uppercase tracking-wider transition-all duration-300 cursor-pointer ${idx === 0 ? 'border-[var(--accent-cyan)] bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] text-[var(--accent-cyan)]' : 'border-[var(--border-subtle)] bg-white/[0.005] text-[var(--text-secondary)] opacity-70 hover:text-[var(--text-primary)] hover:border-[var(--border-default)]'}`}
-            data-segment-id={seg.id}
-          >
+          <button type="button" class="seg-tab px-5 py-2.5 rounded-full border text-sm font-mono uppercase tracking-wider transition-colors duration-200 cursor-pointer" data-segment-id={seg.id} aria-pressed={idx === 0 ? 'true' : 'false'} aria-controls={`seg-${seg.id}`}>
             {seg.title}
           </button>
         ))}
       </div>
-
-      <!-- Segment content console -->
-      <div class="relative bg-[var(--surface-faint)] border border-[var(--border-subtle)] p-6 sm:p-8 rounded-3xl backdrop-blur-xl transition-all duration-500 min-h-[160px] overflow-hidden" id="seg-display-box">
-        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-[var(--accent-cyan)] opacity-[0.02] blur-3xl pointer-events-none" id="seg-glow"></div>
-        <div class="relative z-10 space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="relative bg-[var(--surface-faint)] border border-[var(--border-subtle)] p-6 sm:p-8 rounded-3xl backdrop-blur-xl overflow-hidden">
+        {segments.map((seg, idx) => (
+          <div id={`seg-${seg.id}`} class="seg-panel grid grid-cols-1 md:grid-cols-2 gap-8" hidden={idx !== 0}>
             <div class="space-y-2">
-              <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--accent-cyan)]">// THE CHALLENGE</span>
-              <h4 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide" id="seg-display-title">AI Companies</h4>
-              <p class="font-body text-xs sm:text-sm text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] leading-relaxed font-light" id="seg-display-pain">
-                {segments[0].pain}
-              </p>
+              <span class="font-mono text-xs uppercase tracking-widest text-[var(--accent-cyan)]">The challenge</span>
+              <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">{seg.title}</h3>
+              <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{seg.pain}</p>
             </div>
             <div class="space-y-2 border-t md:border-t-0 md:border-l border-[var(--border-subtle)] pt-6 md:pt-0 md:pl-8">
-              <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--accent-purple)]">// OUR STRATEGY</span>
-              <h4 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">Tailored Response</h4>
-              <p class="font-body text-xs sm:text-sm text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] leading-relaxed font-light" id="seg-display-strategy">
-                {segments[0].strategy}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ────────────────────────────────────────────────────────
-         SERVICE CONSOLE (Interactive Node Explorer Tree)
-         ──────────────────────────────────────────────────────── -->
-    <section class="mt-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12" id="solutions-blueprint">
-      <div class="text-center space-y-4">
-        <Badge variant="cyan">STRATEGY NODE CONSOLE</Badge>
-        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">
-          Custom Solutions Blueprint
-        </h2>
-        <p class="font-body text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] max-w-xl mx-auto text-xs sm:text-sm">
-          Select individual strategy modules from the node grid below to build your custom operational RFP package.
-        </p>
-      </div>
-
-      <!-- Categories & Services layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        <!-- Left vertical selector list -->
-        <div class="lg:col-span-4 flex flex-col gap-2 bg-[var(--surface-faint)] border border-[var(--border-subtle)] p-3 rounded-2xl backdrop-blur-xl">
-          {categories.map((cat, idx) => (
-            <button
-              class={`cat-node-btn p-4 rounded-xl text-left font-display uppercase tracking-wider transition-all duration-300 relative group cursor-pointer border ${idx === 0 ? 'bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] text-[var(--text-primary)]' : 'bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-soft)]'}`}
-              data-cat-id={cat.id}
-            >
-              <div class="relative z-10 flex items-center justify-between">
-                <span class="text-xs font-bold">{cat.title}</span>
-                <span class="font-mono text-[9px] opacity-40">0{idx + 1}</span>
-              </div>
-              <div class="absolute inset-0 w-1.5 bg-[var(--accent-cyan)] opacity-0 transition-opacity duration-300 rounded-l-xl" id={`bar-${cat.id}`}></div>
-            </button>
-          ))}
-        </div>
-
-        <!-- Right node grid -->
-        <div class="lg:col-span-8 bg-[var(--surface-faint)] border border-[var(--border-subtle)] p-6 sm:p-8 rounded-3xl backdrop-blur-xl space-y-6">
-          <div class="space-y-1">
-            <h3 class="font-display text-xl font-bold text-[var(--text-primary)] uppercase tracking-wide" id="active-cat-title">
-              {categories[0].title}
-            </h3>
-            <p class="font-body text-xs text-[var(--text-secondary)] opacity-70 font-light" id="active-cat-desc">
-              {categories[0].description}
-            </p>
-          </div>
-
-          <!-- Interactive Node chips grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="services-node-grid">
-            <!-- Services rendered dynamically in JS -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ────────────────────────────────────────────────────────
-         OUR PROCESS (Scroll-linked Pipeline)
-         ──────────────────────────────────────────────────────── -->
-    <section class="mt-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-      <div class="text-center space-y-4">
-        <Badge variant="purple">PIPELINE EXECUTION</Badge>
-        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">
-          Our Operational Path
-        </h2>
-      </div>
-
-      <div class="relative pl-6 sm:pl-10 border-l border-[var(--border-default)] space-y-12 py-4" id="pipeline-timeline">
-        <!-- Glow running bar tracker -->
-        <div id="timeline-glow-bar" class="absolute left-0 top-0 w-[2px] bg-gradient-to-b from-[var(--accent-cyan)] to-[var(--accent-purple)] transition-all duration-300" style="height: 0px;"></div>
-
-        {steps.map((step, idx) => (
-          <div class="timeline-step group relative transition-all duration-500" data-step-index={idx}>
-            <!-- Pulse dot indicator on active -->
-            <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 rounded-full border-4 border-[var(--bg-primary)] bg-[var(--text-primary)]/20 transition-all duration-500 group-hover:scale-125 group-hover:bg-[var(--accent-cyan)] group-data-[active=true]:bg-[var(--accent-cyan)] group-data-[active=true]:border-[var(--accent-cyan)] group-data-[active=true]:shadow-[0_0_12px_rgba(0,200,240,0.5)]"></div>
-            
-            <div class="space-y-4 bg-[var(--surface-faint)] border border-[var(--border-subtle)] p-6 rounded-2xl backdrop-blur-xl group-hover:border-[var(--border-default)] transition-colors">
-              <div class="flex items-center justify-between">
-                <h4 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">
-                  {step.step}. {step.name}
-                </h4>
-                <span class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-widest font-light">STAGE // 0{idx + 1}</span>
-              </div>
-              <p class="font-body text-xs sm:text-sm text-[var(--text-secondary)] opacity-70 leading-relaxed font-light">
-                {step.desc}
-              </p>
-              
-              <!-- Outcomes badges -->
-              <div class="flex flex-wrap gap-2 pt-2 border-t border-[var(--border-subtle)]">
-                {step.outcomes.map((out) => (
-                  <span class="px-2 py-0.5 rounded bg-[var(--surface-soft)] border border-[var(--border-subtle)] font-mono text-[8px] sm:text-[9px] uppercase tracking-wider text-[var(--text-muted)]">
-                    {out}
-                  </span>
-                ))}
-              </div>
+              <span class="font-mono text-xs uppercase tracking-widest text-[var(--accent-purple)]">Our approach</span>
+              <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{seg.strategy}</p>
             </div>
           </div>
         ))}
       </div>
     </section>
 
-    <!-- ────────────────────────────────────────────────────────
-         CONTACT FOOTER FORM integration
-         ──────────────────────────────────────────────────────── -->
-    <section class="mt-32 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10" id="inquiry-form-section">
+    <!-- MODULE BUILDER (all categories in HTML; cards are toggle buttons) -->
+    <section class="mt-32 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12" id="solutions-blueprint">
       <div class="text-center space-y-4">
-        <Badge variant="cyan">CONTACT COORDINATOR</Badge>
-        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">
-          Request Custom Proposal
-        </h2>
-        <p class="font-body text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] max-w-xl mx-auto text-xs sm:text-sm">
-          Submit your coordinates and custom strategy nodes. Our coordinators will compile a custom roadmap within 24 hours.
+        <Badge variant="cyan">BUILD YOUR PROGRAM</Badge>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">Custom Web3 Growth Modules</h2>
+        <p class="font-body text-[var(--text-secondary)] max-w-xl mx-auto text-base">
+          Pick the modules you need and they are added to your proposal request below. Each area links to its full service page.
         </p>
       </div>
 
-      <div class="bg-[var(--surface-soft)] border border-[var(--border-default)] p-8 rounded-3xl backdrop-blur-xl relative overflow-hidden">
-        
-        <!-- Error Alert Container -->
-        <div id="form-error-alert" class="hidden mb-6 p-4 rounded-xl border border-red-500/20 bg-red-500/10 text-red-400 text-xs font-mono backdrop-blur-md"></div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-4 flex flex-col gap-2 bg-[var(--surface-faint)] border border-[var(--border-subtle)] p-3 rounded-2xl backdrop-blur-xl" role="group" aria-label="Module categories">
+          {categories.map((cat, idx) => (
+            <button type="button" class="cat-node-btn p-4 rounded-xl text-left font-display uppercase tracking-wider transition-colors duration-200 cursor-pointer border" data-cat-id={cat.id} aria-pressed={idx === 0 ? 'true' : 'false'} aria-controls={`cat-${cat.id}`}>
+              <span class="flex items-center justify-between">
+                <span class="text-sm font-bold">{cat.title}</span>
+                <span class="font-mono text-xs opacity-60" aria-hidden="true">0{idx + 1}</span>
+              </span>
+            </button>
+          ))}
+        </div>
 
-        <!-- Success Alert Container -->
-        <div id="form-success-alert" class="hidden p-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 text-center space-y-4 backdrop-blur-md">
-          <div class="w-12 h-12 rounded-full bg-emerald-500/10 text-[var(--color-success)] flex items-center justify-center mx-auto">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <div class="lg:col-span-8 bg-[var(--surface-faint)] border border-[var(--border-subtle)] p-6 sm:p-8 rounded-3xl backdrop-blur-xl">
+          {categories.map((cat, idx) => (
+            <div id={`cat-${cat.id}`} class="cat-panel space-y-6" hidden={idx !== 0}>
+              <div class="space-y-1">
+                <h3 class="font-display text-xl font-bold text-[var(--text-primary)] uppercase tracking-wide">{cat.title}</h3>
+                <p class="font-body text-base text-[var(--text-secondary)]">{cat.description}</p>
+                {cat.href && <p class="pt-1"><a href={cat.href} class={`font-body text-base ${linkClass}`}>See our {cat.hrefLabel} page</a></p>}
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {cat.services.map((srv) => (
+                  <button type="button" class="node-card text-left p-4 rounded-xl border transition-colors duration-200 flex flex-col justify-between min-h-[110px] cursor-pointer" data-service-name={srv.name} aria-pressed="false">
+                    <span>
+                      <span class="block font-display text-sm font-bold text-[var(--text-primary)] uppercase mb-1">{srv.name}</span>
+                      <span class="block font-body text-sm text-[var(--text-secondary)] leading-snug">{srv.note}</span>
+                    </span>
+                    <span class="node-badge mt-3 self-end font-mono text-xs uppercase tracking-wider py-1 px-2.5 rounded border">+ Add module</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS (scroll-linked pipeline) -->
+    <section class="mt-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <div class="text-center space-y-4">
+        <Badge variant="purple">HOW WE WORK</Badge>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">From Discovery to Launch and Beyond</h2>
+      </div>
+      <ol class="relative pl-6 sm:pl-10 border-l border-[var(--border-default)] space-y-12 py-4" id="pipeline-timeline">
+        <span id="timeline-glow-bar" class="absolute -left-px top-0 w-[2px] h-full bg-gradient-to-b from-[var(--accent-cyan)] to-[var(--accent-purple)] origin-top transition-transform duration-500" style="transform: scaleY(0);" aria-hidden="true"></span>
+        {steps.map((step, idx) => (
+          <li class="timeline-step group relative" data-step-index={idx}>
+            <span class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 rounded-full border-4 border-[var(--bg-primary)] bg-[var(--border-hover)] transition-colors duration-300 group-data-[active=true]:bg-[var(--accent-cyan)]" aria-hidden="true"></span>
+            <div class="space-y-4 bg-[var(--surface-faint)] border border-[var(--border-subtle)] p-6 rounded-2xl backdrop-blur-xl group-hover:border-[var(--border-default)] transition-colors duration-200">
+              <div class="flex items-center justify-between gap-4">
+                <h3 class="font-display text-lg font-bold text-[var(--text-primary)] uppercase tracking-wide">{step.step}. {step.name}</h3>
+                <span class="font-mono text-xs text-[var(--text-secondary)] uppercase tracking-widest" aria-hidden="true">STAGE 0{idx + 1}</span>
+              </div>
+              <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{step.desc}</p>
+              <ul class="flex flex-wrap gap-2 pt-2 border-t border-[var(--border-subtle)]" aria-label="Outcomes">
+                {step.outcomes.map((out) => (
+                  <li class="px-2 py-0.5 rounded bg-[var(--surface-soft)] border border-[var(--border-subtle)] font-mono text-xs uppercase tracking-wider text-[var(--text-secondary)]">{out}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mt-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <div class="text-center space-y-4">
+        <Badge variant="cyan">FAQ</Badge>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">Crypto Go-To-Market Questions</h2>
+      </div>
+      <div class="space-y-3">
+        {faqs.map((faq) => (
+          <details class="group bg-[var(--surface-faint)] border border-[var(--border-subtle)] rounded-2xl hover:border-[var(--border-default)] transition-colors duration-200">
+            <summary class="flex justify-between items-center gap-6 p-6 cursor-pointer list-none rounded-2xl">
+              <h3 class="faq-q font-display text-base sm:text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{faq.q}</h3>
+              <span class="text-[var(--accent-cyan)] font-mono text-xl group-open:rotate-45 transition-transform duration-300 shrink-0" aria-hidden="true">+</span>
+            </summary>
+            <div class="px-6 pb-6 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+              <p set:html={faq.a} />
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- RFP FORM (same submitLead pipeline as before) -->
+    <section class="mt-32 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10" id="inquiry-form-section">
+      <div class="text-center space-y-4">
+        <Badge variant="cyan">GET A PROPOSAL</Badge>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide">Request a Go-To-Market Proposal</h2>
+        <p class="font-body text-[var(--text-secondary)] max-w-xl mx-auto text-base">
+          Share your goals and the modules you picked. Our team will reply within one business day to schedule a discovery call.
+        </p>
+      </div>
+
+      <div class="bg-[var(--surface-soft)] border border-[var(--border-default)] p-6 sm:p-8 rounded-3xl backdrop-blur-xl relative overflow-hidden">
+        <div id="form-error-alert" class="hidden mb-6 p-4 rounded-xl border border-[color-mix(in_srgb,var(--color-danger)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] text-[var(--color-danger)] text-sm font-mono" role="alert"></div>
+
+        <div id="form-success-alert" class="hidden p-8 rounded-2xl border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] text-center space-y-4" role="status">
+          <div class="w-12 h-12 rounded-full bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] text-[var(--color-success)] flex items-center justify-center mx-auto" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           </div>
-          <h3 class="font-display text-xl font-bold uppercase tracking-wide text-[var(--text-primary)]">RFP Package Submitted</h3>
-          <p class="font-body text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-light max-w-md mx-auto">
-            Thank you! Your custom operational blueprint has been sent to our coordinating team. We will reach out to you via Telegram or Email within 24 hours to schedule a discovery alignment call.
+          <p class="font-display text-xl font-bold uppercase tracking-wide text-[var(--text-primary)]">Request Sent</p>
+          <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed max-w-md mx-auto">
+            Thank you. Your request has reached our team. We will contact you on Telegram or by email within one business day to schedule a discovery call.
           </p>
         </div>
 
-        <form class="space-y-6" id="custom-rfp-form">
+        <form class="space-y-6" id="custom-rfp-form" novalidate>
           <div class="form-grid-wrapper space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div class="space-y-2">
-                <label class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block">Full Name *</label>
-                <input type="text" id="form-name" name="name" required placeholder="Alex Nguyen" class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-[var(--text-primary)] transition-colors placeholder:text-[var(--text-muted)]" />
+                <label for="form-name" class={labelClass}>Full Name *</label>
+                <input type="text" id="form-name" name="name" required autocomplete="name" placeholder="Alex Nguyen" class={inputClass} />
               </div>
               <div class="space-y-2">
-                <label class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block">Email Address *</label>
-                <input type="email" id="form-email" name="email" required placeholder="alex@project.com" class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-[var(--text-primary)] transition-colors placeholder:text-[var(--text-muted)]" />
+                <label for="form-email" class={labelClass}>Email Address *</label>
+                <input type="email" id="form-email" name="email" required autocomplete="email" placeholder="alex@project.com" class={inputClass} />
               </div>
             </div>
-
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div class="space-y-2">
-                <label class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block">Telegram Username *</label>
-                <input type="text" id="form-contact-handle" name="contact_handle" required placeholder="@username" class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-[var(--text-primary)] transition-colors placeholder:text-[var(--text-muted)]" />
+                <label for="form-contact-handle" class={labelClass}>Telegram Username *</label>
+                <input type="text" id="form-contact-handle" name="contact_handle" required placeholder="@username" class={inputClass} />
               </div>
               <div class="space-y-2">
-                <label class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block">Organization Website / Project Link</label>
-                <input type="url" id="form-website" name="website" placeholder="https://..." class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-[var(--text-primary)] transition-colors placeholder:text-[var(--text-muted)]" />
+                <label for="form-website" class={labelClass}>Website / Project Link</label>
+                <input type="url" id="form-website" name="website" autocomplete="url" placeholder="https://..." class={inputClass} />
               </div>
             </div>
-
             <div class="space-y-2">
-              <label class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block">Selected Strategy Modules</label>
-              <textarea id="form-selected-modules" name="selected_modules" readonly placeholder="No services selected yet. Add them using the Blueprint node explorer above!" class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] px-4 py-3 rounded-lg text-xs text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] focus:outline-none h-20 resize-none font-mono placeholder:text-[var(--text-muted)]"></textarea>
+              <label for="form-selected-modules" class={labelClass}>Selected Modules</label>
+              <textarea id="form-selected-modules" name="selected_modules" readonly placeholder="No modules selected yet. Add them in the module builder above." class={`${inputClass} text-sm h-20 resize-none font-mono`}></textarea>
             </div>
-
             <div class="space-y-2">
-              <label class="font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider block">Additional Requirements or Core Goals</label>
-              <textarea id="form-message" name="message" class="w-full bg-[var(--surface-soft)] border border-[var(--border-default)] focus:border-[var(--accent-cyan)] focus:outline-none px-4 py-3 rounded-lg text-sm text-[var(--text-primary)] h-32 transition-colors placeholder:text-[var(--text-muted)]" placeholder="Explain your targets, constraints, or key parameters..."></textarea>
+              <label for="form-message" class={labelClass}>Goals, Timeline or Constraints</label>
+              <textarea id="form-message" name="message" class={`${inputClass} h-32`} placeholder="Tell us about your launch, markets and budget range..."></textarea>
             </div>
-
             <div class="pt-4 text-center">
-              <button type="submit" id="form-submit-btn" class="btn-liquid-glass-primary w-full py-4 text-xs font-bold tracking-widest uppercase">
-                Submit RFP Package
+              <button type="submit" id="form-submit-btn" class="btn-liquid-glass-primary w-full py-4 text-sm font-bold tracking-widest uppercase">
+                Send Proposal Request
               </button>
             </div>
           </div>
         </form>
       </div>
     </section>
-
   </div>
 
-  <!-- ────────────────────────────────────────────────────────
-       FLOATING RFP DRAWER (Bottom Panel)
-       ──────────────────────────────────────────────────────── -->
-  <div id="floating-rfp-drawer" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-[var(--bg-secondary)]/90 border border-[var(--border-default)] rounded-full px-6 py-3.5 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] flex items-center gap-6 transition-all duration-500 translate-y-24 opacity-0 scale-95 pointer-events-none">
+  <!-- Floating module cart -->
+  <div id="floating-rfp-drawer" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-[var(--bg-secondary)]/90 border border-[var(--border-default)] rounded-full px-6 py-3.5 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] flex items-center gap-6 transition-all duration-300 translate-y-24 opacity-0 scale-95 pointer-events-none" aria-hidden="true">
     <div class="flex items-center gap-2.5">
-      <span class="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent-cyan)] text-[10px] font-bold text-[var(--text-inverted)]" id="rfp-count-badge">0</span>
-      <span class="font-mono text-[9px] uppercase tracking-wider text-[var(--text-secondary)]">Modules Loaded</span>
+      <span class="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--accent-cyan)] text-xs font-bold text-[var(--text-inverted)]" id="rfp-count-badge">0</span>
+      <span class="font-mono text-xs uppercase tracking-wider text-[var(--text-secondary)]">Modules added</span>
     </div>
-    <div class="h-4 w-[1px] bg-[var(--surface-soft)]"></div>
-    <button id="rfp-checkout-btn" class="btn-liquid-glass-primary py-2 px-5 text-[9px] tracking-wider uppercase font-semibold">
-      Build RFP Strategy
+    <span class="h-4 w-px bg-[var(--border-default)]" aria-hidden="true"></span>
+    <button id="rfp-checkout-btn" type="button" class="btn-liquid-glass-primary py-2 px-5 text-xs tracking-wider uppercase font-semibold" tabindex="-1">
+      Review Request
     </button>
   </div>
 
 </BaseLayout>
 
-<!-- Template data for the client script below. A JSON data block instead of
-     define:vars: data blocks never execute, so the CSP needs no hash for it. -->
-<script type="application/json" id="custom-solutions-data" set:html={JSON.stringify({ categories, segments }).replace(/</g, '\\u003c')} />
+<style>
+  summary::-webkit-details-marker { display: none; }
+  .faq-q { margin: 0; }
+
+  .seg-tab { border-color: var(--border-subtle); color: var(--text-secondary); }
+  .seg-tab:hover { color: var(--text-primary); border-color: var(--border-default); }
+  .seg-tab[aria-pressed='true'] { border-color: var(--accent-cyan); color: var(--accent-cyan); background: color-mix(in srgb, var(--accent-cyan) 10%, transparent); }
+
+  .cat-node-btn { border-color: transparent; color: var(--text-secondary); }
+  .cat-node-btn:hover { color: var(--text-primary); background: var(--surface-soft); }
+  .cat-node-btn[aria-pressed='true'] { color: var(--text-primary); background: color-mix(in srgb, var(--accent-cyan) 6%, transparent); border-color: color-mix(in srgb, var(--accent-cyan) 30%, transparent); }
+
+  .node-card { background: var(--surface-faint); border-color: var(--border-subtle); }
+  .node-card:hover { border-color: var(--border-default); }
+  .node-card .node-badge { background: var(--surface-soft); border-color: var(--border-default); color: var(--text-secondary); }
+  .node-card[aria-pressed='true'] { background: color-mix(in srgb, var(--color-success) 8%, transparent); border-color: color-mix(in srgb, var(--color-success) 45%, transparent); }
+  .node-card[aria-pressed='true'] .node-badge { background: color-mix(in srgb, var(--color-success) 18%, transparent); border-color: var(--color-success); color: var(--color-success); }
+
+  .seg-panel, .cat-panel { animation: panel-in 0.25s ease-out; }
+  @keyframes panel-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .seg-panel, .cat-panel { animation: none; }
+    #timeline-glow-bar { transition: none; }
+  }
+</style>
 
 <script>
   import { submitLead } from '../../lib/leadSubmit';
 
-  interface Service {
-    name: string;
-    kpi: string;
-    timeline: string;
-  }
-  interface Category {
-    id: string;
-    title: string;
-    description: string;
-    color: string;
-    services: Service[];
-  }
-  interface Segment {
-    id: string;
-    title: string;
-    pain: string;
-    strategy: string;
-  }
-
-  declare global {
-    interface Window {
-      CUSTOM_CATEGORIES: Category[];
-      CUSTOM_SEGMENTS: Segment[];
-    }
-  }
-
-  const customSolutionsData = JSON.parse(document.getElementById('custom-solutions-data')?.textContent || '{}');
-  window.CUSTOM_CATEGORIES = customSolutionsData.categories ?? [];
-  window.CUSTOM_SEGMENTS = customSolutionsData.segments ?? [];
-
   document.addEventListener('DOMContentLoaded', () => {
-    // ══════════════════════════════════════════════════════════
-    // 1. DYNAMIC SENTENCE BUILDER & INTERACTIVITY
-    // ══════════════════════════════════════════════════════════
-    const selectService = document.getElementById('sb-service') as HTMLSelectElement;
-    const selectClient = document.getElementById('sb-client') as HTMLSelectElement;
-    const selectTimeline = document.getElementById('sb-timeline') as HTMLSelectElement;
-    const recommendationText = document.getElementById('sb-recommendation');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 1. Toggle groups (client types and module categories): one panel visible.
+    const wireToggle = (buttonSelector: string, idAttr: string, panelPrefix: string) => {
+      const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>(buttonSelector));
+      const show = (id: string) => {
+        buttons.forEach((b) => b.setAttribute('aria-pressed', b.getAttribute(idAttr) === id ? 'true' : 'false'));
+        buttons.forEach((b) => {
+          const panel = document.getElementById(`${panelPrefix}${b.getAttribute(idAttr)}`);
+          if (panel) panel.hidden = b.getAttribute(idAttr) !== id;
+        });
+      };
+      buttons.forEach((b) => b.addEventListener('click', () => show(b.getAttribute(idAttr) || '')));
+      return show;
+    };
+    wireToggle('.seg-tab', 'data-segment-id', 'seg-');
+    const showCategory = wireToggle('.cat-node-btn', 'data-cat-id', 'cat-');
+
+    // 2. Sentence builder: suggestion text + jump to the matching module category.
+    const selectService = document.getElementById('sb-service') as HTMLSelectElement | null;
+    const recommendation = document.getElementById('sb-recommendation');
     const actionBtn = document.getElementById('sb-action');
+    selectService?.addEventListener('change', () => {
+      if (!recommendation) return;
+      const label = selectService.options[selectService.selectedIndex].text;
+      recommendation.innerHTML = '';
+      recommendation.append('SUGGESTED MODULES: ');
+      const strong = document.createElement('span');
+      strong.className = 'text-[var(--text-primary)] font-semibold uppercase';
+      strong.textContent = label;
+      recommendation.append(strong);
+    });
+    actionBtn?.addEventListener('click', () => {
+      if (!selectService) return;
+      showCategory(selectService.value);
+      document.getElementById('solutions-blueprint')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
 
-    const updateRecommendation = () => {
-      if (!selectService || !recommendationText) return;
-      const svcVal = selectService.value;
-      const text = selectService.options[selectService.selectedIndex].text;
-      recommendationText.innerHTML = `⚡ SUGGESTED CATEGORY: <span class="text-[var(--text-primary)] font-semibold uppercase">${text}</span>`;
-    };
-
-    if (selectService) selectService.addEventListener('change', updateRecommendation);
-    if (selectClient) selectClient.addEventListener('change', updateRecommendation);
-    if (selectTimeline) selectTimeline.addEventListener('change', updateRecommendation);
-
-    if (actionBtn) {
-      actionBtn.addEventListener('click', () => {
-        const svcVal = selectService.value;
-        // Scroll smoothly to blueprint tree category explorer
-        const blueprintSec = document.getElementById('solutions-blueprint');
-        if (blueprintSec) {
-          blueprintSec.scrollIntoView({ behavior: 'smooth' });
-          // Trigger tab change in node tree
-          const catBtn = document.querySelector(`.cat-node-btn[data-cat-id="${svcVal}"]`) as HTMLButtonElement;
-          if (catBtn) catBtn.click();
-        }
+    // 3. Particle canvas: slow rotation, paused off-screen, static for reduced motion.
+    const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement | null;
+    const ctx = canvas?.getContext('2d');
+    if (canvas && ctx) {
+      let width = (canvas.width = canvas.offsetWidth);
+      let height = (canvas.height = canvas.offsetHeight);
+      window.addEventListener('resize', () => {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
       });
-    }
 
-    // ══════════════════════════════════════════════════════════
-    // 2. 3D PARTICLE CONSTELLATION CANVAS
-    // ══════════════════════════════════════════════════════════
-    const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        let width = canvas.width = canvas.offsetWidth;
-        let height = canvas.height = canvas.offsetHeight;
-
-        window.addEventListener('resize', () => {
-          if (!canvas) return;
-          width = canvas.width = canvas.offsetWidth;
-          height = canvas.height = canvas.offsetHeight;
-        });
-
-        // 3D Particles coordinates
-        interface Particle {
-          x: number;
-          y: number;
-          z: number;
-          ox: number;
-          oy: number;
-          oz: number;
-          tx: number;
-          ty: number;
-          tz: number;
-        }
-        const particles: Particle[] = [];
-        const numParticles = 60;
-        const radius = Math.min(width, height) * 0.35;
-
-        // Initialize particles on sphere surface
-        for (let i = 0; i < numParticles; i++) {
-          const theta = Math.acos(Math.random() * 2 - 1);
-          const phi = Math.random() * Math.PI * 2;
-
-          const x = radius * Math.sin(theta) * Math.cos(phi);
-          const y = radius * Math.sin(theta) * Math.sin(phi);
-          const z = radius * Math.cos(theta);
-
-          particles.push({
-            x, y, z,
-            ox: x, oy: y, oz: z, // Original coordinates
-            tx: x, ty: y, tz: z  // Target coordinates for morphing
-          });
-        }
-
-        // Tilt controls
-        let rotateX = 0.003;
-        let rotateY = 0.004;
-        let targetX = 0;
-        let targetY = 0;
-        let currentX = 0;
-        let currentY = 0;
-
-        // Mouse move parallax
-        canvas.addEventListener('mousemove', (e) => {
-          const rect = canvas.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top + rect.height / 2;
-          targetX = (e.clientX - cx) * 0.0003;
-          targetY = (e.clientY - cy) * 0.0003;
-        });
-
-        canvas.addEventListener('mouseleave', () => {
-          targetX = 0;
-          targetY = 0;
-        });
-
-        // Morph shapes
-        const morphToShape = (shapeType: string) => {
-          particles.forEach((p) => {
-            if (shapeType === 'blockchain') {
-              // Morph to a cube grid pattern
-              p.tx = (Math.random() * 2 - 1) * radius * 0.8;
-              p.ty = (Math.random() * 2 - 1) * radius * 0.8;
-              p.tz = (Math.random() * 2 - 1) * radius * 0.8;
-            } else if (shapeType === 'ai') {
-              // Morph to neuron-like double loop helix
-              const factor = Math.random() * Math.PI * 2;
-              p.tx = radius * 0.8 * Math.cos(factor);
-              p.ty = (Math.random() * 2 - 1) * radius * 0.7;
-              p.tz = radius * 0.8 * Math.sin(factor);
-            } else {
-              // Return to sphere
-              p.tx = p.ox;
-              p.ty = p.oy;
-              p.tz = p.oz;
-            }
-          });
+      const radius = Math.min(width, height) * 0.35;
+      const particles = Array.from({ length: 60 }, () => {
+        const theta = Math.acos(Math.random() * 2 - 1);
+        const phi = Math.random() * Math.PI * 2;
+        return {
+          x: radius * Math.sin(theta) * Math.cos(phi),
+          y: radius * Math.sin(theta) * Math.sin(phi),
+          z: radius * Math.cos(theta)
         };
+      });
+      const fov = 400;
+      const speedX = 0.0015;
+      const speedY = 0.002;
+      let running = false;
 
-        // Listen for dropdown changes to trigger canvas morphing
-        if (selectService) {
-          selectService.addEventListener('change', () => {
-            morphToShape(selectService.value);
-          });
-        }
-
-        const fov = 400;
-
-        const animate = () => {
-          ctx.clearRect(0, 0, width, height);
-
-          // Smoothly lerp mouse rotation offset
-          currentX += (targetX - currentX) * 0.1;
-          currentY += (targetY - currentY) * 0.1;
-
-          // Rotation matrices
-          const rx = rotateX + currentY;
-          const ry = rotateY + currentX;
-
-          const cosX = Math.cos(rx);
-          const sinX = Math.sin(rx);
-          const cosY = Math.cos(ry);
-          const sinY = Math.sin(ry);
-
-          // Projects 3D points to 2D screen
-          const projected: { sx: number; sy: number; sz: number; scale: number }[] = [];
-
-          particles.forEach((p) => {
-            // Lerp morph coordinates towards target
-            p.x += (p.tx - p.x) * 0.05;
-            p.y += (p.ty - p.y) * 0.05;
-            p.z += (p.tz - p.z) * 0.05;
-
-            // Rotate Y
-            let x1 = p.x * cosY - p.z * sinY;
-            let z1 = p.z * cosY + p.x * sinY;
-
-            // Rotate X
-            let y2 = p.y * cosX - z1 * sinX;
-            let z2 = z1 * cosX + p.y * sinX;
-
-            // Update particle coordinate values back for continuous rotation
-            p.x = x1;
-            p.y = y2;
-            p.z = z2;
-
-            // Update target values too so morph fits rotation
-            let tx1 = p.tx * cosY - p.tz * sinY;
-            let tz1 = p.tz * cosY + p.tx * sinY;
-            let ty2 = p.ty * cosX - tz1 * sinX;
-            let tz2 = tz1 * cosX + p.ty * sinX;
-            p.tx = tx1; p.ty = ty2; p.tz = tz2;
-
-            let ox1 = p.ox * cosY - p.oz * sinY;
-            let oz1 = p.oz * cosY + p.ox * sinY;
-            let oy2 = p.oy * cosX - oz1 * sinX;
-            let oz2 = oz1 * cosX + p.oy * sinX;
-            p.ox = ox1; p.oy = oy2; p.oz = oz2;
-
-            // Perspective projection divide
-            const scale = fov / (fov + z2);
-            const sx = x1 * scale + width / 2;
-            const sy = y2 * scale + height / 2;
-
-            projected.push({ sx, sy, sz: z2, scale });
-          });
-
-          // Draw links/edges first for correct layering
-          ctx.strokeStyle = 'rgba(0, 200, 240, 0.08)';
-          ctx.lineWidth = 0.5;
-          for (let i = 0; i < projected.length; i++) {
-            for (let j = i + 1; j < projected.length; j++) {
-              const dx = projected[i].sx - projected[j].sx;
-              const dy = projected[i].sy - projected[j].sy;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-
-              // Connect nodes that are close to each other
-              if (dist < 75) {
-                ctx.beginPath();
-                ctx.moveTo(projected[i].sx, projected[i].sy);
-                ctx.lineTo(projected[j].sx, projected[j].sy);
-                ctx.stroke();
-              }
-            }
+      const draw = (rotate: boolean) => {
+        ctx.clearRect(0, 0, width, height);
+        const cosX = Math.cos(speedX), sinX = Math.sin(speedX);
+        const cosY = Math.cos(speedY), sinY = Math.sin(speedY);
+        const projected = particles.map((p) => {
+          if (rotate) {
+            const x1 = p.x * cosY - p.z * sinY;
+            const z1 = p.z * cosY + p.x * sinY;
+            const y2 = p.y * cosX - z1 * sinX;
+            const z2 = z1 * cosX + p.y * sinX;
+            p.x = x1; p.y = y2; p.z = z2;
           }
-
-          // Draw particle node dots
-          projected.forEach((p) => {
-            const size = Math.max(1, p.scale * 2.2);
-            // Render depth with transparency gradients
-            const alpha = Math.min(1, Math.max(0.1, (fov - p.sz) / (fov * 2)));
-            ctx.fillStyle = `rgba(0, 200, 240, ${alpha * 0.8})`;
-
-            ctx.beginPath();
-            ctx.arc(p.sx, p.sy, size, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Glow core
-            if (p.sz < 0) {
-              ctx.fillStyle = `rgba(139, 92, 246, ${alpha * 0.4})`;
+          const scale = fov / (fov + p.z);
+          return { sx: p.x * scale + width / 2, sy: p.y * scale + height / 2, sz: p.z, scale };
+        });
+        ctx.strokeStyle = 'rgba(0, 200, 240, 0.08)';
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < projected.length; i++) {
+          for (let j = i + 1; j < projected.length; j++) {
+            const dx = projected[i].sx - projected[j].sx;
+            const dy = projected[i].sy - projected[j].sy;
+            if (dx * dx + dy * dy < 75 * 75) {
               ctx.beginPath();
-              ctx.arc(p.sx, p.sy, size * 2, 0, Math.PI * 2);
-              ctx.fill();
+              ctx.moveTo(projected[i].sx, projected[i].sy);
+              ctx.lineTo(projected[j].sx, projected[j].sy);
+              ctx.stroke();
             }
-          });
-
-          requestAnimationFrame(animate);
-        };
-
-        animate();
-      }
-    }
-
-    // ══════════════════════════════════════════════════════════
-    // 3. MOUSE-TRACKING SPOTLIGHT HOVER FOR BENTO CARDS
-    // ══════════════════════════════════════════════════════════
-    const bentoCards = document.querySelectorAll('.bento-card');
-    bentoCards.forEach((card) => {
-      card.addEventListener('mousemove', (e: Event) => {
-        const me = e as MouseEvent;
-        const rect = (card as HTMLElement).getBoundingClientRect();
-        const x = me.clientX - rect.left;
-        const y = me.clientY - rect.top;
-        (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
-        (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
-      });
-    });
-
-    // ══════════════════════════════════════════════════════════
-    // 4. INTERACTIVE CLIENT SEGMENTS SELECTOR
-    // ══════════════════════════════════════════════════════════
-    const segTabs = document.querySelectorAll('.seg-tab');
-    const segTitle = document.getElementById('seg-display-title');
-    const segPain = document.getElementById('seg-display-pain');
-    const segStrategy = document.getElementById('seg-display-strategy');
-    const segBox = document.getElementById('seg-display-box');
-
-    segTabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const segId = tab.getAttribute('data-segment-id') || '';
-        const segmentData = window.CUSTOM_SEGMENTS.find(s => s.id === segId);
-        if (!segmentData || !segTitle || !segPain || !segStrategy || !segBox) return;
-
-        // Visual fade out transition
-        segBox.style.opacity = '0.3';
-        segBox.style.transform = 'translateY(4px)';
-
-        setTimeout(() => {
-          segTitle.innerText = segmentData.title;
-          segPain.innerText = segmentData.pain;
-          segStrategy.innerText = segmentData.strategy;
-
-          // Toggle tab button styling classes
-          segTabs.forEach(t => {
-            t.classList.remove('border-[var(--accent-cyan)]', 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)]', 'text-[var(--accent-cyan)]');
-            t.classList.add('border-[var(--border-subtle)]', 'bg-white/[0.005]', 'text-[var(--text-secondary)]', 'opacity-70');
-          });
-          tab.classList.remove('border-[var(--border-subtle)]', 'bg-white/[0.005]', 'text-[var(--text-secondary)]', 'opacity-70');
-          tab.classList.add('border-[var(--accent-cyan)]', 'bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)]', 'text-[var(--accent-cyan)]');
-
-          segBox.style.opacity = '1';
-          segBox.style.transform = 'translateY(0)';
-        }, 150);
-      });
-    });
-
-    // ══════════════════════════════════════════════════════════
-    // 5. BLUEPRINT NODE TREE CONSOLE INTERACTIVE CART
-    // ══════════════════════════════════════════════════════════
-    const catBtns = document.querySelectorAll('.cat-node-btn');
-    const servicesGrid = document.getElementById('services-node-grid');
-    const activeTitle = document.getElementById('active-cat-title');
-    const activeDesc = document.getElementById('active-cat-desc');
-
-    const selectedModules = new Set<string>();
-
-    const rfpDrawer = document.getElementById('floating-rfp-drawer');
-    const rfpCountBadge = document.getElementById('rfp-count-badge');
-    const rfpCheckoutBtn = document.getElementById('rfp-checkout-btn');
-    const formSelectedInput = document.getElementById('form-selected-modules') as HTMLTextAreaElement;
-
-    // Updates cart drawer display status
-    const updateRfpCart = () => {
-      if (!rfpDrawer || !rfpCountBadge || !formSelectedInput) return;
-      const count = selectedModules.size;
-      rfpCountBadge.innerText = String(count);
-
-      if (count > 0) {
-        rfpDrawer.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
-        rfpDrawer.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-        formSelectedInput.value = Array.from(selectedModules).join('\n');
-      } else {
-        rfpDrawer.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-        rfpDrawer.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
-        formSelectedInput.value = '';
-      }
-    };
-
-    const renderServices = (catId: string) => {
-      const categoryData = window.CUSTOM_CATEGORIES.find(c => c.id === catId);
-      if (!categoryData || !servicesGrid || !activeTitle || !activeDesc) return;
-
-      activeTitle.innerText = categoryData.title;
-      activeDesc.innerText = categoryData.description;
-
-      servicesGrid.innerHTML = '';
-
-      categoryData.services.forEach(srv => {
-        const isSelected = selectedModules.has(srv.name);
-
-        const card = document.createElement('div');
-        card.className = `p-4 rounded-xl border transition-all duration-300 flex flex-col justify-between min-h-[110px] group/node relative overflow-hidden cursor-pointer ${isSelected ? 'bg-emerald-950/20 border-emerald-500/40 shadow-[0_0_12px_rgba(16,185,129,0.1)]' : 'bg-[var(--surface-faint)] border-[var(--border-subtle)] hover:border-[var(--border-default)]'}`;
-        card.setAttribute('data-service-name', srv.name);
-
-        card.innerHTML = `
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-1">
-              <span class="font-display text-xs font-bold text-[var(--text-primary)] uppercase group-hover/node:text-[var(--accent-cyan)] transition-colors">${srv.name}</span>
-              <span class="text-[9px] font-mono text-[var(--text-muted)]">${srv.timeline}</span>
-            </div>
-            <div class="font-mono text-[9px] text-[color-mix(in_srgb,var(--accent-cyan)_70%,transparent)] uppercase tracking-widest font-semibold">${srv.kpi}</div>
-          </div>
-          <div class="mt-3 flex justify-end">
-            <span class="node-badge font-mono text-[8px] uppercase tracking-wider py-1 px-2.5 rounded border transition-all ${isSelected ? 'bg-emerald-500/20 border-emerald-500 text-[var(--color-success)]' : 'bg-[var(--surface-soft)] border-[var(--border-default)] text-[var(--text-secondary)] opacity-70 group-hover/node:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] group-hover/node:text-[var(--text-primary)]'}">
-              ${isSelected ? '✓ Loaded' : '+ Add Node'}
-            </span>
-          </div>
-        `;
-
-        // Click handler to toggle selection
-        card.addEventListener('click', () => {
-          const badge = card.querySelector('.node-badge') as HTMLElement;
-          if (selectedModules.has(srv.name)) {
-            selectedModules.delete(srv.name);
-            card.classList.remove('bg-emerald-950/20', 'border-emerald-500/40', 'shadow-[0_0_12px_rgba(16,185,129,0.1)]');
-            card.classList.add('bg-[var(--surface-faint)]', 'border-[var(--border-subtle)]');
-            badge.innerText = '+ Add Node';
-            badge.className = 'node-badge font-mono text-[8px] uppercase tracking-wider py-1 px-2.5 rounded border bg-[var(--surface-soft)] border-[var(--border-default)] text-[var(--text-secondary)] opacity-70 group-hover/node:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] group-hover/node:text-[var(--text-primary)]';
-          } else {
-            selectedModules.add(srv.name);
-            card.classList.remove('bg-[var(--surface-faint)]', 'border-[var(--border-subtle)]');
-            card.classList.add('bg-emerald-950/20', 'border-emerald-500/40', 'shadow-[0_0_12px_rgba(16,185,129,0.1)]');
-            badge.innerText = '✓ Loaded';
-            badge.className = 'node-badge font-mono text-[8px] uppercase tracking-wider py-1 px-2.5 rounded border bg-emerald-500/20 border-emerald-500 text-[var(--color-success)]';
           }
-          updateRfpCart();
-        });
-
-        servicesGrid.appendChild(card);
-      });
-    };
-
-    // Category button click handlers
-    catBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const catId = btn.getAttribute('data-cat-id') || '';
-        renderServices(catId);
-
-        catBtns.forEach(b => {
-          b.classList.remove('bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)]', 'border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)]', 'text-[var(--text-primary)]');
-          b.classList.add('bg-transparent', 'border-transparent', 'text-[var(--text-muted)]');
-        });
-        btn.classList.remove('bg-transparent', 'border-transparent', 'text-[var(--text-muted)]');
-        btn.classList.add('bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)]', 'border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)]', 'text-[var(--text-primary)]');
-      });
-    });
-
-    // Initial render
-    renderServices('ai');
-
-    // Float checkout click scrolls to Contact Form
-    if (rfpCheckoutBtn) {
-      rfpCheckoutBtn.addEventListener('click', () => {
-        const formSec = document.getElementById('inquiry-form-section');
-        if (formSec) {
-          formSec.scrollIntoView({ behavior: 'smooth' });
         }
-      });
-    }
-
-    // ══════════════════════════════════════════════════════════
-    // 6. SCROLL-LINKED PIPELINE TIMELINE PROGRESS BAR
-    // ══════════════════════════════════════════════════════════
-    const timeline = document.getElementById('pipeline-timeline');
-    const glowBar = document.getElementById('timeline-glow-bar');
-    const stepsElements = document.querySelectorAll('.timeline-step');
-
-    if (timeline && glowBar) {
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px 0px -25% 0px',
-        threshold: 0.15
+        projected.forEach((p) => {
+          const size = Math.max(1, p.scale * 2.2);
+          const alpha = Math.min(1, Math.max(0.1, (fov - p.sz) / (fov * 2)));
+          ctx.fillStyle = `rgba(0, 200, 240, ${alpha * 0.8})`;
+          ctx.beginPath();
+          ctx.arc(p.sx, p.sy, size, 0, Math.PI * 2);
+          ctx.fill();
+          if (p.sz < 0) {
+            ctx.fillStyle = `rgba(124, 92, 252, ${alpha * 0.4})`;
+            ctx.beginPath();
+            ctx.arc(p.sx, p.sy, size * 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
+      };
+      const loop = () => {
+        if (!running) return;
+        draw(true);
+        requestAnimationFrame(loop);
       };
 
+      if (reduceMotion) {
+        draw(false);
+      } else {
+        new IntersectionObserver(([entry]) => {
+          const wasRunning = running;
+          running = entry.isIntersecting && !document.hidden;
+          if (running && !wasRunning) requestAnimationFrame(loop);
+        }).observe(canvas);
+      }
+    }
+
+    // 4. Spotlight hover on bento cards.
+    document.querySelectorAll<HTMLElement>('.bento-card').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    // 5. Module cart.
+    const selected = new Set<string>();
+    const drawer = document.getElementById('floating-rfp-drawer');
+    const countBadge = document.getElementById('rfp-count-badge');
+    const checkoutBtn = document.getElementById('rfp-checkout-btn');
+    const selectedField = document.getElementById('form-selected-modules') as HTMLTextAreaElement | null;
+
+    const updateCart = () => {
+      if (!drawer || !countBadge || !selectedField) return;
+      countBadge.textContent = String(selected.size);
+      selectedField.value = Array.from(selected).join('\n');
+      const open = selected.size > 0;
+      drawer.classList.toggle('translate-y-24', !open);
+      drawer.classList.toggle('opacity-0', !open);
+      drawer.classList.toggle('pointer-events-none', !open);
+      drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      checkoutBtn?.setAttribute('tabindex', open ? '0' : '-1');
+    };
+
+    document.querySelectorAll<HTMLButtonElement>('.node-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const name = card.getAttribute('data-service-name') || '';
+        const badge = card.querySelector('.node-badge');
+        const isOn = selected.has(name);
+        if (isOn) selected.delete(name); else selected.add(name);
+        card.setAttribute('aria-pressed', isOn ? 'false' : 'true');
+        if (badge) badge.textContent = isOn ? '+ Add module' : '✓ Added';
+        updateCart();
+      });
+    });
+
+    checkoutBtn?.addEventListener('click', () => {
+      document.getElementById('inquiry-form-section')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+
+    // 6. Scroll-linked pipeline progress (transform only).
+    const timeline = document.getElementById('pipeline-timeline');
+    const glowBar = document.getElementById('timeline-glow-bar');
+    if (timeline && glowBar) {
       const stepObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.setAttribute('data-active', 'true');
-            
-            // Calculate height of the timeline bar based on active step index
-            const stepIdx = parseInt(entry.target.getAttribute('data-step-index') || '0');
-            const totalSteps = stepsElements.length;
-            const percentage = ((stepIdx) / (totalSteps - 1)) * 100;
-            
-            // Set height to index height bounds
-            const stepRect = entry.target.getBoundingClientRect();
-            const timelineRect = timeline.getBoundingClientRect();
-            const relativeOffset = (stepRect.top - timelineRect.top) + 12;
-            glowBar.style.height = `${relativeOffset}px`;
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.setAttribute('data-active', 'true');
+          const stepTop = entry.target.getBoundingClientRect().top - timeline.getBoundingClientRect().top + 12;
+          const ratio = Math.min(1, stepTop / timeline.getBoundingClientRect().height);
+          const current = parseFloat(glowBar.dataset.ratio || '0');
+          if (ratio > current) {
+            glowBar.dataset.ratio = String(ratio);
+            glowBar.style.transform = `scaleY(${ratio})`;
           }
         });
-      }, observerOptions);
-
-      stepsElements.forEach(st => stepObserver.observe(st));
+      }, { rootMargin: '0px 0px -25% 0px', threshold: 0.15 });
+      document.querySelectorAll('.timeline-step').forEach((st) => stepObserver.observe(st));
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 7. UNIFIED FORM SUBMISSION (Sheet + Telegram + Email)
-    // ══════════════════════════════════════════════════════════
-    const formElement = document.getElementById('custom-rfp-form') as HTMLFormElement;
-    const formErrorAlert = document.getElementById('form-error-alert');
-    const formSuccessAlert = document.getElementById('form-success-alert');
-    const formGridWrapper = document.querySelector('.form-grid-wrapper') as HTMLElement;
-    const formSubmitBtn = document.getElementById('form-submit-btn') as HTMLButtonElement;
+    // 7. Form submission (Sheet + Telegram + Email via Apps Script).
+    const form = document.getElementById('custom-rfp-form') as HTMLFormElement | null;
+    const errorAlert = document.getElementById('form-error-alert');
+    const successAlert = document.getElementById('form-success-alert');
+    const fields = document.querySelector('.form-grid-wrapper') as HTMLElement | null;
+    const submitBtn = document.getElementById('form-submit-btn') as HTMLButtonElement | null;
+    const nameEl = document.getElementById('form-name') as HTMLInputElement | null;
+    const emailEl = document.getElementById('form-email') as HTMLInputElement | null;
+    const handleEl = document.getElementById('form-contact-handle') as HTMLInputElement | null;
+    const websiteEl = document.getElementById('form-website') as HTMLInputElement | null;
+    const messageEl = document.getElementById('form-message') as HTMLTextAreaElement | null;
 
-    const formName = document.getElementById('form-name') as HTMLInputElement;
-    const formEmail = document.getElementById('form-email') as HTMLInputElement;
-    const formContactHandle = document.getElementById('form-contact-handle') as HTMLInputElement;
-    const formWebsite = document.getElementById('form-website') as HTMLInputElement;
-    const formMessage = document.getElementById('form-message') as HTMLTextAreaElement;
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!nameEl || !emailEl || !handleEl || !submitBtn || !errorAlert || !successAlert || !fields) return;
 
-    if (formElement) {
-      formElement.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        if (!formName || !formEmail || !formContactHandle || !formSubmitBtn || !formErrorAlert || !formSuccessAlert || !formGridWrapper) return;
+      if (!nameEl.value || !emailEl.value || !handleEl.value) {
+        errorAlert.textContent = 'Please fill in all required fields (*).';
+        errorAlert.classList.remove('hidden');
+        return;
+      }
 
-        if (!formName.value || !formEmail.value || !formContactHandle.value) {
-          formErrorAlert.innerText = 'Please fill in all required fields (*).';
-          formErrorAlert.classList.remove('hidden');
-          return;
-        }
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'SENDING...';
+      errorAlert.classList.add('hidden');
 
-        formSubmitBtn.disabled = true;
-        formSubmitBtn.innerText = 'SUBMITTING...';
-        formErrorAlert.classList.add('hidden');
+      const messageContent = `[Selected Modules]:\n${selectedField?.value || 'None'}\n\n[Message]:\n${messageEl?.value || ''}`;
 
-        const messageContent = `[Selected Modules]:\n${formSelectedInput.value || 'None'}\n\n[Message]:\n${formMessage?.value || ''}`;
+      const result = await submitLead({
+        name: nameEl.value,
+        email: emailEl.value,
+        telegram: handleEl.value,
+        website: websiteEl?.value || '',
+        serviceInterest: 'Custom Solutions RFP',
+        message: messageContent
+      }, 'Custom Solutions RFP', [
+        { name: 'firstname', value: nameEl.value.split(' ')[0] || nameEl.value },
+        { name: 'lastname', value: nameEl.value.split(' ').slice(1).join(' ') || '' },
+        { name: 'email', value: emailEl.value },
+        { name: 'telegram_handle', value: handleEl.value },
+        { name: 'website', value: websiteEl?.value || '' },
+        { name: 'service_interest', value: 'Custom Solutions RFP' },
+        { name: 'message', value: messageContent }
+      ]);
 
-        const result = await submitLead({
-          name: formName.value,
-          email: formEmail.value,
-          telegram: formContactHandle.value,
-          website: formWebsite?.value || '',
-          serviceInterest: 'Custom Solutions RFP',
-          message: messageContent
-        }, 'Custom Solutions RFP', [
-          { name: 'firstname', value: formName.value.split(' ')[0] || formName.value },
-          { name: 'lastname', value: formName.value.split(' ').slice(1).join(' ') || '' },
-          { name: 'email', value: formEmail.value },
-          { name: 'telegram_handle', value: formContactHandle.value },
-          { name: 'website', value: formWebsite?.value || '' },
-          { name: 'service_interest', value: 'Custom Solutions RFP' },
-          { name: 'message', value: messageContent }
-        ]);
-
-        if (result.ok) {
-          formGridWrapper.style.display = 'none';
-          formSuccessAlert.classList.remove('hidden');
-          // Reset selected modules
-          selectedModules.clear();
-          updateRfpCart();
-        } else {
-          formSubmitBtn.disabled = false;
-          formSubmitBtn.innerText = 'SUBMIT RFP PACKAGE';
-          formErrorAlert.innerText = result.error || 'Submission failed. Please try again or email info@fintech24h.com';
-          formErrorAlert.classList.remove('hidden');
-        }
-      });
-    }
+      if (result.ok) {
+        fields.style.display = 'none';
+        successAlert.classList.remove('hidden');
+        selected.clear();
+        document.querySelectorAll('.node-card').forEach((c) => c.setAttribute('aria-pressed', 'false'));
+        document.querySelectorAll('.node-badge').forEach((b) => { b.textContent = '+ Add module'; });
+        updateCart();
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'SEND PROPOSAL REQUEST';
+        errorAlert.textContent = result.error || 'Submission failed. Please try again or email info@fintech24h.com';
+        errorAlert.classList.remove('hidden');
+      }
+    });
   });
 </script>
