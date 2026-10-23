@@ -17,16 +17,16 @@ export const services: Service[] = [
     slug: 'kol-marketing',
     icon: 'Users',
     shortDescription: 'Most KOL campaigns fail before they start. We build campaigns around audience fit, not follower count.',
-    longDescription: 'Establish trust and generate massive reach through our global network of crypto and AI influencers. We manage the entire lifecycle from onboarding and content alignment to tracking ROI, conversions, and key engagement metrics.',
+    longDescription: 'Reach the crypto audiences that matter through vetted KOLs on X, YouTube and Telegram. We manage the full lifecycle, from shortlisting and briefing to content review, disclosure and reporting on engagement and conversions.',
     features: [
-      'Tier 1 influencer partnerships across Twitter/X, YouTube, and Telegram',
+      'Vetted KOL partnerships across X, YouTube and Telegram',
       'Regional KOL targeting (Vietnam, Singapore, UAE, Indonesia, Thailand, India)',
       'Content creation, brief review, and style optimization workflows',
       'Real-time tracking of impressions, clicks, and member registrations'
     ],
     benefits: [
-      'Immediate brand visibility to highly targeted crypto investors',
-      'Verified engagement rates ensuring ad-spend efficiency',
+      'Visibility with the crypto audiences most likely to act',
+      'Audience checks before any budget is spent',
       'Localized campaigns that fit culture and language'
     ],
     metrics: [
@@ -40,18 +40,18 @@ export const services: Service[] = [
     title: 'PR & Media Campaigns',
     slug: 'pr-media',
     icon: 'FileText',
-    shortDescription: 'A press release distributed to 200 outlets nobody reads does nothing. We place editorial coverage that builds credibility.',
+    shortDescription: 'A press release syndicated to feeds nobody reads does nothing. We earn editorial coverage that builds credibility.',
     longDescription: 'Establish authority and project credibility. We write compelling narratives and pitch to leading editors on major platforms to secure premium editorial space for your product launches, updates, and fundraising announcements.',
     features: [
-      'Tier-1 media placements (Bloomberg, Forbes, Yahoo Finance, CoinTelegraph, Decrypt)',
+      'Editorial placements in crypto-native, business and regional media',
       'Press release draft writing, translations, and editorial review',
       'SEO backlink building to boost domain authority',
       'Crisis PR management and brand narrative control'
     ],
     benefits: [
-      'Unmatched credibility and trust index for investors',
-      'Permanent high-quality backlinks for search indexing',
-      'Widespread organic distribution across crypto syndicates'
+      'Third-party credibility with investors and partners',
+      'Relevant backlinks that support search visibility',
+      'Coverage that keeps working in search and AI answers'
     ],
     metrics: [
       { label: 'Editorial Strategy', value: 'Focused' },
@@ -65,17 +65,17 @@ export const services: Service[] = [
     slug: 'community-growth',
     icon: 'MessageSquare',
     shortDescription: 'Follower count is vanity. Daily active engagement, organic sharing, and community-led growth is what moves the needle.',
-    longDescription: 'Your community is your currency. We design data-driven viral loops and provide 24/7 moderation to turn passive members into active advocates. From anti-sybil airdrops to deep engagement tracking, we handle the entire funnel.',
+    longDescription: 'Your community is your support desk, feedback loop and first line of defense. We design quests and referral loops, moderate around your members\' time zones and turn passive members into advocates, with Sybil defense built in.',
     features: [
-      '24/7 multi-lingual moderation and proactive engagement strategies',
+      'Multilingual moderation and proactive engagement',
       'Viral referral loop design and gamified task boards (Zealy, Galxe)',
       'Sybil defense mechanisms and anti-spam security configurations',
       'Weekly analysis reports on sentiment, retention, and growth metrics'
     ],
     benefits: [
       'Safe, scam-free environments that foster investor confidence',
-      'Explosive social media and on-chain transaction growth',
-      'High retention rates of active, supportive community advocates'
+      'Active members who help each other and invite others',
+      'Long-term retention of supportive community advocates'
     ],
     metrics: [
       { label: 'Community Operations', value: 'Active' },
@@ -89,10 +89,10 @@ export const services: Service[] = [
     slug: 'event-marketing',
     icon: 'Ticket',
     shortDescription: 'Conferences don\'t create opportunities. Preparation and follow-through do. We handle every layer of event marketing.',
-    longDescription: 'Transform digital presence into real-world authority. From Token2049 side-events to private VC dinners in Tier-1 cities, we design, manage, and execute offline experiences that connect you directly with strategic partners and high-net-worth individuals.',
+    longDescription: 'Turn conference trips into relationships and deals. From side events during major conference weeks to private investor dinners, we plan, run and follow up on experiences that put you in the room with the right partners.',
     features: [
       'End-to-end event conceptualization and logistical execution',
-      'Curated guest list management (VCs, Founders, Tier-1 KOLs)',
+      'Curated guest lists of investors, founders and KOLs',
       'High-impact venue sourcing and immersive brand experiences',
       'Post-event media coverage and partnership follow-up sequences'
     ],
@@ -137,15 +137,15 @@ export const services: Service[] = [
     slug: 'business-development',
     icon: 'Briefcase',
     shortDescription: 'Who you integrate with, where you\'re listed, and who backs you is as important as what you\'ve built.',
-    longDescription: 'Accelerate your market entry with critical B2B partnerships. We introduce your project to key decision-makers at tier-1 launchpads, venture capital firms, market makers, and layer-1 blockchains to expand your distribution channels.',
+    longDescription: 'Open the doors that matter. We prepare your project and introduce it to decision-makers at exchanges, launchpads, venture funds, market makers and Layer 1 ecosystems through people they already trust.',
     features: [
-      'Introductions to Top 20 centralized exchanges (CEXs) and launchpads',
+      'Introductions to exchanges and launchpads that fit your stage',
       'VC fundraising matching and pitch deck audit and design services',
       'Strategic partnership networking with relevant Web3 projects',
       'Market Maker onboarding and liquidity provider consultation'
     ],
     benefits: [
-      'Reduced listing fees and launchpad onboarding friction',
+      'A well-prepared listing process with fewer surprises',
       'Direct access to capital and strategic smart money',
       'Co-marketing opportunities with major industry leaders'
     ],

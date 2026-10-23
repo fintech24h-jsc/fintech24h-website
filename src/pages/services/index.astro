@@ -1,35 +1,114 @@
 ---
 // src/pages/services/index.astro
+// Services hub. Focus keyword: "blockchain marketing services"; also covers
+// crypto / Web3 / DeFi / NFT / fintech marketing services variants and links to
+// all 7 service pages (6 core + go-to-market). No case-study numbers.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { buildFaqSchema } from '../../lib/serviceSchema';
 import { services } from '../../data/services';
 
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services/' }
 ];
-// Services ItemList Schema
+
+const linkClass =
+  'text-[var(--accent-cyan)] underline decoration-[color-mix(in_srgb,var(--accent-cyan)_40%,transparent)] underline-offset-4 hover:decoration-[var(--accent-cyan)] transition-colors duration-200 rounded-sm';
+
+// The go-to-market page is not part of services.ts (that list also drives the
+// homepage bento), so it is added here as the seventh hub entry.
+const gtm = {
+  title: 'Crypto Go-To-Market & Custom Programs',
+  slug: 'custom-solutions',
+  shortDescription: 'One plan and one dedicated team for launches that need KOLs, PR, community, events and BD working together.',
+  features: ['Pre-launch, launch and scale roadmaps', 'A single lead across every channel', 'Retainer, sprint or milestone engagements']
+};
+
+const hubItems = [...services.map((s) => ({ title: s.title, slug: s.slug })), { title: gtm.title, slug: gtm.slug }];
+
 const itemListSchema = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "itemListElement": services.map((s, index) => ({
-    "@type": "ListItem",
-    "position": index + 1,
-    "url": `https://fintech24h.com/services/${s.slug}/`,
-    "name": s.title
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Fintech24h blockchain marketing services',
+  itemListElement: hubItems.map((s, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: `https://fintech24h.com/services/${s.slug}/`,
+    name: s.title
   }))
 };
+
+const verticals = [
+  { title: 'DeFi marketing', desc: 'Trust-first launches for protocols that move real value: specialist KOLs, technical PR and community support that can answer hard questions.', links: [['kol-marketing', 'KOL'], ['community-growth', 'Community']] },
+  { title: 'NFT & GameFi marketing', desc: 'Culture-led campaigns with creators, holder communities, events and quests that reward real players and collectors.', links: [['community-growth', 'Community'], ['event-marketing', 'Events']] },
+  { title: 'Token launch & TGE marketing', desc: 'A phased plan from waitlist to listing day, coordinating KOL waves, PR, AMAs and exchange introductions.', links: [['custom-solutions', 'Go-to-market'], ['business-development', 'BD']] },
+  { title: 'Exchange & wallet marketing', desc: 'Regional growth, multilingual support and partnership deals for platforms competing on trust and liquidity.', links: [['pr-media', 'PR'], ['business-development', 'BD']] },
+  { title: 'Fintech marketing', desc: 'Regulation-aware messaging, business press and partnerships for payments, lending and wealth products.', links: [['pr-media', 'PR'], ['business-development', 'BD']] },
+  { title: 'RWA & tokenization', desc: 'Education-first content and institutional PR for projects bringing real-world assets on-chain.', links: [['pr-media', 'PR'], ['custom-solutions', 'Go-to-market']] },
+  { title: 'AI & crypto AI projects', desc: 'Clear positioning for AI products and supervised AI support for crypto communities.', links: [['ai-marketing', 'AI marketing'], ['kol-marketing', 'KOL']] }
+];
+
+const stages = [
+  { name: 'Pre-launch', desc: 'Positioning, community setup, early KOL seeding and investor or partner introductions.' },
+  { name: 'Launch', desc: 'Coordinated KOL and PR waves, AMAs, events and exchange coordination for launch week.' },
+  { name: 'Scale', desc: 'Always-on content, ambassador programs, conference season and new markets in Asia and the Gulf.' }
+];
+
+const faqs = [
+  {
+    q: 'What do blockchain marketing services include?',
+    a: 'Blockchain marketing services cover everything that helps a crypto, Web3 or fintech project reach users, investors and partners: KOL and influencer marketing, PR, community management, events, AI-assisted marketing, business development and go-to-market planning.'
+  },
+  {
+    q: 'Which service should a new crypto project start with?',
+    a: `Most early projects start with community setup and positioning, then add KOL and PR waves closer to launch. If you need several channels at once, a <a href="/services/custom-solutions/" class="${linkClass}">go-to-market program</a> keeps them under one plan.`
+  },
+  {
+    q: 'Do you offer DeFi and NFT marketing?',
+    a: `Yes. DeFi and NFT projects use the same core services, adapted to their audiences: specialist <a href="/services/kol-marketing/" class="${linkClass}">KOLs</a> and technical PR for DeFi, and creators, holder communities and events for NFT and GameFi projects.`
+  },
+  {
+    q: 'Do you work with fintech companies as well as crypto projects?',
+    a: 'Yes. We work with exchanges, wallets, payment and fintech companies, with messaging checked against what their licences allow in each market.'
+  },
+  {
+    q: 'Which markets do you cover?',
+    a: `We run global English-language campaigns from Ho Chi Minh City, with local execution in <a href="/blockchain-marketing-agency-vietnam/" class="${linkClass}">Vietnam</a>, <a href="/blockchain-marketing-agency-singapore/" class="${linkClass}">Singapore</a>, <a href="/blockchain-marketing-agency-dubai/" class="${linkClass}">Dubai and the UAE</a>, Indonesia, Thailand and India.`
+  },
+  {
+    q: 'How do engagements work?',
+    a: 'Single-channel work usually runs as a monthly retainer or a campaign. Multi-channel launches run as a go-to-market program with one lead. Everything is agreed in a written proposal before work starts.'
+  }
+];
+
+const faqSchema = buildFaqSchema(faqs);
+const combinedSchema = [itemListSchema, faqSchema];
+
+const iconSvg: Record<string, string> = {
+  Users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/>',
+  FileText: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round" stroke-linejoin="round"/>',
+  MessageSquare: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/>',
+  Briefcase: '<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-linecap="round" stroke-linejoin="round"/>',
+  Ticket: '<path d="M2 9a3 3 0 1 0 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 1 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 5v2M13 17v2M13 11v2" stroke-linecap="round"/>',
+  Cpu: '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" stroke-linecap="round"/>',
+  Layers: '<path d="m12 2 10 5-10 5L2 7l10-5Z" stroke-linejoin="round"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>'
+};
+
+const cards = [
+  ...services.map((s) => ({ title: s.title, slug: s.slug, icon: s.icon, shortDescription: s.shortDescription, features: s.features.slice(0, 3), tag: s.metrics[0] })),
+  { title: gtm.title, slug: gtm.slug, icon: 'Layers', shortDescription: gtm.shortDescription, features: gtm.features, tag: { label: 'One Team', value: 'Coordinated' } }
+];
 ---
 
 <BaseLayout
-  title="Our Services — Blockchain Marketing Solutions | Fintech24h"
+  title="Blockchain & Crypto Marketing Services | Fintech24h"
   description="Blockchain and crypto marketing services for Web3, DeFi, NFT and fintech projects: KOL marketing, PR, community, events, AI marketing and business development."
-  schema={itemListSchema}
+  schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="Services Directory">
-    <!-- Ambient background glows -->
+  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="Services directory">
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
       <div class="bg-orb bg-orb-purple w-[600px] h-[600px] absolute -top-40 -left-32 opacity-15"></div>
       <div class="bg-orb bg-orb-cyan w-[500px] h-[500px] absolute bottom-10 -right-32 opacity-10"></div>
@@ -37,98 +116,150 @@ const itemListSchema = {
     </div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Top header -->
       <div class="text-center max-w-3xl mx-auto mb-20" data-animate="fade-up">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]" aria-hidden="true"></span>
           <span class="text-xs font-semibold text-[var(--accent-cyan)] font-body uppercase tracking-wider">Our Solutions</span>
         </div>
         <h1 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-6">
           Blockchain Marketing Services
         </h1>
         <p class="text-lg text-[var(--text-secondary)] font-body leading-relaxed">
-          From developer relations to retail investor onboarding, our plug-and-play strategies drive actual ROI.
+          Crypto, Web3 and fintech marketing services built around one goal: real users, real partners and real credibility. Use one service or combine them into a single go-to-market program.
         </p>
       </div>
 
-      <!-- Services List Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-animate="stagger">
-        {services.map((s) => (
+        {cards.map((s) => (
           <div class="card-default p-8 sm:p-10 border border-[var(--border-subtle)] flex flex-col justify-between group hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] transition-all duration-300" data-animate-child>
             <div>
-              <!-- Header info: Icon + Title -->
               <div class="flex items-start justify-between gap-4 mb-6">
-                <div class="w-12 h-12 rounded-xl bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] border border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] flex items-center justify-center text-[var(--accent-cyan)] group-hover:bg-[var(--accent-cyan)] group-hover:text-[var(--text-inverted)] transition-colors duration-300">
-                  {s.icon === 'Users' && (
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v-2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  )}
-                  {s.icon === 'FileText' && (
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  )}
-                  {s.icon === 'MessageSquare' && (
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  )}
-                  {s.icon === 'TrendingUp' && (
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18M17 6h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  )}
-                  {s.icon === 'Briefcase' && (
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  )}
-                  {s.icon === 'Ticket' && (
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 1 0 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 1 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 17v2M13 11v2"/></svg>
-                  )}
-                  {s.icon === 'Cpu' && (
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
-                  )}
-                  {s.icon === 'Search' && (
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  )}
+                <div class="w-12 h-12 rounded-xl bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] border border-[color-mix(in_srgb,var(--accent-cyan)_20%,transparent)] flex items-center justify-center text-[var(--accent-cyan)] group-hover:bg-[var(--accent-cyan)] group-hover:text-[var(--text-inverted)] transition-colors duration-300" aria-hidden="true">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" set:html={iconSvg[s.icon] ?? iconSvg.Layers} />
                 </div>
-
-                <!-- Main Metrics tag -->
                 <div class="text-right">
-                  <div class="text-xl font-display font-bold text-[var(--accent-cyan)]">{s.metrics[0].value}</div>
-                  <div class="text-[9px] text-[var(--text-muted)] font-body uppercase tracking-wider">{s.metrics[0].label}</div>
+                  <div class="text-xl font-display font-bold text-[var(--accent-cyan)]">{s.tag.value}</div>
+                  <div class="text-xs text-[var(--text-secondary)] font-body uppercase tracking-wider">{s.tag.label}</div>
                 </div>
               </div>
 
-              <!-- Title & Copy -->
               <h2 class="font-display text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-4 group-hover:text-[var(--accent-cyan)] transition-colors">
                 <a href={`/services/${s.slug}/`} class="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent-cyan)]">{s.title}</a>
               </h2>
-              <p class="text-sm text-[var(--text-secondary)] font-body leading-relaxed mb-6">
-                {s.shortDescription}
-              </p>
+              <p class="text-base text-[var(--text-secondary)] font-body leading-relaxed mb-6">{s.shortDescription}</p>
 
-              <!-- Mini bullet lists -->
-              <ul class="space-y-2 mb-8 text-xs text-[var(--text-secondary)] font-body">
-                {s.features.slice(0, 3).map((f) => (
-                  <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+              <ul class="space-y-2 mb-8 text-sm text-[var(--text-secondary)] font-body">
+                {s.features.map((f) => (
+                  <li class="flex items-start gap-2">
+                    <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] shrink-0" aria-hidden="true"></span>
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <!-- Redirect Link -->
-            <div class="flex items-center justify-between border-t border-[var(--border-subtle)] pt-6 mt-6">
-              <span class="text-xs text-[var(--text-muted)] font-body"> plug & play ready </span>
+            <div class="flex items-center justify-end border-t border-[var(--border-subtle)] pt-6 mt-6">
               <a
                 href={`/services/${s.slug}/`}
                 class="text-xs font-semibold text-[var(--accent-cyan)] hover:text-[var(--accent-cyan-dim)] font-display uppercase tracking-wider flex items-center gap-2 transition-colors rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent-cyan)]"
                 aria-label={`Explore ${s.title}`}
               >
                 Explore Service
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
-
           </div>
         ))}
       </div>
+    </div>
+  </section>
 
+  <!-- DEFINITION -->
+  <section class="py-24 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5" data-animate="fade-up">
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">What Blockchain Marketing Services Include</h2>
+      </div>
+      <div class="lg:col-span-7 space-y-5 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+        <p class="text-[var(--text-primary)] text-xl">
+          Blockchain marketing is the work of earning attention and trust for a crypto, Web3 or fintech product: the right voices talking about it, credible coverage, a community that stays, events that create relationships and partners who open new doors.
+        </p>
+        <p>
+          Fintech24h is a blockchain marketing agency based in Ho Chi Minh City. We run each of these services on its own or together as one program, for token projects, DeFi and infrastructure protocols, NFT and gaming teams, exchanges, fintech companies and AI startups.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERTICALS (DeFi / NFT / fintech variants) -->
+  <section class="py-24 bg-[var(--bg-primary)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14" data-animate="fade-up">
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">Crypto Marketing for Every Corner of Web3</h2>
+        <p class="mt-4 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+          The same services, adapted to how each part of the market finds, trusts and uses a product.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {verticals.map((v) => (
+          <div class="card-default p-7">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-2">{v.title}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed mb-4">{v.desc}</p>
+            <p class="font-body text-sm text-[var(--text-secondary)]">
+              Related:
+              {v.links.map(([slug, label], i) => (
+                <>{i > 0 && ', '}<a href={`/services/${slug}/`} class={linkClass}>{label}</a></>
+              ))}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGES -->
+  <section class="py-24 bg-[var(--bg-secondary)] border-t border-[var(--border-subtle)]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14" data-animate="fade-up">
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">Choosing the Right Mix for Your Stage</h2>
+        <p class="mt-4 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+          Which services matter most depends on where you are. When you need several at once, our <a href="/services/custom-solutions/" class={linkClass}>crypto go-to-market program</a> runs them under one plan.
+        </p>
+      </div>
+      <ol class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {stages.map((st, i) => (
+          <li class="card-default p-7">
+            <span class="font-mono text-xs text-[var(--accent-cyan)] tracking-widest" aria-hidden="true">STAGE 0{i + 1}</span>
+            <h3 class="mt-2 font-display text-xl font-bold text-[var(--text-primary)] mb-2">{st.name}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{st.desc}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 bg-[var(--bg-primary)]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-h2 font-bold text-[var(--text-primary)] text-center mb-12" data-animate="fade-up">Blockchain Marketing Services FAQ</h2>
+      <div class="space-y-4">
+        {faqs.map((faq) => (
+          <details class="card-default p-0 group overflow-hidden">
+            <summary class="flex items-center justify-between gap-6 p-6 cursor-pointer list-none rounded-2xl">
+              <h3 class="faq-q font-display text-base md:text-lg font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{faq.q}</h3>
+              <svg class="w-4 h-4 text-[var(--accent-cyan)] shrink-0 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="px-6 pb-6 font-body text-base text-[var(--text-secondary)] leading-relaxed border-t border-[var(--border-subtle)] pt-4">
+              <p set:html={faq.a} />
+            </div>
+          </details>
+        ))}
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  summary::-webkit-details-marker { display: none; }
+  .faq-q { margin: 0; }
+</style>
