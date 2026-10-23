@@ -194,7 +194,16 @@ export interface KolPartner {
 
 export const kolPartners: KolPartner[] = [
   { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'lead', confirmed: false },
-  { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
+  {
+    name: 'Thien Thien',
+    handle: 'Thienthien1305',
+    avatarUrl: '/dealmakers/kol/thienthien1305.jpg',
+    platforms: [{ type: 'x', url: 'https://x.com/Thienthien1305' }],
+    topics: ['BTC & ETH', 'Airdrops'],
+    markets: ['Vietnam'],
+    tier: 'core',
+    confirmed: true,
+  },
   { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
   { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
   { name: null, handle: null, avatarUrl: null, platforms: [], topics: [], markets: [], tier: 'core', confirmed: false },
