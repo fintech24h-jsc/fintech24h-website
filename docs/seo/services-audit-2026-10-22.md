@@ -116,3 +116,22 @@ Mỗi trang: H1 từ khoá, đoạn định nghĩa, các lỗi hay gặp, hạng
 3. Custom Solutions: **đổi hướng thành Crypto & Web3 Go-To-Market / Dedicated Growth Team**, link từng hạng mục về trang riêng, bỏ KPI số, render HTML thật.
 4. Triển khai: **làm Giai đoạn 0 ngay**, rồi làm lại trang PR đầu tiên.
 5. Avatar pravatar ở hero KOL: chưa hỏi; mặc định thay bằng minh hoạ trừu tượng khi làm lại trang KOL.
+
+---
+
+## 7. Trạng thái thực hiện (cập nhật 2026-10-23)
+
+| Hạng mục | Commit | Trạng thái |
+|---|---|---|
+| Giai đoạn 0 (redirect, schema, meta, CTA, reveal, focus) | `dd90016` | Live |
+| PR & Media | `3ec1b58` | Live |
+| Community | `dff96b2` | Live |
+| KOL (+ bỏ ảnh pravatar ở hero, cả trang chủ) | `c6c885d` | Live |
+| Event Marketing | `3278c6d` | Live |
+| Business Development | `faea7cf` | Live |
+| Custom Solutions → Crypto & Web3 Go-To-Market | `a250a45` | Live |
+| AI Marketing (bổ sung) | `94cbaed` | Live |
+| Hub `/services/` + `services.ts` | `4e76f38` | Live |
+| Giai đoạn 2: link từ mọi bài blog về trang dịch vụ | `25ed3a2` | Live |
+
+Việc tiếp theo cho chủ dự án: GSC → URL Inspection → yêu cầu lập chỉ mục 8 URL dịch vụ; theo dõi hiển thị/vị trí 4–8 tuần theo bản đồ từ khoá ở mục 3.
