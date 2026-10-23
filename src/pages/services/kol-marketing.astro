@@ -1,41 +1,155 @@
 ---
 // src/pages/services/kol-marketing.astro
+// Focus keyword: "crypto influencer marketing agency" / "crypto KOL marketing".
+// Variants covered in H2/H3/FAQ: Web3 influencer marketing/agency, NFT
+// influencer marketing, blockchain KOL, fintech influencer marketing.
+// No case-study numbers, follower counts or guarantees (owner rule).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { buildServiceSchema, buildFaqSchema } from '../../lib/serviceSchema';
 import FooterLeadForm from '../../components/sections/FooterLeadForm.astro';
 import KolCtaSection from '../../components/sections/KolCtaSection.astro';
 
+const PAGE_URL = 'https://fintech24h.com/services/kol-marketing/';
+
 const breadcrumbs = [
   { name: 'Home', item: 'https://fintech24h.com' },
   { name: 'Services', item: 'https://fintech24h.com/services/' },
-  { name: 'KOL Marketing', item: 'https://fintech24h.com/services/kol-marketing/' }
+  { name: 'KOL Marketing', item: PAGE_URL }
+];
+
+const linkClass =
+  'text-[var(--accent-cyan)] underline decoration-[color-mix(in_srgb,var(--accent-cyan)_40%,transparent)] underline-offset-4 hover:decoration-[var(--accent-cyan)] transition-colors duration-200 rounded-sm';
+
+const kolTypes = [
+  { title: 'Industry specialists', desc: 'Researchers and builders who cover DeFi, infrastructure, Layer 2, AI or RWA in depth. Best for technical products that need credible explanation.' },
+  { title: 'Traders & market analysts', desc: 'Chart-focused voices with active trading audiences. Useful around listings and token launches, briefed carefully so nothing reads as financial advice.' },
+  { title: 'Educators & explainer channels', desc: 'YouTube and long-form creators who walk viewers through how a product works. Slower to produce, longer shelf life.' },
+  { title: 'Community & culture accounts', desc: 'Meme, NFT and gaming voices who set the mood of crypto Twitter. Strong for awareness and community energy.' },
+  { title: 'Regional KOLs', desc: 'Vietnamese, Indonesian, Thai and Middle Eastern creators who speak to local audiences in their own language and context.' },
+  { title: 'Micro KOLs', desc: 'Smaller, highly engaged accounts inside a niche. Often the most cost-efficient way to reach real users rather than spectators.' }
+];
+
+const vetChecks = [
+  'Real comments and replies, not just likes from look-alike accounts',
+  'Audience location and language match your target market',
+  'Follower growth history, checked for sudden bought spikes',
+  'Past sponsored posts and how those projects turned out',
+  'Whether paid posts were clearly disclosed',
+  'Topic fit: what they actually post about week to week'
+];
+
+const redFlags = [
+  'Promoting projects that later rugged without addressing it',
+  'Engagement that comes mostly from giveaway or engagement pods',
+  'Deleting sponsored posts after payment',
+  'Undisclosed paid promotion or price predictions sold as content',
+  'Refusing a written brief or content review'
+];
+
+const steps = [
+  { step: '01', title: 'Audience-First Selection', desc: 'Before shortlisting any KOL, we review audience quality, engagement, past campaigns and topic fit with your project. You get a shortlist with the reasoning behind every name, not just a spreadsheet of handles.', align: 'left' },
+  { step: '02', title: 'Brief & Content Alignment', desc: 'Every KOL receives a written brief with your narrative, key messages, tone, required disclosures and what not to say. Each post is reviewed and approved by you before it goes live.', align: 'right' },
+  { step: '03', title: 'Phased Activation', desc: 'We do not release everything at once. Campaigns run in phases: awareness seeding, then education and trust-building content, then a clear call to action timed with your launch or listing.', align: 'left' },
+  { step: '04', title: 'Live Tracking & Optimization', desc: 'During the campaign we watch engagement quality, comment sentiment and tracked clicks. Placements that underperform are paused and the budget moves to voices that are working.', align: 'right' },
+  { step: '05', title: 'Post-Campaign Reporting', desc: 'You receive a plain breakdown of what ran, what worked, what did not and which KOLs are worth keeping for the next cycle. Every campaign makes the next one smarter.', align: 'left' }
+];
+
+const campaignTypes = [
+  { title: 'Launch campaigns', desc: 'Coordinated KOL waves around a TGE, mainnet, product launch or exchange listing.' },
+  { title: 'Always-on KOL management', desc: 'A curated group of KOLs who cover your project month after month and become long-term advocates.' },
+  { title: 'X growth campaigns', desc: 'Threads, quote posts, Spaces and reply strategy that build presence on crypto Twitter.' },
+  { title: 'YouTube & video reviews', desc: 'Explainers, walkthroughs and interviews that stay discoverable long after launch week.' },
+  { title: 'Telegram KOL channels', desc: 'Announcements in trusted Telegram channels for markets where Telegram is the main news feed.' },
+  { title: 'Ambassador programs', desc: 'Community members trained to create content and answer questions, coordinated with your community team.' }
+];
+
+const platforms = ['X (Twitter)', 'YouTube', 'Telegram', 'TikTok', 'Instagram', 'Binance Square', 'Podcasts', 'X Spaces'];
+
+const projectTypes = [
+  { title: 'Token launch & TGE', desc: 'Awareness before launch, education during it and steady voices after, so the conversation does not stop on day two.' },
+  { title: 'Exchange listings', desc: 'KOL coverage timed with the listing announcement and trading start, with careful wording on dates and pairs.' },
+  { title: 'DeFi & infrastructure', desc: 'Specialist KOLs who can explain yields, risk and integrations without overselling.' },
+  { title: 'NFT & GameFi', desc: 'Culture, art and gaming creators for NFT influencer marketing that feels native to the community.' },
+  { title: 'AI x crypto projects', desc: 'Voices who understand both AI and on-chain products and can tell substance from hype.' },
+  { title: 'Fintech & regulated apps', desc: 'Fintech influencer marketing for exchanges, wallets and payment apps, with every claim checked against what your licence allows.' }
+];
+
+const measures = [
+  { title: 'Engagement quality', desc: 'Real replies, saves and quotes, with bot-like activity filtered out.' },
+  { title: 'Tracked clicks & sign-ups', desc: 'Unique links per KOL, so you can see who actually drives action.' },
+  { title: 'Comment sentiment', desc: 'What the audience says about your project under each post.' },
+  { title: 'Audience overlap', desc: 'How much each KOL adds new reach instead of repeating the same people.' },
+  { title: 'Cost per real engagement', desc: 'Spend compared against meaningful interactions, not raw impressions.' },
+  { title: 'Reusable content', desc: 'Posts and videos you can reuse in ads, community channels and PR.' }
+];
+
+const groundRules = [
+  'Every paid post is disclosed as sponsored.',
+  'You approve every piece of content before it goes live.',
+  'No bots, engagement pods or bought followers.',
+  'No price predictions or promised returns in any brief.',
+  'KOLs are paid against delivery, and we replace those who do not deliver.'
+];
+
+const markets = [
+  { name: 'Vietnam', href: '/blockchain-marketing-agency-vietnam/', anchor: 'blockchain marketing agency in Vietnam', desc: 'Vietnamese crypto KOLs on Telegram, Facebook, YouTube and TikTok, managed by our Ho Chi Minh City team.' },
+  { name: 'Singapore & Southeast Asia', href: '/blockchain-marketing-agency-singapore/', anchor: 'blockchain marketing agency in Singapore', desc: 'English-speaking regional KOLs plus Indonesian and Thai creators, vetted the same way in every market.' },
+  { name: 'Dubai & UAE', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai', desc: 'X-native and Arabic-speaking voices for projects entering the Gulf crypto market.' }
+];
+
+const related = [
+  { href: '/services/pr-media/', title: 'Blockchain PR', desc: 'Give KOLs credible coverage to talk about.' },
+  { href: '/services/community-growth/', title: 'Crypto Community Management', desc: 'Turn KOL audiences into active members.' },
+  { href: '/services/event-marketing/', title: 'Crypto Event Marketing', desc: 'Meet KOLs in person at conferences and side events.' }
+];
+
+const guides = [
+  { href: '/blog/the-rise-of-web3-influencer-marketing-a-new-era-of-engagement', title: 'The rise of Web3 influencer marketing' },
+  { href: '/blog/empowering-content-creators-in-web3-5-pioneering-companies', title: 'How Web3 companies work with content creators' },
+  { href: '/blog/web3-social-media-marketing-amplify-your-projects-reach-and-engage-your-audience', title: 'Web3 social media marketing basics' }
 ];
 
 const faqs = [
   {
-    q: "How do you verify KOL audience quality?",
-    a: "We use third-party analytics tools and our own historical database to check engagement-to-follower ratios, comment sentiment (filtering out bot replies), and audience geography. If a KOL has 1M followers but averages 10 real comments, they don't make our list."
+    q: 'What does a crypto influencer marketing agency do?',
+    a: 'It finds, vets, briefs and manages crypto KOLs (key opinion leaders) who promote your project to their audiences. That includes shortlisting, negotiating, writing briefs, reviewing content, handling payments, tracking results and reporting. The value is in choosing the right voices and keeping every post accurate and disclosed.'
   },
   {
-    q: "Do you handle the payments to KOLs?",
-    a: "Yes. We handle all contract negotiations, escrow, and milestone-based payments (usually 50% upfront, 50% upon successful delivery of content as briefed). You pay us a single invoice; we handle the complex distribution."
+    q: 'What is the difference between a KOL and an influencer?',
+    a: 'In crypto the terms are mostly interchangeable. "KOL" is common in Asia and usually means a trusted expert voice, while "influencer" is the broader Western term. We pick people for audience fit and credibility, whatever they are called.'
   },
   {
-    q: "Do you work with KOLs in Singapore, Indonesia and Thailand?",
-    a: 'Yes, our regional KOL network covers <a href="/blockchain-marketing-agency-singapore/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Singapore</a>, Indonesia and Thailand alongside <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Vietnam</a>, vetted the same way across every market.'
+    q: 'How do you verify KOL audience quality?',
+    a: 'We check real comments and replies, audience location and language, follower growth history, past sponsored posts and disclosure habits. Accounts with bought followers, engagement pods or a history of promoting failed projects do not make our list.'
   },
   {
-    q: "Can you guarantee ROI or token price impact?",
-    a: "No agency can guarantee token price impact, as it depends on market conditions, your product, and broader macroeconomic factors. We guarantee reach, engagement, and click-through rates based on historical data of the KOLs we select."
+    q: 'Which platforms do you run KOL campaigns on?',
+    a: 'Mainly X (Twitter), YouTube and Telegram, plus TikTok, Instagram, Binance Square, podcasts and X Spaces when your audience is there.'
   },
   {
-    q: "Do you have KOL relationships in Dubai and the wider UAE?",
-    a: 'Yes, we work with X-native KOLs with real audiences in the <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors">Dubai</a> and wider UAE crypto community.'
+    q: 'Do you handle the payments to KOLs?',
+    a: 'Yes. We handle negotiation, contracts and payments tied to delivery of the agreed content. You pay one invoice and we manage the rest.'
   },
   {
-    q: "Do KOLs disclose that the posts are sponsored?",
-    a: "Yes, we require all KOLs to comply with local regulations (such as FTC guidelines in the US) regarding sponsored content disclosures, typically using #ad or #sponsored tags."
+    q: 'Can you guarantee results or token price impact?',
+    a: 'No. No honest agency can guarantee price impact or a set level of engagement, because that depends on the market, your product and the audience. What we commit to is careful selection, approved content, clear disclosure and transparent reporting.'
+  },
+  {
+    q: 'Do KOLs disclose that posts are sponsored?',
+    a: 'Yes. Every brief requires clear disclosure, such as #ad or a paid partnership label, in line with rules like the FTC guidelines in the US and local advertising rules in each market.'
+  },
+  {
+    q: 'Do you work with KOLs in Southeast Asia?',
+    a: `Yes. Our regional network covers <a href="/blockchain-marketing-agency-singapore/" class="${linkClass}">Singapore</a>, Indonesia and Thailand alongside <a href="/blockchain-marketing-agency-vietnam/" class="${linkClass}">Vietnam</a>, vetted the same way in every market.`
+  },
+  {
+    q: 'Do you have KOL relationships in Dubai and the wider UAE?',
+    a: `Yes. We work with X-native and Arabic-speaking KOLs who have real audiences in the <a href="/blockchain-marketing-agency-dubai/" class="${linkClass}">Dubai</a> and wider UAE crypto community.`
+  },
+  {
+    q: 'How do KOL campaigns work with PR and community?',
+    a: `They work best together. <a href="/services/pr-media/" class="${linkClass}">PR coverage</a> gives KOLs something credible to point to, and a well-run <a href="/services/community-growth/" class="${linkClass}">community</a> keeps the new people KOLs bring in.`
   }
 ];
 
@@ -44,15 +158,18 @@ const META_DESCRIPTION =
 
 const serviceSchema = buildServiceSchema({
   name: 'Crypto KOL & Influencer Marketing',
-  alternateName: ['Web3 Influencer Marketing', 'Crypto Influencer Marketing', 'Blockchain KOL Marketing'],
+  alternateName: ['Web3 Influencer Marketing', 'Crypto Influencer Marketing', 'Blockchain KOL Marketing', 'NFT Influencer Marketing'],
   serviceType: 'Influencer marketing',
-  url: 'https://fintech24h.com/services/kol-marketing/',
+  url: PAGE_URL,
   description: META_DESCRIPTION
 });
 
 const faqSchema = buildFaqSchema(faqs);
 
 const combinedSchema = [serviceSchema, faqSchema];
+
+const eyebrow = 'font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em] mb-4';
+const h2Class = 'font-display text-[clamp(1.6rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]';
 ---
 
 <BaseLayout
@@ -62,131 +179,264 @@ const combinedSchema = [serviceSchema, faqSchema];
 >
   <BreadcrumbSchema items={breadcrumbs} />
 
-  <!-- SECTION 1 — HERO (The Network Concept) -->
+  <!-- SECTION 1: HERO (network concept, H1 = focus keyword) -->
   <KolCtaSection isHero={true} />
 
-  <!-- SECTION 2 — THE PROBLEM (Bento Box Style) -->
-  <section class="py-20 md:py-32 relative z-10 bg-black/40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-4 mb-16 reveal">
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)] leading-[1.2]">
-          Why Most KOL Campaigns Underperform
-        </h2>
+  <!-- SECTION 2: DEFINITION -->
+  <section class="py-20 md:py-28 relative z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div class="lg:col-span-5 reveal">
+        <p class={eyebrow}>The Basics</p>
+        <h2 class={h2Class}>What a Crypto KOL Marketing Agency Does</h2>
       </div>
-
-      <!-- Bento Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[280px]">
-        
-        <!-- Bento 1 (Large) -->
-        <div class="md:col-span-2 card-default border border-[var(--border-subtle)] bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end group hover:border-red-500/30 transition-all reveal">
-          <div class="absolute top-6 right-6 w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center">
-            <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
-          </div>
-          <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-2">Fake Followers, Real Budget Lost</h3>
-          <p class="text-[var(--text-secondary)]">You pay for reach that doesn't exist. Inflated follower counts and bot-heavy audiences mean your message goes nowhere, and your budget evaporates with nothing to show.</p>
-        </div>
-
-        <!-- Bento 2 -->
-        <div class="card-default border border-[var(--border-subtle)] bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end group hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] transition-all reveal reveal-delay-1">
-          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-2">Wrong Audience</h3>
-          <p class="text-[var(--text-secondary)] text-sm">A KOL with 500K followers in gaming does nothing for a DeFi protocol. Reach without relevance is noise.</p>
-        </div>
-
-        <!-- Bento 3 -->
-        <div class="card-default border border-[var(--border-subtle)] bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end group hover:border-[#a78bfa]/30 transition-all reveal">
-          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-2">No Brief, No Direction</h3>
-          <p class="text-[var(--text-secondary)] text-sm">When KOLs receive no brief, they default to generic content. Posts feel promotional and get low engagement.</p>
-        </div>
-
-        <!-- Bento 4 (Large) -->
-        <div class="md:col-span-2 card-default border border-[var(--border-subtle)] bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-end relative overflow-hidden group hover:border-[var(--border-default)] transition-all reveal reveal-delay-1">
-          <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50"></div>
-          <div class="relative z-10">
-            <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-2">Bad Timing Kills Momentum</h3>
-            <p class="text-[var(--text-secondary)] max-w-lg">A KOL drop one week before launch creates buzz that dies before TGE. One week after, you're chasing a market that's already moved on. Campaign timing is strategy, not a calendar exercise.</p>
-          </div>
-        </div>
-
+      <div class="lg:col-span-7 space-y-5 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+        <p class="text-[var(--text-primary)] text-xl">
+          Crypto KOL marketing puts your project in front of the people your audience already listens to. As a crypto influencer marketing agency, Fintech24h finds the right key opinion leaders, checks that their audiences are real, writes the brief, reviews every post and reports on what actually moved people.
+        </p>
+        <p>
+          Web3 influencer marketing is not about the biggest account you can afford. A DeFi protocol needs researchers its users trust, a GameFi launch needs creators gamers follow, and a fintech app needs voices that will not make claims your licence forbids. Picking the wrong voice wastes budget and can hurt credibility.
+        </p>
+        <p>
+          We run KOL campaigns for token projects, DeFi and infrastructure protocols, NFT and gaming teams, exchanges, wallets and fintech companies, across global English-speaking crypto Twitter and regional communities in Asia and the Middle East.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3 — OUR APPROACH (Network Flow) -->
-  <section class="py-20 md:py-32 relative z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-20 reveal">
-        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.14em] mb-4">THE FINTECH24H METHOD</p>
-        <h2 class="font-display text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-[var(--text-primary)]">How We Run KOL Campaigns That Work</h2>
-      </div>
-
-      <div class="relative">
-        <!-- Connecting Line for Desktop -->
-        <div class="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent hidden md:block opacity-30"></div>
-
-        <div class="space-y-24">
-          {[
-            { step: '01', title: 'Audience-First Selection', desc: 'Before selecting any KOL, we audit their audience demographics, engagement quality, historical campaign performance, and topic alignment with your project. You get a shortlist with reasoning, not just names.', align: 'left' },
-            { step: '02', title: 'Brief & Content Alignment', desc: 'We write structured campaign briefs for every KOL, covering project narrative, key messages, tone guidelines, and content formats. Every piece of content is reviewed and approved before going live.', align: 'right' },
-            { step: '03', title: 'Phased Activation', desc: 'We don\'t release everything at once. KOL campaigns are deployed in phases: awareness seeding, followed by education and trust-building content, followed by conversion-focused calls to action.', align: 'left' },
-            { step: '04', title: 'Live Tracking & Optimization', desc: 'During every campaign, we monitor performance in real time: impressions, engagement rate, click-through. Underperforming placements are paused and replaced. You see what\'s happening.', align: 'right' },
-            { step: '05', title: 'Post-Campaign Reporting', desc: 'After every campaign, you receive a full performance breakdown: what worked, what didn\'t, audience quality analysis, and recommendations for the next cycle. Every campaign makes the next smarter.', align: 'left' }
-          ].map((item, i) => (
-            <div class={`flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16 reveal ${item.align === 'right' ? 'md:flex-row-reverse' : ''}`}>
-              <div class="w-full md:w-1/2 flex justify-center md:justify-end">
-                <div class={`card-default p-8 max-w-lg w-full relative group ${item.align === 'left' ? 'md:text-right' : 'md:text-left text-left'}`}>
-                  <div class={`absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[var(--accent-cyan)] shadow-[0_0_15px_var(--accent-cyan)] hidden md:block ${item.align === 'left' ? '-right-10' : '-left-10'}`}></div>
-                  <span class="font-mono text-[var(--accent-cyan)] text-lg mb-2 block">{item.step}.</span>
-                  <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">{item.title}</h3>
-                  <p class="text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-              <div class="hidden md:block w-full md:w-1/2"></div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 4 — SERVICES COVERED (Floating Cards) -->
-  <section class="py-20 md:py-32 relative z-10 bg-[var(--surface-soft)] border-y border-[var(--border-subtle)]">
+  <!-- SECTION 3: THE PROBLEM (bento) -->
+  <section class="py-20 md:py-28 relative z-10 bg-[var(--bg-secondary)] border-y border-[var(--border-subtle)]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 reveal">
-        <h2 class="font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-bold text-[var(--text-primary)]">Campaign Types & Platforms</h2>
+        <p class={eyebrow}>The Problem</p>
+        <h2 class={h2Class}>Why Most Crypto KOL Campaigns Underperform</h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          { title: 'Influencer Campaign', desc: 'End-to-end management of multi-KOL campaigns, from selection to activation.' },
-          { title: 'KOL Management', desc: 'Ongoing relationship management with a curated group of KOLs who become long-term advocates.' },
-          { title: 'Ambassador Program', desc: 'Recruit, onboard, and activate community ambassadors who create organic content.' },
-          { title: 'X Growth Campaign', desc: 'Coordinated Twitter/X amplification: threads, quote posts, Space promotions.' }
-        ].map((s, i) => (
-          <div class="card-default p-8 hover:-translate-y-2 transition-transform duration-300 reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <div class="w-10 h-10 rounded-full bg-[var(--surface-soft)] mb-6 flex items-center justify-center text-[var(--text-primary)] font-mono text-sm">{i+1}</div>
-            <h3 class="font-display font-bold text-[var(--text-primary)] mb-3 text-lg">{s.title}</h3>
-            <p class="text-[var(--text-secondary)] text-sm leading-relaxed">{s.desc}</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 md:auto-rows-[260px]">
+        <div class="md:col-span-2 card-default relative p-8 flex flex-col justify-end group hover:border-[color-mix(in_srgb,var(--color-danger)_35%,transparent)]">
+          <div class="absolute top-6 right-6 w-12 h-12 rounded-full bg-[color-mix(in_srgb,var(--color-danger)_12%,transparent)] flex items-center justify-center" aria-hidden="true">
+            <svg class="w-6 h-6 text-[var(--color-danger)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+          </div>
+          <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-2 pr-16">Fake Followers, Real Budget Lost</h3>
+          <p class="text-[var(--text-secondary)] text-base leading-relaxed">You pay for reach that does not exist. Inflated follower counts and bot-heavy audiences mean your message goes nowhere and the budget disappears with nothing to show.</p>
+        </div>
+        <div class="card-default relative p-8 flex flex-col justify-end">
+          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-2">Wrong Audience</h3>
+          <p class="text-[var(--text-secondary)] text-base leading-relaxed">A gaming influencer with a huge following does nothing for a DeFi protocol. Reach without relevance is noise.</p>
+        </div>
+        <div class="card-default relative p-8 flex flex-col justify-end">
+          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-2">No Brief, No Direction</h3>
+          <p class="text-[var(--text-secondary)] text-base leading-relaxed">Without a brief, KOLs default to generic posts that feel like ads and get ignored.</p>
+        </div>
+        <div class="md:col-span-2 card-default relative p-8 flex flex-col justify-end overflow-hidden">
+          <div class="absolute inset-0 opacity-50 kol-dots" aria-hidden="true"></div>
+          <div class="relative z-10">
+            <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-2">Bad Timing Kills Momentum</h3>
+            <p class="text-[var(--text-secondary)] text-base leading-relaxed max-w-lg">Too early and the buzz fades before TGE. Too late and you are chasing a market that has moved on. Campaign timing is strategy, not a calendar exercise.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: KOL TYPES -->
+  <section class="py-20 md:py-28 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class={eyebrow}>The Network</p>
+        <h2 class={h2Class}>Types of Crypto KOLs We Work With</h2>
+        <p class="mt-5 font-body text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
+          Most good campaigns mix several types, matched to what each phase of your launch needs.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {kolTypes.map((t) => (
+          <div class="card-default p-7">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-2">{t.title}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{t.desc}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- FAQ SECTION -->
-  <section class="py-20 md:py-32 max-w-4xl mx-auto px-4">
-    <div class="text-center mb-16 reveal">
-      <h2 class="font-display text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-[var(--text-primary)]">Common Questions</h2>
+  <!-- SECTION 5: VETTING (published methodology) -->
+  <section class="py-20 md:py-28 relative z-10 bg-[var(--bg-secondary)] border-y border-[var(--border-subtle)]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <p class={eyebrow}>Audience Check</p>
+        <h2 class={h2Class}>How We Vet Crypto Influencers</h2>
+        <p class="mt-5 font-body text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
+          Follower count is the least useful number in influencer marketing. This is what we look at instead.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card-default p-8 border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)]">
+          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-5">What we check</h3>
+          <ul class="space-y-3">
+            {vetChecks.map((c) => (
+              <li class="flex gap-3 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+                <svg class="w-5 h-5 mt-0.5 shrink-0 text-[var(--color-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7"/></svg>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="card-default p-8 border-[color-mix(in_srgb,var(--color-danger)_25%,transparent)]">
+          <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-5">Red flags that end the conversation</h3>
+          <ul class="space-y-3">
+            {redFlags.map((c) => (
+              <li class="flex gap-3 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+                <svg class="w-5 h-5 mt-0.5 shrink-0 text-[var(--color-danger)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18"/></svg>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: PROCESS (timeline; line draws once, as one entrance) -->
+  <section class="py-20 md:py-28 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20 reveal">
+        <p class={eyebrow}>The Fintech24h Method</p>
+        <h2 class={h2Class}>How We Run KOL Campaigns That Work</h2>
+      </div>
+
+      <div class="timeline relative reveal">
+        <div class="timeline-line absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[var(--accent-cyan)] to-transparent hidden md:block opacity-30" aria-hidden="true"></div>
+        <ol class="space-y-12 md:space-y-20">
+          {steps.map((item) => (
+            <li class={`flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16 ${item.align === 'right' ? 'md:flex-row-reverse' : ''}`}>
+              <div class={`w-full md:w-1/2 flex justify-center ${item.align === 'left' ? 'md:justify-end' : 'md:justify-start'}`}>
+                <div class={`card-default p-8 max-w-lg w-full relative ${item.align === 'left' ? 'md:text-right' : 'md:text-left'}`}>
+                  <div class={`absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[var(--accent-cyan)] shadow-[0_0_15px_var(--accent-cyan)] hidden md:block ${item.align === 'left' ? '-right-10' : '-left-10'}`} aria-hidden="true"></div>
+                  <span class="font-mono text-[var(--accent-cyan)] text-lg mb-2 block" aria-hidden="true">{item.step}.</span>
+                  <h3 class="font-display text-xl font-bold text-[var(--text-primary)] mb-3">{item.title}</h3>
+                  <p class="text-[var(--text-secondary)] text-base leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+              <div class="hidden md:block w-full md:w-1/2"></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: CAMPAIGN TYPES & PLATFORMS -->
+  <section class="py-20 md:py-28 relative z-10 bg-[var(--surface-soft)] border-y border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class={eyebrow}>What We Run</p>
+        <h2 class={h2Class}>KOL Campaign Types &amp; Platforms</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {campaignTypes.map((s) => (
+          <div class="card-default p-8">
+            <h3 class="font-display font-bold text-[var(--text-primary)] mb-3 text-lg">{s.title}</h3>
+            <p class="text-[var(--text-secondary)] text-base leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+      <ul class="mt-12 flex flex-wrap justify-center gap-3" aria-label="Platforms">
+        {platforms.map((p) => (
+          <li class="px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--bg-glass)] font-mono text-sm text-[var(--text-secondary)]">{p}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECTION 8: BY PROJECT TYPE -->
+  <section class="py-20 md:py-28 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class={eyebrow}>Who It Is For</p>
+        <h2 class={h2Class}>Web3 Influencer Marketing by Project Type</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {projectTypes.map((t) => (
+          <div class="card-default p-7">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-2">{t.title}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{t.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: MEASUREMENT + GROUND RULES -->
+  <section class="py-20 md:py-28 relative z-10 bg-[var(--bg-secondary)] border-y border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-7">
+        <div class="mb-10 reveal">
+          <p class={eyebrow}>Reporting</p>
+          <h2 class={h2Class}>How We Measure KOL Campaigns</h2>
+          <p class="mt-5 font-body text-lg text-[var(--text-secondary)] leading-relaxed">
+            Impressions are easy to inflate. Our reports focus on whether real people paid attention and acted.
+          </p>
+        </div>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {measures.map((m) => (
+            <div class="card-default p-5">
+              <dt class="font-display text-base font-bold text-[var(--text-primary)] mb-1">{m.title}</dt>
+              <dd class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{m.desc}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <aside class="lg:col-span-5 self-start card-default relative p-8 overflow-hidden border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)]">
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--accent-cyan)] to-[var(--accent-purple)]" aria-hidden="true"></div>
+        <h3 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-6">Our Ground Rules</h3>
+        <ul class="space-y-4">
+          {groundRules.map((rule) => (
+            <li class="flex gap-3 font-body text-base text-[var(--text-secondary)] leading-relaxed">
+              <svg class="w-5 h-5 mt-0.5 shrink-0 text-[var(--color-success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7"/></svg>
+              <span>{rule}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-6 font-body text-sm text-[var(--text-secondary)] leading-relaxed">Disclosure follows the FTC guidelines in the US and local advertising rules in each market. This is general guidance, not legal advice.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SECTION 10: MARKETS -->
+  <section class="py-20 md:py-28 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 reveal">
+        <p class={eyebrow}>Regional Networks</p>
+        <h2 class={h2Class}>Crypto KOLs in Asia &amp; the Middle East</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        {markets.map((m) => (
+          <div class="card-default p-7">
+            <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-2">{m.name}</h3>
+            <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed mb-4">{m.desc}</p>
+            <a href={m.href} class={`font-body text-base ${linkClass}`}>Our {m.anchor}</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 11: FAQ -->
+  <section class="py-20 md:py-28 max-w-4xl mx-auto px-4">
+    <div class="text-center mb-14 reveal">
+      <p class={eyebrow}>FAQ</p>
+      <h2 class={h2Class}>Crypto KOL Marketing Questions</h2>
     </div>
     <div class="space-y-4">
-      {faqs.map((faq, i) => (
-        <details class="card-default p-0 border border-[var(--border-subtle)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] transition-all duration-300 group overflow-hidden reveal" style={`transition-delay: ${i * 0.1}s`}>
-          <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
-            <span class="font-display font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors pr-6">{faq.q}</span>
-            <div class="w-8 h-8 rounded-full border border-[var(--border-default)] flex items-center justify-center text-[var(--text-secondary)] opacity-70 group-hover:text-[var(--accent-cyan)] group-hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] shrink-0">
+      {faqs.map((faq) => (
+        <details class="card-default p-0 hover:border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] group overflow-hidden">
+          <summary class="flex items-center justify-between gap-6 p-6 cursor-pointer list-none rounded-2xl">
+            <h3 class="faq-q font-display text-base md:text-lg font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{faq.q}</h3>
+            <span class="w-8 h-8 rounded-full border border-[var(--border-default)] flex items-center justify-center text-[var(--text-secondary)] group-hover:text-[var(--accent-cyan)] shrink-0" aria-hidden="true">
               <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </div>
+            </span>
           </summary>
-          <div class="px-6 pb-6 text-[var(--text-secondary)] border-t border-[var(--border-subtle)] pt-4">
+          <div class="px-6 pb-6 text-[var(--text-secondary)] text-base leading-relaxed border-t border-[var(--border-subtle)] pt-4">
             <p set:html={faq.a} />
           </div>
         </details>
@@ -194,9 +444,30 @@ const combinedSchema = [serviceSchema, faqSchema];
     </div>
   </section>
 
-  <p class="text-center text-sm text-[var(--text-muted)] font-body max-w-xl mx-auto px-4 -mt-4 mb-16">
-    Building KOL campaigns for the Vietnamese market? See our <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--text-secondary)] underline decoration-[var(--border-default)] underline-offset-4 hover:text-[var(--accent-cyan)] hover:decoration-[var(--accent-cyan)] transition-colors">blockchain marketing agency in Vietnam</a>.
-  </p>
+  <!-- SECTION 12: RELATED SERVICES + GUIDES -->
+  <section class="py-16 md:py-20 border-t border-[var(--border-subtle)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-7">
+        <h2 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-6">Pair KOL Marketing With</h2>
+        <div class="grid grid-cols-1 gap-3">
+          {related.map((r) => (
+            <a href={r.href} class="card-default group block p-5">
+              <span class="block font-display text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200">{r.title}</span>
+              <span class="block font-body text-base text-[var(--text-secondary)]">{r.desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-2xl font-bold text-[var(--text-primary)] mb-6">Further Reading</h2>
+        <ul class="space-y-4">
+          {guides.map((g) => (
+            <li><a href={g.href} class={`font-body text-base ${linkClass}`}>{g.title}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <!-- CTA SECTION (Unified FooterLeadForm) -->
   <FooterLeadForm defaultService="KOL Marketing" />
@@ -205,31 +476,33 @@ const combinedSchema = [serviceSchema, faqSchema];
 
 <style>
   summary::-webkit-details-marker { display: none; }
-  /* Hidden only when JS can reveal it; 0.01 (not 0) keeps the hero H1 eligible as LCP. */
-  @media (scripting: enabled) {
-    .reveal { opacity: 0.01; transform: translateY(28px); transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .faq-q { margin: 0; }
+  .kol-dots { background-image: radial-gradient(color-mix(in srgb, var(--text-primary) 8%, transparent) 1px, transparent 1px); background-size: 20px 20px; }
+
+  /* Page entrances: one per section. The hero's .reveal rules live in
+     KolCtaSection (is:global); these scoped rules only add the timeline draw. */
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    .timeline.reveal { transform: none; }
+    .timeline .timeline-line { transform: scaleY(0); transform-origin: top; transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1); }
+    .timeline.revealed .timeline-line { transform: scaleY(1); }
   }
-  .reveal.revealed { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-  .line-reveal { transform: scaleX(0); transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); transform-origin: left; }
-  .revealed .line-reveal { transform: scaleX(1); }
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const items = document.querySelectorAll('main .reveal');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach((el) => el.classList.add('revealed'));
+      return;
+    }
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal, svg').forEach(el => observer.observe(el));
+    }, { threshold: 0.12 });
+    items.forEach((el) => observer.observe(el));
   });
 </script>
