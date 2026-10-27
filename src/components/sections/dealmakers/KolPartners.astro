@@ -87,6 +87,8 @@ const initials = (name: string) =>
 const benefitsHref = (locale === 'en' ? '/dealmakers/ss3/partner-benefits/' : `/dealmakers/${locale}/ss3/partner-benefits/`) + '#kol';
 
 const cardBase = 'flex items-center gap-4 min-h-[112px] h-full p-4 sm:p-5 rounded-2xl border transition-all duration-300';
+// KOL cards align to the top so name, avatar and icon row line up whatever the tag count.
+const kolCardBase = cardBase.replace('items-center', 'items-start');
 ---
 
 <section class="relative py-20 lg:py-28" aria-label={copy.ariaLabel}>
@@ -111,7 +113,7 @@ const cardBase = 'flex items-center gap-4 min-h-[112px] h-full p-4 sm:p-5 rounde
     <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
       {kolPartners.map((k, i) => (
         <li data-dm-reveal style={`--dm-reveal-delay: ${i * 60}`}>
-          <div class:list={[cardBase, 'relative border-[var(--dm-border)] bg-[linear-gradient(135deg,rgba(217,178,106,0.07)_0%,rgba(255,255,255,0.015)_45%,rgba(52,168,120,0.06)_100%)] hover:border-[var(--dm-border-accent)] hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.45),0_0_28px_rgba(217,178,106,0.10)]']}>
+          <div class:list={[kolCardBase, 'relative border-[var(--dm-border)] bg-[linear-gradient(135deg,rgba(217,178,106,0.07)_0%,rgba(255,255,255,0.015)_45%,rgba(52,168,120,0.06)_100%)] hover:border-[var(--dm-border-accent)] hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.45),0_0_28px_rgba(217,178,106,0.10)]']}>
             {k.avatarUrl ? (
               <img
                 src={k.avatarUrl}
@@ -128,8 +130,8 @@ const cardBase = 'flex items-center gap-4 min-h-[112px] h-full p-4 sm:p-5 rounde
             )}
 
             <div class="flex-1 min-w-0">
-              <p class:list={['font-display font-semibold text-lg leading-tight text-[var(--dm-text-primary)] line-clamp-2 break-words', k.platforms.length === 1 && 'pe-10']}>{k.name}</p>
-              <p class:list={['font-mono text-[11px] mt-1 text-[var(--dm-text-muted)] truncate', k.platforms.length === 1 && 'pe-10']} dir="ltr">@{k.handle}</p>
+              <p class="font-display font-semibold text-lg leading-tight text-[var(--dm-text-primary)] line-clamp-2 break-words">{k.name}</p>
+              <p class="font-mono text-[11px] mt-1 text-[var(--dm-text-muted)] truncate" dir="ltr">@{k.handle}</p>
               {(k.markets.length > 0 || k.topics.length > 0) && (
                 <div class="flex flex-wrap gap-1.5 mt-2.5">
                   {k.markets.map((m) => (
@@ -140,7 +142,7 @@ const cardBase = 'flex items-center gap-4 min-h-[112px] h-full p-4 sm:p-5 rounde
                   ))}
                 </div>
               )}
-              {k.platforms.length > 1 && (
+              {k.platforms.length > 0 && (
                 <div class="flex flex-wrap gap-1.5 mt-3">
                   {k.platforms.map((p) => (
                     <a
@@ -160,26 +162,6 @@ const cardBase = 'flex items-center gap-4 min-h-[112px] h-full p-4 sm:p-5 rounde
                 </div>
               )}
             </div>
-
-            {k.platforms.length === 1 && (
-              <div class="absolute top-3 end-3 flex gap-1.5">
-                {k.platforms.map((p) => (
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${k.name} ${copy.on} ${platformName[p.type]}`}
-                    class="w-8 h-8 rounded-full border border-[var(--dm-border)] flex items-center justify-center text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] hover:border-[var(--dm-border-accent)] transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dm-gold)]"
-                  >
-                    {platformIcon[p.type] ? (
-                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={platformIcon[p.type]} /></svg>
-                    ) : (
-                      <span class="font-mono text-[10px]">{platformLabel[p.type]}</span>
-                    )}
-                  </a>
-                ))}
-              </div>
-            )}
           </div>
         </li>
       ))}
