@@ -148,6 +148,19 @@ export const kolPartners: KolPartner[] = [
     topics: ['BTC 与 ETH', '空投'],
     markets: ['越南'],
   },
+  {
+    name: 'Danjo Capital Master',
+    handle: 'DanjoCapitalMaster',
+    avatarUrl: '/dealmakers/kol/danjocapitalmaster.jpg',
+    platforms: [
+      { type: 'youtube', url: 'https://www.youtube.com/c/DanjoCapitalMaster' },
+      { type: 'telegram', url: 'https://t.me/danjocapitalmaster' },
+      { type: 'x', url: 'https://twitter.com/Capitaldanjo' },
+      { type: 'tiktok', url: 'https://www.tiktok.com/@danjocapital' },
+    ],
+    topics: ['NFT 与 GameFi', '加密项目'],
+    markets: ['全球'],
+  },
 ];
 
 export const kolPartnerBenefits: string[] = [

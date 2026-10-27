@@ -148,6 +148,19 @@ export const kolPartners: KolPartner[] = [
     topics: ['BTC و ETH', 'الإيردروب'],
     markets: ['فيتنام'],
   },
+  {
+    name: 'Danjo Capital Master',
+    handle: 'DanjoCapitalMaster',
+    avatarUrl: '/dealmakers/kol/danjocapitalmaster.jpg',
+    platforms: [
+      { type: 'youtube', url: 'https://www.youtube.com/c/DanjoCapitalMaster' },
+      { type: 'telegram', url: 'https://t.me/danjocapitalmaster' },
+      { type: 'x', url: 'https://twitter.com/Capitaldanjo' },
+      { type: 'tiktok', url: 'https://www.tiktok.com/@danjocapital' },
+    ],
+    topics: ['NFT و GameFi', 'مشاريع الكريبتو'],
+    markets: ['عالمي'],
+  },
 ];
 
 export const kolPartnerBenefits: string[] = [

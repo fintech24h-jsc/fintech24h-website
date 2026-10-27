@@ -198,6 +198,19 @@ export const kolPartners: KolPartner[] = [
     topics: ['BTC & ETH', 'Airdrops'],
     markets: ['Vietnam'],
   },
+  {
+    name: 'Danjo Capital Master',
+    handle: 'DanjoCapitalMaster',
+    avatarUrl: '/dealmakers/kol/danjocapitalmaster.jpg',
+    platforms: [
+      { type: 'youtube', url: 'https://www.youtube.com/c/DanjoCapitalMaster' },
+      { type: 'telegram', url: 'https://t.me/danjocapitalmaster' },
+      { type: 'x', url: 'https://twitter.com/Capitaldanjo' },
+      { type: 'tiktok', url: 'https://www.tiktok.com/@danjocapital' },
+    ],
+    topics: ['NFT & GameFi', 'Crypto projects'],
+    markets: ['Global'],
+  },
 ];
 
 // Condensed list for the landing KOL section; full detail lives in
