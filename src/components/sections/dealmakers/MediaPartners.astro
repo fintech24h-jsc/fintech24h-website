@@ -14,7 +14,9 @@ const mediaTrack = partnerTracks.find((t) => t.id === 'media')!;
 
 const copy = locale === 'ar' ? {
   ariaLabel: 'الشركاء الإعلاميون',
-  eyebrow: 'الشركاء الإعلاميون · دعم المجتمع',
+  eyebrow: 'Season 3 · دعم المجتمع',
+  titleA: 'الشركاء',
+  titleB: 'الإعلاميون',
   h2: 'تضخيم الصدى عبر شركاء إعلاميين في المنظومة بأكملها.',
   lede: 'نفخر بالعمل إلى جانب أصوات موثوقة في إعلام Web3 والتكنولوجيا المالية، تساعد تغطيتها في إيصال F-Matching Season 3 إلى جمهور أوسع.',
   mediaPartnerFallback: 'شريك إعلامي',
@@ -25,7 +27,9 @@ const copy = locale === 'ar' ? {
   inReturn: 'في المقابل: أعلن الشراكة، وانشر مقال علاقات عامة، وادعم التواصل الإعلامي لـ Season 3.',
 } : locale === 'zh' ? {
   ariaLabel: '媒体合作伙伴',
-  eyebrow: '媒体合作伙伴 · 社区支持',
+  eyebrow: 'Season 3 · 社区支持',
+  titleA: '',
+  titleB: '媒体合作伙伴',
   h2: '来自整个生态系统媒体合作伙伴的放大传播。',
   lede: '我们很荣幸能与 Web3 与金融科技媒体领域备受信赖的声音合作，他们的报道帮助 F-Matching Season 3 触达更广泛的受众。',
   mediaPartnerFallback: '媒体合作伙伴',
@@ -36,7 +40,9 @@ const copy = locale === 'ar' ? {
   inReturn: '作为回报：宣布合作、发布公关文章，并在 Season 3 期间提供传播支持。',
 } : {
   ariaLabel: 'Media Partners',
-  eyebrow: 'Media Partners · Community support',
+  eyebrow: 'Season 3 · Community support',
+  titleA: 'Media',
+  titleB: 'Partners',
   h2: 'Amplified by media partners across the ecosystem.',
   lede: 'We’re proud to work alongside respected voices in Web3 and fintech media, whose coverage helps bring F-Matching Season 3 to a wider audience.',
   mediaPartnerFallback: 'Media partner',
@@ -51,10 +57,15 @@ const copy = locale === 'ar' ? {
 <section class="relative py-20 lg:py-28 bg-[var(--dm-bg-secondary)]" aria-label={copy.ariaLabel}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <div data-dm-reveal>
-      <p class="font-mono text-[11px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
-      <h2 class="font-display font-semibold text-h3 text-[var(--dm-text-primary)] mb-4">
-        {copy.h2}
+      <p class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.06)] font-mono text-[11px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald)]" aria-hidden="true"></span>{copy.eyebrow}
+      </p>
+      <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-3">
+        {copy.titleA} <span class="dm-text-gradient">{copy.titleB}</span>
       </h2>
+      <p class="font-display text-lg sm:text-xl leading-snug text-[var(--dm-text-secondary)] max-w-2xl mx-auto mb-4">
+        {copy.h2}
+      </p>
       <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-xl mx-auto mb-7">
         {copy.lede}
       </p>

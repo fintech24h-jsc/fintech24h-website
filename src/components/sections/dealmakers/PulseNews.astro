@@ -1,0 +1,115 @@
+---
+// src/components/sections/dealmakers/PulseNews.astro
+// Latest posts from the WordPress "Dealmakers Pulse" category (partner
+// announcements, season news), shown at the end of the Season 3 landing as
+// proof that the program is live and covered. Fetched at build time: the page
+// is prerendered, so a new Pulse post appears after the next deploy. Hidden
+// entirely when WordPress returns nothing, like the main site's blog sections.
+import { getPostsByCategory, getFeaturedImage, getExcerpt, stripHtml } from '../../../lib/wordpress';
+import type { DealmakersLocale } from '../../../data/dealmakers/content';
+
+interface Props {
+  locale?: DealmakersLocale;
+}
+const { locale = 'en' } = Astro.props;
+
+const PULSE_SLUG = 'dealmakers-pulse';
+const posts = (await getPostsByCategory(PULSE_SLUG, 3)).slice(0, 3);
+
+const copy = locale === 'ar' ? {
+  ariaLabel: 'DealMakers Pulse',
+  eyebrow: 'Season 3 · آخر الأخبار',
+  titleA: 'DealMakers',
+  titleB: 'Pulse',
+  lede: 'إعلانات الشراكات وأخبار الموسم كما نُشرت على Fintech24h.',
+  read: 'اقرأ المقال',
+  viewAll: 'عرض جميع مقالات DealMakers Pulse',
+  dateLocale: 'ar-EG-u-nu-latn',
+} : locale === 'zh' ? {
+  ariaLabel: 'DealMakers Pulse',
+  eyebrow: 'Season 3 · 最新动态',
+  titleA: 'DealMakers',
+  titleB: 'Pulse',
+  lede: '合作伙伴公告与赛季新闻，均已发布于 Fintech24h。',
+  read: '阅读文章',
+  viewAll: '查看全部 DealMakers Pulse 文章',
+  dateLocale: 'zh-CN',
+} : {
+  ariaLabel: 'DealMakers Pulse',
+  eyebrow: 'Season 3 · Latest news',
+  titleA: 'DealMakers',
+  titleB: 'Pulse',
+  lede: 'Partner announcements and season news, as published on Fintech24h.',
+  read: 'Read the article',
+  viewAll: 'View all DealMakers Pulse articles',
+  dateLocale: 'en-US',
+};
+
+const fmtDate = (d: string) => new Date(d).toLocaleDateString(copy.dateLocale, { year: 'numeric', month: 'short', day: 'numeric' });
+
+const cards = posts.map((p) => {
+  const img = getFeaturedImage(p);
+  const media: any = p._embedded?.['wp:featuredmedia']?.[0];
+  const sized = media?.media_details?.sizes?.medium_large?.source_url || media?.media_details?.sizes?.large?.source_url;
+  return {
+    href: `/blog/${p.slug}`,
+    title: stripHtml(p.title.rendered),
+    excerpt: getExcerpt(p, 120),
+    date: p.date,
+    img: sized || img.url,
+    alt: img.alt,
+  };
+});
+---
+
+{cards.length > 0 && (
+  <section id="pulse" class="relative py-20 lg:py-28" aria-label={copy.ariaLabel}>
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--dm-border-accent)] to-transparent" aria-hidden="true"></div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12" data-dm-reveal>
+        <p class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.06)] font-mono text-[11px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald)]" aria-hidden="true"></span>{copy.eyebrow}
+        </p>
+        <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-3" dir="ltr">
+          {copy.titleA}{' '}<span class="dm-text-gradient">{copy.titleB}</span>
+        </h2>
+        <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-xl mx-auto">{copy.lede}</p>
+      </div>
+
+      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((c, i) => (
+          <li data-dm-reveal style={`--dm-reveal-delay: ${i * 80}`}>
+            <a
+              href={c.href}
+              class="group dm-card flex flex-col h-full rounded-[20px] overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dm-gold)]"
+            >
+              <span class="block aspect-[768/552] overflow-hidden bg-[var(--dm-bg-tertiary)] border-b border-[var(--dm-border)]">
+                <img
+                  src={c.img}
+                  alt={c.alt}
+                  width="768"
+                  height="552"
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+                />
+              </span>
+              <span class="flex flex-col flex-1 p-5 sm:p-6" dir="ltr">
+                <time datetime={c.date} class="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--dm-gold)] mb-2">{fmtDate(c.date)}</time>
+                <span class="font-display font-semibold text-lg leading-snug text-[var(--dm-text-primary)] mb-2 line-clamp-3">{c.title}</span>
+                <span class="text-sm text-[var(--dm-text-secondary)] line-clamp-3 mb-4">{c.excerpt}</span>
+                <span class="mt-auto font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--dm-text-muted)] group-hover:text-[var(--dm-gold)] transition-colors duration-200" dir={locale === 'ar' ? 'rtl' : undefined}>{copy.read} →</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <p class="text-center mt-10">
+        <a href={`/blog/category/${PULSE_SLUG}`} class="text-sm text-[var(--dm-text-secondary)] hover:text-[var(--dm-gold)] underline underline-offset-4 decoration-[var(--dm-border-hover)] transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dm-gold)]">
+          {copy.viewAll} →
+        </a>
+      </p>
+    </div>
+  </section>
+)}

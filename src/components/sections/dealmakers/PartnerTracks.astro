@@ -18,7 +18,9 @@ const benefitsHref = localePrefix('/dealmakers/ss3/partner-benefits/');
 
 const copy = locale === 'ar' ? {
   ariaLabel: 'مسارات الشراكة',
-  eyebrow: 'شريك فئة · اختر مسارك',
+  eyebrow: 'Season 3 · اختر مسارك',
+  titleA: 'شركاء',
+  titleB: 'الفئة',
   h2a: 'شراكة واحدة.',
   h2b: 'ثلاث طرق للحضور.',
   lede: 'كل مقعد شريك فئة مبني حول ما تفعله مؤسستك فعليًا — رأس المال، أو الحلول، أو الإعلام.',
@@ -26,7 +28,9 @@ const copy = locale === 'ar' ? {
   compareAll: 'قارن جميع أنواع الشركاء والمزايا',
 } : locale === 'zh' ? {
   ariaLabel: '合作伙伴通道',
-  eyebrow: '类别合作伙伴 · 选择你的通道',
+  eyebrow: 'Season 3 · 选择你的通道',
+  titleA: '',
+  titleB: '类别合作伙伴',
   h2a: '一种合作关系，',
   h2b: '三种呈现方式。',
   lede: '每个类别合作伙伴名额都围绕你的组织实际所做的事情来构建——资本、解决方案，或媒体。',
@@ -34,7 +38,9 @@ const copy = locale === 'ar' ? {
   compareAll: '比较所有合作伙伴类型与权益',
 } : {
   ariaLabel: 'Partner Tracks',
-  eyebrow: 'Category Partner · Choose your track',
+  eyebrow: 'Season 3 · Choose your track',
+  titleA: 'Category',
+  titleB: 'Partners',
   h2a: 'One partnership.',
   h2b: 'Three ways to show up.',
   lede: 'Every Category Partner slot is built around what your organization actually does — capital, solutions, or media.',
@@ -46,10 +52,15 @@ const copy = locale === 'ar' ? {
 <section id="partner-tracks" class="relative py-20 lg:py-28" aria-label={copy.ariaLabel}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mb-14" data-dm-reveal>
-      <p class="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-3">{copy.eyebrow}</p>
-      <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-4">
-        {copy.h2a} <span class="dm-text-gradient">{copy.h2b}</span>
+      <p class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.06)] font-mono text-[11px] text-[var(--dm-gold)] uppercase tracking-[0.18em] mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--dm-emerald)]" aria-hidden="true"></span>{copy.eyebrow}
+      </p>
+      <h2 class="font-display font-semibold text-h2 text-[var(--dm-text-primary)] mb-3">
+        {copy.titleA} <span class="dm-text-gradient">{copy.titleB}</span>
       </h2>
+      <p class="font-display text-lg sm:text-xl leading-snug text-[var(--dm-text-secondary)] mb-4">
+        {copy.h2a} {copy.h2b}
+      </p>
       <p class="text-sm text-[var(--dm-text-secondary)]">
         {copy.lede}
       </p>
