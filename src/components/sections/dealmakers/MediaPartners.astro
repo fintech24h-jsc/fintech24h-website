@@ -18,39 +18,39 @@ const copy = locale === 'ar' ? {
   titleA: 'الشركاء',
   titleB: 'الإعلاميون',
   h2: 'تضخيم الصدى عبر شركاء إعلاميين في المنظومة بأكملها.',
-  lede: 'نفخر بالعمل إلى جانب أصوات موثوقة في إعلام Web3 والتكنولوجيا المالية، تساعد تغطيتها في إيصال F-Matching Season 3 إلى جمهور أوسع.',
+  lede: 'وسائل إعلام موثوقة في Web3 والتكنولوجيا المالية تنقل Season 3 إلى جمهور أوسع.',
   mediaPartnerFallback: 'شريك إعلامي',
   yourLogo: 'شعارك هنا',
   becomeMediaPartner: 'كن شريكًا إعلاميًا',
   seeFullList: 'عرض القائمة الكاملة لمزايا الشريك الإعلامي',
   interest: 'الشريك الإعلامي',
-  inReturn: 'في المقابل: أعلن الشراكة، وانشر مقال علاقات عامة، وادعم التواصل الإعلامي لـ Season 3.',
+  inReturn: 'في المقابل: إعلان الشراكة، ومقال علاقات عامة، ودعم Season 3.',
 } : locale === 'zh' ? {
   ariaLabel: '媒体合作伙伴',
   eyebrow: 'Season 3 · 社区支持',
   titleA: '',
   titleB: '媒体合作伙伴',
   h2: '来自整个生态系统媒体合作伙伴的放大传播。',
-  lede: '我们很荣幸能与 Web3 与金融科技媒体领域备受信赖的声音合作，他们的报道帮助 F-Matching Season 3 触达更广泛的受众。',
+  lede: '值得信赖的 Web3 与金融科技媒体，让 Season 3 触达更广泛的受众。',
   mediaPartnerFallback: '媒体合作伙伴',
   yourLogo: '你的品牌标识',
   becomeMediaPartner: '成为媒体合作伙伴',
   seeFullList: '查看媒体合作伙伴完整权益列表',
   interest: '媒体合作伙伴',
-  inReturn: '作为回报：宣布合作、发布公关文章，并在 Season 3 期间提供传播支持。',
+  inReturn: '作为回报：合作公告、公关文章与 Season 3 传播支持。',
 } : {
   ariaLabel: 'Media Partners',
   eyebrow: 'Season 3 · Community support',
   titleA: 'Media',
   titleB: 'Partners',
   h2: 'Amplified by media partners across the ecosystem.',
-  lede: 'We’re proud to work alongside respected voices in Web3 and fintech media, whose coverage helps bring F-Matching Season 3 to a wider audience.',
+  lede: 'Respected Web3 and fintech media bringing Season 3 to a wider audience.',
   mediaPartnerFallback: 'Media partner',
   yourLogo: 'Your logo',
   becomeMediaPartner: 'Become a Media Partner',
   seeFullList: 'See the full Media Partner benefit list',
   interest: 'Media Partner',
-  inReturn: 'In return: announce the partnership, publish a PR article, and support Season 3 communications.',
+  inReturn: 'In return: a partnership announcement, a PR article and Season 3 support.',
 };
 ---
 
@@ -66,7 +66,7 @@ const copy = locale === 'ar' ? {
       <p class="font-display text-lg sm:text-xl leading-snug text-[var(--dm-text-secondary)] max-w-2xl mx-auto mb-4">
         {copy.h2}
       </p>
-      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-xl mx-auto mb-7">
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-2xl mx-auto mb-7 [text-wrap:balance]">
         {copy.lede}
       </p>
 
@@ -75,7 +75,7 @@ const copy = locale === 'ar' ? {
           <li class="dm-tag dm-tag-gray text-[11px] py-1 px-3">{b}</li>
         ))}
       </ul>
-      <p class="text-xs text-[var(--dm-text-muted)] max-w-xl mx-auto mb-12">{copy.inReturn}</p>
+      <p class="text-xs text-[var(--dm-text-muted)] max-w-2xl mx-auto mb-12 [text-wrap:balance]">{copy.inReturn}</p>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto mb-10">

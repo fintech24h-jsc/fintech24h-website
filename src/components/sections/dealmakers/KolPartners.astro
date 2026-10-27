@@ -49,13 +49,13 @@ const copy = locale === 'ar' ? {
   titleA: 'شركاء',
   titleB: 'KOL',
   h2: 'الأصوات التي تحمل Season 3 إلى الدوائر الصحيحة.',
-  lede: 'صنّاع محتوى مستقلون في Web3 والتكنولوجيا المالية يشاركون F-Matching Season 3 مع مجتمعات تُبرم الصفقات فعلًا. تظهر ملفاتهم هنا فور تأكيد كل شراكة.',
+  lede: 'صنّاع محتوى مستقلون في Web3 والتكنولوجيا المالية يشاركون Season 3 مع مجتمعاتهم.',
   yourSpot: 'مكانك هنا',
   openSlot: 'متاح لـ Season 3',
   on: 'على',
   becomeKol: 'كن شريك KOL',
   interest: 'شريك KOL',
-  inReturn: 'في المقابل: شارك Season 3 وأعلن الشراكة على قنواتك الاجتماعية.',
+  inReturn: 'في المقابل: شارك Season 3 وأعلن الشراكة.',
   seeFull: 'عرض جميع مزايا شريك KOL',
 } : locale === 'zh' ? {
   ariaLabel: 'KOL 合作伙伴',
@@ -63,13 +63,13 @@ const copy = locale === 'ar' ? {
   titleA: '',
   titleB: 'KOL 合作伙伴',
   h2: '把 Season 3 带进对的圈子的声音。',
-  lede: '来自 Web3 与金融科技领域的独立 KOL，将 F-Matching Season 3 分享给真正促成交易的社区。每位合作伙伴确认后，其资料即在此展示。',
+  lede: '独立的 Web3 与金融科技 KOL，与自己的社区分享 Season 3。',
   yourSpot: '你的位置',
   openSlot: 'Season 3 开放中',
   on: '在',
   becomeKol: '成为 KOL 合作伙伴',
   interest: 'KOL 合作伙伴',
-  inReturn: '作为回报：在你的社交渠道分享 Season 3 并发布合作公告。',
+  inReturn: '作为回报：分享 Season 3 并发布合作公告。',
   seeFull: '查看 KOL 合作伙伴完整权益',
 } : {
   ariaLabel: 'KOL Partners',
@@ -77,13 +77,13 @@ const copy = locale === 'ar' ? {
   titleA: 'KOL',
   titleB: 'Partners',
   h2: 'The voices taking Season 3 to the right rooms.',
-  lede: 'Independent Web3 and fintech KOLs who share F-Matching Season 3 with communities that actually close deals. Profiles appear here as each partnership is confirmed.',
+  lede: 'Independent Web3 and fintech KOLs, sharing Season 3 with their communities.',
   yourSpot: 'Your spot',
   openSlot: 'Open for Season 3',
   on: 'on',
   becomeKol: 'Become a KOL Partner',
   interest: 'KOL Partner',
-  inReturn: 'In return: share Season 3 and announce the partnership on your social channels.',
+  inReturn: 'In return: share Season 3 and announce the partnership.',
   seeFull: 'See the full KOL Partner benefit list',
 };
 
@@ -110,7 +110,7 @@ const kolCardBase = cardBase.replace('items-center', 'items-start');
       <p class="font-display text-lg sm:text-xl leading-snug text-[var(--dm-text-secondary)] max-w-2xl mx-auto mb-4">
         {copy.h2}
       </p>
-      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-xl mx-auto mb-7">
+      <p class="text-sm sm:text-base text-[var(--dm-text-secondary)] max-w-2xl mx-auto mb-7 [text-wrap:balance]">
         {copy.lede}
       </p>
       <ul class="flex flex-wrap items-center justify-center gap-2.5 max-w-2xl mx-auto mb-4">
@@ -118,7 +118,7 @@ const kolCardBase = cardBase.replace('items-center', 'items-start');
           <li class="dm-tag dm-tag-gray text-[11px] py-1 px-3">{b}</li>
         ))}
       </ul>
-      <p class="text-xs text-[var(--dm-text-muted)] max-w-xl mx-auto mb-12">{copy.inReturn}</p>
+      <p class="text-xs text-[var(--dm-text-muted)] max-w-2xl mx-auto mb-12 [text-wrap:balance]">{copy.inReturn}</p>
     </div>
 
     <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">

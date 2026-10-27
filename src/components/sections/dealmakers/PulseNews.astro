@@ -5,7 +5,7 @@
 // proof that the program is live and covered. Fetched at build time: the page
 // is prerendered, so a new Pulse post appears after the next deploy. Hidden
 // entirely when WordPress returns nothing, like the main site's blog sections.
-import { getPostsByCategory, getFeaturedImage, getExcerpt, stripHtml } from '../../../lib/wordpress';
+import { getPostsByCategory, getFeaturedImage, stripHtml } from '../../../lib/wordpress';
 import type { DealmakersLocale } from '../../../data/dealmakers/content';
 
 interface Props {
@@ -54,7 +54,6 @@ const cards = posts.map((p) => {
   return {
     href: `/blog/${p.slug}`,
     title: stripHtml(p.title.rendered),
-    excerpt: getExcerpt(p, 120),
     date: p.date,
     img: sized || img.url,
     alt: img.alt,
@@ -96,8 +95,7 @@ const cards = posts.map((p) => {
               </span>
               <span class="flex flex-col flex-1 p-5 sm:p-6" dir="ltr">
                 <time datetime={c.date} class="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--dm-gold)] mb-2">{fmtDate(c.date)}</time>
-                <span class="font-display font-semibold text-lg leading-snug text-[var(--dm-text-primary)] mb-2 line-clamp-3">{c.title}</span>
-                <span class="text-sm text-[var(--dm-text-secondary)] line-clamp-3 mb-4">{c.excerpt}</span>
+                <span class="font-display font-semibold text-lg leading-snug text-[var(--dm-text-primary)] mb-4 line-clamp-3">{c.title}</span>
                 <span class="mt-auto font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--dm-text-muted)] group-hover:text-[var(--dm-gold)] transition-colors duration-200" dir={locale === 'ar' ? 'rtl' : undefined}>{copy.read} →</span>
               </span>
             </a>
