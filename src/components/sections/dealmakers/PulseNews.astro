@@ -3,10 +3,13 @@
 // Latest posts from the WordPress "Dealmakers Pulse" category (partner
 // announcements, season news), shown at the end of the Season 3 landing as
 // proof that the program is live and covered. Fetched at build time: the page
-// is prerendered, so a new Pulse post appears after the next deploy. Hidden
-// entirely when WordPress returns nothing, like the main site's blog sections.
+// is prerendered, so a new Pulse post appears after the next deploy. The
+// fetch is shared by the en/ar/zh pages and retried; if WordPress still fails
+// the build uses the last-known posts in pulse-fallback.ts instead of dropping
+// the section (a failed fetch hid it on the 2026-10-27 deploy).
 import { getPostsByCategory, getFeaturedImage, stripHtml } from '../../../lib/wordpress';
 import type { DealmakersLocale } from '../../../data/dealmakers/content';
+import { pulseFallback, type PulseCard } from '../../../data/dealmakers/pulse-fallback';
 
 interface Props {
   locale?: DealmakersLocale;
@@ -14,7 +17,9 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 
 const PULSE_SLUG = 'dealmakers-pulse';
-const posts = (await getPostsByCategory(PULSE_SLUG, 3)).slice(0, 3);
+const g = globalThis as { __dmPulseCards?: Promise<PulseCard[]> };
+g.__dmPulseCards ??= fetchPulseCards();
+const cards = await g.__dmPulseCards;
 
 const copy = locale === 'ar' ? {
   ariaLabel: 'DealMakers Pulse',
@@ -45,20 +50,25 @@ const copy = locale === 'ar' ? {
   dateLocale: 'en-US',
 };
 
+async function fetchPulseCards(): Promise<PulseCard[]> {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const posts = (await getPostsByCategory('dealmakers-pulse', 3)).slice(0, 3);
+    if (posts.length > 0) {
+      return posts.map((p) => {
+        const img = getFeaturedImage(p);
+        const media: any = p._embedded?.['wp:featuredmedia']?.[0];
+        const sized = media?.media_details?.sizes?.medium_large?.source_url || media?.media_details?.sizes?.large?.source_url;
+        return { slug: p.slug, title: stripHtml(p.title.rendered), date: p.date, img: sized || img.url, alt: img.alt };
+      });
+    }
+    await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+  }
+  console.warn('PulseNews: WordPress returned no Dealmakers Pulse posts, using pulse-fallback.ts');
+  return pulseFallback;
+}
+
 const fmtDate = (d: string) => new Date(d).toLocaleDateString(copy.dateLocale, { year: 'numeric', month: 'short', day: 'numeric' });
 
-const cards = posts.map((p) => {
-  const img = getFeaturedImage(p);
-  const media: any = p._embedded?.['wp:featuredmedia']?.[0];
-  const sized = media?.media_details?.sizes?.medium_large?.source_url || media?.media_details?.sizes?.large?.source_url;
-  return {
-    href: `/blog/${p.slug}`,
-    title: stripHtml(p.title.rendered),
-    date: p.date,
-    img: sized || img.url,
-    alt: img.alt,
-  };
-});
 ---
 
 {cards.length > 0 && (
@@ -79,7 +89,7 @@ const cards = posts.map((p) => {
         {cards.map((c, i) => (
           <li data-dm-reveal style={`--dm-reveal-delay: ${i * 80}`}>
             <a
-              href={c.href}
+              href={`/blog/${c.slug}`}
               class="group dm-card flex flex-col h-full rounded-[20px] overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dm-gold)]"
             >
               <span class="block aspect-[768/552] overflow-hidden bg-[var(--dm-bg-tertiary)] border-b border-[var(--dm-border)]">
