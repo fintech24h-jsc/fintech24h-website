@@ -222,6 +222,14 @@ export const kolPartners: KolPartner[] = [
     topics: ['AI & Blockchain', 'BD & Growth'],
     markets: ['Vietnam'],
   },
+  {
+    name: 'Tsunami House',
+    handle: 'TsunamiHouse',
+    avatarUrl: '/dealmakers/kol/tsunamihouse.jpg',
+    platforms: [{ type: 'x', url: 'https://x.com/TsunamiHouse' }],
+    topics: ['Crypto community', 'Social promotion'],
+    markets: ['Global'],
+  },
 ];
 
 // Condensed list for the landing KOL section; full detail lives in

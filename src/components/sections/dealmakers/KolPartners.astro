@@ -3,9 +3,10 @@
 // KOL Partners: individual creators, so a face-first roster instead of a
 // second logo grid (Media Partners sits right above). Every KOL is an equal:
 // one horizontal profile card each (avatar, name, handle, market, topics,
-// platform links). The grid is padded with "Your spot" cards to finish the
-// row; those link to the Apply form. Free editorial exchange, same as
-// Media Partners.
+// platform links), centred so a short last row sits in the middle. Empty
+// "Your spot" cards only appear while no KOL is confirmed; once there are
+// profiles the "Become a KOL Partner" button below is the invitation. Free
+// editorial exchange, same as Media Partners.
 import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
 import type { KolPlatform } from '../../../data/dealmakers/ss3';
 
@@ -16,10 +17,12 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 const { kolPartners, kolPartnerBenefits } = getSS3Content(locale);
 
-// Desktop shows 3 per row: pad the last row with open spots (a full row
-// of them when no KOL is confirmed yet). On mobile only the first one shows.
+// Open spots only when there is no KOL yet (a full row of three; on mobile
+// only the first one shows).
 const COLS = 3;
-const openSpots = kolPartners.length === 0 ? COLS : (COLS - (kolPartners.length % COLS)) % COLS;
+const openSpots = kolPartners.length === 0 ? COLS : 0;
+// 1 / 2 / 3 per row; widths subtract the 1rem gap so rows wrap cleanly.
+const itemWidth = 'w-full sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)]';
 
 const platformName: Record<KolPlatform, string> = {
   x: 'X',
@@ -121,9 +124,9 @@ const kolCardBase = cardBase.replace('items-center', 'items-start');
       <p class="text-xs text-[var(--dm-text-muted)] max-w-2xl mx-auto mb-12 [text-wrap:balance]">{copy.inReturn}</p>
     </div>
 
-    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+    <ul class="flex flex-wrap justify-center gap-4 mb-10">
       {kolPartners.map((k, i) => (
-        <li data-dm-reveal style={`--dm-reveal-delay: ${i * 60}`}>
+        <li class={itemWidth} data-dm-reveal style={`--dm-reveal-delay: ${i * 60}`}>
           <div class:list={[kolCardBase, 'relative border-[var(--dm-border)] bg-[linear-gradient(135deg,rgba(217,178,106,0.07)_0%,rgba(255,255,255,0.015)_45%,rgba(52,168,120,0.06)_100%)] hover:border-[var(--dm-border-accent)] hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.45),0_0_28px_rgba(217,178,106,0.10)]']}>
             {k.avatarUrl ? (
               <img
@@ -178,7 +181,7 @@ const kolCardBase = cardBase.replace('items-center', 'items-start');
       ))}
 
       {Array.from({ length: openSpots }).map((_, i) => (
-        <li class:list={[i > 0 && 'hidden sm:block']} data-dm-reveal style={`--dm-reveal-delay: ${(kolPartners.length + i) * 60}`}>
+        <li class:list={[itemWidth, i > 0 && 'hidden sm:block']} data-dm-reveal style={`--dm-reveal-delay: ${(kolPartners.length + i) * 60}`}>
           <a
             href="#apply"
             data-dm-prefill-interest={copy.interest}

@@ -172,6 +172,14 @@ export const kolPartners: KolPartner[] = [
     topics: ['الذكاء الاصطناعي و Blockchain', 'تطوير الأعمال والنمو'],
     markets: ['فيتنام'],
   },
+  {
+    name: 'Tsunami House',
+    handle: 'TsunamiHouse',
+    avatarUrl: '/dealmakers/kol/tsunamihouse.jpg',
+    platforms: [{ type: 'x', url: 'https://x.com/TsunamiHouse' }],
+    topics: ['مجتمع الكريبتو', 'الترويج الاجتماعي'],
+    markets: ['عالمي'],
+  },
 ];
 
 export const kolPartnerBenefits: string[] = [

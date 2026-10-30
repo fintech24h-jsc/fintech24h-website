@@ -172,6 +172,14 @@ export const kolPartners: KolPartner[] = [
     topics: ['AI 与区块链', '商务拓展与增长'],
     markets: ['越南'],
   },
+  {
+    name: 'Tsunami House',
+    handle: 'TsunamiHouse',
+    avatarUrl: '/dealmakers/kol/tsunamihouse.jpg',
+    platforms: [{ type: 'x', url: 'https://x.com/TsunamiHouse' }],
+    topics: ['加密社区', '社交推广'],
+    markets: ['全球'],
+  },
 ];
 
 export const kolPartnerBenefits: string[] = [
