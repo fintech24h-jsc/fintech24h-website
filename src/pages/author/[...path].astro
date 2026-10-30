@@ -6,7 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import Pagination from '../../components/ui/Pagination.astro';
 import { getUserBySlug, getPostsByAuthor, getPhatVoAuthorIds, isPhatVoWpAuthor, PHAT_VO_SLUG, PHAT_VO_WP_FALLBACK, POSTS_PER_PAGE, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
-import { getReadingTime } from '../../lib/utils';
+import { getReadingTime, stripCmsScripts } from '../../lib/utils';
 import { team } from '../../data/team';
 
 Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -424,7 +424,7 @@ const phatProducts = [
 
                       <!-- Title -->
                       <h3 class="font-display text-xl md:text-2xl font-bold text-[var(--text-primary)] leading-tight group-hover:text-[var(--accent-cyan)] transition-colors">
-                        <a href={`/blog/${post.slug}`} data-cms-content set:html={post.title.rendered} />
+                        <a href={`/blog/${post.slug}`} data-cms-content set:html={stripCmsScripts(post.title.rendered)} />
                       </h3>
 
                       <!-- Excerpt -->

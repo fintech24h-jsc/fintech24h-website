@@ -170,8 +170,10 @@ for (const member of [...wpMembers, ...founders]) {
        Keeping data out of define:vars means the script stays a real ES
        module that Vite bundles/typechecks, instead of an inline, unbundled
        blob. -->
-  <script type="application/json" id="verify-directory" set:html={JSON.stringify(directory)} />
-  <script type="application/json" id="verify-ecosystem-links" set:html={JSON.stringify(ecosystemLinks)} />
+  <!-- `<` escaped: member names come from WordPress, and a `</script>` in one
+       would otherwise end the island and inject markup. -->
+  <script type="application/json" id="verify-directory" set:html={JSON.stringify(directory).replace(/</g, '\\u003c')} />
+  <script type="application/json" id="verify-ecosystem-links" set:html={JSON.stringify(ecosystemLinks).replace(/</g, '\\u003c')} />
 
   <script>
     import { verifyMember, type Platform, type VerifiableMember, type EcosystemLink } from '../lib/verify-team';

@@ -96,6 +96,27 @@ export function stripWpTocWidget(html: string): string {
 }
 
 /**
+ * Removes every <script> from WordPress HTML before it is rendered. The CSP
+ * nonce rewriter (securityHeaders.ts) skips scripts inside [data-cms-content],
+ * but a stray closing tag in the post (`</div><script>…`) ends that element
+ * early and the script would get the nonce. Inline scripts in post bodies were
+ * already blocked by the CSP, so removing them changes nothing visible. The
+ * Twitter embed loader is kept: it is an allowed CSP host and renders tweets.
+ * Repeats until stable so `<scr<script></script>ipt>` cannot rebuild a tag.
+ */
+const CMS_SCRIPT_TAG = /<script\b[^>]*>[\s\S]*?(?:<\/script\s*>|$)/gi;
+const KEPT_CMS_SCRIPT = /^<script\b[^>]*\bsrc=["']https:\/\/platform\.twitter\.com\/widgets\.js["'][^>]*>\s*<\/script\s*>$/i;
+
+export function stripCmsScripts(html: string): string {
+  let previous: string;
+  do {
+    previous = html;
+    html = html.replace(CMS_SCRIPT_TAG, (tag) => (KEPT_CMS_SCRIPT.test(tag) ? tag : ''));
+  } while (html !== previous);
+  return html;
+}
+
+/**
  * Images hotlinked from other sites are requested without a Referer header.
  * Some hosts block hotlinking by referrer (the image loads with no-referrer);
  * it also stops leaking our article URLs to third parties.

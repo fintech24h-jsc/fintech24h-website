@@ -176,18 +176,18 @@ function appendToSheet(data) {
   }
   sheet.appendRow([
     new Date(),
-    val(data, ['formType']),
-    val(data, ['name', 'contactName']),
-    val(data, ['email']),
-    val(data, ['telegram']),
-    val(data, ['projectType']),
-    val(data, ['projectName']),
-    val(data, ['website', 'projectUrl']),
-    val(data, ['serviceInterest']),
-    val(data, ['budget']),
-    val(data, ['timeline']),
-    val(data, ['linkedin']),
-    val(data, ['message']),
+    safeCell_(val(data, ['formType'])),
+    safeCell_(val(data, ['name', 'contactName'])),
+    safeCell_(val(data, ['email'])),
+    safeCell_(val(data, ['telegram'])),
+    safeCell_(val(data, ['projectType'])),
+    safeCell_(val(data, ['projectName'])),
+    safeCell_(val(data, ['website', 'projectUrl'])),
+    safeCell_(val(data, ['serviceInterest'])),
+    safeCell_(val(data, ['budget'])),
+    safeCell_(val(data, ['timeline'])),
+    safeCell_(val(data, ['linkedin'])),
+    safeCell_(val(data, ['message'])),
   ]);
 }
 
@@ -294,16 +294,16 @@ function appendDealMakersApplyToSheet(data) {
   sheet.appendRow([
     now,
     DM_APPLY_STATUS_OPTIONS[0], // 🟡 Pending Review — staff flips this after checking
-    val(data, ['name']),
-    val(data, ['company']),
-    val(data, ['role']),
-    val(data, ['email']),
-    val(data, ['linkedin']),
-    val(data, ['telegram']),
-    val(data, ['interest']),
-    val(data, ['weOffer']),
-    val(data, ['weAreLookingFor']),
-    val(data, ['note']),
+    safeCell_(val(data, ['name'])),
+    safeCell_(val(data, ['company'])),
+    safeCell_(val(data, ['role'])),
+    safeCell_(val(data, ['email'])),
+    safeCell_(val(data, ['linkedin'])),
+    safeCell_(val(data, ['telegram'])),
+    safeCell_(val(data, ['interest'])),
+    safeCell_(val(data, ['weOffer'])),
+    safeCell_(val(data, ['weAreLookingFor'])),
+    safeCell_(val(data, ['note'])),
   ]);
 }
 
@@ -431,13 +431,13 @@ function appendTelegramJoinToSheet(data) {
   sheet.appendRow([
     now,
     TG_JOIN_STATUS_OPTIONS[0], // 🟡 Pending Review — staff flips this after checking
-    val(data, ['name']),
-    val(data, ['company']),
-    val(data, ['email']),
-    val(data, ['linkedin']),
-    val(data, ['telegram']),
-    val(data, ['fundingStatus']),
-    val(data, ['note']),
+    safeCell_(val(data, ['name'])),
+    safeCell_(val(data, ['company'])),
+    safeCell_(val(data, ['email'])),
+    safeCell_(val(data, ['linkedin'])),
+    safeCell_(val(data, ['telegram'])),
+    safeCell_(val(data, ['fundingStatus'])),
+    safeCell_(val(data, ['note'])),
   ]);
 }
 
