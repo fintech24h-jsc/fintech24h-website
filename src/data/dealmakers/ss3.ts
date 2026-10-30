@@ -214,6 +214,14 @@ export const kolPartners: KolPartner[] = [
     topics: ['NFT & GameFi', 'Crypto projects'],
     markets: ['Global'],
   },
+  {
+    name: 'Rosie Do',
+    handle: 'RosieAIGrowth',
+    avatarUrl: '/dealmakers/kol/rosieaigrowth.jpg',
+    platforms: [{ type: 'x', url: 'https://x.com/RosieAIGrowth' }],
+    topics: ['AI & Blockchain', 'BD & Growth'],
+    markets: ['Vietnam'],
+  },
 ];
 
 // Condensed list for the landing KOL section; full detail lives in

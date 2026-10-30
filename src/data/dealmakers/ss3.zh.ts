@@ -164,6 +164,14 @@ export const kolPartners: KolPartner[] = [
     topics: ['NFT 与 GameFi', '加密项目'],
     markets: ['全球'],
   },
+  {
+    name: 'Rosie Do',
+    handle: 'RosieAIGrowth',
+    avatarUrl: '/dealmakers/kol/rosieaigrowth.jpg',
+    platforms: [{ type: 'x', url: 'https://x.com/RosieAIGrowth' }],
+    topics: ['AI 与区块链', '商务拓展与增长'],
+    markets: ['越南'],
+  },
 ];
 
 export const kolPartnerBenefits: string[] = [
