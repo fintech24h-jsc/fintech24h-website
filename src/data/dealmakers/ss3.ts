@@ -171,6 +171,7 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'The Cryptonomist', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/CRYPTONOMIST-LORO-WHITE.png', websiteUrl: 'https://cryptonomist.ch/', confirmed: true },
   { name: 'DGroup Capital', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/image_2026-10-26_08-41-23.png', websiteUrl: 'https://dgroup.capital/', confirmed: true },
   { name: 'NewsPatrolling', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/newspatrolling.jpg', websiteUrl: 'https://newspatrolling.com/', confirmed: true },
+  { name: 'TheHolyCoins', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/theholycoins-white-font-transparent-bg.png', websiteUrl: 'https://theholycoins.com/', confirmed: true },
 ];
 
 // ─── KOL Partners (free, editorial exchange like Media Partners) ─────────────
