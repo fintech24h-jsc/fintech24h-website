@@ -138,6 +138,7 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'NewsPatrolling', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/newspatrolling.jpg', websiteUrl: 'https://newspatrolling.com/', confirmed: true },
   { name: 'TheHolyCoins', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/theholycoins-white-font-transparent-bg.png', websiteUrl: 'https://theholycoins.com/', confirmed: true },
   { name: 'CryptosNewss', logoUrl: '/dealmakers/partners/cryptosnewss.png', websiteUrl: 'https://cryptosnewss.com/', confirmed: true },
+  { name: 'BlockmanPR', logoUrl: '/dealmakers/partners/blockmanpr.png', websiteUrl: 'https://blockman.pro/', confirmed: true },
 ];
 
 // ─── KOL Partners ── same shape as ss3.ts; names/handles stay untranslated.
