@@ -139,6 +139,8 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'TheHolyCoins', logoUrl: 'https://fintech24h.com/wp-content/uploads/2026/10/theholycoins-white-font-transparent-bg.png', websiteUrl: 'https://theholycoins.com/', confirmed: true },
   { name: 'CryptosNewss', logoUrl: '/dealmakers/partners/cryptosnewss-2026.png', websiteUrl: 'https://cryptosnewss.com/', confirmed: true },
   { name: 'BlockmanPR', logoUrl: '/dealmakers/partners/blockmanpr.png', websiteUrl: 'https://blockman.pro/', confirmed: true },
+  { name: 'Coinstelegram', logoUrl: '/dealmakers/partners/coinstelegram.png', websiteUrl: 'https://coinstelegram.com/', confirmed: true },
+  { name: 'CoinGabbar', logoUrl: '/dealmakers/partners/coingabbar.png', websiteUrl: 'https://www.coingabbar.com/', confirmed: true },
 ];
 
 // ─── KOL Partners ── same shape as ss3.ts; names/handles stay untranslated.
