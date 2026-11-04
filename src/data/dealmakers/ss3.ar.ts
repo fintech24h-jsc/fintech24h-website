@@ -141,6 +141,7 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'BlockmanPR', logoUrl: '/dealmakers/partners/blockmanpr.png', websiteUrl: 'https://blockman.pro/', confirmed: true },
   { name: 'Coinstelegram', logoUrl: '/dealmakers/partners/coinstelegram.png', websiteUrl: 'https://coinstelegram.com/', confirmed: true },
   { name: 'CoinGabbar', logoUrl: '/dealmakers/partners/coingabbar.png', websiteUrl: 'https://www.coingabbar.com/', confirmed: true },
+  { name: 'ICT2GO', logoUrl: '/dealmakers/partners/ict2go.png', websiteUrl: 'https://ict2go.ru/', confirmed: true },
 ];
 
 // ─── KOL Partners ── same shape as ss3.ts; names/handles stay untranslated.
