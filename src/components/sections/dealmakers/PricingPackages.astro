@@ -71,6 +71,19 @@ const copy = locale === 'ar' ? {
             <span class="text-xs text-[var(--dm-text-muted)] whitespace-nowrap">{pkg.priceQualifier}</span>
           </div>
 
+          {pkg.availability && (
+            <p class="self-start inline-flex max-w-full items-center gap-2.5 mt-2 ps-2.5 pe-3 py-1 rounded-full border border-[rgba(239,83,80,0.35)] bg-[rgba(239,83,80,0.08)]">
+              <span class="shrink-0 w-1.5 h-1.5 rounded-full bg-[#ef5350] shadow-[0_0_0_3px_rgba(239,83,80,0.2)]" aria-hidden="true"></span>
+              {/* Letter-spacing breaks Arabic joins, so only the Latin label gets the mono caps look. */}
+              <span class={`font-semibold text-[#ff6b63] whitespace-nowrap ${locale === 'en' ? 'font-mono text-[10px] uppercase tracking-widest' : 'text-[11px]'}`}>{pkg.availability.label}</span>
+              <span class="flex gap-0.5" aria-hidden="true">
+                {Array.from({ length: pkg.availability.total }, (_, s) => (
+                  <span class={`w-2.5 h-1 rounded-full ${s < pkg.availability!.total - pkg.availability!.left ? 'bg-white/15' : 'bg-[#ef5350]'}`}></span>
+                ))}
+              </span>
+            </p>
+          )}
+
           <div class="dm-divider my-5"></div>
 
           <ul class="space-y-3 mb-6 flex-1">

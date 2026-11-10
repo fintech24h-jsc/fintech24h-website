@@ -413,6 +413,7 @@ export const pricingPackages: PricingPackage[] = [
     description: 'مسار مخصص للفرق التي تقدّم حلول الإدراج، أو السيولة، أو الشؤون القانونية، أو التقنية، أو النمو لمشاريع Season 3.',
     price: '3,000 دولار',
     priceQualifier: '/ الموسم · 3 مقاعد',
+    availability: { left: 2, total: 3, label: 'متبقٍّ 2/3' },
     highlight: false,
     benefits: [
       '3 مقاعد فقط لشريك الحلول هذا الموسم',

@@ -413,6 +413,7 @@ export const pricingPackages: PricingPackage[] = [
     description: '专属通道，面向为 Season 3 项目提供上币、流动性、法律、技术或增长解决方案的团队。',
     price: '3,000 美元',
     priceQualifier: '/ 赛季 · 3 个名额',
+    availability: { left: 2, total: 3, label: '仅剩 2/3 个名额' },
     highlight: false,
     benefits: [
       '本赛季仅开放 3 个解决方案合作伙伴名额',

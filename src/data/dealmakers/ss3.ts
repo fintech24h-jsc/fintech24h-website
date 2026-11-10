@@ -480,6 +480,8 @@ export interface PricingPackage {
   description: string;
   price: string;
   priceQualifier: string;
+  /** Seats still open, shown as a red scarcity badge under the price. */
+  availability?: { left: number; total: number; label: string };
   highlight: boolean;
   ribbon?: string;
   benefits: string[];
@@ -515,6 +517,7 @@ export const pricingPackages: PricingPackage[] = [
     description: 'A dedicated track for teams offering listing, liquidity, legal, tech, or growth solutions to Season 3 projects.',
     price: '$3,000',
     priceQualifier: '/ season · 3 slots',
+    availability: { left: 2, total: 3, label: '2/3 slots left' },
     highlight: false,
     benefits: [
       'Only 3 Solution Partner slots this season',
