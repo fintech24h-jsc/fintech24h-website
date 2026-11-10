@@ -179,6 +179,9 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'ICT2GO', logoUrl: '/dealmakers/partners/ict2go.png', websiteUrl: 'https://ict2go.ru/', confirmed: true },
   { name: 'Cryptoken Media', logoUrl: '/dealmakers/partners/cryptoken-media.png', websiteUrl: 'https://cryptoken.media/', confirmed: true },
   { name: 'Glov', logoUrl: '/dealmakers/partners/glov.png', websiteUrl: 'https://theglove.ru/', confirmed: true },
+  { name: 'Edarabia', logoUrl: '/dealmakers/partners/edarabia.jpg', websiteUrl: 'https://www.edarabia.com/', confirmed: true },
+  { name: 'entARABI', logoUrl: '/dealmakers/partners/entarabi.png', websiteUrl: 'https://entarabi.com/', confirmed: true },
+  { name: 'Expand', logoUrl: '/dealmakers/partners/expand.png', websiteUrl: 'https://toexpand.com/', confirmed: true },
 ];
 
 // ─── KOL Partners (free, editorial exchange like Media Partners) ─────────────
