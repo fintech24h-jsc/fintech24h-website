@@ -147,6 +147,7 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'Edarabia', logoUrl: '/dealmakers/partners/edarabia.jpg', websiteUrl: 'https://www.edarabia.com/', confirmed: true },
   { name: 'entARABI', logoUrl: '/dealmakers/partners/entarabi.png', websiteUrl: 'https://entarabi.com/', confirmed: true },
   { name: 'Expand', logoUrl: '/dealmakers/partners/expand.png', websiteUrl: 'https://toexpand.com/', confirmed: true },
+  { name: 'CoinPedia', logoUrl: '/dealmakers/partners/coinpedia.png', websiteUrl: 'https://coinpedia.org/', confirmed: true },
 ];
 
 // ─── KOL Partners ── same shape as ss3.ts; names/handles stay untranslated.
