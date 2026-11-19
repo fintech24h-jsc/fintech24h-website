@@ -190,6 +190,17 @@ export const kolPartners: KolPartner[] = [
     topics: ['مجتمع الكريبتو', 'الترويج الاجتماعي'],
     markets: ['عالمي'],
   },
+  {
+    name: 'Erik Hodler',
+    handle: 'ErikHodler',
+    avatarUrl: '/dealmakers/kol/erikhodler.jpg',
+    platforms: [
+      { type: 'x', url: 'https://x.com/ErikHodler' },
+      { type: 'telegram', url: 'https://t.me/ErikHodler' },
+    ],
+    topics: ['أخبار الكريبتو', 'شبكة KOL'],
+    markets: ['عالمي'],
+  },
 ];
 
 export const kolPartnerBenefits: string[] = [

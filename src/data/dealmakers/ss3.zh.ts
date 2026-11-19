@@ -190,6 +190,17 @@ export const kolPartners: KolPartner[] = [
     topics: ['加密社区', '社交推广'],
     markets: ['全球'],
   },
+  {
+    name: 'Erik Hodler',
+    handle: 'ErikHodler',
+    avatarUrl: '/dealmakers/kol/erikhodler.jpg',
+    platforms: [
+      { type: 'x', url: 'https://x.com/ErikHodler' },
+      { type: 'telegram', url: 'https://t.me/ErikHodler' },
+    ],
+    topics: ['加密新闻', 'KOL 网络'],
+    markets: ['全球'],
+  },
 ];
 
 export const kolPartnerBenefits: string[] = [

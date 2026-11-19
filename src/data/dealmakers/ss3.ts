@@ -240,6 +240,17 @@ export const kolPartners: KolPartner[] = [
     topics: ['Crypto community', 'Social promotion'],
     markets: ['Global'],
   },
+  {
+    name: 'Erik Hodler',
+    handle: 'ErikHodler',
+    avatarUrl: '/dealmakers/kol/erikhodler.jpg',
+    platforms: [
+      { type: 'x', url: 'https://x.com/ErikHodler' },
+      { type: 'telegram', url: 'https://t.me/ErikHodler' },
+    ],
+    topics: ['Crypto news', 'KOL network'],
+    markets: ['Global'],
+  },
 ];
 
 // Condensed list for the landing KOL section; full detail lives in
