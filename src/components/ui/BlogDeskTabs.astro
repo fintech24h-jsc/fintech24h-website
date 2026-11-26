@@ -1,0 +1,40 @@
+---
+// src/components/ui/BlogDeskTabs.astro
+// "All articles" + one tab per category. Real links, so every desk has its own
+// crawlable URL (/blog/category/{slug}); scrolls sideways on phones.
+import type { WPCategory } from '../../lib/wordpress';
+import { getDeskCopy } from '../../data/categorySeo';
+
+interface Props {
+  categories: WPCategory[];
+  active: string; // 'all' or a category slug
+}
+const { categories, active } = Astro.props;
+
+const base = 'inline-flex items-center gap-2 h-11 px-4 rounded-full border font-mono text-[13px] whitespace-nowrap transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]';
+const on = 'border-[color-mix(in_srgb,var(--accent-cyan)_45%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_12%,transparent)] text-[var(--text-primary)]';
+const off = 'border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_40%,transparent)]';
+---
+
+<nav aria-label="Blog desks" class="relative z-10 border-y border-[var(--border-default)] bg-[color-mix(in_srgb,var(--bg-primary)_80%,transparent)] backdrop-blur-md">
+  <ul class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <li>
+      <a href="/blog" class:list={[base, active === 'all' ? on : off]} aria-current={active === 'all' ? 'page' : undefined}>
+        {active !== 'all' && <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>}
+        All articles
+      </a>
+    </li>
+    {categories.map((c) => {
+      const isActive = c.slug === active;
+      return (
+        <li>
+          <a href={`/blog/category/${c.slug}`} class:list={[base, isActive ? on : off]} aria-current={isActive ? 'page' : undefined}>
+            <span class="sm:hidden">{getDeskCopy(c.slug, c.name).short}</span>
+            <span class="hidden sm:inline">{c.name}</span>
+            <span class:list={[isActive ? 'text-[var(--accent-cyan)]' : 'opacity-70']}>{c.count}</span>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>

@@ -1,10 +1,16 @@
 ---
 // src/components/sections/CategoryListing.astro
-// Header, category chips, article grid and pagination shared by /blog/category/{slug} and its /page/N.
+// One blog desk (/blog/category/{slug} and its /page/N): desk hero with search
+// scoped to the category, desk tabs, latest-in-desk feature (page 1), article
+// grid, pagination and links to the other desks. Only this category's posts.
 import Pagination from '../ui/Pagination.astro';
-import { formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
+import BlogPostCard from '../ui/BlogPostCard.astro';
+import BlogDeskTabs from '../ui/BlogDeskTabs.astro';
+import BlogSearchForm from '../ui/BlogSearchForm.astro';
+import { formatShortDate, getExcerpt, getFeaturedImageSized } from '../../lib/wordpress';
 import type { WPPost, WPCategory } from '../../lib/wordpress';
 import { getReadingTime } from '../../lib/utils';
+import { getDeskCopy } from '../../data/categorySeo';
 
 interface Props {
   category: Pick<WPCategory, 'name' | 'slug' | 'description'>;
@@ -14,127 +20,111 @@ interface Props {
   totalPages: number;
   heading?: string;
 }
-const { category, allCategories, posts, currentPage, totalPages, heading = `Category: ${category.name}` } = Astro.props;
+const { category, allCategories, posts, currentPage, totalPages, heading = category.name } = Astro.props;
+
+const count = allCategories.find((c) => c.slug === category.slug)?.count ?? 0;
+const others = allCategories.filter((c) => c.slug !== category.slug);
+const feature = currentPage === 1 ? posts[0] : undefined;
+const gridPosts = feature ? posts.slice(1) : posts;
+const featureImage = feature ? getFeaturedImageSized(feature, 'large') : null;
+const label = category.name;
+
+// Highlight the category name inside the SEO heading when it appears there.
+const at = heading.toLowerCase().indexOf(category.name.toLowerCase());
+const headingParts = at >= 0
+  ? [heading.slice(0, at), heading.slice(at, at + category.name.length), heading.slice(at + category.name.length)]
+  : [heading, '', ''];
 ---
 
-  <section class="relative py-24 lg:py-32 overflow-hidden" aria-label="Blog Category Catalog">
-    <!-- Ambient background glows -->
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="bg-orb bg-orb-purple w-[600px] h-[600px] absolute -top-40 -left-32 opacity-15"></div>
-      <div class="bg-orb bg-orb-cyan w-[500px] h-[500px] absolute bottom-10 -right-32 opacity-10"></div>
-      <div class="grid-pattern absolute inset-0 opacity-20"></div>
-    </div>
+<div class="relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="bg-orb bg-orb-purple w-[640px] h-[640px] absolute -top-56 left-1/4 opacity-20"></div>
+  </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto mb-16" data-animate="fade-up">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
-          <span class="text-xs font-semibold text-[var(--accent-cyan)] font-body uppercase tracking-wider">Category Archives</span>
-        </div>
-        <h1 class="font-display text-h1 font-bold text-[var(--text-primary)] mb-6">
-          {heading}
+  <section aria-label={`${category.name} desk`} class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 lg:pt-32 pb-8 lg:pb-11">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 lg:items-end">
+      <div class="lg:col-span-8 flex flex-col gap-4 lg:gap-5">
+        <nav aria-label="Breadcrumb" class="font-mono text-xs text-[var(--text-muted)]">
+          <ol class="flex items-center gap-2.5">
+            <li><a href="/blog" class="text-[var(--accent-cyan)] hover:opacity-80">Blog</a></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" class="text-[var(--text-primary)]">{category.name}</li>
+          </ol>
+        </nav>
+        <div class="self-start inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--accent-cyan)]"><span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>Desk</div>
+        <h1 class="font-display font-bold text-[var(--text-primary)] text-[clamp(2.25rem,4.6vw,3.75rem)] leading-[1.06] tracking-[-0.03em]">
+          {headingParts[0]}<span class="gradient-text-cyan">{headingParts[1]}</span>{headingParts[2]}
         </h1>
-        <p class="text-lg text-[var(--text-secondary)] font-body leading-relaxed">
-          {category.description || `Browse marketing playbooks and research related to ${category.name}.`}
+        <p class="font-body text-base lg:text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl">{category.description || getDeskCopy(category.slug, category.name).blurb}</p>
+        <p class="flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs lg:text-[13px] text-[var(--text-muted)]">
+          {count > 0 && <span><span class="text-[var(--text-primary)]">{count}</span> articles</span>}
+          {posts[0] && currentPage === 1 && <span>latest {formatShortDate(posts[0].date)}</span>}
+          <span>page {currentPage} of {Math.max(1, totalPages)}</span>
         </p>
       </div>
-
-      <!-- Categories Filter bar -->
-      <div class="flex flex-wrap justify-center gap-3 mb-16" data-animate="fade-up">
-        <a
-          href="/blog"
-          class="px-4 py-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] hover:border-[var(--border-hover)] text-xs font-semibold font-body text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all"
-        >
-          All Articles
-        </a>
-        {allCategories.map((c) => (
-          <a
-            href={`/blog/category/${c.slug}`}
-            class:list={[
-              "px-4 py-2 rounded-full border text-xs font-semibold font-body transition-all",
-              c.slug === category.slug
-                ? "border-[var(--accent-cyan)] bg-[color-mix(in_srgb,var(--accent-cyan)_10%,transparent)] text-[var(--accent-cyan)]"
-                : "border-[var(--border-default)] bg-[var(--surface-soft)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)]"
-            ]}
-          >
-            {c.name} ({c.count || 0})
-          </a>
-        ))}
+      <div class="lg:col-span-4">
+        <BlogSearchForm id="desk-search" label="Search this desk" category={category.slug} placeholder={`Search in ${category.name}`} />
       </div>
-
-      <!-- Articles list grid -->
-      {posts.length > 0 ? (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-animate="stagger">
-          {posts.map((post) => {
-            const rTime = getReadingTime(post.content.rendered);
-            const excerptText = getExcerpt(post, 140);
-            const featuredImage = getFeaturedImage(post);
-            return (
-              <article class="card-default p-6 flex flex-col justify-between group" data-animate-child>
-                <div>
-                  {/* Image (clickable → article; hidden from tab order since the
-                      title below is the primary accessible link to the same post) */}
-                  {featuredImage.url && (
-                    <a
-                      href={`/blog/${post.slug}`}
-                      tabindex="-1"
-                      aria-hidden="true"
-                      class="block relative aspect-[16/10] rounded-xl overflow-hidden mb-5 border border-[var(--border-subtle)] shadow-inner"
-                    >
-                      <img
-                        src={featuredImage.url}
-                        alt={featuredImage.alt}
-                        width="800"
-                        height="500"
-                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </a>
-                  )}
-
-                  <!-- Info row -->
-                  <div class="flex items-center gap-3 text-xs text-[var(--text-muted)] font-body mb-4">
-                    <span>{formatDate(post.date)}</span>
-                    <span class="w-1 h-1 rounded-full bg-[var(--text-muted)]"></span>
-                    <span>{rTime} min read</span>
-                  </div>
-
-                  <!-- Title & Summary -->
-                  <h2 class="font-display text-lg font-bold text-[var(--text-primary)] mb-3 line-clamp-2">
-                    <a href={`/blog/${post.slug}`} class="group-hover:text-[var(--accent-cyan)] hover:text-[var(--accent-cyan)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
-                      {post.title.rendered}
-                    </a>
-                  </h2>
-                  <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed mb-6 line-clamp-3">
-                    {excerptText}
-                  </p>
-                </div>
-
-                <!-- Redirect link -->
-                <div class="flex justify-end pt-4 border-t border-[var(--border-subtle)] mt-6">
-                  <a
-                    href={`/blog/${post.slug}`}
-                    class="text-[10px] font-semibold text-[var(--accent-cyan)] hover:text-[var(--accent-cyan-dim)] font-display uppercase tracking-wider flex items-center gap-1.5 transition-colors"
-                    aria-label={`Read ${post.title.rendered}`}
-                  >
-                    Read Article
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                  </a>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      ) : (
-        <div class="text-center py-12">
-          <p class="text-[var(--text-secondary)] font-body">No articles found in this category yet. Check back soon!</p>
-        </div>
-      )}
-
-      <Pagination currentPage={currentPage} totalPages={totalPages} basePath={`/blog/category/${category.slug}`} label={`${category.name} pagination`} />
-
     </div>
   </section>
+
+  <BlogDeskTabs categories={allCategories} active={category.slug} />
+
+  <section aria-labelledby="desk-articles" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 lg:pt-12">
+    <h2 id="desk-articles" class="sr-only">{category.name} articles</h2>
+    {posts.length === 0 ? (
+      <p class="text-center py-16 font-body text-[var(--text-secondary)]">No articles in this desk yet. Check back soon.</p>
+    ) : (
+      <div class="flex flex-col gap-3 md:gap-6">
+        {feature && featureImage && (
+          <article class="card-default rounded-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 mb-2 md:mb-0">
+            <a href={`/blog/${feature.slug}`} tabindex="-1" aria-hidden="true" class="block lg:col-span-7 aspect-[16/9] lg:aspect-auto lg:min-h-[400px] overflow-hidden bg-[var(--surface-soft)]">
+              <img src={featureImage.url} alt={featureImage.alt} width="1200" height="675" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" />
+            </a>
+            <div class="lg:col-span-5 p-5 sm:p-7 lg:p-10 flex flex-col gap-3 lg:gap-4 justify-center">
+              <div class="flex flex-wrap items-center gap-3 font-mono text-xs text-[var(--text-muted)]">
+                <span class="px-2.5 py-1 rounded bg-[color-mix(in_srgb,var(--accent-purple)_14%,transparent)] text-[var(--accent-purple)] uppercase tracking-[0.1em]">Latest in {category.name}</span>
+                <span>{formatShortDate(feature.date)} · {getReadingTime(feature.content.rendered)} min</span>
+              </div>
+              <h3 class="font-display font-bold text-[clamp(1.375rem,2.4vw,2rem)] leading-[1.2] tracking-[-0.02em] text-[var(--text-primary)]">
+                <a href={`/blog/${feature.slug}`} class="hover:text-[var(--accent-cyan)] transition-colors duration-200">{feature.title.rendered}</a>
+              </h3>
+              <p class="font-body text-[var(--text-secondary)] leading-relaxed line-clamp-3">{getExcerpt(feature, 200)}</p>
+              <a href={`/blog/${feature.slug}`} class="mt-1 self-start inline-flex items-center gap-2 font-display font-bold text-sm text-[var(--accent-cyan)] hover:opacity-80 transition-opacity duration-200">Read article <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </article>
+        )}
+        {gridPosts.length > 0 && (
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6" data-animate="stagger">
+            {gridPosts.map((post) => <BlogPostCard post={post} label={label} />)}
+          </div>
+        )}
+      </div>
+    )}
+
+    <div class="pt-4 pb-4">
+      <Pagination currentPage={currentPage} totalPages={totalPages} basePath={`/blog/category/${category.slug}`} label={`${category.name} pagination`} />
+    </div>
+  </section>
+
+  {others.length > 0 && (
+    <section aria-labelledby="other-desks" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-16 pb-24 lg:pb-32">
+      <h2 id="other-desks" class="font-display text-xl lg:text-2xl font-bold text-[var(--text-primary)] mb-5 lg:mb-6">Explore other desks</h2>
+      <ul class="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-5">
+        {others.map((c) => (
+          <li>
+            <a href={`/blog/category/${c.slug}`} class="card-default h-full p-5 lg:p-6 flex items-center lg:items-start gap-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
+              <span class="w-14 shrink-0 font-display text-2xl lg:text-[1.75rem] font-bold leading-tight gradient-text-cyan">{c.count}</span>
+              <span class="flex flex-col gap-1.5 flex-1 min-w-0">
+                <span class="font-display text-lg lg:text-xl font-bold text-[var(--text-primary)]">{c.name}</span>
+                <span class="hidden sm:block text-sm leading-relaxed text-[var(--text-secondary)]">{getDeskCopy(c.slug, c.name).blurb}</span>
+                <span class="hidden lg:block font-mono text-xs text-[var(--accent-cyan)] mt-1">Open desk →</span>
+              </span>
+              <svg class="lg:hidden w-5 h-5 shrink-0 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+</div>

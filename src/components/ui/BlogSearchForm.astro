@@ -1,0 +1,50 @@
+---
+// src/components/ui/BlogSearchForm.astro
+// GET form to /blog/search. `shortcut` adds the ⌘K / Ctrl+K hint and handler.
+interface Props {
+  id: string;
+  placeholder: string;
+  label?: string;      // visible label; omitted = screen-reader only
+  category?: string;   // limit the search to one category slug
+  value?: string;
+  shortcut?: boolean;
+}
+const { id, placeholder, label, category, value, shortcut = false } = Astro.props;
+---
+
+<form role="search" action="/blog/search" method="get" class="w-full">
+  <label for={id} class={label ? 'block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] mb-2.5' : 'sr-only'}>{label ?? 'Search articles'}</label>
+  <div class="flex items-center gap-3 h-14 sm:h-16 pl-4 sm:pl-5 pr-2 rounded-2xl border border-[var(--border-hover)] bg-[var(--bg-glass)] backdrop-blur-md transition-colors duration-200 focus-within:border-[color-mix(in_srgb,var(--accent-cyan)_55%,transparent)] focus-within:ring-2 focus-within:ring-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)]">
+    <svg class="w-5 h-5 shrink-0 text-[var(--text-muted)]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input
+      id={id}
+      name="q"
+      type="search"
+      required
+      maxlength="100"
+      autocomplete="off"
+      value={value}
+      placeholder={placeholder}
+      data-blog-search={shortcut ? '' : undefined}
+      class="flex-1 min-w-0 h-full bg-transparent border-0 outline-none font-body text-base text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
+    />
+    {category && <input type="hidden" name="category" value={category} />}
+    {shortcut && <kbd class="hidden md:inline-flex items-center px-2.5 py-1 rounded-lg border border-[var(--border-hover)] font-mono text-xs text-[var(--text-muted)]">⌘ K</kbd>}
+    <button type="submit" aria-label="Search" class="w-10 h-10 shrink-0 inline-flex items-center justify-center rounded-xl text-[var(--accent-cyan)] hover:bg-[var(--surface-soft)] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</form>
+
+{shortcut && (
+  <script>
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        const input = document.querySelector<HTMLInputElement>('[data-blog-search]');
+        if (!input) return;
+        e.preventDefault();
+        input.focus();
+      }
+    });
+  </script>
+)}

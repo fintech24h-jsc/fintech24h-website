@@ -1,0 +1,66 @@
+---
+// src/components/sections/BlogSubscribeCta.astro
+// Blog footer band: email sign-up (sent through the lead pipeline as
+// formType "Blog Newsletter", so it lands in the Leads sheet + Telegram) and
+// the discovery-call CTA.
+---
+
+<section aria-label="Subscribe and work with us" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 lg:pb-32">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6" data-animate="fade-up">
+    <div class="card-default rounded-3xl p-6 sm:p-8 lg:p-10 flex flex-col gap-4">
+      <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent-cyan)]">The Growth Brief</span>
+      <h2 class="font-display text-2xl lg:text-[1.75rem] leading-tight font-bold text-[var(--text-primary)]">New research in your inbox</h2>
+      <p class="font-body text-[var(--text-secondary)] leading-relaxed">New frameworks and DealMakers updates, sent only when there is something worth reading.</p>
+      <form class="flex flex-col sm:flex-row gap-3 mt-2" data-blog-newsletter novalidate>
+        <label for="blog-newsletter-email" class="sr-only">Work email</label>
+        <input id="blog-newsletter-email" name="email" type="email" required autocomplete="email" placeholder="you@company.com"
+          class="flex-1 min-w-0 h-[52px] px-4 rounded-lg border border-[var(--border-hover)] bg-[var(--surface-soft)] font-body text-base text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none focus-visible:border-[var(--accent-cyan)] focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)]" />
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+        <button type="submit" class="btn-primary justify-center h-[52px]">Subscribe</button>
+      </form>
+      <p class="font-mono text-xs text-[var(--text-muted)]" data-blog-newsletter-status role="status" aria-live="polite">No spam. Unsubscribe in one click.</p>
+    </div>
+
+    <div class="rounded-3xl p-px bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent-cyan)_50%,transparent),color-mix(in_srgb,var(--accent-purple)_50%,transparent))]">
+      <div class="h-full rounded-[23px] bg-[var(--bg-primary)] p-6 sm:p-8 lg:p-10 flex flex-col gap-4">
+        <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent-purple)]">Work with us</span>
+        <h2 class="font-display text-2xl lg:text-[1.75rem] leading-tight font-bold text-[var(--text-primary)]">Want this playbook run for your project?</h2>
+        <p class="font-body text-[var(--text-secondary)] leading-relaxed">Fintech24h plans and runs KOL, PR, community and AI marketing for blockchain projects.</p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-auto pt-2">
+          <a href="/contact/" class="btn-primary justify-center h-[52px]">Book a discovery call</a>
+          <a href="/services/" class="inline-flex items-center justify-center h-[52px] px-6 rounded-lg border border-[var(--border-hover)] font-display font-semibold text-[0.9375rem] text-[var(--text-primary)] hover:border-[color-mix(in_srgb,var(--accent-cyan)_45%,transparent)] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]">See services</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { submitLead } from '../../lib/leadSubmit';
+
+  document.querySelectorAll<HTMLFormElement>('[data-blog-newsletter]').forEach((form) => {
+    const status = form.parentElement?.querySelector<HTMLElement>('[data-blog-newsletter-status]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+      const trap = (form.elements.namedItem('website') as HTMLInputElement).value;
+      if (!status || !button) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        status.textContent = 'Please enter a valid email address.';
+        return;
+      }
+      if (trap) return; // bot filled the hidden field
+      button.disabled = true;
+      status.textContent = 'Subscribing…';
+      const result = await submitLead({ email, message: `Blog newsletter sign-up from ${location.pathname}` }, 'Blog Newsletter');
+      button.disabled = false;
+      if (result.ok) {
+        form.reset();
+        status.textContent = 'Thanks, you are on the list.';
+      } else {
+        status.textContent = result.error ?? 'Something went wrong. Please try again.';
+      }
+    });
+  });
+</script>

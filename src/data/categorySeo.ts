@@ -32,6 +32,19 @@ const categorySeo: Record<string, CategorySeo> = {
   },
 };
 
+// Short labels and one-line blurbs for the blog's desk tabs, desk index and
+// "Explore other desks" cards.
+const deskCopy: Record<string, { short: string; blurb: string }> = {
+  knowledge: { short: 'Knowledge', blurb: 'Frameworks, rankings and deep dives on blockchain infrastructure, fintech systems and Web3 growth.' },
+  news: { short: 'News', blurb: 'Market moves and industry news that change how blockchain projects launch and grow.' },
+  'partner-relationship': { short: 'Partners', blurb: 'Ecosystem partners, agency and developer rankings, and the events Fintech24h supports as a media partner.' },
+  'dealmakers-pulse': { short: 'Pulse', blurb: 'Media partners and KOLs joining Fi24h Dealmakers’ Club Season 3.' },
+};
+
+export function getDeskCopy(slug: string, categoryName: string): { short: string; blurb: string } {
+  return deskCopy[slug] ?? { short: categoryName, blurb: `Research and updates on ${categoryName}.` };
+}
+
 export function getCategorySeo(slug: string, categoryName: string): CategorySeo {
   return categorySeo[slug] ?? {
     title: `${categoryName} — Fintech24h Insights`,

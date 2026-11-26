@@ -47,7 +47,7 @@ export interface WPPost {
     'wp:featuredmedia'?: Array<{
       source_url: string;
       alt_text: string;
-      media_details: { width: number; height: number };
+      media_details: { width: number; height: number; sizes?: Record<string, { source_url: string; width: number }> };
     }>;
     'wp:term'?: Array<Array<{ id: number; name: string; slug: string }>>;
     author?: Array<{
@@ -302,6 +302,32 @@ export async function getCategoryPostsPage(categorySlug: string, page = 1, perPa
   }
 }
 
+/** Full-text search over published posts, optionally inside one category. */
+export async function searchPosts(query: string, page = 1, categoryId?: number, perPage = POSTS_PER_PAGE): Promise<PagedPosts> {
+  try {
+    const params: Record<string, string> = {
+      search: query,
+      page: String(page),
+      per_page: String(perPage),
+      status: 'publish',
+      categories_exclude: [...BLOCKED_CATEGORY_IDS].join(','),
+    };
+    if (categoryId) params.categories = String(categoryId);
+    const r = await fetchWPMeta<WPPost[]>('/posts', params);
+    return toPaged(r.data.filter((p) => !isSpamPost(p)).map(decodeTitle), r, page, perPage);
+  } catch (err) {
+    console.warn(`WP API fail: searchPosts ${page}`, err);
+    return EMPTY_PAGE;
+  }
+}
+
+/** The post's visible categories (never the blocked default category). */
+export function getPostCategories(post: WPPost): Array<{ id: number; name: string; slug: string }> {
+  return (post._embedded?.['wp:term']?.[0] ?? [])
+    .filter((t) => !BLOCKED_CATEGORY_IDS.has(t.id) && t.slug !== 'uncategorized')
+    .map((t) => ({ ...t, name: decodeHtmlEntities(t.name) }));
+}
+
 export async function getPostBySlug(slug: string): Promise<WPPost | null> {
   try {
     const posts = await fetchWP<WPPost[]>('/posts', { slug, status: 'publish' });
@@ -397,8 +423,12 @@ export async function getAllCategories(): Promise<WPCategory[]> {
   }
 
   try {
+    // The default WordPress category (id 1, "Uncategorized") only ever held the
+    // 2026-09 spam posts; it is never shown, linked or put in a sitemap.
     const items = (await fetchWP<WPCategory[]>('/categories', { per_page: '100', hide_empty: 'true' }))
-      .map((c) => ({ ...c, name: decodeHtmlEntities(c.name), description: decodeHtmlEntities(c.description) }));
+      .filter((c) => !BLOCKED_CATEGORY_IDS.has(c.id) && c.slug !== 'uncategorized')
+      .map((c) => ({ ...c, name: decodeHtmlEntities(c.name), description: decodeHtmlEntities(c.description) }))
+      .sort((a, b) => b.count - a.count); // biggest desk first in tabs and the desk index
     if (items && items.length > 0) {
       cachedCategories = items;
       return items;
@@ -438,9 +468,26 @@ export function getFeaturedImage(post: WPPost): { url: string; alt: string } {
   };
 }
 
+/**
+ * Featured image at a WordPress-generated size (medium_large = 768px wide) for
+ * cards, so listings don't download 1920px originals. Falls back to the original.
+ */
+export function getFeaturedImageSized(post: WPPost, size: 'medium' | 'medium_large' | 'large' = 'medium_large'): { url: string; alt: string } {
+  const full = getFeaturedImage(post);
+  const sized = post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.[size]?.source_url;
+  return { ...full, url: sized || full.url };
+}
+
 export function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric',
+  });
+}
+
+/** "Nov 21, 2026" — compact date for card meta rows. */
+export function formatShortDate(dateStr: string): string {
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'short', day: 'numeric',
   });
 }
 

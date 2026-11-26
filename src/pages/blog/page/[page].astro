@@ -15,7 +15,7 @@ if (Astro.url.search) return Astro.redirect(`/blog/page/${pageNumber}`, 301);
 
 Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
 
-const { posts, totalPages } = await getPostsPage(pageNumber);
+const { posts, total, totalPages } = await getPostsPage(pageNumber);
 // Past the last page (WordPress answers 400) or WordPress unreachable: real 404, never a blank 200.
 if (posts.length === 0 || pageNumber > totalPages) return Astro.rewrite('/404');
 
@@ -33,5 +33,5 @@ const breadcrumbs = [
   description={`Page ${pageNumber} of ${totalPages}: strategy, trends, and insights on Blockchain, Fintech & AI marketing from the Fintech24h team.`}
 >
   <BreadcrumbSchema items={breadcrumbs} />
-  <BlogIndexSection posts={posts} categories={categories} currentPage={pageNumber} totalPages={totalPages} />
+  <BlogIndexSection posts={posts} categories={categories} currentPage={pageNumber} totalPages={totalPages} totalPosts={total} />
 </BaseLayout>
