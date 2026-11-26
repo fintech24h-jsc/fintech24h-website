@@ -26,8 +26,8 @@ const showBlog = await isBlogAvailable();
       />
     </a>
 
-    <!-- Desktop nav — same classes, absolute-centered -->
-    <div class="hidden md:flex items-center gap-8 text-[var(--nav-text)] text-sm font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
+    <!-- Desktop nav — absolute-centered; from lg up, since at 768–1023px the links collide with the logo and buttons -->
+    <div class="hidden lg:flex items-center gap-8 text-[var(--nav-text)] text-sm font-semibold tracking-wider font-mono absolute left-1/2 -translate-x-1/2">
       <a href="/" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">home</a>
       <a href="/about/" class="hover:text-[var(--accent-cyan)] transition-colors duration-300">about us</a>
 
@@ -102,7 +102,7 @@ const showBlog = await isBlogAvailable();
       <button
         type="button"
         id="mob-toggle"
-        class="md:hidden text-[var(--text-primary)] hover:text-[var(--accent-cyan)] transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]"
+        class="lg:hidden text-[var(--text-primary)] hover:text-[var(--accent-cyan)] transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]"
         aria-label="Toggle Mobile Menu"
         aria-expanded="false"
       >
