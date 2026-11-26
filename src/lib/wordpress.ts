@@ -356,10 +356,6 @@ export async function getPostsByCategory(categorySlug: string, perPage = 24): Pr
   }
 }
 
-export async function getRecentPosts(count = 3): Promise<WPPost[]> {
-  return getAllPosts(1, count);
-}
-
 // ─── Blog Availability (used to hide blog nav/section when WP is unreachable) ─
 // Memoized so Navbar + Footer + BlogHighlight share a single check per
 // build/isolate instead of each triggering their own WP request (which was
