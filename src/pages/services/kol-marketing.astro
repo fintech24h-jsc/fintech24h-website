@@ -95,7 +95,9 @@ const groundRules = [
 const markets = [
   { name: 'Vietnam', href: '/blockchain-marketing-agency-vietnam/', anchor: 'blockchain marketing agency in Vietnam', desc: 'Vietnamese crypto KOLs on Telegram, Facebook, YouTube and TikTok, managed by our Ho Chi Minh City team.' },
   { name: 'Singapore & Southeast Asia', href: '/blockchain-marketing-agency-singapore/', anchor: 'blockchain marketing agency in Singapore', desc: 'English-speaking regional KOLs plus Indonesian and Thai creators, vetted the same way in every market.' },
-  { name: 'Dubai & UAE', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai', desc: 'X-native and Arabic-speaking voices for projects entering the Gulf crypto market.' }
+  { name: 'Dubai & UAE', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai', desc: 'X-native and Arabic-speaking voices for projects entering the Gulf crypto market.' },
+  { name: 'United States', href: '/blockchain-marketing-agency-usa/', anchor: 'blockchain marketing agency for the USA', desc: 'US crypto creators on X and YouTube, with paid relationships disclosed in line with FTC guidance.' },
+  { name: 'Europe', href: '/blockchain-marketing-agency-europe/', anchor: 'blockchain marketing agency for Europe', desc: 'Creators across European markets, with paid posts clearly marked as marketing under MiCA.' }
 ];
 
 const related = [
@@ -197,7 +199,7 @@ const h2Class = 'font-display text-[clamp(1.6rem,3.5vw,2.75rem)] font-bold text-
           Web3 influencer marketing is not about the biggest account you can afford. A DeFi protocol needs researchers its users trust, a GameFi launch needs creators gamers follow, and a fintech app needs voices that will not make claims your licence forbids. Picking the wrong voice wastes budget and can hurt credibility.
         </p>
         <p>
-          We run KOL campaigns for token projects, DeFi and infrastructure protocols, NFT and gaming teams, exchanges, wallets and fintech companies, across global English-speaking crypto Twitter and regional communities in Asia and the Middle East.
+          We run KOL campaigns for token projects, DeFi and infrastructure protocols, NFT and gaming teams, exchanges, wallets and fintech companies, across global English-speaking crypto Twitter and regional communities in Asia, the Middle East, the United States and Europe.
         </p>
       </div>
     </div>
@@ -407,9 +409,9 @@ const h2Class = 'font-display text-[clamp(1.6rem,3.5vw,2.75rem)] font-bold text-
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12 reveal">
         <p class={eyebrow}>Regional Networks</p>
-        <h2 class={h2Class}>Crypto KOLs in Asia &amp; the Middle East</h2>
+        <h2 class={h2Class}>Crypto KOLs in Asia, the Middle East, the US &amp; Europe</h2>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 md:[&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1 gap-4 md:gap-6">
         {markets.map((m) => (
           <div class="card-default p-7">
             <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-2">{m.name}</h3>

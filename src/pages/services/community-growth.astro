@@ -139,7 +139,9 @@ const groundRules = [
 const markets = [
   { name: 'Vietnam', href: '/blockchain-marketing-agency-vietnam/', anchor: 'blockchain marketing agency in Vietnam', desc: 'Vietnamese Telegram and Facebook communities run by our Ho Chi Minh City team.' },
   { name: 'Singapore & Southeast Asia', href: '/blockchain-marketing-agency-singapore/', anchor: 'blockchain marketing agency in Singapore', desc: 'Regional communities, including Indonesian and Thai groups moderated in the local language.' },
-  { name: 'Dubai & UAE', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai', desc: 'X and Telegram communities for projects building in the Gulf crypto scene.' }
+  { name: 'Dubai & UAE', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai', desc: 'X and Telegram communities for projects building in the Gulf crypto scene.' },
+  { name: 'United States', href: '/blockchain-marketing-agency-usa/', anchor: 'blockchain marketing agency for the USA', desc: 'X and Discord communities moderated across US time zones, with clear rules for financial talk.' },
+  { name: 'Europe', href: '/blockchain-marketing-agency-europe/', anchor: 'blockchain marketing agency for Europe', desc: 'English-first communities for European audiences, moderated across European time zones.' }
 ];
 
 const related = [
@@ -530,12 +532,12 @@ const h2Class = 'font-display text-3xl md:text-5xl font-black text-[var(--text-p
   <section class="py-20 bg-[var(--bg-primary)] relative z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12 reveal">
-        <h2 class={h2Class}>Community Management Across Asia &amp; the Middle East</h2>
+        <h2 class={h2Class}>Community Management Across Asia, the Middle East, the US &amp; Europe</h2>
         <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl mx-auto">
           Global English communities run from Ho Chi Minh City, with native-speaking moderators for the markets where local groups matter.
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 md:[&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1 gap-4">
         {markets.map((m) => (
           <div class="bg-[var(--bg-glass)] rounded-2xl p-6 border border-[var(--border-default)]">
             <h3 class="font-display text-lg font-bold text-[var(--text-primary)] mb-2">{m.name}</h3>

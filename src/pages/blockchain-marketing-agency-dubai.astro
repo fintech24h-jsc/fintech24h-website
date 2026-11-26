@@ -14,6 +14,7 @@ import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
 import ProcessSection from '../components/sections/ProcessSection.astro';
 import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
+import MarketQuickAnswer from '../components/sections/MarketQuickAnswer.astro';
 
 const PAGE_URL = 'https://fintech24h.com/blockchain-marketing-agency-dubai/';
 
@@ -130,7 +131,20 @@ const serviceSchema = {
   }
 };
 
-const combinedSchema = [serviceSchema, faqSchema];
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${PAGE_URL}#webpage`,
+  url: PAGE_URL,
+  name: 'Blockchain, Crypto & Web3 Marketing Agency in Dubai',
+  inLanguage: 'en',
+  dateModified: '2026-11-26',
+  isPartOf: { '@type': 'WebSite', name: 'Fintech24h', url: 'https://fintech24h.com' },
+  about: { '@id': 'https://fintech24h.com/#organization' },
+  publisher: { '@id': 'https://fintech24h.com/#organization' }
+};
+
+const combinedSchema = [webPageSchema, serviceSchema, faqSchema];
 ---
 
 <BaseLayout
@@ -178,6 +192,14 @@ const combinedSchema = [serviceSchema, faqSchema];
   </section>
 
   <!-- ═══════════════════ TRUST (reused global proof) ═══════════════════ -->
+  <!-- ═══════════════════ AT A GLANCE (direct answer for search and answer engines) ═══════════════════ -->
+  <MarketQuickAnswer
+    market="Dubai and the UAE"
+    accent="var(--accent-purple)"
+    answer="Fintech24h runs blockchain, crypto and Web3 marketing for projects entering Dubai and the wider UAE. Campaigns are built around X-native KOLs, Gulf and Tier-1 crypto press, and introductions to exchanges, VCs and free-zone partners, delivered with on-the-ground partners in the UAE."
+    facts={[{ label: "Base", value: "Ho Chi Minh City, Vietnam; partners in the UAE" }, { label: "Services", value: "KOL, PR, community, events, AI marketing, business development, custom solutions" }, { label: "Channels", value: "X first, then Telegram; Gulf News, Zawya, Tier-1 crypto press" }, { label: "Pricing", value: "From about $5,000/month; full-funnel from $15,000/month" }, { label: "Rules", value: "VARA regulates virtual-asset marketing in Dubai; DIFC and ADGM have their own regulators" }]}
+  />
+
   <TrustBar />
 
   <!-- ═══════════════════════ WHY DUBAI (vertical editorial timeline, no cards/tabs) ═══════════════════════ -->

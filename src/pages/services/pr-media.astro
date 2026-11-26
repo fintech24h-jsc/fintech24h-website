@@ -197,6 +197,18 @@ const markets = [
     href: '/blockchain-marketing-agency-dubai/',
     anchor: 'blockchain marketing agency in Dubai',
     desc: 'Gulf business media and event-led PR for projects entering the Middle East market.'
+  },
+  {
+    name: 'United States',
+    href: '/blockchain-marketing-agency-usa/',
+    anchor: 'blockchain marketing agency for the USA',
+    desc: 'Tier-1 crypto and business press read by US investors, with claims kept clear of price and returns.'
+  },
+  {
+    name: 'Europe',
+    href: '/blockchain-marketing-agency-europe/',
+    anchor: 'blockchain marketing agency for Europe',
+    desc: 'International crypto press plus regional outlets in priority European markets, consistent with your MiCA white paper.'
   }
 ];
 
@@ -478,12 +490,12 @@ const h2Class = 'font-display text-[clamp(2rem,4vw,3.5rem)] font-bold text-[var(
     <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
       <div class="mb-12 reveal">
         <span class={eyebrow}>The Regional Pages</span>
-        <h2 class={`${h2Class} rule-draw`}>Crypto PR in Asia &amp; the Middle East</h2>
+        <h2 class={`${h2Class} rule-draw`}>Crypto PR in Asia, the Middle East, the US &amp; Europe</h2>
         <p class="mt-6 font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl">
           We run global English-language PR from Ho Chi Minh City, with local knowledge in the markets where many of our clients build, raise and launch.
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--border-default)] border border-[var(--border-default)]">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 md:[&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1 gap-px bg-[var(--border-default)] border border-[var(--border-default)]">
         {markets.map((m) => (
           <div class="bg-[var(--bg-primary)] p-8">
             <h3 class="font-display text-xl font-bold text-[var(--text-primary)] uppercase mb-3">{m.name}</h3>

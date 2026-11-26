@@ -12,6 +12,7 @@ import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
 import ProcessSection from '../components/sections/ProcessSection.astro';
 import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
+import MarketQuickAnswer from '../components/sections/MarketQuickAnswer.astro';
 
 const PAGE_URL = 'https://fintech24h.com/blockchain-marketing-agency-usa/';
 const linkClass = 'text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors';
@@ -124,13 +125,27 @@ const serviceSchema = {
   }
 };
 
-const combinedSchema = [serviceSchema, faqSchema];
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${PAGE_URL}#webpage`,
+  url: PAGE_URL,
+  name: 'Blockchain, Crypto & Web3 Marketing Agency for the USA',
+  inLanguage: 'en',
+  dateModified: '2026-11-26',
+  isPartOf: { '@type': 'WebSite', name: 'Fintech24h', url: 'https://fintech24h.com' },
+  about: { '@id': 'https://fintech24h.com/#organization' },
+  publisher: { '@id': 'https://fintech24h.com/#organization' }
+};
+
+const combinedSchema = [webPageSchema, serviceSchema, faqSchema];
 ---
 
 <BaseLayout
   title="Blockchain, Crypto & Web3 Marketing Agency for the USA"
   description="Fintech24h is a compliance-aware blockchain and crypto marketing agency for projects entering the United States. KOL, PR, community and business development for Web3 and AI projects."
   canonical={PAGE_URL}
+  ogImage="https://fintech24h.com/og-usa.png"
   schema={combinedSchema}
 >
   <BreadcrumbSchema items={breadcrumbs} />
@@ -187,6 +202,14 @@ const combinedSchema = [serviceSchema, faqSchema];
   </section>
 
   <!-- ═══════════════════ TRUST (reused global proof) ═══════════════════ -->
+  <!-- ═══════════════════ AT A GLANCE (direct answer for search and answer engines) ═══════════════════ -->
+  <MarketQuickAnswer
+    market="the United States"
+    accent="var(--accent-cyan)"
+    answer="Fintech24h runs blockchain, crypto and Web3 marketing for projects entering the United States: KOL, PR, community and business development campaigns that build credibility with US builders and investors. Paid creator posts are disclosed in line with FTC guidance, copy avoids price and return claims, and campaigns are coordinated remotely across US time zones."
+    facts={[{ label: "Base", value: "Ho Chi Minh City, Vietnam; no US office" }, { label: "Services", value: "KOL, PR, community, events, AI marketing, business development, custom solutions" }, { label: "Channels", value: "X, Discord, YouTube, podcasts, Tier-1 crypto and business press" }, { label: "Pricing", value: "From about $5,000/month; full-funnel from $15,000/month" }, { label: "Rules", value: "FTC Endorsement Guides; SEC Securities Act §17(b) for paid promotion of securities" }]}
+  />
+
   <TrustBar />
 
   <!-- ═══════════════════════ WHY THE US (2x2 numbered grid) ═══════════════════════ -->

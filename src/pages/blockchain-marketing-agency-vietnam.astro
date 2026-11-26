@@ -12,6 +12,7 @@ import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 import TrustBar from '../components/sections/TrustBar.astro';
 import ProcessSection from '../components/sections/ProcessSection.astro';
 import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
+import MarketQuickAnswer from '../components/sections/MarketQuickAnswer.astro';
 
 const PAGE_URL = 'https://fintech24h.com/blockchain-marketing-agency-vietnam/';
 
@@ -149,7 +150,20 @@ const localBusinessSchema = {
   priceRange: '$$$$'
 };
 
-const combinedSchema = [serviceSchema, faqSchema, localBusinessSchema];
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${PAGE_URL}#webpage`,
+  url: PAGE_URL,
+  name: 'Blockchain & Crypto Marketing Agency in Vietnam',
+  inLanguage: 'en',
+  dateModified: '2026-11-26',
+  isPartOf: { '@type': 'WebSite', name: 'Fintech24h', url: 'https://fintech24h.com' },
+  about: { '@id': 'https://fintech24h.com/#organization' },
+  publisher: { '@id': 'https://fintech24h.com/#organization' }
+};
+
+const combinedSchema = [webPageSchema, serviceSchema, faqSchema, localBusinessSchema];
 
 const pillars = [
   {
@@ -243,6 +257,14 @@ const stats = [
   </section>
 
   <!-- ═══════════════════ TRUST (reused global proof) ═══════════════════ -->
+  <!-- ═══════════════════ AT A GLANCE (direct answer for search and answer engines) ═══════════════════ -->
+  <MarketQuickAnswer
+    market="Vietnam"
+    accent="var(--accent-warm)"
+    answer="Fintech24h is a blockchain, crypto and Web3 marketing agency headquartered in Ho Chi Minh City. It runs KOL, PR, community and business development campaigns for projects operating in or entering Vietnam, using vetted Vietnamese crypto KOLs, Telegram and Zalo communities moderated in Vietnamese, and placements in both local and Tier-1 crypto media."
+    facts={[{ label: "Base", value: "Ho Chi Minh City, Vietnam (headquarters)" }, { label: "Services", value: "KOL, PR, community, events, AI marketing, business development, custom solutions" }, { label: "Channels", value: "Telegram, Zalo, X, YouTube, Facebook" }, { label: "Pricing", value: "From about $3,000/month; full-funnel from $15,000/month" }, { label: "Rules", value: "No dedicated crypto marketing law yet; general advertising rules apply" }]}
+  />
+
   <TrustBar />
 
   <!-- ═══════════════════════ WHY VIETNAM ═══════════════════════ -->

@@ -56,7 +56,9 @@ const formats = [
 const hubs = [
   { name: 'Singapore', desc: 'Conference week side events, investor dinners and ecosystem nights during Singapore\'s busiest crypto season.', href: '/blockchain-marketing-agency-singapore/', anchor: 'blockchain marketing agency in Singapore' },
   { name: 'Dubai & UAE', desc: 'Activations timed to the Gulf\'s Web3 and fintech conference calendar, with local vendors and venue partners.', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai' },
-  { name: 'Vietnam', desc: 'Our home market: community meetups, builder events and side events around Vietnam\'s growing Web3 gatherings.', href: '/blockchain-marketing-agency-vietnam/', anchor: 'blockchain marketing agency in Vietnam' }
+  { name: 'Vietnam', desc: 'Our home market: community meetups, builder events and side events around Vietnam\'s growing Web3 gatherings.', href: '/blockchain-marketing-agency-vietnam/', anchor: 'blockchain marketing agency in Vietnam' },
+  { name: 'United States', desc: 'Side events, AMAs and activations planned around the major US crypto conference weeks.', href: '/blockchain-marketing-agency-usa/', anchor: 'blockchain marketing agency for the USA' },
+  { name: 'Europe', desc: 'Side events and AMAs around Europe\'s main blockchain conference weeks, across EU and UK time zones.', href: '/blockchain-marketing-agency-europe/', anchor: 'blockchain marketing agency for Europe' }
 ];
 
 const measures = [
@@ -202,7 +204,7 @@ const h2Class = 'font-display text-[clamp(2rem,4vw,3.25rem)] text-[var(--text-pr
           Blockchain conferences are where investors, exchanges, builders and media gather in one city for a few days. That makes them expensive, crowded and easy to waste. A booth on its own rarely pays back. A well-timed side event, a strong panel and a disciplined follow-up plan usually do.
         </p>
         <p>
-          We work with token projects, DeFi and infrastructure protocols, NFT and gaming teams, exchanges and fintech companies, from a first conference appearance to a full calendar of activations across Asia and the Middle East.
+          We work with token projects, DeFi and infrastructure protocols, NFT and gaming teams, exchanges and fintech companies, from a first conference appearance to a full calendar of activations across Asia, the Middle East, the United States and Europe.
         </p>
       </div>
     </div>
@@ -318,12 +320,12 @@ const h2Class = 'font-display text-[clamp(2rem,4vw,3.25rem)] text-[var(--text-pr
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-16 reveal">
         <p class={eyebrow}>Where We Activate</p>
-        <h2 class={h2Class}>Crypto Events in Asia &amp; the Middle East</h2>
+        <h2 class={h2Class}>Crypto Events in Asia, the Middle East, the US &amp; Europe</h2>
         <p class="mt-6 font-body text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
           We plan around the major crypto conference weeks in each hub and book venues and vendors early, when the city fills up.
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--border-default)] border border-[var(--border-default)] rounded-lg overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 md:[&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1 gap-px bg-[var(--border-default)] border border-[var(--border-default)] rounded-lg overflow-hidden">
         {hubs.map((h) => (
           <div class="bg-[var(--bg-primary)] p-8">
             <h3 class="font-display text-2xl text-[var(--text-primary)] font-medium uppercase tracking-wide mb-3">{h.name}</h3>

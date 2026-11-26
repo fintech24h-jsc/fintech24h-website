@@ -1,0 +1,40 @@
+---
+// src/components/sections/MarketQuickAnswer.astro
+// "At a glance" block for the market pillar pages: a one-paragraph direct answer
+// plus a short fact table. Answer engines (Google AI Overviews, ChatGPT,
+// Perplexity) quote self-contained summaries like this, so it sits right under
+// the hero, in plain text, with a visible "last updated" date.
+interface Props {
+  market: string;              // "the United States", "Vietnam" …
+  answer: string;              // one self-contained paragraph
+  facts: Array<{ label: string; value: string }>;
+  accent?: string;             // CSS colour token for the eyebrow and rule
+  updated?: string;            // ISO date of the last content review
+}
+const { market, answer, facts, accent = 'var(--accent-cyan)', updated = '2026-11-26' } = Astro.props;
+const updatedLabel = new Date(`${updated}T00:00:00Z`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+
+<section aria-labelledby="at-a-glance" class="relative z-10 py-12 md:py-16 bg-[var(--bg-primary)]">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="card-default rounded-3xl p-6 sm:p-8 lg:p-10 grid lg:grid-cols-12 gap-8 lg:gap-10" data-animate="fade-up">
+      <div class="lg:col-span-7 flex flex-col gap-4">
+        <p class="font-mono text-[11px] uppercase tracking-[0.16em] flex items-center gap-2" style={`color: ${accent}`}>
+          <span class="w-1.5 h-1.5 rounded-full" style={`background: ${accent}`}></span>
+          At a glance
+        </p>
+        <h2 id="at-a-glance" class="font-display text-xl sm:text-2xl font-bold text-[var(--text-primary)] leading-snug">What Fintech24h does in {market}</h2>
+        <p class="font-body text-base text-[var(--text-secondary)] leading-relaxed">{answer}</p>
+        <p class="font-mono text-[11px] text-[var(--text-muted)]">Last updated <time datetime={updated}>{updatedLabel}</time></p>
+      </div>
+      <dl class="lg:col-span-5 divide-y divide-[var(--border-default)] border-t lg:border-t-0 lg:border-l border-[var(--border-default)] lg:pl-8">
+        {facts.map((f) => (
+          <div class="py-3 first:pt-4 lg:first:pt-0 grid grid-cols-5 gap-3">
+            <dt class="col-span-2 font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--text-muted)] pt-0.5">{f.label}</dt>
+            <dd class="col-span-3 font-body text-sm text-[var(--text-primary)] leading-relaxed">{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>

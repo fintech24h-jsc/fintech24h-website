@@ -78,7 +78,9 @@ const readiness = [
 const markets = [
   { name: 'Southeast Asia', href: '/blockchain-marketing-agency-singapore/', anchor: 'blockchain marketing agency in Singapore', desc: 'Partners, exchanges and investors across Singapore, Indonesia and Thailand.' },
   { name: 'Vietnam', href: '/blockchain-marketing-agency-vietnam/', anchor: 'blockchain marketing agency in Vietnam', desc: 'Our home market and a large retail crypto audience, with local partners and communities.' },
-  { name: 'Dubai & UAE', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai', desc: 'Free-zone partners, regional funds and exchanges active in the Gulf.' }
+  { name: 'Dubai & UAE', href: '/blockchain-marketing-agency-dubai/', anchor: 'blockchain marketing agency in Dubai', desc: 'Free-zone partners, regional funds and exchanges active in the Gulf.' },
+  { name: 'United States', href: '/blockchain-marketing-agency-usa/', anchor: 'blockchain marketing agency for the USA', desc: 'Introductions to exchanges, funds and ecosystem partners for projects building a US presence.' },
+  { name: 'Europe', href: '/blockchain-marketing-agency-europe/', anchor: 'blockchain marketing agency for Europe', desc: 'Exchanges, funds and partners active across the EU, the UK and Switzerland.' }
 ];
 
 const related = [
@@ -391,12 +393,12 @@ const h2Class = 'font-display text-[clamp(2rem,4vw,3rem)] font-light text-[var(-
     <div class="max-w-[1400px] mx-auto px-4 md:px-8">
       <div class="text-center mb-14 reveal">
         <p class={eyebrow}>Where We Open Doors</p>
-        <h2 class={h2Class}>Web3 BD in Asia &amp; the <span class="font-bold">Middle East</span></h2>
+        <h2 class={h2Class}>Web3 BD in Asia, the Middle East, <span class="font-bold">the US &amp; Europe</span></h2>
         <p class="mt-6 font-body text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
           If you are a Western project entering Asia or the Gulf, this is our home ground. Engagements usually run on a monthly retainer plus a success fee.
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 md:[&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1 gap-6">
         {markets.map((m) => (
           <div class="bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-2xl p-8">
             <h3 class="font-display text-xl text-[var(--text-primary)] font-medium mb-3">{m.name}</h3>
