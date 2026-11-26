@@ -55,7 +55,9 @@ export default defineConfig({
         if (
           url.includes('/blockchain-marketing-agency-vietnam') ||
           url.includes('/blockchain-marketing-agency-singapore') ||
-          url.includes('/blockchain-marketing-agency-dubai')
+          url.includes('/blockchain-marketing-agency-dubai') ||
+          url.includes('/blockchain-marketing-agency-usa') ||
+          url.includes('/blockchain-marketing-agency-europe')
         ) {
           return { ...item, changefreq: 'monthly', priority: 0.9 };
         }

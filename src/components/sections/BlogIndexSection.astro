@@ -36,8 +36,7 @@ const latest = isHub ? posts.filter((p) => p !== lead && !isPulse(p)).slice(0, 5
 const shownIds = new Set([lead, ...latest].filter(Boolean).map((p) => p!.id));
 const library = knowledgePosts.filter((p) => !shownIds.has(p.id)).slice(0, 8);
 library.forEach((p) => shownIds.add(p.id));
-const pulsePosts = (pulse?.posts ?? []).slice(0, 5);
-const pulseMore = Math.max(0, (pulse?.total ?? 0) - pulsePosts.length);
+const pulsePosts = (pulse?.posts ?? []).slice(0, 7);
 pulsePosts.forEach((p) => shownIds.add(p.id));
 // Page 1's remaining posts, minus partner announcements (they live in the Pulse strip).
 const gridPosts = isHub ? posts.filter((p) => !shownIds.has(p.id) && !isPulse(p)) : posts;
@@ -234,35 +233,73 @@ const textLink = 'inline-flex items-center gap-2 font-display font-bold text-[15
   )}
 
   {isHub && pulsePosts.length > 0 && (
-    <!-- Dealmakers Pulse strip -->
+    <!-- Dealmakers Pulse: latest announcement as a feature + timeline feed -->
     <section aria-labelledby="pulse-heading" class="relative z-10 bg-[var(--bg-secondary)] border-y border-[var(--border-default)] py-16 lg:py-24 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div class="bg-orb bg-orb-purple w-[560px] h-[560px] absolute -top-48 -left-40 opacity-15"></div>
+        <div class="bg-orb bg-orb-cyan w-[480px] h-[480px] absolute -bottom-48 -right-32 opacity-10"></div>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center flex flex-col items-center gap-4 mb-10 lg:mb-14" data-animate="fade-up">
-          <div class={eyebrow}><span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>F-Matching Season 3</div>
+          <div class={eyebrow}>
+            <span class="relative flex w-2 h-2" aria-hidden="true"><span class="absolute inset-0 rounded-full bg-[var(--color-success)] opacity-60 animate-ping"></span><span class="relative w-2 h-2 rounded-full bg-[var(--color-success)]"></span></span>
+            Live · F-Matching Season 3
+          </div>
           <h2 id="pulse-heading" class="font-display text-h2 font-bold text-[var(--text-primary)]">Dealmakers <span class="gradient-text-cyan">Pulse</span></h2>
-          <p class="font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl">Every partner joining Fi24h Dealmakers’ Club Season 3, in one stream.</p>
+          <p class="font-body text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl">Media partners and KOLs joining Fi24h Dealmakers’ Club Season 3, announced as they sign.</p>
+          {pulse?.total ? <p class="font-mono text-xs text-[var(--text-muted)]"><span class="font-display text-base font-bold gradient-text-cyan mr-1">{pulse.total}</span> partners announced so far</p> : null}
         </div>
-        <ul class="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-5 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-4 px-4 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {pulsePosts.map((p) => { const img = getFeaturedImageSized(p); return (
-            <li class="shrink-0 w-[220px] md:w-auto snap-start">
-              <a href={`/blog/${p.slug}`} class="card-default h-full overflow-hidden flex flex-col">
-                <span class="block aspect-[4/3] overflow-hidden bg-[var(--surface-soft)]"><img src={img.url} alt={img.alt} width="400" height="300" class="w-full h-full object-cover" loading="lazy" decoding="async" /></span>
-                <span class="px-4 pt-3.5 pb-4 flex flex-col gap-1">
-                  <span class="font-display text-base font-bold text-[var(--text-primary)] line-clamp-2">{partnerName(p.title.rendered)}</span>
-                  <span class="font-mono text-[11px] leading-relaxed text-[var(--text-muted)]">Media Partner<br />{formatShortDate(p.date)}</span>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6" data-animate="stagger">
+          {pulsePosts[0] && (() => { const p = pulsePosts[0]; const img = getFeaturedImageSized(p, 'large'); return (
+            <article class="card-default rounded-3xl overflow-hidden lg:col-span-7 flex flex-col" data-animate-child>
+              <a href={`/blog/${p.slug}`} tabindex="-1" aria-hidden="true" class="relative block aspect-[7/5] overflow-hidden bg-[var(--surface-soft)]">
+                <img src={img.url} alt={img.alt} width="1024" height="731" class="w-full h-full object-cover" loading="lazy" decoding="async" />
+                <span class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[rgba(5,8,16,0.55)] to-transparent"></span>
+                <span class="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[rgba(5,8,16,0.72)] backdrop-blur-md border border-white/10 font-mono text-[10px] uppercase tracking-[0.14em] text-white">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>Latest announcement
                 </span>
               </a>
-            </li>
-          ); })}
-          {pulseMore > 0 && (
-            <li class="shrink-0 w-[160px] md:w-auto snap-start">
-              <a href={`/blog/category/${PULSE_SLUG}`} class="h-full min-h-[200px] rounded-2xl border border-dashed border-[color-mix(in_srgb,var(--accent-cyan)_35%,transparent)] flex flex-col items-center justify-center gap-2 text-center p-4 hover:border-[var(--accent-cyan)] transition-colors duration-200">
-                <span class="font-display text-4xl font-bold leading-none gradient-text-cyan">+{pulseMore}</span>
-                <span class="font-mono text-xs text-[var(--text-muted)]">more announcements</span>
-              </a>
-            </li>
-          )}
-        </ul>
+              <div class="p-5 sm:p-7 lg:p-8 flex flex-col gap-3 flex-1">
+                <div class="flex flex-wrap items-center gap-3 font-mono text-xs text-[var(--text-muted)]">
+                  <span class="text-[var(--accent-cyan)] uppercase tracking-[0.12em]">{partnerName(p.title.rendered)}</span>
+                  <span aria-hidden="true">·</span><span>{formatShortDate(p.date)}</span>
+                </div>
+                <h3 class="font-display font-bold text-[clamp(1.25rem,2.2vw,1.75rem)] leading-[1.22] tracking-[-0.01em] text-[var(--text-primary)]">
+                  <a href={`/blog/${p.slug}`} class="hover:text-[var(--accent-cyan)] transition-colors duration-200">{p.title.rendered}</a>
+                </h3>
+                <p class="font-body text-[var(--text-secondary)] leading-relaxed line-clamp-2">{getExcerpt(p, 200)}</p>
+                <a href={`/blog/${p.slug}`} class:list={[textLink, 'text-sm mt-auto pt-2 self-start']}>Read announcement <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          ); })()}
+
+          <div class="card-default rounded-3xl lg:col-span-5 p-5 sm:p-7 flex flex-col" data-animate-child>
+            <div class="flex items-center justify-between mb-5">
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent-cyan)]">Announcement feed</span>
+              <span class="font-mono text-[11px] text-[var(--text-muted)]">newest first</span>
+            </div>
+            <ol class="relative flex flex-col">
+              {pulsePosts.slice(1).map((p, i, list) => { const img = getFeaturedImageSized(p, 'medium'); return (
+                <li class="relative pl-6">
+                  <span class="absolute left-[5px] top-0 bottom-0 w-px bg-[var(--border-hover)]" aria-hidden="true" style={i === list.length - 1 ? 'bottom: 50%' : ''}></span>
+                  <span class="absolute left-0 top-1/2 -translate-y-1/2 w-[11px] h-[11px] rounded-full border-2 border-[var(--accent-cyan)] bg-[var(--bg-secondary)]" aria-hidden="true"></span>
+                  <a href={`/blog/${p.slug}`} class="group flex items-center gap-4 py-3.5 border-b border-[var(--border-default)]">
+                    <img src={img.url} alt="" width="96" height="72" class="w-[84px] h-[63px] sm:w-24 sm:h-[72px] shrink-0 rounded-xl object-cover border border-[var(--border-default)]" loading="lazy" decoding="async" />
+                    <span class="flex flex-col gap-1 min-w-0">
+                      <span class="font-mono text-[11px] text-[var(--text-muted)]">{formatShortDate(p.date)}</span>
+                      <span class="font-display text-[15px] font-medium leading-snug text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200 line-clamp-3">{p.title.rendered}</span>
+                    </span>
+                  </a>
+                </li>
+              ); })}
+            </ol>
+            <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 mt-6">
+              <a href={`/blog/category/${PULSE_SLUG}`} class="btn-liquid-glass-primary justify-center py-3 px-5 text-[11px]">See all {pulse?.total ?? ''} announcements</a>
+              <a href="/dealmakers/ss3/" class="btn-liquid-glass-ghost justify-center py-3 px-5 text-[11px]">Become a partner</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )}

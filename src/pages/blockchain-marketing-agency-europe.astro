@@ -1,0 +1,266 @@
+---
+// src/pages/blockchain-marketing-agency-europe.astro
+// SEO pillar page targeting "Blockchain/Crypto/Web3 Marketing Agency Europe" and EU/MiCA variants.
+// Layout differs from the other market pages: a centered hero with a row of priority-market
+// chips, a three-step "MiCA-ready marketing" band, a definition-list services table and an
+// accordion FAQ. Accent is purple. No LocalBusiness schema: the company has no office in
+// Europe, only Service + areaServed (same honesty rule as the Dubai and US pages).
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import ProcessSection from '../components/sections/ProcessSection.astro';
+import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
+
+const PAGE_URL = 'https://fintech24h.com/blockchain-marketing-agency-europe/';
+const linkClass = 'text-[var(--accent-purple)] underline hover:text-[var(--text-primary)] transition-colors';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Blockchain Marketing Agency Europe', item: PAGE_URL }
+];
+
+const markets = ['Germany', 'France', 'Netherlands', 'Spain', 'Italy', 'Switzerland', 'United Kingdom'];
+
+const services = [
+  { title: 'KOL & Influencer Marketing', slug: 'kol-marketing', desc: 'Crypto creators across European markets, vetted for real engagement, with paid posts clearly identifiable as marketing.' },
+  { title: 'PR & Media', slug: 'pr-media', desc: 'Tier-1 international crypto press plus regional outlets in priority European markets, with claims that match your white paper.' },
+  { title: 'Community Growth & Management', slug: 'community-growth', desc: 'X, Discord and Telegram communities moderated across European time zones, with rules for financial talk.' },
+  { title: 'Event Marketing', slug: 'event-marketing', desc: 'Side events, AMAs and activations planned around the main European blockchain conference weeks.' },
+  { title: 'Crypto AI Marketing', slug: 'ai-marketing', desc: 'Human-supervised AI for community support, sentiment monitoring and multilingual content, with every public claim reviewed by a person.' },
+  { title: 'Business Development', slug: 'business-development', desc: 'Introductions to exchanges, funds and ecosystem partners active in the EU, UK and Switzerland.' },
+  { title: 'Custom Solutions', slug: 'custom-solutions', desc: 'Tailored engagements for Europe-facing projects whose scope goes beyond the six services above.' }
+];
+
+const steps = [
+  {
+    title: 'Align with your white paper',
+    desc: 'Under MiCA, marketing for a crypto-asset has to be consistent with its white paper. We map every campaign claim back to it before anything goes live.'
+  },
+  {
+    title: 'Make marketing look like marketing',
+    desc: 'Communications must be fair, clear, not misleading and clearly identifiable as marketing. KOL posts, PR and ads are briefed that way from the start.'
+  },
+  {
+    title: 'Localize market by market',
+    desc: 'Europe is not one audience. We lead in English and add localized content and media for the markets that matter to your launch, including the UK’s separate rules.'
+  }
+];
+
+const faqs = [
+  {
+    q: 'Which is the best blockchain marketing agency for Europe?',
+    a: 'Fintech24h runs KOL, PR, community and business development campaigns for blockchain, crypto, Web3 and AI projects targeting Europe. Campaigns are built for the MiCA era: claims tied to your white paper, marketing that is clearly identified as marketing, and localization for priority markets.'
+  },
+  {
+    q: 'Does Fintech24h have an office in Europe?',
+    a: 'No. We are legally based in <a href="/blockchain-marketing-agency-vietnam/" class="' + linkClass + '">Vietnam</a> and run European campaigns remotely, coordinating launches and community moderation across European time zones.'
+  },
+  {
+    q: 'How does MiCA affect crypto marketing in the EU?',
+    a: 'The Markets in Crypto-Assets Regulation (MiCA) sets rules for crypto-asset marketing communications: they must be clearly identifiable as marketing, fair, clear and not misleading, and consistent with the published white paper. Crypto-asset service providers also need authorisation. We build campaigns around these rules; your legal counsel confirms the final position.'
+  },
+  {
+    q: 'Is the UK covered by MiCA?',
+    a: 'No. The UK has its own regime: since October 2023, cryptoasset promotions to UK consumers fall under the FCA financial promotions rules, which require approval by an authorised or registered firm, prescribed risk warnings and cooling-off steps for first-time investors. UK campaigns are planned separately from EU ones.'
+  },
+  {
+    q: 'How much does crypto marketing cost in Europe?',
+    a: 'Budgets scale with scope and the number of markets. A focused campaign starts around $5,000 a month; multi-market, full-funnel coverage typically runs $15,000 a month and up.'
+  },
+  {
+    q: 'Do you create content in local European languages?',
+    a: 'Campaigns lead in English, which reaches most of the European crypto audience. Localized content and regional media are scoped per project for the markets that matter most to your launch.'
+  },
+  {
+    q: 'Do you work with RWA, DeFi and stablecoin projects in Europe?',
+    a: 'Yes. Real-world-asset (RWA) tokenization, DeFi, infrastructure and crypto AI projects are a good fit. Stablecoin and token-issuer projects have extra MiCA requirements, so we work closely with your legal team on messaging.'
+  },
+  {
+    q: 'Do you also work in the US, Vietnam, Singapore or Dubai?',
+    a: 'Yes. See our <a href="/blockchain-marketing-agency-usa/" class="' + linkClass + '">blockchain marketing agency for the USA</a>, <a href="/blockchain-marketing-agency-vietnam/" class="' + linkClass + '">Vietnam</a>, <a href="/blockchain-marketing-agency-singapore/" class="' + linkClass + '">Singapore</a> and <a href="/blockchain-marketing-agency-dubai/" class="' + linkClass + '">Dubai</a> pages for details.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Blockchain, Crypto & Web3 Marketing Agency for Europe',
+  description: 'MiCA-ready blockchain and crypto marketing for projects entering Europe and the UK: KOL marketing, PR, community growth and business development for Web3 and AI projects.',
+  url: PAGE_URL,
+  serviceType: 'Blockchain & Web3 Marketing',
+  provider: {
+    '@type': 'Organization',
+    name: 'Fintech24h',
+    url: 'https://fintech24h.com',
+    logo: 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp'
+  },
+  areaServed: [
+    { '@type': 'Place', name: 'European Union' },
+    { '@type': 'Country', name: 'United Kingdom' },
+    { '@type': 'Country', name: 'Switzerland' }
+  ],
+  offers: {
+    '@type': 'Offer',
+    url: 'https://fintech24h.com/contact/',
+    availability: 'https://schema.org/InStock',
+    priceCurrency: 'USD'
+  }
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
+---
+
+<BaseLayout
+  title="Blockchain, Crypto & Web3 Marketing Agency for Europe"
+  description="Fintech24h is a MiCA-ready blockchain and crypto marketing agency for projects entering Europe and the UK. KOL, PR, community and business development for Web3 and AI projects."
+  canonical={PAGE_URL}
+  schema={combinedSchema}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- ═══════════════════════════ HERO (centered, market chips) ═══════════════════════════ -->
+  <section class="relative overflow-hidden pt-28 pb-20 lg:pt-40 lg:pb-28" aria-label="Hero">
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 55% at 50% -10%, rgba(124,92,252,0.18) 0%, transparent 60%);" aria-hidden="true"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-purple w-[620px] h-[620px] absolute -top-48 left-1/2 -translate-x-1/2 opacity-20"></div>
+      <div class="absolute inset-0 grid-pattern" style="opacity: 0.2;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+      <p class="font-mono text-[10px] lg:text-xs text-[var(--accent-purple)] uppercase tracking-[0.18em] flex items-center justify-center gap-2 mb-6" data-animate="fade-up">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)] animate-pulse"></span>
+        Europe &middot; EU, UK &amp; Switzerland
+      </p>
+
+      <h1 class="font-display font-bold leading-[1.1] text-[clamp(2rem,4.8vw,3.6rem)] tracking-[-0.025em] mb-7" data-animate="fade-up">
+        <span class="text-[var(--text-primary)]">Blockchain &amp; crypto marketing agency for </span><span class="gradient-text-purple">Europe’s MiCA era</span>
+      </h1>
+
+      <p class="text-sm sm:text-base lg:text-lg text-[var(--text-secondary)] font-body leading-relaxed max-w-2xl mb-10" data-animate="fade-up">
+        MiCA gave Europe one rulebook for crypto, and it reaches into marketing. Fintech24h runs KOL, PR, community and business development campaigns that win European audiences while keeping every claim consistent with your white paper.
+      </p>
+
+      <div class="flex flex-wrap gap-4 justify-center mb-12" data-animate="fade-up">
+        <a href="#europe-strategy" class="btn-liquid-glass-primary py-2.5 px-6 lg:py-3 lg:px-7 text-[10px] lg:text-xs">
+          <span>Get a Europe Market-Entry Plan</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="inline ml-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-liquid-glass-ghost py-2.5 px-6 lg:py-3 lg:px-7 text-[10px] lg:text-xs">
+          <svg class="w-3.5 h-3.5 inline mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          <span>Chat on Telegram</span>
+        </a>
+      </div>
+
+      <ul class="flex flex-wrap justify-center gap-2 max-w-2xl" aria-label="Priority markets" data-animate="fade-up">
+        {markets.map((m) => (
+          <li class="px-3 py-1.5 rounded-full border border-[var(--border-default)] bg-[var(--surface-soft)] font-mono text-[11px] text-[var(--text-secondary)]">{m}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ TRUST (reused global proof) ═══════════════════ -->
+  <TrustBar />
+
+  <!-- ═══════════════════════ MiCA-READY (three steps) ═══════════════════════ -->
+  <section class="py-14 md:py-28 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="MiCA-ready marketing">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-purple w-[480px] h-[480px] absolute -bottom-32 -left-24 opacity-15"></div>
+    </div>
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 lg:mb-16 text-center max-w-2xl mx-auto" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-4 flex items-center justify-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
+          MiCA-ready marketing
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">One market, many audiences, one rulebook</h2>
+      </div>
+
+      <ol class="grid md:grid-cols-3 gap-5 lg:gap-6" data-animate="stagger">
+        {steps.map((s, i) => (
+          <li class="card-default rounded-2xl p-6 lg:p-8 flex flex-col gap-4" data-animate-child>
+            <span class="font-display text-4xl font-bold leading-none gradient-text-purple">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="font-display font-bold text-xl text-[var(--text-primary)]">{s.title}</h3>
+            <p class="text-sm sm:text-base text-[var(--text-secondary)] font-body leading-relaxed">{s.desc}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-8 text-center text-xs text-[var(--text-muted)] font-body">We handle marketing, not legal advice. Final claims are confirmed with your counsel in each jurisdiction.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SERVICES (definition list) ═══════════════════════ -->
+  <section class="py-14 md:py-28 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Services for Europe">
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
+          Services in Europe
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">Seven services, one compliant story</h2>
+      </div>
+
+      <dl class="divide-y divide-[var(--border-subtle)]" data-animate="stagger">
+        {services.map((s) => (
+          <div class="grid sm:grid-cols-12 gap-2 sm:gap-6 py-6" data-animate-child>
+            <dt class="sm:col-span-4">
+              <a href={`/services/${s.slug}/`} class="font-display font-bold text-base text-[var(--text-primary)] hover:text-[var(--accent-purple)] transition-colors">{s.title}</a>
+            </dt>
+            <dd class="sm:col-span-8 text-sm text-[var(--text-secondary)] font-body leading-relaxed">{s.desc}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PROCESS (reused global execution blueprint) ═══════════════ -->
+  <ProcessSection />
+
+  <!-- ═══════════════════════════ FAQ (accordion) ═══════════════════════════ -->
+  <section class="py-14 md:py-32 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Europe Frequently Asked Questions">
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-purple)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple)]"></span>
+          Europe FAQ
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">Common questions from founders targeting Europe</h2>
+      </div>
+
+      <div class="space-y-3" data-animate="stagger">
+        {faqs.map((faq, i) => (
+          <details class="border-l-2 border-[var(--border-subtle)] hover:border-[var(--accent-purple)] transition-colors duration-300 group" data-animate-child>
+            <summary class="flex items-start gap-3 py-4 pl-5 cursor-pointer list-none">
+              <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest mt-1 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-display font-bold text-sm sm:text-base text-[var(--text-primary)] group-hover:text-[var(--accent-purple)] transition-colors flex-1">{faq.q}</span>
+              <svg class="w-4 h-4 text-[var(--text-muted)] group-open:rotate-180 transition-transform duration-300 shrink-0 mt-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="pl-5 pb-5 text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed">
+              <p set:html={faq.a} />
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ FINAL CTA (reused global lead form) ═════════════════ -->
+  <div id="europe-strategy">
+    <FooterLeadForm defaultService="PR Campaigns" />
+  </div>
+</BaseLayout>
+
+<style>
+  summary::-webkit-details-marker { display: none; }
+</style>

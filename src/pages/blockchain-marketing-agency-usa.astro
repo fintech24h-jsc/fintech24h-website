@@ -1,0 +1,278 @@
+---
+// src/pages/blockchain-marketing-agency-usa.astro
+// SEO pillar page targeting "Blockchain/Crypto/Web3 Marketing Agency USA" and US variants.
+// Layout differs from Vietnam (centered hero), Singapore (split hero) and Dubai (editorial
+// timeline): a split hero with a "compliance-aware by default" checklist card, a 2x2 numbered
+// grid for "Why the US is different", a definition-list services table and an accordion FAQ.
+// Accent is cyan. No LocalBusiness schema: the company has no office in the US, only
+// Service + areaServed (same honesty rule as the Dubai page).
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import ProcessSection from '../components/sections/ProcessSection.astro';
+import FooterLeadForm from '../components/sections/FooterLeadForm.astro';
+
+const PAGE_URL = 'https://fintech24h.com/blockchain-marketing-agency-usa/';
+const linkClass = 'text-[var(--accent-cyan)] underline hover:text-[var(--text-primary)] transition-colors';
+
+const breadcrumbs = [
+  { name: 'Home', item: 'https://fintech24h.com' },
+  { name: 'Blockchain Marketing Agency USA', item: PAGE_URL }
+];
+
+const services = [
+  { title: 'KOL & Influencer Marketing', slug: 'kol-marketing', desc: 'US crypto creators on X and YouTube, vetted for real engagement, with paid relationships disclosed the way FTC guidance expects.' },
+  { title: 'PR & Media', slug: 'pr-media', desc: 'Announcements and founder stories placed in Tier-1 crypto and business press read by US investors and builders.' },
+  { title: 'Community Growth & Management', slug: 'community-growth', desc: 'X, Discord and Telegram communities moderated across US time zones, without hype that turns into a liability later.' },
+  { title: 'Event Marketing', slug: 'event-marketing', desc: 'Side events, AMAs and activations planned around the major US crypto conference weeks.' },
+  { title: 'Crypto AI Marketing', slug: 'ai-marketing', desc: 'Human-supervised AI for community support, sentiment monitoring and content, with every public claim reviewed by a person.' },
+  { title: 'Business Development', slug: 'business-development', desc: 'Introductions to exchanges, funds and ecosystem partners for projects building a US presence.' },
+  { title: 'Custom Solutions', slug: 'custom-solutions', desc: 'Tailored engagements for US-facing projects whose scope goes beyond the six services above.' }
+];
+
+const whyPoints = [
+  {
+    title: 'Disclosure is part of the creative',
+    desc: 'Paid KOL posts in the US need a clear disclosure of the relationship. We brief creators on it up front, so it never becomes a takedown or an enforcement headline.'
+  },
+  {
+    title: 'Securities risk shapes the message',
+    desc: 'Some tokens can be treated as securities, and paid promotion of a security has its own disclosure duty. Campaigns lead with product and utility, not price or returns.'
+  },
+  {
+    title: 'Credibility beats reach',
+    desc: 'US investors and builders check the team, the code and the press before they trust a project. Founder-led PR and technical content outperform volume posting.'
+  },
+  {
+    title: 'X and Discord carry the conversation',
+    desc: 'The US crypto audience lives on X and in Discord servers more than Telegram. Channel strategy and moderation are built around that.'
+  }
+];
+
+const checklist = [
+  'Paid KOL relationships disclosed in every post',
+  'No price predictions or promised returns in copy',
+  'Claims checked against your docs and legal counsel',
+  'Moderation rules for financial talk in your community'
+];
+
+const faqs = [
+  {
+    q: 'Which is the best blockchain marketing agency for the US market?',
+    a: 'Fintech24h runs KOL, PR, community and business development campaigns for blockchain, crypto, Web3 and AI projects targeting the United States. Our approach is compliance-aware by default: disclosed creator partnerships, credibility-led PR and messaging built around product rather than price.'
+  },
+  {
+    q: 'Does Fintech24h have an office in the United States?',
+    a: 'No. We are legally based in <a href="/blockchain-marketing-agency-vietnam/" class="' + linkClass + '">Vietnam</a> and run US campaigns remotely, coordinating launches, AMAs and community moderation across US time zones.'
+  },
+  {
+    q: 'How much does crypto marketing cost in the US?',
+    a: 'Budgets scale with scope. A focused campaign starts around $5,000 a month; full-funnel coverage across PR, KOL, community and business development typically runs $15,000 a month and up.'
+  },
+  {
+    q: 'Do crypto influencers have to disclose paid posts in the US?',
+    a: 'Yes. FTC guidance requires a clear disclosure when a creator has a material connection to a brand, such as payment or free tokens. When a token is treated as a security, Section 17(b) of the Securities Act also requires disclosure of the compensation received for promoting it. We build these disclosures into every brief.'
+  },
+  {
+    q: 'Can you market a token sale to US investors?',
+    a: 'We handle marketing, not legal structuring. Offering tokens to US persons can trigger securities rules, so token-sale campaigns run only after your legal counsel confirms the structure and the jurisdictions you can target.'
+  },
+  {
+    q: 'Which channels work best for crypto marketing in the US?',
+    a: 'X is the main public channel, Discord is where engaged communities gather, and YouTube and podcasts carry long-form trust. Tier-1 press and founder-led content do more for credibility than paid reach alone.'
+  },
+  {
+    q: 'Do you work with DeFi, RWA and AI projects targeting the US?',
+    a: 'Yes. DeFi, real-world-asset (RWA) tokenization, infrastructure and crypto AI projects are a good fit, especially teams that need technical credibility with US builders and funds.'
+  },
+  {
+    q: 'Do you also work in Europe, Vietnam, Singapore or Dubai?',
+    a: 'Yes. See our <a href="/blockchain-marketing-agency-europe/" class="' + linkClass + '">blockchain marketing agency in Europe</a>, <a href="/blockchain-marketing-agency-vietnam/" class="' + linkClass + '">Vietnam</a>, <a href="/blockchain-marketing-agency-singapore/" class="' + linkClass + '">Singapore</a> and <a href="/blockchain-marketing-agency-dubai/" class="' + linkClass + '">Dubai</a> pages for details.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Blockchain, Crypto & Web3 Marketing Agency for the USA',
+  description: 'Compliance-aware blockchain and crypto marketing for projects entering the United States: KOL marketing, PR, community growth and business development for Web3 and AI projects.',
+  url: PAGE_URL,
+  serviceType: 'Blockchain & Web3 Marketing',
+  provider: {
+    '@type': 'Organization',
+    name: 'Fintech24h',
+    url: 'https://fintech24h.com',
+    logo: 'https://fintech24h.com/wp-content/uploads/2026/07/Logo-Fintech24h.webp'
+  },
+  areaServed: { '@type': 'Country', name: 'United States' },
+  offers: {
+    '@type': 'Offer',
+    url: 'https://fintech24h.com/contact/',
+    availability: 'https://schema.org/InStock',
+    priceCurrency: 'USD'
+  }
+};
+
+const combinedSchema = [serviceSchema, faqSchema];
+---
+
+<BaseLayout
+  title="Blockchain, Crypto & Web3 Marketing Agency for the USA"
+  description="Fintech24h is a compliance-aware blockchain and crypto marketing agency for projects entering the United States. KOL, PR, community and business development for Web3 and AI projects."
+  canonical={PAGE_URL}
+  schema={combinedSchema}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- ═══════════════════════════ HERO (split: headline left, checklist card right) ═══════════════════════════ -->
+  <section class="relative overflow-hidden pt-28 pb-20 lg:pt-40 lg:pb-28" aria-label="Hero">
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 85% 0%, rgba(0,200,240,0.14) 0%, transparent 60%);" aria-hidden="true"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-cyan w-[560px] h-[560px] absolute -top-40 -right-32 opacity-20"></div>
+      <div class="absolute inset-0 grid-pattern" style="opacity: 0.2;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+      <div class="lg:col-span-7">
+        <p class="font-mono text-[10px] lg:text-xs text-[var(--accent-cyan)] uppercase tracking-[0.18em] flex items-center gap-2 mb-6" data-animate="fade-up">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
+          United States
+        </p>
+
+        <h1 class="font-display font-bold leading-[1.1] text-[clamp(2rem,4.6vw,3.5rem)] tracking-[-0.025em] mb-7" data-animate="fade-up">
+          <span class="text-[var(--text-primary)]">Blockchain &amp; crypto marketing agency for </span><span class="gradient-text-cyan">the US market</span>
+        </h1>
+
+        <p class="text-sm sm:text-base lg:text-lg text-[var(--text-secondary)] font-body leading-relaxed max-w-xl mb-10" data-animate="fade-up">
+          The US is the deepest crypto market and the strictest about how projects are promoted. Fintech24h runs KOL, PR, community and business development campaigns that build credibility with US builders and investors, with disclosure and claims handled from day one.
+        </p>
+
+        <div class="flex flex-wrap gap-4" data-animate="fade-up">
+          <a href="#usa-strategy" class="btn-liquid-glass-primary py-2.5 px-6 lg:py-3 lg:px-7 text-[10px] lg:text-xs">
+            <span>Get a US Market-Entry Plan</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="inline ml-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="https://t.me/fintech24h" target="_blank" rel="noopener noreferrer" class="btn-liquid-glass-ghost py-2.5 px-6 lg:py-3 lg:px-7 text-[10px] lg:text-xs">
+            <svg class="w-3.5 h-3.5 inline mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            <span>Chat on Telegram</span>
+          </a>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-5 card-default rounded-3xl p-7 lg:p-8" aria-label="Compliance-aware by default" data-animate="fade-up">
+        <p class="font-mono text-[11px] text-[var(--accent-cyan)] uppercase tracking-[0.16em] mb-2">Compliance-aware by default</p>
+        <p class="font-display font-bold text-xl text-[var(--text-primary)] mb-6">Every US campaign ships with</p>
+        <ul class="space-y-4">
+          {checklist.map((item) => (
+            <li class="flex gap-3 text-sm text-[var(--text-secondary)] font-body leading-relaxed">
+              <svg class="w-5 h-5 shrink-0 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-6 pt-5 border-t border-[var(--border-default)] text-xs text-[var(--text-muted)] font-body leading-relaxed">We handle marketing, not legal advice. Final claims and token-sale targeting are confirmed with your US counsel.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ TRUST (reused global proof) ═══════════════════ -->
+  <TrustBar />
+
+  <!-- ═══════════════════════ WHY THE US (2x2 numbered grid) ═══════════════════════ -->
+  <section class="py-14 md:py-28 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="Why the US is different">
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 lg:mb-14 max-w-2xl" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+          Why the US is different
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">The biggest market, with the least room for hype</h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-x-10 gap-y-10 lg:gap-y-12" data-animate="stagger">
+        {whyPoints.map((p, i) => (
+          <div class="border-t border-[var(--border-default)] pt-6" data-animate-child>
+            <span class="font-mono text-sm gradient-text-cyan font-medium">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="font-display font-bold text-xl text-[var(--text-primary)] mt-3 mb-3">{p.title}</h3>
+            <p class="text-sm sm:text-base text-[var(--text-secondary)] font-body leading-relaxed">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SERVICES (definition list) ═══════════════════════ -->
+  <section class="py-14 md:py-28 bg-[var(--bg-primary)] relative overflow-hidden" aria-label="Services for the US market">
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+          Services in the US
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">Seven services, built for scrutiny</h2>
+      </div>
+
+      <dl class="divide-y divide-[var(--border-subtle)]" data-animate="stagger">
+        {services.map((s) => (
+          <div class="grid sm:grid-cols-12 gap-2 sm:gap-6 py-6" data-animate-child>
+            <dt class="sm:col-span-4">
+              <a href={`/services/${s.slug}/`} class="font-display font-bold text-base text-[var(--text-primary)] hover:text-[var(--accent-cyan)] transition-colors">{s.title}</a>
+            </dt>
+            <dd class="sm:col-span-8 text-sm text-[var(--text-secondary)] font-body leading-relaxed">{s.desc}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PROCESS (reused global execution blueprint) ═══════════════ -->
+  <ProcessSection />
+
+  <!-- ═══════════════════════════ FAQ (accordion) ═══════════════════════════ -->
+  <section class="py-14 md:py-32 bg-[var(--bg-secondary)] relative overflow-hidden" aria-label="US Frequently Asked Questions">
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14" data-animate="fade-up">
+        <p class="font-mono text-xs text-[var(--accent-cyan)] uppercase tracking-[0.15em] mb-4 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)]"></span>
+          US FAQ
+        </p>
+        <h2 class="font-display text-h2 font-bold text-[var(--text-primary)]">Common questions from founders targeting the US</h2>
+      </div>
+
+      <div class="space-y-3" data-animate="stagger">
+        {faqs.map((faq, i) => (
+          <details class="border-l-2 border-[var(--border-subtle)] hover:border-[var(--accent-cyan)] transition-colors duration-300 group" data-animate-child>
+            <summary class="flex items-start gap-3 py-4 pl-5 cursor-pointer list-none">
+              <span class="font-mono text-[10px] text-[var(--text-muted)] tracking-widest mt-1 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-display font-bold text-sm sm:text-base text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors flex-1">{faq.q}</span>
+              <svg class="w-4 h-4 text-[var(--text-muted)] group-open:rotate-180 transition-transform duration-300 shrink-0 mt-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="pl-5 pb-5 text-xs sm:text-sm text-[var(--text-secondary)] font-body leading-relaxed">
+              <p set:html={faq.a} />
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ FINAL CTA (reused global lead form) ═════════════════ -->
+  <div id="usa-strategy">
+    <FooterLeadForm defaultService="PR Campaigns" />
+  </div>
+</BaseLayout>
+
+<style>
+  summary::-webkit-details-marker { display: none; }
+</style>

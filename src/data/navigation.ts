@@ -47,7 +47,9 @@ export const footerLinks = {
   markets: [
     { country: 'Vietnam', flag: 'vn', href: '/blockchain-marketing-agency-vietnam/' },
     { country: 'Singapore', flag: 'sg', href: '/blockchain-marketing-agency-singapore/' },
-    { country: 'Dubai, UAE', flag: 'ae', href: '/blockchain-marketing-agency-dubai/' }
+    { country: 'Dubai, UAE', flag: 'ae', href: '/blockchain-marketing-agency-dubai/' },
+    { country: 'United States', flag: 'us', href: '/blockchain-marketing-agency-usa/' },
+    { country: 'Europe', flag: 'eu', href: '/blockchain-marketing-agency-europe/' }
   ],
   resources: [
     { label: 'Insights Blog', href: '/blog' },

@@ -98,7 +98,7 @@ const faqs = [
   },
   {
     q: 'Do you also work in Vietnam or Dubai?',
-    a: 'Yes. We run the same KOL, PR, community and business development model in Vietnam and Dubai. See our <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">blockchain marketing agency in Vietnam</a> and <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">blockchain marketing agency in Dubai</a> for details.'
+    a: 'Yes. We run the same KOL, PR, community and business development model in Vietnam and Dubai. See our <a href="/blockchain-marketing-agency-vietnam/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">blockchain marketing agency in Vietnam</a> and <a href="/blockchain-marketing-agency-dubai/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">blockchain marketing agency in Dubai</a> for details. We also work with projects entering the <a href="/blockchain-marketing-agency-usa/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">US</a> and <a href="/blockchain-marketing-agency-europe/" class="text-[var(--accent-cyan)] underline hover:text-white transition-colors">Europe</a>.'
   }
 ];
 
@@ -391,5 +391,26 @@ const whyPoints = [
     color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.15);
     transform: translateY(-2px);
+  }
+
+  /* Light theme: the dark-mode glass tint and white label wash out on a white
+     page, so the primary CTA becomes the site's glossy orange button with ink
+     text, and the ghost button gets a white glass fill with dark text. */
+  :global(html[data-theme='light']) .btn-sg-primary {
+    color: #0b1a2e;
+    background: var(--gradient-primary);
+    border-color: rgba(236, 106, 16, 0.55);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 10px 24px rgba(249, 115, 22, 0.28);
+  }
+  :global(html[data-theme='light']) .btn-sg-primary:hover {
+    background: var(--gradient-primary-hover);
+    border-color: rgba(236, 106, 16, 0.7);
+  }
+  :global(html[data-theme='light']) .btn-sg-ghost,
+  :global(html[data-theme='light']) .btn-sg-ghost:hover {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(15, 23, 42, 0.1);
+    color: var(--text-primary);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 8px 22px rgba(11, 18, 32, 0.08);
   }
 </style>
