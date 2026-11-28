@@ -633,28 +633,70 @@ export const PHAT_VO_WP_FALLBACK: WPUser = { id: 2, name: 'Phat Vo', slug: 'phat
 // 301 HTML page even on REST, so `posts?author=ID` cannot be used. Instead: list every
 // published post as a tiny {id, author} pair (newest first, the REST default), keep the ids
 // written by the wanted authors, then load just the requested page of them with `include=`.
-export async function getPostsByAuthor(authorId: number | number[], page = 1, perPage = 24): Promise<PagedPosts> {
-  const wanted = new Set(Array.isArray(authorId) ? authorId : [authorId]);
+// The author's post IDs, newest first. WordPress refuses the REST `author` filter
+// (anti-enumeration redirect), so they come from scanning `id,author` pages. The
+// list is cached on its own (30 min fresh, 7-day fallback) so a profile view costs
+// one WordPress call instead of six, and a rate-limited scan still has a list to use.
+const AUTHOR_IDS_FRESH_SECONDS = 1800;
+const AUTHOR_IDS_STALE_SECONDS = 7 * 86400;
+
+async function getAuthorPostIds(wanted: Set<number>): Promise<number[] | null> {
   const PER_PAGE = 100;
+  const key = `https://fintech24h.com/__cache/author-post-ids-v2?authors=${[...wanted].sort((a, b) => a - b).join(',')}`;
+  // @ts-ignore — `caches` is a Workers runtime global, not a Node/browser type
+  const cache: Cache | undefined = typeof caches !== 'undefined' ? caches.default : undefined;
+  if (cache) {
+    const hit = await cache.match(new Request(key));
+    if (hit) return (await hit.json()) as number[];
+  }
   try {
     const ids: number[] = [];
     for (let p = 1; p <= 10; p++) {
-      let rows: Array<{ id: number; author: number }>;
-      try {
-        rows = await fetchWP('/posts', {
-          _fields: 'id,author',
-          per_page: String(PER_PAGE),
-          page: String(p),
-          status: 'publish',
-          orderby: 'date',
-          order: 'desc',
-        });
-      } catch {
-        break; // out-of-range page (400)
+      let rows: Array<{ id: number; author: number }> | null = null;
+      // Up to three tries per page: WordPress's rate limiter rejects bursts, not single calls.
+      for (let attempt = 0; rows === null; attempt++) {
+        try {
+          rows = await fetchWP('/posts', {
+            _fields: 'id,author',
+            per_page: String(PER_PAGE),
+            page: String(p),
+            status: 'publish',
+            orderby: 'date',
+            order: 'desc',
+          });
+        } catch (err) {
+          // WordPress answers 400 past the last page; any other error is retried, then fails the scan.
+          if (p > 1 && String(err).includes('WP API Error 400')) break;
+          if (attempt >= 2) throw err;
+          await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+        }
       }
+      if (rows === null) break;
       rows.forEach((r) => { if (wanted.has(r.author)) ids.push(r.id); });
       if (rows.length < PER_PAGE) break;
     }
+    if (cache) {
+      const body = JSON.stringify(ids);
+      const headers = (ttl: number) => ({ 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${ttl}` });
+      await cache.put(new Request(key), new Response(body, { headers: headers(AUTHOR_IDS_FRESH_SECONDS) }));
+      await cache.put(new Request(`${key}&stale=1`), new Response(body, { headers: headers(AUTHOR_IDS_STALE_SECONDS) }));
+    }
+    return ids;
+  } catch (err) {
+    console.warn(`WP API fail: author post scan ${[...wanted].join(',')}`, err);
+    if (cache) {
+      const stale = await cache.match(new Request(`${key}&stale=1`));
+      if (stale) return (await stale.json()) as number[];
+    }
+    return null;
+  }
+}
+
+export async function getPostsByAuthor(authorId: number | number[], page = 1, perPage = 24): Promise<PagedPosts> {
+  const wanted = new Set(Array.isArray(authorId) ? authorId : [authorId]);
+  try {
+    const ids = await getAuthorPostIds(wanted);
+    if (!ids) return EMPTY_PAGE;
     const pageIds = ids.slice((page - 1) * perPage, page * perPage);
     const total = ids.length;
     const totalPages = Math.max(1, Math.ceil(total / perPage));
