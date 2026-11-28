@@ -73,13 +73,24 @@ const authorBio = isPhatVo ? phatBio : (member?.bio || user.description || "Fint
 // Fetch publications by the author
 // Phat Vo's byline also covers every non-team WP account (legacy "admin", "editorfi24h", ...).
 const authorIds = isPhatVo ? await getPhatVoAuthorIds() : [user.id];
-const { posts, total: totalPosts, totalPages } = await getPostsByAuthor(authorIds, pageNumber, POSTS_PER_PAGE);
+let authorPage = await getPostsByAuthor(authorIds, pageNumber, POSTS_PER_PAGE);
+// An empty result for Phat Vo usually means a WordPress call failed (rate limit or cold
+// cache), not that there are no posts: try once more before deciding.
+if (isPhatVo && authorPage.posts.length === 0) {
+  authorPage = await getPostsByAuthor(authorIds, pageNumber, POSTS_PER_PAGE);
+}
+const { posts, total: totalPosts, totalPages } = authorPage;
 
-// Don't render empty author archives (e.g. legacy WP accounts with zero published posts) or
-// pages past the last one — serve a real 404 so they're not shown or indexed.
-if (posts.length === 0 || pageNumber > totalPages) {
+// Phat Vo's profile (page 1) always renders: if the publications still can't be loaded
+// it shows with an empty list instead of a 404, and that response is not cached.
+// Other empty author archives (e.g. legacy WP accounts with zero published posts) and
+// pages past the last one get a real 404 so they're not shown or indexed.
+const keepProfile = isPhatVo && pageNumber === 1;
+const postsUnavailable = keepProfile && posts.length === 0;
+if (!keepProfile && (posts.length === 0 || pageNumber > totalPages)) {
   return Astro.rewrite('/404');
 }
+if (postsUnavailable) Astro.response.headers.set('Cache-Control', 'no-store');
 
 // Profile URL (schema / breadcrumb). The paginated URL is the page's own canonical, set by BaseLayout.
 const currentUrl = `https://fintech24h.com/author/${slug}`;
@@ -463,7 +474,9 @@ const phatProducts = [
           </svg>
           <span class="font-mono text-[9px] text-[var(--accent-purple)] uppercase tracking-[0.2em] block mb-2">Active Monitor Seeding</span>
           <p class="text-xs text-[var(--text-secondary)] font-body font-light leading-relaxed">
-            No research drafts or publication modules are indexed under this node currently. Monitoring active updates.
+            {postsUnavailable
+              ? <>Publications could not be loaded right now. Browse every article on the <a href="/blog" class="text-[var(--accent-cyan)] underline">Fintech24h blog</a>.</>
+              : 'No research drafts or publication modules are indexed under this node currently. Monitoring active updates.'}
           </p>
         </div>
       )}
