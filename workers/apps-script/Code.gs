@@ -6,12 +6,15 @@
  *   2. Telegram      (instant notification to your team chat)
  *   3. Email         (to fintech24hvn@gmail.com)
  *
- * DealMakers' Club has TWO fully separate pipelines, each with its own
+ * DealMakers' Club has THREE fully separate pipelines, each with its own
  * sheet tab, Telegram message, and email, so staff never have to dig
  * through regular website leads to find them:
  *
  *   - formType 'dealmakers-ss3'                → sheet "DealMakers Apply to Join"
  *   - formType 'dealmakers-ss3-telegram-join'   → sheet "DealMakers Telegram Join"
+ *   - formType 'dealmakers-ss3-intro-request'   → sheet "DealMakers Intro Requests"
+ *     (a visitor asks Fintech24h for a warm introduction to one company in the
+ *     Qualified Listing Directory; the Telegram alert leads with that company)
  *
  * JOB APPLICATIONS (careers form) have their own pipeline too:
  *
@@ -80,6 +83,12 @@ function doPost(e) {
       sendTelegramJoinNotification(data);
       sendTelegramJoinEmail(data);
       return jsonOutput({ result: 'success' });
+    }
+
+    // ── DealMakers' Club — introduction request to one directory profile:
+    //    own sheet, own notifications. ──
+    if (formType === 'dealmakers-ss3-intro-request') {
+      return handleIntroRequest_(data);
     }
 
     // ── Careers — job application: CV to Drive, own sheet, HR alert. ──
@@ -501,6 +510,166 @@ function sendTelegramJoinEmail(data) {
     '========================================\n' +
     'Verify the Telegram handle above belongs to this person before approving,\n' +
     'then update the Status column in the sheet to Approved or Rejected.';
+
+  var email = val(data, ['email']);
+  MailApp.sendEmail({
+    to: EMAIL_TO,
+    subject: subject,
+    body: body,
+    replyTo: email || EMAIL_TO,
+  });
+}
+
+// =============================================================================
+// DealMakers' Club — introduction requests from the Qualified Listing Directory.
+// A visitor opens a company profile, picks what they want from that company
+// (partnership, services, more information, investment) and asks Fintech24h for
+// a warm introduction. Own sheet, own Telegram message, own email. The Telegram
+// message opens with the requested company and the purpose, in a layout unlike
+// the Apply / Telegram Join alerts, so staff can tell it apart at a glance.
+//
+// The website sends: targetCompany, targetSlug, targetContact, targetWebsite,
+// intent, name, email, company, telegram, message, locale, pageUrl and
+// companyWebsite (bot honeypot, must stay empty).
+// =============================================================================
+
+var INTRO_SHEET_NAME = 'DealMakers Intro Requests';
+var INTRO_HEADERS = [
+  'Submitted At', 'Status', 'Requested Company', 'Purpose', 'Requester Name',
+  'Requester Company', 'Email', 'Telegram', 'Message', 'Company Contact',
+  'Profile Slug', 'Language', 'Page',
+];
+var INTRO_STATUS_OPTIONS = ['🟡 New', '📨 Forwarded to company', '✅ Introduced', '❌ Declined'];
+
+function handleIntroRequest_(data) {
+  // Bot trap: real visitors never fill this visually-hidden field.
+  if (String(data.companyWebsite || '').trim()) {
+    return jsonOutput({ result: 'error', message: 'Rejected submission' });
+  }
+  var email = String(val(data, ['email'])).trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return jsonOutput({ result: 'error', message: 'Invalid email' });
+  }
+
+  appendIntroRequestToSheet_(data);                       // source of truth — written first
+  try { sendIntroRequestNotification_(data); }
+  catch (teleErr) { console.warn('Intro Telegram skipped: ' + teleErr.toString()); }
+  try { sendIntroRequestEmail_(data); }
+  catch (mailErr) { console.warn('Intro email skipped: ' + mailErr.toString()); }
+
+  return jsonOutput({ result: 'success' });
+}
+
+function getOrCreateIntroSheet_() {
+  var ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(INTRO_SHEET_NAME);
+  if (sheet) return sheet;
+
+  sheet = ss.insertSheet(INTRO_SHEET_NAME);
+  sheet.appendRow(INTRO_HEADERS);
+  try {
+    applySheetPolish_(sheet, INTRO_HEADERS, 2, INTRO_STATUS_OPTIONS,
+      [150, 170, 170, 160, 150, 170, 200, 140, 300, 170, 120, 80, 240]);
+  } catch (fmtErr) {
+    console.warn('Sheet formatting skipped: ' + fmtErr.toString());
+  }
+  return sheet;
+}
+
+function appendIntroRequestToSheet_(data) {
+  var sheet = getOrCreateIntroSheet_();
+  var now = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm:ss');
+
+  sheet.appendRow([
+    now,
+    INTRO_STATUS_OPTIONS[0],
+    safeCell_(val(data, ['targetCompany'])),
+    safeCell_(val(data, ['intent'])),
+    safeCell_(val(data, ['name'])),
+    safeCell_(val(data, ['company'])),
+    safeCell_(val(data, ['email'])),
+    safeCell_(val(data, ['telegram'])),
+    safeCell_(val(data, ['message'])),
+    safeCell_(val(data, ['targetContact'])),
+    safeCell_(val(data, ['targetSlug'])),
+    safeCell_(val(data, ['locale'])),
+    safeCell_(val(data, ['pageUrl'])),
+  ]);
+}
+
+function sendIntroRequestNotification_(data) {
+  if (!TELEGRAM_TOKEN || TELEGRAM_TOKEN.indexOf('PASTE') === 0) return;
+
+  var now = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm:ss');
+  var target = val(data, ['targetCompany']) || NA;
+  var contact = val(data, ['targetContact']);
+  var website = val(data, ['targetWebsite']);
+  var message = val(data, ['message']);
+  var lang = String(val(data, ['locale']) || 'en').toUpperCase();
+
+  var html =
+    '🤝🤝🤝 <b>INTRODUCTION REQUEST</b> 🤝🤝🤝\n' +
+    '<i>DealMakers\' Club directory · not a membership application</i>\n' +
+    '━━━━━━━━━━━━━━━━━━━━\n' +
+    '🎯 <b>Wants to meet:</b> ' + escapeHtml(target) + '\n' +
+    (contact ? '👔 <b>Company contact:</b> ' + escapeHtml(contact) + '\n' : '') +
+    (website ? '🌐 <b>Website:</b> ' + escapeHtml(website) + '\n' : '') +
+    '💬 <b>Purpose:</b> ' + escapeHtml(val(data, ['intent']) || NA) + '\n' +
+    '━━━━━━━━━━━━━━━━━━━━\n' +
+    '🙋 <b>Requested by</b>\n' +
+    '• <b>Name:</b> ' + escapeHtml(val(data, ['name']) || NA) + '\n' +
+    '• <b>Company:</b> ' + escapeHtml(val(data, ['company']) || NA) + '\n' +
+    '• <b>Email:</b> ' + escapeHtml(val(data, ['email']) || NA) + '\n' +
+    '• <b>Telegram:</b> ' + escapeHtml(val(data, ['telegram']) || NA) + '\n' +
+    '\n' +
+    '📝 <b>Message</b>\n' +
+    (message ? escapeHtml(message) : '<i>No message provided.</i>') + '\n' +
+    '\n' +
+    '🌍 <b>Language:</b> ' + escapeHtml(lang) + '  ·  🕒 ' + now + '\n' +
+    '👉 Check fit, ask ' + escapeHtml(target) + ' if they accept, then update the ' +
+    '<b>' + escapeHtml(INTRO_SHEET_NAME) + '</b> sheet.';
+
+  UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_TOKEN + '/sendMessage', {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: html,
+      parse_mode: 'HTML',
+      disable_web_page_preview: true,
+    }),
+    muteHttpExceptions: true,
+  });
+}
+
+function sendIntroRequestEmail_(data) {
+  var target = val(data, ['targetCompany']) || 'Unknown company';
+  var name = val(data, ['name']) || 'Unknown';
+  var now = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm:ss');
+  var subject = '🤝 Intro request → ' + target + ' (from ' + name + ')';
+
+  var body =
+    'New introduction request — DealMakers\' Club directory\n' +
+    '========================================\n' +
+    'STATUS:             New\n' +
+    'WANTS TO MEET:      ' + target + '\n' +
+    'Company contact:    ' + (val(data, ['targetContact']) || '—') + '\n' +
+    'Company website:    ' + (val(data, ['targetWebsite']) || '—') + '\n' +
+    'Purpose:            ' + (val(data, ['intent']) || '—') + '\n' +
+    '----------------------------------------\n' +
+    'Requester name:     ' + name + '\n' +
+    'Requester company:  ' + (val(data, ['company']) || '—') + '\n' +
+    'Email:              ' + (val(data, ['email']) || '—') + '\n' +
+    'Telegram:           ' + (val(data, ['telegram']) || '—') + '\n' +
+    'Message:            ' + (val(data, ['message']) || '—') + '\n' +
+    '----------------------------------------\n' +
+    'Language:           ' + (val(data, ['locale']) || 'en') + '\n' +
+    'Page:               ' + (val(data, ['pageUrl']) || '—') + '\n' +
+    'Submitted:          ' + now + '\n' +
+    'Tracked in:         "' + INTRO_SHEET_NAME + '" sheet\n' +
+    '========================================\n' +
+    'Check the fit, ask the company whether they accept the introduction,\n' +
+    'then update the Status column in the sheet.';
 
   var email = val(data, ['email']);
   MailApp.sendEmail({

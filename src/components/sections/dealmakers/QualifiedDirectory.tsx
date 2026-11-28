@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { getSS3Content, type DealmakersLocale } from '../../../data/dealmakers/content';
+import { submitLead } from '../../../lib/leadSubmit';
 import type { DirectoryCategory, DirectoryProfile } from '../../../data/dealmakers/ss3';
 
 type FilterKey = 'all' | 'sponsored' | DirectoryCategory;
@@ -11,6 +12,13 @@ interface Props {
 // Cards per page: two full rows (4 columns from 1280px, 3 below), so the
 // directory reads in one landscape view instead of a long vertical list.
 const WIDE_QUERY = '(min-width: 1280px)';
+
+// Purposes sent to the staff sheet / Telegram in English whatever the page
+// language, in the same order as each locale's `intents` labels.
+const INTENTS_EN = ['Partnership', 'Use their services', 'More information', 'Investment'];
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+type IntroStatus = 'idle' | 'sending' | 'sent';
 
 export default function QualifiedDirectory({ locale = 'en' }: Props) {
   const { directoryProfiles } = getSS3Content(locale);
@@ -51,7 +59,22 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
     intents: ['شراكة', 'الاستفادة من خدماتهم', 'مزيد من المعلومات', 'استثمار'],
     requestIntro: (name: string) => `اطلب تعارفًا مع ${name}`,
     introNote: 'تراجع Fintech24h كل طلب، ولا تتم مشاركة بيانات التواصل إلا بعد موافقة الطرفين.',
-    joinClub: 'الانضمام إلى DealMakers’ Club',
+    nameLabel: 'اسمك',
+    emailLabel: 'البريد الإلكتروني للعمل',
+    companyLabel: 'الشركة / المشروع',
+    telegramLabel: 'Telegram (اختياري)',
+    messageLabel: 'رسالتك',
+    messagePlaceholders: [
+      'ما نوع الشراكة التي تفكر فيها، وماذا سيقدّم كل طرف؟',
+      'ما الخدمات التي تحتاجها منهم، ومتى تقريبًا؟',
+      'ما الذي تودّ معرفته (الأسعار، الملف الإعلامي، دراسات الحالة…)؟',
+      'أخبرهم عن جولة التمويل أو الاستثمار الذي تفكر فيه.',
+    ],
+    sending: 'جارٍ الإرسال…',
+    successTitle: 'تم إرسال الطلب',
+    successBody: (name: string) => `ستراجع Fintech24h طلبك وتتواصل مع ${name} نيابةً عنك. نردّ عادةً خلال يومي عمل.`,
+    errRequired: 'يرجى إدخال الاسم والبريد الإلكتروني والشركة.',
+    errEmail: 'يرجى إدخال بريد إلكتروني صالح.',
   } : locale === 'zh' ? {
     filters: [
       { key: 'all' as FilterKey, label: '全部档案' },
@@ -88,7 +111,22 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
     intents: ['合作', '使用其服务', '了解更多信息', '投资'],
     requestIntro: (name: string) => `请求引荐 ${name}`,
     introNote: 'Fintech24h 会审核每一条请求，仅在双方同意后才会交换联系方式。',
-    joinClub: '加入 DealMakers’ Club',
+    nameLabel: '你的姓名',
+    emailLabel: '工作邮箱',
+    companyLabel: '公司 / 项目',
+    telegramLabel: 'Telegram（选填）',
+    messageLabel: '留言',
+    messagePlaceholders: [
+      '你设想的是哪种合作？双方各自能带来什么？',
+      '你需要对方的哪项服务？大致什么时候需要？',
+      '你想了解哪些信息（报价、媒体资料包、案例等）？',
+      '请介绍融资轮次或你考虑的投资。',
+    ],
+    sending: '发送中…',
+    successTitle: '请求已发送',
+    successBody: (name: string) => `Fintech24h 将审核你的请求，并代你联系 ${name}。我们通常在 2 个工作日内回复。`,
+    errRequired: '请填写姓名、邮箱和公司。',
+    errEmail: '请输入有效的邮箱地址。',
   } : {
     filters: [
       { key: 'all' as FilterKey, label: 'All profiles' },
@@ -125,23 +163,34 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
     intents: ['Partnership', 'Use their services', 'More information', 'Investment'],
     requestIntro: (name: string) => `Request intro to ${name}`,
     introNote: 'Fintech24h reviews every request; contact details are shared only after both sides agree.',
-    joinClub: 'Join DealMakers’ Club',
+    nameLabel: 'Your name',
+    emailLabel: 'Work email',
+    companyLabel: 'Company / project',
+    telegramLabel: 'Telegram (optional)',
+    messageLabel: 'Message',
+    messagePlaceholders: [
+      'What kind of partnership do you have in mind, and what would each side bring?',
+      'Which of their services do you need, and roughly when?',
+      'What would you like to know (rates, media kit, case studies…)?',
+      'Tell them about the round or the investment you have in mind.',
+    ],
+    sending: 'Sending…',
+    successTitle: 'Request sent',
+    successBody: (name: string) => `Fintech24h will review it and contact ${name} on your behalf. We usually reply within 2 business days.`,
+    errRequired: 'Please fill in your name, email and company.',
+    errEmail: 'Please enter a valid email.',
   };
 
   const categoryLabel = (c: DirectoryCategory) => copy.filters.find((f) => f.key === c)?.label ?? c;
-
-  function dispatchPrefill(interest: string, context: string) {
-    window.dispatchEvent(new CustomEvent('dm:prefill', { detail: { interest, context } }));
-    if ((window as any).dataLayer) {
-      (window as any).dataLayer.push({ event: 'dealmakers_ss3_request_introduction', label: context });
-    }
-  }
 
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [intent, setIntent] = useState(0);
+  const [intro, setIntro] = useState({ name: '', email: '', company: '', telegram: '', message: '', companyWebsite: '' });
+  const [introStatus, setIntroStatus] = useState<IntroStatus>('idle');
+  const [introError, setIntroError] = useState('');
   const [wide, setWide] = useState(true);
   const PAGE_SIZE = wide ? 8 : 6;
 
@@ -174,6 +223,9 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
   const openProfile = (slug: string, e: React.MouseEvent) => {
     triggerRef.current = e.currentTarget as HTMLElement;
     setIntent(0);
+    setIntroStatus('idle');
+    setIntroError('');
+    setIntro((prev) => ({ ...prev, message: '' }));
     setActiveSlug(slug);
     if ((window as any).dataLayer) {
       (window as any).dataLayer.push({ event: 'dealmakers_ss3_open_profile', label: slug });
@@ -183,6 +235,51 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
   const closeProfile = () => {
     setActiveSlug(null);
     triggerRef.current?.focus();
+  };
+
+  // Introduction request: its own Apps Script pipeline (sheet "DealMakers Intro
+  // Requests" + a Telegram alert that leads with the requested company), not
+  // the Apply to Join form.
+  const submitIntro = async (e: React.FormEvent, profile: DirectoryProfile) => {
+    e.preventDefault();
+    if (introStatus === 'sending') return;
+    if (!intro.name.trim() || !intro.email.trim() || !intro.company.trim()) {
+      setIntroError(copy.errRequired);
+      return;
+    }
+    if (!EMAIL_RE.test(intro.email.trim())) {
+      setIntroError(copy.errEmail);
+      return;
+    }
+    setIntroError('');
+    setIntroStatus('sending');
+    const result = await submitLead(
+      {
+        targetCompany: profile.companyName,
+        targetSlug: profile.slug,
+        targetContact: profile.contactName,
+        targetWebsite: profile.websiteUrl ?? '',
+        intent: INTENTS_EN[intent],
+        name: intro.name.trim(),
+        email: intro.email.trim(),
+        company: intro.company.trim(),
+        telegram: intro.telegram.trim(),
+        message: intro.message.trim(),
+        companyWebsite: intro.companyWebsite,
+        locale,
+        pageUrl: window.location.href,
+      },
+      'dealmakers-ss3-intro-request'
+    );
+    if (!result.ok) {
+      setIntroStatus('idle');
+      setIntroError(result.error ?? 'Error');
+      return;
+    }
+    setIntroStatus('sent');
+    if ((window as any).dataLayer) {
+      (window as any).dataLayer.push({ event: 'dealmakers_ss3_request_introduction', label: profile.slug, intent: INTENTS_EN[intent] });
+    }
   };
 
   // Focus trap + Escape + return focus
@@ -412,41 +509,88 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
               <p className="text-xs text-[var(--dm-text-secondary)]">{activeProfile.focusMarket}</p>
             </div>
 
-            {/* Personalised introduction request: the visitor picks what they
-                want from this company, and that intent travels into the apply
-                form's note together with the company name. */}
+            {/* Introduction request: the visitor picks what they want from
+                this company and sends it straight to Fintech24h. */}
             <div className="p-4 sm:p-5 rounded-2xl border border-[var(--dm-border-accent)] bg-[rgba(217,178,106,0.05)]">
-              <p className="font-display font-semibold text-base text-[var(--dm-text-primary)]">{copy.introTitle(activeProfile.companyName)}</p>
-              <p className="text-xs text-[var(--dm-text-secondary)] mt-1 mb-3">{copy.introAsk}</p>
-              <div role="radiogroup" aria-label={copy.introAsk} className="flex flex-wrap gap-2 mb-4">
-                {copy.intents.map((label, idx) => (
-                  <button
-                    key={label}
-                    type="button"
-                    role="radio"
-                    aria-checked={intent === idx}
-                    onClick={() => setIntent(idx)}
-                    className={`min-h-9 px-3.5 rounded-full text-xs font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dm-gold)] ${
-                      intent === idx
-                        ? 'bg-[var(--dm-text-primary)] text-[var(--dm-text-inverted)]'
-                        : 'border border-[var(--dm-border-hover)] text-[var(--dm-text-secondary)] hover:text-[var(--dm-text-primary)]'
-                    }`}
-                  >
-                    {label}
+              {introStatus === 'sent' ? (
+                <div className="text-center py-3" role="status">
+                  <span className="mx-auto mb-3 w-11 h-11 rounded-full bg-[var(--dm-emerald)] text-[var(--dm-text-inverted)] flex items-center justify-center" aria-hidden="true">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 13 4 4L19 7" /></svg>
+                  </span>
+                  <p className="font-display font-semibold text-base text-[var(--dm-text-primary)]">{copy.successTitle}</p>
+                  <p className="text-xs text-[var(--dm-text-secondary)] leading-relaxed mt-1.5">{copy.successBody(activeProfile.companyName)}</p>
+                </div>
+              ) : (
+                <form noValidate onSubmit={(e) => submitIntro(e, activeProfile)}>
+                  <p className="font-display font-semibold text-base text-[var(--dm-text-primary)]">{copy.introTitle(activeProfile.companyName)}</p>
+                  <p className="text-xs text-[var(--dm-text-secondary)] mt-1 mb-3">{copy.introAsk}</p>
+                  <div role="radiogroup" aria-label={copy.introAsk} className="flex flex-wrap gap-2 mb-4">
+                    {copy.intents.map((label, idx) => (
+                      <button
+                        key={label}
+                        type="button"
+                        role="radio"
+                        aria-checked={intent === idx}
+                        onClick={() => setIntent(idx)}
+                        className={`min-h-9 px-3.5 rounded-full text-xs font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dm-gold)] ${
+                          intent === idx
+                            ? 'bg-[var(--dm-text-primary)] text-[var(--dm-text-inverted)]'
+                            : 'border border-[var(--dm-border-hover)] text-[var(--dm-text-secondary)] hover:text-[var(--dm-text-primary)]'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-2.5 mb-2.5">
+                    {([
+                      ['name', copy.nameLabel, 'text', 'name'],
+                      ['email', copy.emailLabel, 'email', 'email'],
+                      ['company', copy.companyLabel, 'text', 'organization'],
+                      ['telegram', copy.telegramLabel, 'text', 'off'],
+                    ] as const).map(([field, label, type, auto]) => (
+                      <label key={field} className="flex flex-col gap-1 text-[11px] text-[var(--dm-text-secondary)]">
+                        {label}
+                        <input
+                          type={type}
+                          autoComplete={auto}
+                          value={intro[field]}
+                          onChange={(e) => setIntro((prev) => ({ ...prev, [field]: e.target.value }))}
+                          required={field !== 'telegram'}
+                          placeholder={field === 'telegram' ? '@handle' : undefined}
+                          className="h-11 w-full px-3 rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg)] text-sm text-[var(--dm-text-primary)] placeholder:text-[var(--dm-text-muted)] outline-none focus:border-[var(--dm-border-accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--dm-gold)]"
+                        />
+                      </label>
+                    ))}
+                  </div>
+                  <label className="flex flex-col gap-1 text-[11px] text-[var(--dm-text-secondary)] mb-3">
+                    {copy.messageLabel}
+                    <textarea
+                      rows={3}
+                      value={intro.message}
+                      onChange={(e) => setIntro((prev) => ({ ...prev, message: e.target.value }))}
+                      placeholder={copy.messagePlaceholders[intent]}
+                      className="w-full px-3 py-2.5 rounded-lg border border-[var(--dm-border)] bg-[var(--dm-bg)] text-sm leading-relaxed text-[var(--dm-text-primary)] placeholder:text-[var(--dm-text-muted)] resize-none outline-none focus:border-[var(--dm-border-accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--dm-gold)]"
+                    />
+                  </label>
+                  {/* Bot trap: hidden from people, filled only by scripts. */}
+                  <input
+                    type="text"
+                    name="companyWebsite"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    value={intro.companyWebsite}
+                    onChange={(e) => setIntro((prev) => ({ ...prev, companyWebsite: e.target.value }))}
+                    className="absolute top-0 start-0 w-px h-px opacity-0 pointer-events-none"
+                  />
+                  {introError && <p className="text-xs text-[var(--color-danger,#ef4444)] mb-3" role="alert">{introError}</p>}
+                  <button type="submit" disabled={introStatus === 'sending'} className="dm-btn-primary w-full justify-center text-xs disabled:opacity-60">
+                    {introStatus === 'sending' ? copy.sending : copy.requestIntro(activeProfile.companyName)} <span aria-hidden="true">→</span>
                   </button>
-                ))}
-              </div>
-              <a
-                href="#apply"
-                onClick={() => {
-                  dispatchPrefill(copy.joinClub, `${activeProfile.companyName} (${activeProfile.contactName}) — ${copy.intents[intent]}`);
-                  closeProfile();
-                }}
-                className="dm-btn-primary w-full justify-center text-xs"
-              >
-                {copy.requestIntro(activeProfile.companyName)} <span aria-hidden="true">→</span>
-              </a>
-              <p className="text-[11px] text-[var(--dm-text-secondary)] leading-relaxed mt-3 text-center">{copy.introNote}</p>
+                  <p className="text-[11px] text-[var(--dm-text-secondary)] leading-relaxed mt-3 text-center">{copy.introNote}</p>
+                </form>
+              )}
             </div>
           </div>
         </div>
