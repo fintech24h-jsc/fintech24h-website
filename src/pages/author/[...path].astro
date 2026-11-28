@@ -5,8 +5,9 @@ export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import Pagination from '../../components/ui/Pagination.astro';
-import { getUserBySlug, getPostsByAuthor, getPhatVoAuthorIds, isPhatVoWpAuthor, PHAT_VO_SLUG, PHAT_VO_WP_FALLBACK, POSTS_PER_PAGE, formatDate, getExcerpt, getFeaturedImage } from '../../lib/wordpress';
-import { getReadingTime, stripCmsScripts } from '../../lib/utils';
+import { getUserBySlug, getPostsByAuthor, getPhatVoAuthorIds, isPhatVoWpAuthor, PHAT_VO_SLUG, PHAT_VO_WP_FALLBACK, POSTS_PER_PAGE, formatShortDate, getFeaturedImageSized, getPostCategories } from '../../lib/wordpress';
+import type { WPPost } from '../../lib/wordpress';
+import { getReadingTime } from '../../lib/utils';
 import { team } from '../../data/team';
 
 Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -91,6 +92,35 @@ if (!keepProfile && (posts.length === 0 || pageNumber > totalPages)) {
   return Astro.rewrite('/404');
 }
 if (postsUnavailable) Astro.response.headers.set('Cache-Control', 'no-store');
+
+// Publications section: research & news posts lead, DealMakers partner announcements
+// (most of Phat Vo's posts) are grouped into compact tiles so they don't crowd the research.
+const isPartnerPost = (p: WPPost) =>
+  getPostCategories(p).some((c) => c.slug === 'dealmakers-pulse') || /\bmedia partner\b/i.test(p.title.rendered);
+const partnerName = (title: string) =>
+  /^(.+?)\s+(?:Named|Joins|Becomes)\b/i.exec(title)?.[1] ?? /Welcomes\s+(.+?)\s+as\b/i.exec(title)?.[1] ?? title;
+const pubItems = posts.map((p) => ({
+  id: p.id,
+  href: `/blog/${p.slug}`,
+  title: p.title.rendered,
+  type: isPartnerPost(p) ? 'partner' : 'research',
+  date: formatShortDate(p.date),
+  readTime: getReadingTime(p.content.rendered),
+  image: getFeaturedImageSized(p),
+  partner: partnerName(p.title.rendered),
+}));
+const researchItems = pubItems.filter((i) => i.type === 'research');
+const partnerItems = pubItems.filter((i) => i.type === 'partner');
+const leadItem = researchItems[0];
+const leadImage = leadItem ? getFeaturedImageSized(posts.find((p) => p.id === leadItem.id)!, 'large') : null;
+const sideItems = researchItems.slice(1, 4);
+const partnerTiles = partnerItems.slice(0, 8);
+const shownIds = new Set([leadItem, ...sideItems, ...partnerTiles].filter(Boolean).map((i) => i!.id));
+const moreItems = pubItems.filter((i) => !shownIds.has(i.id));
+const hasBothTypes = researchItems.length > 0 && partnerItems.length > 0;
+const pubTab = 'inline-flex items-center h-11 px-4 rounded-full border font-mono text-[13px] whitespace-nowrap transition-colors duration-200 border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] aria-pressed:border-[color-mix(in_srgb,var(--accent-cyan)_45%,transparent)] aria-pressed:bg-[color-mix(in_srgb,var(--accent-cyan)_12%,transparent)] aria-pressed:text-[var(--text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]';
+const viewBtn = 'w-9 h-9 inline-flex items-center justify-center rounded-lg text-[var(--text-muted)] aria-pressed:bg-[color-mix(in_srgb,var(--accent-cyan)_14%,transparent)] aria-pressed:text-[var(--accent-cyan)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-cyan)]';
+const badgeClass = (type: string) => type === 'research' ? 'text-[var(--accent-cyan)]' : 'text-[var(--accent-purple)]';
 
 // Profile URL (schema / breadcrumb). The paginated URL is the page's own canonical, set by BaseLayout.
 const currentUrl = `https://fintech24h.com/author/${slug}`;
@@ -354,135 +384,162 @@ const phatProducts = [
     <div class="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[var(--bg-primary)] to-transparent pointer-events-none"></div>
   </section>
 
-  <!-- Cyber Research Dossier (Timeline & Asymmetric Publications Layout) -->
-  <section class="py-24 bg-[var(--bg-primary)] relative border-t border-[var(--border-subtle)]" id="publications" aria-label="Author Publications">
-    <!-- Cyber grid background -->
-    <div class="absolute inset-0 pointer-events-none z-0">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-[var(--gradient-glow-cyan)] rounded-full opacity-[0.03] filter blur-[120px]"></div>
-      <div class="absolute inset-0 grid-pattern opacity-10"></div>
+  <!-- Publications: lead research + partner tiles, with a type filter and a grid/list switch -->
+  <section class="py-20 lg:py-28 bg-[var(--bg-primary)] relative border-t border-[var(--border-subtle)]" id="publications" aria-labelledby="publications-heading">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="bg-orb bg-orb-purple w-[640px] h-[640px] absolute -top-64 left-1/2 -translate-x-1/2 opacity-15"></div>
     </div>
 
-    <div class="relative z-10 max-w-5xl mx-auto px-6">
-      
-      <!-- Section Header -->
-      <div class="max-w-2xl mx-auto text-center mb-20" data-animate="fade-up">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/20 bg-cyan-400/5 mb-4">
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>
-          <span class="text-[10px] font-mono font-medium text-[var(--accent-cyan)] uppercase tracking-widest">Research Index</span>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center flex flex-col items-center gap-4 mb-10 lg:mb-12" data-animate="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[color-mix(in_srgb,var(--accent-cyan)_25%,transparent)] bg-[color-mix(in_srgb,var(--accent-cyan)_5%,transparent)] font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--accent-cyan)]">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse"></span>Research Index
         </div>
-        <h2 class="font-display text-4xl font-bold text-[var(--text-primary)] uppercase tracking-tight">
-          Dossier Publications
-        </h2>
-        <p class="text-xs text-[var(--text-muted)] font-mono uppercase tracking-[0.2em] mt-3">
-          Verifiable marketing frameworks, research logs, and technical archives
-        </p>
+        <h2 id="publications-heading" class="font-display text-h2 font-bold text-[var(--text-primary)]">Publications by <span class="gradient-text-cyan">{authorName}</span></h2>
+        <p class="font-body text-base lg:text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl">Research, market news and DealMakers partner announcements, newest first.</p>
+        {totalPosts > 0 && (
+          <p class="flex flex-wrap justify-center gap-x-5 gap-y-1 font-mono text-xs text-[var(--text-muted)]">
+            <span><span class="text-[var(--text-primary)]">{totalPosts}</span> articles</span>
+            <span>{totalPages} {totalPages === 1 ? 'page' : 'pages'}</span>
+            {posts[0] && pageNumber === 1 && <span>latest {formatShortDate(posts[0].date)}</span>}
+          </p>
+        )}
       </div>
 
       {posts.length > 0 ? (
-        <!-- Vertical Timeline Guidance Line -->
-        <div class="relative border-l border-[var(--border-default)] ml-4 md:ml-32 pl-8 md:pl-12 space-y-16 py-8" data-animate="stagger">
-          {posts.map((post, idx) => {
-            const rTime = getReadingTime(post.content.rendered);
-            const excerptText = getExcerpt(post, 180);
-            const featuredImage = getFeaturedImage(post);
-            
-            // Asymmetric design elements (Alternating styles, featured gradients)
-            const isFeatured = idx === 0;
-            const accentColor = idx % 2 === 0 ? 'var(--accent-cyan)' : 'var(--accent-purple)';
+        <div data-pubs>
+          <div data-pubs-toolbar hidden class="[&[hidden]]:hidden flex flex-wrap items-center justify-between gap-3 py-3.5 mb-6 lg:mb-8 border-y border-[var(--border-default)]">
+            <div class="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="group" aria-label="Filter publications">
+              {hasBothTypes && <>
+                <button type="button" data-pubs-filter="all" aria-pressed="true" class={pubTab}>All publications</button>
+                <button type="button" data-pubs-filter="research" aria-pressed="false" class={pubTab}>Research &amp; news</button>
+                <button type="button" data-pubs-filter="partner" aria-pressed="false" class={pubTab}>Partner announcements</button>
+              </>}
+            </div>
+            <div class="flex p-1 rounded-xl border border-[var(--border-default)]" role="group" aria-label="View">
+              <button type="button" data-pubs-view="grid" aria-pressed="true" aria-label="Grid view" class={viewBtn}><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
+              <button type="button" data-pubs-view="list" aria-pressed="false" aria-label="List view" class={viewBtn}><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></button>
+            </div>
+          </div>
 
-            return (
-              <div class="relative group" data-animate-child>
-                
-                <!-- Timeline dot node with ping effect -->
-                <div class="absolute -left-[41px] md:-left-[57px] top-6 w-5 h-5 rounded-full bg-[var(--bg-primary)] border border-[var(--border-default)] flex items-center justify-center group-hover:border-[var(--accent-cyan)] transition-colors duration-300 z-10">
-                  <div class="w-2 h-2 rounded-full group-hover:scale-110 transition-transform" style={{ background: accentColor }}></div>
-                  <div class="absolute inset-0 rounded-full animate-ping opacity-0 group-hover:opacity-40" style={{ background: accentColor }}></div>
-                </div>
-
-                <!-- Left Column monospaced absolute meta (Desktop only) -->
-                <div class="absolute -left-[180px] top-4 hidden md:flex flex-col items-end text-right w-36 font-mono text-[10px] text-[var(--text-muted)] space-y-1">
-                  <div class="text-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] tracking-wider">[{formatDate(post.date).toUpperCase()}]</div>
-                  <div>ID // WP_0{post.id}</div>
-                  <div class="text-[9px] uppercase tracking-widest" style={{ color: accentColor }}>{rTime} MIN READ</div>
-                </div>
-
-                <!-- Article Dossier Panel Card -->
-                <div class={`relative p-6 md:p-8 rounded-2xl bg-[var(--bg-glass)] border border-[var(--border-subtle)] group-hover:border-[var(--border-default)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.7)] transition-all duration-500 overflow-hidden backdrop-blur-sm ${isFeatured ? 'ring-1 ring-cyan-500/10' : ''}`}>
-                  
-                  <!-- Glowing line laser sweep effect on hover -->
-                  <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-down_3.5s_linear_infinite]" style={{ '--accent': accentColor }}></div>
-
-                  <!-- Asymmetric layout inside card -->
-                  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                    
-                    {featuredImage.url && (
-                      <div class="lg:col-span-4 relative aspect-[16/10] rounded-xl overflow-hidden border border-[var(--border-subtle)] group-hover:border-[var(--border-hover)] transition-colors duration-500 bg-[var(--bg-primary)]">
-                        <img 
-                          src={featuredImage.url} 
-                          alt={featuredImage.alt}
-                          class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" 
-                          loading={isFeatured ? "eager" : "lazy"}
-                        />
-                      </div>
-                    )}
-                    
-                    <div class={`${featuredImage.url ? 'lg:col-span-8' : 'lg:col-span-12'} space-y-4`}>
-                      <!-- HUD Category Tag & Index -->
-                      <div class="flex justify-between items-center text-[9px] font-mono tracking-widest text-[var(--text-muted)]">
-                        <span>[ ARCHIVE_INDEX // 0{idx + 1} ]</span>
-                        <span class="uppercase pl-2" style={{ color: accentColor }}>PUBLISHED_POST</span>
-                      </div>
-
-                      <!-- Title -->
-                      <h3 class="font-display text-xl md:text-2xl font-bold text-[var(--text-primary)] leading-tight group-hover:text-[var(--accent-cyan)] transition-colors">
-                        <a href={`/blog/${post.slug}`} data-cms-content set:html={stripCmsScripts(post.title.rendered)} />
-                      </h3>
-
-                      <!-- Excerpt -->
-                      <p class="text-xs text-[var(--text-secondary)] font-body leading-relaxed font-light line-clamp-3">
-                        {excerptText}
-                      </p>
-
-                      <div class="pt-4 border-t border-[var(--border-subtle)] flex items-center justify-between">
-                        <!-- Mobile Meta Fallback -->
-                        <span class="font-mono text-[9px] text-[var(--text-muted)] md:hidden">{formatDate(post.date)} · {rTime} MIN</span>
-                        <span class="font-mono text-[9px] text-[var(--text-muted)] hidden md:block">STATUS // ACTIVE_NODE_LOG</span>
-                        
-                        <a 
-                          href={`/blog/${post.slug}`} 
-                          class="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--accent-cyan)] hover:text-[var(--accent-cyan-dim)] font-display uppercase tracking-wider transition-colors"
-                          style={{ color: accentColor }}
-                        >
-                          Unlock Report
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                      </div>
+          <!-- Grid, all types (default; also the no-JavaScript view) -->
+          <div data-pubs-panel="hub" class="[&[hidden]]:hidden flex flex-col gap-10 lg:gap-12">
+            {leadItem && leadImage && (
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+                <article class="card-default rounded-3xl overflow-hidden lg:col-span-7 flex flex-col">
+                  <a href={leadItem.href} tabindex="-1" aria-hidden="true" class="block aspect-[16/9] overflow-hidden bg-[var(--surface-soft)]">
+                    <img src={leadImage.url} alt={leadImage.alt} width="1200" height="675" class="w-full h-full object-cover" loading="eager" decoding="async" />
+                  </a>
+                  <div class="p-5 sm:p-7 lg:p-8 flex flex-col gap-3">
+                    <div class="flex flex-wrap items-center gap-3 font-mono text-xs text-[var(--text-muted)]">
+                      <span class="px-2.5 py-1 rounded bg-[color-mix(in_srgb,var(--accent-purple)_14%,transparent)] text-[var(--accent-purple)] uppercase tracking-[0.1em]">Latest research</span>
+                      <span>{leadItem.date}</span><span aria-hidden="true">·</span><span>{leadItem.readTime} min read</span>
                     </div>
-
+                    <h3 class="font-display font-bold text-[clamp(1.375rem,2.3vw,1.75rem)] leading-[1.22] text-[var(--text-primary)]"><a href={leadItem.href} class="hover:text-[var(--accent-cyan)] transition-colors duration-200">{leadItem.title}</a></h3>
+                    <a href={leadItem.href} class="mt-1 self-start inline-flex items-center gap-2 font-display font-bold text-sm text-[var(--accent-cyan)] hover:opacity-80 transition-opacity duration-200">Read article <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
-                </div>
-
+                </article>
+                {sideItems.length > 0 && (
+                  <div class="lg:col-span-5 flex flex-col gap-3 lg:gap-4">
+                    {sideItems.map((i) => (
+                      <article class="card-default overflow-hidden flex flex-1">
+                        <a href={i.href} tabindex="-1" aria-hidden="true" class="block shrink-0 w-28 sm:w-40 overflow-hidden bg-[var(--surface-soft)]"><img src={i.image.url} alt={i.image.alt} width="320" height="240" class="w-full h-full object-cover" loading="lazy" decoding="async" /></a>
+                        <div class="p-4 sm:p-5 flex flex-col justify-center gap-2 min-w-0">
+                          <span class="font-mono text-[11px] text-[var(--text-muted)]">{i.date} · {i.readTime} min</span>
+                          <h3 class="font-display font-bold text-[15px] sm:text-[17px] leading-snug text-[var(--text-primary)] line-clamp-3"><a href={i.href} class="hover:text-[var(--accent-cyan)] transition-colors duration-200">{i.title}</a></h3>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                )}
               </div>
-            );
-          })}
+            )}
+
+            {partnerTiles.length > 0 && (
+              <div>
+                <div class="flex flex-wrap justify-between items-baseline gap-2 mb-4">
+                  <h3 class="font-display text-lg lg:text-xl font-bold text-[var(--text-primary)]">DealMakers partner announcements</h3>
+                  <a href="/blog/category/dealmakers-pulse" class="font-mono text-xs text-[var(--accent-cyan)] hover:opacity-80">All announcements →</a>
+                </div>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+                  {partnerTiles.map((i) => (
+                    <li>
+                      <a href={i.href} class="card-default h-full flex items-center gap-3.5 p-2.5 pr-4">
+                        <img src={i.image.url} alt="" width="96" height="70" class="w-16 h-12 sm:w-24 sm:h-[70px] shrink-0 rounded-lg sm:rounded-[10px] object-cover" loading="lazy" decoding="async" />
+                        <span class="flex flex-col gap-1 min-w-0">
+                          <span class="font-display text-[15px] font-bold text-[var(--text-primary)] truncate">{i.partner}</span>
+                          <span class="font-mono text-[11px] text-[var(--text-muted)] whitespace-nowrap">Media Partner · {i.date.replace(/, \d{4}$/, '')}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {moreItems.length > 0 && (
+              <div>
+                <h3 class="font-display text-lg lg:text-xl font-bold text-[var(--text-primary)] mb-4">More on this page</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
+                  {moreItems.map((i) => (
+                    <li>
+                      <article class="card-default h-full overflow-hidden flex">
+                        <a href={i.href} tabindex="-1" aria-hidden="true" class="block shrink-0 w-28 overflow-hidden bg-[var(--surface-soft)]"><img src={i.image.url} alt={i.image.alt} width="224" height="224" class="w-full h-full object-cover" loading="lazy" decoding="async" /></a>
+                        <div class="p-4 flex flex-col justify-center gap-1.5 min-w-0">
+                          <span class="font-mono text-[10px] text-[var(--text-muted)]"><span class:list={['uppercase tracking-[0.1em] mr-2', badgeClass(i.type)]}>{i.type === 'research' ? 'Research' : 'Partner'}</span>{i.date}</span>
+                          <h4 class="font-display font-bold text-[15px] leading-snug text-[var(--text-primary)] line-clamp-3"><a href={i.href} class="hover:text-[var(--accent-cyan)] transition-colors duration-200">{i.title}</a></h4>
+                        </div>
+                      </article>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <!-- Grid, one type -->
+          <ul data-pubs-panel="cards" hidden class="[&[hidden]]:hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
+            {pubItems.map((i) => (
+              <li data-type={i.type}>
+                <article class="card-default h-full overflow-hidden flex md:flex-col">
+                  <a href={i.href} tabindex="-1" aria-hidden="true" class="block shrink-0 w-28 md:w-full aspect-square md:aspect-[16/10] overflow-hidden bg-[var(--surface-soft)]"><img src={i.image.url} alt={i.image.alt} width="400" height="250" class="w-full h-full object-cover" loading="lazy" decoding="async" /></a>
+                  <div class="p-4 md:p-5 flex flex-col gap-2 min-w-0">
+                    <span class="flex justify-between gap-2 font-mono text-[11px] text-[var(--text-muted)]"><span class:list={['uppercase tracking-[0.1em]', badgeClass(i.type)]}>{i.type === 'research' ? 'Research' : 'Partner'}</span><span>{i.date}</span></span>
+                    <h3 class="font-display font-bold text-[15px] md:text-base leading-snug text-[var(--text-primary)] line-clamp-3"><a href={i.href} class="hover:text-[var(--accent-cyan)] transition-colors duration-200">{i.title}</a></h3>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+
+          <!-- List -->
+          <ol data-pubs-panel="list" hidden class="[&[hidden]]:hidden card-default rounded-2xl py-1.5">
+            {pubItems.map((i) => (
+              <li data-type={i.type} class="border-b border-[var(--border-subtle)] last:border-b-0">
+                <a href={i.href} class="group grid grid-cols-[1fr_auto] md:grid-cols-[110px_120px_1fr_64px_20px] items-center gap-x-5 gap-y-1 px-4 md:px-7 py-3.5 hover:bg-[var(--surface-soft)] transition-colors duration-200">
+                  <span class="font-mono text-xs text-[var(--text-muted)] md:order-none order-1">{i.date}</span>
+                  <span class:list={['font-mono text-[11px] uppercase tracking-[0.1em] order-2 md:order-none text-right md:text-left', badgeClass(i.type)]}>{i.type === 'research' ? 'Research' : 'Partner'}</span>
+                  <span class="col-span-2 md:col-span-1 order-3 md:order-none font-display text-[15px] md:text-base font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors duration-200 md:truncate">{i.title}</span>
+                  <span class="hidden md:block font-mono text-xs text-[var(--text-muted)] text-right">{i.readTime} min</span>
+                  <svg class="hidden md:block w-4 h-4 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+              </li>
+            ))}
+          </ol>
         </div>
       ) : (
-        <!-- Fallback if no posts are published by this author -->
-        <div class="max-w-md mx-auto text-center p-12 border border-[var(--border-subtle)] rounded-2xl bg-[var(--bg-glass)] backdrop-blur-sm" data-animate="scale-in">
-          <svg class="w-12 h-12 text-[var(--text-muted)] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
-          <span class="font-mono text-[9px] text-[var(--accent-purple)] uppercase tracking-[0.2em] block mb-2">Active Monitor Seeding</span>
-          <p class="text-xs text-[var(--text-secondary)] font-body font-light leading-relaxed">
+        <div class="max-w-md mx-auto text-center p-10 card-default rounded-2xl">
+          <p class="font-body text-sm text-[var(--text-secondary)] leading-relaxed">
             {postsUnavailable
               ? <>Publications could not be loaded right now. Browse every article on the <a href="/blog" class="text-[var(--accent-cyan)] underline">Fintech24h blog</a>.</>
-              : 'No research drafts or publication modules are indexed under this node currently. Monitoring active updates.'}
+              : 'No publications yet.'}
           </p>
         </div>
       )}
 
-      <Pagination currentPage={pageNumber} totalPages={totalPages} basePath={`/author/${slug}`} label="Publications pagination" />
-
+      <div class="mt-10 lg:mt-12">
+        <Pagination currentPage={pageNumber} totalPages={totalPages} basePath={`/author/${slug}`} label="Publications pagination" />
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -523,3 +580,32 @@ const phatProducts = [
     animation: spin-counter 25s linear infinite;
   }
 </style>
+
+<script>
+  // Publications: type filter + grid/list view. Without JavaScript the toolbar stays
+  // hidden and the default grid (all types) shows every post on the page.
+  document.querySelectorAll<HTMLElement>('[data-pubs]').forEach((root) => {
+    const toolbar = root.querySelector<HTMLElement>('[data-pubs-toolbar]');
+    const panels = {
+      hub: root.querySelector<HTMLElement>('[data-pubs-panel="hub"]'),
+      cards: root.querySelector<HTMLElement>('[data-pubs-panel="cards"]'),
+      list: root.querySelector<HTMLElement>('[data-pubs-panel="list"]'),
+    };
+    let filter = 'all';
+    let view = 'grid';
+    const render = () => {
+      if (panels.hub) panels.hub.hidden = !(view === 'grid' && filter === 'all');
+      if (panels.cards) panels.cards.hidden = !(view === 'grid' && filter !== 'all');
+      if (panels.list) panels.list.hidden = view !== 'list';
+      [panels.cards, panels.list].forEach((panel) => panel?.querySelectorAll<HTMLElement>('[data-type]').forEach((item) => {
+        item.hidden = filter !== 'all' && item.dataset.type !== filter;
+      }));
+      root.querySelectorAll<HTMLButtonElement>('[data-pubs-filter]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.pubsFilter === filter)));
+      root.querySelectorAll<HTMLButtonElement>('[data-pubs-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.pubsView === view)));
+    };
+    root.querySelectorAll<HTMLButtonElement>('[data-pubs-filter]').forEach((b) => b.addEventListener('click', () => { filter = b.dataset.pubsFilter ?? 'all'; render(); }));
+    root.querySelectorAll<HTMLButtonElement>('[data-pubs-view]').forEach((b) => b.addEventListener('click', () => { view = b.dataset.pubsView ?? 'grid'; render(); }));
+    if (toolbar) toolbar.hidden = false;
+    render();
+  });
+</script>
