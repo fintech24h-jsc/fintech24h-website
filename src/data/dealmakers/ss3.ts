@@ -312,6 +312,8 @@ export interface DirectoryProfile {
   /** Square logo mark; falls back to companyInitials when absent. */
   logoUrl?: string;
   websiteUrl?: string;
+  /** One-line company tagline shown on the card; falls back to `about`. */
+  headline?: string;
   contactName: string;
   role: string;
   dealGoal: string;
@@ -332,6 +334,7 @@ export const directoryProfiles: DirectoryProfile[] = [
     companyInitials: 'WJ',
     logoUrl: '/dealmakers/directory/web3job.png',
     websiteUrl: 'https://web3job.work/',
+    headline: 'Web3 Jobs: Blockchain, Crypto & DeFi Careers',
     contactName: 'Phat Vo',
     role: 'Founder',
     dealGoal: 'Hiring partners & employer reach',
@@ -350,6 +353,7 @@ export const directoryProfiles: DirectoryProfile[] = [
     companyInitials: 'CS',
     logoUrl: '/dealmakers/directory/coinstori.png',
     websiteUrl: 'https://coinstori.com/',
+    headline: 'Connect & Share Blockchain Era',
     contactName: 'Phat Vo',
     role: 'Founder & CEO',
     dealGoal: 'Media coverage & company listings',
@@ -368,6 +372,7 @@ export const directoryProfiles: DirectoryProfile[] = [
     companyInitials: 'CI',
     logoUrl: '/dealmakers/directory/cmo-intern.png',
     websiteUrl: 'https://www.cmointern.com/',
+    headline: 'Marketing Insights & Career Tips for Marketers',
     contactName: 'Editorial Team',
     role: 'Fintech24h ecosystem',
     dealGoal: 'Marketing content & talent partner',
