@@ -184,6 +184,7 @@ export const mediaPartners: PartnerLogo[] = [
   { name: 'Expand', logoUrl: '/dealmakers/partners/expand.png', websiteUrl: 'https://toexpand.com/', confirmed: true },
   { name: 'CoinPedia', logoUrl: '/dealmakers/partners/coinpedia.png', websiteUrl: 'https://coinpedia.org/', confirmed: true },
   { name: 'CoinCarp', logoUrl: '/dealmakers/partners/coincarp.png', websiteUrl: 'https://www.coincarp.com/', confirmed: true },
+  { name: 'Crow Investing', logoUrl: '/dealmakers/partners/crowinvesting.png', websiteUrl: 'https://crowinvesting.com/', confirmed: true },
 ];
 
 // ─── KOL Partners (free, editorial exchange like Media Partners) ─────────────
