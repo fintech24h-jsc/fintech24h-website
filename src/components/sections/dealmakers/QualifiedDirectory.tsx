@@ -34,7 +34,8 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
     qualifiedProfile: 'ملف تعريفي مؤهّل',
     exampleProfile: 'ملف تعريفي توضيحي (مثال)',
     sponsoredProfile: '✦ ملف تعريفي مدعوم',
-    exampleNote: 'الملفات أدناه أمثلة توضيحية لشكل الإدراج المؤهّل، إلى أن ينضم أول الأعضاء الحقيقيين في Season 3.',
+    exampleNote: 'الملفات التي تحمل وسم "مثال توضيحي" هي أمثلة لشكل الإدراج المؤهّل.',
+    visitWebsite: 'زيارة الموقع',
     weOffer: 'نحن نقدّم',
     weAreLookingFor: 'نحن نبحث عن',
     focusMarkets: 'التركيز والأسواق',
@@ -63,7 +64,8 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
     qualifiedProfile: '资质档案',
     exampleProfile: '示例档案',
     sponsoredProfile: '✦ 推广档案',
-    exampleNote: '以下档案是资质入驻展示形式的示例，直至 Season 3 首批真实成员加入。',
+    exampleNote: '标有"示例"的档案仅用于展示资质入驻的形式。',
+    visitWebsite: '访问网站',
     weOffer: '我们提供',
     weAreLookingFor: '我们寻求',
     focusMarkets: '关注方向与市场',
@@ -92,7 +94,8 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
     qualifiedProfile: 'Qualified profile',
     exampleProfile: 'Example profile',
     sponsoredProfile: '✦ Sponsored profile',
-    exampleNote: 'The profiles below are illustrative examples of the qualified listing format, until the first real members join in Season 3.',
+    exampleNote: 'Profiles marked “Example” are illustrative of the qualified listing format.',
+    visitWebsite: 'Visit website',
     weOffer: 'We Offer',
     weAreLookingFor: 'We Are Looking For',
     focusMarkets: 'Focus & markets',
@@ -231,8 +234,10 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
                 : 'border-[var(--dm-border)] bg-white/[0.02] hover:border-[var(--dm-border-hover)] hover:bg-white/[0.04]'
             } focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--dm-gold)] focus-visible:outline-offset-2`}
           >
-            <span className="w-11 h-11 rounded-xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-[11px] font-bold text-[var(--dm-gold)]">
-              {p.companyInitials}
+            <span className="w-11 h-11 rounded-xl overflow-hidden bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-[11px] font-bold text-[var(--dm-gold)]">
+              {p.logoUrl ? (
+                <img src={p.logoUrl} alt="" width={44} height={44} loading="lazy" decoding="async" className="w-full h-full object-contain p-1.5" />
+              ) : p.companyInitials}
             </span>
             <div className="min-w-0">
               <h4 className="font-display font-semibold text-sm text-[var(--dm-text-primary)] flex items-center gap-2 flex-wrap">
@@ -280,13 +285,29 @@ export default function QualifiedDirectory({ locale = 'en' }: Props) {
 
             <p className="font-mono text-[10px] text-[var(--dm-gold)] uppercase tracking-widest mb-3">{activeProfile.illustrative ? copy.exampleProfile : copy.qualifiedProfile}</p>
             <div className="flex items-start gap-4 mb-5">
-              <span className="w-14 h-14 rounded-2xl bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-sm font-bold text-[var(--dm-gold)] shrink-0">
-                {activeProfile.companyInitials}
+              <span className="w-14 h-14 rounded-2xl overflow-hidden bg-[var(--dm-bg-tertiary)] border border-[var(--dm-border)] flex items-center justify-center font-mono text-sm font-bold text-[var(--dm-gold)] shrink-0">
+                {activeProfile.logoUrl ? (
+                  <img src={activeProfile.logoUrl} alt={`${activeProfile.companyName} logo`} width={56} height={56} decoding="async" className="w-full h-full object-contain p-2" />
+                ) : activeProfile.companyInitials}
               </span>
               <div className="min-w-0">
                 <h3 id="dm-profile-title" className="font-display font-semibold text-xl text-[var(--dm-text-primary)]">{activeProfile.companyName}</h3>
                 <p className="text-xs text-[var(--dm-text-muted)]">{activeProfile.contactName} · {activeProfile.role}</p>
-                {activeProfile.sponsored && <span className="dm-badge-sponsored mt-2">{copy.sponsoredProfile}</span>}
+                {(activeProfile.websiteUrl || activeProfile.sponsored) && (
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-2">
+                    {activeProfile.sponsored && <span className="dm-badge-sponsored">{copy.sponsoredProfile}</span>}
+                    {activeProfile.websiteUrl && (
+                      <a
+                        href={activeProfile.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-[var(--dm-gold)] hover:text-[var(--dm-gold-bright)] underline underline-offset-4 decoration-[var(--dm-border-accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dm-gold)]"
+                      >
+                        {copy.visitWebsite} <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 

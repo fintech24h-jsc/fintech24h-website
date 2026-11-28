@@ -309,6 +309,9 @@ export interface DirectoryProfile {
   slug: string;
   companyName: string;
   companyInitials: string;
+  /** Square logo mark; falls back to companyInitials when absent. */
+  logoUrl?: string;
+  websiteUrl?: string;
   contactName: string;
   role: string;
   dealGoal: string;
@@ -323,6 +326,60 @@ export interface DirectoryProfile {
 }
 
 export const directoryProfiles: DirectoryProfile[] = [
+  {
+    slug: 'web3job',
+    companyName: 'Web3Job.work',
+    companyInitials: 'WJ',
+    logoUrl: '/dealmakers/directory/web3job.png',
+    websiteUrl: 'https://web3job.work/',
+    contactName: 'Phat Vo',
+    role: 'Founder',
+    dealGoal: 'Hiring partners & employer reach',
+    category: 'partner',
+    tags: ['Web3 hiring', 'Global'],
+    sponsored: true,
+    about: 'Global job board for blockchain, crypto and DeFi careers. Every listing is reviewed before it goes live, with company profiles, a talent directory and pay data published only when it is disclosed.',
+    weOffer: 'Free first job post (live up to 60 days), featured listings, access to an opt-in talent directory, job alerts by email and Telegram, and extra reach for marketing roles through partner CMO Intern.',
+    weAreLookingFor: 'Web3 teams hiring across engineering, security, marketing, community, legal and finance, plus ecosystems and communities that want to co-promote open roles.',
+    focusMarket: 'Hiring · Talent · Global (English & Vietnamese)',
+    illustrative: false,
+  },
+  {
+    slug: 'coinstori',
+    companyName: 'Coinstori',
+    companyInitials: 'CS',
+    logoUrl: '/dealmakers/directory/coinstori.png',
+    websiteUrl: 'https://coinstori.com/',
+    contactName: 'Phat Vo',
+    role: 'Founder & CEO',
+    dealGoal: 'Media coverage & company listings',
+    category: 'service',
+    tags: ['Media', 'Global'],
+    sponsored: false,
+    about: 'Blockchain and Web3 news publication founded in 2021, covering news, knowledge, in-depth analysis, global events and a directory of vetted Web3 companies.',
+    weOffer: 'Company Discover listings with Trust / Verified tags, Magazine interviews, advertising placements, sponsored rankings and event listings in Events Discover.',
+    weAreLookingFor: 'Web3 projects, exchanges and funds that want editorial visibility, plus event organizers and partners for co-branded coverage.',
+    focusMarket: 'Media · News · Company directory · Global',
+    illustrative: false,
+  },
+  {
+    slug: 'cmointern',
+    companyName: 'CMO Intern',
+    companyInitials: 'CI',
+    logoUrl: '/dealmakers/directory/cmo-intern.png',
+    websiteUrl: 'https://www.cmointern.com/',
+    contactName: 'Editorial Team',
+    role: 'Fintech24h ecosystem',
+    dealGoal: 'Marketing content & talent partner',
+    category: 'service',
+    tags: ['Marketing', 'Web3'],
+    sponsored: false,
+    about: 'Media platform for marketing insights and career resources focused on Web3 and crypto, covering Web3 marketing, SEO, community, DAOs, funding, events and AI.',
+    weOffer: 'Advertising and sponsored content, content-writing services, an affiliate program, distribution across the website, LinkedIn, Facebook, X, Telegram and Substack, and Web3 marketing talent through the Web3Job.work partnership.',
+    weAreLookingFor: 'Web3 projects and agencies that want to reach marketers and growth teams, plus brands for project collabs, AMAs and hiring-trend reports.',
+    focusMarket: 'Marketing · Media · Careers · Global',
+    illustrative: false,
+  },
   {
     slug: 'nexa',
     companyName: 'NEXA Protocol',
